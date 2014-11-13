@@ -1,0 +1,25 @@
+body { 
+	padding-top: 70px; 
+}
+
+.borderless > thead > tr > th, 
+.borderless > tbody > tr > th, 
+.borderless > tfoot > tr > th, 
+.borderless > thead > tr > td, 
+.borderless > tbody > tr > td, 
+.borderless > tfoot > tr > td {
+	border-top: 0px;
+}
+
+.no-underline a:hover,
+.no-underline a:focus {
+	text-decoration: none;
+}
+
+.no-padding {
+	padding: 2px;
+}
+
+#loginForm .form-control-feedback {
+	top: 0px;
+}
