@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.tkbaru.model.User;
 import com.tkbaru.service.LoginService;
+import com.tkbaru.service.UserService;
 
 @Controller
 public class LoginController {
@@ -22,6 +24,9 @@ public class LoginController {
 	
 	@Autowired
 	LoginService loginManager;
+	
+	@Autowired
+	UserService userManager;
 	
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -40,6 +45,9 @@ public class LoginController {
 		logger.info("Process dologin! Parameter = " + "userName:" + userName + ", userPswd:" + userPswd);
 		
 		boolean loginSuccess = loginManager.successLogin(userName); 
+
+		User userdata = loginManager.createUserContext(userName);
+		
 		
 		if (!loginSuccess) {
 			String messageText = "Better check yourself, you're not looking too good.";

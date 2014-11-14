@@ -28,7 +28,7 @@
 				    	<div class="panel-heading" role="tab" id="headingCustomer">
 				      		<h4 class="panel-title no-underline">
 				        		<a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseCustomer" aria-expanded="false" aria-controls="collapseCustomer">
-				          			<span class="fa  fa-smile-o fa-fw"></span>&nbsp;Customer
+				          			<span class="fa fa-smile-o fa-fw"></span>&nbsp;Customer
 				        		</a>
 				      		</h4>
 				    	</div>

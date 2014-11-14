@@ -8,8 +8,8 @@ public class User {
 	private int userId;
 	private String userName;
 	private String userPassword;
-	private int roleId;
-	private String userRole;
+
+	private RoleFunction roleFunctionEntity;
 	private Person personEntity;
 	
 	public int getUserId() {
@@ -30,18 +30,12 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public int getRoleId() {
-		return roleId;
+	public RoleFunction getRoleFunctionEntity() {
+		return roleFunctionEntity;
 	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-	public String getUserRole() {
-		return userRole;
-	}
-	public void setUserRole(String userRole) {
-		this.userRole = userRole;
-	}
+	public void setRoleFunctionEntity(RoleFunction roleFunctionEntity) {
+		this.roleFunctionEntity = roleFunctionEntity;
+	}	
 	public Person getPersonEntity() {
 		return personEntity;
 	}

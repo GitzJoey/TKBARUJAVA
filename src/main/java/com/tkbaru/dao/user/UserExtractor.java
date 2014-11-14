@@ -13,7 +13,6 @@ public class UserExtractor implements ResultSetExtractor<User> {
 		User user = new User();
 		
 		user.setUserName(resultSet.getString("user_name"));
-		user.setRoleId(resultSet.getInt("role_id"));
 		
 		return user;
 	}

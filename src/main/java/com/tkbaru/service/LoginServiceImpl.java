@@ -10,9 +10,9 @@ import com.tkbaru.model.User;
 public class LoginServiceImpl implements LoginService {
 	@Autowired
 	UserDAO userDAO;
-	
+
+	@Autowired
 	RoleDAO roleDAO;
-	PersonDAO personDAO;
 	
 	@Override
 	public boolean successLogin(String userName) {
@@ -21,6 +21,16 @@ public class LoginServiceImpl implements LoginService {
 		User userdata = userDAO.getUser(userName);
 		
 		return true;
+	}
+
+	@Override
+	public User createUserContext(String userName) {
+		
+		User userdata = userDAO.getUser(userName);
+		
+		userdata.setRoleFunctionEntity(roleDAO.getRoleFunctionByUserId(userdata.getUserId()));
+		
+		return userdata;
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.tkbaru.dao.role;
 
-public interface RoleDAO {
+import com.tkbaru.model.RoleFunction;
 
+public interface RoleDAO {
+	public RoleFunction getRoleFunctionByUserId(int userId);
 }

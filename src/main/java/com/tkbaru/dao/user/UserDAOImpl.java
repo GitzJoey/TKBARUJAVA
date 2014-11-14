@@ -53,8 +53,6 @@ public class UserDAOImpl implements UserDAO {
 			User res = new User();
 			res.setUserId(Integer.valueOf(String.valueOf(row.get("user_id"))));
 			res.setUserName(String.valueOf(row.get("user_name")));
-			res.setRoleId(Integer.valueOf(String.valueOf(row.get("role_id"))));
-			res.setUserRole(String.valueOf(row.get("name")));
 			
 			Person p = new Person();
 			p.setFirstName(String.valueOf(row.get("first_name")));
