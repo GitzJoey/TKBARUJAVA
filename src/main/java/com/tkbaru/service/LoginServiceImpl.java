@@ -2,8 +2,6 @@ package com.tkbaru.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tkbaru.dao.person.PersonDAO;
-import com.tkbaru.dao.role.RoleDAO;
 import com.tkbaru.dao.user.UserDAO;
 import com.tkbaru.model.User;
 
@@ -12,7 +10,7 @@ public class LoginServiceImpl implements LoginService {
 	UserDAO userDAO;
 
 	@Autowired
-	RoleDAO roleDAO;
+	RoleService roleManager;
 	
 	@Override
 	public boolean successLogin(String userName) {
@@ -28,7 +26,7 @@ public class LoginServiceImpl implements LoginService {
 		
 		User userdata = userDAO.getUser(userName);
 		
-		userdata.setRoleFunctionEntity(roleDAO.getRoleFunctionByUserId(userdata.getUserId()));
+		userdata.setRoleFunctionEntity(roleManager.getRoleFunctionByUserId(userdata.getUserId()));
 		
 		return userdata;
 	}
