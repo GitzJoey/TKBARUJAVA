@@ -19,7 +19,7 @@ public class UserDAOImpl implements UserDAO {
 	
 	public User getUser(String userName) {
 		User result = null;
-		String sqlquery = "SELECT * FROM tb_user WHERE user_name = '" + userName + "'";
+		String sqlquery = "SELECT * FROM tb_user WHERE UCASE(user_name) = UCASE('" + userName + "')";
 	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<User> usr = jdbcTemplate.query(sqlquery, new UserRowMapper());

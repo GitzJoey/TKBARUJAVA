@@ -12,12 +12,15 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 
 import com.tkbaru.model.User;
 import com.tkbaru.service.LoginService;
 import com.tkbaru.service.UserService;
 
 @Controller
+@SessionAttributes("userContext")
 public class LoginController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -40,14 +43,13 @@ public class LoginController {
 		return "login";
 	}
 
-	@RequestMapping(value = "/dologin.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/dologin.html", method = RequestMethod.POST)	
 	public String dologin(@RequestParam("username") String userName, @RequestParam("password") String userPswd, Model model) {
 		logger.info("Process dologin! Parameter = " + "userName:" + userName + ", userPswd:" + userPswd);
 		
 		boolean loginSuccess = loginManager.successLogin(userName); 
 
 		User userdata = loginManager.createUserContext(userName);
-		
 		
 		if (!loginSuccess) {
 			String messageText = "Better check yourself, you're not looking too good.";
@@ -58,7 +60,22 @@ public class LoginController {
 			return "login";
 		}
 		
+		model.addAttribute("userContext", userdata);
+		
 		return "redirect:/dashboard.html";
 	}
 
+	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
+	public String dologout(Locale locale, Model model, SessionStatus sessionStatus) {
+		logger.info("Process dologout! The client locale is {}.", locale);
+		
+		String messageText = "";
+
+		model.addAttribute("collapseFlag", "collapse");
+		model.addAttribute("messageText", messageText);
+		
+		sessionStatus.setComplete();
+				
+		return "login";		
+	}
 }

@@ -13,6 +13,8 @@ public class Person {
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
+	private String emailAddr;
+	private String photoPath;
 	
 	private List<PhoneList> phoneList;
 
@@ -62,6 +64,22 @@ public class Person {
 
 	public void setAddressLine3(String addressLine3) {
 		this.addressLine3 = addressLine3;
+	}
+
+	public String getEmailAddr() {
+		return emailAddr;
+	}
+
+	public void setEmailAddr(String emailAddr) {
+		this.emailAddr = emailAddr;
+	}
+
+	public String getPhotoPath() {
+		return photoPath;
+	}
+
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
 	}
 
 	public List<PhoneList> getPhoneList() {

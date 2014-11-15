@@ -8,6 +8,7 @@ public class User {
 	private int userId;
 	private String userName;
 	private String userPassword;
+	private String picPath;
 
 	private RoleFunction roleFunctionEntity;
 	private Person personEntity;
@@ -30,6 +31,13 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
+	public String getPicPath() {
+		return picPath;
+	}
+	public void setPicPath(String picPath) {
+		this.picPath = picPath;
+	}
+	
 	public RoleFunction getRoleFunctionEntity() {
 		return roleFunctionEntity;
 	}

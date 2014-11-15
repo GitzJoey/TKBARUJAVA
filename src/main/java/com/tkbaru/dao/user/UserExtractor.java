@@ -12,6 +12,7 @@ public class UserExtractor implements ResultSetExtractor<User> {
 	public User extractData(ResultSet resultSet) throws SQLException, DataAccessException {
 		User user = new User();
 		
+		user.setUserId(Integer.valueOf(resultSet.getString("user_id")));
 		user.setUserName(resultSet.getString("user_name"));
 		
 		return user;

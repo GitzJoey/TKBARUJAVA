@@ -33,6 +33,7 @@ public class RoleDAOImpl implements RoleDAO {
 			"        func.menu_icon,                                                     " +
 			"        func.menu_name,                                                     " +
 			"        func.url,                                                           " +
+			"        func.order_num,                                                     " +	
 			"        func.deep_level                                                     " +
 			"FROM tb_user usr                                                            " +
 			"INNER JOIN tb_role role ON usr.role_id = role.role_id                       " +
@@ -50,8 +51,23 @@ public class RoleDAOImpl implements RoleDAO {
 			if (x == 0) {
 				result.setRoleId(Integer.valueOf(String.valueOf(rows.get(x).get("role_id"))));
 				result.setRoleName(String.valueOf(rows.get(x).get("name")));
-			}			
+			}
+			
+			Function f = new Function();
+			f.setFunctionId(Integer.valueOf(String.valueOf(rows.get(x).get("function_id"))));
+			f.setFunctionCode(String.valueOf(rows.get(x).get("function_code")));
+			f.setModule(String.valueOf(rows.get(x).get("module")));
+			f.setModuleIcon(String.valueOf(rows.get(x).get("module_icon")));
+			f.setMenuName(String.valueOf(rows.get(x).get("menu_name")));
+			f.setMenuIcon(String.valueOf(rows.get(x).get("menu_icon")));
+			f.setUrlLink(String.valueOf(rows.get(x).get("url")));
+			f.setOrderNum(Integer.valueOf(String.valueOf(rows.get(x).get("order_num"))));
+			f.setDeepLevel(Integer.valueOf(String.valueOf(rows.get(x).get("deep_level"))));
+			
+			funcList.add(f);
 		}
+		
+		result.setFunctionList(funcList);
 		
 		return result;
 	}

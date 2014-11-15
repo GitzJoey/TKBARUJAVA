@@ -11,7 +11,7 @@
 	</script>	
 </head>
 <body>
-	<div id="wrapper">
+	<div id="wrapper" class="container-fluid">
 
 		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
 

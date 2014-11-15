@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
+@SessionAttributes("userContext")
 public class DashboardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
@@ -17,6 +19,8 @@ public class DashboardController {
 	@RequestMapping(value="/dashboard.html", method = RequestMethod.GET)
 	public String dashboard(Locale locale, Model model) {
 		logger.info("Landed in Dashboard Page! The client locale is {}.", locale);
+		
+		
 		
 		return "dashboard";
 	}

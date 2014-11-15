@@ -14,7 +14,7 @@ public class RoleServiceImpl implements RoleService {
 	public RoleFunction getRoleFunctionByUserId(int userId) {
 		
 		
-		return null;
+		return roleDAO.getRoleFunctionById(userId);
 	}
 
 }
