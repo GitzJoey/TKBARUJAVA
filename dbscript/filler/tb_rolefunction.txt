@@ -1,0 +1,72 @@
+TRUNCATE TABLE tb_rolefunction;
+
+/*ADMIN ROLE*/
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 3, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 4, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 5, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 6, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 7, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 8, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 9, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 10, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 11, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 12, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 13, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 14, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 15, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 16, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 17, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 18, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 19, 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*NON ADMIN ROLE*/
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 3, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 4, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 5, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 6, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 7, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 8, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 9, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 10, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 11, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 12, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 13, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (2, 14, 0, (SELECT CURRENT_TIMESTAMP()));
+COMMIT;
