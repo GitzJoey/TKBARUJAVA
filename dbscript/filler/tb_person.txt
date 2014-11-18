@@ -1,0 +1,5 @@
+TRUNCATE TABLE tb_person;
+INSERT INTO tb_person (first_name, last_name) VALUES ('admin', 'admin');
+
+INSERT INTO tb_person (first_name, last_name) VALUES ('non admin', 'non admin');
+COMMIT;

@@ -1,0 +1,8 @@
+TRUNCATE TABLE tb_user;
+INSERT INTO tb_user (user_name, role_id, person_id, status, created_by, created_date) 
+VALUES ('admin', 1, 1, 'A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_user (user_name, role_id, person_id, status, created_by, created_date)
+VALUES ('nonadmin', 2, 2, 'A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;
