@@ -8,7 +8,7 @@
 	<script>
 		$(document).ready(function() {
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/user.html");
+				window.location.href("${ pageContext.request.contextPath }/admin/function.html");
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -32,10 +32,10 @@
 					}
 				});
 				if (id == "") {
-					jsAlert("Please select at least 1 username");
+					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/user/edit/" + id + ".html");	
+					$('#editTableSelection').attr("href", ctxpath + "/admin/function/edit/" + id + ".html");	
 				}				
 			});
 			
@@ -48,14 +48,14 @@
 					}
 				});
 				if (id == "") {
-					jsAlert("Please select at least 1 username");
+					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/user/delete/" + id + ".html");	
+					$('#deleteTableSelection').attr("href", ctxpath + "/admin/function/delete/" + id + ".html");	
 				}								
 			});
 			
-			$('#userForm').bootstrapValidator({
+			$('#functionForm').bootstrapValidator({
        			feedbackIcons: {
            			valid: 'glyphicon glyphicon-ok',
            			invalid: 'glyphicon glyphicon-remove',
@@ -67,14 +67,11 @@
                			validators: {
                    			notEmpty: { },
 							stringLength: { min: 4, max: 10 },
-							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'inputUserName' }
                			}
            			},
            			inputPassword: {
                			validators: {
                    			notEmpty: {	},
-                   			different: { field: 'inputUserName' },
                    			stringLength: { min: 6 }
                			}
            			}
@@ -107,7 +104,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-user fa-fw"></span>&nbsp;User 
+					<span class="fa fa-minus-square fa-fw"></span>&nbsp;Function
 				</h1>
 
 				<c:choose>
@@ -115,7 +112,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-user fa-fw fa-2x"></span>User List
+									<span class="fa fa-minus-square fa-fw fa-2x"></span>Function List
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -124,34 +121,32 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="15%">User Name</th>
-												<th width="25%">Name</th>
-												<th width="35%">Address</th>
-												<th width="15%">Phone</th>
-												<th width="5%">Status</th>
+												<th width="15%">Function Code</th>
+												<th width="20%">Module</th>
+												<th width="20%">Menu Name</th>
+												<th width="25%">Url</th>
+												<th width="5%">Order</th>
+												<th width="5%">Deep Level</th>
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty userList}">
-												<c:forEach var="i" varStatus="status" items="${userList}">
+											<c:if test="${not empty functionList}">
+												<c:forEach var="i" varStatus="status" items="${functionList}">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
-														<td><c:out value="${i.userName}"></c:out></td>
-														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
-														<td>
-															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine3 }"/>
-														</td>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
+														<td align="center"><input id="cbx_<c:out value="${ i.functionId }"/>" type="checkbox" value="<c:out value="${ i.functionId }"/>"/></td>
+														<td><c:out value="${i.functionCode}"></c:out></td>
+														<td><span class="<c:out value="${ i.moduleIcon }"></c:out>">&nbsp;</span><c:out value="${ i.module }"></c:out></td>
+														<td><span class="<c:out value="${ i.menuIcon }"></c:out>">&nbsp;</span><c:out value="${ i.menuName }"></c:out></td>
+														<td><c:out value="${ i.urlLink }"/></td>
+														<td><c:out value="${ i.orderNum }"/></td>
+														<td><c:out value="${ i.deepLevel }"/></td>
 													</tr>
 												</c:forEach>
 											</c:if>
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/function/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -163,73 +158,52 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add User
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Function
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit User
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Function
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form id="userForm" role="form" class="form-horizontal">
+								<form id="functionForm" role="form" class="form-horizontal">
 									<div class="form-group">
-										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
+										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name">
+											<input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" placeholder="Enter Function Code">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
+										<label for="inputModule" class="col-sm-2 control-label">Module</label>
 										<div class="col-sm-3">
-											<input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
+											<input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" placeholder="Module Name Icon">
+											<input type="text" class="form-control" id="inputModule" name="inputModule" placeholder="Module Name">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+										<label for="inputMenuName" class="col-sm-2 control-label">Menu Name</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+											<input type="text" class="form-control" id="inputMenuIcon" name="inputMenuIcon" placeholder="Menu Name Icon">
+											<input type="text" class="form-control" id="inputMenuName" placeholder="Menu Name">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+										<label for="inputUrlLink" class="col-sm-2 control-label">URL</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+											<input type="text" class="form-control" id="inputUrlLink" placeholder="URL">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputAddress1" class="col-sm-2 control-label">Address</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress1" placeholder="Address 1">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputAddress2" class="col-sm-2 control-label">&nbsp;</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress2" placeholder="Address 2">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputAddress3" class="col-sm-2 control-label">&nbsp;</label>
-										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress3" placeholder="Address 3">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputRole" class="col-sm-2 control-label">Role</label>
+										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option>Admin</option>
-											</select>
+											<input type="text" class="form-control" id="inputOrderNum" placeholder="Order">
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputDeepLevel" class="col-sm-2 control-label">Deep Level</label>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option>Active</option>
-												<option>Inactive</option>
-											</select>
+											<input type="text" class="form-control" id="inputDeepLevel" placeholder="Deep Level">
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">

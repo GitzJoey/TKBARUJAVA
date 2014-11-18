@@ -1,4 +1,4 @@
-package com.tkbaru.dao.user;
+package com.tkbaru.dao;
 
 import java.util.List;
 

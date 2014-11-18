@@ -2,7 +2,7 @@ package com.tkbaru.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.tkbaru.dao.user.UserDAO;
+import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
 
 public class LoginServiceImpl implements LoginService {

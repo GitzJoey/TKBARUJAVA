@@ -1,4 +1,4 @@
-package com.tkbaru.dao.role;
+package com.tkbaru.dao;
 
 import com.tkbaru.model.RoleFunction;
 
