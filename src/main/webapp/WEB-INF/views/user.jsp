@@ -1,18 +1,67 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			$('#cancelButton').click(function() {				
+				window.location.href("${ pageContext.request.contextPath }/admin/user.html");
+			});
+			
+			$('input[type="checkbox"][id^="cbx_"]').click(function() {
+				var selected = $(this);
+				
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			})
+			
+			$('#editTableSelection').click(function() {
+				var id = "";
+				var ctxpath = "${ pageContext.request.contextPath }";
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");	
+					}
+				});
+				if (id == "") {
+					jsAlert("Please select at least 1 username");
+					return false;	
+				} else {
+					$('#editTableSelection').attr("href", ctxpath + "/admin/user/edit/" + id + ".html");	
+				}				
+			});
+			
+			$('#deleteTableSelection').click(function() {
+				var id = "";
+				var ctxpath = "${ pageContext.request.contextPath }";
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");	
+					}
+				});
+				if (id == "") {
+					jsAlert("Please select at least 1 username");
+					return false;	
+				} else {
+					$('#deleteTableSelection').attr("href", ctxpath + "/admin/user/delete/" + id + ".html");	
+				}								
+			});
+			
 			$('#userForm').bootstrapValidator({
        			feedbackIcons: {
            			valid: 'glyphicon glyphicon-ok',
            			invalid: 'glyphicon glyphicon-remove',
 					validating: 'glyphicon glyphicon-refresh'
        			},
-       			submitButtons: '[type="submit"]',
+       			submitButtons: 'button[type="submit"]',
        			fields: {
        				inputUserName: {
                			validators: {
@@ -44,12 +93,8 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10 offset-md-1">
-				<h1>
-					<span class="fa fa-user fa-fw"></span>&nbsp;User 
-				</h1>
-				
 				<c:if test="${ERRORPAGE == 'ERRORPAGE_SHOW'}">
-	    			<div class="alert alert-danger alert-dismissible" role="alert">
+	    			<div class="alert alert-danger alert-dismissible collapse" role="alert">
 	  					<button type="button" class="close" data-dismiss="alert">
 	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 	  					</button>
@@ -59,6 +104,12 @@
 					</div>
 				</c:if>
 				
+				<div id="jsAlerts"></div>
+
+				<h1>
+					<span class="fa fa-user fa-fw"></span>&nbsp;User 
+				</h1>
+
 				<c:choose>
 					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
 						<div class="panel panel-default">
@@ -84,10 +135,14 @@
 											<c:if test="${not empty userList}">
 												<c:forEach var="i" varStatus="status" items="${userList}">
 													<tr>
-														<td>&nbsp;</td>
+														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
 														<td><c:out value="${i.userName}"></c:out></td>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
+														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
+														<td>
+															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
+															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
+															<c:out value="${ i.personEntity.addressLine3 }"/>
+														</td>
 														<td>&nbsp;</td>
 														<td>&nbsp;</td>
 													</tr>
@@ -96,9 +151,9 @@
 										</tbody>
 									</table>
 								</div>
-								<a class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button></a>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn btn-sm btn-primary"><span class="fa fa-plus fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
-								<button type="button" class="btn btn-sm btn-primary"><span class="fa fa-plus fa-fw"></span>&nbsp;Delete</button>
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
+								<a id="deleteTableSelection" class="btn btn-sm btn-primary"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
 						</div>
 					</c:when>
@@ -111,7 +166,7 @@
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add User
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-write fa-fw fa-2x"></span>&nbsp;Edit User
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit User
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -179,8 +234,8 @@
 									</div>
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
-											<button type="cancel" class="btn btn-default pull-right">Cancel</button>
-											<button type="submit" class="btn btn-default pull-right">Submit</button>
+											<button id="cancelButton" type="reset" class="btn btn-default pull-right">Cancel</button>
+											<button id="submitButton" type="submit" class="btn btn-default pull-right">Submit</button>
 										</div>
 									</div>
 								</form>

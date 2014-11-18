@@ -17,6 +17,8 @@
 		
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
+	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrapvalidator/dist/js/bootstrapValidator.min.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrapvalidator/src/js/language/id_ID.js"></script>

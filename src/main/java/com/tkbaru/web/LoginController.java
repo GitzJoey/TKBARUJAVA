@@ -49,8 +49,6 @@ public class LoginController {
 		
 		boolean loginSuccess = loginManager.successLogin(userName); 
 
-		User userdata = loginManager.createUserContext(userName);
-		
 		if (!loginSuccess) {
 			String messageText = "Better check yourself, you're not looking too good.";
 		
@@ -58,11 +56,12 @@ public class LoginController {
 			model.addAttribute("messageText", messageText);
 			
 			return "login";
+		} else {
+			User userdata = loginManager.createUserContext(userName);
+			
+			model.addAttribute("userContext", userdata);			
+			return "redirect:/dashboard.html";
 		}
-		
-		model.addAttribute("userContext", userdata);
-		
-		return "redirect:/dashboard.html";
 	}
 
 	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)

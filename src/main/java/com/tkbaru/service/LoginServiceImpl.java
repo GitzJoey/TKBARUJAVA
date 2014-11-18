@@ -18,6 +18,10 @@ public class LoginServiceImpl implements LoginService {
 		
 		User userdata = userDAO.getUser(userName);
 		
+		if (userdata == null) {
+			return false;
+		}
+		
 		return true;
 	}
 

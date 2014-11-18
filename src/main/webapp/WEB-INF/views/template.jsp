@@ -20,7 +20,20 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				Content
+				<c:if test="${ERRORPAGE == 'ERRORPAGE_SHOW'}">
+	    			<div class="alert alert-danger alert-dismissible collapse" role="alert">
+	  					<button type="button" class="close" data-dismiss="alert">
+	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	  					</button>
+	  					<h4><strong>Warning!</strong></h4>
+	  					<br>
+	  					${errorMessageText}
+					</div>
+				</c:if>
+				
+				<div id="jsAlerts"></div>
+				
+				Contents
 			</div>
 		</div>
 	</div>	

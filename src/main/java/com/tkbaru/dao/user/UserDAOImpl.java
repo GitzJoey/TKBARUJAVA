@@ -24,7 +24,8 @@ public class UserDAOImpl implements UserDAO {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<User> usr = jdbcTemplate.query(sqlquery, new UserRowMapper());
 		
-		result = usr.get(0);
+		if (usr.size() == 0) return result;
+		else result = usr.get(0);
 		
 		return result;
 	}

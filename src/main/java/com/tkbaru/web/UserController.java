@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -42,17 +43,18 @@ public class UserController {
 		return Constants.JSPPAGE_USER;
 	}
 
-	@RequestMapping(value = "/admin/user/edit.html", method = RequestMethod.GET)
-	public String userEdit(Locale locale, Model model) {
+	@RequestMapping(value = "/admin/user/edit/{selectedId}.html", method = RequestMethod.GET)
+	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		logger.info(String.valueOf(selectedId));
 		return Constants.JSPPAGE_USER;
 	}
 
-	@RequestMapping(value = "/admin/user/delete.html", method = RequestMethod.GET)
-	public String userDelete(Locale locale, Model model) {
+	@RequestMapping(value = "/admin/user/delete/{selectedId}.html", method = RequestMethod.GET)
+	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
