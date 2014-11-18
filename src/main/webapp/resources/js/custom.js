@@ -1,0 +1,1 @@
+function jsAlert(message) { $('#jsAlerts').append('<div class="alert alert-danger" role="alert">' + message + '</div>'); }
