@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -37,6 +38,7 @@ public class UserController {
 	@RequestMapping(value = "/admin/user/add.html", method = RequestMethod.GET)
 	public String userAdd(Locale locale, Model model) {
 		
+		model.addAttribute("userForm", new User());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -46,10 +48,12 @@ public class UserController {
 	@RequestMapping(value = "/admin/user/edit/{selectedId}.html", method = RequestMethod.GET)
 	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
+		User selectedUser = userManager.getUserById(selectedId);
+		
+		model.addAttribute("userForm", selectedUser);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		logger.info(String.valueOf(selectedId));
 		return Constants.JSPPAGE_USER;
 	}
 
@@ -63,8 +67,9 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/admin/user/save.html", method = RequestMethod.POST)
-	public String userSave(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
 		
+		logger.info(usr.getUserName());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

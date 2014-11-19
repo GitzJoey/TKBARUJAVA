@@ -1,5 +1,7 @@
 package com.tkbaru.dao;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 
 import com.tkbaru.model.Person;
 import com.tkbaru.model.User;
@@ -66,6 +69,36 @@ public class UserDAOImpl implements UserDAO {
 			result.add(res);
 		}
 		
+		return result;
+	}
+
+	@Override
+	public User getUserById(int selectedId) {
+		User result = new User();
+		
+		String sqlquery = 
+				"SELECT tbuser.user_id,                                                    "+
+				"		tbuser.user_name,                                                  "+
+				"        tbuser.role_id,                                                   "+
+				"        tbuser.person_id                                                  "+
+				"FROM tb_user tbuser                                                       "+
+				"WHERE tbuser.user_id = ? ";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		result = jdbcTemplate.queryForObject(sqlquery, new Object[] { selectedId }, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User usr = new User();
+				
+				usr.setUserId(rs.getInt("user_id"));
+				usr.setUserName(rs.getString("user_name"));
+				usr.setRoleId(rs.getInt("role_id"));
+				usr.setPersonId(rs.getInt("person_id"));
+				
+				return usr;
+			}
+		});
+				
 		return result;
 	}
 }

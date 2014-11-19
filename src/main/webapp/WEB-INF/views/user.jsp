@@ -178,11 +178,11 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form id="userForm" role="form" class="form-horizontal">
+								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save.html">
 									<div class="form-group">
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name">
+											<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -193,8 +193,8 @@
 									</div>
 									<div class="form-group">
 										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
-										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputFirstName" placeholder="First Name">
+										<div class="col-sm-5">											
+											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -272,7 +272,7 @@
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 										</div>
 									</div>
-								</form>
+								</form:form>
 							</div>
 						</div>					
 					</c:when>

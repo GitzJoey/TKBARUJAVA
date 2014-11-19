@@ -38,6 +38,9 @@
       
     <!-- declare spring DAO -->
     <bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl"></bean>
+	<bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
     <bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
     	<property name="dataSource" ref="dataSource" />
     </bean>

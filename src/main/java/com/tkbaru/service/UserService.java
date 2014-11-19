@@ -6,4 +6,5 @@ import com.tkbaru.model.User;
 
 public interface UserService {
 	public List<User> getAllUser();
+	public User getUserById(int selectedId);
 }

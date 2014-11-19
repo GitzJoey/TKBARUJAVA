@@ -7,4 +7,5 @@ import com.tkbaru.model.User;
 public interface UserDAO {
 	public User getUser(String userName);
 	public List<User> getAllUser();
+	public User getUserById(int selectedId);
 }

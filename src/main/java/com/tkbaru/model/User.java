@@ -2,15 +2,17 @@ package com.tkbaru.model;
 
 public class User {
 	public User() {
-		
+		this.roleFunctionEntity = new RoleFunction();
+		this.personEntity = new Person();
 	}
 	
 	private int userId;
 	private String userName;
 	private String userPassword;
-	private String picPath;
 
+	private int roleId;
 	private RoleFunction roleFunctionEntity;
+	private int personId;
 	private Person personEntity;
 	
 	public int getUserId() {
@@ -31,20 +33,26 @@ public class User {
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
 	}
-	public String getPicPath() {
-		return picPath;
+	public int getRoleId() {
+		return roleId;
 	}
-	public void setPicPath(String picPath) {
-		this.picPath = picPath;
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
 	}
-	
 	public RoleFunction getRoleFunctionEntity() {
 		return roleFunctionEntity;
 	}
 	public void setRoleFunctionEntity(RoleFunction roleFunctionEntity) {
 		this.roleFunctionEntity = roleFunctionEntity;
-	}	
+	}
+	public int getPersonId() {
+		return personId;
+	}
+	public void setPersonId(int personId) {
+		this.personId = personId;
+	}
 	public Person getPersonEntity() {
+		if (personEntity == null) return new Person();
 		return personEntity;
 	}
 	public void setPersonEntity(Person personEntity) {

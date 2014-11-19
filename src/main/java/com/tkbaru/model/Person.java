@@ -1,10 +1,11 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Person {
 	public Person() {
-		
+		this.phoneList = new ArrayList<PhoneList>();
 	}
 	
 	private int personId;
