@@ -62,4 +62,12 @@ public class UserController {
 		return Constants.JSPPAGE_USER;
 	}
 
+	@RequestMapping(value = "/admin/user/save.html", method = RequestMethod.POST)
+	public String userSave(Locale locale, Model model, @PathVariable Integer selectedId) {
+		
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_USER;
+	}	
 }

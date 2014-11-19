@@ -1,5 +1,9 @@
 package com.tkbaru.dao;
 
-public interface FunctionDAO {
+import java.util.List;
 
+import com.tkbaru.model.Function;
+
+public interface FunctionDAO {
+	public List<Function> getAllFunctions();
 }

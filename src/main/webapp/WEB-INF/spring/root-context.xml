@@ -38,7 +38,12 @@
       
     <!-- declare spring DAO -->
     <bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl"></bean>
-    <bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl"><property name="dataSource" ref="dataSource" /></bean>
+    <bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
+    <bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
     
     <!-- declare spring Service -->
     <bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></bean>

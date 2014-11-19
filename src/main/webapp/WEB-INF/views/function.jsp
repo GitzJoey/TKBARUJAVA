@@ -148,7 +148,7 @@
 								</div>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/function/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
-								<a id="deleteTableSelection" class="btn btn-sm btn-primary"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
+								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
 						</div>
 					</c:when>

@@ -11,6 +11,15 @@ body {
 	border-top: 0px;
 }
 
+.nopaddingrow > thead > tr > th, 
+.nopaddingrow > tbody > tr > th, 
+.nopaddingrow > tfoot > tr > th, 
+.nopaddingrow > thead > tr > td, 
+.nopaddingrow > tbody > tr > td, 
+.nopaddingrow > tfoot > tr > td {
+	padding: 0px;
+}
+
 .no-underline a:hover,
 .no-underline a:focus {
 	text-decoration: none;

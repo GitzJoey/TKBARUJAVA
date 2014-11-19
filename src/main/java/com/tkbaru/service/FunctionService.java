@@ -1,5 +1,9 @@
 package com.tkbaru.service;
 
-public interface FunctionService {
+import java.util.List;
 
+import com.tkbaru.model.Function;
+
+public interface FunctionService {
+	public List<Function> getAllFunctions();
 }
