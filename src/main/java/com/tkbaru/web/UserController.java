@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.User;
+import com.tkbaru.service.LookupService;
+import com.tkbaru.service.RoleService;
 import com.tkbaru.service.UserService;
 
 @Controller
@@ -23,6 +25,12 @@ public class UserController {
 	
 	@Autowired
 	UserService userManager;
+	
+	@Autowired
+	LookupService lookupManager;
+	
+	@Autowired
+	RoleService roleManager;
 	
 	@RequestMapping(value = "/admin/user.html", method = RequestMethod.GET)
 	public String userPageLoad(Locale locale, Model model) {
@@ -39,6 +47,8 @@ public class UserController {
 	public String userAdd(Locale locale, Model model) {
 		
 		model.addAttribute("userForm", new User());
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -50,7 +60,12 @@ public class UserController {
 		
 		User selectedUser = userManager.getUserById(selectedId);
 		
+		logger.info(selectedUser.getRoleId() + "-" + selectedUser.getRoleFunctionEntity().getRoleId());
+		
 		model.addAttribute("userForm", selectedUser);
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -69,7 +84,11 @@ public class UserController {
 	@RequestMapping(value = "/admin/user/save.html", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
 		
-		logger.info(usr.getUserName());
+		if (usr.getUserId() == 0) {
+			userManager.addNewUser(usr);			
+		} else {
+			userManager.editUser(usr);
+		}
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

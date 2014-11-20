@@ -182,7 +182,15 @@
 									<div class="form-group">
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
 										<div class="col-sm-3">
-											<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
+											<c:choose>
+												<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
+												</c:when>
+												<c:otherwise>
+													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" disabled="true"></form:input>
+												</c:otherwise>
+											</c:choose>
+											
 										</div>
 									</div>
 									<div class="form-group">
@@ -200,48 +208,47 @@
 									<div class="form-group">
 										<label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputLastName" placeholder="Last Name">
+											<form:input path="personEntity.lastName" type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputAddress1" class="col-sm-2 control-label">Address</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress1" placeholder="Address 1">
+											<form:input path="personEntity.addressLine1" type="text" class="form-control" id="inputAddress1" name="inputAddress1" placeholder="Address 1"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputAddress2" class="col-sm-2 control-label">&nbsp;</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress2" placeholder="Address 2">
+											<form:input path="personEntity.addressLine2" type="text" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="Address 2"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputAddress3" class="col-sm-2 control-label">&nbsp;</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" id="inputAddress3" placeholder="Address 3">
+											<form:input path="personEntity.addressLine3" type="text" class="form-control" id="inputAddress3" name="inputAddress3" placeholder="Address 3"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputEmailAddress" class="col-sm-2 control-label">Email Address</label>
 										<div class="col-sm-6">
-											<input type="text" class="form-control" id="inputEmailAddress" placeholder="Enter Email Address">
+											<form:input path="personEntity.emailAddr" type="text" class="form-control" id="inputEmailAddress" name="inputEmailAddress" placeholder="Enter Email Address"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputRole" class="col-sm-2 control-label">Role</label>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option>Admin</option>
-											</select>
+											<form:select class="form-control" path="roleFunctionEntity.roleId">
+												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
+											</form:select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option>Active</option>
-												<option>Inactive</option>
-											</select>
+											<form:select class="form-control" path="userStatus">
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -260,7 +267,7 @@
 											<table class="table borderless nopaddingrow">
 												<tr>
 													<td colspan="2">
-														<button id="addPhone" type="addPhone" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
+														<button id="addPhone" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
 													</td>
 												</tr>
 											</table>

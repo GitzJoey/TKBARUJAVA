@@ -1,5 +1,7 @@
 package com.tkbaru.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.tkbaru.dao.RoleDAO;
@@ -14,6 +16,12 @@ public class RoleServiceImpl implements RoleService {
 	public RoleFunction getRoleFunctionByUserId(int userId) {
 				
 		return roleDAO.getRoleFunctionById(userId);
+	}
+
+	@Override
+	public List<RoleFunction> getSummaryRoleList() {
+		
+		return roleDAO.getSummaryRoleList();
 	}
 
 }

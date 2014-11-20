@@ -1,8 +1,8 @@
 TRUNCATE TABLE tb_role;
-INSERT INTO tb_role (name, created_by, created_date) 
-VALUES ('ADMIN', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_role (name, status, created_by, created_date) 
+VALUES ('ADMIN', 'A', 0, (SELECT CURRENT_TIMESTAMP()));
 
-INSERT INTO tb_role (name, created_by, created_date) 
-VALUES ('NONADMIN', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_role (name, status, created_by, created_date) 
+VALUES ('NONADMIN', 'A', 0, (SELECT CURRENT_TIMESTAMP()));
 
 COMMIT;

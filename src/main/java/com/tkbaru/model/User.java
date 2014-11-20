@@ -9,7 +9,8 @@ public class User {
 	private int userId;
 	private String userName;
 	private String userPassword;
-
+	private String userStatus;
+	
 	private int roleId;
 	private RoleFunction roleFunctionEntity;
 	private int personId;
@@ -32,6 +33,12 @@ public class User {
 	}
 	public void setUserPassword(String userPassword) {
 		this.userPassword = userPassword;
+	}
+	public String getUserStatus() {
+		return userStatus;
+	}
+	public void setUserStatus(String userStatus) {
+		this.userStatus = userStatus;
 	}
 	public int getRoleId() {
 		return roleId;

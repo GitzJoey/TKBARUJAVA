@@ -101,4 +101,16 @@ public class UserDAOImpl implements UserDAO {
 				
 		return result;
 	}
+
+	@Override
+	public void addUser(User usr) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editUser(User usr) {
+		// TODO Auto-generated method stub
+		
+	}
 }

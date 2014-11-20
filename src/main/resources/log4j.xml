@@ -14,6 +14,18 @@
 	<logger name="com.tkbaru.web">
 		<level value="info" />
 	</logger>
+
+	<logger name="com.tkbaru.service">
+		<level value="info" />
+	</logger>
+
+	<logger name="com.tkbaru.dao">
+		<level value="info" />
+	</logger>
+
+	<logger name="com.tkbaru.common">
+		<level value="info" />
+	</logger>
 	
 	<!-- 3rdparty Loggers -->
 	<logger name="org.springframework.core">

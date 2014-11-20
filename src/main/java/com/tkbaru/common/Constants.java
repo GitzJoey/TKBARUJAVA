@@ -19,4 +19,7 @@ public class Constants {
 	public static final String JSPPAGE_DASHBOARD = "dashboard";
 	public static final String JSPPAGE_PRODUCT = "product";
 	public static final String JSPPAGE_SUPPLIER = "supplier";
+	
+	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
+	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
 }

@@ -15,12 +15,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LoginService;
 import com.tkbaru.service.UserService;
 
 @Controller
-@SessionAttributes("userContext")
+@SessionAttributes("loginContext")
 public class LoginController {
 
 	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
@@ -59,7 +60,10 @@ public class LoginController {
 		} else {
 			User userdata = loginManager.createUserContext(userName);
 			
-			model.addAttribute("userContext", userdata);			
+			LoginContext lc = new LoginContext();
+			lc.setUserLogin(userdata);
+			
+			model.addAttribute("loginContext", lc);			
 			return "redirect:/dashboard.html";
 		}
 	}

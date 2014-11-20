@@ -43,8 +43,6 @@ public class PersonDAOImpl implements PersonDAO {
 			public Person mapRow(ResultSet rs, int rowNum) throws SQLException {
 				Person pers = new Person();
 				
-				if (!rs.next()) return pers; 
-				
 				pers.setPersonId(rs.getInt("person_id"));
 				pers.setFirstName(rs.getString("first_name"));
 				pers.setLastName(rs.getString("last_name"));
@@ -86,6 +84,18 @@ public class PersonDAOImpl implements PersonDAO {
 		}
 
 		return result;
+	}
+
+	@Override
+	public void addPerson(Person person) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editPerson(Person person) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

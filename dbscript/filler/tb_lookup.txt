@@ -7,7 +7,7 @@ VALUES ('STATUS', 'A',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('STATUS', 'I',
-		'', '', '',
+		'INACT', 'Inactive', 'Inactive',
         2, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Salutation - L002*/

@@ -9,9 +9,7 @@ import javax.sql.DataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.tkbaru.model.Function;
-import com.tkbaru.model.Person;
 import com.tkbaru.model.RoleFunction;
-import com.tkbaru.model.User;
 
 public class RoleDAOImpl implements RoleDAO {
 
@@ -68,6 +66,30 @@ public class RoleDAOImpl implements RoleDAO {
 		}
 		
 		result.setFunctionList(funcList);
+		
+		return result;
+	}
+
+	@Override
+	public List<RoleFunction> getSummaryRoleList() {
+		List<RoleFunction> result = new ArrayList<RoleFunction>();
+		String sqlquery = 
+			"SELECT	role.role_id,                                                        " +
+			"		role.name                                                            " +
+			"FROM tb_role role                                                           " +
+			"WHERE role.status = 'A'                                                     " ;
+		
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+	
+		for (int x = 0; x < rows.size(); x++) {
+			RoleFunction rf = new RoleFunction();
+			
+			rf.setRoleId(Integer.valueOf(String.valueOf(rows.get(x).get("role_id"))));
+			rf.setRoleName(String.valueOf(rows.get(x).get("name")));
+			
+			result.add(rf);
+		}
 		
 		return result;
 	}

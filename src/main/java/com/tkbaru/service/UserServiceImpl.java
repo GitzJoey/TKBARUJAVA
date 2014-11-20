@@ -38,4 +38,16 @@ public class UserServiceImpl implements UserService {
 		return result;
 	}
 
+	@Override
+	public void addNewUser(User usr) {
+		userDAO.addUser(usr);
+		personDAO.addPerson(usr.getPersonEntity());			
+	}
+
+	@Override
+	public void editUser(User usr) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
