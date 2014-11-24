@@ -22,4 +22,16 @@ public class LookupServiceImpl implements LookupService {
 		return result;
 	}
 
+	@Override
+	public List<Lookup> getAllLookup() {
+
+		return lookupDAO.getAllLookup();
+	}
+
+	@Override
+	public Lookup getLookupById(int selectedId) {
+		
+		return lookupDAO.getLookupById(selectedId);
+	}
+
 }

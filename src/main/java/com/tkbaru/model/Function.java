@@ -98,5 +98,12 @@ public class Function {
 	public void setAllowedAction(List<Action> allowedAction) {
 		this.allowedAction = allowedAction;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Function [functionId=" + functionId + ", functionCode=" + functionCode + ", module=" + module
+				+ ", moduleIcon=" + moduleIcon + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", urlLink="
+				+ urlLink + ", orderNum=" + orderNum + ", deepLevel=" + deepLevel + ", allowedAction=" + allowedAction
+				+ "]";
+	}
 }

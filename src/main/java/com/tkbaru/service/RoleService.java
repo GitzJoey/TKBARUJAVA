@@ -6,5 +6,8 @@ import com.tkbaru.model.RoleFunction;
 
 public interface RoleService {
 	public RoleFunction getRoleFunctionByUserId(int userId);
+	public RoleFunction getRoleFunctionById(int roleId);
 	public List<RoleFunction> getSummaryRoleList();
+	public void addNewRoleFunction(RoleFunction role);
+	public void editRoleFunction(RoleFunction role);
 }

@@ -50,6 +50,9 @@
     <bean id="LookupDAO" class="com.tkbaru.dao.LookupDAOImpl">
     	<property name="dataSource" ref="dataSource" />
     </bean>
+    <bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
+    	<property name="dataSource" ref="dataSource" />
+    </bean>
     
     <!-- declare spring Service -->
     <bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></bean>
@@ -57,4 +60,5 @@
     <bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></bean>
     <bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></bean>
     <bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></bean>
+    <bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></bean>
 </beans>

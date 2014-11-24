@@ -35,4 +35,10 @@ public class LoginServiceImpl implements LoginService {
 		return userdata;
 	}
 
+	@Override
+	public boolean checkDB() {
+		
+		return true;
+	}
+
 }

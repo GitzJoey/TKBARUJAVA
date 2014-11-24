@@ -167,43 +167,43 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form id="functionForm" role="form" class="form-horizontal">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm">
 									<div class="form-group">
 										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" placeholder="Enter Function Code">
+											<form:input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" path="functionCode" placeholder="Enter Function Code"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputModule" class="col-sm-2 control-label">Module</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" placeholder="Module Name Icon">
-											<input type="text" class="form-control" id="inputModule" name="inputModule" placeholder="Module Name">
+											<form:input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" path="moduleIcon" placeholder="Module Name Icon"></form:input>
+											<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputMenuName" class="col-sm-2 control-label">Menu Name</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputMenuIcon" name="inputMenuIcon" placeholder="Menu Name Icon">
-											<input type="text" class="form-control" id="inputMenuName" placeholder="Menu Name">
+											<form:input type="text" class="form-control" id="inputMenuIcon" name="inputMenuIcon" path="menuIcon" placeholder="Menu Name Icon"></form:input>
+											<form:input type="text" class="form-control" id="inputMenuName" name="inputMenuName" path="menuName" placeholder="Menu Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputUrlLink" class="col-sm-2 control-label">URL</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputUrlLink" placeholder="URL">
+											<form:input type="text" class="form-control" id="inputUrlLink" name="inputUrlLink" path="urlLink" placeholder="URL"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
 										<div class="col-sm-2">
-											<input type="text" class="form-control" id="inputOrderNum" placeholder="Order">
+											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputDeepLevel" class="col-sm-2 control-label">Deep Level</label>
 										<div class="col-sm-2">
-											<input type="text" class="form-control" id="inputDeepLevel" placeholder="Deep Level">
+											<form:input type="text" class="form-control" id="inputDeepLevel" name="inputDeepLevel" path="deepLevel" placeholder="Deep Level"></form:input>
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">
@@ -212,7 +212,7 @@
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 										</div>
 									</div>
-								</form>
+								</form:form>
 							</div>
 						</div>					
 					</c:when>

@@ -15,13 +15,31 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public RoleFunction getRoleFunctionByUserId(int userId) {
 				
-		return roleDAO.getRoleFunctionById(userId);
+		return roleDAO.getRoleFunctionByUserId(userId);
 	}
 
 	@Override
 	public List<RoleFunction> getSummaryRoleList() {
 		
 		return roleDAO.getSummaryRoleList();
+	}
+
+	@Override
+	public RoleFunction getRoleFunctionById(int roleId) {
+		
+		return roleDAO.getRoleFunctionById(roleId);
+	}
+
+	@Override
+	public void addNewRoleFunction(RoleFunction role) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void editRoleFunction(RoleFunction role) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

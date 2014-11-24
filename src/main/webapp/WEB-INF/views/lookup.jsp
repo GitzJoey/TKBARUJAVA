@@ -169,50 +169,49 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form id="functionForm" role="form" class="form-horizontal">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="lookupForm">
 									<div class="form-group">
 										<label for="inputCategory" class="col-sm-2 control-label">Category</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputCategory" name="inputCategory" placeholder="Enter Category">
+											<form:input type="text" class="form-control" id="inputCategory" name="inputCategory" path="lookupCategory" placeholder="Enter Category"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputLookupCode" class="col-sm-2 control-label">Lookup Code</label>
 										<div class="col-sm-3">
-											<input type="text" class="form-control" id="inputLookupCode" name="inputLookupCode" placeholder="Enter Lookup Code">
+											<form:input type="text" class="form-control" id="inputLookupCode" name="inputLookupCode" path="lookupCode" placeholder="Enter Lookup Code"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputShortVal" class="col-sm-2 control-label">Short Val</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputShortVal" name="inputShortVal" placeholder="Enter Short Val">
+											<form:input type="text" class="form-control" id="inputShortVal" name="inputShortVal" path="shortVal" placeholder="Enter Short Val"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputLongVal" class="col-sm-2 control-label">Long Val</label>
 										<div class="col-sm-5">
-											<input type="text" class="form-control" id="inputLongVal" placeholder="Enter Long Val">
+											<form:input type="text" class="form-control" id="inputLongVal" name="inputLongVal" path="longVal" placeholder="Enter Long Val"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputDescription" class="col-sm-2 control-label">Description</label>
 										<div class="col-sm-2">
-											<input type="text" class="form-control" id="inputDescription" placeholder="Enter Description">
+											<form:input type="text" class="form-control" id="inputDescription" name="inputDescription" path="lookupDescription" placeholder="Enter Description"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
 										<div class="col-sm-2">
-											<input type="text" class="form-control" id="inputOrderNum" placeholder="Order">
+											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
-											<select class="form-control">
-												<option>Active</option>
-												<option>Inactive</option>
-											</select>
+											<form:select class="form-control" path="lookupStatus">
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"></form:options>
+											</form:select>
 										</div>
 									</div>									
 									<div class="col-md-3 offset-md-9">
@@ -221,7 +220,7 @@
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 										</div>
 									</div>
-								</form>
+								</form:form>
 							</div>
 						</div>					
 					</c:when>

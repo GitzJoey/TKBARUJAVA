@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
+
 public class User {
 	public User() {
 		this.roleFunctionEntity = new RoleFunction();
@@ -64,5 +66,11 @@ public class User {
 	}
 	public void setPersonEntity(Person personEntity) {
 		this.personEntity = personEntity;
+	}
+	@Override
+	public String toString() {
+		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userStatus="
+				+ userStatus + ", roleId=" + roleId + ", roleFunctionEntity=" + roleFunctionEntity + ", personId="
+				+ personId + ", personEntity=" + personEntity + "]";
 	}
 }

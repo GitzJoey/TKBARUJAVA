@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.Function;
 import com.tkbaru.model.User;
 import com.tkbaru.service.FunctionService;
 
@@ -26,6 +27,9 @@ public class FunctionController {
 	@RequestMapping(value = "/admin/function.html", method = RequestMethod.GET)
 	public String functionPageLoad(Locale locale, Model model) {		
 
+		List<Function> fList = functionManager.getAllFunctions();
+		
+		model.addAttribute("functionList", fList);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -35,6 +39,7 @@ public class FunctionController {
 	@RequestMapping(value = "/admin/function/add.html", method = RequestMethod.GET)
 	public String functionAdd(Locale locale, Model model) {
 		
+		model.addAttribute("fForm", new Function());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -44,6 +49,9 @@ public class FunctionController {
 	@RequestMapping(value = "/admin/function/edit/{selectedId}.html", method = RequestMethod.GET)
 	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
+		Function f = functionManager.getFunctionById(selectedId);
+		
+		model.addAttribute("fForm", f);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

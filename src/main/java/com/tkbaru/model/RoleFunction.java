@@ -35,4 +35,8 @@ public class RoleFunction {
 	public void setFunctionList(List<Function> functionList) {
 		this.functionList = functionList;
 	}
+	@Override
+	public String toString() {
+		return "RoleFunction [roleId=" + roleId + ", roleName=" + roleName + ", functionList=" + functionList + "]";
+	}
 }

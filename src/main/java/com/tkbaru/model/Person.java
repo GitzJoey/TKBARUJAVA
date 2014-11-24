@@ -3,6 +3,9 @@ package com.tkbaru.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
+
 public class Person {
 	public Person() {
 		this.phoneList = new ArrayList<PhoneList>();
@@ -17,7 +20,7 @@ public class Person {
 	private String emailAddr;
 	private String photoPath;
 	
-	private List<PhoneList> phoneList;
+	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(Person.class));
 
 	public int getPersonId() {
 		return personId;

@@ -41,5 +41,9 @@ public class PhoneList {
 	public void setPhoneNumRemarks(String phoneNumRemarks) {
 		this.phoneNumRemarks = phoneNumRemarks;
 	}
-	
+	@Override
+	public String toString() {
+		return "PhoneList [phoneListId=" + phoneListId + ", providerName=" + providerName + ", phoneNumber="
+				+ phoneNumber + ", phoneStatus=" + phoneStatus + ", phoneNumRemarks=" + phoneNumRemarks + "]";
+	}
 }

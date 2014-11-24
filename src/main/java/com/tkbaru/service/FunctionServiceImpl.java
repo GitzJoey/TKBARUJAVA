@@ -18,4 +18,10 @@ public class FunctionServiceImpl implements FunctionService {
 		return functionDAO.getAllFunctions();
 	}
 
+	@Override
+	public Function getFunctionById(int selectedId) {
+		
+		return functionDAO.getFunctionById(selectedId);
+	}
+
 }

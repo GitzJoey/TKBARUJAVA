@@ -8,7 +8,7 @@
 	<script>
 		$(document).ready(function() {
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/user.html");
+				window.location.href("${ pageContext.request.contextPath }/customer/list.html");
 			});
 			
 			$('#addPhone').click(function() {
@@ -41,7 +41,7 @@
 					jsAlert("Please select at least 1 username");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/user/edit/" + id + ".html");	
+					$('#editTableSelection').attr("href", ctxpath + "/customer/edit/" + id + ".html");	
 				}				
 			});
 			
@@ -57,7 +57,7 @@
 					jsAlert("Please select at least 1 username");
 					return false;	
 				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/user/delete/" + id + ".html");	
+					$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id + ".html");	
 				}								
 			});
 			
@@ -74,14 +74,7 @@
                    			notEmpty: { },
 							stringLength: { min: 4, max: 10 },
 							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'inputUserName' }
-               			}
-           			},
-           			inputPassword: {
-               			validators: {
-                   			notEmpty: {	},
-                   			different: { field: 'inputUserName' },
-                   			stringLength: { min: 6 }
+	                   		different: { field: 'inputCustomerName' }
                			}
            			}
        			}
@@ -113,7 +106,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-user fa-fw"></span>&nbsp;User 
+					<span class="fa fa-smile-o fa-fw"></span>&nbsp;Customer 
 				</h1>
 
 				<c:choose>
@@ -121,7 +114,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-user fa-fw fa-2x"></span>User List
+									<span class="fa fa-smile-o fa-fw fa-2x"></span>Customer List
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -130,19 +123,19 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="15%">User Name</th>
-												<th width="25%">Name</th>
-												<th width="35%">Address</th>
+												<th width="15%">Store Name</th>
+												<th width="25%">Address</th>
+												<th width="35%"></th>
 												<th width="15%">Phone</th>
 												<th width="5%">Status</th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:if test="${not empty userList}">
-												<c:forEach var="i" varStatus="status" items="${userList}">
+												<c:forEach var="i" varStatus="status" items="${customerList}">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
-														<td><c:out value="${i.userName}"></c:out></td>
+														<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
+														<td><c:out value="${i.customerName}"></c:out></td>
 														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
 														<td>
 															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
