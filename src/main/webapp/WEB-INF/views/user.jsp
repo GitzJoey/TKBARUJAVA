@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,8 +15,11 @@
 			});
 			
 			$('#addPhone').click(function() {
-				$('#phoneTable').append('<tr><td width="25%"><form:input type="text" class="form-control" id="inputProvider" name="inputProvider" path="phone.providerName" placeholder="Provider"></form:input></td>' +
-										'<td><form:input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" path="phone.phoneNumber" placeholder="Phone Number"></form:input></td></tr>');
+				var ctxpath = "${ pageContext.request.contextPath }";
+				
+				$.get(ctxpath + "/fragment/addphone.html", {count: 1}).done(function(data) {
+					$('#phoneTable > tbody').append(data);
+				});
 				return false;
 			});
 			
@@ -255,16 +261,22 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Phone List</label>
 										<div class="col-sm-9">
 											<table id="phoneTable" class="table borderless nopaddingrow">
-												<c:forEach items="${ personEntity.phoneList }" var="phone" varStatus="ph">
-													<tr>
-														<td width="25%">
-															<form:input type="text" class="form-control" id="inputProvider" path="phone.providerName" placeholder="Provider"></form:input>
-														</td>
-														<td>
-															<form:input type="text" class="form-control" id="inputPhoneNum" path="phone.phoneNumber" placeholder="Phone Number"></form:input>
-														</td>
-													</tr>												
-												</c:forEach>
+												<tbody>
+													<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">
+														<tr>
+															<td width="25%">
+																<spring:bind path="userForm.personEntity.phoneList[${phoneIdx.index}].providerName">
+																	<form:input type="text" class="form-control" id="inputProvider" name="inputProvider" path="${ status.expression }" placeholder="Provider"></form:input>
+																</spring:bind>
+															</td>
+															<td>
+																<spring:bind path="userForm.personEntity.phoneList[${phoneIdx.index}].phoneNumber">
+																	<form:input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" path="${ status.expression }" placeholder="Phone Number"></form:input>
+																</spring:bind>
+															</td>
+														</tr>													
+													</c:forEach>
+												</tbody>
 											</table>
 											<table class="table borderless nopaddingrow">
 												<tr>

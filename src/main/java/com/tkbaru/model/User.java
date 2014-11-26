@@ -1,7 +1,5 @@
 package com.tkbaru.model;
 
-import java.util.ArrayList;
-
 public class User {
 	public User() {
 		this.roleFunctionEntity = new RoleFunction();

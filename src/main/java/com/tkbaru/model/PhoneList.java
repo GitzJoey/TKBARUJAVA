@@ -7,7 +7,7 @@ public class PhoneList {
 
 	private int phoneListId;
 	private String providerName;
-	private int phoneNumber;
+	private String phoneNumber;
 	private String phoneStatus;
 	private String phoneNumRemarks;
 	
@@ -23,10 +23,10 @@ public class PhoneList {
 	public void setProviderName(String providerName) {
 		this.providerName = providerName;
 	}
-	public int getPhoneNumber() {
+	public String getPhoneNumber() {
 		return phoneNumber;
 	}
-	public void setPhoneNumber(int phoneNumber) {
+	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
 	}
 	public String getPhoneStatus() {

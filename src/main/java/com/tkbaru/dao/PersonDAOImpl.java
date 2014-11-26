@@ -76,9 +76,9 @@ public class PersonDAOImpl implements PersonDAO {
 		for (Map<String, Object> row : rows) {
 			PhoneList res = new PhoneList();
 			
-			res.setPhoneListId(Integer.valueOf(String.valueOf(row.get("phone_id"))));
+			res.setPhoneListId(Integer.valueOf(String.valueOf(row.get("phonelist_id"))));
 			res.setProviderName(String.valueOf(row.get("provider")));
-			res.setPhoneNumber(Integer.valueOf(String.valueOf(row.get("number"))));
+			res.setPhoneNumber(String.valueOf(row.get("number")));
 			
 			result.add(res);
 		}
