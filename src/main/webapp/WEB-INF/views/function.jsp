@@ -7,6 +7,10 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			$('#inputMenuIcon, #inputModuleIcon').change(function() {
+				$("#" + $(this).attr('id') + "Sample").attr('class', $(this).val());
+			});
+			
 			$('#cancelButton').click(function() {				
 				window.location.href("${ pageContext.request.contextPath }/admin/function.html");
 			});
@@ -167,7 +171,8 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm" modelAttribute="fForm" action="${pageContext.request.contextPath}/admin/function/save.html">
+									<form:hidden path="functionId"/>
 									<div class="form-group">
 										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
 										<div class="col-sm-3">
@@ -177,15 +182,55 @@
 									<div class="form-group">
 										<label for="inputModule" class="col-sm-2 control-label">Module</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" path="moduleIcon" placeholder="Module Name Icon"></form:input>
-											<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name"></form:input>
+											<table class="table borderless nopaddingrow no-margin">
+												<tr>
+													<td>
+														<form:input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" path="moduleIcon" placeholder="Module Name Icon"></form:input>
+													</td>
+													<td>
+														<c:choose>
+															<c:when test="${ not empty fForm.moduleIcon }">
+																<span id="inputModuleIconSample" class="${ fForm.moduleIcon }"></span>
+															</c:when>
+															<c:otherwise>
+																<span id="inputModuleIconSample" class=""></span>
+															</c:otherwise>
+														</c:choose>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name"></form:input>
+													</td>
+												</tr>
+											</table>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputMenuName" class="col-sm-2 control-label">Menu Name</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputMenuIcon" name="inputMenuIcon" path="menuIcon" placeholder="Menu Name Icon"></form:input>
-											<form:input type="text" class="form-control" id="inputMenuName" name="inputMenuName" path="menuName" placeholder="Menu Name"></form:input>
+											<table class="table borderless nopaddingrow no-margin">
+												<tr>
+													<td>
+														<form:input type="text" class="form-control" id="inputMenuIcon" name="inputMenuIcon" path="menuIcon" placeholder="Menu Name Icon"></form:input>
+													</td>
+													<td>
+														<c:choose>
+															<c:when test="${ not empty fForm.menuIcon }">
+																<span id="inputMenuIconSample" class="${ fForm.menuIcon }"></span>
+															</c:when>
+															<c:otherwise>
+																<span id="inputMenuIconSample" class=""></span>
+															</c:otherwise>
+														</c:choose>
+													</td>
+												</tr>
+												<tr>
+													<td colspan="2">
+														<form:input type="text" class="form-control" id="inputMenuName" name="inputMenuName" path="menuName" placeholder="Menu Name"></form:input>
+													</td>
+												</tr>
+											</table>
 										</div>
 									</div>
 									<div class="form-group">

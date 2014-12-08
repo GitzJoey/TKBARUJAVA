@@ -36,15 +36,17 @@ VALUES ('SALUTATION', 'L003_CI',
 		'C', 'Ci', 'Ci',
         15, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*YesNoSelection - L003*/
+INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('YESNOSELECTION', 'L003_YES',
+		'Y', 'Yes', 'Yes',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('YESNOSELECTION', 'L004_NO',
+		'N', 'No', 'No',
+        2, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
 		'', '', '',

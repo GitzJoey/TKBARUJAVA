@@ -3,23 +3,49 @@ package com.tkbaru.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.Table;
+
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 
+@Entity
+@Table(name="tb_person")
 public class Person {
 	public Person() {
 		this.phoneList = new ArrayList<PhoneList>();
 	}
 	
+	@Id
+	@Column(name="person_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int personId;
+	@Column(name="first_name")
 	private String firstName;
+	@Column(name="last_name")
 	private String lastName;
+	@Column(name="addr_1")
 	private String addressLine1;
+	@Column(name="addr_2")
 	private String addressLine2;
+	@Column(name="addr_3")
 	private String addressLine3;
+	@Column(name="email")
 	private String emailAddr;
+	@Column(name="photo_path")
 	private String photoPath;
 	
+	@OneToMany(mappedBy="personEnt")
 	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(Person.class));
 
 	public int getPersonId() {
@@ -92,6 +118,14 @@ public class Person {
 
 	public void setPhoneList(List<PhoneList> phoneList) {
 		this.phoneList = phoneList;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName
+				+ ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3="
+				+ addressLine3 + ", emailAddr=" + emailAddr + ", photoPath=" + photoPath + ", phoneList=" + phoneList
+				+ "]";
 	}
 	
 }

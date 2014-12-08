@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" 
 	xmlns:tx="http://www.springframework.org/schema/tx" 
-	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc
+						http://www.springframework.org/schema/mvc/spring-mvc.xsd
+						http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						http://www.springframework.org/schema/context
 						http://www.springframework.org/schema/context/spring-context.xsd
@@ -22,43 +25,93 @@
     <context:annotation-config></context:annotation-config>
     
     <!-- properties file holds database connection parameters -->
-    <bean 	id="propertyConfigurer" 
-    		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" 
-    		p:location="/WEB-INF/spring/jdbc.properties">
-	</bean>
+    <beans:bean 
+    	id="propertyConfigurer" 
+    	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" 
+    	p:location="/WEB-INF/spring/jdbc.properties">
+	</beans:bean>
     
 	<!-- configure datasource -->
-	<bean 	id="dataSource"  
-  			class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-  		<property name="driverClassName" value="${jdbc.driverClassName}" />  
-		<property name="url" value="${jdbc.url}" />  
-  		<property name="username" value="${jdbc.username}" />  
-		<property name="password" value="${jdbc.password}" />  
- 	</bean>  
-      
+	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+  		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />  
+		<beans:property name="url" value="${jdbc.url}" />  
+  		<beans:property name="username" value="${jdbc.username}" />  
+		<beans:property name="password" value="${jdbc.password}" />  
+ 	</beans:bean>  
+
+    <beans:bean id="dbcpDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <beans:property name="driverClassName" value="${jdbc.driverClassName}" />
+        <beans:property name="url" value="${jdbc.url}" />
+        <beans:property name="username" value="${jdbc.username}" />
+        <beans:property name="password" value="${jdbc.password}" />
+    </beans:bean>
+
+    <!-- Hibernate 4 SessionFactory Bean definition -->
+    <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<beans:property name="dataSource" ref="dbcpDataSource" />
+        <beans:property name="annotatedClasses">
+            <beans:list>
+                <beans:value>com.tkbaru.model.Supplier</beans:value>
+                <beans:value>com.tkbaru.model.Person</beans:value>
+                <beans:value>com.tkbaru.model.BankAccount</beans:value>
+                <beans:value>com.tkbaru.model.PhoneList</beans:value>
+                <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
+                <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
+            </beans:list>
+        </beans:property>
+        <beans:property name="hibernateProperties">
+            <beans:props>
+                <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
+                <beans:prop key="hibernate.show_sql">true</beans:prop>
+            </beans:props>
+        </beans:property>
+        <beans:property name="packagesToScan">
+        	<beans:list>
+        		<beans:value>com.tkbaru.model.Supplier</beans:value>
+        		<beans:value>com.tkbaru.model.Person</beans:value>
+        		<beans:value>com.tkbaru.model.BankAccount</beans:value>
+        		<beans:value>com.tkbaru.model.PhoneList</beans:value>
+                <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
+                <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
+        	</beans:list>
+        </beans:property>
+    </beans:bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+    
+    <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+                  
     <!-- declare spring DAO -->
-    <bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl"></bean>
-	<bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
-		<property name="dataSource" ref="dataSource" />
-	</bean>
-    <bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
-    	<property name="dataSource" ref="dataSource" />
-    </bean>
-    <bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
-    	<property name="dataSource" ref="dataSource" />
-    </bean>
-    <bean id="LookupDAO" class="com.tkbaru.dao.LookupDAOImpl">
-    	<property name="dataSource" ref="dataSource" />
-    </bean>
-    <bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
-    	<property name="dataSource" ref="dataSource" />
-    </bean>
+    <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
+    <beans:bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>
+    <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>
+    <beans:bean id="LookupDAO" class="com.tkbaru.dao.LookupDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>
+    <beans:bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
-    <bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></bean>
-    <bean id="userService" class="com.tkbaru.service.UserServiceImpl"></bean>
-    <bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></bean>
-    <bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></bean>
-    <bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></bean>
-    <bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></bean>
-</beans>
+    <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></beans:bean>
+    <beans:bean id="userService" class="com.tkbaru.service.UserServiceImpl"></beans:bean>
+    <beans:bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></beans:bean>
+    <beans:bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></beans:bean>
+    <beans:bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></beans:bean>
+    <beans:bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></beans:bean>
+</beans:beans>

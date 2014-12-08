@@ -2,13 +2,17 @@ package com.tkbaru.service;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.tkbaru.dao.PersonDAO;
 import com.tkbaru.dao.RoleDAO;
 import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
 
+@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
@@ -28,6 +32,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public User getUserById(int selectedId) {
 		User result = userDAO.getUserById(selectedId);
 		
@@ -39,12 +44,14 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void addNewUser(User usr) {
 		userDAO.addUser(usr);
 		personDAO.addPerson(usr.getPersonEntity());			
 	}
 
 	@Override
+	@Transactional
 	public void editUser(User usr) {
 		// TODO Auto-generated method stub
 		

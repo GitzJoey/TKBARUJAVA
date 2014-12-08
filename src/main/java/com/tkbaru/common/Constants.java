@@ -22,4 +22,5 @@ public class Constants {
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
+	public static final String LOOKUPCATEGORY_YESNOSELECTION = "YESNOSELECTION";
 }

@@ -11,9 +11,9 @@ VALUES ('F_CUSTOMER_SEARCHCUSTOMER', 'Customer', 'fa fa-smile-o fa-fw', 'Search 
 
 /*Supplier*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SUPPLIER_ADDSUPPLIER', 'Supplier', 'fa fa-building-o fa-fw', 'Add Supplier', 'fa fa-plus fa-fw', '/customer/add.html', 200100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_SUPPLIER_ADDSUPPLIER', 'Supplier', 'fa fa-building-o fa-fw', 'Add Supplier', 'fa fa-plus fa-fw', '/supplier/add.html', 200100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SUPPLIER_EDITCUSTOMER', 'Supplier', 'fa fa-building-o fa-fw', 'Edit Supplier', 'fa fa-plus fa-fw', '/customer/edit.html', 200200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_SUPPLIER_EDITCUSTOMER', 'Supplier', 'fa fa-building-o fa-fw', 'Edit Supplier', 'fa fa-plus fa-fw', '/supplier/list.html', 200200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_SUPPLIER_SEARCHCUSTOMER', 'Supplier', 'fa fa-building-o fa-fw', 'Search Supplier', 'fa fa-plus fa-fw', '/customer/search.html', 200300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
@@ -53,8 +53,8 @@ VALUES ('F_SO_SALESORDER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 2','fa 
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User','fa fa-user fa-fw', '/admin/user.html', 800100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role','fa fa-plus fa-fw', '/admin/role.html', 800200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role','fa fa-tree fa-fw', '/admin/role.html', 800200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function','fa fa-plus fa-fw', '/admin/function.html', 800300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function','fa fa-minus-square fa-fw', '/admin/function.html', 800300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup','fa fa-plus fa-fw', '/admin/lookup.html', 800400, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup','fa fa-hand-o-up fa-fw', '/admin/lookup.html', 800400, 2, 0, (SELECT CURRENT_TIMESTAMP()));

@@ -32,3 +32,7 @@ body {
 #loginForm .form-control-feedback {
 	top: 0px;
 }
+
+.no-margin {
+	margin: 0px;
+}

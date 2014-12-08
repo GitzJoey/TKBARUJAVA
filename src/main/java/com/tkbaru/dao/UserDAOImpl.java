@@ -8,18 +8,40 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.apache.commons.dbcp.BasicDataSource;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Person;
 import com.tkbaru.model.User;
 
+@Repository
 public class UserDAOImpl implements UserDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 	
 	@Autowired
 	DataSource dataSource;
+	public void setDataSource(DataSource dataSource) {
+		this.dataSource = dataSource;
+	}
 	
+    private SessionFactory sessionFactory;
+    public void setSessionFactory(SessionFactory sf){
+        this.sessionFactory = sf;
+    }
+
+    private BasicDataSource dbcpDataSource;
+    public void setDbcpDataSource(BasicDataSource dbcpDataSource) {
+    	this.dbcpDataSource = dbcpDataSource;
+    }
+
 	public User getUser(String userName) {
 		User result = null;
 		String sqlquery = "SELECT * FROM tb_user WHERE UCASE(user_name) = UCASE('" + userName + "')";
@@ -104,8 +126,9 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void addUser(User usr) {
-		// TODO Auto-generated method stub
-		
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(usr);
+        logger.info("User added successfully, User Details = " + usr.toString());		
 	}
 
 	@Override

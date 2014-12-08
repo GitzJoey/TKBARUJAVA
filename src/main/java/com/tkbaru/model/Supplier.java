@@ -1,23 +1,49 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
+
+@Entity
+@Table(name="tb_supplier")
 public class Supplier {
 	public Supplier() {
 		
 	}
 	
+	@Id
+	@Column(name="supplier_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int supplierId;
+	@Column(name="company_name")
 	private String companyName;
+	@Column(name="address")
 	private String companyAddress;
+	@Column(name="city")
 	private String companyCity;
+	@Column(name="remarks")
 	private String supplierRemarks;
+	@Column(name="phone")
 	private String compPhone;
+	@Column(name="fax")
 	private String compFax;
+	@Column(name="status")
 	private String companyStatus;
 	
-	private List<Person> picList;
-	private List<BankAccount> bankAccList;
+	@OneToMany(mappedBy="supplierEnt")
+	private List<SupplierPIC> picList = LazyList.decorate(new ArrayList<SupplierPIC>(), FactoryUtils.instantiateFactory(SupplierPIC.class));
+	@OneToMany(mappedBy="supplierEnt")
+	private List<SupplierBankAccount> bankAccList = LazyList.decorate(new ArrayList<SupplierBankAccount>(), FactoryUtils.instantiateFactory(SupplierBankAccount.class));
 	
 	public int getSupplierId() {
 		return supplierId;
@@ -67,16 +93,16 @@ public class Supplier {
 	public void setCompanyStatus(String companyStatus) {
 		this.companyStatus = companyStatus;
 	}
-	public List<Person> getPicList() {
+	public List<SupplierPIC> getPicList() {
 		return picList;
 	}
-	public void setPicList(List<Person> picList) {
+	public void setPicList(List<SupplierPIC> picList) {
 		this.picList = picList;
 	}
-	public List<BankAccount> getBankAccList() {
+	public List<SupplierBankAccount> getBankAccList() {
 		return bankAccList;
 	}
-	public void setBankAccList(List<BankAccount> bankAccList) {
+	public void setBankAccList(List<SupplierBankAccount> bankAccList) {
 		this.bankAccList = bankAccList;
 	}
 	

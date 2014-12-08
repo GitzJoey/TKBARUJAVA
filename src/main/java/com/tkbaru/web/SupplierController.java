@@ -27,6 +27,16 @@ public class SupplierController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@RequestMapping(value = "/supplier/list.html", method = RequestMethod.GET)
+	public String listSupplier(Locale locale, Model model) {
+
+		model.addAttribute("supplierList", supplierManager.getAllSupplier());
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SUPPLIER;
+	}
+	
 	@RequestMapping(value = "/supplier/add.html", method = RequestMethod.GET)
 	public String addSupplier(Locale locale, Model model) {
 
@@ -42,7 +52,7 @@ public class SupplierController {
 	public String editSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
 		Supplier selectedSupplier = supplierManager.getSupplierById(selectedId);
-			
+		
 		model.addAttribute("supplierForm", selectedSupplier);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
@@ -54,11 +64,13 @@ public class SupplierController {
 
 	@RequestMapping(value = "/supplier/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
+
+		supplierManager.deleteSupplier(selectedId);
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_SUPPLIER;
+		return "redirect:/supplier/list.html";
 	}
 
 	@RequestMapping(value = "/supplier/save.html", method = RequestMethod.POST)
@@ -72,6 +84,6 @@ public class SupplierController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_SUPPLIER;
+		return "redirect:/supplier/list.html";
 	}	
 }

@@ -1,0 +1,6 @@
+TRUNCATE TABLE tb_supplier_pic;
+
+INSERT INTO tb_supplier_pic (supplier_id, person_id, status, remarks, created_by, created_date)
+VALUES (1, 3, 'A', '', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

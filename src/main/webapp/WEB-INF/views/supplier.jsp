@@ -11,9 +11,8 @@
 				window.location.href("${ pageContext.request.contextPath }/supplier/list.html");
 			});
 			
-			$('#addPhone').click(function() {
-				$('#phoneTable').append('<tr><td width="25%"><input type="text" class="form-control" id="inputProvider" placeholder="Provider"></td>' +
-										'<td><input type="text" class="form-control" id="inputPhoneNum" placeholder="Phone Number"></td></tr>');
+			$('#addBank').click(function() {
+
 				return false;
 			});
 			
@@ -130,25 +129,21 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="15%">User Name</th>
-												<th width="25%">Name</th>
-												<th width="35%">Address</th>
-												<th width="15%">Phone</th>
-												<th width="5%">Status</th>
+												<th width="15%">Company Name</th>
+												<th width="25%"></th>
+												<th width="35%"></th>
+												<th width="15%"></th>
+												<th width="5%"></th>
 											</tr>
 										</thead>
 										<tbody>
 											<c:if test="${ not empty supplierList }">
 												<c:forEach var="i" varStatus="status" items="${ supplierList }">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
-														<td><c:out value="${ i.userName }"></c:out></td>
-														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
-														<td>
-															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine3 }"/>
-														</td>
+														<td align="center"><input id="cbx_<c:out value="${ i.supplierId }"/>" type="checkbox" value="<c:out value="${ i.supplierId }"/>"/></td>
+														<td><c:out value="${ i.companyName }"></c:out></td>
+														<td></td>
+														<td></td>
 														<td>&nbsp;</td>
 														<td>&nbsp;</td>
 													</tr>
@@ -157,7 +152,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/supplier/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -179,6 +174,7 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save.html">
+									<form:hidden path="supplierId"/>
 									<div class="form-group">
 										<label for="inputCompanyName" class="col-sm-2 control-label">Company Name</label>
 										<div class="col-sm-3">
@@ -198,12 +194,6 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputSupplierRemarks" class="col-sm-2 control-label">Remarks</label>
-										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputSupplierRemarks" path="supplierRemarks" name="inputSupplierRemarks" placeholder="Remarks"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
 										<label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
 										<div class="col-sm-10">
 											<form:input type="text" class="form-control" id="inputAddress1" name="inputPhoneNumber" path="compPhone"  placeholder="Enter Company Phone Number"></form:input>
@@ -216,11 +206,41 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputSupplierRemarks" class="col-sm-2 control-label">Remarks</label>
+										<div class="col-sm-5">
+											<form:input type="text" class="form-control" id="inputSupplierRemarks" path="supplierRemarks" name="inputSupplierRemarks" placeholder="Remarks"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="companyStatus">
 												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
 											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputBankAccTable" class="col-sm-2 control-label">Bank Account</label>
+										<div class="col-sm-10">
+											<table class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th width="5%">&nbsp;</th>
+														<th width="20%">Bank Name</th>
+														<th width="10%">Short Name</th>
+														<th width="15%">Account</th>
+														<th width="35%">Remarks</th>
+														<th width="5%">Status</th>
+													</tr>
+												</thead>
+											</table>
+											<table class="table borderless nopaddingrow">
+												<tr>
+													<td colspan="2">
+														<button id="addBank" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
+													</td>
+												</tr>
+											</table>											
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">

@@ -7,6 +7,8 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+						
 			$('#cancelButton').click(function() {				
 				window.location.href("${ pageContext.request.contextPath }/admin/lookup.html");
 			});
@@ -25,7 +27,6 @@
 			
 			$('#editTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -41,7 +42,6 @@
 			
 			$('#deleteTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -116,6 +116,24 @@
 								</h1>
 							</div>
 							<div class="panel-body">
+								<div id="categoryDDL" class="btn-group">
+									<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+										<c:choose>
+											<c:when test="${ not empty selectedCat}">
+												<c:out value="${ selectedCat }" />&nbsp;&nbsp;<span class="caret"></span>
+											</c:when>
+											<c:otherwise>
+												Select Category&nbsp;&nbsp;<span class="caret"></span>
+											</c:otherwise>
+										</c:choose>
+									</button>
+									<ul class="dropdown-menu" role="menu">
+										<c:forEach items="${ categoryDDL }" var="catDDL">
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="${ pageContext.request.contextPath }/admin/lookup/bycategory/${ catDDL.lookupCategory }.html">${ catDDL.lookupCategory }</a></li>
+										</c:forEach>										
+									</ul>
+								</div>
+								<div>&nbsp;</div>
 								<div class="table-responsive">
 									<table class="table table-bordered table-hover">
 										<thead>
@@ -169,7 +187,8 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="functionForm" role="form" class="form-horizontal" commandName="lookupForm">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save.html">
+									<form:hidden path="lookupId"/>
 									<div class="form-group">
 										<label for="inputCategory" class="col-sm-2 control-label">Category</label>
 										<div class="col-sm-3">
@@ -206,6 +225,14 @@
 											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
 										</div>
 									</div>
+									<div class="form-group">
+										<label for="inputMaintainability" class="col-sm-2 control-label">Maintainable</label>
+										<div class="col-sm-2">
+											<form:select class="form-control" path="lookupMaintainability">
+												<form:options items="${ MaintainabilityDDL }" itemValue="lookupCode" itemLabel="lookupDescription"></form:options>
+											</form:select>
+										</div>
+									</div>									
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">

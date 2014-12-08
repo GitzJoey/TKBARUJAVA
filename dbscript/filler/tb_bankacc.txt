@@ -1,0 +1,6 @@
+TRUNCATE TABLE tb_bankacc;
+
+INSERT INTO tb_bankacc (short_name, bank_name, account, remarks, status, created_by, created_date)
+VALUES ('Bank 1', 'Bank 1', '938475843', '', 'A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

@@ -34,4 +34,28 @@ public class LookupServiceImpl implements LookupService {
 		return lookupDAO.getLookupById(selectedId);
 	}
 
+	@Override
+	public List<Lookup> getAllCategory() {
+		
+		return lookupDAO.getAllCategory();
+	}
+
+	@Override
+	public void addLookup(Lookup lookup) {
+
+		lookupDAO.addLookup(lookup);
+	}
+
+	@Override
+	public void editLookup(Lookup lookup) {
+		
+		lookupDAO.editLookup(lookup);
+	}
+
+	@Override
+	public void deleteLookup(int selectedId) {
+		
+		lookupDAO.deleteLookup(selectedId);
+	}
+
 }

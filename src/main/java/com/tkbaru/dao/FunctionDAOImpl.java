@@ -8,12 +8,16 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.tkbaru.model.Function;
 
 public class FunctionDAOImpl implements FunctionDAO {
+	
+	private static final Logger logger = LoggerFactory.getLogger(FunctionDAOImpl.class);
 	
 	private DataSource dataSource;
 	public void setDataSource(DataSource dataSource) {
@@ -95,6 +99,60 @@ public class FunctionDAOImpl implements FunctionDAO {
 		});
 				
 		return result;
+	}
+
+	@Override
+	public void addFunction(Function func) {
+        String sql = "INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level) " +
+        				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        try {
+	        jdbcTemplate.update(sql, new Object[] { func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
+	        										func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(), 
+	        										func.getDeepLevel() });
+        } catch(Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+	}
+
+	@Override
+	public void editFunction(Function func) {
+        String query = "UPDATE tb_function SET function_code = ?, module = ?, module_icon = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, deep_level = ? " +
+        				"WHERE function_id = ? ";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+        
+        int out = 0;
+        
+        try {
+            Object[] args = new Object[] { 	func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
+					func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(), 
+					func.getDeepLevel(), func.getFunctionId() };
+
+            out = jdbcTemplate.update(query, args);        	
+        } catch (Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+
+        logger.info("Function updated successfully, row updated : " + out);
+	}
+
+	@Override
+	public void deleteFunction(int selectedId) {
+        String query = "DELETE FROM tb_function WHERE function_id = ? ";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+         
+        int out = 0;
+        
+        try {
+        	out = jdbcTemplate.update(query, selectedId);
+        } catch (Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+
+        logger.info("Function deleted successfully, row deleted : " + out);
 	}
 
 }

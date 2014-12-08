@@ -8,14 +8,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Function;
-import com.tkbaru.model.User;
 import com.tkbaru.service.FunctionService;
+import com.tkbaru.service.LookupService;
 
 @Controller
 public class FunctionController {
@@ -23,7 +24,7 @@ public class FunctionController {
 	
 	@Autowired
 	FunctionService functionManager;
-	
+		
 	@RequestMapping(value = "/admin/function.html", method = RequestMethod.GET)
 	public String functionPageLoad(Locale locale, Model model) {		
 
@@ -62,10 +63,29 @@ public class FunctionController {
 	@RequestMapping(value = "/admin/function/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String functionDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
+		functionManager.deleteFunction(selectedId);
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_FUNCTION;
+		return "redirect:/admin/function.html";
+	}
+
+	@RequestMapping(value = "/admin/function/save.html", method = RequestMethod.POST)
+	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func) {
+		
+		logger.info("Function : " + func.toString());
+		
+		if (func.getFunctionId() == 0) {
+			functionManager.addFunction(func);
+		} else {
+			functionManager.editFunction(func);
+		}
+		
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return "redirect:/admin/function.html";
 	}
 
 }

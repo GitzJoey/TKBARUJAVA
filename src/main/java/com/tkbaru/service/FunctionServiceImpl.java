@@ -24,4 +24,22 @@ public class FunctionServiceImpl implements FunctionService {
 		return functionDAO.getFunctionById(selectedId);
 	}
 
+	@Override
+	public void addFunction(Function func) {
+
+		functionDAO.addFunction(func);
+	}
+
+	@Override
+	public void editFunction(Function func) {
+		
+		functionDAO.editFunction(func);
+	}
+
+	@Override
+	public void deleteFunction(int selectedId) {
+		
+		functionDAO.deleteFunction(selectedId);
+	}
+
 }

@@ -1,19 +1,42 @@
 package com.tkbaru.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.apache.commons.collections.functors.FalsePredicate;
+
+@Entity
+@Table(name="tb_user")
 public class User {
 	public User() {
-		this.roleFunctionEntity = new RoleFunction();
-		this.personEntity = new Person();
+
 	}
 	
+	@Id
+	@Column(name="user_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int userId;
+	@Column(name="user_name")
 	private String userName;
+	@Transient
 	private String userPassword;
+	@Column(name="status")
 	private String userStatus;
 	
+	@Column(name="role_id")
 	private int roleId;
 	private RoleFunction roleFunctionEntity;
+	@Column(name="person_id")
 	private int personId;
+	@OneToOne
+	@JoinColumn(name="person_id", insertable=false, updatable=false)
 	private Person personEntity;
 	
 	public int getUserId() {

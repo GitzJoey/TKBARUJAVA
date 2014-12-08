@@ -1,16 +1,38 @@
 package com.tkbaru.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="tb_phonelist")
 public class PhoneList {
 	public PhoneList() {
 		
 	}
 
+	@Id
+	@Column(name="phonelist_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private int phoneListId;
+	@Column(name="provider")
 	private String providerName;
+	@Column(name="number")
 	private String phoneNumber;
+	@Column(name="status")
 	private String phoneStatus;
+	@Column(name="remarks")
 	private String phoneNumRemarks;
 	
+	@ManyToOne
+	@JoinColumn(name="person_id", nullable=false)
+	private Person personEnt;
+		
 	public int getPhoneListId() {
 		return phoneListId;
 	}

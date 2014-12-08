@@ -8,15 +8,17 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.tkbaru.model.Lookup;
-import com.tkbaru.model.User;
 
 public class LookupDAOImpl implements LookupDAO {
 
+	private static final Logger logger = LoggerFactory.getLogger(LookupDAOImpl.class);
+	
 	private DataSource dataSource;
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -114,6 +116,77 @@ public class LookupDAOImpl implements LookupDAO {
 		});
 				
 		return result;
+	}
+
+	@Override
+	public List<Lookup> getAllCategory() {
+		List<Lookup> result = new ArrayList<Lookup>();
+		
+		String sqlquery = "SELECT DISTINCT category FROM tb_lookup";
+	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		
+		for (Map<String, Object> row : rows) {
+			Lookup res = new Lookup();
+			res.setLookupCategory(String.valueOf(row.get("category")));
+			
+			result.add(res);
+		}		
+		
+		return result;
+	}
+
+	@Override
+	public void addLookup(Lookup lookup) {
+        String sql = "INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable) " +
+				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        try {
+        	jdbcTemplate.update(sql, new Object[] { lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(), lookup.getLongVal(),
+        											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability() });
+        } catch(Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+	}
+
+	@Override
+	public void editLookup(Lookup lookup) {
+        String query = "UPDATE tb_lookup SET category = ?, lookup_code = ?, short_val = ?, long_val = ?, description = ?, order_num = ?, status = ?, maintainable = ? " +
+				"WHERE lookup_id = ? ";
+
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+
+        int out = 0;
+
+        try {
+        	Object[] args = new Object[] { 	lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(), lookup.getLongVal(),
+											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability(), lookup.getLookupId() };
+
+        	out = jdbcTemplate.update(query, args);        	
+        } catch (Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+
+        logger.info("Lookup updated successfully, row updated : " + out);
+	}
+
+	@Override
+	public void deleteLookup(int selectedId) {
+        String query = "DELETE FROM tb_lookup WHERE lookup_id = ? ";
+        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+         
+        int out = 0;
+        
+        try {
+        	out = jdbcTemplate.update(query, selectedId);
+        } catch (Exception err) {
+        	logger.info ("Error : " + err.getMessage());
+        }
+
+        logger.info("Lookup deleted successfully, row deleted : " + out);
 	}
 
 }
