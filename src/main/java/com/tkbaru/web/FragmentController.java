@@ -19,7 +19,9 @@ public class FragmentController {
 		
 		model.addAttribute("userForm", new User());
 		model.addAttribute("addphonecount", addphonecount);
-	    
+	 
+		logger.info("return phone");
+		
 		return "fragment/phone";
 	}
 }

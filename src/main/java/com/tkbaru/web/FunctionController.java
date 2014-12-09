@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Function;
 import com.tkbaru.service.FunctionService;
-import com.tkbaru.service.LookupService;
 
 @Controller
 public class FunctionController {

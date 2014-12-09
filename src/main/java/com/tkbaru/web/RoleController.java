@@ -47,6 +47,7 @@ public class RoleController {
 		model.addAttribute("roleForm", new RoleFunction());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("functionList", functionManager.getAllFunctions());
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -60,7 +61,7 @@ public class RoleController {
 		
 		model.addAttribute("roleForm", selectedRole);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		model.addAttribute("functionList", functionManager.getAllFunctions());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -70,6 +71,8 @@ public class RoleController {
 
 	@RequestMapping(value = "/admin/role/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+		
+		roleManager.deleteRoleFunction(selectedId);
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -85,6 +88,9 @@ public class RoleController {
 		} else {
 			roleManager.editRoleFunction(role);
 		}
+		
+		logger.info("role");
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

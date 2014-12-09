@@ -14,7 +14,6 @@ public class LoginServiceImpl implements LoginService {
 	
 	@Override
 	public boolean successLogin(String userName) {
-		boolean result = false;
 		
 		User userdata = userDAO.getUser(userName);
 		

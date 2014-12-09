@@ -40,8 +40,10 @@ public class Supplier {
 	@Column(name="status")
 	private String companyStatus;
 	
+	@SuppressWarnings("unchecked")
 	@OneToMany(mappedBy="supplierEnt")
 	private List<SupplierPIC> picList = LazyList.decorate(new ArrayList<SupplierPIC>(), FactoryUtils.instantiateFactory(SupplierPIC.class));
+	@SuppressWarnings("unchecked")
 	@OneToMany(mappedBy="supplierEnt")
 	private List<SupplierBankAccount> bankAccList = LazyList.decorate(new ArrayList<SupplierBankAccount>(), FactoryUtils.instantiateFactory(SupplierBankAccount.class));
 	

@@ -15,7 +15,8 @@ public class RequestInitializeInterceptor extends HandlerInterceptorAdapter {
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		try {
 	        if(request.getSession(false) == null){     
-                  response.sendRedirect(request.getContextPath() + "/login.html");
+	        	logger.info("Session is invalid");
+	        	response.sendRedirect(request.getContextPath() + "/login.html");
 	        }
 	        
 			return true;

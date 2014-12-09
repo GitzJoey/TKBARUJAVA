@@ -30,6 +30,8 @@ public class SupplierController {
 	@RequestMapping(value = "/supplier/list.html", method = RequestMethod.GET)
 	public String listSupplier(Locale locale, Model model) {
 
+		logger.info("list");
+		
 		model.addAttribute("supplierList", supplierManager.getAllSupplier());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

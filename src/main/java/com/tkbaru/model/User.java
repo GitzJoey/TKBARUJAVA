@@ -10,8 +10,6 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.apache.commons.collections.functors.FalsePredicate;
-
 @Entity
 @Table(name="tb_user")
 public class User {
