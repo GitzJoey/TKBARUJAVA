@@ -1,6 +1,5 @@
 package com.tkbaru.web;
 
-import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -15,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.RoleFunction;
+import com.tkbaru.service.FunctionService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.RoleService;
 
@@ -26,11 +26,15 @@ public class RoleController {
 	RoleService roleManager;
 	
 	@Autowired
+	FunctionService functionManager;
+	
+	@Autowired
 	LookupService lookupManager;
 	
 	@RequestMapping(value = "/admin/role.html", method = RequestMethod.GET)
 	public String rolePageLoad(Locale locale, Model model) {
 
+		model.addAttribute("rfList", roleManager.getSummaryRoleList());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -42,7 +46,7 @@ public class RoleController {
 		
 		model.addAttribute("roleForm", new RoleFunction());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		model.addAttribute("functionList", functionManager.getAllFunctions());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -70,7 +74,7 @@ public class RoleController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_ROLE;
+		return "redirect:/admin/role.html";
 	}
 
 	@RequestMapping(value = "/admin/role/save.html", method = RequestMethod.POST)
@@ -84,6 +88,6 @@ public class RoleController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_ROLE;
+		return "redirect:/admin/role.html";
 	}	
 }

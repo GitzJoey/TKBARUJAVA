@@ -47,10 +47,18 @@ public class UserDAOImpl implements UserDAO {
 		String sqlquery = "SELECT * FROM tb_user WHERE UCASE(user_name) = UCASE('" + userName + "')";
 	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<User> usr = jdbcTemplate.query(sqlquery, new UserRowMapper());
 		
-		if (usr.size() == 0) return result;
-		else result = usr.get(0);
+		result = jdbcTemplate.queryForObject(sqlquery, new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				User user = new User();
+				
+				user.setUserId(Integer.valueOf(rs.getString("user_id")));
+				user.setUserName(rs.getString("user_name"));
+				
+				return user;
+			}
+		});
 		
 		return result;
 	}

@@ -42,4 +42,9 @@ public class RoleServiceImpl implements RoleService {
 		
 	}
 
+	@Override
+	public void deleteRoleFunction(int roleId) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -51,28 +51,34 @@
 				</div>
     		</div>
     	</div>
-        <div class="row">
-            <div class="col-md-4 col-md-offset-4">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Sign In</h3>
-                    </div>
-                    <div class="panel-body">
-                        <form id="loginForm" role="form" action="${pageContext.request.contextPath}/dologin.html" method="post">
-                            <fieldset>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus>                                
-                                </div>
-                                <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
-                                </div>
-                                <button type="submit" class="btn btn-default">Submit</button>
-                            </fieldset>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+		<c:choose>
+			<c:when test="${ hideLogin == true }">
+			</c:when>
+			<c:otherwise>
+		        <div class="row">
+		            <div class="col-md-4 col-md-offset-4">
+		                <div class="login-panel panel panel-default">
+		                    <div class="panel-heading">
+		                        <h3 class="panel-title">Sign In</h3>
+		                    </div>
+		                    <div class="panel-body">
+		                        <form id="loginForm" role="form" action="${pageContext.request.contextPath}/dologin.html" method="post">
+		                            <fieldset>
+		                                <div class="form-group">
+		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus>                                
+		                                </div>
+		                                <div class="form-group">
+		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+		                                </div>
+		                                <button type="submit" class="btn btn-default">Submit</button>
+		                            </fieldset>
+		                        </form>
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+			</c:otherwise>
+		</c:choose>
     </div>
 </body>
 </html>

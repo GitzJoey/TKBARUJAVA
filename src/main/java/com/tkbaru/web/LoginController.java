@@ -37,7 +37,18 @@ public class LoginController {
 		logger.info("Landed in Login Page! The client locale is {}.", locale);
 
 		String messageText = "";
+		
+		if (!loginManager.checkDB()) {
+			messageText = "System Is Not Ready";
+			
+			model.addAttribute("hideLogin", true);
+			model.addAttribute("collapseFlag", "");
+			model.addAttribute("messageText", messageText);
+			
+			return "login";
+		}
 
+		model.addAttribute("hideLogin", false);
 		model.addAttribute("collapseFlag", "collapse");
 		model.addAttribute("messageText", messageText);
 		
@@ -47,15 +58,6 @@ public class LoginController {
 	@RequestMapping(value = "/dologin.html", method = RequestMethod.POST)	
 	public String dologin(@RequestParam("username") String userName, @RequestParam("password") String userPswd, Model model) {
 		logger.info("Process dologin! Parameter = " + "userName:" + userName + ", userPswd:" + userPswd);
-
-		if (!loginManager.checkDB()) {
-			String messageText = "Better check yourself, you're not looking too good.";
-			
-			model.addAttribute("collapseFlag", "");
-			model.addAttribute("messageText", messageText);
-			
-			return "login";			
-		}
 		
 		boolean loginSuccess = loginManager.successLogin(userName); 
 
