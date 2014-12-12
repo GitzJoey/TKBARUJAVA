@@ -12,8 +12,6 @@
 			});
 			
 			$('#addPhone').click(function() {
-				$('#phoneTable').append('<tr><td width="25%"><form:input type="text" class="form-control" id="inputProvider" name="inputProvider" path="phone.providerName" placeholder="Provider"></form:input></td>' +
-										'<td><form:input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" path="phone.phoneNumber" placeholder="Phone Number"></form:input></td></tr>');
 				return false;
 			});
 			

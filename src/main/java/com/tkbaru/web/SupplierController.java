@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Supplier;
@@ -83,6 +84,7 @@ public class SupplierController {
 		} else {
 			supplierManager.editSupplier(supp);
 		}
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

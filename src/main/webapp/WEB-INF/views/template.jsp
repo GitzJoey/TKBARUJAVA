@@ -6,7 +6,7 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
-			
+			var ctxpath = "${ pageContext.request.contextPath }";
 		});
 	</script>	
 </head>

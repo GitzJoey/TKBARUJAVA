@@ -27,7 +27,7 @@ public class SupplierBankAccount {
 	@Column(name="bankacc_id")
 	private int bankAccId;
 	@Column(name="status")
-	private String supplierBankAccountRemarks;
+	private String supplierBankAccountStatus;
 	
 	@ManyToOne
 	@JoinColumn(name="supplier_id", insertable=false, updatable=false)
@@ -36,9 +36,6 @@ public class SupplierBankAccount {
 	@OneToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="bankacc_id", insertable=false, updatable=false)
 	private BankAccount bankAccDetail;
-	public BankAccount getBankAccDetail() {
-		return bankAccDetail;
-	}
 	
 	public int getSupplierBankAccountId() {
 		return supplierBankAccountId;
@@ -58,16 +55,24 @@ public class SupplierBankAccount {
 	public void setBankAccId(int bankAccId) {
 		this.bankAccId = bankAccId;
 	}
-	public String getSupplierBankAccountRemarks() {
-		return supplierBankAccountRemarks;
+	public String getSupplierBankAccountStatus() {
+		return supplierBankAccountStatus;
 	}
-	public void setSupplierBankAccountRemarks(String supplierBankAccountRemarks) {
-		this.supplierBankAccountRemarks = supplierBankAccountRemarks;
+	public void setSupplierBankAccountStatus(String supplierBankAccountStatus) {
+		this.supplierBankAccountStatus = supplierBankAccountStatus;
+	}
+	
+	public void setBankAccDetail(BankAccount bankAccDetail) {
+		this.bankAccDetail = bankAccDetail;
+	}
+	public BankAccount getBankAccDetail() {
+		return bankAccDetail;
 	}
 	
 	@Override
 	public String toString() {
 		return "SupplierBankAccount [supplierBankAccountId=" + supplierBankAccountId + ", supplierId=" + supplierId
-				+ ", bankAccId=" + bankAccId + ", supplierBankAccountRemarks=" + supplierBankAccountRemarks + "]";
+				+ ", bankAccId=" + bankAccId + ", supplierBankAccountStatus=" + supplierBankAccountStatus
+				+ ", supplierEnt=" + supplierEnt + ", bankAccDetail=" + bankAccDetail + "]";
 	}
 }

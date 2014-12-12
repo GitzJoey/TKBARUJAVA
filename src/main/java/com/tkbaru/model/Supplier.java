@@ -107,5 +107,11 @@ public class Supplier {
 	public void setBankAccList(List<SupplierBankAccount> bankAccList) {
 		this.bankAccList = bankAccList;
 	}
-	
+	@Override
+	public String toString() {
+		return "Supplier [supplierId=" + supplierId + ", companyName=" + companyName + ", companyAddress="
+				+ companyAddress + ", companyCity=" + companyCity + ", supplierRemarks=" + supplierRemarks
+				+ ", compPhone=" + compPhone + ", compFax=" + compFax + ", companyStatus=" + companyStatus
+				+ ", picList=" + picList + ", bankAccList=" + bankAccList + "]";
+	}	
 }

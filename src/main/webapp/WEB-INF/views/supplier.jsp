@@ -7,11 +7,16 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+			
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/supplier/list.html");
+				window.location.href(ctxpath + "/supplier/list.html");
 			});
 			
 			$('#addBank').click(function() {
+				$.get(ctxpath + "/fragment/addbank.html", {count: $('#bankAccTableList tbody tr').length, module: 'supplier'}).done(function(data) {
+					$('#bankAccTable > tbody').append(data);
+				});
 
 				return false;
 			});
@@ -30,7 +35,7 @@
 			
 			$('#editTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
+
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -46,7 +51,7 @@
 			
 			$('#deleteTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
+
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -125,7 +130,7 @@
 							</div>
 							<div class="panel-body">
 								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
+									<table class="table table-hover">
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
@@ -175,6 +180,7 @@
 							<div class="panel-body">
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save.html">
 									<form:hidden path="supplierId"/>
+									<input id="postType" type="hidden" value=""/>
 									<div class="form-group">
 										<label for="inputCompanyName" class="col-sm-2 control-label">Company Name</label>
 										<div class="col-sm-3">
@@ -222,7 +228,7 @@
 									<div class="form-group">
 										<label for="inputBankAccTable" class="col-sm-2 control-label">Bank Account</label>
 										<div class="col-sm-10">
-											<table class="table table-bordered table-hover">
+											<table id="bankAccTable" class="table table-bordered table-hover">
 												<thead>
 													<tr>
 														<th width="5%">&nbsp;</th>
@@ -233,11 +239,71 @@
 														<th width="5%">Status</th>
 													</tr>
 												</thead>
+												<tbody>
+													<c:forEach items="${ supplierForm.bankAccList }" var="baList" varStatus="baIdx">
+														<tr>
+															<td>
+																<form:hidden path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.bankAccId"/>
+															</td>
+															<td>
+																<form:input type="text" class="form-control" id="inputBankName" name="inputBankName" path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.bankName"></form:input>
+															</td>
+															<td>
+																<form:input type="text" class="form-control" id="inputShortName" name="inputShortName" path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.shortName"></form:input>
+															</td>
+															<td>
+																<form:input type="text" class="form-control" id="inputAccNum" name="inputAccNum" path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.accNum"></form:input>
+															</td>
+															<td>
+																<form:input type="text" class="form-control" id="inputBankRemarks" name="inputBankRemarks" path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.bankRemarks"></form:input>
+															</td>
+															<td>
+																<form:select class="form-control" path="supplierForm.bankAccList[${baIdx.index}].bankAccDetail.bankStatus">
+																	<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																</form:select>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
 											</table>
 											<table class="table borderless nopaddingrow">
 												<tr>
 													<td colspan="2">
 														<button id="addBank" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
+													</td>
+												</tr>
+											</table>											
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputPIC" class="col-sm-2 control-label">Person In Charge</label>
+										<div class="col-sm-10">
+											<table id="picTable" class="table table-bordered table-hover">
+												<thead>
+													<tr>
+														<th width="30%">Name</th>
+														<th width="70%">Phone List</th>
+													</tr>
+												</thead>
+												<tbody>
+													<c:forEach items="${ supplierForm.picList }" var="picList" varStatus="picIdx">
+														<tr>
+															<td>
+																<c:out value="picList.firstName"/>&nbsp;<c:out value="picList.lastName"/>
+															</td>
+															<td>
+																<c:forEach items="${ picList.phoneList }" var="picPhoneList" varStatus="picPhoneIdx">
+																	<c:out value="picPhoneList.providerName"/>&nbsp;<c:out value="picPhoneList.phoneNumber"/>
+																</c:forEach>
+															</td>
+														</tr>
+													</c:forEach>
+												</tbody>
+											</table>
+											<table class="table borderless nopaddingrow">
+												<tr>
+													<td colspan="2">														
+														<button id="addPerson" type="button" class="btn btn-primary" data-toggle="modal" data-target="#personModal"><span class="fa fa-plus fa-fw"></span></button>
 													</td>
 												</tr>
 											</table>											
@@ -257,5 +323,36 @@
 			</div>
 		</div>		
 	</div>	
+	
+	<!-- Person Modal -->	
+	<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+        			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        			<h4 class="modal-title" id="myModalLabel"><span class="fa fa-users fa-fw"></span>&nbsp;Person</h4>
+      			</div>
+	      		<div class="modal-body">
+					<form id="personInputForm" role="form">
+						<div class="form-group">
+							<label for="firstName">First Name</label>
+							<input type="text" class="form-control" id="firstName">
+						</div>
+						<div class="form-group">
+							<label for="firstName">Phone Number</label>
+							<div>
+								<table class="table">
+								</table>
+							</div>
+						</div>
+					</form>
+	      		</div>
+      			<div class="modal-footer">
+        			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        			<button type="button" class="btn btn-primary">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

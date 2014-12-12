@@ -36,9 +36,9 @@ public class UserController {
 	public String userPageLoad(Locale locale, Model model) {
 		List<User> userdata = userManager.getAllUser();
 
+		model.addAttribute("userList", userdata);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		model.addAttribute("userList", userdata);
 		
 		return Constants.JSPPAGE_USER;
 	}
@@ -49,6 +49,7 @@ public class UserController {
 		model.addAttribute("userForm", new User());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
