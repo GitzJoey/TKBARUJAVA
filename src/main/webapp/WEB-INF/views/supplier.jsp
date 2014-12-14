@@ -36,7 +36,7 @@
 			        },
 			        
 			        error: function(res) {
-			            alert("Bad thing happend! " + res.statusText);
+			            alert("Error ! - " + res.statusText);
 			        }
 			    });
 
