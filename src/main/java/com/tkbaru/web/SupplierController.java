@@ -9,11 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.Person;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.SupplierService;
@@ -89,5 +91,15 @@ public class SupplierController {
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/supplier/list.html";
-	}	
+	}
+	
+	@RequestMapping(value = "/supplier/addperson.html", method = RequestMethod.POST, consumes = "application/json")
+	public @ResponseBody String addPerson(Locale locale, Model model, @RequestBody final Person p) {
+		try {
+			logger.info("person : " + p.getFirstName());			
+		} catch (Exception err) {
+			logger.info(err.getMessage());
+		}
+		return "<p>a</p>";
+	}
 }

@@ -21,6 +21,38 @@
 				return false;
 			});
 			
+			$('#savePerson').click(function() {
+				var datapost = { personId: 0, firstName: 'b' };
+
+			    $.ajax({
+					url: ctxpath + "/supplier/addperson.html",
+			        type: 'POST',
+			        data: JSON.stringify(datapost),
+			        Accept : "application/json",
+			        contentType: "application/json",
+
+			        success: function(res) {
+			        	alert("it works!");
+			        },
+			        
+			        error: function(res) {
+			            alert("Bad thing happend! " + res.statusText);
+			        }
+			    });
+
+				$("#personModal").modal("hide");
+				return false;
+			});
+
+			$('#addPersonPhoneList').click(function() {
+				$('#phoneList tbody').append('' +
+					'<tr>' +
+					'<td><input type="text" class="form-control" id="provider"></td>'+
+					'<td><input type="text" class="form-control" id="number"></td>'+
+					'</tr>' +
+				+ '');
+			});
+			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
 				var selected = $(this);
 				
@@ -325,12 +357,12 @@
 	</div>	
 	
 	<!-- Person Modal -->	
-	<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		<div class="modal-dialog">
+	<div class="modal fade" id="personModal" tabindex="-1" role="dialog" aria-labelledby="personModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
 			<div class="modal-content">
 				<div class="modal-header">
         			<button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        			<h4 class="modal-title" id="myModalLabel"><span class="fa fa-users fa-fw"></span>&nbsp;Person</h4>
+        			<h4 class="modal-title" id="personModalLabel"><span class="fa fa-users fa-fw"></span>&nbsp;Person</h4>
       			</div>
 	      		<div class="modal-body">
 					<form id="personInputForm" role="form">
@@ -341,15 +373,31 @@
 						<div class="form-group">
 							<label for="firstName">Phone Number</label>
 							<div>
-								<table class="table">
+								<table id="phoneList" class="table">
+									<thead>
+										<tr>
+											<th>Provider</th>
+											<th>Number</th>
+										</tr>
+									</thead>
+									<tbody>
+										
+									</tbody>
 								</table>
+								<table class="table borderless nopaddingrow">
+									<tr>
+										<td colspan="2">														
+											<button id="addPersonPhoneList" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
+										</td>
+									</tr>
+								</table>											
 							</div>
 						</div>
 					</form>
 	      		</div>
       			<div class="modal-footer">
         			<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        			<button type="button" class="btn btn-primary">Save changes</button>
+        			<button id="savePerson" type="button" class="btn btn-primary">Save changes</button>
 				</div>
 			</div>
 		</div>
