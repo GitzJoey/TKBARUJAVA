@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Person;
@@ -93,13 +94,14 @@ public class SupplierController {
 		return "redirect:/supplier/list.html";
 	}
 	
-	@RequestMapping(value = "/supplier/addperson.html", method = RequestMethod.POST, consumes = "application/json")
-	public @ResponseBody String addPerson(Locale locale, Model model, @RequestBody final Person p) {
-		try {
-			logger.info("person : " + p.getFirstName());			
+	@RequestMapping(value = "/supplier/addperson", method = RequestMethod.POST)
+	public @ResponseBody Person addPerson(@RequestBody Person p) {
+		Person x = new Person();
+		try {			
+			logger.info("person : " + p);			
 		} catch (Exception err) {
 			logger.info(err.getMessage());
 		}
-		return "<p>a</p>";
+		return x;
 	}
 }

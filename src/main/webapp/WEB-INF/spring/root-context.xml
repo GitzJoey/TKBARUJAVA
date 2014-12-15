@@ -23,7 +23,7 @@
     <!-- get benefit of annotations -->
     
     <context:annotation-config></context:annotation-config>
-    
+     
     <!-- properties file holds database connection parameters -->
     <beans:bean 
     	id="propertyConfigurer" 

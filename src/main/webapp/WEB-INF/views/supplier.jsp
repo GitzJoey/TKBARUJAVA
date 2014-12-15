@@ -22,17 +22,15 @@
 			});
 			
 			$('#savePerson').click(function() {
-				var datapost = { personId: 0, firstName: 'b' };
-
 			    $.ajax({
-					url: ctxpath + "/supplier/addperson.html",
+					url: ctxpath + "/supplier/addperson",
 			        type: 'POST',
-			        data: JSON.stringify(datapost),
+			        data: JSON.stringify({ "personId": "0", "firstName": "test" }),
 			        Accept : "application/json",
 			        contentType: "application/json",
 
 			        success: function(res) {
-			        	alert("it works!");
+			        	alert("it works!" + res);
 			        },
 			        
 			        error: function(res) {
