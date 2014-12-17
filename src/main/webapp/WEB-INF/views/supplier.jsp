@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -319,11 +320,23 @@
 													<c:forEach items="${ supplierForm.picList }" var="picList" varStatus="picIdx">
 														<tr>
 															<td>
-																<c:out value="picList.firstName"/>&nbsp;<c:out value="picList.lastName"/>
+																<spring:bind path="supplierForm.picList[${picIdx.index}].firstName">
+																	<c:out value="${status.expression}"/>
+																</spring:bind>
+																&nbsp;
+																<spring:bind path="supplierForm.picList[${picIdx.index}].lastName">
+																	<c:out value="${status.expression}"/>
+																</spring:bind>
 															</td>
 															<td>
 																<c:forEach items="${ picList.phoneList }" var="picPhoneList" varStatus="picPhoneIdx">
-																	<c:out value="picPhoneList.providerName"/>&nbsp;<c:out value="picPhoneList.phoneNumber"/>
+																	<spring:bind path="supplierForm.picList[${picIdx.index}].phoneList[${picPhoneIdx.index}].providerName">
+																		<c:out value="${status.expression}"/>
+																	</spring:bind>
+																	&nbsp;
+																	<spring:bind path="supplierForm.picList[${picIdx.index}].phoneList[${picPhoneIdx.index}].phoneNumber">
+																		<c:out value="${status.expression}"/>
+																	</spring:bind>
 																</c:forEach>
 															</td>
 														</tr>

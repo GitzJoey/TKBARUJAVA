@@ -7,6 +7,123 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('#addBankAcc').click(function() {
+				$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
+
+				$('#bankAccinputMode').val("ADD");
+				$('#bankAccListPanel').hide();
+				$('#bankAccListInputPanel').show();				
+			});
+
+			$('input[id^="cbx_bankAccId_"]').click(function() {
+				var selected = $(this);	
+				
+				$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			});
+			
+			$('#editBankAcc, #deleteBankAcc').click(function() {				
+				var hasSelected = false;
+				var button = $(this).attr('id');
+				$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
+					if ($(item).prop("checked") == true) {
+						if (button == 'editBankAcc') {
+							$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
+							
+							$('#bankAccinputMode').val("EDIT");							
+							$('#bankAccId').val($('input[id="bankAccList' + $(item).val() + '.bankAccId"]').val());
+							$('#shortName').val($('input[id="bankAccList' + $(item).val() + '.shortName"]').val());						
+							$('#bankName').val($('input[id="bankAccList' + $(item).val() + '.bankName"]').val());
+							$('#accountNumber').val($('input[id="bankAccList' + $(item).val() + '.accNum"]').val());
+							$('#bankAccRemarks').val($('input[id="bankAccList' + $(item).val() + '.bankRemarks"]').val());
+							
+							$('#bankAccListPanel').hide();
+							$('#bankAccListInputPanel').show();				
+						} else {
+							$('input[id="bankAccList' + $(item).val() + '.bankAccId"]').parents('tr').remove();							
+						}
+
+						hasSelected = true;
+					}					
+				});
+				
+				if (!hasSelected) {
+					jsAlert('Please select at least 1 bank account');
+				}
+			});
+					
+			$('#saveBankAcc').click(function() {
+				if ($('#bankAccinputMode').val() == "ADD") {
+					var custObj = { "bankAccList" : [{
+										"shortName" : $('#shortName').val(),
+										"bankName" : $('#bankName').val(),
+										"accNum" : $('#accountNumber').val(),
+										"bankRemarks" : $('#bankAccRemarks').val(),
+										"bankStatus" : '' }] };
+
+					var countArr = [];
+					if ($('input[id^="cbx_bankAccId_"]').size() == 0) {
+						countArr.push(0);
+					} else if ($('input[id^="cbx_bankAccId_"]').size() == 1) {
+						countArr.push(0);
+						countArr.push(1); 
+					} else {
+						$('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); });						
+					} 
+					countArr.sort(function(a, b) { return b-a });
+						
+					$.ajax({
+						url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
+						type: 'POST',
+						data: JSON.stringify(custObj),
+						Accept : "application/json",
+						contentType: "application/json",
+
+						success: function(res) {
+							$('#bankAccListPanel').show();
+							$('#bankAccListInputPanel').hide();
+
+							$('#bankAccListTable tbody').append(res);
+						},
+      
+						error: function(res) {
+							alert("Error ! - " + res.statusText);
+						}
+					});									
+				} else {
+					$('input[id="bankAccList' + $('#bankAccId').val() + '.shortName"]').val($('#shortName').val());		
+					$('label[for="bankAccList' + $('#bankAccId').val() + '.shortName"]').text($('#shortName').val());
+					
+					$('input[id="bankAccList' + $('#bankAccId').val() + '.bankName"]').val($('#bankName').val());
+					$('label[for="bankAccList' + $('#bankAccId').val() + '.bankName"]').text($('#bankName').val());
+					
+					$('input[id="bankAccList' + $('#bankAccId').val() + '.accNum"]').val($('#accountNumber').val());
+					$('label[for="bankAccList' + $('#bankAccId').val() + '.accNum"]').text($('#accountNumber').val());
+					
+					$('input[id="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
+					$('label[for="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').text($('#bankAccRemarks').val());
+					
+					$('#bankAccListPanel').show();
+					$('#bankAccListInputPanel').hide();
+				}
+			});
+			
+			$('#discardBankAcc').click(function() {
+				$('#bankAccListPanel').show();
+				$('#bankAccListInputPanel').hide();
+				
+				$('#bankAccListInputPanel input').each(function(index) {
+					$(this).val('');
+				});
+			});
+			
 			$('#cancelButton').click(function() {				
 				window.location.href("${ pageContext.request.contextPath }/customer/list.html");
 			});
@@ -160,113 +277,117 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add User
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Customer
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit User
+											<span class="fa fa-smile-o fa-fw fa-2x"></span>&nbsp;Edit Customer
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save.html">
-									<div class="form-group">
-										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
-										<div class="col-sm-3">
-											<c:choose>
-												<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
-													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
-												</c:when>
-												<c:otherwise>
-													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" disabled="true"></form:input>
-												</c:otherwise>
-											</c:choose>
-											
+								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save.html">
+									<div role="tabpanel">
+										<ul class="nav nav-tabs" role="tablist">
+											<li role="presentation" class="active"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Customer Data</a></li>
+											<li role="presentation" class=""><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge</a></li>
+											<li role="presentation" class=""><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
+											<li role="presentation" class=""><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
+										</ul>
+
+										<div class="tab-content">
+											<div role="tabpanel" class="tab-pane active" id="custDataTab">
+												<br/>
+												<div class="form-group">
+													<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
+													<div class="col-sm-3">
+														<form:input path="storeName" type="text" class="form-control" id="inputStoreName" name="inputStoreName" placeholder="Enter Store Name"></form:input>
+													</div>
+												</div>
+											</div>
+											<div role="tabpanel" class="tab-pane" id="picTab">
+											</div>
+											<div role="tabpanel" class="tab-pane" id="bankAccTab">
+												<br/>
+												<div id="bankAccListPanel" class="panel panel-default">
+													<div class="panel-heading">
+														<div class="btn-toolbar">
+															<button type="button" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="editBankAcc" class="btn btn-xs btn-primary pull-right" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
+														</div>
+													</div>
+													<table id="bankAccListTable" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;Bank Name</th>
+																<th>&nbsp;Account</th>
+																<th>&nbsp;Remarks</th>
+																<th>&nbsp;Status</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${ customerForm.bankAccList }" var="baList" varStatus="baIdx">
+																<tr>
+																	<td align="center">
+																		<input id="cbx_bankAccId_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" type="checkbox" value="<c:out value="${baIdx.index}"/>"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankAccId"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].shortName"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankName"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].accNum"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankRemarks"/>
+																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankStatus"/>
+																	</td>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankName"></form:label>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].accNum"></form:label>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankRemarks"></form:label>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankStatus"></form:label>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+												<div id="bankAccListInputPanel" class="panel panel-default collapse">
+													<br/>
+													<input type="hidden" id="bankAccId" value=""/>
+													<input type="hidden" id="bankAccinputMode" value=""/>
+													<div class="row">
+														<label for="shortName" class="col-sm-2 control-label">Short Name</label>
+														<div class="col-sm-2"><input type="text" class="form-control" id="shortName"/></div>
+													</div>
+													<br/>
+													<div class="row">
+														<label for="bankName" class="col-sm-2 control-label">Bank Name</label>
+														<div class="col-sm-4"><input type="text" class="form-control" id="bankName"></div>
+													</div>
+													<br/>
+													<div class="row">
+														<label for="accountNumber" class="col-sm-2 control-label">Account</label>
+														<div class="col-sm-5"><input type="text" class="form-control" id="accountNumber"></div>
+													</div>
+													<br/>
+													<div class="row">
+														<label for="bankAccRemarks" class="col-sm-2 control-label">Remarks</label>
+														<div class="col-sm-6"><input type="text" class="form-control" id="bankAccRemarks"></div>
+													</div>
+													<br/>
+													<div class="row">
+														<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
+														<div class="col-sm-5">
+															<button id="saveBankAcc" type="button" class="btn btn-sm btn-primary">Save</button>
+															<button id="discardBankAcc" type="button" class="btn btn-sm btn-primary">Discard</button>
+														</div>
+													</div>
+													<br/>
+												</div>											
+											</div>
+											<div role="tabpanel" class="tab-pane" id="settingsTab">...</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
-										<div class="col-sm-3">
-											<input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
-										<div class="col-sm-5">											
-											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
-										<div class="col-sm-5">
-											<form:input path="personEntity.lastName" type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputAddress1" class="col-sm-2 control-label">Address</label>
-										<div class="col-sm-10">
-											<form:input path="personEntity.addressLine1" type="text" class="form-control" id="inputAddress1" name="inputAddress1" placeholder="Address 1"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputAddress2" class="col-sm-2 control-label">&nbsp;</label>
-										<div class="col-sm-10">
-											<form:input path="personEntity.addressLine2" type="text" class="form-control" id="inputAddress2" name="inputAddress2" placeholder="Address 2"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputAddress3" class="col-sm-2 control-label">&nbsp;</label>
-										<div class="col-sm-10">
-											<form:input path="personEntity.addressLine3" type="text" class="form-control" id="inputAddress3" name="inputAddress3" placeholder="Address 3"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputEmailAddress" class="col-sm-2 control-label">Email Address</label>
-										<div class="col-sm-6">
-											<form:input path="personEntity.emailAddr" type="text" class="form-control" id="inputEmailAddress" name="inputEmailAddress" placeholder="Enter Email Address"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputRole" class="col-sm-2 control-label">Role</label>
-										<div class="col-sm-2">
-											<form:select class="form-control" path="roleFunctionEntity.roleId">
-												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
-											</form:select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
-										<div class="col-sm-2">
-											<form:select class="form-control" path="userStatus">
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
-											</form:select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Phone List</label>
-										<div class="col-sm-9">
-											<table id="phoneTable" class="table borderless nopaddingrow">
-												<c:forEach items="${ personEntity.phoneList }" var="phone" varStatus="ph">
-													<tr>
-														<td width="25%">
-															<form:input type="text" class="form-control" id="inputProvider" path="phone.providerName" placeholder="Provider"></form:input>
-														</td>
-														<td>
-															<form:input type="text" class="form-control" id="inputPhoneNum" path="phone.phoneNumber" placeholder="Phone Number"></form:input>
-														</td>
-													</tr>												
-												</c:forEach>
-											</table>
-											<table class="table borderless nopaddingrow">
-												<tr>
-													<td colspan="2">
-														<button id="addPhone" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
-													</td>
-												</tr>
-											</table>
-										</div>
-									</div>
-									<div class="col-md-3 offset-md-9">
+									<br/>
+									<hr>
+									<div class="col-md-7 offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>

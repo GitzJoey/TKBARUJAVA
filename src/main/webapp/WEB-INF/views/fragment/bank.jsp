@@ -15,3 +15,21 @@
 		</td>
 	</tr>
 </c:if>
+
+<c:if test="${ module == 'customer' }">
+	<tr>
+		<td align="center">
+			<input id="cbx_bankAccId_${ customerForm.bankAccList[0].bankAccId }" type="checkbox" value="${counter}"/>
+			<form:hidden path="customerForm.bankAccList[${counter}].bankAccId" value="${ customerForm.bankAccList[0].bankAccId }"></form:hidden>
+			<form:hidden path="customerForm.bankAccList[${counter}].shortName" value="${ customerForm.bankAccList[0].shortName }"></form:hidden>
+			<form:hidden path="customerForm.bankAccList[${counter}].bankName" value="${ customerForm.bankAccList[0].bankName }"></form:hidden>
+			<form:hidden path="customerForm.bankAccList[${counter}].accNum" value="${ customerForm.bankAccList[0].accNum }"></form:hidden>
+			<form:hidden path="customerForm.bankAccList[${counter}].bankRemarks" value="${ customerForm.bankAccList[0].bankRemarks }"></form:hidden>
+			<form:hidden path="customerForm.bankAccList[${counter}].bankStatus" value="${ customerForm.bankAccList[0].bankStatus }"></form:hidden>
+		</td>
+		<td>&nbsp;<form:label path="customerForm.bankAccList[${counter}].shortName"><c:out value="${ customerForm.bankAccList[0].shortName }"></c:out></form:label>&nbsp;-&nbsp;<form:label path="customerForm.bankAccList[${counter}].bankName"><c:out value="${ customerForm.bankAccList[0].bankName }"></c:out></form:label></td>
+		<td>&nbsp;<form:label path="customerForm.bankAccList[${counter}].accNum"><c:out value="${ customerForm.bankAccList[0].accNum }"></c:out></form:label></td>
+		<td>&nbsp;<form:label path="customerForm.bankAccList[${counter}].bankRemarks"><c:out value="${ customerForm.bankAccList[0].bankRemarks }"></c:out></form:label></td>
+		<td>&nbsp;<form:label path="customerForm.bankAccList[${counter}].bankStatus"><c:out value="${ customerForm.bankAccList[0].bankStatus }"></c:out></form:label></td>
+	</tr>
+</c:if>

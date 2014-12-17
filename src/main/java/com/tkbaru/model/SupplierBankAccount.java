@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
@@ -29,12 +30,13 @@ public class SupplierBankAccount {
 	@Column(name="status")
 	private String supplierBankAccountStatus;
 	
-	@ManyToOne
+	@ManyToOne(cascade=CascadeType.ALL)
 	@JoinColumn(name="supplier_id", insertable=false, updatable=false)
 	private Supplier supplierEnt;
 	
 	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="bankacc_id", insertable=false, updatable=false)
+	//@JoinColumn(name="bankacc_id", insertable=false, updatable=false)
+	@PrimaryKeyJoinColumn(name="bankacc_id", referencedColumnName="bankacc_id")
 	private BankAccount bankAccDetail;
 	
 	public int getSupplierBankAccountId() {

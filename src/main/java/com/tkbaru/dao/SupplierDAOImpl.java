@@ -27,7 +27,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 	}
 
     private SessionFactory sessionFactory;
-    public void setSessionFactory(SessionFactory sf){
+    public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
 
@@ -39,7 +39,12 @@ public class SupplierDAOImpl implements SupplierDAO {
 	@Override
 	public Supplier getSupplierById(int selectedId) {
         Session session = this.sessionFactory.getCurrentSession();     
-        Supplier supp = (Supplier) session.load(Supplier.class, new Integer(selectedId));
+        Supplier supp = null;
+        try {
+        	supp = (Supplier) session.load(Supplier.class, new Integer(selectedId));
+        } catch (Exception err) {
+        	logger.info(err.getMessage());
+        }
         logger.info("Supplier loaded successfully, Supplier details = " + supp.toString());
         return supp;	
 	}

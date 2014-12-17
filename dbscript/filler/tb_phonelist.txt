@@ -3,5 +3,8 @@ TRUNCATE tb_phonelist;
 INSERT tb_phonelist (person_id, provider, number, status, remarks)
 VALUES (1, 'T-Sel', '081296639663', 'A', 'Admin Number');
 
+INSERT tb_phonelist (person_id, provider, number, status, remarks)
+VALUES (3, 'T-Sel', '081296639663', 'A', 'Admin Number');
+
 COMMIT;
 

@@ -3,6 +3,7 @@ package com.tkbaru.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -44,7 +45,7 @@ public class Supplier {
 	@OneToMany(mappedBy="supplierEnt")
 	private List<SupplierPIC> picList = LazyList.decorate(new ArrayList<SupplierPIC>(), FactoryUtils.instantiateFactory(SupplierPIC.class));
 	@SuppressWarnings("unchecked")
-	@OneToMany(mappedBy="supplierEnt")
+	@OneToMany(mappedBy="supplierEnt", cascade=CascadeType.ALL)
 	private List<SupplierBankAccount> bankAccList = LazyList.decorate(new ArrayList<SupplierBankAccount>(), FactoryUtils.instantiateFactory(SupplierBankAccount.class));
 	
 	public int getSupplierId() {

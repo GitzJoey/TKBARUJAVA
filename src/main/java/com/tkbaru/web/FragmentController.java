@@ -5,11 +5,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.Customer;
+import com.tkbaru.model.Person;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LookupService;
@@ -50,5 +55,24 @@ public class FragmentController {
 		model.addAttribute("counter", elCount);
 	 
 		return "fragment/bank";
+	}
+	
+	@RequestMapping(value = "/fragment/{module}/addbank/{counter}", method = RequestMethod.POST)
+	public String addBankData(@RequestBody Customer c, @PathVariable("module") String elMod, @PathVariable("counter") int count, Model model) {
+		
+		model.addAttribute("customerForm", c);
+		model.addAttribute("counter", count);
+		model.addAttribute("module", elMod);
+		
+		logger.info("Creating Bank Account for module: " + elMod + ", counter: " + count);
+		
+		return "fragment/bank";
+	}
+	
+	@RequestMapping(value = "/fragment/{module}/addperson", method = RequestMethod.POST)
+	public @ResponseBody String addPerson(@RequestBody Person p, @PathVariable("module") String elMod, Model model) {
+		model.addAttribute("module", elMod);
+		
+		return "fragment/person";
 	}
 }

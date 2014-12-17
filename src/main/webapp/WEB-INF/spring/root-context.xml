@@ -51,6 +51,7 @@
 		<beans:property name="dataSource" ref="dbcpDataSource" />
         <beans:property name="annotatedClasses">
             <beans:list>
+            	<beans:value>com.tkbaru.model.Customer</beans:value>
                 <beans:value>com.tkbaru.model.Supplier</beans:value>
                 <beans:value>com.tkbaru.model.Person</beans:value>
                 <beans:value>com.tkbaru.model.BankAccount</beans:value>
@@ -67,6 +68,7 @@
         </beans:property>
         <beans:property name="packagesToScan">
         	<beans:list>
+        		<beans:value>com.tkbaru.model.Customer</beans:value>
         		<beans:value>com.tkbaru.model.Supplier</beans:value>
         		<beans:value>com.tkbaru.model.Person</beans:value>
         		<beans:value>com.tkbaru.model.BankAccount</beans:value>
@@ -106,6 +108,11 @@
     	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="CustomerDAO" class="com.tkbaru.dao.CustomerDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></beans:bean>
@@ -114,4 +121,5 @@
     <beans:bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></beans:bean>
     <beans:bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></beans:bean>
     <beans:bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></beans:bean>
+    <beans:bean id="CustomerService" class="com.tkbaru.service.CustomerServiceImpl"></beans:bean>
 </beans:beans>

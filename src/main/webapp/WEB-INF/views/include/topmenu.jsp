@@ -4,11 +4,11 @@
 		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
   			<div class="container-fluid">
   				<div class="navbar-header">
-    				<a class="navbar-brand" href="#">
+    				<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard.html">
 						<i class="fa fa-btc"></i>
       				</a>
       			</div>
-      			<p class="navbar-text"><strong>Toko Baru - Wangon</strong></p>
+      			<p class="navbar-text"><strong>&nbsp;</strong></p>
 				<form class="navbar-form navbar-right" role="search">
 	  				<div class="form-group">
 	    				<input type="text" class="form-control" placeholder="Search">

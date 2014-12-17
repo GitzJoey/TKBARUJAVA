@@ -9,14 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.Person;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.SupplierService;
@@ -82,26 +78,19 @@ public class SupplierController {
 	@RequestMapping(value = "/supplier/save.html", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("supplierForm") Supplier supp) {
 		
+		logger.info("" + supp.getBankAccList().size());
+		logger.info(supp.getBankAccList().get(0).getBankAccDetail().getBankName());
+		
+		
 		if (supp.getSupplierId() == 0) {
 			supplierManager.addNewSupplier(supp);			
 		} else {
-			supplierManager.editSupplier(supp);
+			//supplierManager.editSupplier(supp);
 		}
 
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/supplier/list.html";
-	}
-	
-	@RequestMapping(value = "/supplier/addperson", method = RequestMethod.POST)
-	public @ResponseBody Person addPerson(@RequestBody Person p) {
-		Person x = new Person();
-		try {			
-			logger.info("person : " + p);			
-		} catch (Exception err) {
-			logger.info(err.getMessage());
-		}
-		return x;
 	}
 }
