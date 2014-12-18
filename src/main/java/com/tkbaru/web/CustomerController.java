@@ -8,14 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.BankAccount;
 import com.tkbaru.model.Customer;
+import com.tkbaru.model.Supplier;
 import com.tkbaru.service.CustomerService;
+import com.tkbaru.service.LookupService;
 
 @Controller
 @RequestMapping("/customer")
@@ -26,15 +27,21 @@ public class CustomerController {
 	@Autowired
 	CustomerService customerManager;
 	
+	@Autowired
+	LookupService lookupManager;
+	
+	@RequestMapping(method = RequestMethod.GET)
 	public String customerPageLoad(Locale locale, Model model) {
+		
+		model.addAttribute("customerList", customerManager.getAllCustomer());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "customer";
+		return Constants.JSPPAGE_CUSTOMER;
 	}
 	
-	@RequestMapping(value="/add.html", method = RequestMethod.GET)
+	@RequestMapping(value="/add", method = RequestMethod.GET)
 	public String addCustomer(Locale locale, Model model) {
 		logger.info("Landed in Customer Page! The client locale is {}.", locale);
 		
@@ -46,7 +53,32 @@ public class CustomerController {
 		return Constants.JSPPAGE_CUSTOMER;
 	}
 
-	@RequestMapping(value="/save.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
+	public String editCustomer(Locale locale, Model model, @PathVariable Integer selectedId) {
+		
+		Customer selectedCustomer = customerManager.getCustomerById(selectedId);
+		
+		model.addAttribute("customerForm", selectedCustomer);
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_CUSTOMER;
+	}
+
+	@RequestMapping(value = "/delete/{selectedId", method = RequestMethod.GET)
+	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
+
+		customerManager.deleteCustomer(selectedId);
+		
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return "redirect:/customer";
+	}
+	
+	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {
 		logger.info("Landed in Customer Page! The client locale is {}.", locale);
 		

@@ -31,7 +31,7 @@
 				
 					$('#bankAccInputMode').val("ADD");
 					$('#bankAccListPanel').hide();
-					$('#bankAccListInputPanel').show();					
+					$('#bankAccListInputPanel').collapse('show');					
 				} else {
 					$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
@@ -46,7 +46,7 @@
 								$('#bankAccRemarks').val($('input[id="bankAccList' + $(item).val() + '.bankRemarks"]').val());
 								
 								$('#bankAccListPanel').hide();
-								$('#bankAccListInputPanel').show();				
+								$('#bankAccListInputPanel').collapse('show');				
 							} else {
 								$('input[id="bankAccList' + $(item).val() + '.bankAccId"]').parents('tr').remove();							
 							}
@@ -86,7 +86,7 @@
 
 							success: function(res) {
 								$('#bankAccListPanel').show();
-								$('#bankAccListInputPanel').hide();
+								$('#bankAccListInputPanel').collapse('hide');
 
 								$('#bankAccListTable tbody').append(res);
 							},
@@ -107,11 +107,11 @@
 						$('label[for="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').text($('#bankAccRemarks').val());
 						
 						$('#bankAccListPanel').show();
-						$('#bankAccListInputPanel').hide();
+						$('#bankAccListInputPanel').collapse('hide');
 					}					
 				} else {
 					$('#bankAccListPanel').show();
-					$('#bankAccListInputPanel').hide();
+					$('#bankAccListInputPanel').collapse('hide');
 					
 					$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });					
 				}
@@ -136,10 +136,10 @@
 				
 				if (button == 'addPerson') {
 					$('#personListInputPanel input').each(function(index) { $(this).val(''); });
-				
+
 					$('#personInputMode').val("ADD");
 					$('#personListPanel').hide();
-					$('#personListInputPanel').show();					
+					$('#personListInputPanel').collapse('show');
 				} else {
 					$('input[id^="cbx_personId_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
@@ -156,7 +156,7 @@
 								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
 								
 								$('#personListPanel').hide();
-								$('#personListInputPanel').show();				
+								$('#personListInputPanel').collapse('show');				
 							} else {
 								$('input[id="picList' + $(item).val() + '.personId"]').parents('tr').remove();							
 							}
@@ -191,7 +191,7 @@
 
 							success: function(res) {
 								$('#personListPanel').show();
-								$('#personListInputPanel').hide();
+								$('#personListInputPanel').collapse('hide');
 
 								$('#personListTable tbody').append(res);
 							},
@@ -218,25 +218,45 @@
 						$('label[for="picList' + $('#personId').val() + '.emailAddr"]').text($('#emailAddr').val());
 						
 						$('#personListPanel').show();
-						$('#personListInputPanel').hide();
+						$('#personListInputPanel').collapse('hide');
 					}					
 				} else {
 					$('#personListPanel').show();
-					$('#personListInputPanel').hide();
+					$('#personListInputPanel').collapse('hide');
 					
 					$('#personListInputPanel input').each(function(index) { $(this).val(''); });					
 				}
 			});
 
+			$('#plusPhone, #minusPhone').click(function() {
+				var button = $(this).attr('id');
+				var prsnId = $('#personId').val();
+				
+				if (button = 'plusPhone') {
+					var countArr = [];
+					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); } 
+					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); 
+					} else { $('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+					countArr.sort(function(a, b) { return b-a });
+					
+					$('#phoneListTable tbody').append(''+
+						'<tr>'+
+							'<td align="center"><div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + countArr.shift() + '" type="checkbox"/></label></div></td>'+
+							'<td><input type="text" class="form-control input-sm" id="" placeholder="Enter Provider"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="" placeholder="Enter Number"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="" placeholder="Status"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="" placeholder="Remarks"/></td>'+
+						'</tr>'+
+					'');
+				} else {
+					
+				}
+			});
 			
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/customer/list.html");
+				window.location.href(ctxpath + "/customer");
 			});
-			
-			$('#addPhone').click(function() {
-				return false;
-			});
-			
+					
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
 				var selected = $(this);
 				
@@ -249,38 +269,27 @@
 				});
 			})
 			
-			$('#editTableSelection').click(function() {
+			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
+				var button = $(this).attr('id');
+								
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
 					}
 				});
 				if (id == "") {
-					jsAlert("Please select at least 1 username");
+					jsAlert("Please select at least 1 customer");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/customer/edit/" + id + ".html");	
+					if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href", ctxpath + "/customer/edit/" + id);	
+					} else {
+						$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id);	
+					}						
 				}				
 			});
-			
-			$('#deleteTableSelection').click(function() {
-				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
-				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
-					if ($(item).prop('checked')) {
-						id = $(item).attr("value");	
-					}
-				});
-				if (id == "") {
-					jsAlert("Please select at least 1 username");
-					return false;	
-				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id + ".html");	
-				}								
-			});
-			
+						
 			$('#userForm').bootstrapValidator({
        			feedbackIcons: {
            			valid: 'glyphicon glyphicon-ok',
@@ -351,17 +360,13 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty userList}">
-												<c:forEach var="i" varStatus="status" items="${customerList}">
+											<c:if test="${not empty customerList}">
+												<c:forEach items="${ customerList }" var="i" varStatus="status">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
-														<td><c:out value="${i.customerName}"></c:out></td>
-														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
-														<td>
-															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine3 }"/>
-														</td>
+														<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.customerId }"/>"/></td>
+														<td><c:out value="${ i.storeName }"></c:out></td>
+														<td></td>
+														<td></td>
 														<td>&nbsp;</td>
 														<td>&nbsp;</td>
 													</tr>
@@ -370,11 +375,30 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/customer/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
 						</div>
+					</c:when>
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT1' }">
+						<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save">
+							<c:forEach items="${ customerForm.picList }" varStatus="picIdx">
+																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
+																		<form:hidden path="picList[${picIdx.index}].personId"/>																																				
+																		<form:hidden path="picList[${picIdx.index}].firstName"/>
+																		<form:hidden path="picList[${picIdx.index}].lastName"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine1"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine2"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
+																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
+																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
+																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phListIdx">
+																			<form:hidden path="picList[${picIdx.index}].phoneList[${phListIdx.index}].providerName"/>
+																			<p>c</p><c:out value="${phListIdx.index}"/>
+																		</c:forEach>
+							</c:forEach>
+						</form:form>
 					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
 						<div class="panel panel-default">
@@ -391,7 +415,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save.html">
+								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
 											<li role="presentation" class="active"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Customer Data</a></li>
@@ -431,26 +455,45 @@
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${ customerForm.picList }" var="picList" varStatus="picIdx">
+															<c:forEach items="${ customerForm.picList }" varStatus="picIdx">
 																<tr>
 																	<td align="center">
-																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].personId"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].firstName"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].lastName"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine1"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine2"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine3"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].emailAddr"/>
-																		<form:hidden path="customerForm.picList[${picIdx.index}].photoPath"/>
+																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
+																		<form:hidden path="picList[${picIdx.index}].personId"/>																																				
+																		<form:hidden path="picList[${picIdx.index}].firstName"/>
+																		<form:hidden path="picList[${picIdx.index}].lastName"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine1"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine2"/>
+																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
+																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
+																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
+																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
+																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"/>																			
+																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"/>
+																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"/>
+																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"/>
+																		</c:forEach>
 																	</td>
-																	<td>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].firstName"></form:label>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].lastName"></form:label></td>
+																	<td>&nbsp;<span id="picList[${picIdx.index}].firstName"><c:out value="${ customerForm.picList[picIdx.index].firstName }"></c:out></span>&nbsp;<span id="picList[${picIdx.index}].lastName"><c:out value="${ customerForm.picList[picIdx.index].lastName }">/</c:out></span></td>
 																	<td>
-																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine1"></form:label><br/>
-																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine2"></form:label><br/>
-																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine3"></form:label><br/>
+																		&nbsp;<span id="picList[${picIdx.index}].addressLine1"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
+																		&nbsp;<span id="picList[${picIdx.index}].addressLine2"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
+																		&nbsp;<span id="picList[${picIdx.index}].addressLine3"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
+																		<br/>
+																		<strong>Phone List</strong><br/>
+																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
+																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].providerName }"></c:out></span>
+																			&nbsp;-&nbsp;
+																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumber }"></c:out></span>
+																			&nbsp;(&nbsp;
+																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneStatus }"></c:out></span>
+																			&nbsp;-&nbsp;
+																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumRemarks }"></c:out></span>
+																			&nbsp;)&nbsp;
+																			<br/>
+																		</c:forEach>
 																	</td>
-																	<td>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].emailAddr"></form:label></td>
+																	<td>&nbsp;<span id="picList[${picIdx.index}].emailAddr"><c:out value="${ picList[picIdx.index].emailAddr }"></c:out></span></td>
 																	<td></td>
 																</tr>
 															</c:forEach>
@@ -463,14 +506,58 @@
 													<input type="hidden" id="personInputMode" value=""/>
 													<div class="row">
 														<label for="firstName" class="col-sm-2 control-label">Name</label>
-														<div class="col-sm-2">
+														<div class="col-sm-4">
 															<input type="text" class="form-control" id="firstName"/>
 														</div>
-														<div class="col-sm-2">
+														<div class="col-sm-4">
 															<input type="text" class="form-control" id="lastName"/>
 														</div>
 													</div>
 													<br/>
+													<div class="row">
+														<label for="addressLine1" class="col-sm-2 control-label">Address</label>
+														<div class="col-sm-8">
+															<input type="text" class="form-control" id="addressLine1"/>
+															<input type="text" class="form-control" id="addressLine1"/>
+															<input type="text" class="form-control" id="addressLine1"/>
+														</div>														
+													</div>
+													<br/>
+													<div class="row">
+														<label for="emailAddr" class="col-sm-2 control-label">Email</label>
+														<div class="col-sm-5">
+															<input type="text" class="form-control" id="emailAddr"/>
+														</div>
+													</div>
+													<br/>
+													<div class="row">																												
+														<div class="col-sm-10 pull-right">
+															<div id="phoneListPanel" class="panel panel-default">
+																<div class="panel-heading">
+																	<strong>Phone List</strong>																	
+																</div>
+																<table id="phoneListTable" class="table table-bordered table-hover">
+																	<thead>
+																		<tr>
+																			<th width="5%">&nbsp;</th>
+																			<th width="15%">Provider</th>
+																			<th width="15%">Number</th>
+																			<th width="15%">Status</th>
+																			<th width="25%">Remarks</th>
+																		</tr>
+																	</thead>
+																	<tbody>
+																	</tbody>
+																</table>
+																<div class="panel-footer no-padding">
+																	<div class="btn-toolbar">
+																	<button type="button" id="minusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+																	<button type="button" id="plusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+																	</div>										
+																</div>
+															</div>
+														</div>
+													</div>
 													<div class="row">
 														<label for="personButton" class="col-sm-2 control-label">&nbsp;</label>
 														<div class="col-sm-5">
@@ -559,9 +646,8 @@
 											<div role="tabpanel" class="tab-pane" id="settingsTab">...</div>
 										</div>
 									</div>
-									<br/>
 									<hr>
-									<div class="col-md-6 col-offset-md-6">
+									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
