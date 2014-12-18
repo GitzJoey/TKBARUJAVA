@@ -9,14 +9,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#addBankAcc').click(function() {
-				$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
-
-				$('#bankAccinputMode').val("ADD");
-				$('#bankAccListPanel').hide();
-				$('#bankAccListInputPanel').show();				
-			});
-
+			//Bank Account
 			$('input[id^="cbx_bankAccId_"]').click(function() {
 				var selected = $(this);	
 				
@@ -29,100 +22,212 @@
 				});
 			});
 			
-			$('#editBankAcc, #deleteBankAcc').click(function() {				
+			$('#addBankAcc, #editBankAcc, #deleteBankAcc').click(function() {				
 				var hasSelected = false;
-				var button = $(this).attr('id');
-				$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
-					if ($(item).prop("checked") == true) {
-						if (button == 'editBankAcc') {
-							$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
-							
-							$('#bankAccinputMode').val("EDIT");							
-							$('#bankAccId').val($('input[id="bankAccList' + $(item).val() + '.bankAccId"]').val());
-							$('#shortName').val($('input[id="bankAccList' + $(item).val() + '.shortName"]').val());						
-							$('#bankName').val($('input[id="bankAccList' + $(item).val() + '.bankName"]').val());
-							$('#accountNumber').val($('input[id="bankAccList' + $(item).val() + '.accNum"]').val());
-							$('#bankAccRemarks').val($('input[id="bankAccList' + $(item).val() + '.bankRemarks"]').val());
-							
-							$('#bankAccListPanel').hide();
-							$('#bankAccListInputPanel').show();				
-						} else {
-							$('input[id="bankAccList' + $(item).val() + '.bankAccId"]').parents('tr').remove();							
-						}
-
-						hasSelected = true;
-					}					
-				});
+				var button = $(this).attr('id');				
 				
-				if (!hasSelected) {
-					jsAlert('Please select at least 1 bank account');
-				}
+				if (button == 'addBankAcc') {
+					$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
+				
+					$('#bankAccInputMode').val("ADD");
+					$('#bankAccListPanel').hide();
+					$('#bankAccListInputPanel').show();					
+				} else {
+					$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
+						if ($(item).prop("checked") == true) {
+							if (button == 'editBankAcc') {
+								$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
+								
+								$('#bankAccInputMode').val("EDIT");							
+								$('#bankAccId').val($('input[id="bankAccList' + $(item).val() + '.bankAccId"]').val());
+								$('#shortName').val($('input[id="bankAccList' + $(item).val() + '.shortName"]').val());						
+								$('#bankName').val($('input[id="bankAccList' + $(item).val() + '.bankName"]').val());
+								$('#accountNumber').val($('input[id="bankAccList' + $(item).val() + '.accNum"]').val());
+								$('#bankAccRemarks').val($('input[id="bankAccList' + $(item).val() + '.bankRemarks"]').val());
+								
+								$('#bankAccListPanel').hide();
+								$('#bankAccListInputPanel').show();				
+							} else {
+								$('input[id="bankAccList' + $(item).val() + '.bankAccId"]').parents('tr').remove();							
+							}
+
+							hasSelected = true;
+						}					
+					});
+					
+					if (!hasSelected) { jsAlert('Please select at least 1 bank account'); }					
+				}				
 			});
 					
-			$('#saveBankAcc').click(function() {
-				if ($('#bankAccinputMode').val() == "ADD") {
-					var custObj = { "bankAccList" : [{
-										"shortName" : $('#shortName').val(),
-										"bankName" : $('#bankName').val(),
-										"accNum" : $('#accountNumber').val(),
-										"bankRemarks" : $('#bankAccRemarks').val(),
-										"bankStatus" : '' }] };
+			$('#saveBankAcc, #discardBankAcc').click(function() {
+				var button = $(this).attr('id');
+				
+				if (button == 'saveBankAcc') {
+					if ($('#bankAccInputMode').val() == "ADD") {
+						var custObj = { "bankAccList" : [{
+											"shortName" : $('#shortName').val(),
+											"bankName" : $('#bankName').val(),
+											"accNum" : $('#accountNumber').val(),
+											"bankRemarks" : $('#bankAccRemarks').val(),
+											"bankStatus" : '' }] };
 
-					var countArr = [];
-					if ($('input[id^="cbx_bankAccId_"]').size() == 0) {
-						countArr.push(0);
-					} else if ($('input[id^="cbx_bankAccId_"]').size() == 1) {
-						countArr.push(0);
-						countArr.push(1); 
+						var countArr = [];
+						if ($('input[id^="cbx_bankAccId_"]').size() == 0) { countArr.push(0); } 
+						else if ($('input[id^="cbx_bankAccId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
+						} else { $('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+						countArr.sort(function(a, b) { return b-a });
+							
+						$.ajax({
+							url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
+							type: 'POST',
+							data: JSON.stringify(custObj),
+							Accept : "application/json",
+							contentType: "application/json",
+
+							success: function(res) {
+								$('#bankAccListPanel').show();
+								$('#bankAccListInputPanel').hide();
+
+								$('#bankAccListTable tbody').append(res);
+							},
+	      
+							error: function(res) { jsAlert("Error ! - " + res.statusText); }
+						});									
 					} else {
-						$('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); });						
-					} 
-					countArr.sort(function(a, b) { return b-a });
+						$('input[id="bankAccList' + $('#bankAccId').val() + '.shortName"]').val($('#shortName').val());		
+						$('label[for="bankAccList' + $('#bankAccId').val() + '.shortName"]').text($('#shortName').val());
 						
-					$.ajax({
-						url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
-						type: 'POST',
-						data: JSON.stringify(custObj),
-						Accept : "application/json",
-						contentType: "application/json",
-
-						success: function(res) {
-							$('#bankAccListPanel').show();
-							$('#bankAccListInputPanel').hide();
-
-							$('#bankAccListTable tbody').append(res);
-						},
-      
-						error: function(res) {
-							alert("Error ! - " + res.statusText);
-						}
-					});									
+						$('input[id="bankAccList' + $('#bankAccId').val() + '.bankName"]').val($('#bankName').val());
+						$('label[for="bankAccList' + $('#bankAccId').val() + '.bankName"]').text($('#bankName').val());
+						
+						$('input[id="bankAccList' + $('#bankAccId').val() + '.accNum"]').val($('#accountNumber').val());
+						$('label[for="bankAccList' + $('#bankAccId').val() + '.accNum"]').text($('#accountNumber').val());
+						
+						$('input[id="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
+						$('label[for="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').text($('#bankAccRemarks').val());
+						
+						$('#bankAccListPanel').show();
+						$('#bankAccListInputPanel').hide();
+					}					
 				} else {
-					$('input[id="bankAccList' + $('#bankAccId').val() + '.shortName"]').val($('#shortName').val());		
-					$('label[for="bankAccList' + $('#bankAccId').val() + '.shortName"]').text($('#shortName').val());
-					
-					$('input[id="bankAccList' + $('#bankAccId').val() + '.bankName"]').val($('#bankName').val());
-					$('label[for="bankAccList' + $('#bankAccId').val() + '.bankName"]').text($('#bankName').val());
-					
-					$('input[id="bankAccList' + $('#bankAccId').val() + '.accNum"]').val($('#accountNumber').val());
-					$('label[for="bankAccList' + $('#bankAccId').val() + '.accNum"]').text($('#accountNumber').val());
-					
-					$('input[id="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
-					$('label[for="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').text($('#bankAccRemarks').val());
-					
 					$('#bankAccListPanel').show();
 					$('#bankAccListInputPanel').hide();
+					
+					$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });					
 				}
 			});
 			
-			$('#discardBankAcc').click(function() {
-				$('#bankAccListPanel').show();
-				$('#bankAccListInputPanel').hide();
+			//Person
+			$('input[id^="cbx_personId_"]').click(function() {
+				var selected = $(this);	
 				
-				$('#bankAccListInputPanel input').each(function(index) {
-					$(this).val('');
+				$('input[id^="cbx_personId_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
 				});
 			});
+			
+			$('#addPerson, #editPerson, #deletePerson').click(function() {				
+				var hasSelected = false;
+				var button = $(this).attr('id');				
+				
+				if (button == 'addPerson') {
+					$('#personListInputPanel input').each(function(index) { $(this).val(''); });
+				
+					$('#personInputMode').val("ADD");
+					$('#personListPanel').hide();
+					$('#personListInputPanel').show();					
+				} else {
+					$('input[id^="cbx_personId_"]').each(function(index, item) {
+						if ($(item).prop("checked") == true) {
+							if (button == 'editPerson') {
+								$('#personListInputPanel input').each(function(index) { $(this).val(''); });
+								
+								$('#personInputMode').val("EDIT");							
+								$('#personId').val($('input[id="picList' + $(item).val() + '.personId"]').val());
+								$('#firstName').val($('input[id="picList' + $(item).val() + '.firstName"]').val());						
+								$('#lastName').val($('input[id="picList' + $(item).val() + '.lastName"]').val());
+								$('#addressLine1').val($('input[id="picList' + $(item).val() + '.addressLine1"]').val());
+								$('#addressLine2').val($('input[id="picList' + $(item).val() + '.addressLine2"]').val());
+								$('#addressLine3').val($('input[id="picList' + $(item).val() + '.addressLine3"]').val());
+								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
+								
+								$('#personListPanel').hide();
+								$('#personListInputPanel').show();				
+							} else {
+								$('input[id="picList' + $(item).val() + '.personId"]').parents('tr').remove();							
+							}
+
+							hasSelected = true;
+						}					
+					});
+					
+					if (!hasSelected) { jsAlert('Please select at least 1 person'); }					
+				}				
+			});
+					
+			$('#savePerson, #discardPerson').click(function() {
+				var button = $(this).attr('id');
+				
+				if (button == 'savePerson') {
+					if ($('#personInputMode').val() == "ADD") {
+						var persObj = {  };
+
+						var countArr = [];
+						if ($('input[id^="cbx_personId_"]').size() == 0) { countArr.push(0); } 
+						else if ($('input[id^="cbx_personId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
+						} else { $('input[id^="cbx_personId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+						countArr.sort(function(a, b) { return b-a });
+							
+						$.ajax({
+							url: ctxpath + "/fragment/customer/addperson/" + countArr.shift(),
+							type: 'POST',
+							data: JSON.stringify(persObj),
+							Accept : "application/json",
+							contentType: "application/json",
+
+							success: function(res) {
+								$('#personListPanel').show();
+								$('#personListInputPanel').hide();
+
+								$('#personListTable tbody').append(res);
+							},
+	      
+							error: function(res) { jsAlert("Error ! - " + res.statusText); }
+						});									
+					} else {
+						$('input[id="picList' + $('#personId').val() + '.firstName"]').val($('#firstName').val());		
+						$('label[for="picList' + $('#personId').val() + '.firstName"]').text($('#firstName').val());
+						
+						$('input[id="picList' + $('#personId').val() + '.lastName"]').val($('#lastName').val());
+						$('label[for="picList' + $('#personId').val() + '.lastName"]').text($('#lastName').val());
+						
+						$('input[id="picList' + $('#personId').val() + '.addressLine1"]').val($('#addressLine1').val());
+						$('label[for="picList' + $('#personId').val() + '.addressLine1"]').text($('#addressLine1').val());
+
+						$('input[id="picList' + $('#personId').val() + '.addressLine2"]').val($('#addressLine2').val());
+						$('label[for="picList' + $('#personId').val() + '.addressLine2"]').text($('#addressLine2').val());
+
+						$('input[id="picList' + $('#personId').val() + '.addressLine3"]').val($('#addressLine3').val());
+						$('label[for="picList' + $('#personId').val() + '.addressLine3"]').text($('#addressLine3').val());
+
+						$('input[id="picList' + $('#personId').val() + '.emailAddr"]').val($('#emailAddr').val());
+						$('label[for="picList' + $('#personId').val() + '.emailAddr"]').text($('#emailAddr').val());
+						
+						$('#personListPanel').show();
+						$('#personListInputPanel').hide();
+					}					
+				} else {
+					$('#personListPanel').show();
+					$('#personListInputPanel').hide();
+					
+					$('#personListInputPanel input').each(function(index) { $(this).val(''); });					
+				}
+			});
+
 			
 			$('#cancelButton').click(function() {				
 				window.location.href("${ pageContext.request.contextPath }/customer/list.html");
@@ -306,14 +411,83 @@
 												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="picTab">
+												<br/>
+												<div id="personListPanel" class="panel panel-default">
+													<div class="panel-heading">
+														<div class="btn-toolbar">
+															<button type="button" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="editPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
+														</div>
+													</div>
+													<table id="personListTable" class="table table-bordered table-hover">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;Name</th>
+																<th>&nbsp;Address</th>
+																<th>&nbsp;Email</th>
+																<th>&nbsp;Status</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:forEach items="${ customerForm.picList }" var="picList" varStatus="picIdx">
+																<tr>
+																	<td align="center">
+																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].personId"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].firstName"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].lastName"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine1"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine2"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].addressLine3"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].emailAddr"/>
+																		<form:hidden path="customerForm.picList[${picIdx.index}].photoPath"/>
+																	</td>
+																	<td>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].firstName"></form:label>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].lastName"></form:label></td>
+																	<td>
+																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine1"></form:label><br/>
+																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine2"></form:label><br/>
+																		&nbsp;<form:label path="customerForm.picList[${picIdx.index}].addressLine3"></form:label><br/>
+																	</td>
+																	<td>&nbsp;<form:label path="customerForm.picList[${picIdx.index}].emailAddr"></form:label></td>
+																	<td></td>
+																</tr>
+															</c:forEach>
+														</tbody>
+													</table>
+												</div>
+												<div id="personListInputPanel" class="panel panel-default collapse">
+													<br/>
+													<input type="hidden" id="personId" value=""/>
+													<input type="hidden" id="personInputMode" value=""/>
+													<div class="row">
+														<label for="firstName" class="col-sm-2 control-label">Name</label>
+														<div class="col-sm-2">
+															<input type="text" class="form-control" id="firstName"/>
+														</div>
+														<div class="col-sm-2">
+															<input type="text" class="form-control" id="lastName"/>
+														</div>
+													</div>
+													<br/>
+													<div class="row">
+														<label for="personButton" class="col-sm-2 control-label">&nbsp;</label>
+														<div class="col-sm-5">
+															<button id="savePerson" type="button" class="btn btn-sm btn-primary">Save</button>
+															<button id="discardPerson" type="button" class="btn btn-sm btn-primary">Discard</button>
+														</div>
+													</div>
+													<br/>
+												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane" id="bankAccTab">
 												<br/>
 												<div id="bankAccListPanel" class="panel panel-default">
 													<div class="panel-heading">
 														<div class="btn-toolbar">
-															<button type="button" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
-															<button type="button" id="editBankAcc" class="btn btn-xs btn-primary pull-right" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
+															<button type="button" id="editBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
 															<button type="button" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
 														</div>
 													</div>
@@ -339,10 +513,10 @@
 																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankRemarks"/>
 																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankStatus"/>
 																	</td>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankName"></form:label>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].accNum"></form:label>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankRemarks"></form:label>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankStatus"></form:label>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankName"></form:label></td>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].accNum"></form:label></td>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankRemarks"></form:label></td>
+																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankStatus"></form:label></td>
 																</tr>
 															</c:forEach>
 														</tbody>
@@ -351,7 +525,7 @@
 												<div id="bankAccListInputPanel" class="panel panel-default collapse">
 													<br/>
 													<input type="hidden" id="bankAccId" value=""/>
-													<input type="hidden" id="bankAccinputMode" value=""/>
+													<input type="hidden" id="bankAccInputMode" value=""/>
 													<div class="row">
 														<label for="shortName" class="col-sm-2 control-label">Short Name</label>
 														<div class="col-sm-2"><input type="text" class="form-control" id="shortName"/></div>
@@ -387,7 +561,7 @@
 									</div>
 									<br/>
 									<hr>
-									<div class="col-md-7 offset-md-5">
+									<div class="col-md-6 col-offset-md-6">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
 											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>

@@ -69,8 +69,17 @@ public class Customer {
 		this.bankAccList = bankAccList;
 	}
 
+	public List<Person> getPicList() {
+		return picList;
+	}
+
+	public void setPicList(List<Person> picList) {
+		this.picList = picList;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", storeName=" + storeName + ", bankAccList=" + bankAccList + "]";
+		return "Customer [customerId=" + customerId + ", storeName=" + storeName + ", bankAccList=" + bankAccList
+				+ ", picList=" + picList + "]";
 	}	
 }
