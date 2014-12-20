@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Customer;
-import com.tkbaru.model.Supplier;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
 
@@ -32,6 +31,7 @@ public class CustomerController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String customerPageLoad(Locale locale, Model model) {
+		logger.info("[customerPageLoad] " + "");
 		
 		model.addAttribute("customerList", customerManager.getAllCustomer());
 		
@@ -43,7 +43,7 @@ public class CustomerController {
 	
 	@RequestMapping(value="/add", method = RequestMethod.GET)
 	public String addCustomer(Locale locale, Model model) {
-		logger.info("Landed in Customer Page! The client locale is {}.", locale);
+		logger.info("[addCustomer] : " + "");
 		
 		model.addAttribute("customerForm", new Customer());
 		
@@ -55,6 +55,7 @@ public class CustomerController {
 
 	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
 	public String editCustomer(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[editCustomer] " + "selectedId = " + selectedId);
 		
 		Customer selectedCustomer = customerManager.getCustomerById(selectedId);
 		
@@ -68,8 +69,9 @@ public class CustomerController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId", method = RequestMethod.GET)
-	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
-
+	public String deleteCustomer(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[deleteCustomer] " + "selectedId = " + selectedId);
+		
 		customerManager.deleteCustomer(selectedId);
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
@@ -80,7 +82,7 @@ public class CustomerController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {
-		logger.info("Landed in Customer Page! The client locale is {}.", locale);
+		logger.info("[saveCustomer] " + "");
 		
 		logger.info(cust.toString());
 		

@@ -1,5 +1,8 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,18 +62,21 @@ public class FragmentController {
 	
 	@RequestMapping(value = "/fragment/{module}/addbank/{counter}", method = RequestMethod.POST)
 	public String addBankData(@RequestBody Customer c, @PathVariable("module") String elMod, @PathVariable("counter") int count, Model model) {
+		logger.info("[addBankData] " + "Creating Bank Account for module: " + elMod + ", counter: " + count);
 		
 		model.addAttribute("customerForm", c);
 		model.addAttribute("counter", count);
 		model.addAttribute("module", elMod);
 		
-		logger.info("Creating Bank Account for module: " + elMod + ", counter: " + count);
-		
 		return "fragment/bank";
 	}
 	
-	@RequestMapping(value = "/fragment/{module}/addperson", method = RequestMethod.POST)
-	public @ResponseBody String addPerson(@RequestBody Person p, @PathVariable("module") String elMod, Model model) {
+	@RequestMapping(value = "/fragment/{module}/addperson/{counter}", method = RequestMethod.POST)
+	public String addPersonData(@RequestBody Customer c, @PathVariable("module") String elMod, @PathVariable("counter") String count, Model model) {
+		logger.info("[addPersonData] " + "Creating PIC for module: " + elMod + ", counter: " + count);
+		
+		model.addAttribute("customerForm", c);
+		model.addAttribute("counter", count);
 		model.addAttribute("module", elMod);
 		
 		return "fragment/person";

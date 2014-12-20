@@ -18,9 +18,7 @@ public class DashboardController {
 	
 	@RequestMapping(value="/dashboard.html", method = RequestMethod.GET)
 	public String dashboard(Locale locale, Model model) {
-		logger.info("Landed in Dashboard Page! The client locale is {}.", locale);
-		
-		
+		logger.info("[dashboard] " + "");
 		
 		return "dashboard";
 	}

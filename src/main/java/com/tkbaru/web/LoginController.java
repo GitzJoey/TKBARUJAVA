@@ -31,8 +31,8 @@ public class LoginController {
 	UserService userManager;
 	
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		logger.info("Landed in Login Page! The client locale is {}.", locale);
+	public String loadLoginPage(Locale locale, Model model) {
+		logger.info("[loadLoginPage] " + "");
 
 		String messageText = "";
 		
@@ -55,7 +55,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/dologin.html", method = RequestMethod.POST)	
 	public String dologin(@RequestParam("username") String userName, @RequestParam("password") String userPswd, Model model) {
-		logger.info("Process dologin! Parameter = " + "userName:" + userName + ", userPswd:" + userPswd);
+		logger.info("[doLogin] " + "");
 		
 		boolean loginSuccess = loginManager.successLogin(userName); 
 
@@ -79,7 +79,7 @@ public class LoginController {
 
 	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
 	public String dologout(Locale locale, Model model, SessionStatus sessionStatus) {
-		logger.info("Process dologout! The client locale is {}.", locale);
+		logger.info("[dologout] " + "");
 		
 		String messageText = "";
 

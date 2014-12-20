@@ -36,6 +36,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> getAllCustomer() {
+		logger.info("[getAllCustomer] " + "");
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Customer> customerList = session.createQuery("FROM Customer").list();
 	
@@ -48,8 +50,9 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public Customer getCustomerById(int selectedId) {
-        Session session = this.sessionFactory.getCurrentSession();     
+		logger.info("[getCustomerById] " + "");
         
+		Session session = this.sessionFactory.getCurrentSession();
         Customer cust = null;
         
         try {
@@ -65,25 +68,34 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public void addCustomer(Customer cust) {
+		logger.info("[addCustomer] " + "");
+		
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(cust);
+        
         logger.info("Customer added successfully, Customer Details = " + cust.toString());		
 	}
 
 	@Override
 	public void editCustomer(Customer cust) {
+		logger.info("[editCustomer] " + "");
+		
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(cust);
+	    
 	    logger.info("Customer updated successfully, Customer Details = " + cust.toString());			
 	}
 
 	@Override
 	public void deleteCustomer(int selectedId) {
+		logger.info("[deleteCustomer] " + "");
+		
         Session session = this.sessionFactory.getCurrentSession();
         Customer customer = (Customer) session.load(Customer.class, new Integer(selectedId));
         if(null != customer){
             session.delete(customer);
         }
+        
         logger.info("Customer deleted successfully, Customer details = " + customer.toString());	
 	}
 }

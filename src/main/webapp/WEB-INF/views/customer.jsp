@@ -70,7 +70,7 @@
 											"accNum" : $('#accountNumber').val(),
 											"bankRemarks" : $('#bankAccRemarks').val(),
 											"bankStatus" : '' }] };
-
+						
 						var countArr = [];
 						if ($('input[id^="cbx_bankAccId_"]').size() == 0) { countArr.push(0); } 
 						else if ($('input[id^="cbx_bankAccId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
@@ -83,7 +83,7 @@
 							data: JSON.stringify(custObj),
 							Accept : "application/json",
 							contentType: "application/json",
-
+							
 							success: function(res) {
 								$('#bankAccListPanel').show();
 								$('#bankAccListInputPanel').collapse('hide');
@@ -136,6 +136,7 @@
 				
 				if (button == 'addPerson') {
 					$('#personListInputPanel input').each(function(index) { $(this).val(''); });
+					$('#phoneListTable tbody').empty();
 
 					$('#personInputMode').val("ADD");
 					$('#personListPanel').hide();
@@ -145,6 +146,7 @@
 						if ($(item).prop("checked") == true) {
 							if (button == 'editPerson') {
 								$('#personListInputPanel input').each(function(index) { $(this).val(''); });
+								$('#phoneListTable tbody').empty();
 								
 								$('#personInputMode').val("EDIT");							
 								$('#personId').val($('input[id="picList' + $(item).val() + '.personId"]').val());
@@ -154,6 +156,20 @@
 								$('#addressLine2').val($('input[id="picList' + $(item).val() + '.addressLine2"]').val());
 								$('#addressLine3').val($('input[id="picList' + $(item).val() + '.addressLine3"]').val());
 								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
+								
+								$('#hiddenPhoneList div').each(function(index, item) {
+									var prsnId = $(item).attr('id').split('_')[1];
+									alert(prsnId);
+									$('#phoneListTable tbody').append(''+
+										'<tr>'+
+											'<td align="center"><div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + index + '" type="checkbox"/></label></div></td>'+
+											'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $('#providerName', item).val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $('#phoneNumber', item).val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $('#phoneStatus', item).val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $('#phoneNumRemarks', item).val() + '"/></td>'+
+										'</tr>'+
+									'');
+								});
 								
 								$('#personListPanel').hide();
 								$('#personListInputPanel').collapse('show');				
@@ -173,9 +189,35 @@
 				var button = $(this).attr('id');
 				
 				if (button == 'savePerson') {
-					if ($('#personInputMode').val() == "ADD") {
-						var persObj = {  };
-
+					if ($('#personInputMode').val() == "ADD") {						
+						var phoneListObj = [];
+						
+						$('#phoneListTable tbody tr').each(function(index, item) {							
+							phoneListObj.push({
+								"providerName" 		: $('#providerName', item).val(),
+								"phoneNumber" 		: $('#phoneNumber', item).val(),
+								"phoneStatus" 		: $('#phoneStatus', item).val(),
+								"phoneNumRemarks" 	: $('#phoneNumRemarks', item).val()
+							});
+						});						
+						
+						var persListObj = [];			
+							persListObj.push({
+								"personId" 		: 0,
+								"firstName" 	: $('#firstName').val(),
+								"lastName"		: $('#lastName').val(),
+								"addressLine1"	: $('#addressLine1').val(),
+								"addressLine2"	: $('#addressLine2').val(),
+								"addressLine3" 	: $('#addressLine3').val(),
+								"emailAddr"		: $('#emailAddr').val(),
+								"photoPath"		: $('#photoPath').val(),
+								"phoneList"		: phoneListObj
+							});
+							
+						
+						var custObj = { };
+							custObj.picList = persListObj;
+							
 						var countArr = [];
 						if ($('input[id^="cbx_personId_"]').size() == 0) { countArr.push(0); } 
 						else if ($('input[id^="cbx_personId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
@@ -185,15 +227,15 @@
 						$.ajax({
 							url: ctxpath + "/fragment/customer/addperson/" + countArr.shift(),
 							type: 'POST',
-							data: JSON.stringify(persObj),
+							data: JSON.stringify(custObj),
 							Accept : "application/json",
 							contentType: "application/json",
-
+							
 							success: function(res) {
 								$('#personListPanel').show();
 								$('#personListInputPanel').collapse('hide');
 
-								$('#personListTable tbody').append(res);
+								$('#personListTable tbody').append(res);	
 							},
 	      
 							error: function(res) { jsAlert("Error ! - " + res.statusText); }
@@ -242,10 +284,10 @@
 					$('#phoneListTable tbody').append(''+
 						'<tr>'+
 							'<td align="center"><div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + countArr.shift() + '" type="checkbox"/></label></div></td>'+
-							'<td><input type="text" class="form-control input-sm" id="" placeholder="Enter Provider"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="" placeholder="Enter Number"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="" placeholder="Status"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="" placeholder="Remarks"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status"/></td>'+
+							'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks"/></td>'+
 						'</tr>'+
 					'');
 				} else {
@@ -381,25 +423,6 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT1' }">
-						<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save">
-							<c:forEach items="${ customerForm.picList }" varStatus="picIdx">
-																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
-																		<form:hidden path="picList[${picIdx.index}].personId"/>																																				
-																		<form:hidden path="picList[${picIdx.index}].firstName"/>
-																		<form:hidden path="picList[${picIdx.index}].lastName"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine1"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine2"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
-																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
-																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
-																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phListIdx">
-																			<form:hidden path="picList[${picIdx.index}].phoneList[${phListIdx.index}].providerName"/>
-																			<p>c</p><c:out value="${phListIdx.index}"/>
-																		</c:forEach>
-							</c:forEach>
-						</form:form>
-					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -467,12 +490,16 @@
 																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
 																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
 																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
-																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
-																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"/>																			
-																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"/>
-																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"/>
-																			<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"/>
-																		</c:forEach>
+																		<div id="hiddenPhoneList">
+																			<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
+																				<div id="phoneId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>_<c:out value="${ phoneListIdx.index }"/>">
+																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"/>																			
+																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"/>
+																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"/>
+																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"/>
+																				</div>
+																			</c:forEach>
+																		</div>
 																	</td>
 																	<td>&nbsp;<span id="picList[${picIdx.index}].firstName"><c:out value="${ customerForm.picList[picIdx.index].firstName }"></c:out></span>&nbsp;<span id="picList[${picIdx.index}].lastName"><c:out value="${ customerForm.picList[picIdx.index].lastName }">/</c:out></span></td>
 																	<td>
@@ -518,8 +545,8 @@
 														<label for="addressLine1" class="col-sm-2 control-label">Address</label>
 														<div class="col-sm-8">
 															<input type="text" class="form-control" id="addressLine1"/>
-															<input type="text" class="form-control" id="addressLine1"/>
-															<input type="text" class="form-control" id="addressLine1"/>
+															<input type="text" class="form-control" id="addressLine2"/>
+															<input type="text" class="form-control" id="addressLine3"/>
 														</div>														
 													</div>
 													<br/>
