@@ -64,12 +64,17 @@
 				
 				if (button == 'saveBankAcc') {
 					if ($('#bankAccInputMode').val() == "ADD") {
-						var custObj = { "bankAccList" : [{
-											"shortName" : $('#shortName').val(),
-											"bankName" : $('#bankName').val(),
-											"accNum" : $('#accountNumber').val(),
-											"bankRemarks" : $('#bankAccRemarks').val(),
-											"bankStatus" : '' }] };
+						var custObj = { };
+						var bankAccObj = [];
+							bankAccObj.push({
+								"shortName" 	: $('#shortName').val(),
+								"bankName" 		: $('#bankName').val(),
+								"accNum" 		: $('#accountNumber').val(),
+								"bankRemarks" 	: $('#bankAccRemarks').val(),
+								"bankStatus" 	: '' 
+							});
+						
+						custObj.bankAccList = bankAccObj;
 						
 						var countArr = [];
 						if ($('input[id^="cbx_bankAccId_"]').size() == 0) { countArr.push(0); } 
@@ -81,7 +86,6 @@
 							url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
 							type: 'POST',
 							data: JSON.stringify(custObj),
-							Accept : "application/json",
 							contentType: "application/json",
 							
 							success: function(res) {
@@ -228,7 +232,6 @@
 							url: ctxpath + "/fragment/customer/addperson/" + countArr.shift(),
 							type: 'POST',
 							data: JSON.stringify(custObj),
-							Accept : "application/json",
 							contentType: "application/json",
 							
 							success: function(res) {
@@ -616,21 +619,21 @@
 															</tr>
 														</thead>
 														<tbody>
-															<c:forEach items="${ customerForm.bankAccList }" var="baList" varStatus="baIdx">
+															<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
 																<tr>
 																	<td align="center">
 																		<input id="cbx_bankAccId_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" type="checkbox" value="<c:out value="${baIdx.index}"/>"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankAccId"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].shortName"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankName"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].accNum"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankRemarks"/>
-																		<form:hidden path="customerForm.bankAccList[${baIdx.index}].bankStatus"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].bankAccId"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].shortName"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].bankName"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].accNum"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].bankRemarks"/>
+																		<form:hidden path="bankAccList[${baIdx.index}].bankStatus"/>
 																	</td>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankName"></form:label></td>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].accNum"></form:label></td>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankRemarks"></form:label></td>
-																	<td>&nbsp;<form:label path="customerForm.bankAccList[${baIdx.index}].bankStatus"></form:label></td>
+																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="bankAccList[${baIdx.index}].bankName"></form:label></td>
+																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].accNum"></form:label></td>
+																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].bankRemarks"></form:label></td>
+																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].bankStatus"></form:label></td>
 																</tr>
 															</c:forEach>
 														</tbody>

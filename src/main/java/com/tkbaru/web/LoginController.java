@@ -57,7 +57,7 @@ public class LoginController {
 	public String dologin(@RequestParam("username") String userName, @RequestParam("password") String userPswd, Model model) {
 		logger.info("[doLogin] " + "");
 		
-		boolean loginSuccess = loginManager.successLogin(userName); 
+		boolean loginSuccess = loginManager.successLogin(userName, userPswd); 
 
 		if (!loginSuccess) {
 			String messageText = "Better check yourself, you're not looking too good.";

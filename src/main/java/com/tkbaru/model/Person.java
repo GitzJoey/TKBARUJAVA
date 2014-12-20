@@ -3,6 +3,7 @@ package com.tkbaru.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import org.apache.commons.collections.list.LazyList;
 @Table(name="tb_person")
 public class Person {
 	public Person() {
-		this.phoneList = new ArrayList<PhoneList>();
+		
 	}
 	
 	@Id
@@ -41,8 +42,8 @@ public class Person {
 	private String photoPath;
 	
 	@SuppressWarnings("unchecked")
-	@OneToMany(mappedBy="personEnt")
-	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(Person.class));
+	@OneToMany(mappedBy="personEnt", cascade=CascadeType.ALL)
+	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(PhoneList.class));
 
 	public int getPersonId() {
 		return personId;

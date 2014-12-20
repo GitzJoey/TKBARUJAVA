@@ -30,7 +30,7 @@ public class PhoneList {
 	private String phoneNumRemarks;
 	
 	@ManyToOne
-	@JoinColumn(name="person_id", nullable=false)
+	@JoinColumn(name="person_id")
 	private Person personEnt;
 		
 	public int getPhoneListId() {

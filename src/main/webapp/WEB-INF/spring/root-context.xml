@@ -46,6 +46,9 @@
         <beans:property name="password" value="${jdbc.password}" />
     </beans:bean>
 
+	<!-- Spring Security -->
+	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
     <!-- Hibernate 4 SessionFactory Bean definition -->
     <beans:bean id="hibernate4AnnotatedSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<beans:property name="dataSource" ref="dbcpDataSource" />
@@ -78,8 +81,6 @@
         	</beans:list>
         </beans:property>
     </beans:bean>
-
-	<tx:annotation-driven transaction-manager="transactionManager"/>
     
     <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
@@ -115,7 +116,9 @@
     </beans:bean>
     
     <!-- declare spring Service -->
-    <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl"></beans:bean>
+    <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
+    	<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
+    </beans:bean>
     <beans:bean id="userService" class="com.tkbaru.service.UserServiceImpl"></beans:bean>
     <beans:bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></beans:bean>
     <beans:bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></beans:bean>

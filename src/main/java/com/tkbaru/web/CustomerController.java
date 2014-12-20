@@ -82,9 +82,10 @@ public class CustomerController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {
-		logger.info("[saveCustomer] " + "");
+		logger.info("[saveCustomer] " + cust.toString());
 		
-		logger.info(cust.toString());
+		if (cust.getCustomerId() == 0) { customerManager.addCustomer(cust); }
+		else { customerManager.editCustomer(cust); }
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
