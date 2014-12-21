@@ -73,7 +73,7 @@ public class LoginController {
 			lc.setUserLogin(userdata);
 			
 			model.addAttribute("loginContext", lc);			
-			return "redirect:/dashboard.html";
+			return "redirect:/dashboard";
 		}
 	}
 

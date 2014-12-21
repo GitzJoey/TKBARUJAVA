@@ -2,37 +2,24 @@ package com.tkbaru.dao;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
-import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Customer;
 
+@Repository
 public class CustomerDAOImpl implements CustomerDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDAOImpl.class);
-
-	@Autowired
-	private DataSource dataSource;
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
 
     private SessionFactory sessionFactory;
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-
-    private BasicDataSource dbcpDataSource;
-    public void setDbcpDataSource(BasicDataSource dbcpDataSource) {
-    	this.dbcpDataSource = dbcpDataSource;
-    }
-    
+   
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customer> getAllCustomer() {

@@ -81,6 +81,8 @@
         	</beans:list>
         </beans:property>
     </beans:bean>
+
+	<tx:annotation-driven transaction-manager="transactionManager"/>    
     
     <beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
         <beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
@@ -110,8 +112,6 @@
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="CustomerDAO" class="com.tkbaru.dao.CustomerDAOImpl">
-    	<beans:property name="dataSource" ref="dataSource" />
-    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     

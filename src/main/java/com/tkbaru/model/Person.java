@@ -9,7 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.FactoryUtils;
@@ -42,7 +44,10 @@ public class Person {
 	private String photoPath;
 	
 	@SuppressWarnings("unchecked")
-	@OneToMany(mappedBy="personEnt", cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_person_phonelist",
+				joinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")},
+				inverseJoinColumns={@JoinColumn(name="phonelist_id", referencedColumnName="phonelist_id")})
 	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(PhoneList.class));
 
 	public int getPersonId() {

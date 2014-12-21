@@ -59,6 +59,8 @@ public class CustomerController {
 		
 		Customer selectedCustomer = customerManager.getCustomerById(selectedId);
 		
+		logger.info("[editCustomer] " + "selectedCustomer = " + selectedCustomer.toString());
+		
 		model.addAttribute("customerForm", selectedCustomer);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
@@ -68,7 +70,7 @@ public class CustomerController {
 		return Constants.JSPPAGE_CUSTOMER;
 	}
 
-	@RequestMapping(value = "/delete/{selectedId", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String deleteCustomer(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[deleteCustomer] " + "selectedId = " + selectedId);
 		
@@ -81,11 +83,11 @@ public class CustomerController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {
-		logger.info("[saveCustomer] " + cust.toString());
+	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {	
+        logger.info("[saveCustomer] " + cust.toString());
 		
-		if (cust.getCustomerId() == 0) { customerManager.addCustomer(cust); }
-		else { customerManager.editCustomer(cust); }
+		//if (cust.getCustomerId() == 0) { customerManager.addCustomer(cust); }
+		//else { customerManager.editCustomer(cust); }
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

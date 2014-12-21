@@ -122,10 +122,10 @@
 			});
 			
 			//Person
-			$('input[id^="cbx_personId_"]').click(function() {
+			$('input[id^="cbx_picListIndex_"]').click(function() {
 				var selected = $(this);	
 				
-				$('input[id^="cbx_personId_"]').each(function(index, item) {
+				$('input[id^="cbx_picListIndex_"]').each(function(index, item) {
 					if ($(item).attr("id") != $(selected).attr("id")) { 
 						if ($(item).prop("checked")) {
 							$(item).prop("checked", false);
@@ -146,13 +146,14 @@
 					$('#personListPanel').hide();
 					$('#personListInputPanel').collapse('show');
 				} else {
-					$('input[id^="cbx_personId_"]').each(function(index, item) {
+					$('input[id^="cbx_picListIndex_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
 							if (button == 'editPerson') {
 								$('#personListInputPanel input').each(function(index) { $(this).val(''); });
 								$('#phoneListTable tbody').empty();
 								
-								$('#personInputMode').val("EDIT");							
+								$('#personInputMode').val("EDIT");			
+								
 								$('#personId').val($('input[id="picList' + $(item).val() + '.personId"]').val());
 								$('#firstName').val($('input[id="picList' + $(item).val() + '.firstName"]').val());						
 								$('#lastName').val($('input[id="picList' + $(item).val() + '.lastName"]').val());
@@ -161,24 +162,27 @@
 								$('#addressLine3').val($('input[id="picList' + $(item).val() + '.addressLine3"]').val());
 								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
 								
-								$('#hiddenPhoneList div').each(function(index, item) {
-									var prsnId = $(item).attr('id').split('_')[1];
-									alert(prsnId);
-									$('#phoneListTable tbody').append(''+
+								$('#hiddenPhoneListForPICListIndex_' + $(item).val() + ' div').each(function(phIndex, phItem) {
+									var elem = $(''+
 										'<tr>'+
-											'<td align="center"><div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + index + '" type="checkbox"/></label></div></td>'+
-											'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $('#providerName', item).val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $('#phoneNumber', item).val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $('#phoneStatus', item).val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $('#phoneNumRemarks', item).val() + '"/></td>'+
+											'<td align="center">'+
+												'<div class="checkbox"><label><input id="cbx_phoneId_' + $(item).val() + '_' + $(phItem).attr('id').split('_')[3] + '" type="checkbox"/></label></div>'+
+												'<input type="text" class="form-control input-sm" id="phoneListId" placeholder="Enter Provider" value="' + $(phItem).find('input[id$="phoneListId"]').val() + '"/>'+
+											'</td>'+
+											'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $(phItem).find('input[id$="providerName"]').val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $(phItem).find('input[id$="phoneNumber"]').val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $(phItem).find('input[id$="phoneStatus"]').val() + '"/></td>'+
+											'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $(phItem).find('input[id$="phoneNumRemarks"]').val() + '"/></td>'+
 										'</tr>'+
 									'');
+									
+									$('#phoneListTable tbody').append(elem);
 								});
 								
 								$('#personListPanel').hide();
 								$('#personListInputPanel').collapse('show');				
 							} else {
-								$('input[id="picList' + $(item).val() + '.personId"]').parents('tr').remove();							
+								$(item).parents('tr').remove();							
 							}
 
 							hasSelected = true;
@@ -276,12 +280,12 @@
 			$('#plusPhone, #minusPhone').click(function() {
 				var button = $(this).attr('id');
 				var prsnId = $('#personId').val();
-				
-				if (button = 'plusPhone') {
+
+				if (button == 'plusPhone') {
 					var countArr = [];
-					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); } 
-					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); 
-					} else { $('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); alert('a'); } 
+					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); alert('b'); } 
+					else { $('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); alert('c'); } 
 					countArr.sort(function(a, b) { return b-a });
 					
 					$('#phoneListTable tbody').append(''+
@@ -294,7 +298,7 @@
 						'</tr>'+
 					'');
 				} else {
-					
+						
 				}
 			});
 			
@@ -333,26 +337,7 @@
 						$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id);	
 					}						
 				}				
-			});
-						
-			$('#userForm').bootstrapValidator({
-       			feedbackIcons: {
-           			valid: 'glyphicon glyphicon-ok',
-           			invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-       			},
-       			submitButtons: 'button[type="submit"]',
-       			fields: {
-       				inputUserName: {
-               			validators: {
-                   			notEmpty: { },
-							stringLength: { min: 4, max: 10 },
-							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'inputCustomerName' }
-               			}
-           			}
-       			}
-			});
+			});						
 		});
 	</script>	
 </head>
@@ -397,11 +382,7 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="15%">Store Name</th>
-												<th width="25%">Address</th>
-												<th width="35%"></th>
-												<th width="15%">Phone</th>
-												<th width="5%">Status</th>
+												<th width="95%">Store Details</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -409,11 +390,36 @@
 												<c:forEach items="${ customerList }" var="i" varStatus="status">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.customerId }"/>"/></td>
-														<td><c:out value="${ i.storeName }"></c:out></td>
-														<td></td>
-														<td></td>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
+														<td>
+															<table class="table borderless">
+																<tbody>
+																	<tr>
+																		<td>
+																			<h3><c:out value="${ i.storeName }"></c:out></h3>
+																			<br/>
+																			<br/>
+																			<c:out value="${ '' }"></c:out><br/>															
+																			<c:out value="${ '' }"></c:out><br/>
+																			<c:out value="${ '' }"></c:out><br/>
+																			<br/>																			
+																		</td>
+																		<td>
+																			<strong>Person In Charge</strong>
+																			<br/>
+																			<br/>
+																			<br/>
+																			<br/>
+																			<strong>Bank Account</strong>
+																			<br/>
+																			<br/>
+																			<br/>
+																			<strong>Settings</strong>
+																		</td>
+																	</tr>
+																</tbody>
+															</table>															
+															
+														</td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -456,6 +462,7 @@
 												<div class="form-group">
 													<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
 													<div class="col-sm-3">
+														<form:hidden path="customerId" />
 														<form:input path="storeName" type="text" class="form-control" id="inputStoreName" name="inputStoreName" placeholder="Enter Store Name"></form:input>
 													</div>
 												</div>
@@ -484,7 +491,7 @@
 															<c:forEach items="${ customerForm.picList }" varStatus="picIdx">
 																<tr>
 																	<td align="center">
-																		<input id="cbx_personId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
+																		<input id="cbx_picListIndex_<c:out value="${ picIdx.index }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
 																		<form:hidden path="picList[${picIdx.index}].personId"/>																																				
 																		<form:hidden path="picList[${picIdx.index}].firstName"/>
 																		<form:hidden path="picList[${picIdx.index}].lastName"/>
@@ -493,9 +500,10 @@
 																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
 																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
 																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
-																		<div id="hiddenPhoneList">
+																		<div id="hiddenPhoneListForPICListIndex_<c:out value="${ picIdx.index }"/>" >
 																			<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
-																				<div id="phoneId_<c:out value="${ customerForm.picList[picIdx.index].personId }"/>_<c:out value="${ phoneListIdx.index }"/>">
+																				<div id="picListIndex_<c:out value="${ picIdx.index }"/>_phoneListIndex_<c:out value="${ phoneListIdx.index }"/>">
+																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneListId"/>
 																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"/>																			
 																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"/>
 																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"/>

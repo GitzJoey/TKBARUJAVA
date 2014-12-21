@@ -12,11 +12,12 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 
 @Controller
 @SessionAttributes("userContext")
+@RequestMapping(value="/dashboard")
 public class DashboardController {
 
 	private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 	
-	@RequestMapping(value="/dashboard.html", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(Locale locale, Model model) {
 		logger.info("[dashboard] " + "");
 		
