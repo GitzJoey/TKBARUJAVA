@@ -145,6 +145,8 @@
 					$('#personInputMode').val("ADD");
 					$('#personListPanel').hide();
 					$('#personListInputPanel').collapse('show');
+					
+					$('#personId').val("0");
 				} else {
 					$('input[id^="cbx_picListIndex_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
@@ -152,6 +154,7 @@
 								$('#personListInputPanel input').each(function(index) { $(this).val(''); });
 								$('#phoneListTable tbody').empty();
 								
+								$('#personIndex').val($(item).val());
 								$('#personInputMode').val("EDIT");			
 								
 								$('#personId').val($('input[id="picList' + $(item).val() + '.personId"]').val());
@@ -163,20 +166,18 @@
 								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
 								
 								$('#hiddenPhoneListForPICListIndex_' + $(item).val() + ' div').each(function(phIndex, phItem) {
-									var elem = $(''+
-										'<tr>'+
-											'<td align="center">'+
-												'<div class="checkbox"><label><input id="cbx_phoneId_' + $(item).val() + '_' + $(phItem).attr('id').split('_')[3] + '" type="checkbox"/></label></div>'+
-												'<input type="text" class="form-control input-sm" id="phoneListId" placeholder="Enter Provider" value="' + $(phItem).find('input[id$="phoneListId"]').val() + '"/>'+
-											'</td>'+
-											'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $(phItem).find('input[id$="providerName"]').val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $(phItem).find('input[id$="phoneNumber"]').val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $(phItem).find('input[id$="phoneStatus"]').val() + '"/></td>'+
-											'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $(phItem).find('input[id$="phoneNumRemarks"]').val() + '"/></td>'+
-										'</tr>'+
-									'');
-									
-									$('#phoneListTable tbody').append(elem);
+									$('#phoneListTable tbody').append(''+
+											'<tr>'+
+												'<td align="center">'+
+													'<div class="checkbox"><label><input id="cbx_phoneId_' + $('input[id="picList' + $(item).val() + '.personId"]').val() + '_' + phIndex + '" type="checkbox"/></label></div>'+
+													'<input type="hidden" id="phoneListId" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneListId' + '"]').val() + '"/>'+
+												'</td>'+
+												'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.providerName' + '"]').val() + '"/></td>'+
+												'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneNumber' + '"]').val() + '"/></td>'+
+												'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneStatus' + '"]').val() + '"/></td>'+
+												'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneNumRemarks' + '"]').val() + '"/></td>'+
+											'</tr>'+
+										'');									
 								});
 								
 								$('#personListPanel').hide();
@@ -202,6 +203,7 @@
 						
 						$('#phoneListTable tbody tr').each(function(index, item) {							
 							phoneListObj.push({
+								"phoneListId"		: $('#phoneListId', item).val(),
 								"providerName" 		: $('#providerName', item).val(),
 								"phoneNumber" 		: $('#phoneNumber', item).val(),
 								"phoneStatus" 		: $('#phoneStatus', item).val(),
@@ -211,7 +213,7 @@
 						
 						var persListObj = [];			
 							persListObj.push({
-								"personId" 		: 0,
+								"personId" 		: $('#personId').val(),
 								"firstName" 	: $('#firstName').val(),
 								"lastName"		: $('#lastName').val(),
 								"addressLine1"	: $('#addressLine1').val(),
@@ -248,23 +250,27 @@
 							error: function(res) { jsAlert("Error ! - " + res.statusText); }
 						});									
 					} else {
-						$('input[id="picList' + $('#personId').val() + '.firstName"]').val($('#firstName').val());		
-						$('label[for="picList' + $('#personId').val() + '.firstName"]').text($('#firstName').val());
+						$('input[id="picList' + $('#personIndex').val() + '.firstName"]').val($('#firstName').val());		
+						$('span[id="picList[' + $('#personIndex').val() + '].firstName"]').text($('#firstName').val());
 						
-						$('input[id="picList' + $('#personId').val() + '.lastName"]').val($('#lastName').val());
-						$('label[for="picList' + $('#personId').val() + '.lastName"]').text($('#lastName').val());
+						$('input[id="picList' + $('#personIndex').val() + '.lastName"]').val($('#lastName').val());
+						$('span[id="picList[' + $('#personIndex').val() + '].lastName"]').text($('#lastName').val());
 						
-						$('input[id="picList' + $('#personId').val() + '.addressLine1"]').val($('#addressLine1').val());
-						$('label[for="picList' + $('#personId').val() + '.addressLine1"]').text($('#addressLine1').val());
+						$('input[id="picList' + $('#personIndex').val() + '.addressLine1"]').val($('#addressLine1').val());
+						$('span[id="picList[' + $('#personIndex').val() + '].addressLine1"]').text($('#addressLine1').val());
 
-						$('input[id="picList' + $('#personId').val() + '.addressLine2"]').val($('#addressLine2').val());
-						$('label[for="picList' + $('#personId').val() + '.addressLine2"]').text($('#addressLine2').val());
+						$('input[id="picList' + $('#personIndex').val() + '.addressLine2"]').val($('#addressLine2').val());
+						$('span[id="picList[' + $('#personIndex').val() + '].addressLine2"]').text($('#addressLine2').val());
 
-						$('input[id="picList' + $('#personId').val() + '.addressLine3"]').val($('#addressLine3').val());
-						$('label[for="picList' + $('#personId').val() + '.addressLine3"]').text($('#addressLine3').val());
+						$('input[id="picList' + $('#personIndex').val() + '.addressLine3"]').val($('#addressLine3').val());
+						$('span[id="picList[' + $('#personIndex').val() + '].addressLine3"]').text($('#addressLine3').val());
 
-						$('input[id="picList' + $('#personId').val() + '.emailAddr"]').val($('#emailAddr').val());
-						$('label[for="picList' + $('#personId').val() + '.emailAddr"]').text($('#emailAddr').val());
+						$('input[id="picList' + $('#personIndex').val() + '.emailAddr"]').val($('#emailAddr').val());
+						$('span[id="picList[' + $('#personIndex').val() + '].emailAddr"]').text($('#emailAddr').val());
+						
+						$('#phoneListTable tbody tr').each(function(idx, itm) {
+							
+						});
 						
 						$('#personListPanel').show();
 						$('#personListInputPanel').collapse('hide');
@@ -283,14 +289,21 @@
 
 				if (button == 'plusPhone') {
 					var countArr = [];
-					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); alert('a'); } 
-					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); alert('b'); } 
-					else { $('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); alert('c'); } 
+					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); } 
+					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
+					else { 
+						$('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { 
+							countArr.push(parseInt($(item).attr('id').split('_')[3]) + 1); 
+						}); 						 
+					} 
 					countArr.sort(function(a, b) { return b-a });
-					
+							
 					$('#phoneListTable tbody').append(''+
 						'<tr>'+
-							'<td align="center"><div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + countArr.shift() + '" type="checkbox"/></label></div></td>'+
+							'<td align="center">'+
+								'<div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + countArr.shift() + '" type="checkbox"/></label></div>'+
+								'<input type="hidden" id="phoneListId" value="0"/>'+
+							'</td>'+
 							'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider"/></td>'+
 							'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number"/></td>'+
 							'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status"/></td>'+
@@ -519,17 +532,19 @@
 																		&nbsp;<span id="picList[${picIdx.index}].addressLine3"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
 																		<br/>
 																		<strong>Phone List</strong><br/>
-																		<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
-																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].providerName }"></c:out></span>
-																			&nbsp;-&nbsp;
-																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumber }"></c:out></span>
-																			&nbsp;(&nbsp;
-																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneStatus }"></c:out></span>
-																			&nbsp;-&nbsp;
-																			<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumRemarks }"></c:out></span>
-																			&nbsp;)&nbsp;
-																			<br/>
-																		</c:forEach>
+																		<div id="spanPhoneList">
+																			<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
+																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].providerName }"></c:out></span>
+																				&nbsp;-&nbsp;
+																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumber }"></c:out></span>
+																				&nbsp;(&nbsp;
+																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneStatus }"></c:out></span>
+																				&nbsp;-&nbsp;
+																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumRemarks }"></c:out></span>
+																				&nbsp;)&nbsp;
+																				<br/>
+																			</c:forEach>
+																		</div>
 																	</td>
 																	<td>&nbsp;<span id="picList[${picIdx.index}].emailAddr"><c:out value="${ picList[picIdx.index].emailAddr }"></c:out></span></td>
 																	<td></td>
@@ -541,6 +556,7 @@
 												<div id="personListInputPanel" class="panel panel-default collapse">
 													<br/>
 													<input type="hidden" id="personId" value=""/>
+													<input type="hidden" id="personIndex" value=""/>
 													<input type="hidden" id="personInputMode" value=""/>
 													<div class="row">
 														<label for="firstName" class="col-sm-2 control-label">Name</label>
