@@ -22,6 +22,10 @@ public class Constants {
 	public static final String JSPPAGE_SUPPLIER = "supplier";
 	public static final String JSPPAGE_CUSTOMER = "customer";
 	public static final String JSPPAGE_ACTION = "action";
+	public static final String JSPPAGE_PURCHASEORDER = "po";
+	public static final String JSPPAGE_SALESORDER = "sales";
+	public static final String JSPPAGE_REPORT = "report";
+	public static final String JSPPAGE_PO_PAYMENT = "popayment";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
