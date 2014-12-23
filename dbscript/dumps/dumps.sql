@@ -169,7 +169,7 @@ CREATE TABLE `tb_function` (
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`function_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -178,7 +178,7 @@ CREATE TABLE `tb_function` (
 
 LOCK TABLES `tb_function` WRITE;
 /*!40000 ALTER TABLE `tb_function` DISABLE KEYS */;
-INSERT INTO `tb_function` VALUES (1,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','Purchase Order','fa fa-plus fa-fw','/po/add.html',100100,1,0,'2014-12-18 19:45:47',NULL,NULL),(2,'F_SO_SETTODAYPRICE','Sales Order','fa fa-dollar fa-fw','Sales Order','fa fa-plus fa-fw','/sales/settodayprice.html',100100,1,0,'2014-12-18 19:45:47',NULL,NULL),(3,'F_SO_SALESORDER','Sales Order','fa fa-dollar fa-fw','Sales Order','fa fa-plus fa-fw','/sales/add.html',200200,2,0,'2014-12-18 19:45:47',NULL,NULL),(4,'F_MON_DELIVERY','Monitoring','fa fa-eye fa-fw','Today Delivery','fa fa-plus fa-fw','/monitor/todaydelivery.html',300100,1,0,'2014-12-18 19:45:47',NULL,NULL),(5,'F_RPT_RPT1','Reports','fa fa-bar-chart-o fa-fw','Report 1','fa fa-plus fa-fw','/sales/settodayprice.html',400100,1,0,'2014-12-18 19:45:47',NULL,NULL),(6,'F_SO_SALESORDER','Reports','fa fa-bar-chart-o fa-fw','Report 2','fa fa-plus fa-fw','/sales/add.html',400200,2,0,'2014-12-18 19:45:47',NULL,NULL),(7,'F_MASTER_CUSTOMER','Master Data','fa fa-file-text-o fa-fw','Customer','fa fa-smile-o fa-fw','/customer',998100,1,0,'2014-12-18 19:45:47',NULL,NULL),(8,'F_MASTER_SUPPLIER','Master Data','fa fa-file-text-o fa-fw','Supplier','fa fa-building-o fa-fw','/supplier',998200,1,0,'2014-12-18 19:45:47',NULL,NULL),(9,'F_MASTER_PRODUCT','Master Data','fa fa-file-text-o fa-fw','Product','fa fa-cubes fa-fw','/product',998300,1,0,'2014-12-18 19:45:47',NULL,NULL),(10,'F_ADM_USER','Admin Menu','glyphicon glyphicon-cog','User','fa fa-user fa-fw','/admin/user.html',999100,1,0,'2014-12-18 19:45:47',NULL,NULL),(11,'F_ADM_ROLE','Admin Menu','glyphicon glyphicon-cog','Role','fa fa-tree fa-fw','/admin/role.html',999200,1,0,'2014-12-18 19:45:47',NULL,NULL),(12,'F_ADM_FUNCTION','Admin Menu','glyphicon glyphicon-cog','Function','fa fa-minus-square fa-fw','/admin/function.html',999300,1,0,'2014-12-18 19:45:47',NULL,NULL),(13,'F_ADM_LOOKUP','Admin Menu','glyphicon glyphicon-cog','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup.html',999400,2,0,'2014-12-18 19:45:47',NULL,NULL);
+INSERT INTO `tb_function` VALUES (1,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','Purchase Order','fa fa-plus fa-fw','/po/add.html',100100,1,0,'2014-12-22 23:12:50',NULL,NULL),(2,'F_SO_SETTODAYPRICE','Sales Order','fa fa-dollar fa-fw','Sales Order','fa fa-plus fa-fw','/sales/settodayprice.html',100100,1,0,'2014-12-22 23:12:50',NULL,NULL),(3,'F_SO_SALESORDER','Sales Order','fa fa-dollar fa-fw','Sales Order','fa fa-plus fa-fw','/sales/add.html',200200,2,0,'2014-12-22 23:12:50',NULL,NULL),(4,'F_MON_DELIVERY','Monitoring','fa fa-eye fa-fw','Today Delivery','fa fa-plus fa-fw','/monitor/todaydelivery.html',300100,1,0,'2014-12-22 23:12:50',NULL,NULL),(5,'F_RPT_RPT1','Reports','fa fa-bar-chart-o fa-fw','Report 1','fa fa-plus fa-fw','/sales/settodayprice.html',400100,1,0,'2014-12-22 23:12:50',NULL,NULL),(6,'F_SO_SALESORDER','Reports','fa fa-bar-chart-o fa-fw','Report 2','fa fa-plus fa-fw','/sales/add.html',400200,2,0,'2014-12-22 23:12:50',NULL,NULL),(7,'F_MASTER_CUSTOMER','Master Data','fa fa-file-text-o fa-fw','Customer','fa fa-smile-o fa-fw','/customer',998100,1,0,'2014-12-22 23:12:50',NULL,NULL),(8,'F_MASTER_SUPPLIER','Master Data','fa fa-file-text-o fa-fw','Supplier','fa fa-building-o fa-fw','/supplier',998200,1,0,'2014-12-22 23:12:50',NULL,NULL),(9,'F_MASTER_PRODUCT','Master Data','fa fa-file-text-o fa-fw','Product','fa fa-cubes fa-fw','/product',998300,1,0,'2014-12-22 23:12:50',NULL,NULL),(10,'F_ADM_USER','Admin Menu','glyphicon glyphicon-cog','User','fa fa-user fa-fw','/admin/user.html',999100,1,0,'2014-12-22 23:12:50',NULL,NULL),(11,'F_ADM_ROLE','Admin Menu','glyphicon glyphicon-cog','Role','fa fa-tree fa-fw','/admin/role.html',999200,1,0,'2014-12-22 23:12:50',NULL,NULL),(12,'F_ADM_FUNCTION','Admin Menu','glyphicon glyphicon-cog','Function','fa fa-minus-square fa-fw','/admin/function.html',999300,1,0,'2014-12-22 23:12:50',NULL,NULL),(13,'F_ADM_ACTION','Admin Menu','glyphicon glyphicon-cog','Action','fa fa-gamepad fa-fw','/admin/action.html',999400,1,0,'2014-12-22 23:12:50',NULL,NULL),(14,'F_ADM_LOOKUP','Admin Menu','glyphicon glyphicon-cog','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup.html',999500,2,0,'2014-12-22 23:12:50',NULL,NULL);
 /*!40000 ALTER TABLE `tb_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -317,15 +317,17 @@ DROP TABLE IF EXISTS `tb_product`;
 CREATE TABLE `tb_product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_type` varchar(45) DEFAULT NULL,
+  `short_code` varchar(45) DEFAULT NULL,
   `product_name` varchar(45) DEFAULT NULL,
-  `short_name` varchar(45) DEFAULT NULL,
+  `product_description` varchar(45) DEFAULT NULL,
+  `unit` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -334,6 +336,7 @@ CREATE TABLE `tb_product` (
 
 LOCK TABLES `tb_product` WRITE;
 /*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
+INSERT INTO `tb_product` VALUES (1,'','','','','',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -516,4 +519,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-22 12:16:46
+-- Dump completed on 2014-12-23 20:54:22

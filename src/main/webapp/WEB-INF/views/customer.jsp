@@ -329,7 +329,7 @@
 						}
 					}
 				});
-			})
+			});
 			
 			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
@@ -431,7 +431,6 @@
 																	</tr>
 																</tbody>
 															</table>															
-															
 														</td>
 													</tr>
 												</c:forEach>

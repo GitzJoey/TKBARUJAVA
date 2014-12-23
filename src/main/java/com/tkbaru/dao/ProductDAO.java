@@ -1,14 +1,13 @@
-package com.tkbaru.service;
+package com.tkbaru.dao;
 
 import java.util.List;
 
 import com.tkbaru.model.Product;
 
-public interface ProductService {
+public interface ProductDAO {
 	public List<Product> getAllProduct();
 	public Product getProductById(int selectedId);
-	public void addProduct(Product product);
-	public void editProduct(Product product);
+	public void addProduct(Product prod);
+	public void editProduct(Product prod);
 	public void deleteProduct(int selectedId);
-
 }

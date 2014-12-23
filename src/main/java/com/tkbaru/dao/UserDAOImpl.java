@@ -8,7 +8,6 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -35,11 +34,6 @@ public class UserDAOImpl implements UserDAO {
     private SessionFactory sessionFactory;
     public void setSessionFactory(SessionFactory sf){
         this.sessionFactory = sf;
-    }
-
-    private BasicDataSource dbcpDataSource;
-    public void setDbcpDataSource(BasicDataSource dbcpDataSource) {
-    	this.dbcpDataSource = dbcpDataSource;
     }
 
 	public User getUser(String userName) {

@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.apache.commons.dbcp.BasicDataSource;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -31,11 +30,6 @@ public class SupplierDAOImpl implements SupplierDAO {
         this.sessionFactory = sf;
     }
 
-    private BasicDataSource dbcpDataSource;
-    public void setDbcpDataSource(BasicDataSource dbcpDataSource) {
-    	this.dbcpDataSource = dbcpDataSource;
-    }
-    
 	@Override
 	public Supplier getSupplierById(int selectedId) {
         Session session = this.sessionFactory.getCurrentSession();     

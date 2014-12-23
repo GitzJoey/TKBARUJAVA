@@ -20,7 +20,6 @@ import com.tkbaru.service.LookupService;
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
-
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	
 	@Autowired

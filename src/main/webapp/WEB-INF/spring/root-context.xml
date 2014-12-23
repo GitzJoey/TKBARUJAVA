@@ -61,6 +61,7 @@
                 <beans:value>com.tkbaru.model.PhoneList</beans:value>
                 <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
+                <beans:value>com.tkbaru.model.Product</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -78,6 +79,7 @@
         		<beans:value>com.tkbaru.model.PhoneList</beans:value>
                 <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
+                <beans:value>com.tkbaru.model.Product</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -91,7 +93,6 @@
     <!-- declare spring DAO -->
     <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
-    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
 	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
@@ -108,10 +109,12 @@
     </beans:bean>
     <beans:bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
-    	<beans:property name="dbcpDataSource" ref="dbcpDataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="CustomerDAO" class="com.tkbaru.dao.CustomerDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+    <beans:bean id="ProductDAO" class="com.tkbaru.dao.ProductDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     
@@ -125,4 +128,5 @@
     <beans:bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></beans:bean>
     <beans:bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></beans:bean>
     <beans:bean id="CustomerService" class="com.tkbaru.service.CustomerServiceImpl"></beans:bean>
+    <beans:bean id="ProductService" class="com.tkbaru.service.ProductServiceImpl"></beans:bean>
 </beans:beans>

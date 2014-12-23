@@ -2,38 +2,50 @@ package com.tkbaru.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.tkbaru.dao.ProductDAO;
 import com.tkbaru.model.Product;
 
 public class ProductServiceImpl implements ProductService {
 
+	@Autowired
+	ProductDAO productDAO;
+	
 	@Override
-	public List<Product> getAllCustomer() {
-		// TODO Auto-generated method stub
-		return null;
+	@Transactional
+	public List<Product> getAllProduct() {
+		
+		return productDAO.getAllProduct();
 	}
 
 	@Override
+	@Transactional
 	public Product getProductById(int selectedId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addProduct(Product customer) {
-		// TODO Auto-generated method stub
 		
+		return productDAO.getProductById(selectedId);
 	}
 
 	@Override
-	public void editProduct(Product customer) {
-		// TODO Auto-generated method stub
-		
+	@Transactional
+	public void addProduct(Product product) {
+
+		productDAO.addProduct(product);
 	}
 
 	@Override
+	@Transactional
+	public void editProduct(Product product) {
+
+		productDAO.editProduct(product);
+	}
+
+	@Override
+	@Transactional
 	public void deleteProduct(int selectedId) {
-		// TODO Auto-generated method stub
-		
+
+		productDAO.deleteProduct(selectedId);		
 	}
 
 }

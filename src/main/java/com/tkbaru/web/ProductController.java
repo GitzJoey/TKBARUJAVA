@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,12 +13,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.Customer;
+import com.tkbaru.model.Product;
+import com.tkbaru.service.LookupService;
+import com.tkbaru.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
+
+	@Autowired
+	ProductService productManager;
+	
+	@Autowired
+	LookupService lookupManager;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String productPageLoad(Locale locale, Model model) {
@@ -33,6 +42,7 @@ public class ProductController {
 	public String addProduct(Locale locale, Model model) {
 		logger.info("[addProduct] : " + "");
 		
+		model.addAttribute("productForm", new Product());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 	
@@ -43,6 +53,9 @@ public class ProductController {
 	public String editProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[editProduct] : " + "");
 			
+		Product selectedProduct = productManager.getProductById(selectedId);
+		
+		model.addAttribute("productForm", selectedProduct);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -53,6 +66,8 @@ public class ProductController {
 	public String deleteProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[deleteProduct] : " + "");
 
+		productManager.deleteProduct(selectedId);
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -60,9 +75,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveProduct(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {	
+	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod) {	
 		logger.info("[saveProduct] : " + "");
 	
+		if (prod.getProductId() == 0) { productManager.addProduct(prod); }
+		else { productManager.editProduct(prod); }
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
