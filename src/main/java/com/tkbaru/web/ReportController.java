@@ -16,18 +16,13 @@ import com.tkbaru.common.Constants;
 @RequestMapping("/report")
 public class ReportController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
-	/*
-	@RequestMapping(method = RequestMethod.GET)
-	public String reportPageLoad(Locale locale, Model model) {
-		logger.info("[reportPageLoad] " + "");
+
+	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
+	public String selectedReportPage(Locale locale, Model model, @PathVariable String reportId) {
+		logger.info("[selectedReportPage] " + "id: " + reportId);
+		
+		model.addAttribute("reportId", reportId);
 		
 		return Constants.JSPPAGE_REPORT;
 	}
-	
-	@RequestMapping(name="/id/{reportid}", method = RequestMethod.GET)
-	public String selectedReportPage(Locale locale, Model model, @PathVariable Integer reportId) {
-		
-		return Constants.JSPPAGE_REPORT;
-	}
-	*/
 }

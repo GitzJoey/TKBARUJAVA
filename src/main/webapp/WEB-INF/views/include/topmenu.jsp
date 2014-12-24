@@ -11,9 +11,9 @@
       			<p class="navbar-text"><strong>&nbsp;</strong></p>
 				<form class="navbar-form navbar-right" role="search">
 	  				<div class="form-group input-group-sm">
-	    				<input type="text" class="form-control" placeholder="Search">
+	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search">
 	  				</div>
-	  				<button type="submit" class="btn btn-sm btn-default"><span class="fa fa-search fa-fw"></span>&nbsp;Search</button>
+	  				<button id="searchTopMenu" type="button" class="btn btn-sm btn-default"><span class="fa fa-search fa-fw"></span>&nbsp;Search</button>
 				</form>
   			</div>
 		</nav>

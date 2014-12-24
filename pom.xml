@@ -14,6 +14,7 @@
 		<org.aspectj-version>1.8.2</org.aspectj-version>
 		<org.slf4j-version>1.7.7</org.slf4j-version>
 		<hibernate.version>4.3.7.Final</hibernate.version>
+		<net.sf.jasperreports-version>5.6.1</net.sf.jasperreports-version>
 	</properties>
 	<dependencies>
 		<!-- Spring -->
@@ -60,6 +61,7 @@
             <artifactId>commons-dbcp</artifactId>
             <version>1.4</version>
         </dependency>
+        
         <!-- Spring ORM -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -74,6 +76,13 @@
 			<version>${org.aspectj-version}</version>
 		</dependency>	
 		
+		<!-- Jasper Report -->
+		<dependency>
+			<groupId>net.sf.jasperreports</groupId>
+			<artifactId>jasperreports</artifactId>
+			<version>${net.sf.jasperreports-version}</version>
+		</dependency>
+				
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>

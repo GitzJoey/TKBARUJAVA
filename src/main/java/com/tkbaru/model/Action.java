@@ -6,8 +6,9 @@ public class Action {
 	}
 	
 	private int actionId;
-	private String ActionName;
-	private String Status;
+	private String actionCode;
+	private String actionName;
+	private String actionStatus;
 	
 	public int getActionId() {
 		return actionId;
@@ -15,16 +16,22 @@ public class Action {
 	public void setActionId(int actionId) {
 		this.actionId = actionId;
 	}
+	public String getActionCode() {
+		return actionCode;
+	}
+	public void setActionCode(String actionCode) {
+		this.actionCode = actionCode;
+	}
 	public String getActionName() {
-		return ActionName;
+		return actionName;
 	}
 	public void setActionName(String actionName) {
-		ActionName = actionName;
+		this.actionName = actionName;
 	}
-	public String getStatus() {
-		return Status;
+	public String getActionStatus() {
+		return actionStatus;
 	}
-	public void setStatus(String status) {
-		Status = status;
+	public void setActionStatus(String actionStatus) {
+		this.actionStatus = actionStatus;
 	}
 }
