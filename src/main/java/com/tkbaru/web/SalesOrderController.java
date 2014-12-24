@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tkbaru.common.Constants;
 
 @Controller
-@RequestMapping(name="/po")
+@RequestMapping("/sales")
 public class SalesOrderController {
 
 	@RequestMapping(method = RequestMethod.GET)

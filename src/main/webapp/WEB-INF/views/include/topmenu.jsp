@@ -5,19 +5,15 @@
   			<div class="container-fluid">
   				<div class="navbar-header">
     				<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">
-						<i class="fa fa-btc"></i>
+						<i class="fa fa-home fa-border"></i>
       				</a>
       			</div>
       			<p class="navbar-text"><strong>&nbsp;</strong></p>
 				<form class="navbar-form navbar-right" role="search">
-	  				<div class="form-group">
+	  				<div class="form-group input-group-sm">
 	    				<input type="text" class="form-control" placeholder="Search">
 	  				</div>
-	  				<button type="submit" class="btn btn-default"><span class="fa fa-search fa-fw"></span>&nbsp;Search</button>
+	  				<button type="submit" class="btn btn-sm btn-default"><span class="fa fa-search fa-fw"></span>&nbsp;Search</button>
 				</form>
-				<div class="btn-toolbar">
-					<button type="button" class="btn btn-danger navbar-btn navbar-right">&nbsp;<span class="fa fa-life-buoy fa-spin fa-fw"></span>&nbsp;</button>
-					<button type="button" class="btn btn-default navbar-btn navbar-right"><span class="fa fa-envelope fa-fw"></span>&nbsp;Messages</button>
-				</div>
   			</div>
 		</nav>
