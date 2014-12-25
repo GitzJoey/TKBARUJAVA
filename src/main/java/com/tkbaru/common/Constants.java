@@ -34,4 +34,9 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
 	public static final String LOOKUPCATEGORY_YESNOSELECTION = "YESNOSELECTION";
+	
+	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
+	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";
+	public static final String JASPERREPORT_OUTPUTTYPE_CSV = "csv";
+	public static final String JASPERREPORT_OUTPUTTYPE_XLS = "xls";
 }

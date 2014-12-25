@@ -129,4 +129,8 @@
     <beans:bean id="SupplierService" class="com.tkbaru.service.SupplierServiceImpl"></beans:bean>
     <beans:bean id="CustomerService" class="com.tkbaru.service.CustomerServiceImpl"></beans:bean>
     <beans:bean id="ProductService" class="com.tkbaru.service.ProductServiceImpl"></beans:bean>
+    <beans:bean id="ReportService" class="com.tkbaru.service.ReportServiceImpl"></beans:bean>
+
+	<!-- Jasper -->
+	<beans:import resource="jasper-views.xml" />
 </beans:beans>

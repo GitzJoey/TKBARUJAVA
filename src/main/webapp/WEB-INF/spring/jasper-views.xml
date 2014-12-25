@@ -6,8 +6,24 @@
 						http://www.springframework.org/schema/beans/spring-beans.xsd
 						">
 	
-	<bean id="/report/gen/html/user" class="org.springframework.web.servlet.view.jasperreports.JasperReportsMultiFormatView"
-		p:url="/WEB-INF/jasper/reportUser.jrxml"
+	<bean id="user_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/reportUser.jrxml"
+			p:reportDataKey="datasource" 
 	/>
-
-</beans>						
+ 
+	<bean id="user_xls"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
+			p:url="/WEB-INF/jasper/reportUser.jrxml"
+			p:reportDataKey="datasource" />
+ 
+	<bean id="user_html"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
+			p:url="/WEB-INF/jasper/reportUser.jrxml"
+		p:reportDataKey="datasource" />
+ 
+	<bean id="user_csv"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
+			p:url="/WEB-INF/jasper/reportUser.jrxml"
+			p:reportDataKey="datasource" />
+</beans>
