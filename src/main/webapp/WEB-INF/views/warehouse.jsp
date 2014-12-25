@@ -32,14 +32,8 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
-				<c:choose>
-					<c:when test="${ reportId == 'rpt1' }">
-						<a href="${ pageContext.request.contextPath }/report/gen/html/user">ppp</a>
-					</c:when>
-					<c:otherwise>
-						<p>reportId not found.</p>
-					</c:otherwise>
-				</c:choose>
+				
+				Contents
 			</div>
 		</div>
 	</div>	

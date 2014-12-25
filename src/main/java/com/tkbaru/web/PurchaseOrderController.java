@@ -15,20 +15,19 @@ import com.tkbaru.common.Constants;
 @RequestMapping("/po")
 public class PurchaseOrderController {
 	private static final Logger logger = LoggerFactory.getLogger(PurchaseOrderController.class);
-	/*
-	@RequestMapping(method = RequestMethod.GET)
+	
+	@RequestMapping(value="/add", method = RequestMethod.GET)
 	public String poPageLoad(Locale locale, Model model) {
 		logger.info("[poPageLoad] " + "");
 		
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
-	*/
-	/*
-	@RequestMapping(name="/payment", method = RequestMethod.GET)
+	
+	@RequestMapping(value="/payment", method = RequestMethod.GET)
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 		
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
-	*/
+	
 }

@@ -13,6 +13,7 @@ public class Constants {
 	public static final String ERRORFLAG_HIDE = "ERRORFLAG_HIDE";
 	
 	public static final String JSPPAGE_REDIRECT_TO = "redirect:/";
+	
 	public static final String JSPPAGE_USER = "user";
 	public static final String JSPPAGE_LOOKUP = "lookup";
 	public static final String JSPPAGE_ROLE = "role";
@@ -25,8 +26,10 @@ public class Constants {
 	public static final String JSPPAGE_PURCHASEORDER = "po";
 	public static final String JSPPAGE_SALESORDER = "sales";
 	public static final String JSPPAGE_REPORT = "report";
-	public static final String JSPPAGE_PO_PAYMENT = "popayment";
+	public static final String JSPPAGE_PO_PAYMENT = "po_payment";
 	public static final String JSPPAGE_SEARCH = "search";
+	public static final String JSPPAGE_WAREHOUSE = "warehouse";
+	public static final String JSPPAGE_TODAYDELIVERY = "todaydelivery";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";

@@ -13,10 +13,15 @@ import com.tkbaru.common.Constants;
 @RequestMapping("/sales")
 public class SalesOrderController {
 
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value="/add", method = RequestMethod.GET)
 	public String salesPageLoad(Locale locale, Model model) {
 		
 		return Constants.JSPPAGE_SALESORDER;
 	}
-	
+
+	@RequestMapping(value="/todayprice", method = RequestMethod.GET)
+	public String todayPricePageLoad(Locale locale, Model model) {
+		
+		return Constants.JSPPAGE_SALESORDER;
+	}	
 }

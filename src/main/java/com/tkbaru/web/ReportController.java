@@ -18,7 +18,7 @@ public class ReportController {
 	private static final Logger logger = LoggerFactory.getLogger(ReportController.class);
 
 	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
-	public String selectedReportPage(Locale locale, Model model, @PathVariable String reportId) {
+	public String selectedReportPage(Locale locale, Model model, @PathVariable("reportid") String reportId) {
 		logger.info("[selectedReportPage] " + "id: " + reportId);
 		
 		model.addAttribute("reportId", reportId);
