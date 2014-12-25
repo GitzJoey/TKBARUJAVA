@@ -1,7 +1,6 @@
 package com.tkbaru.web;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
@@ -18,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.User;
 import com.tkbaru.service.ReportService;
 
 @Controller
@@ -50,21 +48,24 @@ public class ReportController {
 		Map<String,Object> parameterMap = new HashMap<String,Object>();
 
 		String beanOutputType = "";
-		if (outputType.toLowerCase().equals(Constants.JASPERREPORT_OUTPUTTYPE_HTML.toLowerCase())) { beanOutputType = "_html"; } 
-		else if (outputType.toLowerCase().equals(Constants.JASPERREPORT_OUTPUTTYPE_PDF.toLowerCase())) { beanOutputType = "_pdf"; }
-		else if (outputType.toLowerCase().equals(Constants.JASPERREPORT_OUTPUTTYPE_CSV.toLowerCase())) { beanOutputType = "_csv"; }
-		else if (outputType.toLowerCase().equals(Constants.JASPERREPORT_OUTPUTTYPE_PDF.toLowerCase())) { beanOutputType = "_xls"; }
-		else { }
 		
-		if (reportName.toUpperCase().equals("USER")) {
-			datasource = reportManager.generateReportUserDS(); 	
-			parameterMap.put("datasource", datasource);
-			
-			mav = new ModelAndView(reportName + beanOutputType, parameterMap); 
-		} else if (reportName.toUpperCase().equals("RPT2")) {
-			
-		} else {
-			
+		switch (outputType.toLowerCase()) {
+			case Constants.JASPERREPORT_OUTPUTTYPE_HTML: beanOutputType = "_html"; break;
+			case Constants.JASPERREPORT_OUTPUTTYPE_PDF: beanOutputType = "_pdf"; break;
+			case Constants.JASPERREPORT_OUTPUTTYPE_CSV: beanOutputType = "_csv"; break;
+			case Constants.JASPERREPORT_OUTPUTTYPE_XLS: beanOutputType = "_xls"; break;
+			default : break;
+		}
+		
+		switch (reportName.toUpperCase()) {
+			case "USER":
+				datasource = reportManager.generateReportUserDS(); 	
+				parameterMap.put("datasource", datasource);
+				
+				mav = new ModelAndView(reportName + beanOutputType, parameterMap); 
+				break;
+			default:
+				break;
 		}
 		
 		logger.info("[selectedReportPage] " + "mav: " + mav.toString());

@@ -9,8 +9,7 @@
 	<bean id="user_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
-			p:reportDataKey="datasource" 
-	/>
+			p:reportDataKey="datasource" />
  
 	<bean id="user_xls"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
