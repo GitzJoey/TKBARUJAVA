@@ -32,6 +32,8 @@ public class ProductController {
 	public String productPageLoad(Locale locale, Model model) {
 		logger.info("[productPageLoad] : " + "");
 		
+		model.addAttribute("productList", productManager.getAllProduct());
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -43,26 +45,34 @@ public class ProductController {
 		logger.info("[addProduct] : " + "");
 		
 		model.addAttribute("productForm", new Product());
+		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 	
 		return Constants.JSPPAGE_PRODUCT;
 	}
 	
-	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{selectedId}.html", method = RequestMethod.GET)
 	public String editProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[editProduct] : " + "");
+		logger.info("[editProduct] " + "selectedId = " + selectedId);
 			
 		Product selectedProduct = productManager.getProductById(selectedId);
 		
 		model.addAttribute("productForm", selectedProduct);
+		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PRODUCT;
 	}
 	
-	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String deleteProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[deleteProduct] : " + "");
 

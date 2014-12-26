@@ -46,6 +46,8 @@ public class ProductDAOImpl implements ProductDAO {
         } catch (Exception err) {
         	logger.info(err.getMessage());
         }
+        
+        logger.info("Product loaded successfully, Product details = " + prod.toString());
                 
         return prod;	
 	}

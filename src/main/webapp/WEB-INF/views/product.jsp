@@ -39,9 +39,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/customer/edit/" + id);	
+						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id + ".html");	
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id);	
+						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id + ".html");	
 					}						
 				}				
 			});
@@ -102,9 +102,12 @@
 												<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-														<td>
-															
-														</td>
+														<td><c:out value="${i.productType}"></c:out></td>
+														<td><c:out value="${i.shortCode}"></c:out></td>
+														<td><c:out value="${i.productName}"></c:out></td>
+														<td><c:out value="${i.unit}"></c:out></td>
+														<td><c:out value="${i.productDesc}"></c:out></td>
+														<td><c:out value="${i.productStatus}"></c:out></td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -137,8 +140,11 @@
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputProductType" name="inputProductType" path="productType" placeholder="Enter Product Type"></form:input>
-										</div>
+											<form:select class="form-control" path="productType">
+												<option>Select Product Type</option>
+												<form:options items="${ productTypeDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+											</form:select>															
+										</div>										
 									</div>
 									<div class="form-group">
 										<label for="inputShortCode" class="col-sm-2 control-label">Short Code</label>
@@ -160,14 +166,20 @@
 									</div>
 									<div class="form-group">
 										<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
-										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputUnit" name="inputUnit" path="unit" placeholder="Unit"></form:input>
+										<div class="col-sm-2">											
+											<form:select class="form-control" path="unit">
+												<option>Select Unit</option>
+												<form:options items="${ unitDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+											</form:select>	
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											
+											<form:select class="form-control" path="productStatus">
+												<option>Select Unit</option>
+												<form:options items="${ statusDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+											</form:select>
 										</div>
 									</div>									
 									<div class="col-md-7 col-offset-md-5">
