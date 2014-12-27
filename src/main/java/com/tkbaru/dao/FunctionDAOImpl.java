@@ -15,8 +15,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 import com.tkbaru.model.Function;
 
-public class FunctionDAOImpl implements FunctionDAO {
-	
+public class FunctionDAOImpl implements FunctionDAO {	
 	private static final Logger logger = LoggerFactory.getLogger(FunctionDAOImpl.class);
 	
 	private DataSource dataSource;
@@ -57,6 +56,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 			
 			result.add(res);
 		}
+		
+		for (Function f:result) { logger.info("f: " + f.toString()); }
 		
 		return result;
 	}

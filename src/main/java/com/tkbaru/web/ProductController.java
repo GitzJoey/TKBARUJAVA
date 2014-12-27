@@ -55,7 +55,7 @@ public class ProductController {
 		return Constants.JSPPAGE_PRODUCT;
 	}
 	
-	@RequestMapping(value = "/edit/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
 	public String editProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[editProduct] " + "selectedId = " + selectedId);
 			
@@ -72,9 +72,9 @@ public class ProductController {
 		return Constants.JSPPAGE_PRODUCT;
 	}
 	
-	@RequestMapping(value = "/delete/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String deleteProduct(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[deleteProduct] : " + "");
+		logger.info("[deleteProduct] : " + "selectedId = " + selectedId);
 
 		productManager.deleteProduct(selectedId);
 		
@@ -86,7 +86,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod) {	
-		logger.info("[saveProduct] : " + "");
+		logger.info("[saveProduct] " + "prod: " + prod.toString());
 	
 		if (prod.getProductId() == 0) { productManager.addProduct(prod); }
 		else { productManager.editProduct(prod); }

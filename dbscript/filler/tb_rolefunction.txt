@@ -39,6 +39,8 @@ INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
 VALUES (1, 18, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
 VALUES (1, 19, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
+VALUES (1, 20, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*NON ADMIN ROLE*/
 INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
@@ -69,4 +71,5 @@ INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
 VALUES (2, 13, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT tb_rolefunction (role_id, function_id, created_by, created_date)
 VALUES (2, 14, 0, (SELECT CURRENT_TIMESTAMP()));
+
 COMMIT;

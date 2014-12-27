@@ -1,123 +1,119 @@
 TRUNCATE TABLE tb_lookup;
 
 /*Status - L001*/
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('STATUS', 'A',
-		'ACT', 'Active', 'Active',
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('STATUS', 'L001_A',
+		'ACT', 'Active',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('STATUS', 'I',
-		'INACT', 'Inactive', 'Inactive',
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('STATUS', 'L001_I',
+		'INACT', 'Inactive',
         2, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Salutation - L002*/
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_MR',
-		'Mr', 'Mr', 'Mister',
+		'Mr', 'Mr',
         10, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_MRS',
-		'Mrs', 'Mrs', 'Miss',
+		'Mrs', 'Mrs',
         11, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_TN',
-		'Tn', 'Tuan', 'Tuan',
+		'Tn', 'Tuan',
         12, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_NY',
-		'Ny', 'Nyonya', 'Nyonya',
+		'Ny', 'Nyonya',
         13, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_KO',
-		'K', 'Koh', 'Koh',
+		'K', 'Koh',
         14, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L003_CI',
-		'C', 'Ci', 'Ci',
+		'C', 'Ci',
         15, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*YesNoSelection - L003*/
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('YESNOSELECTION', 'L003_YES',
-		'Y', 'Yes', 'Yes',
+		'Y', 'Yes',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('YESNOSELECTION', 'L004_NO',
-		'N', 'No', 'No',
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('YESNOSELECTION', 'L003_NO',
+		'N', 'No',
         2, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*Product Type - L004*/
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_ML',
+		'ML', 'Minyak Curah',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_GL',
+		'GL', 'Gula Pasir',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_TRG',
+		'TRG', 'Tepung Terigu (Gandum)',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_ACI',
+		'ACI', 'Tepung Tapioka/Kanji (Singkong)',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_KDLL',
+		'KDLL', 'Kedelai Lokal',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_KDLI',
+		'KDLI', 'Kedelai Import',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Unit - L005*/
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('UNIT', 'L005_DR',
+		'DR', 'Drum',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('UNIT', 'L005_KG',
+		'Kg', 'Kilogram (Kg)',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('UNIT', 'L005_TN',
+		'Ton', 'Ton',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('UNIT', 'L005_KN',
+		'Kn', 'Kuintal (Kn)',
+        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
-        1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '', '',
+		'', '',
         1, 'A', 'N', 0, (SELECT CURRENT_TIMESTAMP()));
 */      
 COMMIT;

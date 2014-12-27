@@ -1,0 +1,9 @@
+TRUNCATE TABLE tb_store;
+
+INSERT INTO tb_store (store_name, address_1, address_2, address_3, is_default, status, created_by, created_date)
+VALUES ('Toko Baru', '', '', '', 'L003_YES', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_store (store_name, address_1, address_2, address_3, is_default, status, created_by, created_date)
+VALUES ('Toko Baru - ', '', '', '', 'L003_NO', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+ 
+COMMIT;

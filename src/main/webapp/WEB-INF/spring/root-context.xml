@@ -62,6 +62,7 @@
                 <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
                 <beans:value>com.tkbaru.model.Product</beans:value>
+                <beans:value>com.tkbaru.model.Store</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -80,6 +81,7 @@
                 <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
                 <beans:value>com.tkbaru.model.Product</beans:value>
+                <beans:value>com.tkbaru.model.Store</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -117,6 +119,9 @@
     <beans:bean id="ProductDAO" class="com.tkbaru.dao.ProductDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="StoreDAO" class="com.tkbaru.dao.StoreDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -130,7 +135,8 @@
     <beans:bean id="CustomerService" class="com.tkbaru.service.CustomerServiceImpl"></beans:bean>
     <beans:bean id="ProductService" class="com.tkbaru.service.ProductServiceImpl"></beans:bean>
     <beans:bean id="ReportService" class="com.tkbaru.service.ReportServiceImpl"></beans:bean>
-
+	<beans:bean id="StoreService" class="com.tkbaru.service.StoreServiceImpl"></beans:bean>
+	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />
 </beans:beans>
