@@ -17,6 +17,7 @@ public class StoreDAOImpl implements StoreDAO {
         this.sessionFactory = sf;
     }
     
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<Store> getAllStore() {
 		logger.info("[getAllStore] " + "");

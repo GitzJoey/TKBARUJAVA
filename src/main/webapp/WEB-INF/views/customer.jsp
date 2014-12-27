@@ -453,7 +453,7 @@
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Customer
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-smile-o fa-fw fa-2x"></span>&nbsp;Edit Customer
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Customer
 										</c:otherwise>
 									</c:choose>
 								</h1>

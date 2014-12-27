@@ -39,9 +39,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id + ".html");	
+						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id);	
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id + ".html");	
+						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id);	
 					}						
 				}				
 			});
@@ -129,7 +129,7 @@
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Product
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-smile-o fa-fw fa-2x"></span>&nbsp;Edit Product
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Product
 										</c:otherwise>
 									</c:choose>
 								</h1>

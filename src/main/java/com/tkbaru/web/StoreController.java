@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.Customer;
 import com.tkbaru.model.Store;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.StoreService;

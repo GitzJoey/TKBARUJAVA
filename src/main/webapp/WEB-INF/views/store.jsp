@@ -72,7 +72,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cubes fa-fw"></span>&nbsp;Product 
+					<span class="fa fa-umbrella fa-fw"></span>&nbsp;Store 
 				</h1>
 
 				<c:choose>
@@ -121,7 +121,7 @@
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Store
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-umbrella fa-fw fa-2x"></span>&nbsp;Edit Store
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Store
 										</c:otherwise>
 									</c:choose>
 								</h1>
