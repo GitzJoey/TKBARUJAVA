@@ -78,19 +78,23 @@ public class CustomerController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/customer";
+		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_CUSTOMER;
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust) {	
-        logger.info("[saveCustomer] " + cust.toString());
-		
-		//if (cust.getCustomerId() == 0) { customerManager.addCustomer(cust); }
-		//else { customerManager.editCustomer(cust); }
+
+		if (cust.getCustomerId() == 0) { 
+			logger.info("[saveCustomer] " + "addCustomer: " + cust.toString());
+			customerManager.addCustomer(cust);			
+		} else {
+			logger.info("[saveCustomer] " + "editCustomer: " + cust.toString());
+			customerManager.editCustomer(cust); 			
+		}
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/customer";
+		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_CUSTOMER;
 	}
 }

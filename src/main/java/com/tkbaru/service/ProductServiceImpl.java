@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	@Transactional
 	public void editProduct(Product product) {
-
+		
 		productDAO.editProduct(product);
 	}
 

@@ -142,7 +142,6 @@
 												<th width="15%">Category</th>
 												<th width="15%">Lookup Code</th>
 												<th width="15%">Short Value</th>
-												<th width="15%">Long Value</th>
 												<th width="25%">Description</th>
 												<th width="5%">Order</th>
 												<th width="5%">Status</th>
@@ -156,7 +155,6 @@
 														<td><c:out value="${i.lookupCategory}"/></td>
 														<td><c:out value="${ i.lookupCode}"/></td>
 														<td><c:out value="${ i.shortVal }"/></td>
-														<td><c:out value="${ i.longVal }"/></td>
 														<td><c:out value="${ i.lookupDescription }"/></td>
 														<td><c:out value="${ i.orderNum }"/></td>
 														<td><c:out value="${ i.lookupStatus }"/></td>
@@ -205,12 +203,6 @@
 										<label for="inputShortVal" class="col-sm-2 control-label">Short Val</label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputShortVal" name="inputShortVal" path="shortVal" placeholder="Enter Short Val"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputLongVal" class="col-sm-2 control-label">Long Val</label>
-										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputLongVal" name="inputLongVal" path="longVal" placeholder="Enter Long Val"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

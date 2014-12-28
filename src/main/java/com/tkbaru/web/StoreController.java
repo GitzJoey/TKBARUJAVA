@@ -47,6 +47,8 @@ public class StoreController {
 		logger.info("[addStore] : " + "");
 		
 		model.addAttribute("storeForm", new Store());
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("ynDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -64,6 +66,7 @@ public class StoreController {
 		
 		model.addAttribute("storeForm", selectedStore);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("ynDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -85,10 +88,14 @@ public class StoreController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveStore(Locale locale, Model model, @ModelAttribute("storeForm") Store store) {	
-        logger.info("[saveStore] " + store.toString());
-		
-		if (store.getStoreId() == 0) { storeManager.addStore(store); }
-		else { storeManager.editStore(store); }
+        		
+		if (store.getStoreId() == 0) {
+			logger.info("[saveStore] " + "addStore: " + store.toString());
+			storeManager.addStore(store); 
+		} else { 
+			logger.info("[saveStore] " + "editStore: " + store.toString());
+			storeManager.editStore(store); 
+		}
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

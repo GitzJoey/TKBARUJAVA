@@ -9,7 +9,6 @@ public class Lookup {
 	private String lookupCategory;
 	private String lookupCode;
 	private String shortVal;
-	private String longVal;
 	private String lookupDescription;
 	private int orderNum;
 	private String lookupStatus;
@@ -38,12 +37,6 @@ public class Lookup {
 	}
 	public void setShortVal(String shortVal) {
 		this.shortVal = shortVal;
-	}
-	public String getLongVal() {
-		return longVal;
-	}
-	public void setLongVal(String longVal) {
-		this.longVal = longVal;
 	}
 	public String getLookupDescription() {
 		return lookupDescription;

@@ -653,10 +653,14 @@
 																		<form:hidden path="bankAccList[${baIdx.index}].bankRemarks"/>
 																		<form:hidden path="bankAccList[${baIdx.index}].bankStatus"/>
 																	</td>
-																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].shortName"></form:label>&nbsp;-&nbsp;<form:label path="bankAccList[${baIdx.index}].bankName"></form:label></td>
-																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].accNum"></form:label></td>
-																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].bankRemarks"></form:label></td>
-																	<td>&nbsp;<form:label path="bankAccList[${baIdx.index}].bankStatus"></form:label></td>
+																	<td>
+																		&nbsp;<span id="bankAccList[${baIdx.index}].shortName"><c:out value="${ customerForm.bankAccList[baIdx.index].shortName }"></c:out></span>
+																		&nbsp;-&nbsp;
+																		&nbsp;<span id="bankAccList[${baIdx.index}].bankName"><c:out value="${ customerForm.bankAccList[baIdx.index].bankName }"></c:out></span>
+																	</td>
+																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].accNum"><c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"></c:out></span></td>
+																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].bankRemarks"><c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"></c:out></span></td>
+																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].bankStatus"><c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"></c:out></span></td>
 																</tr>
 															</c:forEach>
 														</tbody>

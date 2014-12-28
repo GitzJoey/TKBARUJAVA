@@ -59,7 +59,7 @@ public class ReportController {
 		
 		switch (reportName.toUpperCase()) {
 			case "USER":
-				datasource = reportManager.generateReportUserDS(); 	
+				datasource = reportManager.generateReportUserDS(); 					
 				parameterMap.put("datasource", datasource);
 				
 				mav = new ModelAndView(reportName + beanOutputType, parameterMap); 

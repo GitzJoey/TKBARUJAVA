@@ -39,7 +39,6 @@ public class LookupDAOImpl implements LookupDAO {
 			res.setLookupCategory(String.valueOf(row.get("category")));
 			res.setLookupCode(String.valueOf(row.get("lookup_code")));
 			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLongVal(String.valueOf(row.get("long_val")));
 			res.setLookupDescription(String.valueOf(row.get("description")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
 			res.setLookupStatus(String.valueOf(row.get("status")));
@@ -66,7 +65,6 @@ public class LookupDAOImpl implements LookupDAO {
 			res.setLookupCategory(String.valueOf(row.get("category")));
 			res.setLookupCode(String.valueOf(row.get("lookup_code")));
 			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLongVal(String.valueOf(row.get("long_val")));
 			res.setLookupDescription(String.valueOf(row.get("description")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
 			res.setLookupStatus(String.valueOf(row.get("status")));
@@ -87,7 +85,6 @@ public class LookupDAOImpl implements LookupDAO {
 				"		category,        "+
 				"		lookup_code,     "+
 				"       short_val,       "+
-				"       long_val,        "+
 				"       description,     "+
 				"       order_num,       "+
 				"       status,          "+
@@ -105,7 +102,6 @@ public class LookupDAOImpl implements LookupDAO {
 				l.setLookupCategory(rs.getString("category"));
 				l.setLookupCode(rs.getString("lookup_code"));
 				l.setShortVal(rs.getString("short_val"));
-				l.setLongVal(rs.getString("long_val"));
 				l.setLookupDescription(rs.getString("description"));
 				l.setOrderNum(rs.getInt("order_num"));
 				l.setLookupStatus(rs.getString("status"));
@@ -139,13 +135,13 @@ public class LookupDAOImpl implements LookupDAO {
 
 	@Override
 	public void addLookup(Lookup lookup) {
-        String sql = "INSERT INTO tb_lookup (category, lookup_code, short_val, long_val, description, order_num, status, maintainable) " +
-				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable) " +
+				"VALUES (?, ?, ?, ?, ?, ?, ?) ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         try {
-        	jdbcTemplate.update(sql, new Object[] { lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(), lookup.getLongVal(),
+        	jdbcTemplate.update(sql, new Object[] { lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(),
         											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability() });
         } catch(Exception err) {
         	logger.info ("Error : " + err.getMessage());
@@ -154,7 +150,7 @@ public class LookupDAOImpl implements LookupDAO {
 
 	@Override
 	public void editLookup(Lookup lookup) {
-        String query = "UPDATE tb_lookup SET category = ?, lookup_code = ?, short_val = ?, long_val = ?, description = ?, order_num = ?, status = ?, maintainable = ? " +
+        String query = "UPDATE tb_lookup SET category = ?, lookup_code = ?, short_val = ?, description = ?, order_num = ?, status = ?, maintainable = ? " +
 				"WHERE lookup_id = ? ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -162,7 +158,7 @@ public class LookupDAOImpl implements LookupDAO {
         int out = 0;
 
         try {
-        	Object[] args = new Object[] { 	lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(), lookup.getLongVal(),
+        	Object[] args = new Object[] { 	lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(),
 											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability(), lookup.getLookupId() };
 
         	out = jdbcTemplate.update(query, args);        	

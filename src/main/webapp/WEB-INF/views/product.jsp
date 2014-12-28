@@ -135,14 +135,14 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save">
+								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data">
 									<form:hidden path="productId"/>									
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productType">
 												<option>Select Product Type</option>
-												<form:options items="${ productTypeDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+												<form:options items="${ productTypeDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
 											</form:select>															
 										</div>										
 									</div>
@@ -159,6 +159,16 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputImage" class="col-sm-2 control-label">Image</label>
+										<div class="col-sm-6">
+											<c:if test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+												<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/product/${productForm.imagePath}"/>
+												<form:input type="hidden" path="imagePath"></form:input>
+											</c:if>
+											<form:input type="file" class="form-control" id="inputImage" name="inputImage" path="imageBinary"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputProductDesc" class="col-sm-2 control-label">Description</label>
 										<div class="col-sm-6">
 											<form:input type="text" class="form-control" id="inputProductDesc" name="inputProductDesc" path="productDesc" placeholder="Enter Description"></form:input>
@@ -169,7 +179,7 @@
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="unit">
 												<option>Select Unit</option>
-												<form:options items="${ unitDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+												<form:options items="${ unitDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
 											</form:select>	
 										</div>
 									</div>
@@ -178,7 +188,7 @@
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productStatus">
 												<option>Select Unit</option>
-												<form:options items="${ statusDDL }" itemValue="lookupDescription" itemLabel="lookupDescription"/>
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
 											</form:select>
 										</div>
 									</div>									

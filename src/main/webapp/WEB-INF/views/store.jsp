@@ -89,8 +89,8 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="10%">Store Name</th>
-												<th width="85%">Details</th>
+												<th width="15%">Store Name</th>
+												<th width="80%">Details</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -133,6 +133,38 @@
 										<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputStoreName" name="inputStoreName" path="storeName" placeholder="Store Name"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputAddress1" class="col-sm-2 control-label">Address</label>
+										<div class="col-sm-5">
+											<form:input type="text" class="form-control" id="inputAddress1" name="inputAddress1" path="storeAddress1"></form:input>
+											<form:input type="text" class="form-control" id="inputAddress2" name="inputAddress2" path="storeAddress2"></form:input>
+											<form:input type="text" class="form-control" id="inputAddress3" name="inputAddress3" path="storeAddress3"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputIsDefault" class="col-sm-2 control-label">Is Default Store</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="isDefault">
+												<option>Please Select</option>
+												<form:options items="${ ynDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>											
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputNpwpNumber" class="col-sm-2 control-label">NPWP Number</label>
+										<div class="col-sm-3">
+											<form:input type="text" class="form-control" id="inputNpwpNumber" name="inputNpwpNumber" path="npwpNumber" placeholder="NPWP Number"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="storeStatus">
+												<option>Please Select</option>
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>											
 										</div>										
 									</div>
 									<div class="col-md-7 col-offset-md-5">
