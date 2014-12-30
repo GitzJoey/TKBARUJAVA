@@ -30,6 +30,8 @@ public class Product {
 	private String productDesc;
 	@Column(name="unit")
 	private String unit;
+	@Column(name="in_kg")
+	private int inKilo;
 	@Transient
 	private MultipartFile imageBinary;
 	@Column(name="image_path")
@@ -73,6 +75,12 @@ public class Product {
 	public void setUnit(String unit) {
 		this.unit = unit;
 	}	
+	public int getInKilo() {
+		return inKilo;
+	}
+	public void setInKilo(int inKilo) {
+		this.inKilo = inKilo;
+	}
 	public MultipartFile getImageBinary() {
 		return imageBinary;
 	}

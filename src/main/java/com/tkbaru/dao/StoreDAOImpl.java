@@ -6,9 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Store;
 
+@Repository
+@SuppressWarnings("unchecked")
 public class StoreDAOImpl implements StoreDAO {
 	private static final Logger logger = LoggerFactory.getLogger(StoreDAOImpl.class);
 
@@ -16,8 +19,7 @@ public class StoreDAOImpl implements StoreDAO {
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-    
-	@SuppressWarnings("unchecked")
+    	
 	@Override
 	public List<Store> getAllStore() {
 		logger.info("[getAllStore] " + "");

@@ -12,8 +12,6 @@ public class Constants {
 	public static final String ERRORFLAG_SHOW = "ERRORFLAG_SHOW";
 	public static final String ERRORFLAG_HIDE = "ERRORFLAG_HIDE";
 	
-	public static final String JSPPAGE_REDIRECT_TO = "redirect:/";
-	
 	public static final String JSPPAGE_USER = "user";
 	public static final String JSPPAGE_LOOKUP = "lookup";
 	public static final String JSPPAGE_ROLE = "role";
@@ -31,7 +29,6 @@ public class Constants {
 	public static final String JSPPAGE_WAREHOUSE = "warehouse";
 	public static final String JSPPAGE_TODAYDELIVERY = "todaydelivery";
 	public static final String JSPPAGE_STORE = "store";
-	public static final String JSPPAGE_ADMIN_STORE = "admin/store";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";

@@ -2,21 +2,42 @@ package com.tkbaru.model;
 
 import java.util.List;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="tb_function")
 public class Function {
 	public Function() {
 		
 	}
 	
+	@Id
+	@GeneratedValue
+	@Column(name="function_id")
 	private int functionId;
+	@Column(name="function_code")
 	private String functionCode;
+	@Column(name="module")
 	private String module;
+	@Column(name="module_icon")
 	private String moduleIcon;
+	@Column(name="menu_name")
 	private String menuName;
+	@Column(name="menu_icon")
 	private String menuIcon;
+	@Column(name="url")
 	private String urlLink;
+	@Column(name="order_num")
 	private int orderNum;
+	@Column(name="deep_level")
 	private int deepLevel;
 	
+	@Transient
 	private List<Action> allowedAction;
 
 	public int getFunctionId() {

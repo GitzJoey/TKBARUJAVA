@@ -1,5 +1,7 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -13,40 +15,42 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
-import com.tkbaru.model.RoleFunction;
+import com.tkbaru.model.Function;
+import com.tkbaru.model.Role;
 import com.tkbaru.service.FunctionService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.RoleService;
 
 @Controller
+@RequestMapping("/admin/role")
 public class RoleController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	
 	@Autowired
 	RoleService roleManager;
-	
+
 	@Autowired
 	FunctionService functionManager;
 	
 	@Autowired
 	LookupService lookupManager;
 	
-	@RequestMapping(value = "/admin/role.html", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String rolePageLoad(Locale locale, Model model) {
 
-		model.addAttribute("rfList", roleManager.getSummaryRoleList());
+		model.addAttribute("rList", roleManager.getAllRole());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_ROLE;
 	}
 	
-	@RequestMapping(value = "/admin/role/add.html", method = RequestMethod.GET)
-	public String userAdd(Locale locale, Model model) {
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
+	public String addRole(Locale locale, Model model) {
 		
-		model.addAttribute("roleForm", new RoleFunction());
+		model.addAttribute("roleForm", new Role());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("functionList", functionManager.getAllFunctions());
+		model.addAttribute("functionListLeft", functionManager.getAllFunctions());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -54,14 +58,27 @@ public class RoleController {
 		return Constants.JSPPAGE_ROLE;
 	}
 
-	@RequestMapping(value = "/admin/role/edit/{selectedId}.html", method = RequestMethod.GET)
-	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
+	public String editRole(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
-		RoleFunction selectedRole = roleManager.getRoleFunctionById(selectedId);
+		Role selectedRole = roleManager.getRoleById(selectedId);
 		
 		model.addAttribute("roleForm", selectedRole);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("functionList", functionManager.getAllFunctions());
+		
+		List<Function> unselectedList = new ArrayList<Function>();
+		for (Function allF:functionManager.getAllFunctions()) {
+			boolean found = false;
+			for (Function selF:selectedRole.getFunctionList()) {
+				if (allF.getFunctionId() == selF.getFunctionId()) { found = true; }
+			}
+			if (!found) {
+				unselectedList.add(allF);
+			}
+		}
+		
+		model.addAttribute("functionListLeft", unselectedList);
+		model.addAttribute("functionListRight", selectedRole.getFunctionList());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -69,31 +86,31 @@ public class RoleController {
 		return Constants.JSPPAGE_ROLE;
 	}
 
-	@RequestMapping(value = "/admin/role/delete/{selectedId}.html", method = RequestMethod.GET)
-	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
+	public String deleteRole(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
-		roleManager.deleteRoleFunction(selectedId);
+		roleManager.deleteRole(selectedId);
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/admin/role.html";
+		return "redirect:/admin/role";
 	}
 
-	@RequestMapping(value = "/admin/role/save.html", method = RequestMethod.POST)
-	public String userSave(Locale locale, Model model, @ModelAttribute("roleForm") RoleFunction role) {
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role) {
 		
 		if (role.getRoleId() == 0) {
-			roleManager.addNewRoleFunction(role);			
+			logger.info("[saveRole] " + "addRole: " + role.toString());
+			//roleManager.addRole(role);			
 		} else {
-			roleManager.editRoleFunction(role);
+			logger.info("[saveRole] " + "editRole: " + role.toString());
+			//roleManager.editRole(role);
 		}
-		
-		logger.info("role");
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/admin/role.html";
+		return "redirect:/admin/role";
 	}	
 }

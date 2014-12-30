@@ -19,6 +19,7 @@ import org.apache.commons.collections.list.LazyList;
 
 @Entity
 @Table(name="tb_person")
+@SuppressWarnings("unchecked")
 public class Person {
 	public Person() {
 		
@@ -43,7 +44,6 @@ public class Person {
 	@Column(name="photo_path")
 	private String photoPath;
 	
-	@SuppressWarnings("unchecked")
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_person_phonelist",
 				joinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")},

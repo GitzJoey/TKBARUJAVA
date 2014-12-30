@@ -83,7 +83,7 @@ public class StoreController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_ADMIN_STORE;
+		return "redirect:/admin/store";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
@@ -100,6 +100,6 @@ public class StoreController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_ADMIN_STORE;
+		return "redirect:/admin/store";
 	}
 }

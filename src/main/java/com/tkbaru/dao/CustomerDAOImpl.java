@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.tkbaru.model.Customer;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class CustomerDAOImpl implements CustomerDAO {
 	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDAOImpl.class);
@@ -19,8 +20,7 @@ public class CustomerDAOImpl implements CustomerDAO {
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-   
-	@SuppressWarnings("unchecked")
+   	
 	@Override
 	public List<Customer> getAllCustomer() {
 		logger.info("[getAllCustomer] " + "");

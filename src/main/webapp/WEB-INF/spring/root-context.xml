@@ -63,6 +63,8 @@
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
                 <beans:value>com.tkbaru.model.Product</beans:value>
                 <beans:value>com.tkbaru.model.Store</beans:value>
+                <beans:value>com.tkbaru.model.Role</beans:value>
+                <beans:value>com.tkbaru.model.Function</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -82,6 +84,8 @@
                 <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
                 <beans:value>com.tkbaru.model.Product</beans:value>
                 <beans:value>com.tkbaru.model.Store</beans:value>
+                <beans:value>com.tkbaru.model.Role</beans:value>
+                <beans:value>com.tkbaru.model.Function</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -102,6 +106,7 @@
 	</beans:bean>
     <beans:bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />

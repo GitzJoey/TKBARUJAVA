@@ -78,7 +78,7 @@ public class CustomerController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_CUSTOMER;
+		return "redirect:/customer";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
@@ -95,6 +95,6 @@ public class CustomerController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_REDIRECT_TO + Constants.JSPPAGE_CUSTOMER;
+		return "redirect:/customer";
 	}
 }

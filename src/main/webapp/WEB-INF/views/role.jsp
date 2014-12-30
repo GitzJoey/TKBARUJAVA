@@ -10,8 +10,10 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+			
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/role.html");
+				window.location.href(ctxpath + "/admin/role");
 			});
 						
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -26,44 +28,33 @@
 				});
 			})
 			
-			$('#editTableSelection').click(function() {
+			$('#editTableSelection, #deleteTableSelection').click(function() {				
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
+				var button = $(this).attr('id');
+				
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
 					}
 				});
+				
 				if (id == "") {
 					jsAlert("Please select at least 1 role");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/role/edit/" + id + ".html");	
+					if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href", ctxpath + "/admin/role/edit/" + id);
+					} else {
+						$('#deleteTableSelection').attr("href", ctxpath + "/admin/role/delete/" + id);	
+					}
 				}				
 			});
-			
-			$('#deleteTableSelection').click(function() {
-				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
-				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
-					if ($(item).prop('checked')) {
-						id = $(item).attr("value");	
-					}
-				});
-				if (id == "") {
-					jsAlert("Please select at least 1 role");
-					return false;	
-				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/role/delete/" + id + ".html");	
-				}								
-			});		
-			
-			$('#selectLeft, #selectRight').change(function() {
-				if ($(this).attr("id").indexOf("Left") > 0) {
-					$('#selectRight').val([]);
-				} else {
-					$('#selectLeft').val([]);
-				}
+
+			$('#moveLeftButton, #moveRightButton').click(function() {
+				var button = $(this).attr('id');
+				
+				if (button == 'moveRightButton') { return !$('#selectLeft option:selected').remove().appendTo('#selectRight'); } 
+				else { return !$('#selectRight option:selected').remove().appendTo('#selectLeft'); }
 			});
 		});
 	</script>	
@@ -114,8 +105,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty rfList}">
-												<c:forEach var="i" varStatus="status" items="${rfList}">
+											<c:if test="${not empty rList}">
+												<c:forEach var="i" varStatus="status" items="${rList}">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.roleId }"/>" type="checkbox" value="<c:out value="${ i.roleId }"/>"/></td>
 														<td><c:out value="${i.roleName}"></c:out></td>
@@ -126,7 +117,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/role/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/role/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -147,7 +138,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save.html">
+								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save">
 									<form:hidden path="roleId"/>
 									<div class="form-group">
 										<label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
@@ -162,8 +153,8 @@
 												<tr>
 													<td width="45%">														
 														<select id="selectLeft" multiple class="form-control" size="15">
-															<c:forEach items="${ functionList }" var="f" varStatus="fi">
-																<option value="${ f.functionId }"><c:out value="${ f.module }" /> - <c:out value="${ f.menuName }" /></option> 	
+															<c:forEach items="${ functionListLeft }" var="fl">
+																<option value="${ fl.functionId }"><c:out value="${ fl.module }" /> - <c:out value="${ fl.menuName }" /></option> 	
 															</c:forEach>
 														</select>
 													</td>
@@ -178,13 +169,24 @@
 														<br/>
 													</td>
 													<td width="45%">
-														<select id="selectRight" multiple class="form-control" size="15">
-															<option>1</option>
-															<option>2</option>
-															<option>3</option>
-															<option>4</option>
-															<option>5</option>
-														</select>
+													    <form:select multiple="true" path="functionList">
+        													<form:options items="${roleForm.functionList}" itemValue="functionId" itemLabel="menuName"/>
+    													</form:select>
+														<!-- 
+														<c:choose>
+															<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
+																<select id="selectRight" multiple class="form-control" size="15">
+																	<c:forEach items="${ functionListRight }" var="fr">
+																		<option value="${ fr.functionId }"><c:out value="${ fr.module }" /> - <c:out value="${ fr.menuName }" /></option> 	
+																	</c:forEach>
+																</select>
+															</c:when>
+															<c:otherwise>
+																<select id="selectRight" multiple class="form-control" size="15">
+																</select>
+															</c:otherwise>
+														</c:choose>
+														-->
 													</td>
 												</tr>
 											</table>

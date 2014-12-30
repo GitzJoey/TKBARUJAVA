@@ -93,7 +93,8 @@
 												<th width="10%">Code</th>
 												<th width="20%">Name</th>
 												<th width="10%">Unit</th>
-												<th width="35%">Description</th>
+												<th width="5%">In Kg</th>
+												<th width="30%">Description</th>
 												<th width="10%">Status</th>
 											</tr>
 										</thead>
@@ -106,6 +107,7 @@
 														<td><c:out value="${i.shortCode}"></c:out></td>
 														<td><c:out value="${i.productName}"></c:out></td>
 														<td><c:out value="${i.unit}"></c:out></td>
+														<td><c:out value="${i.inKilo}"></c:out></td>
 														<td><c:out value="${i.productDesc}"></c:out></td>
 														<td><c:out value="${i.productStatus}"></c:out></td>
 													</tr>
@@ -184,10 +186,16 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputInKilo" class="col-sm-2 control-label">In Kg</label>
+										<div class="col-sm-2">
+											<form:input type="text" class="form-control" id="inputInKilo" name="inputInKilo" path="inKilo" placeholder=""></form:input>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productStatus">
-												<option>Select Unit</option>
+												<option>Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
 											</form:select>
 										</div>

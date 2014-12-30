@@ -19,6 +19,7 @@ import org.apache.commons.collections.list.LazyList;
 
 @Entity
 @Table(name="tb_customer")
+@SuppressWarnings("unchecked")
 public class Customer {
 	public Customer() {
 		
@@ -30,15 +31,13 @@ public class Customer {
 	private int customerId;
 	@Column(name="store_name")
 	private String storeName;
-	
-	@SuppressWarnings("unchecked")
+		
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},
 				inverseJoinColumns={@JoinColumn(name="bankacc_id", referencedColumnName="bankacc_id")})
 	private List<BankAccount> bankAccList = LazyList.decorate(new ArrayList<BankAccount>(), FactoryUtils.instantiateFactory(BankAccount.class));
 
-	@SuppressWarnings("unchecked")
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_pic", 
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},
