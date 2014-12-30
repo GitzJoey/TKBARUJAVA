@@ -53,8 +53,16 @@
 			$('#moveLeftButton, #moveRightButton').click(function() {
 				var button = $(this).attr('id');
 				
-				if (button == 'moveRightButton') { return !$('#selectLeft option:selected').remove().appendTo('#selectRight'); } 
-				else { return !$('#selectRight option:selected').remove().appendTo('#selectLeft'); }
+				if (button == 'moveRightButton') { 
+					$('#selectLeft option:selected').remove().appendTo('#selectRight');
+					$('#selectRight').sortSelect();
+					$('#selectRight').val('');					
+				} else { 
+					$('#selectRight option:selected').remove().appendTo('#selectLeft');
+					$('#selectLeft').sortSelect();
+					$('#selectLeft').val('');
+				}
+				return false;
 			});
 		});
 	</script>	
@@ -140,6 +148,7 @@
 							<div class="panel-body">
 								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save">
 									<form:hidden path="roleId"/>
+									<input id="selectedFunc" name="selectedFunc" type="hidden" value="testing"/>
 									<div class="form-group">
 										<label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
 										<div class="col-sm-3">
@@ -169,10 +178,6 @@
 														<br/>
 													</td>
 													<td width="45%">
-													    <form:select multiple="true" path="functionList">
-        													<form:options items="${roleForm.functionList}" itemValue="functionId" itemLabel="menuName"/>
-    													</form:select>
-														<!-- 
 														<c:choose>
 															<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 																<select id="selectRight" multiple class="form-control" size="15">
@@ -186,7 +191,6 @@
 																</select>
 															</c:otherwise>
 														</c:choose>
-														-->
 													</td>
 												</tr>
 											</table>

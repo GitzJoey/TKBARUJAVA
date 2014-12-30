@@ -80,7 +80,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-cubes fa-fw fa-2x"></span>Product List
+									<span class="fa fa-cubes fa-fw fa-2x"></span>&nbsp;Product List
 								</h1>
 							</div>
 							<div class="panel-body">

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tkbaru.common.Converter;
 import com.tkbaru.dao.FunctionDAO;
 import com.tkbaru.model.Function;
 
@@ -40,6 +41,12 @@ public class FunctionServiceImpl implements FunctionService {
 	public void deleteFunction(int selectedId) {
 		
 		functionDAO.deleteFunction(selectedId);
+	}
+
+	@Override
+	public List<Function> getFunctionById(List<Integer> selectedIds) {
+		
+		return functionDAO.getFunctionById("(" + Converter.convertToCommaSeparated(selectedIds) + ")");
 	}
 
 }

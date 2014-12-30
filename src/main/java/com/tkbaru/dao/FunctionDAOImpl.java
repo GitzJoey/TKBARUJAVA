@@ -156,4 +156,44 @@ public class FunctionDAOImpl implements FunctionDAO {
         logger.info("Function deleted successfully, row deleted : " + out);
 	}
 
+	@Override
+	public List<Function> getFunctionById(String selectedIds) {
+		List<Function> result = new ArrayList<Function>();
+		String sqlquery =  
+				"SELECT function_id,     " +
+				"		function_code,   " +
+				"		module,          " +
+				"		module_icon,     " +
+				"		menu_name,       " +
+				"		menu_icon,       " +
+				"		url,             " +
+				"		order_num,       " +
+				"		deep_level       " +
+				"FROM tb_function        " +
+				"WHERE function_id IN    " + selectedIds;
+	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+	
+		for (Map<String, Object> row : rows) {
+			Function res = new Function();
+			
+			res.setFunctionId(Integer.valueOf(String.valueOf(row.get("function_id"))));
+			res.setFunctionCode(String.valueOf(row.get("function_code")));
+			res.setModule(String.valueOf(row.get("module")));
+			res.setModuleIcon(String.valueOf(row.get("module_icon")));
+			res.setMenuName(String.valueOf(row.get("menu_name")));
+			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
+			res.setUrlLink(String.valueOf(row.get("url")));
+			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
+			res.setDeepLevel(Integer.valueOf(String.valueOf(row.get("deep_level"))));
+			
+			result.add(res);
+		}
+		
+		for (Function f:result) { logger.info("f: " + f.toString()); }
+		
+		return result;
+	}
+
 }

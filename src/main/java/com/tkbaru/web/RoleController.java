@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,7 +100,9 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role) {
+	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role, HttpServletRequest request) {
+		
+		logger.info("a " + request.getParameter("selectedFunc"));
 		
 		if (role.getRoleId() == 0) {
 			logger.info("[saveRole] " + "addRole: " + role.toString());

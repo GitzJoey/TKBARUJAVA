@@ -8,4 +8,16 @@ $(document).ready(function() {
 	$('#searchTopMenu').click(function() {
 		window.location.href(ctxpath + "/search/query/" + $('#searchTopMenuQuery').val());
 	});
+	
+	$.fn.sortSelect = function() {	    
+		var options = $("#" + this.attr('id') + ' option');
+
+		options.sort(function(a, b) { 
+			a = a.value;
+			b = b.value;
+			return a - b;
+		});
+	    	
+	    $(this).html(options);
+	}
 });
