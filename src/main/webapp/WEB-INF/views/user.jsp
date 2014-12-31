@@ -185,6 +185,7 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save.html">
+									<form:hidden path="userId"/>
 									<div class="form-group">
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
 										<div class="col-sm-3">
@@ -244,7 +245,7 @@
 									<div class="form-group">
 										<label for="inputRole" class="col-sm-2 control-label">Role</label>
 										<div class="col-sm-2">
-											<form:select class="form-control" path="roleFunctionEntity.roleId">
+											<form:select class="form-control" path="roleId">
 												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
 											</form:select>
 										</div>

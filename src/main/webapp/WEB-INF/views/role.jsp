@@ -12,8 +12,19 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#cancelButton').click(function() {				
-				window.location.href(ctxpath + "/admin/role");
+			$('#submitButton, #cancelButton').click(function() {
+				var button = $(this).attr('id');
+				
+				if (button == 'submitButton') {
+					var sf = "";
+					$('#selectedFunc').val('');
+					$('#selectRight option').each(function(index, item) {
+						sf += $(this).val() + ",";	
+					});
+					$('#selectedFunc').val(sf);
+				} else {
+					window.location.href(ctxpath + "/admin/role");	
+				}
 			});
 						
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -61,7 +72,7 @@
 					$('#selectRight option:selected').remove().appendTo('#selectLeft');
 					$('#selectLeft').sortSelect();
 					$('#selectLeft').val('');
-				}
+				}								
 				return false;
 			});
 		});
@@ -148,7 +159,7 @@
 							<div class="panel-body">
 								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save">
 									<form:hidden path="roleId"/>
-									<input id="selectedFunc" name="selectedFunc" type="hidden" value="testing"/>
+									<input id="selectedFunc" name="selectedFunc" type="hidden" value="${selectedFunction}"/>
 									<div class="form-group">
 										<label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
 										<div class="col-sm-3">

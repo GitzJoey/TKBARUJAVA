@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.common.Converter;
 import com.tkbaru.model.Function;
 import com.tkbaru.model.Role;
 import com.tkbaru.service.FunctionService;
@@ -81,6 +82,7 @@ public class RoleController {
 		
 		model.addAttribute("functionListLeft", unselectedList);
 		model.addAttribute("functionListRight", selectedRole.getFunctionList());
+		model.addAttribute("selectedFunction", selectedRole.getAllFunctionIdInString());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -102,14 +104,14 @@ public class RoleController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role, HttpServletRequest request) {
 		
-		logger.info("a " + request.getParameter("selectedFunc"));
+		role.setFunctionList(functionManager.getFunctionById(Converter.convertToIntegerList(request.getParameter("selectedFunc"))));
 		
 		if (role.getRoleId() == 0) {
 			logger.info("[saveRole] " + "addRole: " + role.toString());
-			//roleManager.addRole(role);			
+			roleManager.addRole(role);			
 		} else {
 			logger.info("[saveRole] " + "editRole: " + role.toString());
-			//roleManager.editRole(role);
+			roleManager.editRole(role);
 		}
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);

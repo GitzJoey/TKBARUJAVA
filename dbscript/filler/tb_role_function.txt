@@ -1,0 +1,73 @@
+TRUNCATE TABLE tb_role_function;
+
+/*ADMIN ROLE*/
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 1);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 2);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 3);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 4);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 5);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 6);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 7);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 8);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 9);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 10);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 11);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 12);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 13);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 14);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 15);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 16);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 17);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 18);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 19);
+
+/*NON ADMIN ROLE*/
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 1);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 2);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 3);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 4);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 5);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 6);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 7);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 8);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 9);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 10);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 11);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 12);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 13);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 14);
+
+COMMIT;

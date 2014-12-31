@@ -55,6 +55,15 @@ public class Role {
 	public void setFunctionList(List<Function> functionList) {
 		this.functionList = functionList;
 	}
+	public String getAllFunctionIdInString() {
+		String r = "";
+		for (Function f:this.functionList) { r += String.valueOf(f.getFunctionId()) + ","; }
+		
+		if (r.length() == 0) return r;
+		
+		r = r.substring(0, r.length() - 1);
+		return r;
+	}
 	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName

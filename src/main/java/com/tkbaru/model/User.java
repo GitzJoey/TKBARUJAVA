@@ -1,40 +1,19 @@
 package com.tkbaru.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-@Entity
-@Table(name="tb_user")
 public class User {
 	public User() {
 
 	}
 	
-	@Id
-	@Column(name="user_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int userId;
-	@Column(name="user_name")
 	private String userName;
-	@Transient
 	private String userPassword;
-	@Column(name="status")
 	private String userStatus;
 	
-	@Column(name="role_id")
 	private int roleId;
-	private RoleFunction roleFunctionEntity;
-	@Column(name="person_id")
+	private Role roleEntity;
+	
 	private int personId;
-	@OneToOne
-	@JoinColumn(name="person_id", insertable=false, updatable=false)
 	private Person personEntity;
 	
 	public int getUserId() {
@@ -66,12 +45,12 @@ public class User {
 	}
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
+	}	
+	public Role getRoleEntity() {
+		return roleEntity;
 	}
-	public RoleFunction getRoleFunctionEntity() {
-		return roleFunctionEntity;
-	}
-	public void setRoleFunctionEntity(RoleFunction roleFunctionEntity) {
-		this.roleFunctionEntity = roleFunctionEntity;
+	public void setRoleEntity(Role roleEntity) {
+		this.roleEntity = roleEntity;
 	}
 	public int getPersonId() {
 		return personId;
@@ -88,8 +67,10 @@ public class User {
 	}
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userName=" + userName + ", userPassword=" + userPassword + ", userStatus="
-				+ userStatus + ", roleId=" + roleId + ", roleFunctionEntity=" + roleFunctionEntity + ", personId="
-				+ personId + ", personEntity=" + personEntity + "]";
-	}
+		return "User [userId=" + userId + ", userName=" + userName
+				+ ", userPassword=" + userPassword + ", userStatus="
+				+ userStatus + ", roleId=" + roleId + ", roleEntity="
+				+ roleEntity + ", personId=" + personId + ", personEntity="
+				+ personEntity + "]";
+	}	
 }

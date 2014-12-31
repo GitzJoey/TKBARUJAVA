@@ -16,7 +16,6 @@ import org.springframework.web.bind.support.SessionStatus;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LoginService;
-import com.tkbaru.service.UserService;
 
 @Controller
 @SessionAttributes("loginContext")
@@ -26,10 +25,7 @@ public class LoginController {
 	
 	@Autowired
 	LoginService loginManager;
-	
-	@Autowired
-	UserService userManager;
-	
+		
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 	public String loadLoginPage(Locale locale, Model model) {
 		logger.info("[loadLoginPage] " + "");

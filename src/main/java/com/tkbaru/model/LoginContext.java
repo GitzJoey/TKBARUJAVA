@@ -6,6 +6,7 @@ public class LoginContext {
 	}
 	
 	private User userLogin;
+	
 	private String selectedMenu;
 	
 	public User getUserLogin() {
@@ -13,7 +14,7 @@ public class LoginContext {
 	}
 	public void setUserLogin(User userLogin) {
 		this.userLogin = userLogin;
-	}
+	}	
 	public String getSelectedMenu() {
 		return selectedMenu;
 	}

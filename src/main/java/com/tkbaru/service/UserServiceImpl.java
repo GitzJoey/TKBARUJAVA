@@ -4,25 +4,29 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.tkbaru.dao.PersonDAO;
-import com.tkbaru.dao.RoleDAO;
 import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
 
 @Service
 public class UserServiceImpl implements UserService {
-
+	private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+	
 	@Autowired
 	UserDAO userDAO;
 	
 	@Autowired
-	PersonDAO personDAO;
-	
+	PersonService personManager;
+
 	@Autowired
-	RoleDAO roleDAO;
+	PhoneListService phoneListManager;
+
+	@Autowired
+	RoleService roleManager;
 	
 	@Override
 	public List<User> getAllUser() {
@@ -34,11 +38,12 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User getUserById(int selectedId) {
+		logger.info("[getUserById] " + "");
 		User result = userDAO.getUserById(selectedId);
 		
-		result.setRoleFunctionEntity(roleDAO.getRoleFunctionById(result.getUserId()));
-		result.setPersonEntity(personDAO.getPersonEntityById(result.getPersonId()));
-		result.getPersonEntity().setPhoneList(personDAO.getPhoneListById(result.getPersonId()));
+		result.setRoleEntity(roleManager.getRoleById(result.getRoleId()));		
+		result.setPersonEntity(personManager.getPersonEntityById(result.getPersonId()));
+		result.getPersonEntity().setPhoneList(phoneListManager.getPhoneListById(result.getPersonId()));
 		
 		return result;
 	}
@@ -46,15 +51,24 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public void addNewUser(User usr) {
+		logger.info("[addNewUser] " + "");
+		
 		userDAO.addUser(usr);
-		personDAO.addPerson(usr.getPersonEntity());			
+		personManager.addPerson(usr.getPersonEntity());			
 	}
 
 	@Override
 	@Transactional
 	public void editUser(User usr) {
-		// TODO Auto-generated method stub
+		logger.info("[editUser] " + "");
 		
+	}
+
+	@Override
+	public User getUserByUserName(String userName) {
+		logger.info("[getUserByUserName] " + "");
+		
+		return userDAO.getUser(userName);
 	}
 
 }

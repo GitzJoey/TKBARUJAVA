@@ -21,8 +21,7 @@ import com.tkbaru.model.Person;
 import com.tkbaru.model.User;
 
 @Repository
-public class UserDAOImpl implements UserDAO {
-	
+public class UserDAOImpl implements UserDAO {	
 	private static final Logger logger = LoggerFactory.getLogger(UserDAOImpl.class);
 	
 	@Autowired
@@ -49,6 +48,8 @@ public class UserDAOImpl implements UserDAO {
 				
 				user.setUserId(Integer.valueOf(rs.getString("user_id")));
 				user.setUserName(rs.getString("user_name"));
+				user.setRoleId(rs.getInt("role_id"));
+				user.setPersonId(rs.getInt("person_id"));
 				
 				return user;
 			}

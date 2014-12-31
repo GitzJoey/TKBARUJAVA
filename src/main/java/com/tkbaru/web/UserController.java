@@ -34,6 +34,8 @@ public class UserController {
 	
 	@RequestMapping(value = "/admin/user.html", method = RequestMethod.GET)
 	public String userPageLoad(Locale locale, Model model) {
+		logger.info("[userPageLoad] " + "");
+		
 		List<User> userdata = userManager.getAllUser();
 
 		model.addAttribute("userList", userdata);
@@ -45,10 +47,11 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user/add.html", method = RequestMethod.GET)
 	public String userAdd(Locale locale, Model model) {
+		logger.info("[userAdd] " + "");
 		
 		model.addAttribute("userForm", new User());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		model.addAttribute("roleDDL", roleManager.getAllRole());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -58,14 +61,13 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user/edit/{selectedId}.html", method = RequestMethod.GET)
 	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[userEdit] " + "");
 		
 		User selectedUser = userManager.getUserById(selectedId);
-		
-		logger.info(selectedUser.getRoleId() + "-" + selectedUser.getRoleFunctionEntity().getRoleId());
-		
+			
 		model.addAttribute("userForm", selectedUser);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("roleDDL", roleManager.getSummaryRoleList());
+		model.addAttribute("roleDDL", roleManager.getAllRole());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -75,6 +77,7 @@ public class UserController {
 
 	@RequestMapping(value = "/admin/user/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[userDelete] " + "");
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -86,10 +89,13 @@ public class UserController {
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
 		
 		if (usr.getUserId() == 0) {
+			logger.info("[userSave] " + "addNewUser: " + usr.toString());
 			userManager.addNewUser(usr);			
 		} else {
+			logger.info("[userSave] " + "editUser: " + usr.toString());
 			userManager.editUser(usr);
 		}
+		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

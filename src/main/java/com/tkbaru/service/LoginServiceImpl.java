@@ -3,16 +3,15 @@ package com.tkbaru.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
 
 public class LoginServiceImpl implements LoginService {
 	@Autowired
-	UserDAO userDAO;
+	UserService userManager;
 
 	@Autowired
 	RoleService roleManager;
-
+	
 	private BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager;
 	public void setCryptoBCryptPasswordEncoderManager(BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager) {
 		this.cryptoBCryptPasswordEncoderManager = cryptoBCryptPasswordEncoderManager;
@@ -21,7 +20,7 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public boolean successLogin(String userName, String userPswd) {
 		
-		User userdata = userDAO.getUser(userName);
+		User userdata = userManager.getUserByUserName(userName);
 			
 		if (userdata == null) {
 			return false;
@@ -35,9 +34,9 @@ public class LoginServiceImpl implements LoginService {
 	@Override
 	public User createUserContext(String userName) {
 		
-		User userdata = userDAO.getUser(userName);
+		User userdata = userManager.getUserByUserName(userName);
 		
-		userdata.setRoleFunctionEntity(roleManager.getRoleFunctionByUserId(userdata.getUserId()));
+		userdata.setRoleEntity(roleManager.getRoleById(userdata.getRoleId()));
 		
 		return userdata;
 	}

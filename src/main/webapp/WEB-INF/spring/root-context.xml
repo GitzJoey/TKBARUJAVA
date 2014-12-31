@@ -104,8 +104,10 @@
 	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
+	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.PhoneListDAOImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
     <beans:bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
-    	<beans:property name="dataSource" ref="dataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
@@ -133,6 +135,8 @@
     	<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
     </beans:bean>
     <beans:bean id="userService" class="com.tkbaru.service.UserServiceImpl"></beans:bean>
+    <beans:bean id="personService" class="com.tkbaru.service.PersonServiceImpl"></beans:bean>
+    <beans:bean id="phoneListService" class="com.tkbaru.service.PhoneListServiceImpl"></beans:bean>
     <beans:bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></beans:bean>
     <beans:bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></beans:bean>
     <beans:bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></beans:bean>

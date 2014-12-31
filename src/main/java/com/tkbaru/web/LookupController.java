@@ -26,7 +26,8 @@ public class LookupController {
 	
 	@RequestMapping(value = "/admin/lookup.html", method = RequestMethod.GET)
 	public String lookupPageLoad(Locale locale, Model model) {
-
+		logger.info("[lookupPageLoad] " + "");
+		
 		List<Lookup> lookupList = lookupManager.getAllLookup();
 		
 		model.addAttribute("lookupList", lookupList);
@@ -39,7 +40,8 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/bycategory/{category}.html", method = RequestMethod.GET)
 	public String lookupListByCat(Locale locale, Model model, @PathVariable String category) {
-
+		logger.info("[lookupListByCat] " + "");
+		
 		List<Lookup> lookupList = lookupManager.getLookupByCategory(category);
 		
 		model.addAttribute("lookupList", lookupList);
@@ -53,7 +55,8 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/add.html", method = RequestMethod.GET)
 	public String lookupAdd(Locale locale, Model model) {
-
+		logger.info("[lookupAdd] " + "");
+		
 		model.addAttribute("lookupForm", new Lookup());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("MaintainabilityDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
@@ -65,7 +68,8 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/edit/{selectedId}.html", method = RequestMethod.GET)
 	public String lookupEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
-
+		logger.info("[lookupEdit] " + "");
+		
 		Lookup l = lookupManager.getLookupById(selectedId);
 		
 		model.addAttribute("lookupForm", l);
@@ -79,6 +83,7 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String lookupDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[lookupDelete] " + "");
 		
 		lookupManager.deleteLookup(selectedId);
 		
@@ -90,12 +95,12 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/save.html", method = RequestMethod.POST)
 	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup) {
-
-		logger.info("Lookup : " + lookup.toString());
 		
 		if (lookup.getLookupId() == 0) {
+			logger.info("[lookupSave] " + "addLookup: " + lookup.toString());
 			lookupManager.addLookup(lookup);
 		} else {
+			logger.info("[lookupSave] " + "editLookup: " + lookup.toString());
 			lookupManager.editLookup(lookup);
 		}
 

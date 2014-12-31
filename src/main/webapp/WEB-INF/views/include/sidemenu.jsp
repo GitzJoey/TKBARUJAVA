@@ -18,7 +18,7 @@
 							<td>
 								<c:out value="${ loginContext.userLogin.userName }"></c:out>
 								<br/>
-								Role: <c:out value="${ loginContext.userLogin.roleFunctionEntity.roleName }"></c:out>
+								Role: <c:out value="${ loginContext.userLogin.roleEntity.roleName }"></c:out>
 							</td>
 						</tr>
 						<tr>
@@ -35,8 +35,8 @@
 				<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 
 					<c:set var="currentModule" value=""/>
-					<c:if test="${ not empty loginContext.userLogin.roleFunctionEntity.functionList }">
-						<c:forEach items="${ loginContext.userLogin.roleFunctionEntity.functionList }" var="fList">
+					<c:if test="${ not empty loginContext.userLogin.roleEntity.functionList }">
+						<c:forEach items="${ loginContext.userLogin.roleEntity.functionList }" var="fList">
 							<c:if test="${ currentModule != fList.module }">
 								<c:set var="currentModule" value="${ fList.module }"/>	
 								<div class="panel panel-default">
@@ -51,7 +51,7 @@
 							      		<div class="panel-body no-padding">
 											<ul class="nav nav-pills nav-stacked" role="tablist">	
 												<fmt:parseNumber var="intCurrentDeepLevel" integerOnly="true" type="number" value="1" />				
-												<c:forEach items="${ loginContext.userLogin.roleFunctionEntity.functionList }" var="ffList">
+												<c:forEach items="${ loginContext.userLogin.roleEntity.functionList }" var="ffList">
 													<c:if test="${ ffList.module == currentModule }">
 														<fmt:parseNumber var="intDeepLevel" integerOnly="true" type="number" value="${ ffList.deepLevel }" />
 														<c:choose>

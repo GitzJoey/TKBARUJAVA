@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.dao.RoleDAO;
 import com.tkbaru.model.Role;
-import com.tkbaru.model.RoleFunction;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -16,42 +15,9 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	RoleDAO roleDAO;
 	
-	@Override
-	public RoleFunction getRoleFunctionByUserId(int userId) {
-				
-		return roleDAO.getRoleFunctionByUserId(userId);
-	}
-
-	@Override
-	public List<RoleFunction> getSummaryRoleList() {
-		
-		return roleDAO.getSummaryRoleList();
-	}
-
-	@Override
-	public RoleFunction getRoleFunctionById(int roleId) {
-		
-		return roleDAO.getRoleFunctionById(roleId);
-	}
-
-	@Override
-	public void addNewRoleFunction(RoleFunction role) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void editRoleFunction(RoleFunction role) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deleteRoleFunction(int roleId) {
-		// TODO Auto-generated method stub
-		
-	}
-
+	@Autowired
+	UserService userManager;
+	
 	@Override
 	@Transactional
 	public List<Role> getAllRole() {

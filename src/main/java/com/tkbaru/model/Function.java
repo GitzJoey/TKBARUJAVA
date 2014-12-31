@@ -1,13 +1,10 @@
 package com.tkbaru.model;
 
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_function")
@@ -37,9 +34,6 @@ public class Function {
 	@Column(name="deep_level")
 	private int deepLevel;
 	
-	@Transient
-	private List<Action> allowedAction;
-
 	public int getFunctionId() {
 		return functionId;
 	}
@@ -112,19 +106,13 @@ public class Function {
 		this.deepLevel = deepLevel;
 	}
 
-	public List<Action> getAllowedAction() {
-		return allowedAction;
-	}
-
-	public void setAllowedAction(List<Action> allowedAction) {
-		this.allowedAction = allowedAction;
-	}
-
 	@Override
 	public String toString() {
-		return "Function [functionId=" + functionId + ", functionCode=" + functionCode + ", module=" + module
-				+ ", moduleIcon=" + moduleIcon + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", urlLink="
-				+ urlLink + ", orderNum=" + orderNum + ", deepLevel=" + deepLevel + ", allowedAction=" + allowedAction
-				+ "]";
+		return "Function [functionId=" + functionId + ", functionCode="
+				+ functionCode + ", module=" + module + ", moduleIcon="
+				+ moduleIcon + ", menuName=" + menuName + ", menuIcon="
+				+ menuIcon + ", urlLink=" + urlLink + ", orderNum=" + orderNum
+				+ ", deepLevel=" + deepLevel + "]";
 	}
+
 }

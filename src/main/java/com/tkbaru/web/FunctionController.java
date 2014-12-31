@@ -25,7 +25,8 @@ public class FunctionController {
 	FunctionService functionManager;
 		
 	@RequestMapping(value = "/admin/function.html", method = RequestMethod.GET)
-	public String functionPageLoad(Locale locale, Model model) {		
+	public String functionPageLoad(Locale locale, Model model) {
+		logger.info("[functionPageLoad] " + "");
 
 		List<Function> fList = functionManager.getAllFunctions();
 		
@@ -38,6 +39,7 @@ public class FunctionController {
 
 	@RequestMapping(value = "/admin/function/add.html", method = RequestMethod.GET)
 	public String functionAdd(Locale locale, Model model) {
+		logger.info("[functionAdd] " + "");
 		
 		model.addAttribute("fForm", new Function());
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -47,7 +49,8 @@ public class FunctionController {
 	}
 
 	@RequestMapping(value = "/admin/function/edit/{selectedId}.html", method = RequestMethod.GET)
-	public String userEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String functionEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[functionEdit] " + "");
 		
 		Function f = functionManager.getFunctionById(selectedId);
 		
@@ -61,6 +64,7 @@ public class FunctionController {
 
 	@RequestMapping(value = "/admin/function/delete/{selectedId}.html", method = RequestMethod.GET)
 	public String functionDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[functionDelete] " + "");
 		
 		functionManager.deleteFunction(selectedId);
 		
@@ -73,11 +77,11 @@ public class FunctionController {
 	@RequestMapping(value = "/admin/function/save.html", method = RequestMethod.POST)
 	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func) {
 		
-		logger.info("Function : " + func.toString());
-		
 		if (func.getFunctionId() == 0) {
+			logger.info("[functionSave] " + "addFunction: " + func.toString());
 			functionManager.addFunction(func);
 		} else {
+			logger.info("[functionSave] " + "editFunction: " + func.toString());
 			functionManager.editFunction(func);
 		}
 		

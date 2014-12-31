@@ -25,6 +25,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 	
 	@Override
 	public List<Function> getAllFunctions() {
+		logger.info("[getAllFunctions] " + "");
+		
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery =  
 				"SELECT function_id,     " +
@@ -64,6 +66,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 	@Override
 	public Function getFunctionById(int selectedId) {
+		logger.info("[getFunctionById] " + "");
+		
 		Function result = new Function();
 		
 		String sqlquery = 
@@ -104,6 +108,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 	@Override
 	public void addFunction(Function func) {
+		logger.info("[addFunction] " + "");
+		
         String sql = "INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level) " +
         				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
 
@@ -120,6 +126,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 	@Override
 	public void editFunction(Function func) {
+		logger.info("[editFunction] " + "");
+		
         String query = "UPDATE tb_function SET function_code = ?, module = ?, module_icon = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, deep_level = ? " +
         				"WHERE function_id = ? ";
 
@@ -142,6 +150,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 	@Override
 	public void deleteFunction(int selectedId) {
+		logger.info("[deleteFunction] " + "");
+		
         String query = "DELETE FROM tb_function WHERE function_id = ? ";
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
          
@@ -158,6 +168,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 	@Override
 	public List<Function> getFunctionById(String selectedIds) {
+		logger.info("[getFunctionById] " + "selectedIds: " + selectedIds);
+		
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery =  
 				"SELECT function_id,     " +
