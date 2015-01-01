@@ -30,6 +30,8 @@ public class Role {
 	private int roleId;
 	@Column(name="name")
 	private String roleName;
+	@Column(name="status")
+	private String roleStatus;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_role_function", 
@@ -63,10 +65,17 @@ public class Role {
 		
 		r = r.substring(0, r.length() - 1);
 		return r;
+	}	
+	public String getRoleStatus() {
+		return roleStatus;
+	}
+	public void setRoleStatus(String roleStatus) {
+		this.roleStatus = roleStatus;
 	}
 	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName
-				+ ", functionList=" + functionList + "]";
+				+ ", roleStatus=" + roleStatus + ", functionList="
+				+ functionList + "]";
 	}
 }

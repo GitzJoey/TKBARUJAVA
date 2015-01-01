@@ -13,7 +13,7 @@
 	  				<div class="form-group input-group-sm">
 	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search">
 	  				</div>
-	  				<button id="searchTopMenu" type="button" class="btn btn-sm btn-default"><span class="fa fa-search fa-fw"></span>&nbsp;Search</button>
+	  				<a id="searchTopMenu" type="button" class="btn btn-sm btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
 				</form>
   			</div>
 		</nav>

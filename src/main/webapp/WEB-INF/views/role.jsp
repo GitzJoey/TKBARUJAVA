@@ -125,11 +125,19 @@
 										</thead>
 										<tbody>
 											<c:if test="${not empty rList}">
-												<c:forEach var="i" varStatus="status" items="${rList}">
+												<c:forEach var="i" varStatus="idx" items="${rList}">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.roleId }"/>" type="checkbox" value="<c:out value="${ i.roleId }"/>"/></td>
 														<td><c:out value="${i.roleName}"></c:out></td>
-														<td></td>
+														<td>
+															<select id="selectRight" multiple class="form-control" size="5">
+																<c:forEach items="${ i.functionList }" var="f">
+																	<option>
+																		<c:out value="${ f.module }"/>&nbsp;-&nbsp;<c:out value="${ f.menuName }"/>
+																	</option>
+																</c:forEach>																
+        													</select>
+														</td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -166,6 +174,15 @@
 											<form:input path="roleName" type="text" class="form-control" id="inputRoleName" name="inputRoleName" placeholder="Enter Role Name"></form:input>
 										</div>
 									</div>
+									<div class="form-group">
+										<label for="inputRoleStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="roleStatus">
+												<option>Please Select</option>
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>											
+										</div>										
+									</div>									
 									<div class="form-group">
 										<label for="inputFunctionList" class="col-sm-2 control-label">Function List</label>
 										<div class="col-sm-10">

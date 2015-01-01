@@ -34,6 +34,7 @@
 						id = $(item).attr("value");	
 					}
 				});
+				
 				if (id == "") {
 					jsAlert("Please select at least 1 product");
 					return false;	

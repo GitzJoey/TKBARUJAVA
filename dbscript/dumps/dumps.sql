@@ -18,36 +18,6 @@ USE `tkbaru`;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `tb_action`
---
-
-DROP TABLE IF EXISTS `tb_action`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_action` (
-  `action_id` int(11) NOT NULL,
-  `function_id` int(11) DEFAULT NULL,
-  `action_code` varchar(45) DEFAULT NULL,
-  `action_name` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
-  PRIMARY KEY (`action_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tb_action`
---
-
-LOCK TABLES `tb_action` WRITE;
-/*!40000 ALTER TABLE `tb_action` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_action` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `tb_bankacc`
 --
 
@@ -60,7 +30,7 @@ CREATE TABLE `tb_bankacc` (
   `bank_name` varchar(45) DEFAULT NULL,
   `account` int(11) DEFAULT NULL,
   `remarks` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -89,6 +59,11 @@ DROP TABLE IF EXISTS `tb_customer`;
 CREATE TABLE `tb_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
   `store_name` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -99,7 +74,7 @@ CREATE TABLE `tb_customer` (
 
 LOCK TABLES `tb_customer` WRITE;
 /*!40000 ALTER TABLE `tb_customer` DISABLE KEYS */;
-INSERT INTO `tb_customer` VALUES (1,'test 1');
+INSERT INTO `tb_customer` VALUES (1,'test 1',NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tb_customer` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +146,7 @@ CREATE TABLE `tb_function` (
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`function_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -180,7 +155,7 @@ CREATE TABLE `tb_function` (
 
 LOCK TABLES `tb_function` WRITE;
 /*!40000 ALTER TABLE `tb_function` DISABLE KEYS */;
-INSERT INTO `tb_function` VALUES (1,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','Purchase Order','fa fa-clipboard fa-fw','/po/add',100100,1,0,'2014-12-28 22:21:18',NULL,NULL),(2,'F_PO_POPAYMENT','Purchase Order','fa fa-truck fa-fw','PO Payment','fa fa-calculator fa-fw','/po/payment',100200,1,0,'2014-12-28 22:21:18',NULL,NULL),(3,'F_SO_TODAYPRICE','Sales Order','fa fa-dollar fa-fw','Today Price','fa  fa-barcode fa-fw','/sales/todayprice',200100,1,0,'2014-12-28 22:21:18',NULL,NULL),(4,'F_SO_SALESORDER','Sales Order','fa fa-dollar fa-fw','Sales Order','fa  fa-book fa-fw','/sales/add',200200,2,0,'2014-12-28 22:21:18',NULL,NULL),(5,'F_WH_WAREHOUSE','Warehouse','fa fa-wrench fa-fw','Dashboard','fa fa-desktop fa-fw','/warehouse/dashboard',300100,1,0,'2014-12-28 22:21:19',NULL,NULL),(6,'F_MON_DELIVERY','Monitoring','fa fa-eye fa-fw','Today Delivery','fa fa-bus fa-fw','/monitor/todaydelivery',400100,1,0,'2014-12-28 22:21:19',NULL,NULL),(7,'F_RPT_RPT1','Reports','fa fa-bar-chart-o fa-fw','Report 1','fa fa-plus fa-fw','/report/id/rpt1',500100,1,0,'2014-12-28 22:21:19',NULL,NULL),(8,'F_RPT_RPT2','Reports','fa fa-bar-chart-o fa-fw','Report 2','fa fa-plus fa-fw','/report/id/rpt2',500200,2,0,'2014-12-28 22:21:19',NULL,NULL),(9,'F_RPT_RPT3','Reports','fa fa-bar-chart-o fa-fw','Report 3','fa fa-plus fa-fw','/report/id/rpt3',500300,3,0,'2014-12-28 22:21:19',NULL,NULL),(10,'F_RPT_RPT4','Reports','fa fa-bar-chart-o fa-fw','Report 4','fa fa-plus fa-fw','/report/id/rpt4',500400,4,0,'2014-12-28 22:21:19',NULL,NULL),(11,'F_RPT_RPT5','Reports','fa fa-bar-chart-o fa-fw','Report 5','fa fa-plus fa-fw','/report/id/rpt5',500500,5,0,'2014-12-28 22:21:19',NULL,NULL),(12,'F_MASTER_CUSTOMER','Master Data','fa fa-file-text-o fa-fw','Customer','fa fa-smile-o fa-fw','/customer',998100,1,0,'2014-12-28 22:21:19',NULL,NULL),(13,'F_MASTER_SUPPLIER','Master Data','fa fa-file-text-o fa-fw','Supplier','fa fa-building-o fa-fw','/supplier',998200,1,0,'2014-12-28 22:21:19',NULL,NULL),(14,'F_MASTER_PRODUCT','Master Data','fa fa-file-text-o fa-fw','Product','fa fa-cubes fa-fw','/product',998300,1,0,'2014-12-28 22:21:19',NULL,NULL),(15,'F_ADM_USER','Admin Menu','glyphicon glyphicon-cog','User','fa fa-user fa-fw','/admin/user.html',999100,1,0,'2014-12-28 22:21:19',NULL,NULL),(16,'F_ADM_ROLE','Admin Menu','glyphicon glyphicon-cog','Role','fa fa-tree fa-fw','/admin/role.html',999200,1,0,'2014-12-28 22:21:19',NULL,NULL),(17,'F_ADM_FUNCTION','Admin Menu','glyphicon glyphicon-cog','Function','fa fa-minus-square fa-fw','/admin/function.html',999300,1,0,'2014-12-28 22:21:19',NULL,NULL),(18,'F_ADM_ACTION','Admin Menu','glyphicon glyphicon-cog','Action','fa fa-gamepad fa-fw','/admin/action.html',999400,1,0,'2014-12-28 22:21:19',NULL,NULL),(19,'F_ADM_LOOKUP','Admin Menu','glyphicon glyphicon-cog','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup.html',999500,2,0,'2014-12-28 22:21:19',NULL,NULL),(20,'F_ADM_STORE','Admin Menu','glyphicon glyphicon-cog','Store','fa fa-umbrella fa-fw','/admin/store',999600,3,0,'2014-12-28 22:21:19',NULL,NULL);
+INSERT INTO `tb_function` VALUES (1,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','Purchase Order','fa fa-clipboard fa-fw','/po/add',100100,1,0,'2014-12-31 22:20:40',NULL,NULL),(2,'F_PO_POPAYMENT','Purchase Order','fa fa-truck fa-fw','PO Payment','fa fa-calculator fa-fw','/po/payment',100200,1,0,'2014-12-31 22:20:40',NULL,NULL),(3,'F_SO_TODAYPRICE','Sales Order','fa fa-dollar fa-fw','Today Price','fa  fa-barcode fa-fw','/sales/todayprice',200100,1,0,'2014-12-31 22:20:40',NULL,NULL),(4,'F_SO_SALESORDER','Sales Order','fa fa-dollar fa-fw','Sales Order','fa  fa-book fa-fw','/sales/add',200200,2,0,'2014-12-31 22:20:40',NULL,NULL),(5,'F_WH_WAREHOUSE','Warehouse','fa fa-wrench fa-fw','Dashboard','fa fa-desktop fa-fw','/warehouse/dashboard',300100,1,0,'2014-12-31 22:20:40',NULL,NULL),(6,'F_MON_DELIVERY','Monitoring','fa fa-eye fa-fw','Today Delivery','fa fa-bus fa-fw','/monitor/todaydelivery',400100,1,0,'2014-12-31 22:20:40',NULL,NULL),(7,'F_RPT_RPT1','Reports','fa fa-bar-chart-o fa-fw','Report 1','fa fa-plus fa-fw','/report/id/rpt1',500100,1,0,'2014-12-31 22:20:40',NULL,NULL),(8,'F_RPT_RPT2','Reports','fa fa-bar-chart-o fa-fw','Report 2','fa fa-plus fa-fw','/report/id/rpt2',500200,2,0,'2014-12-31 22:20:40',NULL,NULL),(9,'F_RPT_RPT3','Reports','fa fa-bar-chart-o fa-fw','Report 3','fa fa-plus fa-fw','/report/id/rpt3',500300,3,0,'2014-12-31 22:20:40',NULL,NULL),(10,'F_RPT_RPT4','Reports','fa fa-bar-chart-o fa-fw','Report 4','fa fa-plus fa-fw','/report/id/rpt4',500400,4,0,'2014-12-31 22:20:40',NULL,NULL),(11,'F_RPT_RPT5','Reports','fa fa-bar-chart-o fa-fw','Report 5','fa fa-plus fa-fw','/report/id/rpt5',500500,5,0,'2014-12-31 22:20:40',NULL,NULL),(12,'F_MASTER_CUSTOMER','Master Data','fa fa-file-text-o fa-fw','Customer','fa fa-smile-o fa-fw','/customer',998100,1,0,'2014-12-31 22:20:40',NULL,NULL),(13,'F_MASTER_SUPPLIER','Master Data','fa fa-file-text-o fa-fw','Supplier','fa fa-building-o fa-fw','/supplier',998200,1,0,'2014-12-31 22:20:40',NULL,NULL),(14,'F_MASTER_PRODUCT','Master Data','fa fa-file-text-o fa-fw','Product','fa fa-cubes fa-fw','/product',998300,1,0,'2014-12-31 22:20:40',NULL,NULL),(15,'F_ADM_USER','Admin Menu','glyphicon glyphicon-cog','User','fa fa-user fa-fw','/admin/user.html',999100,1,0,'2014-12-31 22:20:40',NULL,NULL),(16,'F_ADM_ROLE','Admin Menu','glyphicon glyphicon-cog','Role','fa fa-tree fa-fw','/admin/role.html',999200,1,0,'2014-12-31 22:20:40',NULL,NULL),(17,'F_ADM_FUNCTION','Admin Menu','glyphicon glyphicon-cog','Function','fa fa-minus-square fa-fw','/admin/function.html',999300,1,0,'2014-12-31 22:20:40',NULL,NULL),(18,'F_ADM_LOOKUP','Admin Menu','glyphicon glyphicon-cog','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup.html',999400,2,0,'2014-12-31 22:20:40',NULL,NULL),(19,'F_ADM_STORE','Admin Menu','glyphicon glyphicon-cog','Store','fa fa-umbrella fa-fw','/admin/store',999500,3,0,'2014-12-31 22:20:40',NULL,NULL);
 /*!40000 ALTER TABLE `tb_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -193,13 +168,13 @@ DROP TABLE IF EXISTS `tb_lookup`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_lookup` (
   `lookup_id` int(11) NOT NULL AUTO_INCREMENT,
-  `category` varchar(45) DEFAULT NULL,
-  `lookup_code` varchar(45) DEFAULT NULL,
+  `category` varchar(25) DEFAULT NULL,
+  `lookup_code` varchar(10) DEFAULT NULL,
   `short_val` varchar(20) DEFAULT NULL,
   `description` varchar(245) DEFAULT NULL,
   `order_num` int(11) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
-  `maintainable` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `maintainable` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -288,8 +263,8 @@ CREATE TABLE `tb_phonelist` (
   `person_id` int(11) DEFAULT NULL,
   `provider` varchar(15) DEFAULT NULL,
   `number` varchar(25) DEFAULT NULL,
-  `status` varchar(5) DEFAULT NULL,
-  `remarks` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
+  `remarks` varchar(245) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -318,13 +293,13 @@ DROP TABLE IF EXISTS `tb_product`;
 CREATE TABLE `tb_product` (
   `product_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_type` varchar(45) DEFAULT NULL,
-  `short_code` varchar(45) DEFAULT NULL,
-  `product_name` varchar(45) DEFAULT NULL,
-  `product_description` varchar(45) DEFAULT NULL,
-  `unit` varchar(45) DEFAULT NULL,
+  `short_code` varchar(25) DEFAULT NULL,
+  `product_name` varchar(95) DEFAULT NULL,
+  `product_description` varchar(245) DEFAULT NULL,
+  `unit` varchar(10) DEFAULT NULL,
   `in_kg` int(11) DEFAULT NULL,
-  `image_path` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
+  `image_path` varchar(145) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -353,7 +328,7 @@ DROP TABLE IF EXISTS `tb_role`;
 CREATE TABLE `tb_role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_ by` int(11) DEFAULT NULL,
@@ -368,7 +343,7 @@ CREATE TABLE `tb_role` (
 
 LOCK TABLES `tb_role` WRITE;
 /*!40000 ALTER TABLE `tb_role` DISABLE KEYS */;
-INSERT INTO `tb_role` VALUES (1,'ADMIN','L001_A',0,'2014-12-29 22:34:48',NULL,NULL),(2,'NONADMIN','L001_A',0,'2014-12-29 22:34:48',NULL,NULL);
+INSERT INTO `tb_role` VALUES (1,'ADMIN','L001_A',0,'2014-12-31 22:55:21',NULL,NULL),(2,'NONADMIN','L001_A',0,'2014-12-31 22:55:21',NULL,NULL);
 /*!40000 ALTER TABLE `tb_role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -391,7 +366,7 @@ CREATE TABLE `tb_role_function` (
 
 LOCK TABLES `tb_role_function` WRITE;
 /*!40000 ALTER TABLE `tb_role_function` DISABLE KEYS */;
-INSERT INTO `tb_role_function` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,13),(2,14);
+INSERT INTO `tb_role_function` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,13),(2,14);
 /*!40000 ALTER TABLE `tb_role_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -404,13 +379,13 @@ DROP TABLE IF EXISTS `tb_store`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_store` (
   `store_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_name` varchar(45) DEFAULT NULL,
-  `address_1` varchar(45) DEFAULT NULL,
-  `address_2` varchar(45) DEFAULT NULL,
-  `address_3` varchar(45) DEFAULT NULL,
-  `is_default` varchar(45) DEFAULT NULL,
+  `store_name` varchar(95) DEFAULT NULL,
+  `address_1` varchar(145) DEFAULT NULL,
+  `address_2` varchar(145) DEFAULT NULL,
+  `address_3` varchar(145) DEFAULT NULL,
+  `is_default` varchar(10) DEFAULT NULL,
   `npwp_number` varchar(45) DEFAULT NULL,
-  `status` varchar(45) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -521,7 +496,7 @@ CREATE TABLE `tb_user` (
   `user_name` varchar(10) NOT NULL,
   `role_id` int(11) DEFAULT NULL,
   `person_id` int(11) DEFAULT NULL,
-  `status` varchar(5) DEFAULT NULL,
+  `status` varchar(10) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -537,7 +512,7 @@ CREATE TABLE `tb_user` (
 
 LOCK TABLES `tb_user` WRITE;
 /*!40000 ALTER TABLE `tb_user` DISABLE KEYS */;
-INSERT INTO `tb_user` VALUES (1,'admin',1,1,'A',0,'2014-11-16 18:42:51',NULL,NULL,NULL),(2,'nonadmin',2,2,'A',0,'2014-11-16 18:42:51',NULL,NULL,NULL);
+INSERT INTO `tb_user` VALUES (1,'admin',1,1,'L001_A',0,'2014-12-31 22:58:39',NULL,NULL,NULL),(2,'nonadmin',2,2,'L001_A',0,'2014-12-31 22:58:39',NULL,NULL,NULL);
 /*!40000 ALTER TABLE `tb_user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -550,4 +525,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2014-12-30 18:29:40
+-- Dump completed on 2014-12-31 23:06:35
