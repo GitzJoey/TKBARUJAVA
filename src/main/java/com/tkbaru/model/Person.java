@@ -127,6 +127,14 @@ public class Person {
 		this.phoneList = phoneList;
 	}
 
+	public MultipartFile getImageBinary() {
+		return imageBinary;
+	}
+
+	public void setImageBinary(MultipartFile imageBinary) {
+		this.imageBinary = imageBinary;
+	}
+
 	@Override
 	public String toString() {
 		return "Person [personId=" + personId + ", firstName=" + firstName
