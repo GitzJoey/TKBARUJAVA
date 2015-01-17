@@ -16,10 +16,20 @@
 			
 			$('#addPhone').click(function() {
 				var ctxpath = "${ pageContext.request.contextPath }";
+				var iCount = 0;
 				
-				$.get(ctxpath + "/fragment/addphone.html", {count: 1}).done(function(data) {
+				var countArr = [];
+				if ($('input[id^="cbx_phoneListId_"]').size() == 0) { countArr.push(0); } 
+				else if ($('input[id^="cbx_phoneListId_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
+				else { $('input[id^="cbx_phoneListId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+				countArr.sort(function(a, b) { return b-a });				
+
+				iCount = countArr.shift();
+				
+				$.get(ctxpath + "/fragment/addphone.html", {count: iCount}).done(function(data) {
 					$('#phoneTable > tbody').append(data);
 				});
+				
 				return false;
 			});
 			
@@ -137,9 +147,7 @@
 											<tr>
 												<th width="5%">&nbsp;</th>
 												<th width="15%">User Name</th>
-												<th width="25%">Name</th>
-												<th width="35%">Address</th>
-												<th width="15%">Phone</th>
+												<th width="75%">Details</th>
 												<th width="5%">Status</th>
 											</tr>
 										</thead>
@@ -148,15 +156,23 @@
 												<c:forEach var="i" varStatus="status" items="${userList}">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
-														<td><c:out value="${i.userName}"></c:out></td>
-														<td><c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out></td>
+														<td><c:out value="${ i.userName }"></c:out></td>
 														<td>
+															<strong>Name:</strong><br/>
+															<c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out>
+															<br/><br/>
+															<strong>Details:</strong><br/>
 															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
 															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine3 }"/>
+															<c:out value="${ i.personEntity.addressLine3 }"/><br/>
+															<c:out value="${ i.personEntity.emailAddr }"/><br/>
+															<br/><br/>	
+															<strong>Phone Number:</strong><br/>												
+															<c:forEach items="${ i.personEntity.phoneList }" var="ph">
+																<c:out value="${ ph.providerName }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
+															</c:forEach>
 														</td>
-														<td>&nbsp;</td>
-														<td>&nbsp;</td>
+														<td><c:out value="${ i.userStatus }"></c:out></td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -184,7 +200,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save.html">
+								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save" enctype="multipart/form-data">
 									<form:hidden path="userId"/>
 									<div class="form-group">
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
@@ -194,16 +210,47 @@
 													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
 												</c:when>
 												<c:otherwise>
-													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" disabled="true"></form:input>
+													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" readonly="true"></form:input>
 												</c:otherwise>
-											</c:choose>
-											
+											</c:choose>											
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 										<div class="col-sm-3">
-											<input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
+											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputRole" class="col-sm-2 control-label">Role</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="roleId">
+												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-2">
+											<form:select class="form-control" path="userStatus">
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>
+										</div>
+									</div>
+									<hr>
+									<div class="form-group">
+										<label for="inputImage" class="col-sm-2 control-label">&nbsp;</label>
+										<div class="col-sm-6">
+											<c:choose>											
+												<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/user/${userForm.personEntity.photoPath}"/>
+													<form:input type="hidden" path="personEntity.photoPath"></form:input>
+												</c:when>
+												<c:otherwise>
+													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/def-images.png"/>
+												</c:otherwise>
+											</c:choose>
+											<form:input type="file" class="form-control" id="inputImage" name="inputImage" path="personEntity.imageBinary"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -243,49 +290,48 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputRole" class="col-sm-2 control-label">Role</label>
-										<div class="col-sm-2">
-											<form:select class="form-control" path="roleId">
-												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
-											</form:select>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
-										<div class="col-sm-2">
-											<form:select class="form-control" path="userStatus">
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
-											</form:select>
-										</div>
-									</div>
-									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Phone List</label>
-										<div class="col-sm-9">
-											<table id="phoneTable" class="table borderless nopaddingrow">
-												<tbody>
-													<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">
+										<div class="col-sm-10">
+											<div id="phoneListPanel" class="panel panel-default">
+												<table id="phoneTable" class="table table-bordered table-hover">
+													<thead>
 														<tr>
-															<td width="25%">
-																<spring:bind path="userForm.personEntity.phoneList[${phoneIdx.index}].providerName">
-																	<form:input type="text" class="form-control" id="inputProvider" name="inputProvider" path="${ status.expression }" placeholder="Provider"></form:input>
-																</spring:bind>
-															</td>
-															<td>
-																<spring:bind path="userForm.personEntity.phoneList[${phoneIdx.index}].phoneNumber">
-																	<form:input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" path="${ status.expression }" placeholder="Phone Number"></form:input>
-																</spring:bind>
-															</td>
-														</tr>													
-													</c:forEach>
-												</tbody>
-											</table>
-											<table class="table borderless nopaddingrow">
-												<tr>
-													<td colspan="2">
-														<button id="addPhone" type="button" class="btn btn-primary"><span class="fa fa-plus fa-fw"></span></button>
-													</td>
-												</tr>
-											</table>
+															<th width="5%">&nbsp;</th>
+															<th width="55%">Number</th>
+															<th width="15%">Status</th>
+														</tr>
+													</thead>											
+													<tbody>
+														<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">													
+															<tr>
+																<td align="center">
+																	<input type="checkbox" id="cbx_phoneListId_<c:out value="${ pList.phoneListId }"/>" value="<c:out value="${ phoneIdx.index }"/>"/>																	
+																</td>
+																<td>
+																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerName">
+																		<form:options items="${ providerDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																	</form:select>																	
+																	<br/>
+																	<form:input path="personEntity.phoneList[${phoneIdx.index}].phoneNumber" type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Phone Number"></form:input>
+																	<br/>
+																	<form:input path="personEntity.phoneList[${phoneIdx.index}].phoneNumRemarks" type="text" class="form-control" id="inputPhoneNumRemarks" name="inputPhoneNumRemarks" placeholder="Remarks"></form:input>
+																</td>
+																<td>
+																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].phoneStatus">
+																		<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																	</form:select>																																			
+																</td>
+															</tr>													
+														</c:forEach>
+													</tbody>
+												</table>
+												<div class="panel-footer no-padding">
+													<div class="btn-toolbar">
+														<button id="deletePhone" type="button" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+														<button id="addPhone" type="button" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">

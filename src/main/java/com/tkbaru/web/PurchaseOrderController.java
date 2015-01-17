@@ -29,5 +29,11 @@ public class PurchaseOrderController {
 		
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
-	
+
+	@RequestMapping(value="/revise", method = RequestMethod.GET)
+	public String poRevise(Locale locale, Model model) {
+		logger.info("[poRevise] " + "");
+		
+		return Constants.JSPPAGE_PO_REVISE;
+	}	
 }

@@ -13,9 +13,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="tb_person")
@@ -41,6 +43,8 @@ public class Person {
 	private String addressLine3;
 	@Column(name="email")
 	private String emailAddr;
+	@Transient
+	private MultipartFile imageBinary;
 	@Column(name="photo_path")
 	private String photoPath;
 	
@@ -122,12 +126,22 @@ public class Person {
 		this.phoneList = phoneList;
 	}
 
+	public MultipartFile getImageBinary() {
+		return imageBinary;
+	}
+
+	public void setImageBinary(MultipartFile imageBinary) {
+		this.imageBinary = imageBinary;
+	}
+
 	@Override
 	public String toString() {
-		return "Person [personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", addressLine1=" + addressLine1 + ", addressLine2=" + addressLine2 + ", addressLine3="
-				+ addressLine3 + ", emailAddr=" + emailAddr + ", photoPath=" + photoPath + ", phoneList=" + phoneList
-				+ "]";
+		return "Person [personId=" + personId + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", addressLine1=" + addressLine1
+				+ ", addressLine2=" + addressLine2 + ", addressLine3="
+				+ addressLine3 + ", emailAddr=" + emailAddr + ", imageBinary="
+				+ imageBinary + ", photoPath=" + photoPath + ", phoneList="
+				+ phoneList + "]";
 	}
 	
 }

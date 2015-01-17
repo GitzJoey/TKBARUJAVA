@@ -67,6 +67,7 @@ public class UserController {
 			
 		model.addAttribute("userForm", selectedUser);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -85,12 +86,12 @@ public class UserController {
 		return Constants.JSPPAGE_USER;
 	}
 
-	@RequestMapping(value = "/admin/user/save.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/admin/user/save", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
 		
 		if (usr.getUserId() == 0) {
 			logger.info("[userSave] " + "addNewUser: " + usr.toString());
-			userManager.addNewUser(usr);			
+			userManager.addNewUser(usr);		
 		} else {
 			logger.info("[userSave] " + "editUser: " + usr.toString());
 			userManager.editUser(usr);
@@ -99,6 +100,6 @@ public class UserController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_USER;
+		return "redirect:/admin/user.html";
 	}	
 }

@@ -185,4 +185,56 @@ public class LookupDAOImpl implements LookupDAO {
         logger.info("Lookup deleted successfully, row deleted : " + out);
 	}
 
+	@Override
+	public List<Lookup> getLookupByCategories(String categoryCodes) {
+		List<Lookup> result = new ArrayList<Lookup>();
+		
+		String sqlquery = "SELECT * FROM tb_lookup WHERE UCASE(category) IN " + categoryCodes + " ORDER BY category, order_num";
+	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		
+		for (Map<String, Object> row : rows) {
+			Lookup res = new Lookup();
+			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
+			res.setLookupCategory(String.valueOf(row.get("category")));
+			res.setLookupCode(String.valueOf(row.get("lookup_code")));
+			res.setShortVal(String.valueOf(row.get("short_val")));
+			res.setLookupDescription(String.valueOf(row.get("description")));
+			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
+			res.setLookupStatus(String.valueOf(row.get("status")));
+			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
+			
+			result.add(res);
+		}		
+		
+		return result;
+	}
+
+	@Override
+	public List<Lookup> getLookupByLookupCodes(String lookupCodes) {
+		List<Lookup> result = new ArrayList<Lookup>();
+		
+		String sqlquery = "SELECT * FROM tb_lookup WHERE UCASE(lookup_code) IN " + lookupCodes + " ORDER BY category, order_num";
+	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		
+		for (Map<String, Object> row : rows) {
+			Lookup res = new Lookup();
+			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
+			res.setLookupCategory(String.valueOf(row.get("category")));
+			res.setLookupCode(String.valueOf(row.get("lookup_code")));
+			res.setShortVal(String.valueOf(row.get("short_val")));
+			res.setLookupDescription(String.valueOf(row.get("description")));
+			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
+			res.setLookupStatus(String.valueOf(row.get("status")));
+			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
+			
+			result.add(res);
+		}		
+		
+		return result;
+	}
+
 }

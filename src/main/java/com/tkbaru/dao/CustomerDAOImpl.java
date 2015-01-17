@@ -12,8 +12,7 @@ import com.tkbaru.model.Customer;
 
 @Repository
 @SuppressWarnings("unchecked")
-public class CustomerDAOImpl implements CustomerDAO {
-	
+public class CustomerDAOImpl implements CustomerDAO {	
 	private static final Logger logger = LoggerFactory.getLogger(CustomerDAOImpl.class);
 
     private SessionFactory sessionFactory;

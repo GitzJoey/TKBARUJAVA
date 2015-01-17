@@ -8,6 +8,8 @@ public interface LookupDAO {
 	public Lookup getLookupById(int selectedId);
 	public List<Lookup> getAllLookup();
 	public List<Lookup> getLookupByCategory(String categoryCode);
+	public List<Lookup> getLookupByCategories(String categoryCodes);
+	public List<Lookup> getLookupByLookupCodes(String lookupCodes);
 	public List<Lookup> getAllCategory();
 	public void addLookup(Lookup lookup);
 	public void editLookup(Lookup lookup);

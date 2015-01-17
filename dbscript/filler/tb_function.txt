@@ -4,7 +4,9 @@ TRUNCATE TABLE tb_function;
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_PO_PURCHASEORDER', 'Purchase Order', 'fa fa-truck fa-fw', 'Purchase Order','fa fa-clipboard fa-fw', '/po/add', 100100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_POPAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_PO_REVISEPO', 'Purchase Order', 'fa fa-truck fa-fw', 'Revise PO','fa fa-code-fork fa-fw', '/po/revise', 100200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_PO_POPAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Sales Order*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
@@ -19,6 +21,8 @@ VALUES ('F_WH_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', 'Dashboard','fa fa-
 /*Monitoring*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_MON_DELIVERY', 'Monitoring', 'fa fa-eye fa-fw', 'Today Delivery','fa fa-bus fa-fw', '/monitor/todaydelivery', 400100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_MON_STOCK', 'Monitoring', 'fa fa-eye fa-fw', 'Stocks','fa fa-database fa-fw', '/monitor/stocks', 400200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Reports*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)

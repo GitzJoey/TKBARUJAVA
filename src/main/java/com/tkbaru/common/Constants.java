@@ -21,20 +21,23 @@ public class Constants {
 	public static final String JSPPAGE_SUPPLIER = "supplier";
 	public static final String JSPPAGE_CUSTOMER = "customer";
 	public static final String JSPPAGE_ACTION = "action";
-	public static final String JSPPAGE_PURCHASEORDER = "po";
 	public static final String JSPPAGE_SALESORDER = "sales";
 	public static final String JSPPAGE_REPORT = "report";
+	public static final String JSPPAGE_PURCHASEORDER = "po";
 	public static final String JSPPAGE_PO_PAYMENT = "po_payment";
+	public static final String JSPPAGE_PO_REVISE = "po_revise";
 	public static final String JSPPAGE_SEARCH = "search";
 	public static final String JSPPAGE_WAREHOUSE = "warehouse";
 	public static final String JSPPAGE_TODAYDELIVERY = "todaydelivery";
 	public static final String JSPPAGE_STORE = "store";
+	public static final String JSPPAGE_STOCKS = "stocks";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
 	public static final String LOOKUPCATEGORY_YESNOSELECTION = "YESNOSELECTION";
 	public static final String LOOKUPCATEGORY_UNIT = "UNIT";
 	public static final String LOOKUPCATEGORY_PRODUCT_TYPE = "PRODUCT_TYPE";
+	public static final String LOOKUPCATEGORY_PHONE_PROVIDER = "PHONE_PROVIDER";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";

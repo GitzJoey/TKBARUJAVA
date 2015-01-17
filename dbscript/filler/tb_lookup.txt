@@ -90,11 +90,37 @@ VALUES ('UNIT', 'L005_KN',
 		'Kn', 'Kuintal (Kn)',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
-/*
+/*Phone Provider - L006*/
 INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
-VALUES ('', '',
-		'', '',
+VALUES ('PHONE_PROVIDER', 'L006_TSEL',
+		'T-Sel', 'Telkomsel',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_XL',
+		'XL', 'XL Axiata',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_ISAT',
+		'ISAT', 'Indosat',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_3',
+		'3', '3',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_FLX',
+		'FLEXI', 'Telkom Flexi',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_SMRTFRN',
+		'SMRTFRN', 'SmartFren',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('PHONE_PROVIDER', 'L006_CRA',
+		'Ceria', 'Ceria',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
+
+/*
 INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
 		'', '',

@@ -90,7 +90,9 @@
 											<tr>
 												<th width="5%">&nbsp;</th>
 												<th width="15%">Store Name</th>
-												<th width="80%">Details</th>
+												<th width="70%">Details</th>
+												<th width="5%">Default</th>
+												<th width="5%">Status</th>												
 											</tr>
 										</thead>
 										<tbody>
@@ -99,7 +101,21 @@
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.storeId }"/>" type="checkbox" value="<c:out value="${ i.storeId }"/>"/></td>
 														<td><c:out value="${i.storeName}"></c:out></td>
-														<td></td>
+														<td>
+															<strong><c:out value="${i.storeName}"></c:out></strong><br/><br/>
+															<c:out value="${i.storeAddress1}"></c:out><br/>
+															<c:out value="${i.storeAddress2}"></c:out><br/>
+															<c:out value="${i.storeAddress3}"></c:out><br/>
+															<br/>
+															NPWP : <c:out value="${i.npwpNumber}"/><br/>
+															<br/>
+														</td>
+														<td>
+															<c:out value="${i.isDefault}"/><br/>
+														</td>
+														<td>
+															<c:out value="${i.storeStatus}"/><br/>
+														</td>
 													</tr>
 												</c:forEach>
 											</c:if>

@@ -41,7 +41,7 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void addProduct(Product product) {
 		try {
-			String path = servletContext.getRealPath("/") +  "\\resources\\images\\product\\"; //"d:\\TKBARU\\workspace\\TKBARU\\src\\main\\webapp\\resources\\images\\product\\";
+			String path = servletContext.getRealPath("/") +  "resources\\images\\product\\";
 			RandomProvider rndm = new RandomProvider();			
 			String fileName = Integer.toString(product.getProductId()) + "-" + product.getProductName() + "-" + rndm.generateRandomInString() + ".jpg"; 			
 			product.getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());

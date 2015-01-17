@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tkbaru.common.Converter;
 import com.tkbaru.dao.LookupDAO;
 import com.tkbaru.model.Lookup;
 
@@ -56,6 +57,22 @@ public class LookupServiceImpl implements LookupService {
 	public void deleteLookup(int selectedId) {
 		
 		lookupDAO.deleteLookup(selectedId);
+	}
+
+	@Override
+	public List<Lookup> getLookupByCategory(List<String> categoryNames) {
+
+		String inClause = Converter.convertToINClause(categoryNames);
+		
+		return lookupDAO.getLookupByCategories(inClause.toUpperCase());
+	}
+
+	@Override
+	public List<Lookup> getLookupByLookupCode(List<String> lookupCodes) {
+
+		String inClause = Converter.convertToINClause(lookupCodes);
+		
+		return lookupDAO.getLookupByLookupCodes(inClause.toUpperCase());
 	}
 
 }

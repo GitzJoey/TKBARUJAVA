@@ -31,7 +31,17 @@ public class Customer {
 	private int customerId;
 	@Column(name="store_name")
 	private String storeName;
-		
+	@Column(name="address")
+	private String storeAddress;
+	@Column(name="city")
+	private String storeCity;
+	@Column(name="phone")
+	private String storePhone;
+	@Column(name="status")
+	private String storeStatus;
+	@Column(name="remarks")
+	private String storeRemarks;
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},
@@ -76,9 +86,52 @@ public class Customer {
 		this.picList = picList;
 	}
 
+	public String getStoreAddress() {
+		return storeAddress;
+	}
+
+	public void setStoreAddress(String storeAddress) {
+		this.storeAddress = storeAddress;
+	}
+
+	public String getStoreCity() {
+		return storeCity;
+	}
+
+	public void setStoreCity(String storeCity) {
+		this.storeCity = storeCity;
+	}
+
+	public String getStorePhone() {
+		return storePhone;
+	}
+
+	public void setStorePhone(String storePhone) {
+		this.storePhone = storePhone;
+	}
+
+	public String getStoreStatus() {
+		return storeStatus;
+	}
+
+	public void setStoreStatus(String storeStatus) {
+		this.storeStatus = storeStatus;
+	}
+
+	public String getStoreRemarks() {
+		return storeRemarks;
+	}
+
+	public void setStoreRemarks(String storeRemarks) {
+		this.storeRemarks = storeRemarks;
+	}
+
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", storeName=" + storeName + ", bankAccList=" + bankAccList
-				+ ", picList=" + picList + "]";
+		return "Customer [customerId=" + customerId + ", storeName="
+				+ storeName + ", storeAddress=" + storeAddress + ", storeCity="
+				+ storeCity + ", storePhone=" + storePhone + ", storeStatus="
+				+ storeStatus + ", storeRemarks=" + storeRemarks
+				+ ", bankAccList=" + bankAccList + ", picList=" + picList + "]";
 	}	
 }

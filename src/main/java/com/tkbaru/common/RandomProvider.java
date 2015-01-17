@@ -45,7 +45,7 @@ public class RandomProvider {
 
 	    int randomNumber =  (int)(fraction + this.lowerBound);
 	    
-	    return randomNumber;
+	    return Math.abs(randomNumber);
 	}
 	
 	public String generateRandomInString() {

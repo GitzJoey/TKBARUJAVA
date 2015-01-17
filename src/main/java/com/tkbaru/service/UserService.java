@@ -10,4 +10,5 @@ public interface UserService {
 	public User getUserByUserName(String userName);
 	public void addNewUser(User usr);
 	public void editUser(User usr);
+	public void deleteUser(int selectedId);
 }

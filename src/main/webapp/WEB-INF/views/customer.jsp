@@ -38,7 +38,9 @@
 							if (button == 'editBankAcc') {
 								$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
 								
-								$('#bankAccInputMode').val("EDIT");							
+								$('#bankAccIndex').val($(item).val());
+								$('#bankAccInputMode').val("EDIT");	
+								
 								$('#bankAccId').val($('input[id="bankAccList' + $(item).val() + '.bankAccId"]').val());
 								$('#shortName').val($('input[id="bankAccList' + $(item).val() + '.shortName"]').val());						
 								$('#bankName').val($('input[id="bankAccList' + $(item).val() + '.bankName"]').val());
@@ -75,13 +77,13 @@
 							});
 						
 						custObj.bankAccList = bankAccObj;
-						
+
 						var countArr = [];
 						if ($('input[id^="cbx_bankAccId_"]').size() == 0) { countArr.push(0); } 
-						else if ($('input[id^="cbx_bankAccId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
-						} else { $('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
+						else if ($('input[id^="cbx_bankAccId_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
+						else { $('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
 						countArr.sort(function(a, b) { return b-a });
-							
+
 						$.ajax({
 							url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
 							type: 'POST',
@@ -98,17 +100,17 @@
 							error: function(res) { jsAlert("Error ! - " + res.statusText); }
 						});									
 					} else {
-						$('input[id="bankAccList' + $('#bankAccId').val() + '.shortName"]').val($('#shortName').val());		
-						$('label[for="bankAccList' + $('#bankAccId').val() + '.shortName"]').text($('#shortName').val());
+						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.shortName"]').val($('#shortName').val());		
+						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].shortName"]').text($('#shortName').val());
 						
-						$('input[id="bankAccList' + $('#bankAccId').val() + '.bankName"]').val($('#bankName').val());
-						$('label[for="bankAccList' + $('#bankAccId').val() + '.bankName"]').text($('#bankName').val());
+						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.bankName"]').val($('#bankName').val());
+						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].bankName"]').text($('#bankName').val());
 						
-						$('input[id="bankAccList' + $('#bankAccId').val() + '.accNum"]').val($('#accountNumber').val());
-						$('label[for="bankAccList' + $('#bankAccId').val() + '.accNum"]').text($('#accountNumber').val());
+						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.accNum"]').val($('#accountNumber').val());
+						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].accNum"]').text($('#accountNumber').val());
 						
-						$('input[id="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
-						$('label[for="bankAccList' + $('#bankAccId').val() + '.bankRemarks"]').text($('#bankAccRemarks').val());
+						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
+						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].bankRemarks"]').text($('#bankAccRemarks').val());
 						
 						$('#bankAccListPanel').show();
 						$('#bankAccListInputPanel').collapse('hide');
@@ -408,25 +410,41 @@
 																<tbody>
 																	<tr>
 																		<td>
-																			<h3><c:out value="${ i.storeName }"></c:out></h3>
-																			<br/>
-																			<br/>
-																			<c:out value="${ '' }"></c:out><br/>															
-																			<c:out value="${ '' }"></c:out><br/>
-																			<c:out value="${ '' }"></c:out><br/>
-																			<br/>																			
-																		</td>
-																		<td>
-																			<strong>Person In Charge</strong>
-																			<br/>
-																			<br/>
-																			<br/>
-																			<br/>
-																			<strong>Bank Account</strong>
-																			<br/>
-																			<br/>
-																			<br/>
-																			<strong>Settings</strong>
+																			<table class="table borderless nopaddingrow">
+																				<tr>
+																					<td colspan="2">
+																						<strong class="title"><c:out value="${ i.storeName }"></c:out></strong>
+																						<hr>
+																					</td>
+																				</tr>
+																				<tr>
+																					<td width="35%">
+																						<strong>Store Details</strong><br/>
+																						<c:out value="${ i.storeAddress }"></c:out><br/>
+																						<c:out value="${ i.storeCity }"></c:out><br/>															
+																						<c:out value="${ i.storePhone }"></c:out><br/>
+																						<c:out value="${ i.storeRemarks }"></c:out><br/>
+																					</td>
+																					<td width="65%">
+																						<strong>Person In Charge</strong>
+																						<br/>
+																						<c:forEach items="${ i.picList }" var="iPIC">
+																							<c:out value="${ iPIC.firstName }"/><br/>
+																						</c:forEach>
+																						<br/>
+																						<strong>Bank Account</strong>
+																						<br/>
+																						<c:forEach items="${ i.bankAccList }" var="iBA">
+																							<c:out value="${ iBA.shortName }"/><br/>
+																						</c:forEach>
+																						<br/>
+																						<strong>Settings</strong>
+																						<br/>
+																						<br/>
+																						<br/>
+																					</td>
+																				</tr>
+																			</table>
 																		</td>
 																	</tr>
 																</tbody>
@@ -476,6 +494,38 @@
 													<div class="col-sm-3">
 														<form:hidden path="customerId" />
 														<form:input path="storeName" type="text" class="form-control" id="inputStoreName" name="inputStoreName" placeholder="Enter Store Name"></form:input>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputStoreAddress" class="col-sm-2 control-label">Address</label>
+													<div class="col-sm-8">
+														<form:input path="storeAddress" type="text" class="form-control" id="inputStoreAddress" name="inputStoreAddress" placeholder="Enter Address"></form:input>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputStoreCity" class="col-sm-2 control-label">City</label>
+													<div class="col-sm-4">
+														<form:input path="storeCity" type="text" class="form-control" id="inputStoreCity" name="inputStoreCity" placeholder="Enter City"></form:input>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputStorePhone" class="col-sm-2 control-label">Phone</label>
+													<div class="col-sm-4">
+														<form:input path="storePhone" type="text" class="form-control" id="inputStorePhone" name="inputStorePhone" placeholder="Enter Phone"></form:input>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
+													<div class="col-sm-2">
+														<form:select class="form-control" path="storeStatus">
+															<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+														</form:select>
+													</div>
+												</div>
+												<div class="form-group">
+													<label for="inputStoreRemarks" class="col-sm-2 control-label">Remarks</label>
+													<div class="col-sm-8">
+														<form:input path="storeRemarks" type="text" class="form-control" id="inputStoreRemarks" name="inputStoreRemarks" placeholder="Remarks"></form:input>
 													</div>
 												</div>
 											</div>
@@ -604,8 +654,8 @@
 																</table>
 																<div class="panel-footer no-padding">
 																	<div class="btn-toolbar">
-																	<button type="button" id="minusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
-																	<button type="button" id="plusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+																		<button type="button" id="minusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+																		<button type="button" id="plusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
 																	</div>										
 																</div>
 															</div>
@@ -669,6 +719,7 @@
 												<div id="bankAccListInputPanel" class="panel panel-default collapse">
 													<br/>
 													<input type="hidden" id="bankAccId" value=""/>
+													<input type="hidden" id="bankAccIndex" value=""/>
 													<input type="hidden" id="bankAccInputMode" value=""/>
 													<div class="row">
 														<label for="shortName" class="col-sm-2 control-label">Short Name</label>

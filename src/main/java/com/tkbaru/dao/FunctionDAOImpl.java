@@ -136,7 +136,8 @@ public class FunctionDAOImpl implements FunctionDAO {
         int out = 0;
         
         try {
-            Object[] args = new Object[] { 	func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
+            Object[] args = new Object[] { 
+            		func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
 					func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(), 
 					func.getDeepLevel(), func.getFunctionId() };
 

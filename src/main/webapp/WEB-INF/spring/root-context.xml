@@ -65,6 +65,7 @@
                 <beans:value>com.tkbaru.model.Store</beans:value>
                 <beans:value>com.tkbaru.model.Role</beans:value>
                 <beans:value>com.tkbaru.model.Function</beans:value>
+                <beans:value>com.tkbaru.model.Stocks</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -86,6 +87,7 @@
                 <beans:value>com.tkbaru.model.Store</beans:value>
                 <beans:value>com.tkbaru.model.Role</beans:value>
                 <beans:value>com.tkbaru.model.Function</beans:value>
+                <beans:value>com.tkbaru.model.Stocks</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -99,10 +101,10 @@
     <!-- declare spring DAO -->
     <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
-    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
 	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.PhoneListDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
@@ -129,14 +131,18 @@
     <beans:bean id="StoreDAO" class="com.tkbaru.dao.StoreDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="StocksDAO" class="com.tkbaru.dao.StocksDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
     	<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
     </beans:bean>
-    <beans:bean id="userService" class="com.tkbaru.service.UserServiceImpl"></beans:bean>
+    <beans:bean id="userService" class="com.tkbaru.service.UserServiceImpl">
+    	<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
+    </beans:bean>
     <beans:bean id="personService" class="com.tkbaru.service.PersonServiceImpl"></beans:bean>
-    <beans:bean id="phoneListService" class="com.tkbaru.service.PhoneListServiceImpl"></beans:bean>
     <beans:bean id="roleService" class="com.tkbaru.service.RoleServiceImpl"></beans:bean>
     <beans:bean id="functionService" class="com.tkbaru.service.FunctionServiceImpl"></beans:bean>
     <beans:bean id="lookupService" class="com.tkbaru.service.LookupServiceImpl"></beans:bean>
@@ -145,6 +151,7 @@
     <beans:bean id="ProductService" class="com.tkbaru.service.ProductServiceImpl"></beans:bean>
     <beans:bean id="ReportService" class="com.tkbaru.service.ReportServiceImpl"></beans:bean>
 	<beans:bean id="StoreService" class="com.tkbaru.service.StoreServiceImpl"></beans:bean>
+	<beans:bean id="StocksService" class="com.tkbaru.service.StocksServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />

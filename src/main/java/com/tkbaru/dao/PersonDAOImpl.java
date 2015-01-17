@@ -5,17 +5,29 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Person;
 
+@Repository
 public class PersonDAOImpl implements PersonDAO {
-
+	private static final Logger logger = LoggerFactory.getLogger(PersonDAOImpl.class);
+	
 	private DataSource dataSource;
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
+
+    private SessionFactory sessionFactory;
+    public void setSessionFactory(SessionFactory sf) {
+        this.sessionFactory = sf;
+    }
 
 	@Override
 	public Person getPersonEntityById(int personId) {
@@ -55,17 +67,57 @@ public class PersonDAOImpl implements PersonDAO {
 		return result;
 	}
 
+	@Override
+	public Person getPersonById(int selectedId) {
+		logger.info("[getPersonById] " + "");
+        
+		Session session = this.sessionFactory.getCurrentSession();
+        Person pers = null;
+        
+        try {
+        	pers = (Person) session.load(Person.class, new Integer(selectedId));
+        } catch (Exception err) {
+        	logger.info(err.getMessage());
+        }
+        
+        logger.info("Person loaded successfully, Person details = " + pers.toString());
+        
+        return pers;
+	}
 
 	@Override
-	public void addPerson(Person person) {
-		// TODO Auto-generated method stub
+	public int addPerson(Person person) {
+		logger.info("[addPerson] " + "");
 		
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(person);
+        
+        logger.info("Person added successfully, Person Details = " + person.toString());
+        
+        return person.getPersonId();
 	}
 
 	@Override
 	public void editPerson(Person person) {
-		// TODO Auto-generated method stub
+		logger.info("[editPerson] " + "");
 		
+		Session session = this.sessionFactory.getCurrentSession();
+	    session.update(person);
+	    
+	    logger.info("Person updated successfully, Person Details = " + person.toString());	
+	}
+
+	@Override
+	public void deletePerson(int selectedId) {
+		logger.info("[deletePerson] " + "");
+		
+        Session session = this.sessionFactory.getCurrentSession();
+        Person person = (Person) session.load(Person.class, new Integer(selectedId));
+        if(null != person){
+            session.delete(person);
+        }
+        
+        logger.info("Person deleted successfully, Person details = " + person.toString());	
 	}
 
 }

@@ -19,7 +19,15 @@
 	<bean id="user_html"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
-		p:reportDataKey="datasource" />
+			p:reportDataKey="datasource">
+			<property name="exporterParameters">
+		         <map>
+		             <entry key="net.sf.jasperreports.engine.export.JRHtmlExporterParameter.IS_USING_IMAGES_TO_ALIGN">
+		                <value>false</value>
+		            </entry>
+		         </map>			
+			</property>
+	</bean>
  
 	<bean id="user_csv"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"

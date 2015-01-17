@@ -2,7 +2,8 @@ package com.tkbaru.model;
 
 public class User {
 	public User() {
-
+		personEntity = new Person();
+		roleEntity = new Role();
 	}
 	
 	private int userId;

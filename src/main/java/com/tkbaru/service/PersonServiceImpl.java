@@ -2,6 +2,7 @@ package com.tkbaru.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.dao.PersonDAO;
 import com.tkbaru.model.Person;
@@ -19,15 +20,31 @@ public class PersonServiceImpl implements PersonService {
 	}
 
 	@Override
-	public void addPerson(Person person) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public Person getPersonById(int selectedId) {
 		
+		return personDAO.getPersonById(selectedId);
 	}
 
 	@Override
-	public void editPerson(Person person) {
-		// TODO Auto-generated method stub
+	@Transactional
+	public int addPerson(Person person) {
 		
+		return personDAO.addPerson(person);
+	}
+
+	@Override
+	@Transactional
+	public void editPerson(Person person) {
+		
+		personDAO.editPerson(person);
+	}
+
+	@Override
+	@Transactional
+	public void deletePerson(int selectedId) {
+		
+		personDAO.deletePerson(selectedId);
 	}
 
 }

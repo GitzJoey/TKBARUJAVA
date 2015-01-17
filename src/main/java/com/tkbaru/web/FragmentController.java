@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.common.RandomProvider;
 import com.tkbaru.model.Customer;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.model.User;
@@ -25,13 +26,15 @@ public class FragmentController {
 	LookupService lookupManager; 
 	
 	@RequestMapping(value = "/fragment/addphone.html", method = RequestMethod.GET)
-	public String addPhone(@RequestParam(value="count") int addphonecount, Model model) {		
+	public String addPhone(@RequestParam(value="count") int addphonecount, Model model) {				
+		logger.info("[addPhone] Adding phone via AJAX, counter: " + addphonecount);
+		
+		RandomProvider rndm = new RandomProvider();
 		
 		model.addAttribute("userForm", new User());
 		model.addAttribute("addphonecount", addphonecount);
-	 
-		logger.info("return phone");
-		
+		model.addAttribute("rndmId", rndm.generateRandom());
+
 		return "fragment/phone";
 	}
 

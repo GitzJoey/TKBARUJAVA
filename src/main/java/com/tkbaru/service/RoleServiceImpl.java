@@ -15,9 +15,6 @@ public class RoleServiceImpl implements RoleService {
 	@Autowired
 	RoleDAO roleDAO;
 	
-	@Autowired
-	UserService userManager;
-	
 	@Override
 	@Transactional
 	public List<Role> getAllRole() {
