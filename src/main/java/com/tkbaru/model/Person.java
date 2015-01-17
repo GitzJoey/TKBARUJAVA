@@ -20,39 +20,40 @@ import org.apache.commons.collections.list.LazyList;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
-@Table(name="tb_person")
+@Table(name = "tb_person")
 @SuppressWarnings("unchecked")
 public class Person {
+
 	public Person() {
-		
 	}
-	
+
 	@Id
-	@Column(name="person_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "person_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int personId;
-	@Column(name="first_name")
+	@Column(name = "first_name")
 	private String firstName;
-	@Column(name="last_name")
+	@Column(name = "last_name")
 	private String lastName;
-	@Column(name="addr_1")
+	@Column(name = "addr_1")
 	private String addressLine1;
-	@Column(name="addr_2")
+	@Column(name = "addr_2")
 	private String addressLine2;
-	@Column(name="addr_3")
+	@Column(name = "addr_3")
 	private String addressLine3;
-	@Column(name="email")
+	@Column(name = "email")
 	private String emailAddr;
+	@Column(name = "photo_path")
+	private String photoPath;
+
 	@Transient
 	private MultipartFile imageBinary;
-	@Column(name="photo_path")
-	private String photoPath;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="tb_person_phonelist",
-				joinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")},
-				inverseJoinColumns={@JoinColumn(name="phonelist_id", referencedColumnName="phonelist_id")})
-	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(PhoneList.class));
+	@ManyToMany(cascade = CascadeType.ALL)
+	@JoinTable(name = "tb_person_phonelist", joinColumns = { @JoinColumn(name = "person_id", referencedColumnName = "person_id") }, inverseJoinColumns = { @JoinColumn(name = "phonelist_id", referencedColumnName = "phonelist_id") })
+	private List<PhoneList> phoneList = LazyList.decorate(
+			new ArrayList<PhoneList>(),
+			FactoryUtils.instantiateFactory(PhoneList.class));
 
 	public int getPersonId() {
 		return personId;
@@ -126,22 +127,13 @@ public class Person {
 		this.phoneList = phoneList;
 	}
 
-	public MultipartFile getImageBinary() {
-		return imageBinary;
-	}
-
-	public void setImageBinary(MultipartFile imageBinary) {
-		this.imageBinary = imageBinary;
-	}
-
 	@Override
 	public String toString() {
 		return "Person [personId=" + personId + ", firstName=" + firstName
 				+ ", lastName=" + lastName + ", addressLine1=" + addressLine1
 				+ ", addressLine2=" + addressLine2 + ", addressLine3="
-				+ addressLine3 + ", emailAddr=" + emailAddr + ", imageBinary="
-				+ imageBinary + ", photoPath=" + photoPath + ", phoneList="
-				+ phoneList + "]";
+				+ addressLine3 + ", emailAddr=" + emailAddr + ", photoPath="
+				+ photoPath + ", phoneList=" + phoneList + "]";
 	}
-	
+
 }

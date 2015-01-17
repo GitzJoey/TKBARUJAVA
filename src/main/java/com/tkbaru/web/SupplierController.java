@@ -27,7 +27,7 @@ public class SupplierController {
 	@Autowired
 	LookupService lookupManager;
 	
-	@RequestMapping(value = "/supplier/list.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier", method = RequestMethod.GET)
 	public String listSupplier(Locale locale, Model model) {
 
 		logger.info("list");
@@ -39,7 +39,7 @@ public class SupplierController {
 		return Constants.JSPPAGE_SUPPLIER;
 	}
 	
-	@RequestMapping(value = "/supplier/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier/add", method = RequestMethod.GET)
 	public String addSupplier(Locale locale, Model model) {
 
 		model.addAttribute("supplierForm", new Supplier());
@@ -50,7 +50,7 @@ public class SupplierController {
 		return Constants.JSPPAGE_SUPPLIER;
 	}
 
-	@RequestMapping(value = "/supplier/edit/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier/edit/{selectedId}", method = RequestMethod.GET)
 	public String editSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
 		
 		Supplier selectedSupplier = supplierManager.getSupplierById(selectedId);
@@ -64,7 +64,7 @@ public class SupplierController {
 		return Constants.JSPPAGE_SUPPLIER;
 	}
 
-	@RequestMapping(value = "/supplier/delete/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/supplier/delete/{selectedId}", method = RequestMethod.GET)
 	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
 
 		supplierManager.deleteSupplier(selectedId);
@@ -72,10 +72,10 @@ public class SupplierController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/supplier/list.html";
+		return "redirect:/supplier";
 	}
 
-	@RequestMapping(value = "/supplier/save.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/supplier/save", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("supplierForm") Supplier supp) {
 		
 		logger.info("" + supp.getBankAccList().size());
@@ -91,6 +91,6 @@ public class SupplierController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/supplier/list.html";
+		return "redirect:/supplier";
 	}
 }

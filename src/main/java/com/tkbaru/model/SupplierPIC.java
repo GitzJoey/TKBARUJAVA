@@ -12,61 +12,70 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_supplier_pic")
+@Table(name = "tb_supplier_pic")
 public class SupplierPIC {
+
 	public SupplierPIC() {
-		
 	}
-	
+
 	@Id
-	@Column(name="supplier_pic_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "supplier_pic_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int supplierPICId;
-	@Column(name="supplier_id")
+	@Column(name = "supplier_id")
 	private int supplierId;
-	@Column(name="person_id")
+	@Column(name = "person_id")
 	private int personId;
-	@Column(name="status")
+	@Column(name = "status")
 	private String picRemarks;
-	
+
 	@ManyToOne
-	@JoinColumn(name="supplier_id", insertable=false, updatable=false)
+	@JoinColumn(name = "supplier_id", insertable = false, updatable = false)
 	private Supplier supplierEnt;
-	
-	@OneToOne(cascade=CascadeType.ALL)
-	@JoinColumn(name="person_id", insertable=false, updatable=false)
+
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "person_id", insertable = false, updatable = false)
 	private Person personDetail;
+
 	public Person getPersonDetail() {
 		return personDetail;
 	}
-	
+
 	public int getSupplierPICId() {
 		return supplierPICId;
 	}
+
 	public void setSupplierPICId(int supplierPICId) {
 		this.supplierPICId = supplierPICId;
 	}
+
 	public int getSupplierId() {
 		return supplierId;
 	}
+
 	public void setSupplierId(int supplierId) {
 		this.supplierId = supplierId;
 	}
+
 	public int getPersonId() {
 		return personId;
 	}
+
 	public void setPersonId(int personId) {
 		this.personId = personId;
 	}
+
 	public String getPicRemarks() {
 		return picRemarks;
 	}
+
 	public void setPicRemarks(String picRemarks) {
 		this.picRemarks = picRemarks;
 	}
+
 	@Override
 	public String toString() {
-		return "SupplierPIC [supplierPICId=" + supplierPICId + ", personId=" + personId + ", picRemarks=" + picRemarks
-				+ "]";
+		return "SupplierPIC [supplierPICId=" + supplierPICId + ", personId="
+				+ personId + ", picRemarks=" + picRemarks + "]";
 	}
 }

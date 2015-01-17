@@ -39,7 +39,7 @@ public class SupplierDAOImpl implements SupplierDAO {
         } catch (Exception err) {
         	logger.info(err.getMessage());
         }
-        logger.info("Supplier loaded successfully, Supplier details = " + supp.toString());
+//        logger.info("Supplier loaded successfully, Supplier details = " + supp.toString());
         return supp;	
 	}
 
@@ -47,7 +47,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 	public void addNewSupplier(Supplier supplier) {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(supplier);
-        logger.info("Supplier added successfully, Supplier Details = " + supplier.toString());
+//        logger.info("Supplier added successfully, Supplier Details = " + supplier.toString());
 		
 	}
 
@@ -55,7 +55,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 	public void editSupplier(Supplier supplier) {
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(supplier);
-	    logger.info("Supplier updated successfully, Supplier Details = " + supplier.toString());		
+//	    logger.info("Supplier updated successfully, Supplier Details = " + supplier.toString());		
 	}
 
 	@Override
@@ -63,7 +63,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Supplier> supplierList = session.createQuery("FROM Supplier").list();
 	
-		logger.info("" + supplierList.get(0).getBankAccList().get(0).getBankAccDetail().toString());
+//		logger.info("" + supplierList.get(0).getBankAccList().get(0).getBankAccDetail().toString());
 		return supplierList;
 	}
 
@@ -74,7 +74,7 @@ public class SupplierDAOImpl implements SupplierDAO {
         if(null != supplier){
             session.delete(supplier);
         }
-        logger.info("Supplier deleted successfully, Supplier details = " + supplier.toString());		
+//        logger.info("Supplier deleted successfully, Supplier details = " + supplier.toString());		
 	}
 
 }

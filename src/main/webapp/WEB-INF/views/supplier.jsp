@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {				
-				window.location.href(ctxpath + "/supplier/list.html");
+				window.location.href(ctxpath + "/supplier");
 			});
 			
 			$('#addBank').click(function() {
@@ -76,7 +76,7 @@
 					jsAlert("Please select at least 1 username");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/supplier/edit/" + id + ".html");	
+					$('#editTableSelection').attr("href", ctxpath + "/supplier/edit/" + id);	
 				}				
 			});
 			
@@ -92,7 +92,7 @@
 					jsAlert("Please select at least 1 username");
 					return false;	
 				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/supplier/delete/" + id + ".html");	
+					$('#deleteTableSelection').attr("href", ctxpath + "/supplier/delete/" + id);	
 				}								
 			});
 			
@@ -188,7 +188,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/supplier/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/supplier/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -209,7 +209,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save.html">
+								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save">
 									<form:hidden path="supplierId"/>
 									<input id="postType" type="hidden" value=""/>
 									<div class="form-group">
