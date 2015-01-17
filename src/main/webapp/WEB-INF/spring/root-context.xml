@@ -77,18 +77,18 @@
         </beans:property>
         <beans:property name="packagesToScan">
         	<beans:list>
-        		<beans:value>com.tkbaru.model.Customer</beans:value>
-        		<beans:value>com.tkbaru.model.Supplier</beans:value>
-        		<beans:value>com.tkbaru.model.Person</beans:value>
-        		<beans:value>com.tkbaru.model.BankAccount</beans:value>
-        		<beans:value>com.tkbaru.model.PhoneList</beans:value>
-                <beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
-                <beans:value>com.tkbaru.model.SupplierPIC</beans:value>
-                <beans:value>com.tkbaru.model.Product</beans:value>
-                <beans:value>com.tkbaru.model.Store</beans:value>
-                <beans:value>com.tkbaru.model.Role</beans:value>
-                <beans:value>com.tkbaru.model.Function</beans:value>
-                <beans:value>com.tkbaru.model.Stocks</beans:value>
+				<beans:value>com.tkbaru.model.Customer</beans:value>
+				<beans:value>com.tkbaru.model.Supplier</beans:value>
+				<beans:value>com.tkbaru.model.Person</beans:value>
+				<beans:value>com.tkbaru.model.BankAccount</beans:value>
+				<beans:value>com.tkbaru.model.PhoneList</beans:value>
+				<beans:value>com.tkbaru.model.SupplierBankAccount</beans:value>
+				<beans:value>com.tkbaru.model.SupplierPIC</beans:value>
+				<beans:value>com.tkbaru.model.Product</beans:value>
+				<beans:value>com.tkbaru.model.Store</beans:value>
+				<beans:value>com.tkbaru.model.Role</beans:value>
+				<beans:value>com.tkbaru.model.Function</beans:value>
+				<beans:value>com.tkbaru.model.Stocks</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
