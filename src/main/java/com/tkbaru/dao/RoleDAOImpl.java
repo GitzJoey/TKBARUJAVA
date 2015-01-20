@@ -57,7 +57,7 @@ public class RoleDAOImpl implements RoleDAO {
 		logger.info("[addRole] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
-        session.persist(role);
+        session.save(role);
         
         logger.info("Role added successfully, Role Details = " + role.toString());		
 	}

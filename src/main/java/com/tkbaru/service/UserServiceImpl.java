@@ -1,7 +1,6 @@
 package com.tkbaru.service;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -13,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.tkbaru.common.CommonHelper;
+import com.tkbaru.common.Converter;
 import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
@@ -55,6 +54,7 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public User getUserById(int selectedId) {
 		logger.info("[getUserById] " + "");
+		
 		User result = userDAO.getUserById(selectedId);
 		
 		result.setRoleEntity(roleManager.getRoleById(result.getRoleId()));		
@@ -71,19 +71,17 @@ public class UserServiceImpl implements UserService {
 		try {
 			String path = servletContext.getRealPath("/") + "resources\\images\\user\\";
 			RandomProvider rndm = new RandomProvider();			
-			String fileName = Integer.toString(usr.getUserId()) + "-" + usr.getUserName() + "-" + CommonHelper.todayDateToString() + "-" + rndm.generateRandomInString() + ".jpg"; 			
+			String fileName = Integer.toString(usr.getUserId()) + "-" + usr.getUserName() + "-" + Converter.todayDateToString() + "-" + rndm.generateRandomInString() + ".jpg"; 			
 			usr.getPersonEntity().getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
 			
 			usr.getPersonEntity().setPhotoPath(fileName);
 			
 			usr.setUserPassword(cryptoBCryptPasswordEncoderManager.encode(usr.getUserPassword()));
 			
-		} catch (IllegalStateException e) {
+		} catch (Exception e) {
 			
-		} catch (IOException e) {
-			
-		}
-
+		} 
+		
 		usr.setPersonId(personManager.addPerson(usr.getPersonEntity()));
 		
 		userDAO.addUser(usr);
@@ -93,7 +91,23 @@ public class UserServiceImpl implements UserService {
 	@Transactional
 	public void editUser(User usr) {
 		logger.info("[editUser] " + "");
-		
+
+		try {
+			String path = servletContext.getRealPath("/") + "resources\\images\\user\\";
+			RandomProvider rndm = new RandomProvider();			
+			String fileName = Integer.toString(usr.getUserId()) + "-" + usr.getUserName() + "-" + Converter.todayDateToString() + "-" + rndm.generateRandomInString() + ".jpg"; 			
+			usr.getPersonEntity().getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
+			
+			usr.getPersonEntity().setPhotoPath(fileName);
+			
+			usr.setUserPassword(cryptoBCryptPasswordEncoderManager.encode(usr.getUserPassword()));
+			
+		} catch (Exception e) {
+			
+		}
+				
+		personManager.editPerson(usr.getPersonEntity());
+		userDAO.editUser(usr);		
 	}
 
 	@Override
@@ -105,8 +119,12 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteUser(int selectedId) {
-		logger.info("[deleteUser] " + "");
+		logger.info("[deleteUser] " + "selectedId:" + selectedId);
 		
+		User usr = userDAO.getUserById(selectedId);
+		usr.setPersonEntity(personManager.getPersonById(usr.getPersonId()));
+		
+		personManager.deletePerson(usr.getPersonEntity().getPersonId());			
 		userDAO.deleteUser(selectedId);		
 	}
 

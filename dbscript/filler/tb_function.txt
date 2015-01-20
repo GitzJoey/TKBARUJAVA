@@ -46,7 +46,7 @@ VALUES ('F_MASTER_PRODUCT', 'Master Data', 'fa fa-file-text-o fa-fw', 'Product',
 
 /*Admin Menu*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User', 'fa fa-user fa-fw', '/admin/user.html', 999100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User', 'fa fa-user fa-fw', '/admin/user', 999100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role', 'fa fa-tree fa-fw', '/admin/role.html', 999200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)

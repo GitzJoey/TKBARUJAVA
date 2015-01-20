@@ -27,107 +27,51 @@
 				var button = $(this).attr('id');				
 				
 				if (button == 'addBankAcc') {
-					$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
-				
-					$('#bankAccInputMode').val("ADD");
-					$('#bankAccListPanel').hide();
-					$('#bankAccListInputPanel').collapse('show');					
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/addbank/0");
 				} else {
-					$('input[id^="cbx_bankAccId_"]').each(function(index, item) {
-						if ($(item).prop("checked") == true) {
-							if (button == 'editBankAcc') {
-								$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });
-								
-								$('#bankAccIndex').val($(item).val());
-								$('#bankAccInputMode').val("EDIT");	
-								
-								$('#bankAccId').val($('input[id="bankAccList' + $(item).val() + '.bankAccId"]').val());
-								$('#shortName').val($('input[id="bankAccList' + $(item).val() + '.shortName"]').val());						
-								$('#bankName').val($('input[id="bankAccList' + $(item).val() + '.bankName"]').val());
-								$('#accountNumber').val($('input[id="bankAccList' + $(item).val() + '.accNum"]').val());
-								$('#bankAccRemarks').val($('input[id="bankAccList' + $(item).val() + '.bankRemarks"]').val());
-								
-								$('#bankAccListPanel').hide();
-								$('#bankAccListInputPanel').collapse('show');				
-							} else {
-								$('input[id="bankAccList' + $(item).val() + '.bankAccId"]').parents('tr').remove();							
-							}
-
+					var bankAccId = 0;
+					$('input[id^="cbx_bankAccId_"]').each(function(index, item) { 
+						if ($(item).prop("checked") == true) { 
 							hasSelected = true;
-						}					
+							bankAccId = $(item).attr('id').split('_')[2];
+						} 
 					});
 					
-					if (!hasSelected) { jsAlert('Please select at least 1 bank account'); }					
+					if (!hasSelected) { jsAlert('Please select at least 1 bank account'); return false;}
+					else {
+						if (button == 'editBankAcc') {
+							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/editbank/" + bankAccId);
+						} else {
+							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/deletebank/" + bankAccId);
+						}
+					}
 				}				
 			});
 					
 			$('#saveBankAcc, #discardBankAcc').click(function() {
 				var button = $(this).attr('id');
+				var bankAccButtonMode = $('#bankAccButtonMode').val();
 				
 				if (button == 'saveBankAcc') {
-					if ($('#bankAccInputMode').val() == "ADD") {
-						var custObj = { };
-						var bankAccObj = [];
-							bankAccObj.push({
-								"shortName" 	: $('#shortName').val(),
-								"bankName" 		: $('#bankName').val(),
-								"accNum" 		: $('#accountNumber').val(),
-								"bankRemarks" 	: $('#bankAccRemarks').val(),
-								"bankStatus" 	: '' 
-							});
-						
-						custObj.bankAccList = bankAccObj;
-
-						var countArr = [];
-						if ($('input[id^="cbx_bankAccId_"]').size() == 0) { countArr.push(0); } 
-						else if ($('input[id^="cbx_bankAccId_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
-						else { $('input[id^="cbx_bankAccId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
-						countArr.sort(function(a, b) { return b-a });
-
-						$.ajax({
-							url: ctxpath + "/fragment/customer/addbank/" + countArr.shift(),
-							type: 'POST',
-							data: JSON.stringify(custObj),
-							contentType: "application/json",
-							
-							success: function(res) {
-								$('#bankAccListPanel').show();
-								$('#bankAccListInputPanel').collapse('hide');
-
-								$('#bankAccListTable tbody').append(res);
-							},
-	      
-							error: function(res) { jsAlert("Error ! - " + res.statusText); }
-						});									
-					} else {
-						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.shortName"]').val($('#shortName').val());		
-						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].shortName"]').text($('#shortName').val());
-						
-						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.bankName"]').val($('#bankName').val());
-						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].bankName"]').text($('#bankName').val());
-						
-						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.accNum"]').val($('#accountNumber').val());
-						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].accNum"]').text($('#accountNumber').val());
-						
-						$('input[id="bankAccList' + $('#bankAccIndex').val() + '.bankRemarks"]').val($('#bankAccRemarks').val());
-						$('span[id="bankAccList[' + $('#bankAccIndex').val() + '].bankRemarks"]').text($('#bankAccRemarks').val());
-						
-						$('#bankAccListPanel').show();
-						$('#bankAccListInputPanel').collapse('hide');
-					}					
-				} else {
-					$('#bankAccListPanel').show();
-					$('#bankAccListInputPanel').collapse('hide');
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/save");
+				} else if (button == 'discardBankAcc') {
+					var index = $('#currentBankAccIndexSelected').val();
 					
-					$('#bankAccListInputPanel input').each(function(index) { $(this).val(''); });					
+					$('input[name="bankAccList[' + index + '].shortName"]').val($('#fromDB_shortName').val());
+					$('input[name="bankAccList[' + index + '].bankName"]').val($('#fromDB_bankName').val());
+					$('input[name="bankAccList[' + index + '].accNum"]').val($('#fromDB_accNum').val());
+					$('input[name="bankAccList[' + index + '].bankStatus"]').val($('#fromDB_bankStatus').val());
+					$('input[name="bankAccList[' + index + '].bankRemarks"]').val($('#fromDB_bankRemarks').val());					
+					
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/discard");
 				}
 			});
 			
 			//Person
-			$('input[id^="cbx_picListIndex_"]').click(function() {
+			$('input[id^="cbx_picList_"]').click(function() {
 				var selected = $(this);	
 				
-				$('input[id^="cbx_picListIndex_"]').each(function(index, item) {
+				$('input[id^="cbx_picList_"]').each(function(index, item) {
 					if ($(item).attr("id") != $(selected).attr("id")) { 
 						if ($(item).prop("checked")) {
 							$(item).prop("checked", false);
@@ -141,179 +85,60 @@
 				var button = $(this).attr('id');				
 				
 				if (button == 'addPerson') {
-					$('#personListInputPanel input').each(function(index) { $(this).val(''); });
-					$('#phoneListTable tbody').empty();
-
-					$('#personInputMode').val("ADD");
-					$('#personListPanel').hide();
-					$('#personListInputPanel').collapse('show');
-					
-					$('#personId').val("0");
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/addperson/0");
 				} else {
-					$('input[id^="cbx_picListIndex_"]').each(function(index, item) {
+					$('input[id^="cbx_picList_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
-							if (button == 'editPerson') {
-								$('#personListInputPanel input').each(function(index) { $(this).val(''); });
-								$('#phoneListTable tbody').empty();
-								
-								$('#personIndex').val($(item).val());
-								$('#personInputMode').val("EDIT");			
-								
-								$('#personId').val($('input[id="picList' + $(item).val() + '.personId"]').val());
-								$('#firstName').val($('input[id="picList' + $(item).val() + '.firstName"]').val());						
-								$('#lastName').val($('input[id="picList' + $(item).val() + '.lastName"]').val());
-								$('#addressLine1').val($('input[id="picList' + $(item).val() + '.addressLine1"]').val());
-								$('#addressLine2').val($('input[id="picList' + $(item).val() + '.addressLine2"]').val());
-								$('#addressLine3').val($('input[id="picList' + $(item).val() + '.addressLine3"]').val());
-								$('#emailAddr').val($('input[id="picList' + $(item).val() + '.emailAddr"]').val());
-								
-								$('#hiddenPhoneListForPICListIndex_' + $(item).val() + ' div').each(function(phIndex, phItem) {
-									$('#phoneListTable tbody').append(''+
-											'<tr>'+
-												'<td align="center">'+
-													'<div class="checkbox"><label><input id="cbx_phoneId_' + $('input[id="picList' + $(item).val() + '.personId"]').val() + '_' + phIndex + '" type="checkbox"/></label></div>'+
-													'<input type="hidden" id="phoneListId" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneListId' + '"]').val() + '"/>'+
-												'</td>'+
-												'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.providerName' + '"]').val() + '"/></td>'+
-												'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneNumber' + '"]').val() + '"/></td>'+
-												'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneStatus' + '"]').val() + '"/></td>'+
-												'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks" value="' + $('input[id="picList' + $(item).val() + '.phoneList' + phIndex + '.phoneNumRemarks' + '"]').val() + '"/></td>'+
-											'</tr>'+
-										'');									
-								});
-								
-								$('#personListPanel').hide();
-								$('#personListInputPanel').collapse('show');				
-							} else {
-								$(item).parents('tr').remove();							
-							}
-
 							hasSelected = true;
+							personId = $(item).attr('id').split('_')[2];
 						}					
 					});
 					
-					if (!hasSelected) { jsAlert('Please select at least 1 person'); }					
+					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false;}
+					else {
+						if (button == 'editPerson') {
+							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/editperson/" + personId);
+						} else {
+							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/deleteperson/" + personId);
+						}						
+					}
 				}				
 			});
 					
 			$('#savePerson, #discardPerson').click(function() {
 				var button = $(this).attr('id');
+				var personButtonMode = $('#personButtonMode').val();
 				
 				if (button == 'savePerson') {
-					if ($('#personInputMode').val() == "ADD") {						
-						var phoneListObj = [];
-						
-						$('#phoneListTable tbody tr').each(function(index, item) {							
-							phoneListObj.push({
-								"phoneListId"		: $('#phoneListId', item).val(),
-								"providerName" 		: $('#providerName', item).val(),
-								"phoneNumber" 		: $('#phoneNumber', item).val(),
-								"phoneStatus" 		: $('#phoneStatus', item).val(),
-								"phoneNumRemarks" 	: $('#phoneNumRemarks', item).val()
-							});
-						});						
-						
-						var persListObj = [];			
-							persListObj.push({
-								"personId" 		: $('#personId').val(),
-								"firstName" 	: $('#firstName').val(),
-								"lastName"		: $('#lastName').val(),
-								"addressLine1"	: $('#addressLine1').val(),
-								"addressLine2"	: $('#addressLine2').val(),
-								"addressLine3" 	: $('#addressLine3').val(),
-								"emailAddr"		: $('#emailAddr').val(),
-								"photoPath"		: $('#photoPath').val(),
-								"phoneList"		: phoneListObj
-							});
-							
-						
-						var custObj = { };
-							custObj.picList = persListObj;
-							
-						var countArr = [];
-						if ($('input[id^="cbx_personId_"]').size() == 0) { countArr.push(0); } 
-						else if ($('input[id^="cbx_personId_"]').size() == 1) { countArr.push(0); countArr.push(1); 
-						} else { $('input[id^="cbx_personId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
-						countArr.sort(function(a, b) { return b-a });
-							
-						$.ajax({
-							url: ctxpath + "/fragment/customer/addperson/" + countArr.shift(),
-							type: 'POST',
-							data: JSON.stringify(custObj),
-							contentType: "application/json",
-							
-							success: function(res) {
-								$('#personListPanel').show();
-								$('#personListInputPanel').collapse('hide');
-
-								$('#personListTable tbody').append(res);	
-							},
-	      
-							error: function(res) { jsAlert("Error ! - " + res.statusText); }
-						});									
-					} else {
-						$('input[id="picList' + $('#personIndex').val() + '.firstName"]').val($('#firstName').val());		
-						$('span[id="picList[' + $('#personIndex').val() + '].firstName"]').text($('#firstName').val());
-						
-						$('input[id="picList' + $('#personIndex').val() + '.lastName"]').val($('#lastName').val());
-						$('span[id="picList[' + $('#personIndex').val() + '].lastName"]').text($('#lastName').val());
-						
-						$('input[id="picList' + $('#personIndex').val() + '.addressLine1"]').val($('#addressLine1').val());
-						$('span[id="picList[' + $('#personIndex').val() + '].addressLine1"]').text($('#addressLine1').val());
-
-						$('input[id="picList' + $('#personIndex').val() + '.addressLine2"]').val($('#addressLine2').val());
-						$('span[id="picList[' + $('#personIndex').val() + '].addressLine2"]').text($('#addressLine2').val());
-
-						$('input[id="picList' + $('#personIndex').val() + '.addressLine3"]').val($('#addressLine3').val());
-						$('span[id="picList[' + $('#personIndex').val() + '].addressLine3"]').text($('#addressLine3').val());
-
-						$('input[id="picList' + $('#personIndex').val() + '.emailAddr"]').val($('#emailAddr').val());
-						$('span[id="picList[' + $('#personIndex').val() + '].emailAddr"]').text($('#emailAddr').val());
-						
-						$('#phoneListTable tbody tr').each(function(idx, itm) {
-							
-						});
-						
-						$('#personListPanel').show();
-						$('#personListInputPanel').collapse('hide');
-					}					
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/save");
 				} else {
-					$('#personListPanel').show();
-					$('#personListInputPanel').collapse('hide');
-					
-					$('#personListInputPanel input').each(function(index) { $(this).val(''); });					
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/discard");
 				}
 			});
 
-			$('#plusPhone, #minusPhone').click(function() {
-				var button = $(this).attr('id');
-				var prsnId = $('#personId').val();
-
+			$('button[id^="phoneButton_"]').click(function() {
+				var button = $(this).attr('id').split('_')[1];
+				var prsnId = $(this).attr('id').split('_')[2];
+				var prsnIdx = $(this).attr('id').split('_')[3];
+				
 				if (button == 'plusPhone') {
-					var countArr = [];
-					if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 0) { countArr.push(0); } 
-					else if ($('input[id^="cbx_phoneId_' + prsnId + '_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
-					else { 
-						$('input[id^="cbx_phoneId_' + prsnId + '_"]').each(function(index, item) { 
-							countArr.push(parseInt($(item).attr('id').split('_')[3]) + 1); 
-						}); 						 
-					} 
-					countArr.sort(function(a, b) { return b-a });
-							
-					$('#phoneListTable tbody').append(''+
-						'<tr>'+
-							'<td align="center">'+
-								'<div class="checkbox"><label><input id="cbx_phoneId_' + prsnId + '_' + countArr.shift() + '" type="checkbox"/></label></div>'+
-								'<input type="hidden" id="phoneListId" value="0"/>'+
-							'</td>'+
-							'<td><input type="text" class="form-control input-sm" id="providerName" placeholder="Enter Provider"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="phoneNumber" placeholder="Enter Number"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="phoneStatus" placeholder="Status"/></td>'+
-							'<td><input type="text" class="form-control input-sm" id="phoneNumRemarks" placeholder="Remarks"/></td>'+
-						'</tr>'+
-					'');
+					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + 	"/person/" + prsnId + "/" + prsnIdx + "/addphone/0/0");
 				} else {
-						
+					var hasSelected = false;
+					var phoneListId = "";
+					var phoneListIndex = "";
+					$('input[id^="cbx_phoneList_' + prsnId + '_"]').each(function(index, item) {						
+						if ($(item).prop("checked") == true) {
+							hasSelected = true;
+							phoneListId = $(item).attr('id').split('_')[3];
+							phoneListIndex = $(item).val();
+						}
+					});
+
+					if (!hasSelected) { jsAlert('Please select at least 1 phone'); return false;}
+					else {
+						$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + prsnId + "/" + prsnIdx + "/deletephone/" + phoneListId + "/" + phoneListIndex);	
+					}
 				}
 			});
 			
@@ -480,14 +305,14 @@
 								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
-											<li role="presentation" class="active"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Customer Data</a></li>
-											<li role="presentation" class=""><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge</a></li>
-											<li role="presentation" class=""><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
-											<li role="presentation" class=""><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Customer Data</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
 										</ul>
 
 										<div class="tab-content">
-											<div role="tabpanel" class="tab-pane active" id="custDataTab">
+											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>" id="custDataTab">
 												<br/>
 												<div class="form-group">
 													<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
@@ -529,229 +354,221 @@
 													</div>
 												</div>
 											</div>
-											<div role="tabpanel" class="tab-pane" id="picTab">
+											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>" id="picTab">
 												<br/>
 												<div id="personListPanel" class="panel panel-default">
 													<div class="panel-heading">
-														<div class="btn-toolbar">
-															<button type="button" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
-															<button type="button" id="editPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
-															<button type="button" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
+														<div class="btn-toolbar">															
+															<button type="submit" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
 														</div>
 													</div>
-													<table id="personListTable" class="table table-bordered table-hover">
-														<thead>
-															<tr>
-																<th>&nbsp;</th>
-																<th>&nbsp;Name</th>
-																<th>&nbsp;Address</th>
-																<th>&nbsp;Email</th>
-																<th>&nbsp;Status</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${ customerForm.picList }" varStatus="picIdx">
-																<tr>
-																	<td align="center">
-																		<input id="cbx_picListIndex_<c:out value="${ picIdx.index }"/>" type="checkbox" value="<c:out value="${picIdx.index}"/>"/>																		
-																		<form:hidden path="picList[${picIdx.index}].personId"/>																																				
-																		<form:hidden path="picList[${picIdx.index}].firstName"/>
-																		<form:hidden path="picList[${picIdx.index}].lastName"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine1"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine2"/>
-																		<form:hidden path="picList[${picIdx.index}].addressLine3"/>
-																		<form:hidden path="picList[${picIdx.index}].emailAddr"/>
-																		<form:hidden path="picList[${picIdx.index}].photoPath"/>
-																		<div id="hiddenPhoneListForPICListIndex_<c:out value="${ picIdx.index }"/>" >
-																			<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
-																				<div id="picListIndex_<c:out value="${ picIdx.index }"/>_phoneListIndex_<c:out value="${ phoneListIdx.index }"/>">
-																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneListId"/>
-																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"/>																			
-																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"/>
-																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"/>
-																					<form:hidden path="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"/>
+													<div class="panel-body">
+														<div id="accordion_picList" class="panel-group" >															
+															<c:forEach items="${ customerForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
+																<c:if test="${ editPersonIdx == picListLoopIdx.index }">
+																	
+																</c:if>														
+																<div class="panel panel-default">
+															        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
+															             <h4 class="panel-title"><c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>														
+															        </div>
+															        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
+															            <div class="panel-body">
+																			<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
+																			<div class="row">
+																				<label for="firstName" class="col-sm-2 control-label">Name</label>
+																				<div class="col-sm-4">
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName"/>
 																				</div>
-																			</c:forEach>
-																		</div>
-																	</td>
-																	<td>&nbsp;<span id="picList[${picIdx.index}].firstName"><c:out value="${ customerForm.picList[picIdx.index].firstName }"></c:out></span>&nbsp;<span id="picList[${picIdx.index}].lastName"><c:out value="${ customerForm.picList[picIdx.index].lastName }">/</c:out></span></td>
-																	<td>
-																		&nbsp;<span id="picList[${picIdx.index}].addressLine1"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
-																		&nbsp;<span id="picList[${picIdx.index}].addressLine2"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
-																		&nbsp;<span id="picList[${picIdx.index}].addressLine3"><c:out value="${ customerForm.picList[picIdx.index].addressLine1 }"></c:out></span><br/>
-																		<br/>
-																		<strong>Phone List</strong><br/>
-																		<div id="spanPhoneList">
-																			<c:forEach items="${ customerForm.picList[picIdx.index].phoneList }" varStatus="phoneListIdx">
-																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].providerName"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].providerName }"></c:out></span>
-																				&nbsp;-&nbsp;
-																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumber"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumber }"></c:out></span>
-																				&nbsp;(&nbsp;
-																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneStatus"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneStatus }"></c:out></span>
-																				&nbsp;-&nbsp;
-																				<span id="picList[${picIdx.index}].phoneList[${phoneListIdx.index}].phoneNumRemarks"><c:out value="${ customerForm.picList[picIdx.index].phoneList[phoneListIdx.index].phoneNumRemarks }"></c:out></span>
-																				&nbsp;)&nbsp;
-																				<br/>
-																			</c:forEach>
-																		</div>
-																	</td>
-																	<td>&nbsp;<span id="picList[${picIdx.index}].emailAddr"><c:out value="${ picList[picIdx.index].emailAddr }"></c:out></span></td>
-																	<td></td>
-																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
+																				<div class="col-sm-4">
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName"/>
+																				</div>
+																			</div>
+																			<br/>
+																			<div class="row">
+																				<label for="addressLine1" class="col-sm-2 control-label">Address</label>
+																				<div class="col-sm-8">
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1"/>
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
+																				</div>														
+																			</div>
+																			<br/>
+																			<div class="row">
+																				<label for="emailAddr" class="col-sm-2 control-label">Email</label>
+																				<div class="col-sm-5">
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr"/>
+																				</div>
+																			</div>
+																			<br/>
+																			<div class="row">
+																				<label for="phoneListPanel" class="col-sm-2 control-label">Phone List</label>														
+																				<div class="col-sm-10 pull-right">
+																					<div id="phoneListPanel" class="panel panel-default">
+																						<div class="panel-heading no-padding">
+																							<div class="btn-toolbar">
+																								<button type="submit" id="phoneButton_minusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+																								<button type="submit" id="phoneButton_plusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+																							</div>																																																															
+																						</div>
+																						<table id="phoneListTable" class="table table-bordered table-hover">
+																							<thead>
+																								<tr>
+																									<th width="5%">&nbsp;</th>
+																									<th width="15%">Provider</th>
+																									<th width="15%">Number</th>
+																									<th width="15%">Status</th>
+																									<th width="25%">Remarks</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<c:forEach items="${ picListLoop.phoneList }" varStatus="phoneListLoopIdx">
+																									<tr>
+																										<td align="center">
+																											<input id="cbx_phoneList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ customerForm.picList[picListLoopIdx.index].phoneList[phoneListLoopIdx.index].phoneListId }"/>" type="checkbox" value="<c:out value="${ phoneListLoopIdx.index }"/>"/>
+																											<form:hidden path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneListId"/>
+																										</td>
+																										<td>
+																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
+																												<form:options items="${ providerDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																											</form:select>																						
+																										</td>
+																										<td>
+																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber"/>
+																										</td>
+																										<td>
+																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
+																												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																											</form:select>																						
+																										</td>
+																										<td>
+																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumRemarks"/>
+																										</td>																					
+																									</tr>
+																								</c:forEach>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																			</div>
+															            </div>
+																        <ul class="list-group">	
+																        	<li class="list-group-item">
+																        		<input id="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
+																        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+																        	</li>
+																        </ul>															            
+															        </div>
+															    </div>
+														    </c:forEach>
+														</div>
+													</div>
 												</div>
-												<div id="personListInputPanel" class="panel panel-default collapse">
-													<br/>
-													<input type="hidden" id="personId" value=""/>
-													<input type="hidden" id="personIndex" value=""/>
-													<input type="hidden" id="personInputMode" value=""/>
-													<div class="row">
-														<label for="firstName" class="col-sm-2 control-label">Name</label>
-														<div class="col-sm-4">
-															<input type="text" class="form-control" id="firstName"/>
-														</div>
-														<div class="col-sm-4">
-															<input type="text" class="form-control" id="lastName"/>
-														</div>
-													</div>
-													<br/>
-													<div class="row">
-														<label for="addressLine1" class="col-sm-2 control-label">Address</label>
-														<div class="col-sm-8">
-															<input type="text" class="form-control" id="addressLine1"/>
-															<input type="text" class="form-control" id="addressLine2"/>
-															<input type="text" class="form-control" id="addressLine3"/>
-														</div>														
-													</div>
-													<br/>
-													<div class="row">
-														<label for="emailAddr" class="col-sm-2 control-label">Email</label>
-														<div class="col-sm-5">
-															<input type="text" class="form-control" id="emailAddr"/>
-														</div>
-													</div>
-													<br/>
-													<div class="row">																												
-														<div class="col-sm-10 pull-right">
-															<div id="phoneListPanel" class="panel panel-default">
-																<div class="panel-heading">
-																	<strong>Phone List</strong>																	
-																</div>
-																<table id="phoneListTable" class="table table-bordered table-hover">
-																	<thead>
-																		<tr>
-																			<th width="5%">&nbsp;</th>
-																			<th width="15%">Provider</th>
-																			<th width="15%">Number</th>
-																			<th width="15%">Status</th>
-																			<th width="25%">Remarks</th>
-																		</tr>
-																	</thead>
-																	<tbody>
-																	</tbody>
-																</table>
-																<div class="panel-footer no-padding">
-																	<div class="btn-toolbar">
-																		<button type="button" id="minusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
-																		<button type="button" id="plusPhone" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
-																	</div>										
-																</div>
+											</div>
+											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>" id="bankAccTab">
+												<br/>
+												<c:if test="${ empty editBankIdx }">
+													<div id="bankAccListPanel" class="panel panel-default">
+														<div class="panel-heading">
+															<div class="btn-toolbar">
+																<button type="submit" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
+																<button type="submit" id="editBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
+																<button type="submit" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
 															</div>
 														</div>
-													</div>
-													<div class="row">
-														<label for="personButton" class="col-sm-2 control-label">&nbsp;</label>
-														<div class="col-sm-5">
-															<button id="savePerson" type="button" class="btn btn-sm btn-primary">Save</button>
-															<button id="discardPerson" type="button" class="btn btn-sm btn-primary">Discard</button>
-														</div>
-													</div>
-													<br/>
-												</div>
-											</div>
-											<div role="tabpanel" class="tab-pane" id="bankAccTab">
-												<br/>
-												<div id="bankAccListPanel" class="panel panel-default">
-													<div class="panel-heading">
-														<div class="btn-toolbar">
-															<button type="button" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
-															<button type="button" id="editBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
-															<button type="button" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
-														</div>
-													</div>
-													<table id="bankAccListTable" class="table table-bordered table-hover">
-														<thead>
-															<tr>
-																<th>&nbsp;</th>
-																<th>&nbsp;Bank Name</th>
-																<th>&nbsp;Account</th>
-																<th>&nbsp;Remarks</th>
-																<th>&nbsp;Status</th>
-															</tr>
-														</thead>
-														<tbody>
-															<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
+														<table id="bankAccListTable" class="table table-bordered table-hover">
+															<thead>
 																<tr>
-																	<td align="center">
-																		<input id="cbx_bankAccId_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" type="checkbox" value="<c:out value="${baIdx.index}"/>"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].bankAccId"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].shortName"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].bankName"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].accNum"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].bankRemarks"/>
-																		<form:hidden path="bankAccList[${baIdx.index}].bankStatus"/>
-																	</td>
-																	<td>
-																		&nbsp;<span id="bankAccList[${baIdx.index}].shortName"><c:out value="${ customerForm.bankAccList[baIdx.index].shortName }"></c:out></span>
-																		&nbsp;-&nbsp;
-																		&nbsp;<span id="bankAccList[${baIdx.index}].bankName"><c:out value="${ customerForm.bankAccList[baIdx.index].bankName }"></c:out></span>
-																	</td>
-																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].accNum"><c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"></c:out></span></td>
-																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].bankRemarks"><c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"></c:out></span></td>
-																	<td>&nbsp;<span id="bankAccList[${baIdx.index}].bankStatus"><c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"></c:out></span></td>
+																	<th>&nbsp;</th>
+																	<th>&nbsp;Bank Name</th>
+																	<th>&nbsp;Account</th>
+																	<th>&nbsp;Remarks</th>
+																	<th>&nbsp;Status</th>
 																</tr>
-															</c:forEach>
-														</tbody>
-													</table>
-												</div>
-												<div id="bankAccListInputPanel" class="panel panel-default collapse">
-													<br/>
-													<input type="hidden" id="bankAccId" value=""/>
-													<input type="hidden" id="bankAccIndex" value=""/>
-													<input type="hidden" id="bankAccInputMode" value=""/>
-													<div class="row">
-														<label for="shortName" class="col-sm-2 control-label">Short Name</label>
-														<div class="col-sm-2"><input type="text" class="form-control" id="shortName"/></div>
+															</thead>
+															<tbody>
+																<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
+																	<tr>
+																		<td align="center">
+																			<input id="cbx_bankAccId_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" type="checkbox" value="<c:out value="${ baIdx.index }"/>"/>
+																			<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
+																		</td>
+																		<td>
+																			<c:out value="${ customerForm.bankAccList[baIdx.index].shortName }"/>
+																			&nbsp;-&nbsp;
+																			<c:out value="${ customerForm.bankAccList[baIdx.index].bankName }"/>
+																		</td>
+																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"/></td>
+																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/></td>
+																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"/></td>
+																	</tr>
+																</c:forEach>
+															</tbody>
+														</table>
 													</div>
-													<br/>
-													<div class="row">
-														<label for="bankName" class="col-sm-2 control-label">Bank Name</label>
-														<div class="col-sm-4"><input type="text" class="form-control" id="bankName"></div>
-													</div>
-													<br/>
-													<div class="row">
-														<label for="accountNumber" class="col-sm-2 control-label">Account</label>
-														<div class="col-sm-5"><input type="text" class="form-control" id="accountNumber"></div>
-													</div>
-													<br/>
-													<div class="row">
-														<label for="bankAccRemarks" class="col-sm-2 control-label">Remarks</label>
-														<div class="col-sm-6"><input type="text" class="form-control" id="bankAccRemarks"></div>
-													</div>
-													<br/>
-													<div class="row">
-														<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
-														<div class="col-sm-5">
-															<button id="saveBankAcc" type="button" class="btn btn-sm btn-primary">Save</button>
-															<button id="discardBankAcc" type="button" class="btn btn-sm btn-primary">Discard</button>
+												</c:if>												
+												<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
+													<c:set var="collapseFlag" value="collapse"/>
+													<c:if test="${ editBankIdx == baIdx.index }">
+														<c:set var="collapseFlag" value=""/>
+														<div id="currentBankAccSelected">
+															<input id="currentBankAccIdSelected" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>"/>
+															<input id="currentBankAccIndexSelected" type="hidden" value="<c:out value="${ baIdx.index }"/>"/>
+															<input id="bankAccButtonMode" type="hidden" value="${ bankAccButtonMode }"/>
+															
+															<input id="fromDB_shortName" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].shortName }"/>"/>
+															<input id="fromDB_bankName" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankName }"/>"/>
+															<input id="fromDB_accNum" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"/>"/>
+															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"/>"/>
+															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
+													</c:if>													
+													<div id="bankAccListInputPanel_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" class="panel panel-default <c:out value="${ collapseFlag }"/>">
+														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
+														<br/>
+														<div class="row">
+															<label for="shortName" class="col-sm-2 control-label">Short Name</label>
+															<div class="col-sm-2"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].shortName"/></div>
+														</div>
+														<br/>
+														<div class="row">
+															<label for="bankName" class="col-sm-2 control-label">Bank Name</label>
+															<div class="col-sm-4"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankName"/></div>
+														</div>
+														<br/>
+														<div class="row">
+															<label for="accountNumber" class="col-sm-2 control-label">Account</label>
+															<div class="col-sm-5"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].accNum"/></div>
+														</div>
+														<br/>
+														<div class="row">
+															<label for="bankStatus" class="col-sm-2 control-label">Status</label>
+															<div class="col-sm-3">
+																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
+																	<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																</form:select>
+															</div>																																	
+														</div>
+														<br/>
+														<div class="row">
+															<label for="bankAccRemarks" class="col-sm-2 control-label">Remarks</label>
+															<div class="col-sm-6"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankRemarks"/></div>
+														</div>
+														<br/>
+														<div class="row">
+															<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
+															<div class="col-sm-5">																 
+																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary">Save</button>
+																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary">Discard</button>
+															</div>
+														</div>
+														<br/>
 													</div>
-													<br/>
-												</div>											
+												</c:forEach>												
 											</div>
-											<div role="tabpanel" class="tab-pane" id="settingsTab">...</div>
+											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>" id="settingsTab">
+												...
+											</div>
 										</div>
 									</div>
 									<hr>

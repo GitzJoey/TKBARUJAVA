@@ -23,8 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Table(name="tb_person")
 @SuppressWarnings("unchecked")
 public class Person {
-
 	public Person() {
+		
 	}
 
 	@Id
@@ -51,9 +51,7 @@ public class Person {
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_person_phonelist", joinColumns={ @JoinColumn(name="person_id", referencedColumnName="person_id") }, inverseJoinColumns={ @JoinColumn(name="phonelist_id", referencedColumnName="phonelist_id") })
-	private List<PhoneList> phoneList=LazyList.decorate(
-			new ArrayList<PhoneList>(),
-			FactoryUtils.instantiateFactory(PhoneList.class));
+	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(PhoneList.class));
 
 	public int getPersonId() {
 		return personId;

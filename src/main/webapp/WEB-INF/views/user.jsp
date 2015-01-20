@@ -10,27 +10,27 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
-			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/user.html");
-			});
+			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#addPhone').click(function() {
-				var ctxpath = "${ pageContext.request.contextPath }";
-				var iCount = 0;
-				
-				var countArr = [];
-				if ($('input[id^="cbx_phoneListId_"]').size() == 0) { countArr.push(0); } 
-				else if ($('input[id^="cbx_phoneListId_"]').size() == 1) { countArr.push(0); countArr.push(1); } 
-				else { $('input[id^="cbx_phoneListId_"]').each(function(index, item) { countArr.push(parseInt($(item).val()) + 1); }); } 
-				countArr.sort(function(a, b) { return b-a });				
-
-				iCount = countArr.shift();
-				
-				$.get(ctxpath + "/fragment/addphone.html", {count: iCount}).done(function(data) {
-					$('#phoneTable > tbody').append(data);
-				});
-				
-				return false;
+			$('#cancelButton').click(function() {				
+				window.location.href(ctxpath + "/admin/user");
+			});
+						
+			$('button[type="submit"]').click(function(item) {
+				var button = $(this).attr('id'); 
+			
+				if (button == "submitButton") { $('#userForm').attr('action', ctxpath + "/admin/user/save"); } 
+				else if (button == "addPhone") { $('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/addphone"); } 
+				else if (button == "deletePhone") {
+					var idx = -1;
+					$('input[type="checkbox"][id^="cbx_phoneListId_"]').each(function(index, item) {
+						if ($(item).prop('checked')) { idx = $(item).val(); }						
+					});					
+					if (idx == -1) return false;
+					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/removephone/" + idx);
+				} else {
+					return false;	
+				}
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -45,9 +45,10 @@
 				});
 			})
 			
-			$('#editTableSelection').click(function() {
+			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
+				var button = $(this).attr('id');
+				
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -57,26 +58,14 @@
 					jsAlert("Please select at least 1 username");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/user/edit/" + id + ".html");	
+					if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href", ctxpath + "/admin/user/edit/" + id);
+					} else {
+						$('#deleteTableSelection').attr("href", ctxpath + "/admin/user/delete/" + id);	
+					}
 				}				
 			});
-			
-			$('#deleteTableSelection').click(function() {
-				var id = "";
-				var ctxpath = "${ pageContext.request.contextPath }";
-				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
-					if ($(item).prop('checked')) {
-						id = $(item).attr("value");	
-					}
-				});
-				if (id == "") {
-					jsAlert("Please select at least 1 username");
-					return false;	
-				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/user/delete/" + id + ".html");	
-				}								
-			});
-			
+						
 			$('#userForm').bootstrapValidator({
        			feedbackIcons: {
            			valid: 'glyphicon glyphicon-ok',
@@ -179,7 +168,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -238,6 +227,8 @@
 										</div>
 									</div>
 									<hr>
+									<form:hidden path="personId"/>
+									<form:hidden path="personEntity.personId"/>
 									<div class="form-group">
 										<label for="inputImage" class="col-sm-2 control-label">&nbsp;</label>
 										<div class="col-sm-6">
@@ -298,14 +289,15 @@
 														<tr>
 															<th width="5%">&nbsp;</th>
 															<th width="55%">Number</th>
-															<th width="15%">Status</th>
+															<th width="15%">Status <c:out value="${ fn:length(userForm.personEntity.phoneList) }"/></th>
 														</tr>
 													</thead>											
 													<tbody>
 														<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">													
 															<tr>
 																<td align="center">
-																	<input type="checkbox" id="cbx_phoneListId_<c:out value="${ pList.phoneListId }"/>" value="<c:out value="${ phoneIdx.index }"/>"/>																	
+																	<input type="checkbox" id="cbx_phoneListId_<c:out value="${ pList.phoneListId }"/>" value="<c:out value="${ phoneIdx.index }"/>"/>
+																	<form:hidden path="personEntity.phoneList[${phoneIdx.index}].phoneListId"/>																	
 																</td>
 																<td>
 																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerName">
@@ -327,8 +319,8 @@
 												</table>
 												<div class="panel-footer no-padding">
 													<div class="btn-toolbar">
-														<button id="deletePhone" type="button" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
-														<button id="addPhone" type="button" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+														<button id="deletePhone" type="submit" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+														<button id="addPhone" type="submit" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
 													</div>
 												</div>
 											</div>
@@ -337,7 +329,7 @@
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>											
 										</div>
 									</div>
 								</form:form>

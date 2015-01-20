@@ -1,5 +1,9 @@
 package com.tkbaru.dao;
 
-public interface StocksDAO {
+import java.util.List;
 
+import com.tkbaru.model.Stocks;
+
+public interface StocksDAO {
+	public List<Stocks> getAllStocks();
 }

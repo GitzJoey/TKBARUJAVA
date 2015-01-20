@@ -3,7 +3,6 @@ package com.tkbaru.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -33,7 +32,7 @@ public class Role {
 	@Column(name="status")
 	private String roleStatus;
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="tb_role_function", 
 			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
 			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
