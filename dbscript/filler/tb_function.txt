@@ -48,12 +48,12 @@ VALUES ('F_MASTER_PRODUCT', 'Master Data', 'fa fa-file-text-o fa-fw', 'Product',
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User', 'fa fa-user fa-fw', '/admin/user', 999100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role', 'fa fa-tree fa-fw', '/admin/role.html', 999200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_STORE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Store', 'fa fa-umbrella fa-fw', '/admin/store', 999200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function', 'fa fa-minus-square fa-fw', '/admin/function.html', 999300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role', 'fa fa-tree fa-fw', '/admin/role.html', 999300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup', 'fa fa-hand-o-up fa-fw', '/admin/lookup.html', 999400, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function', 'fa fa-minus-square fa-fw', '/admin/function.html', 999400, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_STORE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Store', 'fa fa-umbrella fa-fw', '/admin/store', 999500, 3, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup', 'fa fa-hand-o-up fa-fw', '/admin/lookup.html', 999500, 2, 0, (SELECT CURRENT_TIMESTAMP()));
 
 COMMIT;

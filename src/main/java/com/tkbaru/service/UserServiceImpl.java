@@ -28,10 +28,13 @@ public class UserServiceImpl implements UserService {
 	PersonService personManager;
 
 	@Autowired
-	ServletContext servletContext;
+	RoleService roleManager;
 	
 	@Autowired
-	RoleService roleManager;
+	StoreService storeManager;
+
+	@Autowired
+	ServletContext servletContext;
 
 	private BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager;
 	public void setCryptoBCryptPasswordEncoderManager(BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager) {
@@ -45,6 +48,7 @@ public class UserServiceImpl implements UserService {
 		for(User u:userlist) {
 			u.setRoleEntity(roleManager.getRoleById(u.getRoleId()));
 			u.setPersonEntity(personManager.getPersonById(u.getPersonId()));
+			u.setStoreEntity(storeManager.getStoreById(u.getStoreId()));
 		}
 		
 		return userlist;
@@ -59,6 +63,7 @@ public class UserServiceImpl implements UserService {
 		
 		result.setRoleEntity(roleManager.getRoleById(result.getRoleId()));		
 		result.setPersonEntity(personManager.getPersonById(result.getPersonId()));
+		result.setStoreEntity(storeManager.getStoreById(result.getStoreId()));
 		
 		return result;
 	}

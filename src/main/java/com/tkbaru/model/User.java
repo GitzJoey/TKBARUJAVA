@@ -16,6 +16,9 @@ public class User {
 	
 	private int personId;
 	private Person personEntity;
+
+	private int storeId;
+	private Store storeEntity;
 	
 	public int getUserId() {
 		return userId;
@@ -65,6 +68,18 @@ public class User {
 	}
 	public void setPersonEntity(Person personEntity) {
 		this.personEntity = personEntity;
+	}	
+	public int getStoreId() {
+		return storeId;
+	}
+	public void setStoreId(int storeId) {
+		this.storeId = storeId;
+	}
+	public Store getStoreEntity() {
+		return storeEntity;
+	}
+	public void setStoreEntity(Store storeEntity) {
+		this.storeEntity = storeEntity;
 	}
 	@Override
 	public String toString() {
@@ -72,6 +87,7 @@ public class User {
 				+ ", userPassword=" + userPassword + ", userStatus="
 				+ userStatus + ", roleId=" + roleId + ", roleEntity="
 				+ roleEntity + ", personId=" + personId + ", personEntity="
-				+ personEntity + "]";
+				+ personEntity + ", storeId=" + storeId + ", storeEntity="
+				+ storeEntity + "]";
 	}	
 }

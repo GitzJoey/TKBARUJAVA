@@ -64,6 +64,7 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.user_name,													"+
 				"		tbuser.passwd,														"+
 				"		tbuser.role_id,														"+
+				"		tbuser.store_id,													"+
 				"		tbuser.person_id,													"+
 				"		tbuser.status														"+
 				"FROM tb_user tbuser														"+
@@ -78,6 +79,7 @@ public class UserDAOImpl implements UserDAO {
 			res.setUserName(String.valueOf(row.get("user_name")));
 			res.setUserPassword(String.valueOf(row.get("passwd")));
 			res.setRoleId(Integer.valueOf(String.valueOf(row.get("role_id"))));
+			res.setStoreId(Integer.valueOf(String.valueOf(row.get("store_id"))));
 			res.setPersonId(Integer.valueOf(String.valueOf(row.get("person_id"))));
 			res.setUserStatus(String.valueOf(row.get("status")));
 			
@@ -98,6 +100,7 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.user_name,		"+
 				"		tbuser.passwd,			"+
 				"		tbuser.role_id,			"+
+				"		tbuser.store_id,		"+
 				"		tbuser.person_id,		"+
 				"		tbuser.status			"+				
 				"FROM tb_user tbuser            "+
@@ -113,6 +116,7 @@ public class UserDAOImpl implements UserDAO {
 				usr.setUserName(rs.getString("user_name"));
 				usr.setUserPassword(rs.getString("passwd"));
 				usr.setRoleId(rs.getInt("role_id"));
+				usr.setStoreId(rs.getInt("store_id"));
 				usr.setPersonId(rs.getInt("person_id"));
 				usr.setUserStatus(rs.getString("status"));
 				
@@ -127,13 +131,13 @@ public class UserDAOImpl implements UserDAO {
 	public void addUser(User usr) {
 		logger.info("[addUser] " + "");
 		
-        String sql = "INSERT INTO tb_user (user_name, passwd, role_id, person_id, status) " +
-        				"VALUES (?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO tb_user (user_name, passwd, role_id, person_id, store_id, status) " +
+        				"VALUES (?, ?, ?, ?, ?, ?) ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         try {
-	        jdbcTemplate.update(sql, new Object[] { usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getUserStatus() });
+	        jdbcTemplate.update(sql, new Object[] { usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus() });
         } catch(Exception err) {
         	logger.info ("Error : " + err.getMessage());
         }
@@ -144,7 +148,7 @@ public class UserDAOImpl implements UserDAO {
 	public void editUser(User usr) {
 		logger.info("[editUser] " + "");
 		
-        String query = "UPDATE tb_user SET user_name = ?, passwd = ?, role_id = ?, person_id = ?, status = ? " +
+        String query = "UPDATE tb_user SET user_name = ?, passwd = ?, role_id = ?, person_id = ?, store_id = ?, status = ? " +
         				"WHERE user_id = ? ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -153,7 +157,7 @@ public class UserDAOImpl implements UserDAO {
         
         try {
             Object[] args = new Object[] { 
-            		usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getUserStatus(), usr.getUserId() };
+            		usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus(), usr.getUserId() };
 
             out = jdbcTemplate.update(query, args);        	
         } catch (Exception err) {

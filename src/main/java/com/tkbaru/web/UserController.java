@@ -20,6 +20,7 @@ import com.tkbaru.model.PhoneList;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.RoleService;
+import com.tkbaru.service.StoreService;
 import com.tkbaru.service.UserService;
 
 @Controller
@@ -35,6 +36,9 @@ public class UserController {
 	
 	@Autowired
 	RoleService roleManager;
+	
+	@Autowired
+	StoreService storeManager;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String userPageLoad(Locale locale, Model model) {
@@ -56,6 +60,7 @@ public class UserController {
 		model.addAttribute("userForm", new User());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
+		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -73,6 +78,7 @@ public class UserController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
+		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -119,6 +125,7 @@ public class UserController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
+		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -143,6 +150,7 @@ public class UserController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
+		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

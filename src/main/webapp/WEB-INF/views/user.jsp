@@ -219,6 +219,14 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputStore" class="col-sm-2 control-label">Store</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="storeId">
+												<form:options items="${ storeDDL }" itemValue="storeId" itemLabel="storeName"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="userStatus">
