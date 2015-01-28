@@ -7,6 +7,7 @@ public class Constants {
 	public static final String PAGEMODE_EDIT = "PAGEMODE_EDIT";
 	public static final String PAGEMODE_DELETE = "PAGEMODE_DELETE";
 	public static final String PAGEMODE_LIST = "PAGEMODE_LIST";
+	public static final String PAGEMODE_VIEW = "PAGEMODE_VIEW";
 
 	public static final String ERRORFLAG = "ERRORFLAG";
 	public static final String ERRORFLAG_SHOW = "ERRORFLAG_SHOW";
@@ -22,6 +23,8 @@ public class Constants {
 	public static final String JSPPAGE_CUSTOMER = "customer";
 	public static final String JSPPAGE_ACTION = "action";
 	public static final String JSPPAGE_SALESORDER = "sales";
+	public static final String JSPPAGE_SO_PAYMENT = "so_payment";
+	public static final String JSPPAGE_SO_REVISE = "so_revise";
 	public static final String JSPPAGE_REPORT = "report";
 	public static final String JSPPAGE_PURCHASEORDER = "po";
 	public static final String JSPPAGE_PO_PAYMENT = "po_payment";
@@ -31,6 +34,9 @@ public class Constants {
 	public static final String JSPPAGE_TODAYDELIVERY = "todaydelivery";
 	public static final String JSPPAGE_STORE = "store";
 	public static final String JSPPAGE_STOCKS = "stocks";
+	public static final String JSPPAGE_TODAYPRICE = "todayprice";
+	public static final String JSPPAGE_PRICELEVEL = "price_level";
+	public static final String JSPPAGE_BANK = "bank";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";

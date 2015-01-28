@@ -7,6 +7,16 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('#hideInflow, #hideOutflow').click(function() {
+				var button = $(this).attr('id');
+				
+				if (button == 'hideInflow') {
+					
+				} else {
+					
+				}
+			});
 		});
 	</script>	
 </head>
@@ -32,8 +42,76 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
+
+				<h1>
+					<span class="fa fa-wrench fa-fw"></span>&nbsp;Warehouse
+				</h1>
 				
-				Contents
+				<c:choose>
+					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
+						<div id="inflowPanel" class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-mail-forward fa-rotate-90 fa-fw fa-2x"></span>Inflow
+								</h1>
+							</div>
+							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+							<ul class="list-group">
+								<li class="list-group-item">
+									<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
+								</li>
+							</ul>
+						</div>
+						<br/>
+						<div id="outflowPanel" class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-mail-reply fa-rotate-90 fa-fw fa-2x"></span>Outflow
+								</h1>
+							</div>
+							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+							<ul class="list-group">
+								<li class="list-group-item">
+									<button type="button" id="hideOutflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
+								</li>
+							</ul>
+						</div>
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+					</c:when>
+				</c:choose>				
 			</div>
 		</div>
 	</div>	

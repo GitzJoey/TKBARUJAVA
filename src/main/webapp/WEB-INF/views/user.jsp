@@ -26,7 +26,10 @@
 					$('input[type="checkbox"][id^="cbx_phoneListId_"]').each(function(index, item) {
 						if ($(item).prop('checked')) { idx = $(item).val(); }						
 					});					
-					if (idx == -1) return false;
+					if (idx == -1) {
+						jsAlert("Please select at least 1 phone");
+						return false;
+					}
 					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/removephone/" + idx);
 				} else {
 					return false;	
@@ -343,6 +346,9 @@
 								</form:form>
 							</div>
 						</div>					
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_VIEW'}">
+						VIEW
 					</c:when>
 				</c:choose> 				
 			</div>

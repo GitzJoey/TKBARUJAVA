@@ -32,8 +32,24 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
+
+				<h1>
+					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;Sales Order
+				</h1>
 				
-				Contents
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<c:choose>
+								<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+									<span class="fa fa-cart-arrow-down fa-fw fa-2x"></span>&nbsp;New Sales Order
+								</c:when>
+							</c:choose>
+						</h1>
+					</div>
+					<div class="panel-body">
+					</div>					
+				</div>						
 			</div>
 		</div>
 	</div>	

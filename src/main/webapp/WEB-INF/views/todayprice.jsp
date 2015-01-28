@@ -34,23 +34,19 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
+					<span class="fa fa-dollar fa-fw"></span>&nbsp;Price
 				</h1>
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<c:choose>
-								<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-									<span class="fa fa-code-fork fa-rotate-180 fa-fw fa-2x"></span>&nbsp;Revise Purchase Order
-								</c:when>
-							</c:choose>
+							<span class="fa fa-barcode fa-fw fa-2x"></span>Today Price
 						</h1>
 					</div>
 					<div class="panel-body">
 						Contents
-					</div>					
-				</div>						
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>	

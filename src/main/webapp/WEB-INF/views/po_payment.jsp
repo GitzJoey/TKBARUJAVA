@@ -33,7 +33,24 @@
 				
 				<div id="jsAlerts"></div>
 				
-				Contents
+				<h1>
+					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
+				</h1>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<c:choose>
+								<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+									<span class="fa fa-calculator fa-fw fa-2x"></span>&nbsp;PO Payment
+								</c:when>
+							</c:choose>
+						</h1>
+					</div>
+					<div class="panel-body">
+						Contents
+					</div>					
+				</div>						
 			</div>
 		</div>
 	</div>	

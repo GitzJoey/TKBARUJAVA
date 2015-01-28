@@ -16,13 +16,24 @@ import com.tkbaru.common.Constants;
 public class MonitorController {
 	private static final Logger logger = LoggerFactory.getLogger(MonitorController.class);
 
-	@RequestMapping(value="/todaydelivery.html", method = RequestMethod.GET)
-	public String todayDeliveryPage(Locale locale, Model model) {
-		logger.info("[todayDeliveryPage] : " + "");
+	@RequestMapping(value="/todaydelivery", method = RequestMethod.GET)
+	public String todayDeliveryMonitorPage(Locale locale, Model model) {
+		logger.info("[todayDeliveryMonitorPage] : " + "");
 			
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return Constants.JSPPAGE_WAREHOUSE;
+		return Constants.JSPPAGE_TODAYDELIVERY;
 	}
+
+	@RequestMapping(value="/stocks", method = RequestMethod.GET)
+	public String stocksMonitorPage(Locale locale, Model model) {
+		logger.info("[stocksMonitorPage] : " + "");
+			
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_STOCKS;
+	}
+
 }

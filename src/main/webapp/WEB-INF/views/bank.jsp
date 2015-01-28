@@ -34,23 +34,37 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
+					<span class="fa fa-bank fa-fw"></span>&nbsp;Bank
 				</h1>
 
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h1 class="panel-title">
-							<c:choose>
-								<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-									<span class="fa fa-code-fork fa-rotate-180 fa-fw fa-2x"></span>&nbsp;Revise Purchase Order
-								</c:when>
-							</c:choose>
-						</h1>
-					</div>
-					<div class="panel-body">
-						Contents
-					</div>					
-				</div>						
+				<c:choose>
+					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-cloud-upload fa-fw fa-2x"></span>Upload
+								</h1>
+							</div>
+							<div class="panel-body">
+								Contents
+							</div>
+						</div>
+					</c:when>				
+					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-compress fa-fw fa-2x"></span>Consolidate
+								</h1>
+							</div>
+							<div class="panel-body">
+								Contents
+							</div>
+						</div>
+					</c:when>
+				</c:choose>				
 			</div>
 		</div>
 	</div>	

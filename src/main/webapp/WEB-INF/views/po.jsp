@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,8 +33,28 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
-				
-				Contents
+
+				<h1>
+					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
+				</h1>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<c:choose>
+								<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+									<span class="fa fa-truck fa-fw fa-2x"></span>&nbsp;New Purchase Order
+								</c:when>
+							</c:choose>
+						</h1>
+					</div>
+					<div class="panel-body">
+						<form:form id="poForm" role="form" class="form-horizontal" modelAttribute="poForm" action="${pageContext.request.contextPath}/po/save">
+							<div class="row">
+							</div>
+						</form:form>
+					</div>					
+				</div>						
 			</div>
 		</div>
 	</div>	

@@ -32,8 +32,21 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
-				
-				Contents
+
+				<h1>
+					<span class="fa fa-eye fa-fw"></span>&nbsp;Monitoring
+				</h1>
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<span class="fa fa-bus fa-fw fa-2x"></span>Today Delivery
+						</h1>
+					</div>
+					<div class="panel-body">
+						Contents
+					</div>
+				</div>				
 			</div>
 		</div>
 	</div>	

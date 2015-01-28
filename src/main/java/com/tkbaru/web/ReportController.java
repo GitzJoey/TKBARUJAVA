@@ -30,7 +30,8 @@ public class ReportController {
 	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
 	public String selectedReportPage(Locale locale, Model model, @PathVariable("reportid") String reportId) {
 		logger.info("[selectedReportPage] " + "id: " + reportId);
-		
+
+		model.addAttribute("reportGroup", "");
 		model.addAttribute("reportId", reportId);
 		
 		return Constants.JSPPAGE_REPORT;

@@ -5,15 +5,28 @@
   			<div class="container-fluid">
   				<div class="navbar-header">
     				<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">
-						<i class="fa fa-home fa-border"></i>
+						<span class="fa fa-home fa-border"></span><span>&nbsp;&nbsp;&nbsp;</span><strong><c:out value="${ loginContext.userLogin.storeEntity.storeName }"/></strong>
       				</a>
-      			</div>
-      			<p class="navbar-text"><strong>&nbsp;</strong></p>
+      			</div>      			
 				<form class="navbar-form navbar-right" role="search">
-	  				<div class="form-group input-group-sm">
+	  				<div class="form-group">
 	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search">
 	  				</div>
-	  				<a id="searchTopMenu" type="button" class="btn btn-sm btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
+	  				<a id="searchTopMenu" type="button" class="btn btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
 				</form>
+				<ul class="nav navbar-nav pull-right">
+					<li class="dropdown">
+					 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-globe"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">English</a></li>
+							<li><a href="#">Indonesia</a></li>
+						</ul>
+					</li>
+				</ul>
+      			<p class="navbar-text pull-right">
+      				<marquee scrollamount="2">
+      					*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      				</marquee>
+      			</p>
   			</div>
 		</nav>

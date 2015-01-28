@@ -45,6 +45,7 @@ public class UserDAOImpl implements UserDAO {
 				user.setUserPassword(rs.getString("passwd"));
 				user.setRoleId(rs.getInt("role_id"));
 				user.setPersonId(rs.getInt("person_id"));
+				user.setStoreId(rs.getInt("store_id"));
 				user.setUserStatus(rs.getString("status"));
 				
 				return user;

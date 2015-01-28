@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 @SessionAttributes("userContext")
 @RequestMapping(value="/dashboard")
 public class DashboardController {
-
 	private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
 	
 	@RequestMapping(method = RequestMethod.GET)

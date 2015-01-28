@@ -43,6 +43,16 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (1, 20);
 INSERT tb_role_function (role_id, function_id)
 VALUES (1, 21);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 22);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 23);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 24);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 25);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 26);
 
 /*NON ADMIN ROLE*/
 INSERT tb_role_function (role_id, function_id)
@@ -77,5 +87,15 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (2, 15);
 INSERT tb_role_function (role_id, function_id)
 VALUES (2, 16);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 17);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 18);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 19);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 20);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 21);
 
 COMMIT;

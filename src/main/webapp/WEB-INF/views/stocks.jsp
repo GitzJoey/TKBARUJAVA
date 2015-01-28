@@ -32,8 +32,21 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
+
+				<h1>
+					<span class="fa fa-eye fa-fw"></span>&nbsp;Monitoring
+				</h1>
 				
-				Contents
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<span class="fa fa-database fa-fw fa-2x"></span>Stocks
+						</h1>
+					</div>
+					<div class="panel-body">
+						Contents
+					</div>
+				</div>				
 			</div>
 		</div>
 	</div>	

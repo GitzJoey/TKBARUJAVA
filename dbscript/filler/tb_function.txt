@@ -2,39 +2,53 @@ TRUNCATE TABLE tb_function;
 
 /*Purchase Order*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_PURCHASEORDER', 'Purchase Order', 'fa fa-truck fa-fw', 'Purchase Order','fa fa-clipboard fa-fw', '/po/add', 100100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_PO_PURCHASEORDER', 'Purchase Order', 'fa fa-truck fa-fw', 'Purchase Order','fa fa-truck fa-fw', '/po/add', 100100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_REVISEPO', 'Purchase Order', 'fa fa-truck fa-fw', 'Revise PO','fa fa-code-fork fa-fw', '/po/revise', 100200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_PO_REVISE', 'Purchase Order', 'fa fa-truck fa-fw', 'Revise PO','fa fa-code-fork fa-rotate-180 fa-fw', '/po/revise', 100200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_POPAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_PO_PAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Sales Order*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SO_TODAYPRICE', 'Sales Order', 'fa fa-dollar fa-fw', 'Today Price','fa  fa-barcode fa-fw', '/sales/todayprice', 200100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_SO_SALESORDER', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Sales Order','fa fa-cart-arrow-down fa-fw', '/sales/add', 200100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SO_SALESORDER', 'Sales Order', 'fa fa-dollar fa-fw', 'Sales Order','fa  fa-book fa-fw', '/sales/add', 200200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_SO_REVISE', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Revise SO','fa fa fa-code-fork fa-fw', '/sales/revise', 200200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_SO_PAYMENT', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'SO Payment','fa fa-calculator fa-fw', '/sales/payment', 200300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Price*/
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_PRICE_TODAYPRICE', 'Price', 'fa fa-dollar fa-fw', 'Today Price','fa  fa-barcode fa-fw', '/price/todayprice', 300100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_PRICE_PRICELEVEL', 'Price', 'fa fa-dollar fa-fw', 'Price Level','fa  fa-table fa-fw', '/price/pricelevel', 300200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Warehouse*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_WH_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', 'Dashboard','fa fa-desktop fa-fw', '/warehouse/dashboard', 300100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_WH_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', 'Dashboard','fa fa-wrench fa-fw', '/warehouse/dashboard', 400100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Bank*/
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_BANK_UPLOAD', 'Bank', 'fa fa-bank fa-fw', 'Upload','fa fa-cloud-upload fa-fw', '/bank/upload', 500100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_BANK_CONSOLIDATE', 'Bank', 'fa fa-bank fa-fw', 'Consolidate','fa fa-compress fa-fw', '/bank/consolidate', 500200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Monitoring*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MON_DELIVERY', 'Monitoring', 'fa fa-eye fa-fw', 'Today Delivery','fa fa-bus fa-fw', '/monitor/todaydelivery', 400100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_MON_DELIVERY', 'Monitoring', 'fa fa-eye fa-fw', 'Today Delivery','fa fa-bus fa-fw', '/monitor/todaydelivery', 600100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MON_STOCK', 'Monitoring', 'fa fa-eye fa-fw', 'Stocks','fa fa-database fa-fw', '/monitor/stocks', 400200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_MON_STOCK', 'Monitoring', 'fa fa-eye fa-fw', 'Stocks','fa fa-database fa-fw', '/monitor/stocks', 600200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Reports*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT1', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 1','fa fa-plus fa-fw', '/report/id/rpt1', 500100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPT1', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 1','fa fa-plus fa-fw', '/report/id/rpt1', 700100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT2', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 2','fa fa-plus fa-fw', '/report/id/rpt2', 500200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPT2', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 2','fa fa-plus fa-fw', '/report/id/rpt2', 700200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 500300, 3, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 700300, 3, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT4', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 4','fa fa-plus fa-fw', '/report/id/rpt4', 500400, 4, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTMASTER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Master Data','fa fa-file-text-o fa-fw', '/report/id/rptmaster', 798100, 4, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT5', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 5','fa fa-plus fa-fw', '/report/id/rpt5', 500500, 5, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTADMIN', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Admin Data','glyphicon glyphicon-cog', '/report/id/rptadmin', 799100, 5, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Master Data*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
