@@ -233,15 +233,21 @@
 									<div class="form-group">
 										<label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
 										<div class="col-sm-10">
-											<form:input type="text" class="form-control" id="inputAddress1" name="inputPhoneNumber" path="compPhone"  placeholder="Enter Company Phone Number"></form:input>
+											<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="compPhone"  placeholder="Enter Company Phone Number"></form:input>
 										</div>
-									</div>
+									</div>                     
 									<div class="form-group">
 										<label for="inputFax" class="col-sm-2 control-label">Fax</label>
 										<div class="col-sm-10">
 											<form:input type="text" class="form-control" id="inputFax" name="inputFax" path="compFax" placeholder="Fax"></form:input>
 										</div>
 									</div>
+                                                                        <div class="form-group">
+										<label for="inputNpwp" class="col-sm-2 control-label">NPWP</label>
+										<div class="col-sm-10">
+											<form:input type="text" class="form-control" id="inputNpwp" name="inputNpwp" path="npwp"  placeholder="Enter Company NPWP"></form:input>
+										</div>
+									</div>        
 									<div class="form-group">
 										<label for="inputSupplierRemarks" class="col-sm-2 control-label">Remarks</label>
 										<div class="col-sm-5">
