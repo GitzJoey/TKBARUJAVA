@@ -28,7 +28,13 @@
     <beans:bean 
     	id="propertyConfigurer" 
     	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer" 
-    	p:location="/WEB-INF/spring/jdbc.properties">
+        p:ignoreResourceNotFound="true">
+            <beans:property name="locations">
+                <beans:list>
+                    <beans:value>file:src/main/webapp/WEB-INF/spring/jdbc.properties</beans:value>
+                    <beans:value>/WEB-INF/spring/jdbc.properties</beans:value>
+                </beans:list>
+            </beans:property>
 	</beans:bean>
     
 	<!-- configure datasource -->
