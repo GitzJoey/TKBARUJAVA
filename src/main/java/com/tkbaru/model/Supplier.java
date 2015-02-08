@@ -9,6 +9,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -54,6 +57,13 @@ public class Supplier {
 	private List<SupplierBankAccount> bankAccList = LazyList.decorate(
 			new ArrayList<SupplierBankAccount>(),
 			FactoryUtils.instantiateFactory(SupplierBankAccount.class));
+        
+        @SuppressWarnings("unchecked")
+        @ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_supplier_product",
+                joinColumns={ @JoinColumn(name="supplier_id", referencedColumnName="supplier_id") },
+                inverseJoinColumns={ @JoinColumn(name="product_id", referencedColumnName="product_id") })
+	private List<Product> productList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));
 
 	public int getSupplierId() {
 		return supplierId;
@@ -142,7 +152,8 @@ public class Supplier {
 				+ ", companyCity=" + companyCity + ", supplierRemarks="
 				+ supplierRemarks + ", compPhone=" + compPhone + ", compFax="
 				+ compFax + ", companyStatus=" + companyStatus + ", picList="
-				+ picList + ", bankAccList=" + bankAccList + "]";
+				+ picList + ", bankAccList=" + bankAccList + ", productList="
+                                + productList + "]";
 	}
 
     /**
@@ -157,5 +168,19 @@ public class Supplier {
      */
     public void setNpwp(String npwp) {
         this.npwp = npwp;
+    }
+
+    /**
+     * @return the productList
+     */
+    public List<Product> getProductList() {
+        return productList;
+    }
+
+    /**
+     * @param productList the productList to set
+     */
+    public void setProductList(List<Product> productList) {
+        this.productList = productList;
     }
 }
