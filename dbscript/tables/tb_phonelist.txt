@@ -1,4 +1,17 @@
-TRUNCATE tb_phonelist;
+DROP TABLE IF EXISTS `tb_phonelist`;
+
+CREATE TABLE `tb_phonelist` (
+  `phonelist_id` 	int(11) 		NOT NULL AUTO_INCREMENT,
+  `provider` 		varchar(15) 	DEFAULT NULL,
+  `number` 			varchar(25) 	DEFAULT NULL,
+  `status` 			varchar(15) 	DEFAULT NULL,
+  `remarks` 		varchar(245) 	DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT NULL,
+  `created_date` 	datetime 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT NULL,
+  `updated_date` 	datetime 		DEFAULT NULL,
+  PRIMARY KEY (`phonelist_id`)
+);
 
 INSERT tb_phonelist (provider, number, status, remarks)
 VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Admin Number');

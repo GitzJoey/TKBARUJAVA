@@ -1,0 +1,27 @@
+DROP TABLE IF EXISTS `tb_person`;
+
+CREATE TABLE `tb_person` (
+  `person_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
+  `first_name` 		varchar(45) 	DEFAULT NULL,
+  `last_name` 		varchar(45) 	DEFAULT NULL,
+  `addr_1` 			varchar(145) 	DEFAULT NULL,
+  `addr_2` 			varchar(145) 	DEFAULT NULL,
+  `addr_3` 			varchar(145) 	DEFAULT NULL,
+  `email` 			varchar(45) 	DEFAULT NULL,
+  `photo_path` 		varchar(45) 	DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT NULL,
+  `created_date` 	datetime 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT NULL,
+  `updated_date` 	datetime 		DEFAULT NULL,
+  PRIMARY KEY (`person_id`)
+);
+
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('admin', 'admin', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('non admin', 'non admin', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('Supplier PIC 1', 'Supplier PIC 1', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('Customer PIC 1', 'Customer PIC 1', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

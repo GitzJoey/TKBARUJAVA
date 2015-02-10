@@ -1,6 +1,0 @@
-TRUNCATE TABLE tb_supplier_bankacc;
-
-INSERT INTO tb_supplier_bankacc (supplier_id, bankacc_id)
-VALUES (1, 1);
-
-COMMIT;

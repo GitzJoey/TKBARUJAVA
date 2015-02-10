@@ -1,6 +1,0 @@
-TRUNCATE TABLE tb_customer_pic;
-
-INSERT INTO tb_customer_pic (customer_id, person_id)
-VALUES (1, 4);
-
-COMMIT;

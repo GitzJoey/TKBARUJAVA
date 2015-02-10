@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `tb_customer_pic`;
+
+CREATE TABLE `tb_customer_pic` (
+  `customer_id` int(11) NOT NULL,
+  `person_id` 	int(11) NOT NULL
+);
+
+INSERT INTO tb_customer_pic (customer_id, person_id)
+VALUES (1, 4);
+
+COMMIT;

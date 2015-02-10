@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `tb_supplier_pic`;
+
+CREATE TABLE `tb_supplier_pic` (
+  `supplier_id` int(11) DEFAULT NULL,
+  `person_id` 	int(11) DEFAULT NULL
+);
+
+INSERT INTO tb_supplier_pic (supplier_id, person_id)
+VALUES (1, 3);
+
+COMMIT;

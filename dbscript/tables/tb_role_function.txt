@@ -1,4 +1,9 @@
-TRUNCATE TABLE tb_role_function;
+DROP TABLE IF EXISTS `tb_role_function`;
+
+CREATE TABLE `tb_role_function` (
+  `role_id` 	int(11) DEFAULT NULL,
+  `function_id` int(11) DEFAULT NULL
+);
 
 /*ADMIN ROLE*/
 INSERT tb_role_function (role_id, function_id)

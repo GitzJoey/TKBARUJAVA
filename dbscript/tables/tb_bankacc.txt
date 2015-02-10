@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `tb_bankacc`;
+
+CREATE TABLE `tb_bankacc` (
+  `bankacc_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `short_name` 		varchar(45) DEFAULT NULL,
+  `bank_name` 		varchar(45) DEFAULT NULL,
+  `account` 		int(11) 	DEFAULT NULL,
+  `remarks` 		varchar(45) DEFAULT NULL,
+  `status` 			varchar(10) DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_date` 	datetime 	DEFAULT NULL,
+  PRIMARY KEY (`bankacc_id`)
+);
+
+INSERT INTO tb_bankacc (short_name, bank_name, account, remarks, status, created_by, created_date)
+VALUES ('Bank 1', 'Bank 1', '938475843', '', 'A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

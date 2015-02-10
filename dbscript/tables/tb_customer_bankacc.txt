@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS `tb_customer_bankacc`;
+
+CREATE TABLE `tb_customer_bankacc` (
+  `customer_id` int(11) NOT NULL,
+  `bankacc_id` 	int(11) NOT NULL
+);

@@ -1,0 +1,22 @@
+DROP TABLE IF EXISTS `tb_customer`;
+
+CREATE TABLE `tb_customer` (
+  `customer_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `store_name` 		varchar(45) DEFAULT NULL,
+  `address` 		varchar(45) DEFAULT NULL,
+  `city` 			varchar(45) DEFAULT NULL,
+  `phone` 			varchar(45) DEFAULT NULL,
+  `npwp_num` 		int(11) 	DEFAULT NULL,
+  `status` 			varchar(15) DEFAULT NULL,
+  `remarks` 		varchar(45) DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_date` 	datetime 	DEFAULT NULL,
+  PRIMARY KEY (`customer_id`)
+);
+
+INSERT INTO tb_customer (store_name)
+VALUES ('Cust 1 Store');
+
+COMMIT;

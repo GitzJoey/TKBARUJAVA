@@ -1,0 +1,20 @@
+DROP TABLE IF EXISTS `tb_role`;
+
+CREATE TABLE `tb_role` (
+  `role_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `name` 			varchar(45) DEFAULT NULL,
+  `status` 			varchar(15) DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_ by` 	int(11) 	DEFAULT NULL,
+  `updated_date` 	datetime 	DEFAULT NULL,
+  PRIMARY KEY (`role_id`)
+);
+
+INSERT INTO tb_role (name, status, created_by, created_date) 
+VALUES ('ADMIN', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_role (name, status, created_by, created_date) 
+VALUES ('NONADMIN', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

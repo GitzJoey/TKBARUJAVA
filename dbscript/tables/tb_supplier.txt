@@ -1,0 +1,22 @@
+DROP TABLE IF EXISTS `tb_supplier`;
+
+CREATE TABLE `tb_supplier` (
+  `supplier_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `company_name` 	varchar(45) DEFAULT NULL,
+  `address` 		varchar(45) DEFAULT NULL,
+  `city` 			varchar(45) DEFAULT NULL,
+  `phone` 			varchar(45) DEFAULT NULL,
+  `fax` 			varchar(45) DEFAULT NULL,
+  `remarks` 		varchar(45) DEFAULT NULL,
+  `status` 			varchar(15) DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_date` 	datetime 	DEFAULT NULL,
+  PRIMARY KEY (`supplier_id`)
+);
+
+INSERT INTO tb_supplier (company_name, address, city, remarks, phone, fax, created_by, created_date)
+VALUES ('Supplier Company 1', 'Address 1', 'City 1', 'Remarks 1', '12345', '1234567', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

@@ -1,4 +1,22 @@
-TRUNCATE TABLE tb_function;
+DROP TABLE IF EXISTS `tb_function`;
+
+CREATE TABLE `tb_function` (
+  `function_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `function_code` 		varchar(45) DEFAULT NULL,
+  `module` 				varchar(45) DEFAULT NULL,
+  `module_icon` 		varchar(45) DEFAULT NULL,
+  `menu_name` 			varchar(45) DEFAULT NULL,
+  `menu_icon` 			varchar(45) DEFAULT NULL,
+  `url` 				varchar(45) DEFAULT NULL,
+  `order_num` 			int(11) 	DEFAULT NULL,
+  `deep_level` 			int(11) 	DEFAULT NULL,
+  `created_by` 			int(11) 	DEFAULT NULL,
+  `created_date` 		datetime 	DEFAULT NULL,
+  `updated_by` 			int(11) 	DEFAULT NULL,
+  `updated_date` 		datetime 	DEFAULT NULL,
+  PRIMARY KEY (`function_id`)
+);
+
 
 /*Purchase Order*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)

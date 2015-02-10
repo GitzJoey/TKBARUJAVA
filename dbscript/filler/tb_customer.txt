@@ -1,6 +1,0 @@
-TRUNCATE TABLE tb_customer;
-
-INSERT INTO tb_customer (store_name)
-VALUES ('Cust 1 Store');
-
-COMMIT;
