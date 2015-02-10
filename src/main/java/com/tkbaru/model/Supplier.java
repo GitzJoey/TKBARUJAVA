@@ -44,7 +44,7 @@ public class Supplier {
 	@Column(name = "status")
 	private String companyStatus;
         @Column(name="npwp_num")
-        private String npwpNum;
+        private int npwpNum;
 
 	@SuppressWarnings("unchecked")
 	@OneToMany(mappedBy = "supplierEnt")
@@ -159,14 +159,14 @@ public class Supplier {
     /**
      * @return the npwpNum
      */
-    public String getNpwpNum() {
+    public int getNpwpNum() {
         return npwpNum;
     }
 
     /**
      * @param npwpNum the npwpNum to set
      */
-    public void setNpwpNum(String npwpNum) {
+    public void setNpwpNum(int npwpNum) {
         this.npwpNum = npwpNum;
     }
 
