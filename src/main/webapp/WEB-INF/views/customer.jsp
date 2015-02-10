@@ -248,7 +248,7 @@
 																						<c:out value="${ i.storeAddress }"></c:out><br/>
 																						<c:out value="${ i.storeCity }"></c:out><br/>															
 																						<c:out value="${ i.storePhone }"></c:out><br/>
-                                                                                                                                                                                <c:out value="${ i.npwp}"></c:out><br/>
+                                                                                                                                                                                <c:out value="${ i.npwpNum}"></c:out><br/>
 																						<c:out value="${ i.storeRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">
@@ -341,9 +341,9 @@
 													</div>
 												</div>
                                                                                                 <div class="form-group">
-													<label for="inputStoreNpwp" class="col-sm-2 control-label">NPWP</label>
+													<label for="inputStoreNpwpNum" class="col-sm-2 control-label">NPWP Number</label>
 													<div class="col-sm-4">
-														<form:input path="npwp" type="text" class="form-control" id="inputNpwp" name="inputNpwp" placeholder="Enter NPWP"></form:input>
+														<form:input path="npwpNum" type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" placeholder="Enter NPWP Number"></form:input>
 													</div>
 												</div>        
 												<div class="form-group">

@@ -43,8 +43,8 @@ public class Supplier {
 	private String compFax;
 	@Column(name = "status")
 	private String companyStatus;
-        @Column(name="npwp")
-        private String npwp;
+        @Column(name="npwp_num")
+        private String npwpNum;
 
 	@SuppressWarnings("unchecked")
 	@OneToMany(mappedBy = "supplierEnt")
@@ -157,17 +157,17 @@ public class Supplier {
 	}
 
     /**
-     * @return the npwp
+     * @return the npwpNum
      */
-    public String getNpwp() {
-        return npwp;
+    public String getNpwpNum() {
+        return npwpNum;
     }
 
     /**
-     * @param npwp the npwp to set
+     * @param npwpNum the npwpNum to set
      */
-    public void setNpwp(String npwp) {
-        this.npwp = npwp;
+    public void setNpwpNum(String npwpNum) {
+        this.npwpNum = npwpNum;
     }
 
     /**

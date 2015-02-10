@@ -243,9 +243,9 @@
 										</div>
 									</div>
                                                                         <div class="form-group">
-										<label for="inputNpwp" class="col-sm-2 control-label">NPWP</label>
+										<label for="inputNpwpNum" class="col-sm-2 control-label">NPWP</label>
 										<div class="col-sm-10">
-											<form:input type="text" class="form-control" id="inputNpwp" name="inputNpwp" path="npwp"  placeholder="Enter Company NPWP"></form:input>
+											<form:input type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" path="npwpNum"  placeholder="Enter Company NPWP"></form:input>
 										</div>
 									</div>        
 									<div class="form-group">

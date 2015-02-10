@@ -41,8 +41,8 @@ public class Customer {
 	private String storeStatus;
 	@Column(name="remarks")
 	private String storeRemarks;
-        @Column(name="npwp")
-        private String npwp;
+        @Column(name="npwp_num")
+        private String npwpNum;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
@@ -138,16 +138,16 @@ public class Customer {
 	}	
 
     /**
-     * @return the npwp
+     * @return the npwpNum
      */
-    public String getNpwp() {
-        return npwp;
+    public String getNpwpNum() {
+        return npwpNum;
     }
 
     /**
-     * @param npwp the npwp to set
+     * @param npwpNum the npwpNum to set
      */
-    public void setNpwp(String npwp) {
-        this.npwp = npwp;
+    public void setNpwpNum(String npwpNum) {
+        this.npwpNum = npwpNum;
     }
 }
