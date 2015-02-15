@@ -248,7 +248,7 @@
 																						<c:out value="${ i.storeAddress }"></c:out><br/>
 																						<c:out value="${ i.storeCity }"></c:out><br/>															
 																						<c:out value="${ i.storePhone }"></c:out><br/>
-                                                                                                                                                                                <c:out value="${ i.npwpNum}"></c:out><br/>
+																						<c:out value="${ i.npwpNum }"></c:out><br/>
 																						<c:out value="${ i.storeRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">
@@ -340,7 +340,7 @@
 														<form:input path="storePhone" type="text" class="form-control" id="inputStorePhone" name="inputStorePhone" placeholder="Enter Phone"></form:input>
 													</div>
 												</div>
-                                                                                                <div class="form-group">
+												<div class="form-group">
 													<label for="inputStoreNpwpNum" class="col-sm-2 control-label">NPWP Number</label>
 													<div class="col-sm-4">
 														<form:input path="npwpNum" type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" placeholder="Enter NPWP Number"></form:input>
@@ -461,10 +461,17 @@
 															            </div>
 																        <ul class="list-group">	
 																        	<li class="list-group-item">
-																        		<input id="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
-																        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+																        		<div class="checkbox">
+																        			<input id="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
+																        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>">Delete</label> 
+																        		</div>
 																        	</li>
 																        </ul>															            
+																        <div class="panel-footer">
+																        	<div class="btn-toolbar">
+																        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+																        	</div>
+																        </div>
 															        </div>
 															    </div>
 														    </c:forEach>

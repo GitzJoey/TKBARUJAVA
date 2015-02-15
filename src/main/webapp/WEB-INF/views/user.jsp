@@ -147,7 +147,12 @@
 											<c:if test="${not empty userList}">
 												<c:forEach var="i" varStatus="status" items="${userList}">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
+														<td align="center">
+															<div class="checkbox">
+																<input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/>
+																<label for="cbx_<c:out value="${ i.userId }"/>"></label>
+															</div>
+														</td>
 														<td><c:out value="${ i.userName }"></c:out></td>
 														<td>
 															<strong>Name:</strong><br/>
@@ -300,7 +305,7 @@
 														<tr>
 															<th width="5%">&nbsp;</th>
 															<th width="55%">Number</th>
-															<th width="15%">Status <c:out value="${ fn:length(userForm.personEntity.phoneList) }"/></th>
+															<th width="15%">Status</th>
 														</tr>
 													</thead>											
 													<tbody>

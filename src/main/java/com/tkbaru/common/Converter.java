@@ -36,6 +36,27 @@ public class Converter {
 		return result;
 	}	
 	
+	public static String convertToINClause(String commaSeparatedstringList) {
+		String result = "";
+				
+		String[] sL = commaSeparatedstringList.split(",");
+		
+		for (String s:sL) {
+			result += "'" + s + "'" + ", ";
+		}
+		
+		result = result.substring(0, result.length() - 2);
+		
+		if (result.length() == 0) {
+			return "('')";
+		} else {
+			result = "(" + result + ")";
+		}
+		
+		return result;
+		
+	}
+	
 	public static List<Integer> convertToIntegerList(String sInt) {
 		List<Integer> result = new ArrayList<Integer>();
 		

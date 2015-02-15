@@ -20,7 +20,97 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				Dashboard Content
+				<div class="row">
+					<div class="col-md-3">
+						<div class="panel panel-default">
+  							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-default">
+  							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-default">
+  							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-3">
+						<div class="panel panel-default">
+  							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-8">
+						<div class="panel panel-default">
+  							<div class="panel-body">
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+								<br/>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="panel panel-default">
+							<ul class="list-group">
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+								<li class="list-group-item">&nbsp;</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-12">
+						<input type='text' class="form-control" id='datetimepicker4'/>
+				        <script type="text/javascript">
+				            $(function () {
+				                $('#datetimepicker4').datetimepicker();
+				            });
+				        </script>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

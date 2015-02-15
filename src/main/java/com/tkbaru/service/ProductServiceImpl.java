@@ -2,6 +2,7 @@ package com.tkbaru.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -68,6 +69,14 @@ public class ProductServiceImpl implements ProductService {
 	public void deleteProduct(int selectedId) {
 
 		productDAO.deleteProduct(selectedId);		
+	}
+
+	@Override
+	public List<Product> getProductByIds(String selectedIds) {
+		
+		if (selectedIds.length() == 0) return new ArrayList<Product>();
+		
+		return productDAO.getProductByIds(selectedIds);
 	}
 
 }

@@ -41,8 +41,8 @@ public class Customer {
 	private String storeStatus;
 	@Column(name="remarks")
 	private String storeRemarks;
-        @Column(name="npwp_num")
-        private int npwpNum;
+	@Column(name="npwp_num")
+	private Integer npwpNum;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
@@ -128,26 +128,21 @@ public class Customer {
 		this.storeRemarks = storeRemarks;
 	}
 
+    public Integer getNpwpNum() {
+        return npwpNum;
+    }
+
+    public void setNpwpNum(Integer npwpNum) {
+        this.npwpNum = npwpNum;
+    }
+
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", storeName="
 				+ storeName + ", storeAddress=" + storeAddress + ", storeCity="
 				+ storeCity + ", storePhone=" + storePhone + ", storeStatus="
-				+ storeStatus + ", storeRemarks=" + storeRemarks
-				+ ", bankAccList=" + bankAccList + ", picList=" + picList + "]";
+				+ storeStatus + ", storeRemarks=" + storeRemarks + ", npwpNum="
+				+ npwpNum + ", bankAccList=" + bankAccList + ", picList="
+				+ picList + "]";
 	}	
-
-    /**
-     * @return the npwpNum
-     */
-    public int getNpwpNum() {
-        return npwpNum;
-    }
-
-    /**
-     * @param npwpNum the npwpNum to set
-     */
-    public void setNpwpNum(int npwpNum) {
-        this.npwpNum = npwpNum;
-    }
 }

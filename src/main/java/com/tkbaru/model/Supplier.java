@@ -12,58 +12,57 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 
 @Entity
-@Table(name = "tb_supplier")
+@Table(name="tb_supplier")
+@SuppressWarnings("unchecked")
 public class Supplier {
-
 	public Supplier() {
+		
 	}
 
 	@Id
-	@Column(name = "supplier_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="supplier_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int supplierId;
-	@Column(name = "company_name")
+	@Column(name="company_name")
 	private String companyName;
-	@Column(name = "address")
+	@Column(name="address")
 	private String companyAddress;
-	@Column(name = "city")
+	@Column(name="city")
 	private String companyCity;
-	@Column(name = "remarks")
+	@Column(name="remarks")
 	private String supplierRemarks;
-	@Column(name = "phone")
+	@Column(name="phone")
 	private String compPhone;
-	@Column(name = "fax")
+	@Column(name="fax")
 	private String compFax;
-	@Column(name = "status")
+	@Column(name="status")
 	private String companyStatus;
-        @Column(name="npwp_num")
-        private int npwpNum;
+	@Column(name="npwp_num")
+	private Integer npwpNum;
 
-	@SuppressWarnings("unchecked")
-	@OneToMany(mappedBy = "supplierEnt")
-	private List<SupplierPIC> picList = LazyList.decorate(
-			new ArrayList<SupplierPIC>(),
-			FactoryUtils.instantiateFactory(SupplierPIC.class));
-	
-	@SuppressWarnings("unchecked")
-	@OneToMany(mappedBy = "supplierEnt", cascade = CascadeType.ALL)
-	private List<SupplierBankAccount> bankAccList = LazyList.decorate(
-			new ArrayList<SupplierBankAccount>(),
-			FactoryUtils.instantiateFactory(SupplierBankAccount.class));
-        
-        @SuppressWarnings("unchecked")
-        @ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="tb_supplier_product",
-                joinColumns={ @JoinColumn(name="supplier_id", referencedColumnName="supplier_id") },
-                inverseJoinColumns={ @JoinColumn(name="product_id", referencedColumnName="product_id") })
-	private List<Product> productList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_supplier_bankacc", 
+				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
+				inverseJoinColumns={@JoinColumn(name="bankacc_id", referencedColumnName="bankacc_id")})
+	private List<BankAccount> bankAccList = LazyList.decorate(new ArrayList<BankAccount>(), FactoryUtils.instantiateFactory(BankAccount.class));
+
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_supplier_pic", 
+				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
+				inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
+	private List<Person> picList = LazyList.decorate(new ArrayList<Person>(), FactoryUtils.instantiateFactory(Person.class));
+
+	@ManyToMany
+	@JoinTable(name="tb_supplier_prod", 
+				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
+				inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")})
+	private List<Product> prodList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));
 
 	public int getSupplierId() {
 		return supplierId;
@@ -129,20 +128,36 @@ public class Supplier {
 		this.companyStatus = companyStatus;
 	}
 
-	public List<SupplierPIC> getPicList() {
-		return picList;
+	public Integer getNpwpNum() {
+		return npwpNum;
 	}
 
-	public void setPicList(List<SupplierPIC> picList) {
-		this.picList = picList;
+	public void setNpwpNum(Integer npwpNum) {
+		this.npwpNum = npwpNum;
 	}
 
-	public List<SupplierBankAccount> getBankAccList() {
+	public List<BankAccount> getBankAccList() {
 		return bankAccList;
 	}
 
-	public void setBankAccList(List<SupplierBankAccount> bankAccList) {
+	public void setBankAccList(List<BankAccount> bankAccList) {
 		this.bankAccList = bankAccList;
+	}
+
+	public List<Person> getPicList() {
+		return picList;
+	}
+
+	public void setPicList(List<Person> picList) {
+		this.picList = picList;
+	}
+
+	public List<Product> getProdList() {
+		return prodList;
+	}
+
+	public void setProdList(List<Product> prodList) {
+		this.prodList = prodList;
 	}
 
 	@Override
@@ -151,36 +166,9 @@ public class Supplier {
 				+ companyName + ", companyAddress=" + companyAddress
 				+ ", companyCity=" + companyCity + ", supplierRemarks="
 				+ supplierRemarks + ", compPhone=" + compPhone + ", compFax="
-				+ compFax + ", companyStatus=" + companyStatus + ", picList="
-				+ picList + ", bankAccList=" + bankAccList + ", productList="
-                                + productList + "]";
+				+ compFax + ", companyStatus=" + companyStatus + ", npwpNum="
+				+ npwpNum + ", bankAccList=" + bankAccList + ", picList="
+				+ picList + ", prodList=" + prodList + "]";
 	}
 
-    /**
-     * @return the npwpNum
-     */
-    public int getNpwpNum() {
-        return npwpNum;
-    }
-
-    /**
-     * @param npwpNum the npwpNum to set
-     */
-    public void setNpwpNum(int npwpNum) {
-        this.npwpNum = npwpNum;
-    }
-
-    /**
-     * @return the productList
-     */
-    public List<Product> getProductList() {
-        return productList;
-    }
-
-    /**
-     * @param productList the productList to set
-     */
-    public void setProductList(List<Product> productList) {
-        this.productList = productList;
-    }
 }

@@ -9,9 +9,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Product;
+
 import java.util.ArrayList;
 import java.util.Map;
+
 import javax.sql.DataSource;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 
 @Repository
@@ -19,7 +22,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class ProductDAOImpl implements ProductDAO {
 	private static final Logger logger = LoggerFactory.getLogger(ProductDAOImpl.class);
 
-        private DataSource dataSource;
+    private DataSource dataSource;
 	public void setDataSource(DataSource dataSource) {
 		this.dataSource = dataSource;
 	}
@@ -92,16 +95,16 @@ public class ProductDAOImpl implements ProductDAO {
     public List<Product> getAllProductBySupplierId(int supplierId) {
 		List<Product> result = new ArrayList<Product>();
 		String sqlquery = 
-				"SELECT tbp.product_id,       "+
-                                "       tbp.product_type,"+
-                                "       tbp.short_code,"+
-				"	tbp.product_name,           "+
-				"       tbp.product_description,             "+
-                                "       tbp.unit,             "+
-                                "       tbp.in_kg,             "+
-                                "       tbp.image_path             "+
-				"FROM tb_product tbp          "+
-				"WHERE tbp.supplier_id = ?        ";
+				"SELECT tbp.product_id,       		"+
+				"       tbp.product_type,			"+
+                "       tbp.short_code,				"+
+				"		tbp.product_name,       	"+
+				"       tbp.product_description,	"+
+                "       tbp.unit,             		"+
+                "       tbp.in_kg,             		"+
+                "       tbp.image_path             	"+
+				"FROM tb_product tbp          		"+
+				"WHERE tbp.supplier_id = ?        	";
 	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery, new Object[] { supplierId });
@@ -120,5 +123,19 @@ public class ProductDAOImpl implements ProductDAO {
 
 		return result;
     }
+
+	@Override
+	public List<Product> getProductByIds(String selectedIdINClause) {
+		logger.info("[getProductByIds] " + "selectedIdINClause: " + selectedIdINClause);
+		
+		Session session = this.sessionFactory.getCurrentSession();		
+		List<Product> productList = session.createQuery("FROM Product").list();
+	
+		for(Product prod:productList) {
+			logger.info("Product : " + prod.toString());
+		}
+		
+		return productList;
+	}
 
 }

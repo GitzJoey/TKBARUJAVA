@@ -46,13 +46,15 @@ public class CustomerController {
 		return Constants.JSPPAGE_CUSTOMER;
 	}
 	
-	@RequestMapping(value="/add", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String addCustomer(Locale locale, Model model) {
 		logger.info("[addCustomer] " + "");
 		
 		model.addAttribute("customerForm", new Customer());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		
+
+		model.addAttribute("activeTab", "custDataTab");
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

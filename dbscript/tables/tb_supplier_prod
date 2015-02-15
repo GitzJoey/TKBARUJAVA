@@ -1,0 +1,11 @@
+DROP TABLE IF EXISTS `tb_supplier_prod`;
+
+CREATE TABLE `tb_supplier_prod` (
+  `supplier_id` int(11) NOT NULL,
+  `product_id` 	int(11) NOT NULL
+);
+
+INSERT INTO tb_supplier_bankacc (supplier_id, bankacc_id)
+VALUES (1, 1);
+
+COMMIT;
