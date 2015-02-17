@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-		<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
   			<div class="container-fluid">
   				<div class="navbar-header">
     				<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">

@@ -1,5 +1,6 @@
 body { 
 	padding-top: 70px; 
+	background-color: GhostWhite;
 }
 
 .borderless > thead > tr > th, 
@@ -39,4 +40,8 @@ body {
 
 strong.title {
 	font-size: 30px;
+}
+
+.huge {
+	font-size: 40px;
 }

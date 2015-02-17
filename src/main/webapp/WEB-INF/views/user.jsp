@@ -68,6 +68,8 @@
 					}
 				}				
 			});
+			
+			$('#userListTable').DataTable();
 						
 			$('#userForm').bootstrapValidator({
        			feedbackIcons: {
@@ -133,49 +135,42 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="15%">User Name</th>
-												<th width="75%">Details</th>
-												<th width="5%">Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty userList}">
-												<c:forEach var="i" varStatus="status" items="${userList}">
-													<tr>
-														<td align="center">
-															<div class="checkbox">
-																<input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/>
-																<label for="cbx_<c:out value="${ i.userId }"/>"></label>
-															</div>
-														</td>
-														<td><c:out value="${ i.userName }"></c:out></td>
-														<td>
-															<strong>Name:</strong><br/>
-															<c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out>
-															<br/><br/>
-															<strong>Details:</strong><br/>
-															<c:out value="${ i.personEntity.addressLine1 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ i.personEntity.addressLine3 }"/><br/>
-															<c:out value="${ i.personEntity.emailAddr }"/><br/>
-															<br/><br/>	
-															<strong>Phone Number:</strong><br/>												
-															<c:forEach items="${ i.personEntity.phoneList }" var="ph">
-																<c:out value="${ ph.providerName }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
-															</c:forEach>
-														</td>
-														<td><c:out value="${ i.userStatus }"></c:out></td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="userListTable" class="table table-bordered table-hover">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="15%">User Name</th>
+											<th width="75%">Details</th>
+											<th width="5%">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty userList}">
+											<c:forEach var="i" varStatus="status" items="${userList}">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
+													<td><c:out value="${ i.userName }"></c:out></td>
+													<td>
+														<strong>Name:</strong><br/>
+														<c:out value="${ i.personEntity.firstName }"></c:out>&nbsp;<c:out value="${ i.personEntity.firstName }"></c:out>
+														<br/><br/>
+														<strong>Details:</strong><br/>
+														<c:out value="${ i.personEntity.addressLine1 }"/><br/>
+														<c:out value="${ i.personEntity.addressLine2 }"/><br/>
+														<c:out value="${ i.personEntity.addressLine3 }"/><br/>
+														<c:out value="${ i.personEntity.emailAddr }"/><br/>
+														<br/><br/>	
+														<strong>Phone Number:</strong><br/>												
+														<c:forEach items="${ i.personEntity.phoneList }" var="ph">
+															<c:out value="${ ph.providerName }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
+														</c:forEach>
+													</td>
+													<td><c:out value="${ i.userStatus }"></c:out></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>				
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>

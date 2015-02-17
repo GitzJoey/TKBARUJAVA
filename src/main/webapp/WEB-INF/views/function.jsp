@@ -81,6 +81,8 @@
            			}
        			}
 			});
+			
+			$('#functionListTable').DataTable();
 		});
 	</script>	
 </head>
@@ -120,36 +122,34 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="15%">Function Code</th>
-												<th width="20%">Module</th>
-												<th width="20%">Menu Name</th>
-												<th width="25%">Url</th>
-												<th width="5%">Order</th>
-												<th width="5%">Deep Level</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty functionList}">
-												<c:forEach var="i" varStatus="status" items="${functionList}">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.functionId }"/>" type="checkbox" value="<c:out value="${ i.functionId }"/>"/></td>
-														<td><c:out value="${i.functionCode}"></c:out></td>
-														<td><span class="<c:out value="${ i.moduleIcon }"></c:out>">&nbsp;</span><c:out value="${ i.module }"></c:out></td>
-														<td><span class="<c:out value="${ i.menuIcon }"></c:out>">&nbsp;</span><c:out value="${ i.menuName }"></c:out></td>
-														<td><c:out value="${ i.urlLink }"/></td>
-														<td><c:out value="${ i.orderNum }"/></td>
-														<td><c:out value="${ i.deepLevel }"/></td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="functionListTable" class="table table-bordered table-hover display responsive" style="width: 100%;">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="15%">Function Code</th>
+											<th width="20%">Module</th>
+											<th width="20%">Menu Name</th>
+											<th width="20%">Url</th>
+											<th width="5%">Order</th>
+											<th width="5%">Deep Level</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty functionList}">
+											<c:forEach var="i" varStatus="status" items="${functionList}">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.functionId }"/>" type="checkbox" value="<c:out value="${ i.functionId }"/>"/></td>
+													<td><c:out value="${i.functionCode}"></c:out></td>
+													<td><span class="<c:out value="${ i.moduleIcon }"></c:out>">&nbsp;</span><c:out value="${ i.module }"></c:out></td>
+													<td><span class="<c:out value="${ i.menuIcon }"></c:out>">&nbsp;</span><c:out value="${ i.menuName }"></c:out></td>
+													<td><c:out value="${ i.urlLink }"/></td>
+													<td><c:out value="${ i.orderNum }"/></td>
+													<td><c:out value="${ i.deepLevel }"/></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/function/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
