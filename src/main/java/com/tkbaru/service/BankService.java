@@ -1,5 +1,7 @@
 package com.tkbaru.service;
 
-public interface BankService {
+import com.tkbaru.model.Bank;
 
+public interface BankService {
+	public boolean bankUpload(Bank bank);
 }

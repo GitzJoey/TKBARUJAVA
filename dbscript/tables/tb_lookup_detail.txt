@@ -1,0 +1,255 @@
+DROP TABLE IF EXISTS `tb_lookup_detail`;
+
+CREATE TABLE `tb_lookup_detail` (
+  `lookup_detail_id` int(11) NOT NULL AUTO_INCREMENT,
+  `lookup_id` int(11) NOT NULL,
+  `language_code` varchar(15) DEFAULT NULL,
+  `lookup_val` varchar(45) DEFAULT NULL,
+  `lookup_alt_val` varchar(45) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`lookup_detail_id`)
+);
+
+/*Status - L001*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L001_A'), 'L010_ID', 'Aktif', 'Aktif', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L001_A'), 'L010_EN', 'Active', 'Active', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L001_I'), 'L010_ID', 'Non-aktif', 'Non-aktif', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L001_I'), 'L010_EN', 'Inactive', 'Inactive', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Salutation - L002*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L002_MR'), 'L010_ID', 'Tuan', 'Tuan', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L002_MR'), 'L010_EN', 'Mr', 'Mr', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L002_MRS'), 'L010_ID', 'Ny', 'Ny', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L002_MRS'), 'L010_EN', 'Mrs', 'Mrs', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*YesNoSelection - L003*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L003_YES'), 'L010_ID', 'Ya', 'Ya', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L003_YES'), 'L010_EN', 'Yes', 'Yes', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L003_NO'), 'L010_ID', 'Tidak', 'Tidak', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L003_NO'), 'L010_EN', 'No', 'No', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Product Type - L004*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_ML'), 'L010_ID', 'Minyak Sawit', 'Minyak Sawit', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_ML'), 'L010_EN', 'Palm Oil', 'Palm Oil', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_GL'), 'L010_ID', 'Gula', 'Gula', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_GL'), 'L010_EN', 'Sugar', 'Sugar', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_TRG'), 'L010_ID', 'Terigu', 'Terigu', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_TRG'), 'L010_EN', 'Wheat', 'Wheat', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_ACI'), 'L010_ID', 'Aci', 'Tapioka', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_ACI'), 'L010_EN', 'Tapioca', 'Tapioca', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_KDLL'), 'L010_ID', 'Kedelai Lokal', 'Kedelai Lokal', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_KDLL'), 'L010_EN', 'Local Soybean', 'Local Soybean', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_KDLI'), 'L010_ID', 'Kedelai Impor', 'Kedelai Impor', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L004_KDLI'), 'L010_EN', 'Imported Soybean', 'Imported Soybean', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Unit - L005*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_DR'), 'L010_ID', 'Drum', 'Drum', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_DR'), 'L010_EN', 'Drum', 'Drum', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_KG'), 'L010_ID', 'Kilogram', 'Kilogram', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_KG'), 'L010_EN', 'Kilogram', 'Kilogram', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_TN'), 'L010_ID', 'Ton', 'Ton', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_TN'), 'L010_EN', 'Tonne', 'Tonne', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_KN'), 'L010_ID', 'Kuintal', 'Kuintal', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L005_KN'), 'L010_EN', 'Kuintal', 'Kuintal', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Phone Provider - L006*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_TSEL'), 'L010_ID', 'T-Sel', 'T-Sel', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_TSEL'), 'L010_EN', 'T-Sel', 'T-Sel', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_XL'), 'L010_ID', 'XL', 'XL', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_XL'), 'L010_EN', 'XL', 'XL', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_ISAT'), 'L010_ID', 'Indosat', 'Indosat', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_ISAT'), 'L010_EN', 'Indosat', 'Indosat', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_3'), 'L010_ID', '3', '3', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_3'), 'L010_EN', '3', '3', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_FLX'), 'L010_ID', 'Flexi', 'Flexi', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_FLX'), 'L010_EN', 'Flexi', 'Flexi', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_SMRTFRN'), 'L010_ID', 'SmartFren', 'SmartFren', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_SMRTFRN'), 'L010_EN', 'SmartFren', 'SmartFren', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_CRA'), 'L010_ID', 'Ceria', 'Ceria', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L006_CRA'), 'L010_EN', 'Ceria', 'Ceria', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Bank - L007*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L007_BCA'), 'L010_ID', 'Bank Central Asia', 'Bank Central Asia', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L007_BCA'), 'L010_EN', 'Bank Central Asia', 'Bank Central Asia', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L007_BDI'), 'L010_ID', 'Bank Danamon Indonesia', 'Bank Danamon Indonesia', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L007_BDI'), 'L010_EN', 'Bank Danamon Indonesia', 'Bank Danamon Indonesia', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Bank Transaction Direction - L008*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L008_DB'), 'L010_ID', 'Debit', 'Debit', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L008_DB'), 'L010_EN', 'Debit', 'Debit', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L008_CR'), 'L010_ID', 'Kredit', 'Kredit', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L008_CR'), 'L010_EN', 'Credit', 'Credit', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Currency Code - L009*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L009_IDR'), 'L010_ID', 'Rupiah', 'Rupiah', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L009_IDR'), 'L010_EN', 'Indonesian Rupiah', 'Indonesian Rupiah', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L009_USD'), 'L010_ID', 'Dolar', 'Dolar', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L009_USD'), 'L010_EN', 'US Dollar', 'US Dollar', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Language - L010*/
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L010_ID'), 'L010_ID', 'Bahasa Indonesia', 'Bahasa Indonesia', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L010_ID'), 'L010_EN', 'Indonesian', 'Indonesian', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*ID*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L010_EN'), 'L010_ID', 'Bahasa Inggris', 'Bahasa Inggris', 0, (SELECT CURRENT_TIMESTAMP()));
+/*EN*/ 
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = 'L010_EN'), 'L010_EN', 'English', 'English', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Template*/
+/*ID*/ 
+/*
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = ''), 'L010_ID', '', '', 0, (SELECT CURRENT_TIMESTAMP()));
+*/
+/*EN*/ 
+/*
+INSERT INTO tb_lookup_detail (lookup_id, language_code, lookup_val, lookup_alt_val, created_by, created_date)
+VALUES((SELECT lookup_id FROM tb_lookup2 WHERE lookup_key = ''), 'L010_EN', '', '', 0, (SELECT CURRENT_TIMESTAMP()));
+*/
+
+COMMIT;

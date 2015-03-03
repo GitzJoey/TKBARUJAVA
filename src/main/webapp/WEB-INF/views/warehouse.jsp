@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,16 +8,6 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
-			
-			$('#hideInflow, #hideOutflow').click(function() {
-				var button = $(this).attr('id');
-				
-				if (button == 'hideInflow') {
-					
-				} else {
-					
-				}
-			});
 		});
 	</script>	
 </head>
@@ -42,76 +33,111 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
-
-				<h1>
-					<span class="fa fa-wrench fa-fw"></span>&nbsp;Warehouse
-				</h1>
 				
+				<h1>
+					<span class="fa fa-wrench fa-fw"></span>&nbsp;Warehouse 
+				</h1>
+
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
-						<div id="inflowPanel" class="panel panel-default">
+					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-mail-forward fa-rotate-90 fa-fw fa-2x"></span>Inflow
+									<span class="fa fa-wrench fa-fw fa-2x"></span>Warehouse List
 								</h1>
 							</div>
 							<div class="panel-body">
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th width="5%">&nbsp;</th>
+												<th width="30%">Warehouse Name</th>
+												<th width="60%">Location</th>
+												<th width="5%">Status</th>												
+											</tr>
+										</thead>
+										<tbody>
+											<c:if test="${not empty warehouseList}">
+												<c:forEach items="${ warehouseList }" var="i" varStatus="warehouseIdx">
+													<tr>
+														<td align="center"><input id="cbx_<c:out value="${ i.warehouseId }"/>" type="checkbox" value="<c:out value="${ i.warehouseId }"/>"/></td>
+														<td><c:out value="${i.warehouseName}"></c:out></td>
+														<td>
+															<strong><c:out value="${i.warehouseName}"></c:out></strong><br/><br/>
+															<c:out value="${i.warehouseLocation}"></c:out><br/><br/>
+															<c:out value="${i.warehouseRemarks}"></c:out>
+														</td>
+														<td>
+															<c:out value="${i.warehouseStatus}"/><br/>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
+								</div>
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/warehouse/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
+								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
-							<ul class="list-group">
-								<li class="list-group-item">
-									<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-								</li>
-							</ul>
-						</div>
-						<br/>
-						<div id="outflowPanel" class="panel panel-default">
+						</div>						
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-mail-reply fa-rotate-90 fa-fw fa-2x"></span>Outflow
+									<c:choose>
+										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Warehouse
+										</c:when>
+										<c:otherwise>
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Warehouse
+										</c:otherwise>
+									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
+								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/warehouse/save"> 
+									<form:hidden path="warehouseId"/>									
+									<div class="form-group">
+										<label for="inputWarehouseName" class="col-sm-2 control-label">Warehouse Name</label>
+										<div class="col-sm-3">
+											<form:input type="text" class="form-control" id="inputWarehouseName" name="inputWarehouseName" path="warehouseName" placeholder="Warehouse Name"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputWarehouseLocation" class="col-sm-2 control-label">Location</label>
+										<div class="col-sm-5">
+											<form:input type="text" class="form-control" id="inputWarehouseLocation" name="inputWarehouseLocation" path="warehouseLocation"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputWarehouseRemarks" class="col-sm-2 control-label">Remarks</label>
+										<div class="col-sm-6">
+											<form:input type="text" class="form-control" id="inputWarehouseRemarks" name="inputWarehouseRemarks" path="warehouseRemarks"></form:input>
+										</div>										
+									</div>
+									<div class="form-group">
+										<label for="inputWarehouseStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="warehouseStatus">
+												<option>Please Select</option>
+												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+											</form:select>											
+										</div>										
+									</div>
+									<div class="col-md-7 col-offset-md-5">
+										<div class="btn-toolbar">
+											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+										</div>
+									</div>
+								</form:form>
 							</div>
-							<ul class="list-group">
-								<li class="list-group-item">
-									<button type="button" id="hideOutflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-								</li>
-							</ul>
 						</div>
-					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-					</c:when>
-				</c:choose>				
+					</c:when>					
+				</c:choose>
 			</div>
 		</div>
 	</div>	

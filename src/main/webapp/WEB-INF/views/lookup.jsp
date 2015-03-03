@@ -55,6 +55,8 @@
 				}								
 			});
 			
+			$('#lookupListTable').DataTable();
+			
 			$('#functionForm').bootstrapValidator({
        			feedbackIcons: {
            			valid: 'glyphicon glyphicon-ok',
@@ -134,36 +136,56 @@
 									</ul>
 								</div>
 								<div>&nbsp;</div>
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="15%">Category</th>
-												<th width="15%">Lookup Code</th>
-												<th width="15%">Short Value</th>
-												<th width="25%">Description</th>
-												<th width="5%">Order</th>
-												<th width="5%">Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${ not empty lookupList }">
-												<c:forEach var="i" varStatus="status" items="${ lookupList }">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.lookupId }"/>" type="checkbox" value="<c:out value="${ i.lookupId }"/>"/></td>
-														<td><c:out value="${i.lookupCategory}"/></td>
-														<td><c:out value="${ i.lookupCode}"/></td>
-														<td><c:out value="${ i.shortVal }"/></td>
-														<td><c:out value="${ i.lookupDescription }"/></td>
-														<td><c:out value="${ i.orderNum }"/></td>
-														<td><c:out value="${ i.lookupStatus }"/></td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="lookupListTable" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="20%">Category</th>
+											<th width="20%">Key</th>
+											<th width="40%">Value</th>
+											<th width="5%">Order</th>
+											<th width="5%">Status</th>
+											<th width="5%">Maintainable</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${ not empty lookupList }">
+											<c:forEach var="i" varStatus="status" items="${ lookupList }">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.lookupId }"/>" type="checkbox" value="<c:out value="${ i.lookupId }"/>"/></td>
+													<td><c:out value="${ i.lookupCategory }"/></td>
+													<td><c:out value="${ i.lookupKey }"/></td>
+													<td>
+														<c:set var="lang" value=""></c:set>
+														<c:forEach var="j" varStatus="js" items="${ i.lookupDetail }">
+															<c:choose>
+																<c:when test="${ lang == '' }">
+																	<c:set var="lang" value="${ j.languageCode }"></c:set>
+																	<c:out value="${ j.languageCode }"/><br/>
+																	Value : <c:out value="${ j.lookupValue }"/><br/>
+																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
+																</c:when>
+																<c:when test="${ lang == j.languageCode }">
+																	Value : <c:out value="${ j.lookupValue }"/><br/>
+																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
+																</c:when>
+																<c:otherwise>
+																	<c:set var="lang" value="${ j.languageCode }"></c:set>
+																	<c:out value="${ j.languageCode }"/><br/>
+																	Value : <c:out value="${ j.lookupValue }"/><br/>
+																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
+																</c:otherwise>
+															</c:choose>
+														</c:forEach>
+													</td>
+													<td><c:out value="${ i.orderNum }"/></td>
+													<td><c:out value="${ i.lookupStatus }"/></td>
+													<td><c:out value="${ i.lookupMaintainability }"/></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/lookup/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
@@ -194,21 +216,29 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputLookupCode" class="col-sm-2 control-label">Lookup Code</label>
+										<label for="inputLookupKey" class="col-sm-2 control-label">Lookup Key</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputLookupCode" name="inputLookupCode" path="lookupCode" placeholder="Enter Lookup Code"></form:input>
+											<form:input type="text" class="form-control" id="inputLookupKey" name="inputLookupKey" path="lookupKey" placeholder="Enter Lookup Key"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputShortVal" class="col-sm-2 control-label">Short Val</label>
+										<label for="inputValue" class="col-sm-2 control-label">Value</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputShortVal" name="inputShortVal" path="shortVal" placeholder="Enter Short Val"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputDescription" class="col-sm-2 control-label">Description</label>
-										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputDescription" name="inputDescription" path="lookupDescription" placeholder="Enter Description"></form:input>
+											<c:forEach items="${ lookupForm.lookupDetail }" varStatus="lookupDetailIdx">
+												<div class="panel panel-default">
+													<div class="panel-body">
+														<c:out value="${ lookupForm.lookupDetail[lookupDetailIdx.index].languageCode }"/>
+													</div>
+													<table class="table borderless">
+														<tr>
+															<td>
+																<form:input type="text" class="form-control" path="lookupDetail[${lookupDetailIdx.index}].lookupValue" placeholder="Enter Lookup Value"></form:input><br/>
+																<form:input type="text" class="form-control" path="lookupDetail[${lookupDetailIdx.index}].lookupAlternateValue" placeholder="Enter Lookup Alternate Value"></form:input>
+															</td>
+														</tr>
+													</table>
+												</div>	
+											</c:forEach>
 										</div>
 									</div>
 									<div class="form-group">
@@ -221,7 +251,7 @@
 										<label for="inputMaintainability" class="col-sm-2 control-label">Maintainable</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupMaintainability">
-												<form:options items="${ MaintainabilityDDL }" itemValue="lookupCode" itemLabel="lookupDescription"></form:options>
+												<form:options items="${ MaintainabilityDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
 											</form:select>
 										</div>
 									</div>									
@@ -229,7 +259,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupStatus">
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"></form:options>
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
 											</form:select>
 										</div>
 									</div>									

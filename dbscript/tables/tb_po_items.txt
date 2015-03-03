@@ -1,0 +1,6 @@
+DROP TABLE IF EXISTS `tb_po_items`;
+
+CREATE TABLE `tb_po_items` (
+  `po_id` int(11) DEFAULT NULL,
+  `items_id` int(11) DEFAULT NULL
+);

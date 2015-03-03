@@ -11,6 +11,4 @@ public interface ProductDAO {
 	public void addProduct(Product prod);
 	public void editProduct(Product prod);
 	public void deleteProduct(int selectedId);
-	
-	public List<Product> getAllProductBySupplierId(int supplierId);
 }

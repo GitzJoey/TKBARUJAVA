@@ -5,13 +5,14 @@ import java.util.List;
 import com.tkbaru.model.Lookup;
 
 public interface LookupDAO {
-	public Lookup getLookupById(int selectedId);
 	public List<Lookup> getAllLookup();
-	public List<Lookup> getLookupByCategory(String categoryCode);
-	public List<Lookup> getLookupByCategories(String categoryCodes);
-	public List<Lookup> getLookupByLookupCodes(String lookupCodes);
-	public List<Lookup> getAllCategory();
+	public Lookup getLookupById(int selectedId);
 	public void addLookup(Lookup lookup);
 	public void editLookup(Lookup lookup);
 	public void deleteLookup(int selectedId);
+
+	public List<Lookup> getLookupByCategory(String categoryCode, String languageCode);
+	public List<Lookup> getLookupByCategories(String categoryCodes, String languageCode);
+	public List<Lookup> getLookupByLookupKeys(String lookupKeys, String languageCode);
+	public List<Lookup> getAllCategory();
 }

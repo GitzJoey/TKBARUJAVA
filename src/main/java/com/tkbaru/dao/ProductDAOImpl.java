@@ -91,39 +91,6 @@ public class ProductDAOImpl implements ProductDAO {
         }		
 	}
 
-    @Override
-    public List<Product> getAllProductBySupplierId(int supplierId) {
-		List<Product> result = new ArrayList<Product>();
-		String sqlquery = 
-				"SELECT tbp.product_id,       		"+
-				"       tbp.product_type,			"+
-                "       tbp.short_code,				"+
-				"		tbp.product_name,       	"+
-				"       tbp.product_description,	"+
-                "       tbp.unit,             		"+
-                "       tbp.in_kg,             		"+
-                "       tbp.image_path             	"+
-				"FROM tb_product tbp          		"+
-				"WHERE tbp.supplier_id = ?        	";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery, new Object[] { supplierId });
-		for (Map<String, Object> row : rows) {
-			Product p = new Product();
-			p.setProductId(Integer.valueOf(String.valueOf(row.get("product_id"))));
-                        p.setProductType(String.valueOf(row.get("product_type")));
-                        p.setShortCode(String.valueOf(row.get("short_code")));
-                        p.setProductName(String.valueOf(row.get("product_name")));
-                        p.setProductDesc(String.valueOf(row.get("product_description")));
-                        p.setUnit(String.valueOf(row.get("unit")));
-                        p.setInKilo(Integer.valueOf(String.valueOf(row.get("in_kg"))));
-                        p.setImagePath(String.valueOf(row.get("in_kg")));
-			result.add(p);
-		}
-
-		return result;
-    }
-
 	@Override
 	public List<Product> getProductByIds(String selectedIdINClause) {
 		logger.info("[getProductByIds] " + "selectedIdINClause: " + selectedIdINClause);

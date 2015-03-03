@@ -36,6 +36,8 @@
             </beans:property>
 	</beans:bean>
     
+    <context:property-placeholder location="/WEB-INF/spring/syspar.properties"/>
+    
 	<!-- configure datasource -->
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
   		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />  
@@ -65,10 +67,15 @@
                 <beans:value>com.tkbaru.model.BankAccount</beans:value>
                 <beans:value>com.tkbaru.model.PhoneList</beans:value>
                 <beans:value>com.tkbaru.model.Product</beans:value>
+                <beans:value>com.tkbaru.model.ProductUnit</beans:value>
                 <beans:value>com.tkbaru.model.Store</beans:value>
                 <beans:value>com.tkbaru.model.Role</beans:value>
                 <beans:value>com.tkbaru.model.Function</beans:value>
                 <beans:value>com.tkbaru.model.Stocks</beans:value>
+                <beans:value>com.tkbaru.model.Bank</beans:value>
+                <beans:value>com.tkbaru.model.Warehouse</beans:value>
+                <beans:value>com.tkbaru.model.Lookup</beans:value>
+                <beans:value>com.tkbaru.model.LookupDetail</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -86,10 +93,15 @@
 				<beans:value>com.tkbaru.model.BankAccount</beans:value>
 				<beans:value>com.tkbaru.model.PhoneList</beans:value>
 				<beans:value>com.tkbaru.model.Product</beans:value>
+				<beans:value>com.tkbaru.model.ProductUnit</beans:value>
 				<beans:value>com.tkbaru.model.Store</beans:value>
 				<beans:value>com.tkbaru.model.Role</beans:value>
 				<beans:value>com.tkbaru.model.Function</beans:value>
 				<beans:value>com.tkbaru.model.Stocks</beans:value>
+				<beans:value>com.tkbaru.model.Bank</beans:value>
+				<beans:value>com.tkbaru.model.Warehouse</beans:value>
+                <beans:value>com.tkbaru.model.Lookup</beans:value>
+                <beans:value>com.tkbaru.model.LookupDetail</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -104,24 +116,23 @@
     <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
+    <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    </beans:bean>
+	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.PhoneListDAOImpl">
+		<beans:property name="dataSource" ref="dataSource" />
+	</beans:bean>
 	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.PhoneListDAOImpl">
-		<beans:property name="dataSource" ref="dataSource" />
-	</beans:bean>
     <beans:bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
-    	<beans:property name="dataSource" ref="dataSource" />
-    </beans:bean>
     <beans:bean id="LookupDAO" class="com.tkbaru.dao.LookupDAOImpl">
-    	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
-    	<beans:property name="dataSource" ref="dataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="CustomerDAO" class="com.tkbaru.dao.CustomerDAOImpl">
@@ -134,6 +145,12 @@
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     <beans:bean id="StocksDAO" class="com.tkbaru.dao.StocksDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+    <beans:bean id="BankDAO" class="com.tkbaru.dao.BankDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+    <beans:bean id="WarehouseDAO" class="com.tkbaru.dao.WarehouseDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     
@@ -154,6 +171,8 @@
     <beans:bean id="ReportService" class="com.tkbaru.service.ReportServiceImpl"></beans:bean>
 	<beans:bean id="StoreService" class="com.tkbaru.service.StoreServiceImpl"></beans:bean>
 	<beans:bean id="StocksService" class="com.tkbaru.service.StocksServiceImpl"></beans:bean>
+	<beans:bean id="BankService" class="com.tkbaru.service.BankServiceImpl"></beans:bean>
+	<beans:bean id="WarehouseService" class="com.tkbaru.service.WarehouseServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />

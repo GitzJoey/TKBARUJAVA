@@ -8,7 +8,7 @@ public class Constants {
 	public static final String PAGEMODE_DELETE = "PAGEMODE_DELETE";
 	public static final String PAGEMODE_LIST = "PAGEMODE_LIST";
 	public static final String PAGEMODE_VIEW = "PAGEMODE_VIEW";
-
+	
 	public static final String ERRORFLAG = "ERRORFLAG";
 	public static final String ERRORFLAG_SHOW = "ERRORFLAG_SHOW";
 	public static final String ERRORFLAG_HIDE = "ERRORFLAG_HIDE";
@@ -31,6 +31,7 @@ public class Constants {
 	public static final String JSPPAGE_PO_REVISE = "po_revise";
 	public static final String JSPPAGE_SEARCH = "search";
 	public static final String JSPPAGE_WAREHOUSE = "warehouse";
+	public static final String JSPPAGE_WAREHOUSE_DASHBOARD = "warehouse_db";
 	public static final String JSPPAGE_TODAYDELIVERY = "todaydelivery";
 	public static final String JSPPAGE_STORE = "store";
 	public static final String JSPPAGE_STOCKS = "stocks";
@@ -44,6 +45,10 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_UNIT = "UNIT";
 	public static final String LOOKUPCATEGORY_PRODUCT_TYPE = "PRODUCT_TYPE";
 	public static final String LOOKUPCATEGORY_PHONE_PROVIDER = "PHONE_PROVIDER";
+	public static final String LOOKUPCATEGORY_BANK = "BANK";
+	public static final String LOOKUPCATEGORY_CURRENCY_CODE = "CURR_CODE";
+	public static final String LOOKUPCATEGORY_BANK_TRANSACTION_DIRECTION = "TRX_DIRECTION";
+	public static final String LOOKUPCATEGORY_LANGUAGE = "LANGUAGE";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";

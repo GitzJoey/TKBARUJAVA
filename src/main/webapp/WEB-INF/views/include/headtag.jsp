@@ -19,6 +19,8 @@
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/chartist-js/dist/chartist.min.css">
 
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
+
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/jquery.dataTables.min.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/dataTables.responsive.css">
@@ -42,6 +44,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	

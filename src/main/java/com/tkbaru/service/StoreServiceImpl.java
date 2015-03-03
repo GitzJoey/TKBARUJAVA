@@ -1,5 +1,6 @@
 package com.tkbaru.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,14 +34,24 @@ public class StoreServiceImpl implements StoreService {
 	@Transactional
 	public void addStore(Store store) {
 		
+		if (store.getIsDefault().equals("L003_YES") && getDefaultStore() != null) {
+			setAllStoreIsDefaultNo();
+		}
+		
 		storeDAO.addStore(store);
 	}
 
 	@Override
 	@Transactional
 	public void editStore(Store store) {
-		
-		storeDAO.editStore(store);
+
+		if (store.getIsDefault().equals("L003_YES") 
+				&& getDefaultStore() != null
+				&& store.getStoreId() != getDefaultStore().getStoreId()) {
+			setAllStoreIsDefaultNo(store);
+		} else {
+			storeDAO.editStore(store);
+		}
 	}
 
 	@Override
@@ -50,4 +61,39 @@ public class StoreServiceImpl implements StoreService {
 		storeDAO.deleteStore(selectedId);
 	}
 
+	@Override
+	public Store getDefaultStore() {
+		
+		return storeDAO.getDefaultStore();
+	}
+
+	private void setAllStoreIsDefaultNo() {
+		List<Store> all = getAllStore();
+		
+		for (Store s:all) {
+			s.setIsDefault("L003_NO");
+		}
+		
+		storeDAO.batchEditStore(all);
+	}
+
+	private void setAllStoreIsDefaultNo(Store except) {
+		List<Store> all = getAllStore();
+		
+		for (Store s:all) {
+			if (s.getStoreId() == except.getStoreId()) {
+				s.setStoreName(except.getStoreName());
+				s.setStoreAddress1(except.getStoreAddress1());
+				s.setStoreAddress2(except.getStoreAddress2());
+				s.setStoreAddress3(except.getStoreAddress3());
+				s.setIsDefault(except.getIsDefault());
+				s.setNpwpNumber(except.getNpwpNumber());
+				s.setStoreStatus(except.getStoreStatus());
+			} else {
+				s.setIsDefault("L003_NO");
+			}
+		}
+		
+		storeDAO.batchEditStore(all);
+	}
 }

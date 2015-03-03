@@ -57,7 +57,7 @@ public class StoreController {
 	}
 
 	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
-	public String editCustomer(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String editStore(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[editStore] " + "selectedId = " + selectedId);
 		
 		Store selectedStore = storeManager.getStoreById(selectedId);

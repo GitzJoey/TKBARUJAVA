@@ -10,4 +10,6 @@ public interface StoreService {
 	public void addStore(Store store);
 	public void editStore(Store store);
 	public void deleteStore(int selectedId);
+
+	public Store getDefaultStore();
 }

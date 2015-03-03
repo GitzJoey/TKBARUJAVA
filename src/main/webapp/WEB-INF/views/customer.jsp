@@ -94,7 +94,7 @@
 						}					
 					});
 					
-					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false;}
+					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false; }
 					else {
 						if (button == 'editPerson') {
 							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/editperson/" + personId);

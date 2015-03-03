@@ -1,5 +1,7 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Product;
+import com.tkbaru.model.ProductUnit;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 
@@ -95,5 +98,48 @@ public class ProductController {
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/product";
+	}
+
+	@RequestMapping(value="/addunit/{selectedUnit}", method = RequestMethod.POST)
+	public String addProductUnit(Locale locale, Model model, @ModelAttribute("productForm") Product prod, @PathVariable Integer selectedUnit) {	
+		logger.info("[addProductUnit] " + "prod: " + prod.toString() + "selectedUnit: " + selectedUnit);
+		
+		if (prod.getProductUnit() == null) {
+			List<ProductUnit> l = new ArrayList<ProductUnit>();
+			l.add(new ProductUnit());
+			
+			prod.setProductUnit(l);
+		} else {
+			prod.getProductUnit().add(new ProductUnit());
+		}
+		
+		model.addAttribute("productForm", prod);
+		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
+		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
+		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_PRODUCT;
+	}
+	
+	@RequestMapping(value="/removeunit/{selectedUnitIndex}", method = RequestMethod.POST)
+	public String removeProductUnit(Locale locale, Model model, @ModelAttribute("productForm") Product prod, @PathVariable Integer selectedUnitIndex) {	
+		logger.info("[removeProductUnit] " + "selectedUnitIndex: " + selectedUnitIndex);
+
+		prod.getProductUnit().remove(selectedUnitIndex);
+		
+		model.addAttribute("productForm", prod);
+		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
+		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
+		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PRODUCT;
 	}
 }

@@ -1,9 +1,13 @@
 package com.tkbaru.model;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -28,83 +32,106 @@ public class Product {
 	private String productName;
 	@Column(name="product_description")
 	private String productDesc;
-	@Column(name="unit")
-	private String unit;
-	@Column(name="in_kg")
-	private int inKilo;
+	@Column(name="base_unit")
+	private String baseUnit;
 	@Transient
 	private MultipartFile imageBinary;
 	@Column(name="image_path")
 	private String imagePath;
 	@Column(name="status")
 	private String productStatus;
-	
+
+	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL)
+	private List<ProductUnit> productUnit;
+
 	public int getProductId() {
 		return productId;
 	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
 	public String getProductType() {
 		return productType;
 	}
+
 	public void setProductType(String productType) {
 		this.productType = productType;
 	}
+
 	public String getShortCode() {
 		return shortCode;
 	}
+
 	public void setShortCode(String shortCode) {
 		this.shortCode = shortCode;
 	}
+
 	public String getProductName() {
 		return productName;
 	}
+
 	public void setProductName(String productName) {
 		this.productName = productName;
 	}
+
 	public String getProductDesc() {
 		return productDesc;
 	}
+
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
 	}
-	public String getUnit() {
-		return unit;
+
+	public String getBaseUnit() {
+		return baseUnit;
 	}
-	public void setUnit(String unit) {
-		this.unit = unit;
-	}	
-	public int getInKilo() {
-		return inKilo;
+
+	public void setBaseUnit(String baseUnit) {
+		this.baseUnit = baseUnit;
 	}
-	public void setInKilo(int inKilo) {
-		this.inKilo = inKilo;
-	}
+
 	public MultipartFile getImageBinary() {
 		return imageBinary;
 	}
+
 	public void setImageBinary(MultipartFile imageBinary) {
 		this.imageBinary = imageBinary;
 	}
+
 	public String getImagePath() {
 		return imagePath;
 	}
+
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
+
 	public String getProductStatus() {
 		return productStatus;
 	}
+
 	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
 	}
+
+	public List<ProductUnit> getProductUnit() {
+		return productUnit;
+	}
+
+	public void setProductUnit(List<ProductUnit> productUnit) {
+		this.productUnit = productUnit;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
 				+ productType + ", shortCode=" + shortCode + ", productName="
-				+ productName + ", productDesc=" + productDesc + ", unit="
-				+ unit + ", imageBinary=" + imageBinary + ", imagePath="
-				+ imagePath + ", productStatus=" + productStatus + "]";
-	}	
+				+ productName + ", productDesc=" + productDesc + ", baseUnit="
+				+ baseUnit + ", imageBinary=" + imageBinary + ", imagePath="
+				+ imagePath + ", productStatus=" + productStatus
+				+ ", productUnit=" + productUnit + "]";
+	}
+	
 }

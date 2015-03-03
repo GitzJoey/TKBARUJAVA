@@ -75,6 +75,8 @@ INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_ico
 VALUES ('F_MASTER_SUPPLIER', 'Master Data', 'fa fa-file-text-o fa-fw', 'Supplier', 'fa fa-building-o fa-fw', '/supplier', 998200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_MASTER_PRODUCT', 'Master Data', 'fa fa-file-text-o fa-fw', 'Product', 'fa fa-cubes fa-fw', '/product', 998300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
+VALUES ('F_MASTER_WAREHOUSE', 'Master Data', 'fa fa-file-text-o fa-fw', 'Warehouse', 'fa fa-wrench fa-fw', '/warehouse', 998400, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Admin Menu*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)

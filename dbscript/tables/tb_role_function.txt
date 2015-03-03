@@ -58,6 +58,8 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (1, 25);
 INSERT tb_role_function (role_id, function_id)
 VALUES (1, 26);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 27);
 
 /*NON ADMIN ROLE*/
 INSERT tb_role_function (role_id, function_id)
@@ -102,5 +104,7 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (2, 20);
 INSERT tb_role_function (role_id, function_id)
 VALUES (2, 21);
+INSERT tb_role_function (role_id, function_id)
+VALUES (2, 22);
 
 COMMIT;

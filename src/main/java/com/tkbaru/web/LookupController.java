@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Lookup;
+import com.tkbaru.model.LookupDetail;
 import com.tkbaru.service.LookupService;
 
 @Controller
@@ -57,7 +59,22 @@ public class LookupController {
 	public String lookupAdd(Locale locale, Model model) {
 		logger.info("[lookupAdd] " + "");
 		
-		model.addAttribute("lookupForm", new Lookup());
+		Lookup newl = new Lookup();
+		
+		List<LookupDetail> ldlist = new ArrayList<LookupDetail>();
+		List<Lookup> langlookups = lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_LANGUAGE);
+		
+		for (Lookup langlookup:langlookups) {
+			LookupDetail newld = new LookupDetail();
+			newld.setLanguageCode(langlookup.getLookupKey());
+			newld.setLookupEntity(newl);
+			
+			ldlist.add(newld);
+		}
+		
+		newl.setLookupDetail(ldlist);
+		
+		model.addAttribute("lookupForm", newl);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("MaintainabilityDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -95,6 +112,12 @@ public class LookupController {
 
 	@RequestMapping(value = "/admin/lookup/save.html", method = RequestMethod.POST)
 	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup) {
+		
+		for (LookupDetail ld:lookup.getLookupDetail()) {
+			if (ld.getLookupEntity() == null) {
+				ld.setLookupEntity(lookup);
+			}
+		}
 		
 		if (lookup.getLookupId() == 0) {
 			logger.info("[lookupSave] " + "addLookup: " + lookup.toString());

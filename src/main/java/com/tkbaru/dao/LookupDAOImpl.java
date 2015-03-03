@@ -1,50 +1,42 @@
 package com.tkbaru.dao;
 
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-import javax.sql.DataSource;
-
+import org.hibernate.Criteria;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Lookup;
 
+@Repository
+@SuppressWarnings("unchecked")
 public class LookupDAOImpl implements LookupDAO {
-
 	private static final Logger logger = LoggerFactory.getLogger(LookupDAOImpl.class);
 	
-	private DataSource dataSource;
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+    private SessionFactory sessionFactory;
+    public void setSessionFactory(SessionFactory sf) {
+        this.sessionFactory = sf;
+    }
 	
 	@Override
-	public List<Lookup> getLookupByCategory(String categoryCode) {
-		List<Lookup> result = new ArrayList<Lookup>();
+	public List<Lookup> getLookupByCategory(String categoryCode, String languageCode) {
+		logger.info("[getLookupByCategory] " + "categoryCode: " + categoryCode);
 		
-		String sqlquery = "SELECT * FROM tb_lookup WHERE UCASE(category) = UCASE('" + categoryCode + "')";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		Session session = this.sessionFactory.getCurrentSession();
+		Query q = session.createQuery("FROM Lookup WHERE lookupCategory = :cat");
+		q.setParameter("cat", categoryCode);
 		
-		for (Map<String, Object> row : rows) {
-			Lookup res = new Lookup();
-			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
-			res.setLookupCategory(String.valueOf(row.get("category")));
-			res.setLookupCode(String.valueOf(row.get("lookup_code")));
-			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLookupDescription(String.valueOf(row.get("description")));
-			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setLookupStatus(String.valueOf(row.get("status")));
-			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
-			
-			result.add(res);
+		List<Lookup> result = q.list();
+		
+		for(Lookup l:result) {
+			l.setLanguageCode(languageCode);
+			logger.info("Lookup : " + l.toString());
 		}		
 		
 		return result;
@@ -52,25 +44,13 @@ public class LookupDAOImpl implements LookupDAO {
 
 	@Override
 	public List<Lookup> getAllLookup() {
-		List<Lookup> result = new ArrayList<Lookup>();
+		logger.info("[getAllLookup] " + "");
 		
-		String sqlquery = "SELECT * FROM tb_lookup";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		Session session = this.sessionFactory.getCurrentSession();	
+		List<Lookup> result = session.createQuery("FROM Lookup").list();
 		
-		for (Map<String, Object> row : rows) {
-			Lookup res = new Lookup();
-			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
-			res.setLookupCategory(String.valueOf(row.get("category")));
-			res.setLookupCode(String.valueOf(row.get("lookup_code")));
-			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLookupDescription(String.valueOf(row.get("description")));
-			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setLookupStatus(String.valueOf(row.get("status")));
-			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
-			
-			result.add(res);
+		for(Lookup l:result) {
+			logger.info("Lookup : " + l.toString());
 		}		
 		
 		return result;
@@ -78,163 +58,108 @@ public class LookupDAOImpl implements LookupDAO {
 
 	@Override
 	public Lookup getLookupById(int selectedId) {
-		Lookup result = new Lookup();
-		
-		String sqlquery = 
-				"SELECT lookup_id,       "+
-				"		category,        "+
-				"		lookup_code,     "+
-				"       short_val,       "+
-				"       description,     "+
-				"       order_num,       "+
-				"       status,          "+
-				"       maintainable     "+
-				"FROM tb_lookup          "+
-				"WHERE lookup_id = ?     ";
-
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		result = jdbcTemplate.queryForObject(sqlquery, new Object[] { selectedId }, new RowMapper<Lookup>() {
-			@Override
-			public Lookup mapRow(ResultSet rs, int rowNum) throws SQLException {
-				Lookup l = new Lookup();
-				
-				l.setLookupId(rs.getInt("lookup_id"));
-				l.setLookupCategory(rs.getString("category"));
-				l.setLookupCode(rs.getString("lookup_code"));
-				l.setShortVal(rs.getString("short_val"));
-				l.setLookupDescription(rs.getString("description"));
-				l.setOrderNum(rs.getInt("order_num"));
-				l.setLookupStatus(rs.getString("status"));
-				l.setLookupMaintainability(rs.getString("maintainable"));
-				
-				return l;
-			}
-		});
-				
-		return result;
+		logger.info("[getLookupById] " + "");
+        
+		Session session = this.sessionFactory.getCurrentSession();
+        Lookup l = null;
+        
+        try {
+        	l = (Lookup) session.load(Lookup.class, new Integer(selectedId));
+        } catch (Exception err) {
+        	logger.info(err.getMessage());
+        }
+        
+        logger.info("Lookup loaded successfully, Lookup details = " + l.toString());
+        
+        return l;
 	}
 
 	@Override
 	public List<Lookup> getAllCategory() {
-		List<Lookup> result = new ArrayList<Lookup>();
+		Session session = this.sessionFactory.getCurrentSession();
 		
-		String sqlquery = "SELECT DISTINCT category FROM tb_lookup";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
-		
-		for (Map<String, Object> row : rows) {
-			Lookup res = new Lookup();
-			res.setLookupCategory(String.valueOf(row.get("category")));
-			
-			result.add(res);
-		}		
-		
-		return result;
+		 Criteria crit = (Criteria) session.createCriteria(Lookup.class);
+		 crit.setProjection(Projections.distinct(Projections.property("lookupCategory")));
+
+		 List<Lookup> result = new ArrayList<Lookup>();
+		 
+		 for (Object cat:crit.list()) {
+			 Lookup l = new Lookup();
+			 l.setLookupCategory(cat.toString());
+			 
+			 result.add(l);
+		 }
+
+		 return result;
 	}
 
 	@Override
 	public void addLookup(Lookup lookup) {
-        String sql = "INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable) " +
-				"VALUES (?, ?, ?, ?, ?, ?, ?) ";
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-        try {
-        	jdbcTemplate.update(sql, new Object[] { lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(),
-        											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability() });
-        } catch(Exception err) {
-        	logger.info ("Error : " + err.getMessage());
-        }
+		logger.info("[addLookup] " + "");
+		
+        Session session = this.sessionFactory.getCurrentSession();
+        session.persist(lookup);
+        
+        logger.info("Lookup added successfully, Lookup Details = " + lookup.toString());		
 	}
 
 	@Override
 	public void editLookup(Lookup lookup) {
-        String query = "UPDATE tb_lookup SET category = ?, lookup_code = ?, short_val = ?, description = ?, order_num = ?, status = ?, maintainable = ? " +
-				"WHERE lookup_id = ? ";
-
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-
-        int out = 0;
-
-        try {
-        	Object[] args = new Object[] { 	lookup.getLookupCategory(), lookup.getLookupCode(), lookup.getShortVal(),
-											lookup.getLookupDescription(), lookup.getOrderNum(), lookup.getLookupStatus(), lookup.getLookupMaintainability(), lookup.getLookupId() };
-
-        	out = jdbcTemplate.update(query, args);        	
-        } catch (Exception err) {
-        	logger.info ("Error : " + err.getMessage());
-        }
-
-        logger.info("Lookup updated successfully, row updated : " + out);
+		logger.info("[editLookup] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+	    session.update(lookup);
+	    
+	    logger.info("Lookup updated successfully, Lookup Details = " + lookup.toString());			
 	}
 
 	@Override
 	public void deleteLookup(int selectedId) {
-        String query = "DELETE FROM tb_lookup WHERE lookup_id = ? ";
-        JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-         
-        int out = 0;
-        
-        try {
-        	out = jdbcTemplate.update(query, selectedId);
-        } catch (Exception err) {
-        	logger.info ("Error : " + err.getMessage());
+		logger.info("[deleteLookup] " + "");
+		
+        Session session = this.sessionFactory.getCurrentSession();
+        Lookup l = (Lookup) session.load(Lookup.class, new Integer(selectedId));
+        if(null != l){
+            session.delete(l);
         }
-
-        logger.info("Lookup deleted successfully, row deleted : " + out);
+        
+        logger.info("Lookup deleted successfully, Lookup details = " + l.toString());	
 	}
 
 	@Override
-	public List<Lookup> getLookupByCategories(String categoryCodes) {
-		List<Lookup> result = new ArrayList<Lookup>();
+	public List<Lookup> getLookupByCategories(String categoryCodes, String languageCode) {
+		logger.info("[getLookupByCategories] " + "categoryCodes: " + categoryCodes);
 		
-		String sqlquery = "SELECT * FROM tb_lookup WHERE UCASE(category) IN " + categoryCodes + " ORDER BY category, order_num";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		Session session = this.sessionFactory.getCurrentSession();
+		Query q = session.createQuery("FROM Lookup WHERE lookupCategoy IN :cat");
+		q.setParameter("cat", categoryCodes);
 		
-		for (Map<String, Object> row : rows) {
-			Lookup res = new Lookup();
-			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
-			res.setLookupCategory(String.valueOf(row.get("category")));
-			res.setLookupCode(String.valueOf(row.get("lookup_code")));
-			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLookupDescription(String.valueOf(row.get("description")));
-			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setLookupStatus(String.valueOf(row.get("status")));
-			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
-			
-			result.add(res);
+		List<Lookup> result = q.list();
+		
+		for(Lookup l:result) {
+			l.setLanguageCode(languageCode);
+			logger.info("Lookup : " + l.toString());
 		}		
 		
 		return result;
 	}
 
 	@Override
-	public List<Lookup> getLookupByLookupCodes(String lookupCodes) {
-		List<Lookup> result = new ArrayList<Lookup>();
+	public List<Lookup> getLookupByLookupKeys(String lookupKeys, String languageCode) {
+		logger.info("[getLookupByLookupKeys] " + "lookupKeys: " + lookupKeys);
 		
-		String sqlquery = "SELECT * FROM tb_lookup WHERE UCASE(lookup_code) IN " + lookupCodes + " ORDER BY category, order_num";
-	
-		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+		Session session = this.sessionFactory.getCurrentSession();
+		Query q = session.createQuery("FROM Lookup WHERE lookupKey IN :keys");
+		q.setParameter("keys", lookupKeys);
 		
-		for (Map<String, Object> row : rows) {
-			Lookup res = new Lookup();
-			res.setLookupId(Integer.valueOf(String.valueOf(row.get("lookup_id"))));
-			res.setLookupCategory(String.valueOf(row.get("category")));
-			res.setLookupCode(String.valueOf(row.get("lookup_code")));
-			res.setShortVal(String.valueOf(row.get("short_val")));
-			res.setLookupDescription(String.valueOf(row.get("description")));
-			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setLookupStatus(String.valueOf(row.get("status")));
-			res.setLookupMaintainability(String.valueOf(row.get("maintainable")));
-			
-			result.add(res);
+		List<Lookup> result = q.list();
+		
+		for(Lookup l:result) {
+			l.setLanguageCode(languageCode);
+			logger.info("Lookup : " + l.toString());
 		}		
 		
 		return result;
 	}
-
+		
 }

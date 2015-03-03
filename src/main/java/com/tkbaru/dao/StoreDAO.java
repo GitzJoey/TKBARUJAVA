@@ -11,4 +11,6 @@ public interface StoreDAO {
 	public void editStore(Store store);
 	public void deleteStore(int selectedId);
 
+	public Store getDefaultStore();
+	public void batchEditStore(List<Store> stores);
 }

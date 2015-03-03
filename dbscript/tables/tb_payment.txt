@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS `tb_payment`;
+
+CREATE TABLE `tb_payment` (
+  `payment_id` int(11) NOT NULL AUTO_INCREMENT,
+  `payment_type` varchar(45) DEFAULT NULL,
+  `payment_date` datetime DEFAULT NULL,
+  `total_amount` varchar(45) DEFAULT NULL,
+  `bank_code` varchar(45) DEFAULT NULL,
+  `effective_date` datetime DEFAULT NULL,
+  `is_linked` varchar(45) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `created_by` int(11) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT NULL,
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`payment_id`)
+);

@@ -2,6 +2,7 @@ package com.tkbaru.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -83,6 +84,38 @@ public class StoreDAOImpl implements StoreDAO {
         }
         
         logger.info("Store deleted successfully, Store details = " + store.toString());
+	}
+
+	@Override
+	public Store getDefaultStore() {
+		logger.info("[getDefaultStore] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		Query q = session.createQuery("FROM Store S WHERE S.isDefault = :isdef");
+		q.setParameter("isdef", "L003_YES");
+		
+		Store s = (Store)q.uniqueResult();
+
+		if (s == null) {
+			logger.info("Default Store Data : " + "null");
+		} else {
+			logger.info("Default Store Data : " + s.toString());
+		}
+		
+		return s;
+	}
+
+	@Override
+	public void batchEditStore(List<Store> stores) {
+		logger.info("[batchEditStore] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+	    for (Store s:stores) {
+	    	session.update(s);
+	    }
+	    
+	    logger.info("Batch Edit Store updated successfully");					
 	}
 
 }

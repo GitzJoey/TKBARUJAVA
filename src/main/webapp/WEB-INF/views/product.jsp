@@ -46,6 +46,25 @@
 					}						
 				}				
 			});
+			
+			$('#plusUnit, #minusUnit').click(function() {
+				var button = $(this).attr('id');
+				var id = "";
+				
+				if (button == "plusUnit") {
+					$('#productForm').attr('action', ctxpath + "/product/addunit/0");
+				} else {
+					$('input[type="checkbox"][id^="cbx_unit_"]').each(function(index, item) {
+						if ($(item).prop('checked')) {
+							id = $(item).attr("value");
+						}
+					});	
+					
+					if (id == "") { jsAlert('Please select at least 1 unit'); return false; }
+					
+					$('#productForm').attr('action', ctxpath + "/product/removeunit/" + id);
+				}
+			});
 		});
 	</script>	
 </head>
@@ -93,9 +112,8 @@
 												<th width="10%">Type</th>
 												<th width="10%">Code</th>
 												<th width="20%">Name</th>
-												<th width="10%">Unit</th>
-												<th width="5%">In Kg</th>
-												<th width="30%">Description</th>
+												<th width="10%">Base Unit</th>
+												<th width="35%">Description</th>
 												<th width="10%">Status</th>
 											</tr>
 										</thead>
@@ -104,13 +122,12 @@
 												<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-														<td><c:out value="${i.productType}"></c:out></td>
-														<td><c:out value="${i.shortCode}"></c:out></td>
-														<td><c:out value="${i.productName}"></c:out></td>
-														<td><c:out value="${i.unit}"></c:out></td>
-														<td><c:out value="${i.inKilo}"></c:out></td>
-														<td><c:out value="${i.productDesc}"></c:out></td>
-														<td><c:out value="${i.productStatus}"></c:out></td>
+														<td><c:out value="${ i.productType }"></c:out></td>
+														<td><c:out value="${ i.shortCode }"></c:out></td>
+														<td><c:out value="${ i.productName }"></c:out></td>
+														<td><c:out value="${ i.baseUnit }"></c:out></td>
+														<td><c:out value="${ i.productDesc }"></c:out></td>
+														<td><c:out value="${ i.productStatus }"></c:out></td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -145,7 +162,7 @@
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productType">
 												<option>Select Product Type</option>
-												<form:options items="${ productTypeDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ productTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
 										</div>										
 									</div>
@@ -168,7 +185,7 @@
 												<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/product/${productForm.imagePath}"/>
 												<form:input type="hidden" path="imagePath"></form:input>
 											</c:if>
-											<form:input type="file" class="form-control" id="inputImage" name="inputImage" path="imageBinary"></form:input>
+											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="imageBinary"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -178,18 +195,50 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
+										<label for="inputUnit" class="col-sm-2 control-label">Base Unit</label>
 										<div class="col-sm-2">											
-											<form:select class="form-control" path="unit">
+											<form:select class="form-control" path="baseUnit">
 												<option>Select Unit</option>
-												<form:options items="${ unitDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>	
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputInKilo" class="col-sm-2 control-label">In Kg</label>
-										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputInKilo" name="inputInKilo" path="inKilo" placeholder=""></form:input>
+										<label for="inputUnitConversion" class="col-sm-2 control-label">Conversion</label>
+										<div class="col-sm-9">
+											<div class="panel panel-default">
+												<table class="table table-bordered table-hover">
+													<thead>
+														<tr>
+															<th width="5%">&nbsp;</th>
+															<th width="15%">Conversion Unit</th>
+															<th width="15%">Conversion Value</th>
+															<th width="35%">Remarks</th>
+														</tr>
+													</thead>
+													<tbody>
+														<c:forEach items="${ productForm.productUnit }" varStatus="prodUnitIdx">
+															<tr>
+																<td align="center"><input id="cbx_unit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/></td>
+																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input></td>
+																<td>
+																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode">
+																		<option>Select Unit</option>
+																		<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																	</form:select>
+																</td>
+																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input></td>
+															</tr>
+														</c:forEach>
+													</tbody>
+												</table>
+												<div class="panel-footer no-padding">
+													<div class="btn-toolbar">
+														<button id="plusUnit" type="submit" class="btn btn-primary btn-xs"><span class="fa fa-plus fa-fw"></span></button>
+														<button id="minusUnit" type="submit" class="btn btn-primary btn-xs"><span class="fa fa-minus fa-fw"></span></button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
@@ -197,7 +246,7 @@
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productStatus">
 												<option>Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>
 									</div>									

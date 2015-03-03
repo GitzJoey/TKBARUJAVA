@@ -18,12 +18,6 @@ import com.tkbaru.model.Supplier;
 public class SupplierDAOImpl implements SupplierDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SupplierDAOImpl.class);
 
-	@Autowired
-	private DataSource dataSource;
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-
     private SessionFactory sessionFactory;
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
