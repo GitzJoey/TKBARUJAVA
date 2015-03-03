@@ -36,8 +36,6 @@
             </beans:property>
 	</beans:bean>
     
-    <context:property-placeholder location="/WEB-INF/spring/syspar.properties"/>
-    
 	<!-- configure datasource -->
 	<beans:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
   		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />  
