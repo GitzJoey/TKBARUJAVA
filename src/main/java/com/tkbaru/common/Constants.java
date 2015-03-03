@@ -37,6 +37,7 @@ public class Constants {
 	public static final String JSPPAGE_TODAYPRICE = "todayprice";
 	public static final String JSPPAGE_PRICELEVEL = "price_level";
 	public static final String JSPPAGE_BANK = "bank";
+	public static final String JSPPAGE_TRUCK = "truck";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
@@ -44,6 +45,8 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_UNIT = "UNIT";
 	public static final String LOOKUPCATEGORY_PRODUCT_TYPE = "PRODUCT_TYPE";
 	public static final String LOOKUPCATEGORY_PHONE_PROVIDER = "PHONE_PROVIDER";
+	public static final String LOOKUPCATEGORY_TRUCK_TYPE = "TRUCK_TYPE";
+	public static final String LOOKUPCATEGORY_WEIGHT_TYPE = "WEIGHT_TYPE";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";

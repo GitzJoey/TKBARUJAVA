@@ -69,6 +69,7 @@
                 <beans:value>com.tkbaru.model.Role</beans:value>
                 <beans:value>com.tkbaru.model.Function</beans:value>
                 <beans:value>com.tkbaru.model.Stocks</beans:value>
+                <beans:value>com.tkbaru.model.Truck</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -90,6 +91,7 @@
 				<beans:value>com.tkbaru.model.Role</beans:value>
 				<beans:value>com.tkbaru.model.Function</beans:value>
 				<beans:value>com.tkbaru.model.Stocks</beans:value>
+				<beans:value>com.tkbaru.model.Truck</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -136,6 +138,9 @@
     <beans:bean id="StocksDAO" class="com.tkbaru.dao.StocksDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="TruckDAO" class="com.tkbaru.dao.TruckDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -154,6 +159,7 @@
     <beans:bean id="ReportService" class="com.tkbaru.service.ReportServiceImpl"></beans:bean>
 	<beans:bean id="StoreService" class="com.tkbaru.service.StoreServiceImpl"></beans:bean>
 	<beans:bean id="StocksService" class="com.tkbaru.service.StocksServiceImpl"></beans:bean>
+	<beans:bean id="TruckService" class="com.tkbaru.service.TruckServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />
