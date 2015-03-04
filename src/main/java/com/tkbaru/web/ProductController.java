@@ -129,7 +129,14 @@ public class ProductController {
 	public String removeProductUnit(Locale locale, Model model, @ModelAttribute("productForm") Product prod, @PathVariable Integer selectedUnitIndex) {	
 		logger.info("[removeProductUnit] " + "selectedUnitIndex: " + selectedUnitIndex);
 
-		prod.getProductUnit().remove(selectedUnitIndex);
+		List<ProductUnit> newPU = new ArrayList<ProductUnit>();
+		
+		for (int x=0; x<prod.getProductUnit().size(); x++) {
+			if (x == selectedUnitIndex) continue;
+			newPU.add(prod.getProductUnit().get(x));
+		}
+		
+		prod.setProductUnit(newPU);
 		
 		model.addAttribute("productForm", prod);
 		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
