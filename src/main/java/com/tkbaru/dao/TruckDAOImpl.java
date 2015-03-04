@@ -36,7 +36,7 @@ public class TruckDAOImpl implements TruckDAO {
 		logger.info("[getTruckById] id = {}", id);
 		Truck truck = null;
 		Session session = this.sessionFactory.getCurrentSession();
-		truck = (Truck) session.load(Truck.class, id);
+		truck = (Truck) session.get(Truck.class, id);
 		return truck;
 	}
 

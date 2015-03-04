@@ -137,7 +137,7 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="truckForm" role="form" class="form-horizontal" modelAttribute="truckForm" action="${pageContext.request.contextPath}/truck/save">
-									<form:hidden path="truckId"/>									
+									<form:hidden path="truckId" />									
 									<div class="form-group">
 										<label for="inputTruckType" class="col-sm-2 control-label">Truck Type</label>
 										<div class="col-sm-3">

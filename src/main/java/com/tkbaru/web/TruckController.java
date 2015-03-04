@@ -83,6 +83,7 @@ public class TruckController {
 		model.addAttribute("truckForm", selectedTruck);
 		model.addAttribute("truckTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_TYPE));
 		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("driverDDL", userManager.getAllUser());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
