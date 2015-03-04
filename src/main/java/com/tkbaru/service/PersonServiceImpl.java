@@ -46,5 +46,5 @@ public class PersonServiceImpl implements PersonService {
 		
 		personDAO.deletePerson(selectedId);
 	}
-
+	
 }

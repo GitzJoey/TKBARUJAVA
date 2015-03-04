@@ -126,6 +126,15 @@ VALUES ('LANGUAGE', 'L010_ID',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
 VALUES ('LANGUAGE', 'L010_EN',
+
+/*Truck Type - L011*/
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('TRUCK_TYPE', 'L011_OIL',
+		'OIL', 'Oil Truck',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_code, short_val, description, order_num, status, maintainable, created_by, created_date)
+VALUES ('TRUCK_TYPE', 'L011_CARGO',
+		'CARGO', 'Cargo Truck',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*

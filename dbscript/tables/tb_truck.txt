@@ -1,0 +1,18 @@
+DROP TABLE IF EXISTS `tb_truck`;
+
+CREATE TABLE `tb_truck` (
+  `truck_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
+  `truck_type` 		varchar(45) 	DEFAULT NULL,
+  `weight_type` 	varchar(45) 	DEFAULT NULL,
+  `plate_number` 	varchar(145) 	DEFAULT NULL,
+  `kir_date` 		date		 	DEFAULT NULL,
+  `driver` 			int(11) 		DEFAULT NULL,
+  `remarks` 		varchar(255) 	DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT NULL,
+  `created_date` 	datetime 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT NULL,
+  `updated_date` 	datetime 		DEFAULT NULL,
+  PRIMARY KEY (`truck_id`)
+);
+
+COMMIT;
