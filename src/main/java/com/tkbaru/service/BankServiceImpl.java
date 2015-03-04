@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.sql.Date;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -47,7 +46,7 @@ public class BankServiceImpl implements BankService {
 			bankDAO.batchAddBank(processingFile_BCA(f));
 			
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.info("[bankUpload] " + "ERROR: " + e.getMessage());
 		} 
 
 		return false;
