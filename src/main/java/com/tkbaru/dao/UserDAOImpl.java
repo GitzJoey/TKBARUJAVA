@@ -185,4 +185,39 @@ public class UserDAOImpl implements UserDAO {
 
         logger.info("User deleted successfully, row deleted : " + out);
 	}
+
+	@Override
+	public List<User> getAllUserByType(String userType) {
+		logger.info("[getAllUserByType] " + "userType: " + userType);
+
+		List<User> result = new ArrayList<User>();
+		String sqlquery = 
+				"SELECT tbuser.user_id,														"+
+				"		tbuser.user_name,													"+
+				"		tbuser.passwd,														"+
+				"		tbuser.role_id,														"+
+				"		tbuser.store_id,													"+
+				"		tbuser.person_id,													"+
+				"		tbuser.status														"+
+				"FROM tb_user tbuser														"+
+				"WHERE tbuser.status = 'L001_A'												";
+	
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
+	
+		for (Map<String, Object> row : rows) {
+			User res = new User();
+			res.setUserId(Integer.valueOf(String.valueOf(row.get("user_id"))));
+			res.setUserName(String.valueOf(row.get("user_name")));
+			res.setUserPassword(String.valueOf(row.get("passwd")));
+			res.setRoleId(Integer.valueOf(String.valueOf(row.get("role_id"))));
+			res.setStoreId(Integer.valueOf(String.valueOf(row.get("store_id"))));
+			res.setPersonId(Integer.valueOf(String.valueOf(row.get("person_id"))));
+			res.setUserStatus(String.valueOf(row.get("status")));
+			
+			result.add(res);
+		}
+		
+		return result;
+	}
 }

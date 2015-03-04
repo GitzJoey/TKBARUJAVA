@@ -73,7 +73,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cubes fa-fw"></span>&nbsp;Truck 
+					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;Truck 
 				</h1>
 
 				<c:choose>
@@ -81,7 +81,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-cubes fa-fw fa-2x"></span>&nbsp;Truck List
+									<span class="fa fa-truck fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;Truck List
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -103,12 +103,12 @@
 												<c:forEach items="${ truckList }" var="i" varStatus="truckIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.truckId }"/>" type="checkbox" value="<c:out value="${ i.truckId }"/>"/></td>
-														<td><c:out value="${i.truckType}"></c:out></td>
-														<td><c:out value="${i.weightType}"></c:out></td>
-														<td><c:out value="${i.plateNumber}"></c:out></td>
-														<td><c:out value="${i.kirDate}"></c:out></td>
-														<td><c:out value="${i.driver}"></c:out></td>
-														<td><c:out value="${i.remarks}"></c:out></td>														
+														<td><c:out value="${ i.truckType }"></c:out></td>
+														<td><c:out value="${ i.weightType }"></c:out></td>
+														<td><c:out value="${ i.plateNumber }"></c:out></td>
+														<td><c:out value="${ i.kirDate }"></c:out></td>
+														<td><c:out value="${ i.driver }"></c:out></td>
+														<td><c:out value="${ i.remarks }"></c:out></td>														
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -173,7 +173,7 @@
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="driver">
 												<option>Select Driver</option>
-												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="userName"/>
+												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
 											</form:select>	
 										</div>
 									</div>                  									

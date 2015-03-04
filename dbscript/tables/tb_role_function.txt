@@ -58,7 +58,6 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (1, 25);
 INSERT tb_role_function (role_id, function_id)
 VALUES (1, 26);
-/* TRUCK MENU*/
 INSERT tb_role_function (role_id, function_id)
 VALUES (1, 27);
 
@@ -108,6 +107,6 @@ VALUES (2, 21);
 INSERT tb_role_function (role_id, function_id)
 VALUES (2, 22);
 INSERT tb_role_function (role_id, function_id)
-VALUES (2, 27);
+VALUES (2, 23);
 
 COMMIT;

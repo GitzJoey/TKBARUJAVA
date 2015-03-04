@@ -133,4 +133,19 @@ public class UserServiceImpl implements UserService {
 		userDAO.deleteUser(selectedId);		
 	}
 
+	@Override
+	public List<User> getAllUserByType(String userType) {
+		logger.info("[getAllUserByType] " + "userType:" + userType);
+		
+		List<User> userList = userDAO.getAllUserByType(userType);
+		
+		for(User u:userList) {
+			u.setRoleEntity(roleManager.getRoleById(u.getRoleId()));
+			u.setPersonEntity(personManager.getPersonById(u.getPersonId()));
+			u.setStoreEntity(storeManager.getStoreById(u.getStoreId()));
+		}
+
+		return userList;
+	}
+
 }

@@ -27,7 +27,6 @@ import com.tkbaru.service.UserService;
 @Controller
 @RequestMapping("/truck")
 public class TruckController {
-
 	private static final Logger logger = LoggerFactory.getLogger(TruckController.class);
 
 	@Autowired
@@ -41,10 +40,10 @@ public class TruckController {
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
-	  DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
-	  dateFormat.setLenient(true);
-	  CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
-	  binder.registerCustomEditor(Date.class, orderDateEditor);
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dateFormat.setLenient(true);
+		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+		binder.registerCustomEditor(Date.class, orderDateEditor);
 	}
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -65,8 +64,8 @@ public class TruckController {
 		
 		model.addAttribute("truckForm", new Truck());
 		model.addAttribute("truckTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_TYPE));
-		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
-		model.addAttribute("driverDDL", userManager.getAllUser());
+		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_WEIGHT_TYPE));
+		model.addAttribute("driverDDL", userManager.getAllUserByType(""));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -82,7 +81,7 @@ public class TruckController {
 		
 		model.addAttribute("truckForm", selectedTruck);
 		model.addAttribute("truckTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_TYPE));
-		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_WEIGHT_TYPE));
 		model.addAttribute("driverDDL", userManager.getAllUser());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -105,10 +104,14 @@ public class TruckController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveTruck(Locale locale, Model model, @ModelAttribute("truckForm") Truck truck) {	
-		logger.info("[saveTruck] " + "truck: " + truck.toString());
-	
-		if (truck.getTruckId() == 0) { truckManager.addTruck(truck); }
-		else { truckManager.editTruck(truck); }
+		
+		if (truck.getTruckId() == 0) { 
+			logger.info("[saveTruck] " + "addTruck: " + truck.toString());
+			truckManager.addTruck(truck); 
+		} else { 
+			logger.info("[saveTruck] " + "editTruck: " + truck.toString());
+			truckManager.editTruck(truck); 
+		}
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
