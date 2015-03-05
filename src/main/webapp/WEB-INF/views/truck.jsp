@@ -46,6 +46,8 @@
 					}						
 				}				
 			});
+      
+      $('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
 		});
 	</script>	
 </head>
