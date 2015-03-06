@@ -7,9 +7,9 @@ CREATE TABLE `tb_bankacc` (
   `account` 		int(11) 	DEFAULT NULL,
   `remarks` 		varchar(45) DEFAULT NULL,
   `status` 			varchar(10) DEFAULT NULL,
-  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT '0',
   `created_date` 	datetime 	DEFAULT NULL,
-  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT '0',
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`bankacc_id`)
 );

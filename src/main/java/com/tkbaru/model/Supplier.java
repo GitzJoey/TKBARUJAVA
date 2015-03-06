@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -45,6 +46,14 @@ public class Supplier {
 	private String companyStatus;
 	@Column(name="npwp_num")
 	private Integer npwpNum;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_supplier_bankacc", 
@@ -136,6 +145,38 @@ public class Supplier {
 		this.npwpNum = npwpNum;
 	}
 
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public List<BankAccount> getBankAccList() {
 		return bankAccList;
 	}
@@ -167,7 +208,9 @@ public class Supplier {
 				+ ", companyCity=" + companyCity + ", supplierRemarks="
 				+ supplierRemarks + ", compPhone=" + compPhone + ", compFax="
 				+ compFax + ", companyStatus=" + companyStatus + ", npwpNum="
-				+ npwpNum + ", bankAccList=" + bankAccList + ", picList="
+				+ npwpNum + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + ", bankAccList=" + bankAccList + ", picList="
 				+ picList + ", prodList=" + prodList + "]";
 	}
 

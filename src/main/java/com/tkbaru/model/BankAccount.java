@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -28,7 +30,14 @@ public class BankAccount {
 	private String bankRemarks;
 	@Column(name="status")
 	private String bankStatus;
-	
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 	public int getBankAccId() {
 		return bankAccId;
 	}
@@ -65,9 +74,37 @@ public class BankAccount {
 	public void setBankStatus(String bankStatus) {
 		this.bankStatus = bankStatus;
 	}
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 	@Override
 	public String toString() {
-		return "BankAccount [bankAccId=" + bankAccId + ", shortName=" + shortName + ", bankName=" + bankName
-				+ ", accNum=" + accNum + ", bankRemarks=" + bankRemarks + ", bankStatus=" + bankStatus + "]";
-	}	
+		return "BankAccount [bankAccId=" + bankAccId + ", shortName="
+				+ shortName + ", bankName=" + bankName + ", accNum=" + accNum
+				+ ", bankRemarks=" + bankRemarks + ", bankStatus=" + bankStatus
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ "]";
+	}
 }

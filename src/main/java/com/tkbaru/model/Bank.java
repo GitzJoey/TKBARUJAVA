@@ -55,6 +55,14 @@ public class Bank {
 	private String uploadFileName;
 	@Column(name="saved_filename")
 	private String savedFileName;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 	
 	@Transient
 	private MultipartFile fileBinary;
@@ -195,6 +203,38 @@ public class Bank {
 		this.savedFileName = savedFileName;
 	}
 
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public MultipartFile getFileBinary() {
 		return fileBinary;
 	}
@@ -217,7 +257,9 @@ public class Bank {
 				+ ", creditTotalAmount=" + creditTotalAmount
 				+ ", debitTotalAmount=" + debitTotalAmount + ", endingBalance="
 				+ endingBalance + ", uploadFileName=" + uploadFileName
-				+ ", savedFileName=" + savedFileName + ", fileBinary="
+				+ ", savedFileName=" + savedFileName + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", fileBinary="
 				+ fileBinary + "]";
 	}
 

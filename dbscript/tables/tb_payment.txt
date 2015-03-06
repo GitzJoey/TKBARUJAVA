@@ -9,9 +9,9 @@ CREATE TABLE `tb_payment` (
   `effective_date` datetime DEFAULT NULL,
   `is_linked` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`payment_id`)
 );

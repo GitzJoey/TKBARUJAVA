@@ -7,9 +7,9 @@ CREATE TABLE `tb_lookup` (
   `order_num` 		int(11) 		DEFAULT NULL,
   `status` 			varchar(15) 	DEFAULT NULL,
   `maintainable` 	varchar(10) 	DEFAULT NULL,
-  `created_by` 		int(11) 		DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT '0',
   `created_date` 	datetime 		DEFAULT NULL,
-  `updated_by` 		int(11) 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT '0',
   `updated_date` 	datetime 		DEFAULT NULL,
   PRIMARY KEY (`lookup_id`),
   UNIQUE KEY `lookup_key_UNIQUE` (`lookup_key`)

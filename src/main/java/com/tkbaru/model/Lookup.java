@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -33,7 +34,15 @@ public class Lookup {
 	private String lookupStatus;
 	@Column(name="maintainable")
 	private String lookupMaintainability;
-	
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
+
 	@OneToMany(mappedBy="lookupEntity", cascade=CascadeType.ALL)
 	private List<LookupDetail> lookupDetail;
 
@@ -71,66 +80,78 @@ public class Lookup {
 	public int getLookupId() {
 		return lookupId;
 	}
-
 	public void setLookupId(int lookupId) {
 		this.lookupId = lookupId;
 	}
-
 	public String getLookupCategory() {
 		return lookupCategory;
 	}
-
 	public void setLookupCategory(String lookupCategory) {
 		this.lookupCategory = lookupCategory;
 	}
-
 	public String getLookupKey() {
 		return lookupKey;
 	}
-
 	public void setLookupKey(String lookupKey) {
 		this.lookupKey = lookupKey;
 	}
-
 	public int getOrderNum() {
 		return orderNum;
 	}
-
 	public void setOrderNum(int orderNum) {
 		this.orderNum = orderNum;
 	}
-
 	public String getLookupStatus() {
 		return lookupStatus;
 	}
-
 	public void setLookupStatus(String lookupStatus) {
 		this.lookupStatus = lookupStatus;
 	}
-
 	public String getLookupMaintainability() {
 		return lookupMaintainability;
 	}
-
 	public void setLookupMaintainability(String lookupMaintainability) {
 		this.lookupMaintainability = lookupMaintainability;
 	}
-
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 	public List<LookupDetail> getLookupDetail() {
 		return lookupDetail;
 	}
-
 	public void setLookupDetail(List<LookupDetail> lookupDetail) {
 		this.lookupDetail = lookupDetail;
 	}
-
 	@Override
 	public String toString() {
 		return "Lookup [lookupId=" + lookupId + ", lookupCategory="
 				+ lookupCategory + ", lookupKey=" + lookupKey + ", orderNum="
 				+ orderNum + ", lookupStatus=" + lookupStatus
 				+ ", lookupMaintainability=" + lookupMaintainability
-				+ ", lookupDetail=" + lookupDetail + "]";
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", lookupDetail=" + lookupDetail + ", languageCode="
+				+ languageCode + "]";
 	}
-
 }

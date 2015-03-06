@@ -57,7 +57,7 @@
 										<div class="col-sm-5">
 											<form:select class="form-control" path="bankCode">
 												<option>Please Select</option>
-												<form:options items="${ bankProviderDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ bankProviderDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>
 									</div>

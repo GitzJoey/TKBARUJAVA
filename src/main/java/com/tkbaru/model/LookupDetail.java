@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +28,15 @@ public class LookupDetail {
 	private String lookupValue;
 	@Column(name="lookup_alt_val")
 	private String lookupAlternateValue;
-	
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
+
 	@ManyToOne
 	@JoinColumn(name="lookup_id", nullable=false)
 	private Lookup lookupEntity;
@@ -63,6 +73,38 @@ public class LookupDetail {
 		this.lookupAlternateValue = lookupAlternateValue;
 	}
 
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public Lookup getLookupEntity() {
 		return lookupEntity;
 	}
@@ -76,7 +118,9 @@ public class LookupDetail {
 		return "LookupDetail [lookupDetailId=" + lookupDetailId
 				+ ", languageCode=" + languageCode + ", lookupValue="
 				+ lookupValue + ", lookupAlternateValue="
-				+ lookupAlternateValue + "]";
+				+ lookupAlternateValue + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + "]";
 	}
-	
+
 }

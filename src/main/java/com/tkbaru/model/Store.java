@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -31,7 +33,14 @@ public class Store {
 	private String npwpNumber;
 	@Column(name="status")
 	private String storeStatus;
-	
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 	public int getStoreId() {
 		return storeId;
 	}
@@ -80,12 +89,38 @@ public class Store {
 	public void setStoreStatus(String storeStatus) {
 		this.storeStatus = storeStatus;
 	}
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 	@Override
 	public String toString() {
 		return "Store [storeId=" + storeId + ", storeName=" + storeName
 				+ ", storeAddress1=" + storeAddress1 + ", storeAddress2="
 				+ storeAddress2 + ", storeAddress3=" + storeAddress3
 				+ ", isDefault=" + isDefault + ", npwpNumber=" + npwpNumber
-				+ ", storeStatus=" + storeStatus + "]";
-	}	
+				+ ", storeStatus=" + storeStatus + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + "]";
+	}
 }

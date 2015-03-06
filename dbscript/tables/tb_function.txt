@@ -10,9 +10,9 @@ CREATE TABLE `tb_function` (
   `url` 				varchar(45) DEFAULT NULL,
   `order_num` 			int(11) 	DEFAULT NULL,
   `deep_level` 			int(11) 	DEFAULT NULL,
-  `created_by` 			int(11) 	DEFAULT NULL,
+  `created_by` 			int(11) 	DEFAULT '0',
   `created_date` 		datetime 	DEFAULT NULL,
-  `updated_by` 			int(11) 	DEFAULT NULL,
+  `updated_by` 			int(11) 	DEFAULT '0',
   `updated_date` 		datetime 	DEFAULT NULL,
   PRIMARY KEY (`function_id`)
 );

@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -31,31 +32,15 @@ public class Role {
 	private String roleName;
 	@Column(name="status")
 	private String roleStatus;
-	
-	@ManyToMany
-	@JoinTable(name="tb_role_function", 
-			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
-			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
-	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
-	
-	public int getRoleId() {
-		return roleId;
-	}
-	public void setRoleId(int roleId) {
-		this.roleId = roleId;
-	}
-	public String getRoleName() {
-		return roleName;
-	}
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-	public List<Function> getFunctionList() {
-		return functionList;
-	}
-	public void setFunctionList(List<Function> functionList) {
-		this.functionList = functionList;
-	}
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
+
 	public String getAllFunctionIdInString() {
 		String r = "";
 		for (Function f:this.functionList) { r += String.valueOf(f.getFunctionId()) + ","; }
@@ -65,16 +50,84 @@ public class Role {
 		r = r.substring(0, r.length() - 1);
 		return r;
 	}	
+
+	@ManyToMany
+	@JoinTable(name="tb_role_function", 
+			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
+			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
+	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
+
+	public int getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleId(int roleId) {
+		this.roleId = roleId;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+
 	public String getRoleStatus() {
 		return roleStatus;
 	}
+
 	public void setRoleStatus(String roleStatus) {
 		this.roleStatus = roleStatus;
 	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public List<Function> getFunctionList() {
+		return functionList;
+	}
+
+	public void setFunctionList(List<Function> functionList) {
+		this.functionList = functionList;
+	}
+
 	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName
-				+ ", roleStatus=" + roleStatus + ", functionList="
+				+ ", roleStatus=" + roleStatus + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", functionList="
 				+ functionList + "]";
 	}
+
 }

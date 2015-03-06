@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -45,6 +46,14 @@ public class Person {
 	private String emailAddr;
 	@Column(name="photo_path")
 	private String photoPath;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 
 	@Transient
 	private MultipartFile imageBinary;
@@ -62,7 +71,7 @@ public class Person {
 	}
 
 	public void setPersonId(int personId) {
-		this.personId=personId;
+		this.personId = personId;
 	}
 
 	public String getFirstName() {
@@ -70,7 +79,7 @@ public class Person {
 	}
 
 	public void setFirstName(String firstName) {
-		this.firstName=firstName;
+		this.firstName = firstName;
 	}
 
 	public String getLastName() {
@@ -78,7 +87,7 @@ public class Person {
 	}
 
 	public void setLastName(String lastName) {
-		this.lastName=lastName;
+		this.lastName = lastName;
 	}
 
 	public String getAddressLine1() {
@@ -86,7 +95,7 @@ public class Person {
 	}
 
 	public void setAddressLine1(String addressLine1) {
-		this.addressLine1=addressLine1;
+		this.addressLine1 = addressLine1;
 	}
 
 	public String getAddressLine2() {
@@ -94,7 +103,7 @@ public class Person {
 	}
 
 	public void setAddressLine2(String addressLine2) {
-		this.addressLine2=addressLine2;
+		this.addressLine2 = addressLine2;
 	}
 
 	public String getAddressLine3() {
@@ -102,7 +111,7 @@ public class Person {
 	}
 
 	public void setAddressLine3(String addressLine3) {
-		this.addressLine3=addressLine3;
+		this.addressLine3 = addressLine3;
 	}
 
 	public String getEmailAddr() {
@@ -110,7 +119,7 @@ public class Person {
 	}
 
 	public void setEmailAddr(String emailAddr) {
-		this.emailAddr=emailAddr;
+		this.emailAddr = emailAddr;
 	}
 
 	public String getPhotoPath() {
@@ -118,15 +127,39 @@ public class Person {
 	}
 
 	public void setPhotoPath(String photoPath) {
-		this.photoPath=photoPath;
+		this.photoPath = photoPath;
 	}
 
-	public List<PhoneList> getPhoneList() {
-		return phoneList;
+	public int getCreatedBy() {
+		return createdBy;
 	}
 
-	public void setPhoneList(List<PhoneList> phoneList) {
-		this.phoneList=phoneList;
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
 	}
 
 	public MultipartFile getImageBinary() {
@@ -134,7 +167,15 @@ public class Person {
 	}
 
 	public void setImageBinary(MultipartFile imageBinary) {
-		this.imageBinary=imageBinary;
+		this.imageBinary = imageBinary;
+	}
+
+	public List<PhoneList> getPhoneList() {
+		return phoneList;
+	}
+
+	public void setPhoneList(List<PhoneList> phoneList) {
+		this.phoneList = phoneList;
 	}
 
 	@Override
@@ -143,8 +184,10 @@ public class Person {
 				+ ", lastName=" + lastName + ", addressLine1=" + addressLine1
 				+ ", addressLine2=" + addressLine2 + ", addressLine3="
 				+ addressLine3 + ", emailAddr=" + emailAddr + ", photoPath="
-				+ photoPath + ", imageBinary=" + imageBinary + ", phoneList="
+				+ photoPath + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + ", imageBinary=" + imageBinary + ", phoneList="
 				+ phoneList + "]";
 	}
-	
+
 }

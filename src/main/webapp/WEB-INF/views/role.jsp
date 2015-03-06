@@ -179,7 +179,7 @@
 										<div class="col-sm-3">
 											<form:select class="form-control" path="roleStatus">
 												<option>Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
 										</div>										
 									</div>									

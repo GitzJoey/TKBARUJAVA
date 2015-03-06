@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,6 +28,14 @@ public class ProductUnit {
 	private Long conversionValue;
 	@Column(name="remarks")
 	private String unitRemarks;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 
 	@ManyToOne
 	@JoinColumn(name="product_id", nullable=false)
@@ -63,6 +73,38 @@ public class ProductUnit {
 		this.unitRemarks = unitRemarks;
 	}
 
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public Product getProductEntity() {
 		return productEntity;
 	}
@@ -75,7 +117,10 @@ public class ProductUnit {
 	public String toString() {
 		return "ProductUnit [productUnitId=" + productUnitId + ", unitCode="
 				+ unitCode + ", conversionValue=" + conversionValue
-				+ ", unitRemarks=" + unitRemarks + "]";
+				+ ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", productEntity="
+				+ productEntity + "]";
 	}
 
 }

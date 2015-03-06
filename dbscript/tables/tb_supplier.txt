@@ -9,9 +9,9 @@ CREATE TABLE `tb_supplier` (
   `fax` 			varchar(45) DEFAULT NULL,
   `remarks` 		varchar(45) DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,
-  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT '0',
   `created_date` 	datetime 	DEFAULT NULL,
-  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT '0',
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`supplier_id`)
 );

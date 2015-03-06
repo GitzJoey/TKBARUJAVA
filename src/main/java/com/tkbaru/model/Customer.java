@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,7 +44,15 @@ public class Customer {
 	private String storeRemarks;
 	@Column(name="npwp_num")
 	private Integer npwpNum;
-	
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
+
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},
@@ -55,7 +64,7 @@ public class Customer {
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},
 				inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
 	private List<Person> picList = LazyList.decorate(new ArrayList<Person>(), FactoryUtils.instantiateFactory(Person.class));
-	
+
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -70,22 +79,6 @@ public class Customer {
 
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
-	}
-
-	public List<BankAccount> getBankAccList() {
-		return bankAccList;
-	}
-
-	public void setBankAccList(List<BankAccount> bankAccList) {
-		this.bankAccList = bankAccList;
-	}
-
-	public List<Person> getPicList() {
-		return picList;
-	}
-
-	public void setPicList(List<Person> picList) {
-		this.picList = picList;
 	}
 
 	public String getStoreAddress() {
@@ -128,13 +121,61 @@ public class Customer {
 		this.storeRemarks = storeRemarks;
 	}
 
-    public Integer getNpwpNum() {
-        return npwpNum;
-    }
+	public Integer getNpwpNum() {
+		return npwpNum;
+	}
 
-    public void setNpwpNum(Integer npwpNum) {
-        this.npwpNum = npwpNum;
-    }
+	public void setNpwpNum(Integer npwpNum) {
+		this.npwpNum = npwpNum;
+	}
+
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public List<BankAccount> getBankAccList() {
+		return bankAccList;
+	}
+
+	public void setBankAccList(List<BankAccount> bankAccList) {
+		this.bankAccList = bankAccList;
+	}
+
+	public List<Person> getPicList() {
+		return picList;
+	}
+
+	public void setPicList(List<Person> picList) {
+		this.picList = picList;
+	}
 
 	@Override
 	public String toString() {
@@ -142,7 +183,10 @@ public class Customer {
 				+ storeName + ", storeAddress=" + storeAddress + ", storeCity="
 				+ storeCity + ", storePhone=" + storePhone + ", storeStatus="
 				+ storeStatus + ", storeRemarks=" + storeRemarks + ", npwpNum="
-				+ npwpNum + ", bankAccList=" + bankAccList + ", picList="
+				+ npwpNum + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + ", bankAccList=" + bankAccList + ", picList="
 				+ picList + "]";
-	}	
+	}
+
 }

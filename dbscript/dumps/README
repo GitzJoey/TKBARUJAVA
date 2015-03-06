@@ -1,0 +1,6 @@
+How To Dump Using MySQL Workbench
+
+1. Server -> Data Import
+2. Import from Self-Contained File -> Browse to dumps.sql file
+3. Default Target Schema -> DB for the project
+4. Start Import

@@ -350,7 +350,7 @@
 													<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
 													<div class="col-sm-2">
 														<form:select class="form-control" path="storeStatus">
-															<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 														</form:select>
 													</div>
 												</div>
@@ -437,7 +437,7 @@
 																										</td>
 																										<td>
 																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
-																												<form:options items="${ providerDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																												<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																											</form:select>																						
 																										</td>
 																										<td>
@@ -445,7 +445,7 @@
 																										</td>
 																										<td>
 																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
-																												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																											</form:select>																						
 																										</td>
 																										<td>
@@ -559,7 +559,7 @@
 															<label for="bankStatus" class="col-sm-2 control-label">Status</label>
 															<div class="col-sm-3">
 																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
-																	<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																	<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																</form:select>
 															</div>																																	
 														</div>

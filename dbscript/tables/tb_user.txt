@@ -8,9 +8,9 @@ CREATE TABLE `tb_user` (
   `store_id` 		int(11) DEFAULT NULL,
   `person_id` 		int(11) DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,
-  `created_by` 		int(11) DEFAULT NULL,
+  `created_by` 		int(11) DEFAULT '0',
   `created_date` 	datetime DEFAULT NULL,
-  `updated_by` 		int(11) DEFAULT NULL,
+  `updated_by` 		int(11) DEFAULT '0',
   `updated_date` 	datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 );

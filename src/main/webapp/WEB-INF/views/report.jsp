@@ -67,7 +67,7 @@
 										<li role="presentation" class="active"><a href="#customerTab" aria-controls="customerTab" role="tab" data-toggle="tab"><span class="fa fa-smile-o fa-fw"></span>&nbsp;Customer</a></li>
 										<li role="presentation" class=""><a href="#supplierTab" aria-controls="supplierTab" role="tab" data-toggle="tab"><span class="fa fa-building-o fa-fw"></span>&nbsp;Supplier</a></li>
 										<li role="presentation" class=""><a href="#productTab" aria-controls="productTab" role="tab" data-toggle="tab"><span class="fa fa-cubes fa-fw"></span>&nbsp;Product</a></li>
-										<li role="presentation" class=""><a href="#truckTab" aria-controls="truckTab" role="tab" data-toggle="tab"><span class="fa fa-plus fa-fw"></span>&nbsp;Truck</a></li>
+										<li role="presentation" class=""><a href="#truckTab" aria-controls="truckTab" role="tab" data-toggle="tab"><span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;Truck</a></li>
 									</ul>
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active" id="customerTab">

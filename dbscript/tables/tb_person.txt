@@ -9,9 +9,9 @@ CREATE TABLE `tb_person` (
   `addr_3` 			varchar(145) 	DEFAULT NULL,
   `email` 			varchar(45) 	DEFAULT NULL,
   `photo_path` 		varchar(45) 	DEFAULT NULL,
-  `created_by` 		int(11) 		DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT '0',
   `created_date` 	datetime 		DEFAULT NULL,
-  `updated_by` 		int(11) 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT '0',
   `updated_date` 	datetime 		DEFAULT NULL,
   PRIMARY KEY (`person_id`)
 );

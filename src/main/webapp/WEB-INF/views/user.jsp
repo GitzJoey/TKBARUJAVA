@@ -233,7 +233,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="userStatus">
-												<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>
 									</div>
@@ -312,7 +312,7 @@
 																</td>
 																<td>
 																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerName">
-																		<form:options items="${ providerDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																		<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>																	
 																	<br/>
 																	<form:input path="personEntity.phoneList[${phoneIdx.index}].phoneNumber" type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Phone Number"></form:input>
@@ -321,7 +321,7 @@
 																</td>
 																<td>
 																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].phoneStatus">
-																		<form:options items="${ statusDDL }" itemValue="lookupCode" itemLabel="lookupDescription"/>
+																		<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>																																			
 																</td>
 															</tr>													

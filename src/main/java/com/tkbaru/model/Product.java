@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -40,6 +41,14 @@ public class Product {
 	private String imagePath;
 	@Column(name="status")
 	private String productStatus;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	private Date updatedDate;
 
 	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL)
 	private List<ProductUnit> productUnit;
@@ -116,6 +125,38 @@ public class Product {
 		this.productStatus = productStatus;
 	}
 
+	public int getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
 	public List<ProductUnit> getProductUnit() {
 		return productUnit;
 	}
@@ -131,7 +172,9 @@ public class Product {
 				+ productName + ", productDesc=" + productDesc + ", baseUnit="
 				+ baseUnit + ", imageBinary=" + imageBinary + ", imagePath="
 				+ imagePath + ", productStatus=" + productStatus
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
 				+ ", productUnit=" + productUnit + "]";
 	}
-	
+
 }

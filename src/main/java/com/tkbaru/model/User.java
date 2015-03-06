@@ -1,5 +1,7 @@
 package com.tkbaru.model;
 
+import java.util.Date;
+
 public class User {
 	public User() {
 		personEntity = new Person();
@@ -19,6 +21,11 @@ public class User {
 
 	private int storeId;
 	private Store storeEntity;
+
+	private int createdBy;
+	private Date createdDate;
+	private int updatedBy;
+	private Date updatedDate;
 	
 	public int getUserId() {
 		return userId;
@@ -49,7 +56,7 @@ public class User {
 	}
 	public void setRoleId(int roleId) {
 		this.roleId = roleId;
-	}	
+	}
 	public Role getRoleEntity() {
 		return roleEntity;
 	}
@@ -63,12 +70,11 @@ public class User {
 		this.personId = personId;
 	}
 	public Person getPersonEntity() {
-		if (personEntity == null) return new Person();
 		return personEntity;
 	}
 	public void setPersonEntity(Person personEntity) {
 		this.personEntity = personEntity;
-	}	
+	}
 	public int getStoreId() {
 		return storeId;
 	}
@@ -81,6 +87,30 @@ public class User {
 	public void setStoreEntity(Store storeEntity) {
 		this.storeEntity = storeEntity;
 	}
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public int getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(int updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
 	@Override
 	public String toString() {
 		return "User [userId=" + userId + ", userName=" + userName
@@ -88,6 +118,8 @@ public class User {
 				+ userStatus + ", roleId=" + roleId + ", roleEntity="
 				+ roleEntity + ", personId=" + personId + ", personEntity="
 				+ personEntity + ", storeId=" + storeId + ", storeEntity="
-				+ storeEntity + "]";
-	}	
+				+ storeEntity + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + "]";
+	}
 }
