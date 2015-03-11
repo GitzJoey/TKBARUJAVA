@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Truck;
@@ -66,6 +67,7 @@ public class TruckController {
 		model.addAttribute("truckTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_TYPE));
 		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_WEIGHT_TYPE));
 		model.addAttribute("driverDDL", userManager.getAllUserByType(""));
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -83,6 +85,7 @@ public class TruckController {
 		model.addAttribute("truckTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_TYPE));
 		model.addAttribute("weightTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_WEIGHT_TYPE));
 		model.addAttribute("driverDDL", userManager.getAllUser());
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -91,19 +94,19 @@ public class TruckController {
 	}
 	
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteTruck(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String deleteTruck(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[deleteTruck] : " + "selectedId = " + selectedId);
 
 		truckManager.deleteTruck(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/truck";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveTruck(Locale locale, Model model, @ModelAttribute("truckForm") Truck truck) {	
+	public String saveTruck(Locale locale, Model model, @ModelAttribute("truckForm") Truck truck, RedirectAttributes redirectAttributes) {	
 		
 		if (truck.getTruckId() == 0) { 
 			logger.info("[saveTruck] " + "addTruck: " + truck.toString());
@@ -113,8 +116,8 @@ public class TruckController {
 			truckManager.editTruck(truck); 
 		}
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/truck";
 	}

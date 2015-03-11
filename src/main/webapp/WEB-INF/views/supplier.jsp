@@ -619,8 +619,7 @@
 																<th width="10%">Type</th>
 																<th width="10%">Code</th>
 																<th width="20%">Name</th>
-																<th width="10%">Unit</th>
-																<th width="5%">In Kg</th>
+																<th width="10%">Base Unit</th>
 																<th width="30%">Description</th>
 																<th width="10%">Status</th>
 															</tr>
@@ -632,13 +631,12 @@
 																		<td align="center">
 																			<input id="prdList_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>" checked/>
 																		</td>
-																		<td><c:out value="${ i.productType }"></c:out></td>
+																		<td><c:out value="${ i.productTypeLookup.lookupValue }"></c:out></td>
 																		<td><c:out value="${ i.shortCode }"></c:out></td>
 																		<td><c:out value="${ i.productName }"></c:out></td>
-																		<td><c:out value="${ i.unit }"></c:out></td>
-																		<td><c:out value="${ i.inKilo }"></c:out></td>
+																		<td><c:out value="${ i.baseUnitLookup.lookupValue }"></c:out></td>
 																		<td><c:out value="${ i.productDesc }"></c:out></td>
-																		<td><c:out value="${ i.productStatus }"></c:out></td>
+																		<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 																	</tr>
 																</c:forEach>
 															</c:if>

@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Bank;
-import com.tkbaru.model.User;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
 

@@ -1,21 +1,26 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_lookup")
-public class Lookup {
+public class Lookup implements Serializable {
+	private static final long serialVersionUID = 8477754720076849619L;
 	public Lookup() {
 		
 	}
@@ -43,14 +48,23 @@ public class Lookup {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@OneToMany(mappedBy="lookupEntity", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="lookupEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<LookupDetail> lookupDetail;
 
 	@Transient
-	private String languageCode;
+	private String languageCode = "L010_EN";
 	public void setLanguageCode(String languageCode) {
 		this.languageCode = languageCode;
 	}
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)	
+	private Lookup statusLookup;
+
+	@ManyToOne
+	@JoinColumn(name="maintainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup maintainabilityLookup;
+
 	public String getLanguageCode() {
 		return this.languageCode;		
 	}
@@ -143,6 +157,19 @@ public class Lookup {
 	public void setLookupDetail(List<LookupDetail> lookupDetail) {
 		this.lookupDetail = lookupDetail;
 	}
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+	public Lookup getMaintainabilityLookup() {
+		return maintainabilityLookup;
+	}
+	public void setMaintainabilityLookup(Lookup maintainabilityLookup) {
+		this.maintainabilityLookup = maintainabilityLookup;
+	}
+
 	@Override
 	public String toString() {
 		return "Lookup [lookupId=" + lookupId + ", lookupCategory="

@@ -8,6 +8,27 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('#editTableSelection, #deleteTableSelection').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+				
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");	
+					}
+				});
+				if (id == "") {
+					jsAlert("Please select at least 1 warehouse");
+					return false;	
+				} else {
+					if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href", ctxpath + "/warehouse/edit/" + id);
+					} else {
+						$('#deleteTableSelection').attr("href", ctxpath + "/warehouse/delete/" + id);	
+					}
+				}				
+			});
 		});
 	</script>	
 </head>
@@ -62,14 +83,14 @@
 												<c:forEach items="${ warehouseList }" var="i" varStatus="warehouseIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.warehouseId }"/>" type="checkbox" value="<c:out value="${ i.warehouseId }"/>"/></td>
-														<td><c:out value="${i.warehouseName}"></c:out></td>
+														<td><c:out value="${ i.warehouseName }"></c:out></td>
 														<td>
-															<strong><c:out value="${i.warehouseName}"></c:out></strong><br/><br/>
-															<c:out value="${i.warehouseLocation}"></c:out><br/><br/>
-															<c:out value="${i.warehouseRemarks}"></c:out>
+															<strong><c:out value="${ i.warehouseName }"></c:out></strong><br/><br/>
+															<c:out value="${ i.warehouseLocation }"></c:out><br/><br/>
+															<c:out value="${ i.warehouseRemarks }"></c:out>
 														</td>
 														<td>
-															<c:out value="${i.warehouseStatus}"/><br/>
+															<c:out value="${ i.statusLookup.lookupValue }"/><br/>
 														</td>
 													</tr>
 												</c:forEach>

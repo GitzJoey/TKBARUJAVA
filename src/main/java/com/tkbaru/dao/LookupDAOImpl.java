@@ -161,5 +161,18 @@ public class LookupDAOImpl implements LookupDAO {
 		
 		return result;
 	}
+
+	@Override
+	public Lookup getLookupByKey(String lookupKey, String languageCode) {
+		logger.info("[getLookupByLookupKey] " + "lookupKey: " + lookupKey);
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		Query q = session.createQuery("FROM Lookup WHERE lookupKey = :key");
+		q.setParameter("key", lookupKey);
+		
+		List<Lookup> result = q.list();
+			
+		return result.get(0);
+	}
 		
 }

@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Store;
@@ -75,19 +76,19 @@ public class StoreController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteStore(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String deleteStore(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[deleteStore] " + "selectedId = " + selectedId);
 		
 		storeManager.deleteStore(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/store";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveStore(Locale locale, Model model, @ModelAttribute("storeForm") Store store) {	
+	public String saveStore(Locale locale, Model model, @ModelAttribute("storeForm") Store store, RedirectAttributes redirectAttributes) {	
         		
 		if (store.getStoreId() == 0) {
 			logger.info("[saveStore] " + "addStore: " + store.toString());
@@ -97,8 +98,8 @@ public class StoreController {
 			storeManager.editStore(store); 
 		}
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/store";
 	}

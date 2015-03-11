@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -41,78 +43,127 @@ public class Store {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
+	
+	@ManyToOne
+	@JoinColumn(name="is_default", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup storeStatusLookup;
+	
+	@ManyToOne
+	@JoinColumn(name="is_default", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup isDefaultLookup;
+
 	public int getStoreId() {
 		return storeId;
 	}
+
 	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
+
 	public String getStoreName() {
 		return storeName;
 	}
+
 	public void setStoreName(String storeName) {
 		this.storeName = storeName;
 	}
+
 	public String getStoreAddress1() {
 		return storeAddress1;
 	}
+
 	public void setStoreAddress1(String storeAddress1) {
 		this.storeAddress1 = storeAddress1;
 	}
+
 	public String getStoreAddress2() {
 		return storeAddress2;
 	}
+
 	public void setStoreAddress2(String storeAddress2) {
 		this.storeAddress2 = storeAddress2;
 	}
+
 	public String getStoreAddress3() {
 		return storeAddress3;
 	}
+
 	public void setStoreAddress3(String storeAddress3) {
 		this.storeAddress3 = storeAddress3;
 	}
+
 	public String getIsDefault() {
 		return isDefault;
 	}
+
 	public void setIsDefault(String isDefault) {
 		this.isDefault = isDefault;
 	}
+
 	public String getNpwpNumber() {
 		return npwpNumber;
 	}
+
 	public void setNpwpNumber(String npwpNumber) {
 		this.npwpNumber = npwpNumber;
 	}
+
 	public String getStoreStatus() {
 		return storeStatus;
 	}
+
 	public void setStoreStatus(String storeStatus) {
 		this.storeStatus = storeStatus;
 	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public int getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(int updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	public Lookup getStoreStatusLookup() {
+		return storeStatusLookup;
+	}
+
+	public void setStoreStatusLookup(Lookup storeStatusLookup) {
+		this.storeStatusLookup = storeStatusLookup;
+	}
+
+	public Lookup getIsDefaultLookup() {
+		return isDefaultLookup;
+	}
+
+	public void setIsDefaultLookup(Lookup isDefaultLookup) {
+		this.isDefaultLookup = isDefaultLookup;
+	}
+
 	@Override
 	public String toString() {
 		return "Store [storeId=" + storeId + ", storeName=" + storeName
@@ -123,4 +174,5 @@ public class Store {
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + "]";
 	}
+
 }

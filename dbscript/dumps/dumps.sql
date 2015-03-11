@@ -512,12 +512,12 @@ CREATE TABLE `tb_product` (
   `base_unit` varchar(10) DEFAULT NULL,
   `image_path` varchar(145) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +526,7 @@ CREATE TABLE `tb_product` (
 
 LOCK TABLES `tb_product` WRITE;
 /*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
-INSERT INTO `tb_product` VALUES (4,'L004_TRG','333','ddd','dddd','L005_TN','0-ddd--50.jpg','L001_I',NULL,NULL,NULL,NULL),(5,'L004_GL','gl','asdfa','adf','L005_KG','0-asdfa--50.jpg','L001_A',NULL,NULL,NULL,NULL);
+INSERT INTO `tb_product` VALUES (1,'L004_GL','sss','ddd','ddd','L005_KG','0-ddd-94.jpg','L001_A',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,7 +548,7 @@ CREATE TABLE `tb_product_unit` (
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`prod_unit_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -557,6 +557,7 @@ CREATE TABLE `tb_product_unit` (
 
 LOCK TABLES `tb_product_unit` WRITE;
 /*!40000 ALTER TABLE `tb_product_unit` DISABLE KEYS */;
+INSERT INTO `tb_product_unit` VALUES (1,1,'L005_TN',1000,'ddkdkkd',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_product_unit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -656,7 +657,7 @@ CREATE TABLE `tb_store` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -682,6 +683,7 @@ CREATE TABLE `tb_supplier` (
   `address` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
+  `npwp_num` int(11) DEFAULT NULL,
   `fax` varchar(45) DEFAULT NULL,
   `remarks` varchar(45) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
@@ -699,7 +701,7 @@ CREATE TABLE `tb_supplier` (
 
 LOCK TABLES `tb_supplier` WRITE;
 /*!40000 ALTER TABLE `tb_supplier` DISABLE KEYS */;
-INSERT INTO `tb_supplier` VALUES (1,'Supplier Company 1','Address 1','City 1','12345','1234567','Remarks 1',NULL,0,'2015-03-05 13:00:36',0,NULL);
+INSERT INTO `tb_supplier` VALUES (1,'Supplier Company 1','Address 1','City 1','12345',NULL,'1234567','Remarks 1',NULL,0,'2015-03-09 09:45:44',0,NULL);
 /*!40000 ALTER TABLE `tb_supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -785,13 +787,14 @@ CREATE TABLE `tb_truck` (
   `plate_number` varchar(145) DEFAULT NULL,
   `kir_date` date DEFAULT NULL,
   `driver` int(11) DEFAULT NULL,
+  `status` varchar(15) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
   `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`truck_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -800,6 +803,7 @@ CREATE TABLE `tb_truck` (
 
 LOCK TABLES `tb_truck` WRITE;
 /*!40000 ALTER TABLE `tb_truck` DISABLE KEYS */;
+INSERT INTO `tb_truck` VALUES (1,'L011_OIL','L012_HEAVY','sdsd','2015-03-12',1,'L001_I','ssss',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_truck` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -849,12 +853,12 @@ CREATE TABLE `tb_warehouse` (
   `location` varchar(45) DEFAULT NULL,
   `remarks` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`warehouse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -863,7 +867,7 @@ CREATE TABLE `tb_warehouse` (
 
 LOCK TABLES `tb_warehouse` WRITE;
 /*!40000 ALTER TABLE `tb_warehouse` DISABLE KEYS */;
-INSERT INTO `tb_warehouse` VALUES (1,'Toko','Toko','Toko','L001_A',NULL,NULL,NULL,NULL),(2,'Gudang','Gudang','Gudang','L001_A',NULL,NULL,NULL,NULL);
+INSERT INTO `tb_warehouse` VALUES (1,'ppp','asldkfj','asdkfj','L001_A',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -876,4 +880,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-05 13:18:02
+-- Dump completed on 2015-03-10 15:36:12

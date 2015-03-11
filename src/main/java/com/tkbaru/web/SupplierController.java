@@ -5,13 +5,13 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.BankAccount;
@@ -88,32 +88,32 @@ public class SupplierController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String deleteSupplier(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[deleteSupplier] " + "");
 		
 		supplierManager.deleteSupplier(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/supplier";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String supplierSave(Locale locale, Model model, @ModelAttribute("supplierForm") Supplier supp, HttpServletRequest request) {		
+	public String supplierSave(Locale locale, Model model, @ModelAttribute("supplierForm") Supplier supp, HttpServletRequest request, RedirectAttributes redirectAttributes) {		
 		
 		supp.setProdList(productManager.getProductByIds(request.getParameter("selectedPrdList")));
 		
 		if (supp.getSupplierId() == 0) {
 			logger.info("[supplierSave] " + "addNewSupplier: " + supp.toString());			
-			//supplierManager.addNewSupplier(supp);			
+			supplierManager.addNewSupplier(supp);			
 		} else {
 			logger.info("[supplierSave] " + "editSupplier: " + supp.toString());
-			//supplierManager.editSupplier(supp);
+			supplierManager.editSupplier(supp);
 		}
 
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/supplier";
 	}        

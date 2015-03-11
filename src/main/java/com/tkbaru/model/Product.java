@@ -6,8 +6,11 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -50,8 +53,20 @@ public class Product {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<ProductUnit> productUnit;
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
+
+	@ManyToOne
+	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup productTypeLookup;
+
+	@ManyToOne
+	@JoinColumn(name="base_unit", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup baseUnitLookup;
 
 	public int getProductId() {
 		return productId;
@@ -163,6 +178,30 @@ public class Product {
 
 	public void setProductUnit(List<ProductUnit> productUnit) {
 		this.productUnit = productUnit;
+	}
+
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getProductTypeLookup() {
+		return productTypeLookup;
+	}
+
+	public void setProductTypeLookup(Lookup productTypeLookup) {
+		this.productTypeLookup = productTypeLookup;
+	}
+
+	public Lookup getBaseUnitLookup() {
+		return baseUnitLookup;
+	}
+
+	public void setBaseUnitLookup(Lookup baseUnitLookup) {
+		this.baseUnitLookup = baseUnitLookup;
 	}
 
 	@Override

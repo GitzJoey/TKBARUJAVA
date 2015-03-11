@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Warehouse;
@@ -83,19 +84,19 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteWarehouse(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String deleteWarehouse(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[deleteWarehouse] " + "selectedId = " + selectedId);
 		
 		warehouseManager.deleteWarehouse(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/warehouse";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse) {	
+	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {	
         		
 		if (warehouse.getWarehouseId() == 0) {
 			logger.info("[saveWarehouse] " + "addWarehouse: " + warehouse.toString());
@@ -105,8 +106,8 @@ public class WarehouseController {
 			warehouseManager.editWarehouse(warehouse); 
 		}
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/warehouse";
 	}

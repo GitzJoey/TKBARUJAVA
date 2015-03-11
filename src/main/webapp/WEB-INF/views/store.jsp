@@ -100,21 +100,21 @@
 												<c:forEach items="${ storeList }" var="i" varStatus="storeIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.storeId }"/>" type="checkbox" value="<c:out value="${ i.storeId }"/>"/></td>
-														<td><c:out value="${i.storeName}"></c:out></td>
+														<td><c:out value="${ i.storeName }"></c:out></td>
 														<td>
-															<strong><c:out value="${i.storeName}"></c:out></strong><br/><br/>
-															<c:out value="${i.storeAddress1}"></c:out><br/>
-															<c:out value="${i.storeAddress2}"></c:out><br/>
-															<c:out value="${i.storeAddress3}"></c:out><br/>
+															<strong><c:out value="${ i.storeName }"></c:out></strong><br/><br/>
+															<c:out value="${ i.storeAddress1 }"></c:out><br/>
+															<c:out value="${ i.storeAddress2 }"></c:out><br/>
+															<c:out value="${ i.storeAddress3 }"></c:out><br/>
 															<br/>
-															NPWP : <c:out value="${i.npwpNumber}"/><br/>
+															NPWP : <c:out value="${ i.npwpNumber }"/><br/>
 															<br/>
 														</td>
 														<td>
-															<c:out value="${i.isDefault}"/><br/>
+															<c:out value="${ i.isDefaultLookup.lookupValue }"/><br/>
 														</td>
 														<td>
-															<c:out value="${i.storeStatus}"/><br/>
+															<c:out value="${ i.storeStatusLookup.lookupValue }"/><br/>
 														</td>
 													</tr>
 												</c:forEach>

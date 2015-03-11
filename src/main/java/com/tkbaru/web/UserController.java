@@ -105,13 +105,13 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[userDelete] " + "selectedId:" + selectedId);
 		
 		userManager.deleteUser(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/user";
 	}

@@ -7,6 +7,7 @@ CREATE TABLE `tb_truck` (
   `plate_number` 	varchar(145) 	DEFAULT NULL,
   `kir_date` 		date		 	DEFAULT NULL,
   `driver` 			int(11) 		DEFAULT NULL,
+  `status` 			varchar(15) 	DEFAULT NULL,
   `remarks` 		varchar(255) 	DEFAULT NULL,
   `created_by` 		int(11) 		DEFAULT '0',
   `created_date` 	datetime 		DEFAULT NULL,

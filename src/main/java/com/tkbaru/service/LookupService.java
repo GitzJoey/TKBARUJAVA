@@ -9,6 +9,7 @@ public interface LookupService {
 	public Lookup getLookupById(int selectedId);
 	public List<Lookup> getLookupByCategory(String categoryName);
 	public List<Lookup> getLookupByCategory(List<String> categoryNames);
+	public Lookup getLookupByKey(String lookupKey);
 	public List<Lookup> getLookupByLookupKeys(List<String> lookupKeys);
 	public List<Lookup> getAllCategory();
 	public void addLookup(Lookup lookup);

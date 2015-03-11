@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Product;
@@ -88,14 +89,20 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod) {	
+	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod, RedirectAttributes redirectAttributes) {	
 		logger.info("[saveProduct] " + "prod: " + prod.toString());
 	
+		for(ProductUnit pu:prod.getProductUnit()) {
+			if (pu.getProductEntity() == null) {
+				pu.setProductEntity(prod);
+			}
+		}
+		
 		if (prod.getProductId() == 0) { productManager.addProduct(prod); }
 		else { productManager.editProduct(prod); }
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/product";
 	}

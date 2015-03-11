@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Function;
@@ -63,19 +64,19 @@ public class FunctionController {
 	}
 
 	@RequestMapping(value = "/admin/function/delete/{selectedId}.html", method = RequestMethod.GET)
-	public String functionDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String functionDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[functionDelete] " + "");
 		
 		functionManager.deleteFunction(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/function.html";
 	}
 
 	@RequestMapping(value = "/admin/function/save.html", method = RequestMethod.POST)
-	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func) {
+	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func, RedirectAttributes redirectAttributes) {
 		
 		if (func.getFunctionId() == 0) {
 			logger.info("[functionSave] " + "addFunction: " + func.toString());
@@ -85,8 +86,8 @@ public class FunctionController {
 			functionManager.editFunction(func);
 		}
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/function.html";
 	}

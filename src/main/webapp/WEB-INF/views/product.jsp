@@ -122,12 +122,12 @@
 												<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-														<td><c:out value="${ i.productType }"></c:out></td>
+														<td><c:out value="${ i.productTypeLookup.lookupValue }"></c:out></td>
 														<td><c:out value="${ i.shortCode }"></c:out></td>
 														<td><c:out value="${ i.productName }"></c:out></td>
-														<td><c:out value="${ i.baseUnit }"></c:out></td>
+														<td><c:out value="${ i.baseUnitLookup.lookupValue }"></c:out></td>
 														<td><c:out value="${ i.productDesc }"></c:out></td>
-														<td><c:out value="${ i.productStatus }"></c:out></td>
+														<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 													</tr>
 												</c:forEach>
 											</c:if>
@@ -220,12 +220,15 @@
 														<c:forEach items="${ productForm.productUnit }" varStatus="prodUnitIdx">
 															<tr>
 																<td align="center"><input id="cbx_unit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/></td>
-																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input></td>
 																<td>
 																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode">
 																		<option>Select Unit</option>
 																		<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>
+																</td>
+																<td>
+																	<span id="convText">1 Tonne = </span>
+																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input>
 																</td>
 																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input></td>
 															</tr>

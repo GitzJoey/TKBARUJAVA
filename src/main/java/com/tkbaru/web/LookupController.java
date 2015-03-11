@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Lookup;
@@ -99,19 +100,19 @@ public class LookupController {
 	}
 
 	@RequestMapping(value = "/admin/lookup/delete/{selectedId}.html", method = RequestMethod.GET)
-	public String lookupDelete(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String lookupDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[lookupDelete] " + "");
 		
 		lookupManager.deleteLookup(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/admin/lookup.html";
 	}
 
 	@RequestMapping(value = "/admin/lookup/save.html", method = RequestMethod.POST)
-	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup) {
+	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup, RedirectAttributes redirectAttributes) {
 		
 		for (LookupDetail ld:lookup.getLookupDetail()) {
 			if (ld.getLookupEntity() == null) {
@@ -127,8 +128,8 @@ public class LookupController {
 			lookupManager.editLookup(lookup);
 		}
 
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/admin/lookup.html";
 	}

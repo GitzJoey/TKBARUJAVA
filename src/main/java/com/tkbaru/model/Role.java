@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.FactoryUtils;
@@ -56,6 +57,10 @@ public class Role {
 			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
 			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
 	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
 
 	public int getRoleId() {
 		return roleId;
@@ -121,6 +126,14 @@ public class Role {
 		this.functionList = functionList;
 	}
 
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
 	@Override
 	public String toString() {
 		return "Role [roleId=" + roleId + ", roleName=" + roleName
@@ -129,5 +142,5 @@ public class Role {
 				+ ", updatedDate=" + updatedDate + ", functionList="
 				+ functionList + "]";
 	}
-
+	
 }

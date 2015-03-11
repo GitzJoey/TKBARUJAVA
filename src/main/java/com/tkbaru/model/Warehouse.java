@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -36,6 +38,11 @@ public class Warehouse {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
+	
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
+
 	public int getWarehouseId() {
 		return warehouseId;
 	}
@@ -89,6 +96,12 @@ public class Warehouse {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
 	}
 	@Override
 	public String toString() {

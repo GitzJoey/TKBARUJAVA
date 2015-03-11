@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.common.Converter;
@@ -91,18 +92,18 @@ public class RoleController {
 	}
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteRole(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String deleteRole(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		
 		roleManager.deleteRole(selectedId);
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/role";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role, HttpServletRequest request) {
+	public String saveRole(Locale locale, Model model, @ModelAttribute("roleForm") Role role, HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
 		role.setFunctionList(functionManager.getFunctionById(Converter.convertToIntegerList(request.getParameter("selectedFunc"))));
 		
@@ -114,8 +115,8 @@ public class RoleController {
 			roleManager.editRole(role);
 		}
 		
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/admin/role";
 	}	

@@ -6,6 +6,7 @@ CREATE TABLE `tb_supplier` (
   `address` 		varchar(45) DEFAULT NULL,
   `city` 			varchar(45) DEFAULT NULL,
   `phone` 			varchar(45) DEFAULT NULL,
+  `npwp_num` 		int(11) 	DEFAULT NULL,
   `fax` 			varchar(45) DEFAULT NULL,
   `remarks` 		varchar(45) DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,

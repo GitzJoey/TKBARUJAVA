@@ -81,11 +81,19 @@ public class LookupServiceImpl implements LookupService {
 	}
 
 	@Override
+	@Transactional
 	public List<Lookup> getLookupByLookupKeys(List<String> lookupKeys) {
 
 		String inClause = Converter.convertToINClause(lookupKeys);
 		
 		return lookupDAO.getLookupByLookupKeys(inClause.toUpperCase(), defaultLanguageCode);
+	}
+
+	@Override
+	@Transactional
+	public Lookup getLookupByKey(String lookupKey) {
+		
+		return lookupDAO.getLookupByKey(lookupKey, defaultLanguageCode);
 	}
 
 }

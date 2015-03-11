@@ -179,8 +179,8 @@
 														</c:forEach>
 													</td>
 													<td><c:out value="${ i.orderNum }"/></td>
-													<td><c:out value="${ i.lookupStatus }"/></td>
-													<td><c:out value="${ i.lookupMaintainability }"/></td>
+													<td><c:out value="${ i.statusLookup.lookupValue }"/></td>
+													<td><c:out value="${ i.maintainabilityLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>

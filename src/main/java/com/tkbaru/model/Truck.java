@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,6 +34,8 @@ public class Truck {
 	private Date kirDate;
 	@Column(name="driver")
 	private int driver;
+	@Column(name="status")
+	private String truckStatus;
 	@Column(name="remarks")
 	private String remarks;
 	@Column(name="created_by")
@@ -43,6 +47,18 @@ public class Truck {
 	@Column(name="updated_date")
 	private Date updatedDate;
 	
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
+
+	@ManyToOne
+	@JoinColumn(name="truck_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup truckTypeLookup;
+
+	@ManyToOne
+	@JoinColumn(name="weight_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup weightTypeLookup;
+
 	public int getTruckId() {
 		return truckId;
 	}
@@ -91,6 +107,14 @@ public class Truck {
 		this.driver = driver;
 	}
 
+	public String getTruckStatus() {
+		return truckStatus;
+	}
+
+	public void setTruckStatus(String truckStatus) {
+		this.truckStatus = truckStatus;
+	}
+
 	public String getRemarks() {
 		return remarks;
 	}
@@ -130,15 +154,40 @@ public class Truck {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getTruckTypeLookup() {
+		return truckTypeLookup;
+	}
+
+	public void setTruckTypeLookup(Lookup truckTypeLookup) {
+		this.truckTypeLookup = truckTypeLookup;
+	}
+
+	public Lookup getWeightTypeLookup() {
+		return weightTypeLookup;
+	}
+
+	public void setWeightTypeLookup(Lookup weightTypeLookup) {
+		this.weightTypeLookup = weightTypeLookup;
+	}
+
 	@Override
 	public String toString() {
 		return "Truck [truckId=" + truckId + ", truckType=" + truckType
 				+ ", weightType=" + weightType + ", plateNumber=" + plateNumber
-				+ ", kirDate=" + kirDate + ", driver=" + driver + ", remarks="
-				+ remarks + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + "]";
+				+ ", kirDate=" + kirDate + ", driver=" + driver
+				+ ", truckStatus=" + truckStatus + ", remarks=" + remarks
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ "]";
 	}
 
 	@Override

@@ -34,6 +34,9 @@ public class UserServiceImpl implements UserService {
 	StoreService storeManager;
 
 	@Autowired
+	LookupService lookupManager;
+	
+	@Autowired
 	ServletContext servletContext;
 
 	private BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager;
@@ -49,6 +52,7 @@ public class UserServiceImpl implements UserService {
 			u.setRoleEntity(roleManager.getRoleById(u.getRoleId()));
 			u.setPersonEntity(personManager.getPersonById(u.getPersonId()));
 			u.setStoreEntity(storeManager.getStoreById(u.getStoreId()));
+			u.setStatusLookup(lookupManager.getLookupByKey(u.getUserStatus()));
 		}
 		
 		return userlist;
@@ -64,7 +68,7 @@ public class UserServiceImpl implements UserService {
 		result.setRoleEntity(roleManager.getRoleById(result.getRoleId()));		
 		result.setPersonEntity(personManager.getPersonById(result.getPersonId()));
 		result.setStoreEntity(storeManager.getStoreById(result.getStoreId()));
-		
+		result.setStatusLookup(lookupManager.getLookupByKey(result.getUserStatus()));
 		return result;
 	}
 
@@ -143,6 +147,7 @@ public class UserServiceImpl implements UserService {
 			u.setRoleEntity(roleManager.getRoleById(u.getRoleId()));
 			u.setPersonEntity(personManager.getPersonById(u.getPersonId()));
 			u.setStoreEntity(storeManager.getStoreById(u.getStoreId()));
+			u.setStatusLookup(lookupManager.getLookupByKey(u.getUserStatus()));
 		}
 
 		return userList;

@@ -27,6 +27,8 @@ public class User {
 	private int updatedBy;
 	private Date updatedDate;
 	
+	private Lookup statusLookup;
+	
 	public int getUserId() {
 		return userId;
 	}
@@ -110,6 +112,12 @@ public class User {
 	}
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
+	}
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
 	}
 	@Override
 	public String toString() {

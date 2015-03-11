@@ -94,9 +94,10 @@
 												<th width="5%">&nbsp;</th>
 												<th width="10%">Truck Type</th>
 												<th width="10%">Weight Type</th>
-												<th width="20%">Plate Number</th>
+												<th width="10%">Plate Number</th>
 												<th width="10%">KIR Date</th>
 												<th width="15%">Driver</th>
+												<th width="15%">Status</th>
 												<th width="30%">Remarks</th>
 											</tr>
 										</thead>
@@ -105,11 +106,12 @@
 												<c:forEach items="${ truckList }" var="i" varStatus="truckIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.truckId }"/>" type="checkbox" value="<c:out value="${ i.truckId }"/>"/></td>
-														<td><c:out value="${ i.truckType }"></c:out></td>
-														<td><c:out value="${ i.weightType }"></c:out></td>
+														<td><c:out value="${ i.truckTypeLookup.lookupValue }"></c:out></td>
+														<td><c:out value="${ i.weightTypeLookup.lookupValue }"></c:out></td>
 														<td><c:out value="${ i.plateNumber }"></c:out></td>
 														<td><c:out value="${ i.kirDate }"></c:out></td>
 														<td><c:out value="${ i.driver }"></c:out></td>
+														<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 														<td><c:out value="${ i.remarks }"></c:out></td>														
 													</tr>
 												</c:forEach>
@@ -176,6 +178,15 @@
 											<form:select class="form-control" path="driver">
 												<option>Select Driver</option>
 												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
+											</form:select>	
+										</div>
+									</div>                  									
+									<div class="form-group">
+										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-2">											
+											<form:select class="form-control" path="truckStatus">
+												<option>Please Select</option>
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>	
 										</div>
 									</div>                  									

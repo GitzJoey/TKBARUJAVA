@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.collections.FactoryUtils;
@@ -72,6 +73,10 @@ public class Supplier {
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
 				inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")})
 	private List<Product> prodList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
 
 	public int getSupplierId() {
 		return supplierId;
@@ -199,6 +204,14 @@ public class Supplier {
 
 	public void setProdList(List<Product> prodList) {
 		this.prodList = prodList;
+	}
+
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
 	}
 
 	@Override

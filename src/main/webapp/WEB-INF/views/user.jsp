@@ -162,10 +162,10 @@
 														<br/><br/>	
 														<strong>Phone Number:</strong><br/>												
 														<c:forEach items="${ i.personEntity.phoneList }" var="ph">
-															<c:out value="${ ph.providerName }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
+															<c:out value="${ ph.providerLookup.lookupValue }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
 														</c:forEach>
 													</td>
-													<td><c:out value="${ i.userStatus }"></c:out></td>
+													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 												</tr>
 											</c:forEach>
 										</c:if>
