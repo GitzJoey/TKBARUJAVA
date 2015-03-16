@@ -122,7 +122,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<table id="functionListTable" class="table table-bordered table-hover display responsive" style="width: 100%;">
+								<table id="functionListTable" class="table table-bordered table-hover display responsive">
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>

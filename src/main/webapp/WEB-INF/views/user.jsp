@@ -15,13 +15,15 @@
 			$('#cancelButton').click(function() {				
 				window.location.href(ctxpath + "/admin/user");
 			});
-						
+			
 			$('button[type="submit"]').click(function(item) {
 				var button = $(this).attr('id'); 
-			
-				if (button == "submitButton") { $('#userForm').attr('action', ctxpath + "/admin/user/save"); } 
-				else if (button == "addPhone") { $('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/addphone"); } 
-				else if (button == "deletePhone") {
+				
+				if (button == "submitButton") { 
+					$('#userForm').attr('action', ctxpath + "/admin/user/save"); 
+				} else if (button == "addPhone") {
+					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/addphone"); 
+				} else if (button == "deletePhone") {
 					var idx = -1;
 					$('input[type="checkbox"][id^="cbx_phoneListId_"]').each(function(index, item) {
 						if ($(item).prop('checked')) { idx = $(item).val(); }						
@@ -71,31 +73,73 @@
 			
 			$('#userListTable').DataTable();
 						
-			$('#userForm').bootstrapValidator({
-       			feedbackIcons: {
-           			valid: 'glyphicon glyphicon-ok',
-           			invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-       			},
-       			submitButtons: 'button[type="submit"]',
-       			fields: {
-       				inputUserName: {
-               			validators: {
-                   			notEmpty: { },
-							stringLength: { min: 4, max: 10 },
-							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'inputUserName' }
-               			}
-           			},
-           			inputPassword: {
-               			validators: {
-                   			notEmpty: {	},
-                   			different: { field: 'inputUserName' },
-                   			stringLength: { min: 6 }
-               			}
-           			}
-       			}
-			});
+			$('#userForm')
+				.find('[name="roleId"]')
+					.change(function(e) { $('#userForm').formValidation('revalidateField', 'roleId'); })
+					.end()
+				.find('[name="storeId"]')
+					.change(function(e) { $('#userForm').formValidation('revalidateField', 'storeId'); })
+					.end()
+				.find('[name="userStatus"]')
+					.change(function(e) { $('#userForm').formValidation('revalidateField', 'userStatus'); })
+					.end()
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						userName: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 4, max: 10 },
+								regexp: { regexp: /^[a-zA-Z0-9]+$/ },
+		                   		different: { field: 'password' }								
+							}					
+						},
+						userPassword: {
+	               			validators: {
+	                   			notEmpty: {	},
+	                   			different: { field: 'username' },
+	                   			stringLength: { min: 6 }
+	               			}
+	           			},
+						roleId: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						storeId: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						userStatus: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						'personEntity.firstName': {
+							validators: {
+								notEmpty: {	},
+								regexp: { regexp: /^[a-zA-Z]+$/ }
+							}							
+						},
+						'personEntity.lastName': {
+							validators: {
+								notEmpty: {	},
+								regexp: { regexp: /^[a-zA-Z]+$/ }
+							}							
+						}
+					}
+				});	
 		});
 	</script>	
 </head>
@@ -217,6 +261,7 @@
 										<label for="inputRole" class="col-sm-2 control-label">Role</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="roleId">
+												<option value="">Please Select</option>
 												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
 											</form:select>
 										</div>
@@ -225,6 +270,7 @@
 										<label for="inputStore" class="col-sm-2 control-label">Store</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="storeId">
+												<option value="">Please Select</option>
 												<form:options items="${ storeDDL }" itemValue="storeId" itemLabel="storeName"></form:options>
 											</form:select>
 										</div>
@@ -233,6 +279,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="userStatus">
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>
@@ -252,7 +299,7 @@
 													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/def-images.png"/>
 												</c:otherwise>
 											</c:choose>
-											<form:input type="file" class="form-control" id="inputImage" name="inputImage" path="personEntity.imageBinary"></form:input>
+											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="personEntity.imageBinary" data-show-preview="false" data-show-upload="false"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

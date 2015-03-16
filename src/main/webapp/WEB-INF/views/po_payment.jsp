@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,7 +49,38 @@
 						</h1>
 					</div>
 					<div class="panel-body">
-						Contents
+						<table id="poPaymentListTable" class="table table-bordered table-hover display responsive">
+							<thead>
+								<tr>
+									<th width="10%">PO Code</th>
+									<th width="15%">Supplier Name</th>
+									<th width="15%">Date</th>
+									<th width="20%">Total Price</th>
+									<th width="5%">&nbsp;</th>
+								</tr>
+							</thead>
+							<tbody>
+								<c:if test="${not empty poList}">
+									<c:forEach items="${ poList }" var="p" varStatus="pL">
+										<tr>
+											<td>
+												<form:hidden path="${ p.poId }"/>
+												<c:out value="${ p.poCode }"></c:out>
+											</td>
+											<td>
+												<c:out value="${ p.supplierLookup.lookupValue }"></c:out>
+											</td>
+											<td>
+											</td>
+											<td>
+											</td>
+											<td>
+											</td>
+										</tr>
+									</c:forEach>
+								</c:if>
+							</tbody>
+						</table>
 					</div>					
 				</div>						
 			</div>

@@ -45,6 +45,48 @@
 					}						
 				}				
 			});
+
+			$('#storeForm')
+				.find('[name="isDefault"]')
+					.change(function(e) {
+						$('#storeForm').formValidation('revalidateField', 'isDefault');
+					})
+					.end()
+				.find('[name="storeStatus"]')
+					.change(function(e) {
+						$('#storeForm').formValidation('revalidateField', 'storeStatus');
+					})
+					.end()					
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						storeName: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 6, max: 30 }
+							}
+						},
+						isDefault: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						},
+						storeStatus: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						}					
+					}
+				});			
 		});
 	</script>	
 </head>
@@ -163,7 +205,7 @@
 										<label for="inputIsDefault" class="col-sm-2 control-label">Is Default Store</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="isDefault">
-												<option>Please Select</option>
+												<option value="">Please Select</option>
 												<form:options items="${ ynDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
 										</div>										
@@ -178,7 +220,7 @@
 										<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="storeStatus">
-												<option>Please Select</option>
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
 										</div>										

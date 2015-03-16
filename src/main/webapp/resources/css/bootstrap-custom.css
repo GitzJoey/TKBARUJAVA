@@ -30,10 +30,6 @@ body {
 	padding: 2px;
 }
 
-#loginForm .form-control-feedback {
-	top: 0px;
-}
-
 .no-margin {
 	margin: 0px;
 }

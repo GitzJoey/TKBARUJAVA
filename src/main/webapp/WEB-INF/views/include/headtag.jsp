@@ -11,7 +11,7 @@
 	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	
-	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/bootstrapvalidator/dist/css/bootstrapValidator.min.css">
+	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/formvalidation/dist/css/formValidation.min.css">
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 	
@@ -49,6 +49,8 @@
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrapvalidator/dist/js/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/formValidation.min.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrapvalidator/src/js/language/id_ID.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/framework/bootstrap.min.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/language/id_ID.js"></script>

@@ -6,22 +6,23 @@
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
 		$(document).ready(function() {
-			$('#loginForm').bootstrapValidator({
-       			// To use feedback icons, ensure that you use Bootstrap v3.1.0 or later
-       			feedbackIcons: {
-           			valid: 'glyphicon glyphicon-ok',
-           			invalid: 'glyphicon glyphicon-remove',
+			$('#loginForm').formValidation({
+				framework: 'bootstrap',
+				locale: 'id_ID',
+				icon: {
+					valid: 'glyphicon glyphicon-ok',
+					invalid: 'glyphicon glyphicon-remove',
 					validating: 'glyphicon glyphicon-refresh'
-       			},
-       			fields: {
-           			username: {
-               			validators: {
-                   			notEmpty: { },
+				},
+				fields: {
+					username: {
+						validators: {
+							notEmpty: { },
 							stringLength: { min: 4, max: 10 },
 							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'password' }
-               			}
-           			},
+	                   		different: { field: 'password' }							
+						}
+					},
 					password: {
                			validators: {
                    			notEmpty: {	},
@@ -29,8 +30,8 @@
                    			stringLength: { min: 6 }
                			}
            			}
-       			}
-   			});
+				}
+			});
 		});
 	</script>
 </head>

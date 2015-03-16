@@ -47,7 +47,7 @@
 				}				
 			});
       
-      $('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
+			$('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
 		});
 	</script>	
 </head>
