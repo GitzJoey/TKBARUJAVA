@@ -29,6 +29,41 @@
 					}
 				}				
 			});
+
+			$('#cancelButton').click(function() {
+				window.location.href(ctxpath + "/warehouse");
+			});
+			
+			$('#warehouseForm')
+				.find('[name="warehouseStatus"]')
+					.change(function(e) {
+						$('#warehouseForm').formValidation('revalidateField', 'warehouseStatus');
+				})
+				.end()
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						warehouseName: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 3, max: 30 }
+							}
+						},
+						warehouseStatus: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						}					
+					}
+				});
 		});
 	</script>	
 </head>
@@ -143,7 +178,7 @@
 										<label for="inputWarehouseStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="warehouseStatus">
-												<option>Please Select</option>
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
 										</div>										

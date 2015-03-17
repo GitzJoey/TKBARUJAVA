@@ -65,6 +65,53 @@
 					$('#productForm').attr('action', ctxpath + "/product/removeunit/" + id);
 				}
 			});
+			
+			$('#productForm')
+				.find('[name="productType"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'productType'); }).end()
+				.find('[name="baseUnit"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'baseUnit'); }).end()
+				.find('[name="productStatus"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'productStatus'); }).end()
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						productType: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						},
+						shortCode: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 1, max: 10 }
+							}							
+						},
+						productName: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 3, max: 30 }
+							}														
+						},
+						baseUnit: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						},
+						productStatus: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						}
+					}					
+				});
 		});
 	</script>	
 </head>
@@ -161,7 +208,7 @@
 										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productType">
-												<option>Select Product Type</option>
+												<option value="">Select Product Type</option>
 												<form:options items="${ productTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
 										</div>										
@@ -198,7 +245,7 @@
 										<label for="inputUnit" class="col-sm-2 control-label">Base Unit</label>
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="baseUnit">
-												<option>Select Unit</option>
+												<option value="">Please Select</option>
 												<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>	
 										</div>
@@ -219,7 +266,10 @@
 													<tbody>
 														<c:forEach items="${ productForm.productUnit }" varStatus="prodUnitIdx">
 															<tr>
-																<td align="center"><input id="cbx_unit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/></td>
+																<td align="center">
+																	<form:hidden path="productUnit[${ prodUnitIdx.index }].productUnitId"/>
+																	<input id="cbx_unit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/>
+																</td>
 																<td>
 																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode">
 																		<option>Select Unit</option>
@@ -248,7 +298,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productStatus">
-												<option>Please Select</option>
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>

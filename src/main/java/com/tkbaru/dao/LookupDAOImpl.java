@@ -171,7 +171,8 @@ public class LookupDAOImpl implements LookupDAO {
 		q.setParameter("key", lookupKey);
 		
 		List<Lookup> result = q.list();
-			
+		
+		if (result.size() == 0) return new Lookup();
 		return result.get(0);
 	}
 		

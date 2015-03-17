@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS `tb_items`;
+
+CREATE TABLE `tb_items` (
+  `items_id` int(11) NOT NULL AUTO_INCREMENT,
+  `product_id` int(11) DEFAULT NULL,
+  `quantity` int(11) DEFAULT NULL,
+  `unit_code` varchar(45) DEFAULT NULL,
+  `price` bigint(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`items_id`)
+);

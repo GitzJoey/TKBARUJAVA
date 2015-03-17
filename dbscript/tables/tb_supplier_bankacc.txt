@@ -5,7 +5,4 @@ CREATE TABLE `tb_supplier_bankacc` (
   `bankacc_id` 	int(11) DEFAULT NULL
 );
 
-INSERT INTO tb_supplier_bankacc (supplier_id, bankacc_id)
-VALUES (1, 1);
-
 COMMIT;

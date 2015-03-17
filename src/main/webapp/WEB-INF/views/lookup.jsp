@@ -57,28 +57,51 @@
 			
 			$('#lookupListTable').DataTable();
 			
-			$('#functionForm').bootstrapValidator({
-       			feedbackIcons: {
-           			valid: 'glyphicon glyphicon-ok',
-           			invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-       			},
-       			submitButtons: 'button[type="submit"]',
-       			fields: {
-       				inputUserName: {
-               			validators: {
-                   			notEmpty: { },
-							stringLength: { min: 4, max: 10 },
-               			}
-           			},
-           			inputPassword: {
-               			validators: {
-                   			notEmpty: {	},
-                   			stringLength: { min: 6 }
-               			}
-           			}
-       			}
-			});
+			$('#lookupForm')
+				.find('[name="lookupMaintainability"]').change(function(e) { $('#lookupForm').formValidation('revalidateField', 'lookupMaintainability'); }).end()
+				.find('[name="lookupStatus"]').change(function(e) { $('#lookupForm').formValidation('revalidateField', 'lookupStatus'); }).end()
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						lookupCategory: {
+							validators: {
+								notEmpty: { }
+							}					
+						},
+						lookupKey: {
+	               			validators: {
+	                   			notEmpty: {	},
+	                   			stringLength: { min: 5 }
+	               			}
+	           			},
+						orderNum: {
+	               			validators: {
+	                   			notEmpty: {	},
+	                   			stringLength: { max: 3 },
+	                   			digits: { }
+	               			}
+	           			},
+	           			lookupMaintainability: {
+	           				icon: false,
+	           				validators: {
+	           					notEmpty: { }
+	           				}
+	           			},
+	           			lookupStatus: {
+	           				icon: false,
+	           				validators: {
+	           					notEmpty: { }
+	           				}
+	           			}
+					}
+				});
 		});
 	</script>	
 </head>
@@ -161,7 +184,7 @@
 															<c:choose>
 																<c:when test="${ lang == '' }">
 																	<c:set var="lang" value="${ j.languageCode }"></c:set>
-																	<c:out value="${ j.languageCode }"/><br/>
+																	<strong><c:out value="${ j.languageCodeLookup.lookupValue }"/></strong><br/>
 																	Value : <c:out value="${ j.lookupValue }"/><br/>
 																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
 																</c:when>
@@ -171,7 +194,7 @@
 																</c:when>
 																<c:otherwise>
 																	<c:set var="lang" value="${ j.languageCode }"></c:set>
-																	<c:out value="${ j.languageCode }"/><br/>
+																	<strong><c:out value="${ j.languageCodeLookup.lookupValue }"/></strong><br/>
 																	Value : <c:out value="${ j.lookupValue }"/><br/>
 																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
 																</c:otherwise>
@@ -207,7 +230,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="functionForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save.html">
+								<form:form id="lookupForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save.html">
 									<form:hidden path="lookupId"/>
 									<div class="form-group">
 										<label for="inputCategory" class="col-sm-2 control-label">Category</label>
@@ -227,7 +250,9 @@
 											<c:forEach items="${ lookupForm.lookupDetail }" varStatus="lookupDetailIdx">
 												<div class="panel panel-default">
 													<div class="panel-body">
-														<c:out value="${ lookupForm.lookupDetail[lookupDetailIdx.index].languageCode }"/>
+														<form:hidden path="lookupDetail[${ lookupDetailIdx.index }].lookupDetailId"/>
+														<form:hidden path="lookupDetail[${ lookupDetailIdx.index }].languageCode"/>
+														<c:out value="${ lookupForm.lookupDetail[lookupDetailIdx.index].languageCodeLookup.lookupValue }"/>
 													</div>
 													<table class="table borderless">
 														<tr>
@@ -251,6 +276,7 @@
 										<label for="inputMaintainability" class="col-sm-2 control-label">Maintainable</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupMaintainability">
+												<option value="">Please Select</option>
 												<form:options items="${ MaintainabilityDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
 											</form:select>
 										</div>
@@ -259,6 +285,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupStatus">
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
 											</form:select>
 										</div>

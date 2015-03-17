@@ -31,20 +31,20 @@ public class Supplier {
 	@Column(name="supplier_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int supplierId;
-	@Column(name="company_name")
-	private String companyName;
+	@Column(name="supplier_name")
+	private String supplierName;
 	@Column(name="address")
-	private String companyAddress;
+	private String supplierAddress;
 	@Column(name="city")
-	private String companyCity;
+	private String supplierCity;
 	@Column(name="remarks")
 	private String supplierRemarks;
 	@Column(name="phone")
-	private String compPhone;
+	private String supplierPhone;
 	@Column(name="fax")
-	private String compFax;
+	private String supplierFax;
 	@Column(name="status")
-	private String companyStatus;
+	private String supplierStatus;
 	@Column(name="npwp_num")
 	private Integer npwpNum;
 	@Column(name="created_by")
@@ -86,28 +86,28 @@ public class Supplier {
 		this.supplierId = supplierId;
 	}
 
-	public String getCompanyName() {
-		return companyName;
+	public String getSupplierName() {
+		return supplierName;
 	}
 
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
 
-	public String getCompanyAddress() {
-		return companyAddress;
+	public String getSupplierAddress() {
+		return supplierAddress;
 	}
 
-	public void setCompanyAddress(String companyAddress) {
-		this.companyAddress = companyAddress;
+	public void setSupplierAddress(String supplierAddress) {
+		this.supplierAddress = supplierAddress;
 	}
 
-	public String getCompanyCity() {
-		return companyCity;
+	public String getSupplierCity() {
+		return supplierCity;
 	}
 
-	public void setCompanyCity(String companyCity) {
-		this.companyCity = companyCity;
+	public void setSupplierCity(String supplierCity) {
+		this.supplierCity = supplierCity;
 	}
 
 	public String getSupplierRemarks() {
@@ -118,28 +118,28 @@ public class Supplier {
 		this.supplierRemarks = supplierRemarks;
 	}
 
-	public String getCompPhone() {
-		return compPhone;
+	public String getSupplierPhone() {
+		return supplierPhone;
 	}
 
-	public void setCompPhone(String compPhone) {
-		this.compPhone = compPhone;
+	public void setSupplierPhone(String supplierPhone) {
+		this.supplierPhone = supplierPhone;
 	}
 
-	public String getCompFax() {
-		return compFax;
+	public String getSupplierFax() {
+		return supplierFax;
 	}
 
-	public void setCompFax(String compFax) {
-		this.compFax = compFax;
+	public void setSupplierFax(String supplierFax) {
+		this.supplierFax = supplierFax;
 	}
 
-	public String getCompanyStatus() {
-		return companyStatus;
+	public String getSupplierStatus() {
+		return supplierStatus;
 	}
 
-	public void setCompanyStatus(String companyStatus) {
-		this.companyStatus = companyStatus;
+	public void setSupplierStatus(String supplierStatus) {
+		this.supplierStatus = supplierStatus;
 	}
 
 	public Integer getNpwpNum() {
@@ -216,15 +216,16 @@ public class Supplier {
 
 	@Override
 	public String toString() {
-		return "Supplier [supplierId=" + supplierId + ", companyName="
-				+ companyName + ", companyAddress=" + companyAddress
-				+ ", companyCity=" + companyCity + ", supplierRemarks="
-				+ supplierRemarks + ", compPhone=" + compPhone + ", compFax="
-				+ compFax + ", companyStatus=" + companyStatus + ", npwpNum="
-				+ npwpNum + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + ", bankAccList=" + bankAccList + ", picList="
-				+ picList + ", prodList=" + prodList + "]";
+		return "Supplier [supplierId=" + supplierId + ", supplierName="
+				+ supplierName + ", supplierAddress=" + supplierAddress
+				+ ", supplierCity=" + supplierCity + ", supplierRemarks="
+				+ supplierRemarks + ", supplierPhone=" + supplierPhone
+				+ ", supplierFax=" + supplierFax + ", supplierStatus="
+				+ supplierStatus + ", npwpNum=" + npwpNum + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", bankAccList="
+				+ bankAccList + ", picList=" + picList + ", prodList="
+				+ prodList + "]";
 	}
 
 }

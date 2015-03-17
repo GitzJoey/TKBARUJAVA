@@ -31,18 +31,18 @@ public class Customer {
 	@Column(name="customer_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int customerId;
-	@Column(name="store_name")
-	private String storeName;
+	@Column(name="customer_name")
+	private String customerName;
 	@Column(name="address")
-	private String storeAddress;
+	private String customerAddress;
 	@Column(name="city")
-	private String storeCity;
+	private String customerCity;
 	@Column(name="phone")
-	private String storePhone;
+	private String customerPhone;
 	@Column(name="status")
-	private String storeStatus;
+	private String customerStatus;
 	@Column(name="remarks")
-	private String storeRemarks;
+	private String customerRemarks;
 	@Column(name="npwp_num")
 	private Integer npwpNum;
 	@Column(name="created_by")
@@ -78,52 +78,52 @@ public class Customer {
 		this.customerId = customerId;
 	}
 
-	public String getStoreName() {
-		return storeName;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setStoreName(String storeName) {
-		this.storeName = storeName;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getStoreAddress() {
-		return storeAddress;
+	public String getCustomerAddress() {
+		return customerAddress;
 	}
 
-	public void setStoreAddress(String storeAddress) {
-		this.storeAddress = storeAddress;
+	public void setCustomerAddress(String customerAddress) {
+		this.customerAddress = customerAddress;
 	}
 
-	public String getStoreCity() {
-		return storeCity;
+	public String getCustomerCity() {
+		return customerCity;
 	}
 
-	public void setStoreCity(String storeCity) {
-		this.storeCity = storeCity;
+	public void setCustomerCity(String customerCity) {
+		this.customerCity = customerCity;
 	}
 
-	public String getStorePhone() {
-		return storePhone;
+	public String getCustomerPhone() {
+		return customerPhone;
 	}
 
-	public void setStorePhone(String storePhone) {
-		this.storePhone = storePhone;
+	public void setCustomerPhone(String customerPhone) {
+		this.customerPhone = customerPhone;
 	}
 
-	public String getStoreStatus() {
-		return storeStatus;
+	public String getCustomerStatus() {
+		return customerStatus;
 	}
 
-	public void setStoreStatus(String storeStatus) {
-		this.storeStatus = storeStatus;
+	public void setCustomerStatus(String customerStatus) {
+		this.customerStatus = customerStatus;
 	}
 
-	public String getStoreRemarks() {
-		return storeRemarks;
+	public String getCustomerRemarks() {
+		return customerRemarks;
 	}
 
-	public void setStoreRemarks(String storeRemarks) {
-		this.storeRemarks = storeRemarks;
+	public void setCustomerRemarks(String customerRemarks) {
+		this.customerRemarks = customerRemarks;
 	}
 
 	public Integer getNpwpNum() {
@@ -192,14 +192,14 @@ public class Customer {
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", storeName="
-				+ storeName + ", storeAddress=" + storeAddress + ", storeCity="
-				+ storeCity + ", storePhone=" + storePhone + ", storeStatus="
-				+ storeStatus + ", storeRemarks=" + storeRemarks + ", npwpNum="
-				+ npwpNum + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + ", bankAccList=" + bankAccList + ", picList="
-				+ picList + "]";
+		return "Customer [customerId=" + customerId + ", customerName="
+				+ customerName + ", customerAddress=" + customerAddress
+				+ ", customerCity=" + customerCity + ", customerPhone="
+				+ customerPhone + ", customerStatus=" + customerStatus
+				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", bankAccList=" + bankAccList + ", picList=" + picList + "]";
 	}
 
 }

@@ -22,14 +22,5 @@ VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Non Admin Number');
 INSERT tb_phonelist (provider, number, status, remarks)
 VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Non Admin Number');
 
-INSERT tb_phonelist (provider, number, status, remarks)
-VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Supplier Number');
-
-INSERT tb_phonelist (provider, number, status, remarks)
-VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Customer Number');
-
-INSERT tb_phonelist (provider, number, status, remarks)
-VALUES ('L006_TSEL', '081296639663', 'L001_A', 'Customer Number');
-
 COMMIT;
 

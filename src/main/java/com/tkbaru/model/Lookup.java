@@ -156,7 +156,7 @@ public class Lookup implements Serializable {
 	}
 	public void setLookupDetail(List<LookupDetail> lookupDetail) {
 		this.lookupDetail = lookupDetail;
-	}
+	}	
 	public Lookup getStatusLookup() {
 		return statusLookup;
 	}

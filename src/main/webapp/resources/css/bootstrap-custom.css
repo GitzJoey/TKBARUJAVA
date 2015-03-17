@@ -41,3 +41,11 @@ strong.title {
 .huge {
 	font-size: 40px;
 }
+
+.small {
+	font-size: 15px;
+}
+
+.tiny {
+	font-size: 10px;
+}

@@ -38,6 +38,66 @@
 		        "info":     	false,
 		        "searching": 	false				
 			});
+			
+			$('select[name="supplierId"]').change(function() {
+				if ($('select[name="supplierId"]').val() != "") {
+					$.ajax({
+						url : ctxpath + "/po/retrieve/supplier",
+						data : 'supplierId=' + encodeURIComponent($('select[name="supplierId"]').val()),
+						type : "GET",
+		 
+						success : function(response) {
+							$('#supplierTooltip').tooltip({ title: response });
+						},
+						error : function(xhr, status, error) {
+							alert(xhr.responseText);
+						}
+					});					
+				} 
+			});
+			
+			$('#poForm')
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						poCode: {
+							validators: {
+								notEmpty: { }
+							}					
+						},
+						poCreatedDate: {
+							validators: {
+								notEmpty: { },
+								date: { format: 'DD-MM-YYYY' }
+							}					
+						},
+						shippingDate: {
+							validators: {
+								notEmpty: { },
+								date: { format: 'DD-MM-YYYY' }
+							}					
+						},
+						warehouseId: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						},
+						supplierId: {
+							icon: false,
+							validators: {
+								notEmpty: { }
+							}
+						}
+					}										
+				});
 		});
 	</script>	
 </head>
@@ -113,7 +173,10 @@
 																		<form:select class="form-control" path="supplierId">
 																			<option value="">Please Select</option>
 																			<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="companyName"/>
-																		</form:select>
+																		</form:select>																		
+																	</div>
+																	<div class="col-sm-1">
+																		<button id="supplierTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>																		
 																	</div>										
 																</div>
 															</div>
@@ -127,7 +190,7 @@
 																<div class="form-group">
 																	<label for="inputPOStatus" class="col-sm-3 control-label">Status</label>
 																	<div class="col-sm-9">
-		
+																		<label id="inputPOStatus" class="control-label"><c:out value="${ poForm.statusLookup.lookupValue }"></c:out></label>				
 																	</div>										
 																</div>
 															</div>
@@ -203,7 +266,10 @@
 																	<tbody>
 																		<c:forEach items="${ poForm.itemsList }" var="iL" varStatus="iLIdx">
 																			<tr>
-																				<td style="vertical-align: middle;"><c:out value="${ poForm.itemsList[iLIdx.index].productLookup.productName }"></c:out></td>
+																				<td style="vertical-align: middle;">
+																					<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
+																					<c:out value="${ poForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																				</td>
 																				<td>
 																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
 																				</td>

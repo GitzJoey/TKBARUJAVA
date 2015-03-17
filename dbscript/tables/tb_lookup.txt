@@ -144,6 +144,20 @@ INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, cr
 VALUES ('WEIGHT_TYPE', 'L012_HEAVY',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*PO Status - L013*/
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_STATUS', 'L013_D',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_STATUS', 'L013_WA',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_STATUS', 'L013_WP',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_STATUS', 'L013_C',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
 INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',

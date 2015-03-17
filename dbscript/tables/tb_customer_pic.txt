@@ -5,7 +5,4 @@ CREATE TABLE `tb_customer_pic` (
   `person_id` 	int(11) NOT NULL
 );
 
-INSERT INTO tb_customer_pic (customer_id, person_id)
-VALUES (1, 4);
-
 COMMIT;

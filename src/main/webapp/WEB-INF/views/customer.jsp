@@ -222,7 +222,7 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="95%">Store Details</th>
+												<th width="95%">Customer Details</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -238,18 +238,18 @@
 																			<table class="table borderless nopaddingrow">
 																				<tr>
 																					<td colspan="2">
-																						<strong class="title"><c:out value="${ i.storeName }"></c:out></strong>
+																						<strong class="title"><c:out value="${ i.customerName }"></c:out></strong>
 																						<hr>
 																					</td>
 																				</tr>
 																				<tr>
 																					<td width="35%">
-																						<strong>Store Details</strong><br/>
-																						<c:out value="${ i.storeAddress }"></c:out><br/>
-																						<c:out value="${ i.storeCity }"></c:out><br/>															
-																						<c:out value="${ i.storePhone }"></c:out><br/>
+																						<strong>Customer Details</strong><br/>
+																						<c:out value="${ i.customerAddress }"></c:out><br/>
+																						<c:out value="${ i.customerCity }"></c:out><br/>															
+																						<c:out value="${ i.customerPhone }"></c:out><br/>
 																						<c:out value="${ i.npwpNum }"></c:out><br/>
-																						<c:out value="${ i.storeRemarks }"></c:out><br/>
+																						<c:out value="${ i.customerRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">
 																						<strong>Person In Charge</strong>
@@ -316,48 +316,48 @@
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>" id="custDataTab">
 												<br/>
 												<div class="form-group">
-													<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
+													<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
 													<div class="col-sm-3">
 														<form:hidden path="customerId" />
-														<form:input path="storeName" type="text" class="form-control" id="inputStoreName" name="inputStoreName" placeholder="Enter Store Name"></form:input>
+														<form:input path="customerName" type="text" class="form-control" id="inputCustomerName" name="inputCustomerName" placeholder="Enter Customer Name"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStoreAddress" class="col-sm-2 control-label">Address</label>
+													<label for="inputCustomerAddress" class="col-sm-2 control-label">Address</label>
 													<div class="col-sm-8">
-														<form:input path="storeAddress" type="text" class="form-control" id="inputStoreAddress" name="inputStoreAddress" placeholder="Enter Address"></form:input>
+														<form:input path="customerAddress" type="text" class="form-control" id="inputCustomerAddress" name="inputCustomerAddress" placeholder="Enter Address"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStoreCity" class="col-sm-2 control-label">City</label>
+													<label for="inputCustomerCity" class="col-sm-2 control-label">City</label>
 													<div class="col-sm-4">
-														<form:input path="storeCity" type="text" class="form-control" id="inputStoreCity" name="inputStoreCity" placeholder="Enter City"></form:input>
+														<form:input path="customerCity" type="text" class="form-control" id="inputCustomerCity" name="inputCustomerCity" placeholder="Enter City"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStorePhone" class="col-sm-2 control-label">Phone</label>
+													<label for="inputCustomerPhone" class="col-sm-2 control-label">Phone</label>
 													<div class="col-sm-4">
-														<form:input path="storePhone" type="text" class="form-control" id="inputStorePhone" name="inputStorePhone" placeholder="Enter Phone"></form:input>
+														<form:input path="customerPhone" type="text" class="form-control" id="inputCustomerPhone" name="inputCustomerPhone" placeholder="Enter Phone"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStoreNpwpNum" class="col-sm-2 control-label">NPWP Number</label>
+													<label for="inputCustomerNpwpNum" class="col-sm-2 control-label">NPWP Number</label>
 													<div class="col-sm-4">
 														<form:input path="npwpNum" type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" placeholder="Enter NPWP Number"></form:input>
 													</div>
 												</div>        
 												<div class="form-group">
-													<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
+													<label for="inputCustomerStatus" class="col-sm-2 control-label">Status</label>
 													<div class="col-sm-2">
-														<form:select class="form-control" path="storeStatus">
+														<form:select class="form-control" path="customerStatus">
 															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 														</form:select>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStoreRemarks" class="col-sm-2 control-label">Remarks</label>
+													<label for="inputCustomerRemarks" class="col-sm-2 control-label">Remarks</label>
 													<div class="col-sm-8">
-														<form:input path="storeRemarks" type="text" class="form-control" id="inputStoreRemarks" name="inputStoreRemarks" placeholder="Remarks"></form:input>
+														<form:input path="customerRemarks" type="text" class="form-control" id="inputCustomerRemarks" name="inputCustomerRemarks" placeholder="Remarks"></form:input>
 													</div>
 												</div>
 											</div>

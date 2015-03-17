@@ -76,6 +76,10 @@ public class PurchaseOrder {
 	@JoinColumn(name="warehouse_id", referencedColumnName="warehouse_id", unique=true, insertable=false, updatable=false)
 	private Warehouse warehouseLookup;
 
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
+
 	public int getPoId() {
 		return poId;
 	}
@@ -210,6 +214,14 @@ public class PurchaseOrder {
 
 	public void setWarehouseLookup(Warehouse warehouseLookup) {
 		this.warehouseLookup = warehouseLookup;
+	}
+
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
 	}
 
 	@Override

@@ -48,6 +48,55 @@
 			});
       
 			$('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
+			
+			$('#truckForm')
+				.find('[name="truckType"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'truckType'); }).end()
+				.find('[name="weightType"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'weightType'); }).end()
+				.find('[name="driver"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'driver'); }).end()
+				.find('[name="truckStatus"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'truckStatus'); }).end()
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						truckType: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						weightType: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						plateNumber: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 4, max: 10 },
+								regexp: { regexp: /^[a-zA-Z0-9]+$/ }
+							}					
+						},
+						driver: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						},
+						truckStatus: {
+							icon: false,
+							validators: {
+								notEmpty: {	}
+							}
+						}
+					}
+				});
 		});
 	</script>	
 </head>
@@ -146,7 +195,7 @@
 										<label for="inputTruckType" class="col-sm-2 control-label">Truck Type</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="truckType">
-												<option>Select Truck Type</option>
+												<option value="">Select Truck Type</option>
 												<form:options items="${ truckTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
 										</div>										
@@ -155,7 +204,7 @@
 										<label for="inputWeightType" class="col-sm-2 control-label">Weight Type</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="weightType">
-												<option>Select Weight Type</option>
+												<option value="">Select Weight Type</option>
 												<form:options items="${ weightTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
 										</div>										
@@ -176,7 +225,7 @@
 										<label for="inputDriver" class="col-sm-2 control-label">Driver</label>
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="driver">
-												<option>Select Driver</option>
+												<option value="">Please Select</option>
 												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
 											</form:select>	
 										</div>
@@ -185,7 +234,7 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="truckStatus">
-												<option>Please Select</option>
+												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>	
 										</div>

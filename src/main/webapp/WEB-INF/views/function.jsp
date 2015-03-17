@@ -59,28 +59,57 @@
 				}								
 			});
 			
-			$('#functionForm').bootstrapValidator({
-       			feedbackIcons: {
-           			valid: 'glyphicon glyphicon-ok',
-           			invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-       			},
-       			submitButtons: 'button[type="submit"]',
-       			fields: {
-       				inputUserName: {
-               			validators: {
-                   			notEmpty: { },
-							stringLength: { min: 4, max: 10 },
-               			}
-           			},
-           			inputPassword: {
-               			validators: {
-                   			notEmpty: {	},
-                   			stringLength: { min: 6 }
-               			}
-           			}
-       			}
-			});
+			$('#functionForm')
+				.formValidation({
+					locale: 'id_ID',
+					framework: 'bootstrap',
+					excluded: ':disabled',
+					icon: {
+						valid: 'glyphicon glyphicon-ok',
+						invalid: 'glyphicon glyphicon-remove',
+						validating: 'glyphicon glyphicon-refresh'
+					},
+					fields: {
+						functionCode: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 }
+							}
+						},
+						module: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 }
+							}
+						},
+						menuName: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 }
+							}
+						},
+						urlLink: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 }
+							}
+						},
+						orderNum: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 },
+								digits: { }
+							}
+						},
+						deepLevel: {
+							validators: {
+								notEmpty: { },
+								stringLength: { min: 5, max: 30 },
+								digits: { }
+							}
+						}
+					}
+				});
 			
 			$('#functionListTable').DataTable();
 		});

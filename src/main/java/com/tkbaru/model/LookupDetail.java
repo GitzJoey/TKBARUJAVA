@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,6 +42,10 @@ public class LookupDetail {
 	@JoinColumn(name="lookup_id", nullable=false)
 	private Lookup lookupEntity;
 
+	@ManyToOne
+	@JoinColumn(name="language_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup languageCodeLookup;
+	
 	public int getLookupDetailId() {
 		return lookupDetailId;
 	}
@@ -111,6 +116,14 @@ public class LookupDetail {
 
 	public void setLookupEntity(Lookup lookupEntity) {
 		this.lookupEntity = lookupEntity;
+	}
+
+	public Lookup getLanguageCodeLookup() {
+		return languageCodeLookup;
+	}
+
+	public void setLanguageCodeLookup(Lookup languageCodeLookup) {
+		this.languageCodeLookup = languageCodeLookup;
 	}
 
 	@Override

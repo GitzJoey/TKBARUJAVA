@@ -76,7 +76,7 @@ CREATE TABLE `tb_bankacc` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`bankacc_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -85,7 +85,7 @@ CREATE TABLE `tb_bankacc` (
 
 LOCK TABLES `tb_bankacc` WRITE;
 /*!40000 ALTER TABLE `tb_bankacc` DISABLE KEYS */;
-INSERT INTO `tb_bankacc` VALUES (1,'Bank 1','Bank 1',938475843,'','A',0,'2015-03-05 13:03:30',0,NULL);
+INSERT INTO `tb_bankacc` VALUES (1,'Bank 1','Bank 1',938475843,'','L001_A',0,NULL,0,NULL),(2,'lksdj','lksdlksdj',9933882,'sdkfslkd','L001_A',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_bankacc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS `tb_customer`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `store_name` varchar(45) DEFAULT NULL,
+  `customer_name` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
@@ -166,7 +166,7 @@ CREATE TABLE `tb_customer_pic` (
 
 LOCK TABLES `tb_customer_pic` WRITE;
 /*!40000 ALTER TABLE `tb_customer_pic` DISABLE KEYS */;
-INSERT INTO `tb_customer_pic` VALUES (1,7),(2,12),(2,13),(2,15);
+INSERT INTO `tb_customer_pic` VALUES (2,6);
 /*!40000 ALTER TABLE `tb_customer_pic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -218,9 +218,9 @@ CREATE TABLE `tb_items` (
   `quantity` int(11) DEFAULT NULL,
   `unit_code` varchar(45) DEFAULT NULL,
   `price` bigint(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`items_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -255,7 +255,7 @@ CREATE TABLE `tb_lookup` (
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`lookup_id`),
   UNIQUE KEY `lookup_key_UNIQUE` (`lookup_key`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `tb_lookup` (
 
 LOCK TABLES `tb_lookup` WRITE;
 /*!40000 ALTER TABLE `tb_lookup` DISABLE KEYS */;
-INSERT INTO `tb_lookup` VALUES (1,'STATUS','L001_A',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(2,'STATUS','L001_I',2,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(3,'SALUTATION','L002_MR',10,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(4,'SALUTATION','L002_MRS',11,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(5,'YESNOSELECTION','L003_YES',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(6,'YESNOSELECTION','L003_NO',2,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(7,'PRODUCT_TYPE','L004_ML',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(8,'PRODUCT_TYPE','L004_GL',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(9,'PRODUCT_TYPE','L004_TRG',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(10,'PRODUCT_TYPE','L004_ACI',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(11,'PRODUCT_TYPE','L004_KDLL',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(12,'PRODUCT_TYPE','L004_KDLI',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(13,'UNIT','L005_DR',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(14,'UNIT','L005_KG',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(15,'UNIT','L005_TN',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(16,'UNIT','L005_KN',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(17,'PHONE_PROVIDER','L006_TSEL',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(18,'PHONE_PROVIDER','L006_XL',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(19,'PHONE_PROVIDER','L006_ISAT',1,'L001_A','L003_NO',0,'2015-03-05 13:02:37',0,NULL),(20,'PHONE_PROVIDER','L006_3',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(21,'PHONE_PROVIDER','L006_FLX',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(22,'PHONE_PROVIDER','L006_SMRTFRN',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(23,'PHONE_PROVIDER','L006_CRA',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(24,'BANK','L007_BCA',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(25,'BANK','L007_BDI',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(26,'TRX_DIRECTION','L008_DB',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(27,'TRX_DIRECTION','L008_CR',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(28,'CURR_CODE','L009_IDR',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(29,'CURR_CODE','L009_USD',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(30,'LANGUAGE','L010_ID',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(31,'LANGUAGE','L010_EN',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(32,'TRUCK_TYPE','L011_OIL',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(33,'TRUCK_TYPE','L011_CARGO',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(34,'WEIGHT_TYPE','L012_MED',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL),(35,'WEIGHT_TYPE','L012_HEAVY',1,'L001_A','L003_NO',0,'2015-03-05 13:02:38',0,NULL);
+INSERT INTO `tb_lookup` VALUES (1,'STATUS','L001_A',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(2,'STATUS','L001_I',2,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(3,'SALUTATION','L002_MR',10,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(4,'SALUTATION','L002_MRS',11,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(5,'YESNOSELECTION','L003_YES',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(6,'YESNOSELECTION','L003_NO',2,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(7,'PRODUCT_TYPE','L004_ML',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(8,'PRODUCT_TYPE','L004_GL',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(9,'PRODUCT_TYPE','L004_TRG',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(10,'PRODUCT_TYPE','L004_ACI',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(11,'PRODUCT_TYPE','L004_KDLL',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(12,'PRODUCT_TYPE','L004_KDLI',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(13,'UNIT','L005_DR',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(14,'UNIT','L005_KG',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(15,'UNIT','L005_TN',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(16,'UNIT','L005_KN',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(17,'PHONE_PROVIDER','L006_TSEL',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(18,'PHONE_PROVIDER','L006_XL',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(19,'PHONE_PROVIDER','L006_ISAT',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(20,'PHONE_PROVIDER','L006_3',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(21,'PHONE_PROVIDER','L006_FLX',1,'L001_A','L003_NO',0,'2015-03-17 20:42:47',0,NULL),(22,'PHONE_PROVIDER','L006_SMRTFRN',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(23,'PHONE_PROVIDER','L006_CRA',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(24,'BANK','L007_BCA',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(25,'BANK','L007_BDI',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(26,'TRX_DIRECTION','L008_DB',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(27,'TRX_DIRECTION','L008_CR',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(28,'CURR_CODE','L009_IDR',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(29,'CURR_CODE','L009_USD',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(30,'LANGUAGE','L010_ID',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(31,'LANGUAGE','L010_EN',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(32,'TRUCK_TYPE','L011_OIL',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(33,'TRUCK_TYPE','L011_CARGO',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(34,'WEIGHT_TYPE','L012_MED',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(35,'WEIGHT_TYPE','L012_HEAVY',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(36,'PO_STATUS','L013_D',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(37,'PO_STATUS','L013_WA',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(38,'PO_STATUS','L013_WP',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL),(39,'PO_STATUS','L013_C',1,'L001_A','L003_NO',0,'2015-03-17 20:42:48',0,NULL);
 /*!40000 ALTER TABLE `tb_lookup` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -286,7 +286,7 @@ CREATE TABLE `tb_lookup_detail` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`lookup_detail_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=71 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=79 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -295,7 +295,7 @@ CREATE TABLE `tb_lookup_detail` (
 
 LOCK TABLES `tb_lookup_detail` WRITE;
 /*!40000 ALTER TABLE `tb_lookup_detail` DISABLE KEYS */;
-INSERT INTO `tb_lookup_detail` VALUES (1,1,'L010_ID','Aktif','Aktif',0,'2015-03-05 13:02:48',0,NULL),(2,1,'L010_EN','Active','Active',0,'2015-03-05 13:02:48',0,NULL),(3,2,'L010_ID','Non-aktif','Non-aktif',0,'2015-03-05 13:02:48',0,NULL),(4,2,'L010_EN','Inactive','Inactive',0,'2015-03-05 13:02:48',0,NULL),(5,3,'L010_ID','Tuan','Tuan',0,'2015-03-05 13:02:48',0,NULL),(6,3,'L010_EN','Mr','Mr',0,'2015-03-05 13:02:48',0,NULL),(7,4,'L010_ID','Ny','Ny',0,'2015-03-05 13:02:48',0,NULL),(8,4,'L010_EN','Mrs','Mrs',0,'2015-03-05 13:02:48',0,NULL),(9,5,'L010_ID','Ya','Ya',0,'2015-03-05 13:02:48',0,NULL),(10,5,'L010_EN','Yes','Yes',0,'2015-03-05 13:02:48',0,NULL),(11,6,'L010_ID','Tidak','Tidak',0,'2015-03-05 13:02:48',0,NULL),(12,6,'L010_EN','No','No',0,'2015-03-05 13:02:48',0,NULL),(13,7,'L010_ID','Minyak Sawit','Minyak Sawit',0,'2015-03-05 13:02:48',0,NULL),(14,7,'L010_EN','Palm Oil','Palm Oil',0,'2015-03-05 13:02:48',0,NULL),(15,8,'L010_ID','Gula','Gula',0,'2015-03-05 13:02:48',0,NULL),(16,8,'L010_EN','Sugar','Sugar',0,'2015-03-05 13:02:48',0,NULL),(17,9,'L010_ID','Terigu','Terigu',0,'2015-03-05 13:02:48',0,NULL),(18,9,'L010_EN','Wheat','Wheat',0,'2015-03-05 13:02:48',0,NULL),(19,10,'L010_ID','Aci','Tapioka',0,'2015-03-05 13:02:48',0,NULL),(20,10,'L010_EN','Tapioca','Tapioca',0,'2015-03-05 13:02:48',0,NULL),(21,11,'L010_ID','Kedelai Lokal','Kedelai Lokal',0,'2015-03-05 13:02:48',0,NULL),(22,11,'L010_EN','Local Soybean','Local Soybean',0,'2015-03-05 13:02:48',0,NULL),(23,12,'L010_ID','Kedelai Impor','Kedelai Impor',0,'2015-03-05 13:02:48',0,NULL),(24,12,'L010_EN','Imported Soybean','Imported Soybean',0,'2015-03-05 13:02:48',0,NULL),(25,13,'L010_ID','Drum','Drum',0,'2015-03-05 13:02:48',0,NULL),(26,13,'L010_EN','Drum','Drum',0,'2015-03-05 13:02:48',0,NULL),(27,14,'L010_ID','Kilogram','Kilogram',0,'2015-03-05 13:02:49',0,NULL),(28,14,'L010_EN','Kilogram','Kilogram',0,'2015-03-05 13:02:49',0,NULL),(29,15,'L010_ID','Ton','Ton',0,'2015-03-05 13:02:49',0,NULL),(30,15,'L010_EN','Tonne','Tonne',0,'2015-03-05 13:02:49',0,NULL),(31,16,'L010_ID','Kuintal','Kuintal',0,'2015-03-05 13:02:49',0,NULL),(32,16,'L010_EN','Kuintal','Kuintal',0,'2015-03-05 13:02:49',0,NULL),(33,17,'L010_ID','T-Sel','T-Sel',0,'2015-03-05 13:02:49',0,NULL),(34,17,'L010_EN','T-Sel','T-Sel',0,'2015-03-05 13:02:49',0,NULL),(35,18,'L010_ID','XL','XL',0,'2015-03-05 13:02:49',0,NULL),(36,18,'L010_EN','XL','XL',0,'2015-03-05 13:02:49',0,NULL),(37,19,'L010_ID','Indosat','Indosat',0,'2015-03-05 13:02:49',0,NULL),(38,19,'L010_EN','Indosat','Indosat',0,'2015-03-05 13:02:49',0,NULL),(39,20,'L010_ID','3','3',0,'2015-03-05 13:02:49',0,NULL),(40,20,'L010_EN','3','3',0,'2015-03-05 13:02:49',0,NULL),(41,21,'L010_ID','Flexi','Flexi',0,'2015-03-05 13:02:49',0,NULL),(42,21,'L010_EN','Flexi','Flexi',0,'2015-03-05 13:02:49',0,NULL),(43,22,'L010_ID','SmartFren','SmartFren',0,'2015-03-05 13:02:49',0,NULL),(44,22,'L010_EN','SmartFren','SmartFren',0,'2015-03-05 13:02:49',0,NULL),(45,23,'L010_ID','Ceria','Ceria',0,'2015-03-05 13:02:49',0,NULL),(46,23,'L010_EN','Ceria','Ceria',0,'2015-03-05 13:02:49',0,NULL),(47,24,'L010_ID','Bank Central Asia','Bank Central Asia',0,'2015-03-05 13:02:49',0,NULL),(48,24,'L010_EN','Bank Central Asia','Bank Central Asia',0,'2015-03-05 13:02:49',0,NULL),(49,25,'L010_ID','Bank Danamon Indonesia','Bank Danamon Indonesia',0,'2015-03-05 13:02:49',0,NULL),(50,25,'L010_EN','Bank Danamon Indonesia','Bank Danamon Indonesia',0,'2015-03-05 13:02:49',0,NULL),(51,26,'L010_ID','Debit','Debit',0,'2015-03-05 13:02:49',0,NULL),(52,26,'L010_EN','Debit','Debit',0,'2015-03-05 13:02:49',0,NULL),(53,27,'L010_ID','Kredit','Kredit',0,'2015-03-05 13:02:49',0,NULL),(54,27,'L010_EN','Credit','Credit',0,'2015-03-05 13:02:49',0,NULL),(55,28,'L010_ID','Rupiah','Rupiah',0,'2015-03-05 13:02:49',0,NULL),(56,28,'L010_EN','Indonesian Rupiah','Indonesian Rupiah',0,'2015-03-05 13:02:49',0,NULL),(57,29,'L010_ID','Dolar','Dolar',0,'2015-03-05 13:02:50',0,NULL),(58,29,'L010_EN','US Dollar','US Dollar',0,'2015-03-05 13:02:50',0,NULL),(59,30,'L010_ID','Bahasa Indonesia','Bahasa Indonesia',0,'2015-03-05 13:02:50',0,NULL),(60,30,'L010_EN','Indonesian','Indonesian',0,'2015-03-05 13:02:50',0,NULL),(61,31,'L010_ID','Bahasa Inggris','Bahasa Inggris',0,'2015-03-05 13:02:50',0,NULL),(62,31,'L010_EN','English','English',0,'2015-03-05 13:02:50',0,NULL),(63,32,'L010_ID','Truk Tangki','Truk Tangki',0,'2015-03-05 13:02:50',0,NULL),(64,32,'L010_EN','Oil Truck','Oil Truck',0,'2015-03-05 13:02:50',0,NULL),(65,33,'L010_ID','Truk Barang','Truk Barang',0,'2015-03-05 13:02:50',0,NULL),(66,33,'L010_EN','Cargo Truck','Cargo Truck',0,'2015-03-05 13:02:50',0,NULL),(67,34,'L010_ID','Truk Sedang (8T)','Truk Sedang (8T)',0,'2015-03-05 13:02:50',0,NULL),(68,34,'L010_EN','Medium Truck (6T)','Medium Truck (6T)',0,'2015-03-05 13:02:50',0,NULL),(69,35,'L010_ID','Truk Berat (25T)','Truk Berat (25T)',0,'2015-03-05 13:02:50',0,NULL),(70,35,'L010_EN','Heavy Truck (25T)','Heavy Truck (25T)',0,'2015-03-05 13:02:50',0,NULL);
+INSERT INTO `tb_lookup_detail` VALUES (1,1,'L010_ID','Aktif','Aktif',0,'2015-03-17 20:43:05',0,NULL),(2,1,'L010_EN','Active','Active',0,'2015-03-17 20:43:05',0,NULL),(3,2,'L010_ID','Non-aktif','Non-aktif',0,'2015-03-17 20:43:05',0,NULL),(4,2,'L010_EN','Inactive','Inactive',0,'2015-03-17 20:43:05',0,NULL),(5,3,'L010_ID','Tuan','Tuan',0,'2015-03-17 20:43:05',0,NULL),(6,3,'L010_EN','Mr','Mr',0,'2015-03-17 20:43:05',0,NULL),(7,4,'L010_ID','Ny','Ny',0,'2015-03-17 20:43:05',0,NULL),(8,4,'L010_EN','Mrs','Mrs',0,'2015-03-17 20:43:05',0,NULL),(9,5,'L010_ID','Ya','Ya',0,'2015-03-17 20:43:05',0,NULL),(10,5,'L010_EN','Yes','Yes',0,'2015-03-17 20:43:05',0,NULL),(11,6,'L010_ID','Tidak','Tidak',0,'2015-03-17 20:43:05',0,NULL),(12,6,'L010_EN','No','No',0,'2015-03-17 20:43:05',0,NULL),(13,7,'L010_ID','Minyak Sawit','Minyak Sawit',0,'2015-03-17 20:43:05',0,NULL),(14,7,'L010_EN','Palm Oil','Palm Oil',0,'2015-03-17 20:43:05',0,NULL),(15,8,'L010_ID','Gula','Gula',0,'2015-03-17 20:43:05',0,NULL),(16,8,'L010_EN','Sugar','Sugar',0,'2015-03-17 20:43:05',0,NULL),(17,9,'L010_ID','Terigu','Terigu',0,'2015-03-17 20:43:06',0,NULL),(18,9,'L010_EN','Wheat','Wheat',0,'2015-03-17 20:43:06',0,NULL),(19,10,'L010_ID','Aci','Tapioka',0,'2015-03-17 20:43:06',0,NULL),(20,10,'L010_EN','Tapioca','Tapioca',0,'2015-03-17 20:43:06',0,NULL),(21,11,'L010_ID','Kedelai Lokal','Kedelai Lokal',0,'2015-03-17 20:43:06',0,NULL),(22,11,'L010_EN','Local Soybean','Local Soybean',0,'2015-03-17 20:43:06',0,NULL),(23,12,'L010_ID','Kedelai Impor','Kedelai Impor',0,'2015-03-17 20:43:06',0,NULL),(24,12,'L010_EN','Imported Soybean','Imported Soybean',0,'2015-03-17 20:43:06',0,NULL),(25,13,'L010_ID','Drum','Drum',0,'2015-03-17 20:43:06',0,NULL),(26,13,'L010_EN','Drum','Drum',0,'2015-03-17 20:43:06',0,NULL),(27,14,'L010_ID','Kilogram','Kilogram',0,'2015-03-17 20:43:06',0,NULL),(28,14,'L010_EN','Kilogram','Kilogram',0,'2015-03-17 20:43:06',0,NULL),(29,15,'L010_ID','Ton','Ton',0,'2015-03-17 20:43:06',0,NULL),(30,15,'L010_EN','Tonne','Tonne',0,'2015-03-17 20:43:06',0,NULL),(31,16,'L010_ID','Kuintal','Kuintal',0,'2015-03-17 20:43:06',0,NULL),(32,16,'L010_EN','Kuintal','Kuintal',0,'2015-03-17 20:43:06',0,NULL),(33,17,'L010_ID','T-Sel','T-Sel',0,'2015-03-17 20:43:06',0,NULL),(34,17,'L010_EN','T-Sel','T-Sel',0,'2015-03-17 20:43:06',0,NULL),(35,18,'L010_ID','XL','XL',0,'2015-03-17 20:43:06',0,NULL),(36,18,'L010_EN','XL','XL',0,'2015-03-17 20:43:06',0,NULL),(37,19,'L010_ID','Indosat','Indosat',0,'2015-03-17 20:43:06',0,NULL),(38,19,'L010_EN','Indosat','Indosat',0,'2015-03-17 20:43:06',0,NULL),(39,20,'L010_ID','3','3',0,'2015-03-17 20:43:06',0,NULL),(40,20,'L010_EN','3','3',0,'2015-03-17 20:43:07',0,NULL),(41,21,'L010_ID','Flexi','Flexi',0,'2015-03-17 20:43:07',0,NULL),(42,21,'L010_EN','Flexi','Flexi',0,'2015-03-17 20:43:07',0,NULL),(43,22,'L010_ID','SmartFren','SmartFren',0,'2015-03-17 20:43:07',0,NULL),(44,22,'L010_EN','SmartFren','SmartFren',0,'2015-03-17 20:43:07',0,NULL),(45,23,'L010_ID','Ceria','Ceria',0,'2015-03-17 20:43:07',0,NULL),(46,23,'L010_EN','Ceria','Ceria',0,'2015-03-17 20:43:07',0,NULL),(47,24,'L010_ID','Bank Central Asia','Bank Central Asia',0,'2015-03-17 20:43:07',0,NULL),(48,24,'L010_EN','Bank Central Asia','Bank Central Asia',0,'2015-03-17 20:43:07',0,NULL),(49,25,'L010_ID','Bank Danamon Indonesia','Bank Danamon Indonesia',0,'2015-03-17 20:43:07',0,NULL),(50,25,'L010_EN','Bank Danamon Indonesia','Bank Danamon Indonesia',0,'2015-03-17 20:43:07',0,NULL),(51,26,'L010_ID','Debit','Debit',0,'2015-03-17 20:43:07',0,NULL),(52,26,'L010_EN','Debit','Debit',0,'2015-03-17 20:43:07',0,NULL),(53,27,'L010_ID','Kredit','Kredit',0,'2015-03-17 20:43:07',0,NULL),(54,27,'L010_EN','Credit','Credit',0,'2015-03-17 20:43:07',0,NULL),(55,28,'L010_ID','Rupiah','Rupiah',0,'2015-03-17 20:43:07',0,NULL),(56,28,'L010_EN','Indonesian Rupiah','Indonesian Rupiah',0,'2015-03-17 20:43:07',0,NULL),(57,29,'L010_ID','Dolar','Dolar',0,'2015-03-17 20:43:07',0,NULL),(58,29,'L010_EN','US Dollar','US Dollar',0,'2015-03-17 20:43:07',0,NULL),(59,30,'L010_ID','Bahasa Indonesia','Bahasa Indonesia',0,'2015-03-17 20:43:07',0,NULL),(60,30,'L010_EN','Indonesian','Indonesian',0,'2015-03-17 20:43:07',0,NULL),(61,31,'L010_ID','Bahasa Inggris','Bahasa Inggris',0,'2015-03-17 20:43:07',0,NULL),(62,31,'L010_EN','English','English',0,'2015-03-17 20:43:07',0,NULL),(63,32,'L010_ID','Truk Tangki','Truk Tangki',0,'2015-03-17 20:43:07',0,NULL),(64,32,'L010_EN','Oil Truck','Oil Truck',0,'2015-03-17 20:43:07',0,NULL),(65,33,'L010_ID','Truk Barang','Truk Barang',0,'2015-03-17 20:43:07',0,NULL),(66,33,'L010_EN','Cargo Truck','Cargo Truck',0,'2015-03-17 20:43:07',0,NULL),(67,34,'L010_ID','Truk Sedang (8T)','Truk Sedang (8T)',0,'2015-03-17 20:43:07',0,NULL),(68,34,'L010_EN','Medium Truck (6T)','Medium Truck (6T)',0,'2015-03-17 20:43:07',0,NULL),(69,35,'L010_ID','Truk Berat (25T)','Truk Berat (25T)',0,'2015-03-17 20:43:07',0,NULL),(70,35,'L010_EN','Heavy Truck (25T)','Heavy Truck (25T)',0,'2015-03-17 20:43:08',0,NULL),(71,36,'L010_ID','Draf','Draf',0,'2015-03-17 20:43:08',0,NULL),(72,36,'L010_EN','Draft','Draft',0,'2015-03-17 20:43:08',0,NULL),(73,37,'L010_ID','Menunggu Kedatangan','Menunggu Kedatangan',0,'2015-03-17 20:43:08',0,NULL),(74,37,'L010_EN','Awaiting For Arrival','Awaiting For Arrival',0,'2015-03-17 20:43:08',0,NULL),(75,38,'L010_ID','Menunggu Pembayaran','Menunggu Pembayaran',0,'2015-03-17 20:43:08',0,NULL),(76,38,'L010_EN','Awaiting For Arrival','Awaiting For Payment',0,'2015-03-17 20:43:08',0,NULL),(77,39,'L010_ID','Tutup/Selesai','Tutup/Selesai',0,'2015-03-17 20:43:08',0,NULL),(78,39,'L010_EN','Closed/Done','Closed/Done',0,'2015-03-17 20:43:08',0,NULL);
 /*!40000 ALTER TABLE `tb_lookup_detail` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -353,7 +353,7 @@ CREATE TABLE `tb_person` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`person_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,7 +362,7 @@ CREATE TABLE `tb_person` (
 
 LOCK TABLES `tb_person` WRITE;
 /*!40000 ALTER TABLE `tb_person` DISABLE KEYS */;
-INSERT INTO `tb_person` VALUES (1,'admin','admin',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:46',0,NULL),(2,'non admin','non admin',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:47',0,NULL),(3,'Supplier PIC 1','Supplier PIC 1',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:47',0,NULL),(4,'Customer PIC 1','Customer PIC 1',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:47',0,NULL);
+INSERT INTO `tb_person` VALUES (1,'admin','admin',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:46',0,NULL),(2,'non admin','non admin',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:47',0,NULL),(3,'Supplier PIC 1','Supplier PIC 1','','','','',NULL,0,NULL,0,NULL),(4,'Customer PIC 1','Customer PIC 1',NULL,NULL,NULL,NULL,NULL,0,'2015-03-05 13:01:47',0,NULL),(5,'karsun','','','','','asldk',NULL,0,NULL,0,NULL),(6,'','','','','','',NULL,0,NULL,0,NULL),(10,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0,NULL),(11,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0,NULL),(12,NULL,NULL,NULL,NULL,NULL,NULL,NULL,0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_person` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -385,7 +385,7 @@ CREATE TABLE `tb_person_phonelist` (
 
 LOCK TABLES `tb_person_phonelist` WRITE;
 /*!40000 ALTER TABLE `tb_person_phonelist` DISABLE KEYS */;
-INSERT INTO `tb_person_phonelist` VALUES (1,1),(2,2),(2,3),(3,4),(4,5),(4,6);
+INSERT INTO `tb_person_phonelist` VALUES (1,1),(2,2),(2,3),(4,5),(4,6),(3,4),(5,7);
 /*!40000 ALTER TABLE `tb_person_phonelist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -407,7 +407,7 @@ CREATE TABLE `tb_phonelist` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`phonelist_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -416,7 +416,7 @@ CREATE TABLE `tb_phonelist` (
 
 LOCK TABLES `tb_phonelist` WRITE;
 /*!40000 ALTER TABLE `tb_phonelist` DISABLE KEYS */;
-INSERT INTO `tb_phonelist` VALUES (1,'L006_TSEL','081296639663','L001_A','Admin Number',0,NULL,0,NULL),(2,'L006_TSEL','081296639663','L001_A','Non Admin Number',0,NULL,0,NULL),(3,'L006_TSEL','081296639663','L001_A','Non Admin Number',0,NULL,0,NULL),(4,'L006_TSEL','081296639663','L001_A','Supplier Number',0,NULL,0,NULL),(5,'L006_TSEL','081296639663','L001_A','Customer Number',0,NULL,0,NULL),(6,'L006_TSEL','081296639663','L001_A','Customer Number',0,NULL,0,NULL);
+INSERT INTO `tb_phonelist` VALUES (1,'L006_TSEL','081296639663','L001_A','Admin Number',0,NULL,0,NULL),(2,'L006_TSEL','081296639663','L001_A','Non Admin Number',0,NULL,0,NULL),(3,'L006_TSEL','081296639663','L001_A','Non Admin Number',0,NULL,0,NULL),(4,'L006_TSEL','081296639663','L001_A','Supplier Number',0,NULL,0,NULL),(5,'L006_TSEL','081296639663','L001_A','Customer Number',0,NULL,0,NULL),(6,'L006_TSEL','081296639663','L001_A','Customer Number',0,NULL,0,NULL),(7,'L006_TSEL','99277312','L001_A','s,mdsdss',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_phonelist` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -433,6 +433,7 @@ CREATE TABLE `tb_po` (
   `po_created` datetime DEFAULT NULL,
   `shipping_date` datetime DEFAULT NULL,
   `supplier_id` int(11) DEFAULT NULL,
+  `warehouse_id` int(11) DEFAULT NULL,
   `po_type` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `created_by` int(11) DEFAULT '0',
@@ -517,7 +518,7 @@ CREATE TABLE `tb_product` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -526,7 +527,7 @@ CREATE TABLE `tb_product` (
 
 LOCK TABLES `tb_product` WRITE;
 /*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
-INSERT INTO `tb_product` VALUES (1,'L004_GL','sss','ddd','ddd','L005_KG','0-ddd-94.jpg','L001_A',0,NULL,0,NULL);
+INSERT INTO `tb_product` VALUES (2,'L004_ML','ML','Minyak Curah','Minyak Curah','L005_KG','0-Minyak Curah-79.jpg','L001_A',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -548,7 +549,7 @@ CREATE TABLE `tb_product_unit` (
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`prod_unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -557,31 +558,8 @@ CREATE TABLE `tb_product_unit` (
 
 LOCK TABLES `tb_product_unit` WRITE;
 /*!40000 ALTER TABLE `tb_product_unit` DISABLE KEYS */;
-INSERT INTO `tb_product_unit` VALUES (1,1,'L005_TN',1000,'ddkdkkd',0,NULL,0,NULL);
+INSERT INTO `tb_product_unit` VALUES (4,2,'L005_DR',180,'1 Drum = 180 Kg',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_product_unit` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `tb_purchaseorder`
---
-
-DROP TABLE IF EXISTS `tb_purchaseorder`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `tb_purchaseorder` (
-  `po_id` int(11) NOT NULL AUTO_INCREMENT,
-  `po_code` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`po_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `tb_purchaseorder`
---
-
-LOCK TABLES `tb_purchaseorder` WRITE;
-/*!40000 ALTER TABLE `tb_purchaseorder` DISABLE KEYS */;
-/*!40000 ALTER TABLE `tb_purchaseorder` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -657,7 +635,7 @@ CREATE TABLE `tb_store` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`store_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -679,7 +657,7 @@ DROP TABLE IF EXISTS `tb_supplier`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `tb_supplier` (
   `supplier_id` int(11) NOT NULL AUTO_INCREMENT,
-  `company_name` varchar(45) DEFAULT NULL,
+  `supplier_name` varchar(45) DEFAULT NULL,
   `address` varchar(45) DEFAULT NULL,
   `city` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
@@ -701,7 +679,7 @@ CREATE TABLE `tb_supplier` (
 
 LOCK TABLES `tb_supplier` WRITE;
 /*!40000 ALTER TABLE `tb_supplier` DISABLE KEYS */;
-INSERT INTO `tb_supplier` VALUES (1,'Supplier Company 1','Address 1','City 1','12345',NULL,'1234567','Remarks 1',NULL,0,'2015-03-09 09:45:44',0,NULL);
+INSERT INTO `tb_supplier` VALUES (1,'Supplier Company 1','Address 1','City 1','12345',NULL,'1234567','Remarks 1',NULL,0,'2015-03-17 22:58:33',0,NULL);
 /*!40000 ALTER TABLE `tb_supplier` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -724,7 +702,7 @@ CREATE TABLE `tb_supplier_bankacc` (
 
 LOCK TABLES `tb_supplier_bankacc` WRITE;
 /*!40000 ALTER TABLE `tb_supplier_bankacc` DISABLE KEYS */;
-INSERT INTO `tb_supplier_bankacc` VALUES (1,1),(0,0),(0,0);
+INSERT INTO `tb_supplier_bankacc` VALUES (0,0),(0,0),(1,1),(2,2);
 /*!40000 ALTER TABLE `tb_supplier_bankacc` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -747,7 +725,7 @@ CREATE TABLE `tb_supplier_pic` (
 
 LOCK TABLES `tb_supplier_pic` WRITE;
 /*!40000 ALTER TABLE `tb_supplier_pic` DISABLE KEYS */;
-INSERT INTO `tb_supplier_pic` VALUES (1,3);
+INSERT INTO `tb_supplier_pic` VALUES (1,3),(2,5);
 /*!40000 ALTER TABLE `tb_supplier_pic` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -827,7 +805,7 @@ CREATE TABLE `tb_user` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`user_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -858,7 +836,7 @@ CREATE TABLE `tb_warehouse` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`warehouse_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -867,7 +845,7 @@ CREATE TABLE `tb_warehouse` (
 
 LOCK TABLES `tb_warehouse` WRITE;
 /*!40000 ALTER TABLE `tb_warehouse` DISABLE KEYS */;
-INSERT INTO `tb_warehouse` VALUES (1,'ppp','asldkfj','asdkfj','L001_A',0,NULL,0,NULL);
+INSERT INTO `tb_warehouse` VALUES (2,'kkk','kkk','kkk','L001_A',0,NULL,0,NULL);
 /*!40000 ALTER TABLE `tb_warehouse` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -880,4 +858,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-03-10 15:36:12
+-- Dump completed on 2015-03-17 23:31:36

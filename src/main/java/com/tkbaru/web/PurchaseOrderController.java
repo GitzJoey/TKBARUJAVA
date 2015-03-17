@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.PurchaseOrder;
+import com.tkbaru.model.Supplier;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.PurchaseOrderService;
@@ -61,7 +64,11 @@ public class PurchaseOrderController {
 	public String poNew(Locale locale, Model model) {
 		logger.info("[poNew] " + "");
 		
-		model.addAttribute("poForm", new PurchaseOrder());
+		PurchaseOrder po = new PurchaseOrder();
+		po.setPoStatus("L013_D");
+		po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+		
+		model.addAttribute("poForm", po);
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
@@ -147,4 +154,18 @@ public class PurchaseOrderController {
 		
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}	
+	
+	@RequestMapping(value="/retrieve/supplier", method = RequestMethod.GET)
+	public @ResponseBody String poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
+		logger.info("[poRetrieveSupplier] " + "supplierId: " + supplierId);
+		
+		Supplier supp = supplierManager.getSupplierById(Integer.parseInt(supplierId));
+		
+		String htmlTag = "" +
+			"<strong>" + supp.getSupplierName() + "</strong>" +	
+			"";
+		
+		return htmlTag;
+	}	
+	
 }

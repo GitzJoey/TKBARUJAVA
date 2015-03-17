@@ -69,6 +69,7 @@ public class LookupController {
 			LookupDetail newld = new LookupDetail();
 			newld.setLanguageCode(langlookup.getLookupKey());
 			newld.setLookupEntity(newl);
+			newld.setLanguageCodeLookup(lookupManager.getLookupByKey(langlookup.getLookupKey()));
 			
 			ldlist.add(newld);
 		}

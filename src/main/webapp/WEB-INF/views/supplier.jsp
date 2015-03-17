@@ -237,7 +237,7 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="95%">Company Details</th>
+												<th width="95%">Supplier Details</th>
 											</tr>
 										</thead>
 										<tbody>
@@ -253,16 +253,16 @@
 																			<table class="table borderless nopaddingrow">
 																				<tr>
 																					<td colspan="2">
-																						<strong class="title"><c:out value="${ i.companyName }"></c:out></strong>
+																						<strong class="title"><c:out value="${ i.supplierName }"></c:out></strong>
 																						<hr>
 																					</td>
 																				</tr>
 																				<tr>
 																					<td width="35%">
-																						<strong>Company Details</strong><br/>
-																						<c:out value="${ i.companyAddress }"></c:out><br/>
-																						<c:out value="${ i.companyCity }"></c:out><br/>															
-																						<c:out value="${ i.compPhone }"></c:out><br/>
+																						<strong>Supplier Details</strong><br/>
+																						<c:out value="${ i.supplierAddress }"></c:out><br/>
+																						<c:out value="${ i.supplierCity }"></c:out><br/>															
+																						<c:out value="${ i.supplierPhone }"></c:out><br/>
 																						<c:out value="${ i.npwpNum }"></c:out><br/>
 																						<c:out value="${ i.supplierRemarks }"></c:out><br/>
 																					</td>
@@ -338,40 +338,40 @@
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>" id="suppDataTab">
 												<br/>
 												<div class="form-group">
-													<label for="inputCompanyName" class="col-sm-2 control-label">Company Name</label>
+													<label for="inputSupplierName" class="col-sm-2 control-label">Supplier Name</label>
 													<div class="col-sm-3">
 														<form:hidden path="supplierId"/>
-														<form:input type="text" class="form-control" id="inputCompanyName" name="inputCompanyName" path="companyName" placeholder="Enter Company Name"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCompanyAddress" class="col-sm-2 control-label">Address</label>
+													<label for="inputSupplierAddress" class="col-sm-2 control-label">Address</label>
 													<div class="col-sm-3">
-														<form:input type="text" class="form-control" id="inputCompanyAddress" name="inputCompanyAddress" path="companyAddress" placeholder="Enter Company Address"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputCity" class="col-sm-2 control-label">City</label>
 													<div class="col-sm-5">											
-														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="companyCity" placeholder="City"></form:input>
+														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
 													<div class="col-sm-4">
-														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="compPhone"  placeholder="Enter Company Phone Number"></form:input>
+														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="supplierPhone"  placeholder="Enter Supplier Phone Number"></form:input>
 													</div>
 												</div>                     
 												<div class="form-group">
 													<label for="inputFax" class="col-sm-2 control-label">Fax</label>
 													<div class="col-sm-4">
-														<form:input type="text" class="form-control" id="inputFax" name="inputFax" path="compFax" placeholder="Fax"></form:input>
+														<form:input type="text" class="form-control" id="inputFax" name="inputFax" path="supplierFax" placeholder="Fax"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputNpwpNum" class="col-sm-2 control-label">NPWP</label>
 													<div class="col-sm-6">
-														<form:input type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" path="npwpNum"  placeholder="Enter Company NPWP"></form:input>
+														<form:input type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" path="npwpNum"  placeholder="Enter Supplier NPWP"></form:input>
 													</div>
 												</div>        
 												<div class="form-group">
@@ -383,7 +383,7 @@
 												<div class="form-group">
 													<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 													<div class="col-sm-2">
-														<form:select class="form-control" path="companyStatus">
+														<form:select class="form-control" path="supplierStatus">
 															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 														</form:select>
 													</div>
