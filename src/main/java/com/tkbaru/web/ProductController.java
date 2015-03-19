@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.service.LookupService;
@@ -31,13 +32,17 @@ public class ProductController {
 	
 	@Autowired
 	LookupService lookupManager;
-	
+
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String productPageLoad(Locale locale, Model model) {
 		logger.info("[productPageLoad] : " + "");
 		
 		model.addAttribute("productList", productManager.getAllProduct());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -53,6 +58,7 @@ public class ProductController {
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 	
@@ -70,6 +76,7 @@ public class ProductController {
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -125,6 +132,7 @@ public class ProductController {
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
 		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -150,6 +158,7 @@ public class ProductController {
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
 		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

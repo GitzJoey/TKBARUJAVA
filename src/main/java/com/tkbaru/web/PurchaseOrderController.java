@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Items;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.LookupService;
@@ -52,6 +53,9 @@ public class PurchaseOrderController {
 	@Autowired
 	WarehouseService warehouseManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -73,7 +77,8 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		//model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
-		
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -97,6 +102,7 @@ public class PurchaseOrderController {
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		//model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -122,6 +128,7 @@ public class PurchaseOrderController {
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		//model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -132,6 +139,7 @@ public class PurchaseOrderController {
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -142,6 +150,7 @@ public class PurchaseOrderController {
 	public String poRevise(Locale locale, Model model) {
 		logger.info("[poRevise] " + "");
 
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -150,7 +159,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value="/save", method = RequestMethod.GET)
 	public String poSave(Locale locale, Model model) {
-		logger.info("[poRevise] " + "");
+		logger.info("[poSave] " + "");
 		
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}	

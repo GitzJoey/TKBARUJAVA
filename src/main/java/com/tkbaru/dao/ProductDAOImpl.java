@@ -10,23 +10,11 @@ import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Product;
 
-import java.util.ArrayList;
-import java.util.Map;
-
-import javax.sql.DataSource;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-
 @Repository
 @SuppressWarnings("unchecked")
 public class ProductDAOImpl implements ProductDAO {
 	private static final Logger logger = LoggerFactory.getLogger(ProductDAOImpl.class);
 
-    private DataSource dataSource;
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
-        
     private SessionFactory sessionFactory;
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;

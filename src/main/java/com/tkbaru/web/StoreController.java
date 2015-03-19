@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Store;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.StoreService;
@@ -30,6 +31,9 @@ public class StoreController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String storePageLoad(Locale locale, Model model) {		
 		logger.info("[storePageLoad] " + "");
@@ -37,6 +41,8 @@ public class StoreController {
 		List<Store> sList = storeManager.getAllStore();
 		
 		model.addAttribute("storeList", sList);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -51,6 +57,7 @@ public class StoreController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("ynDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -69,6 +76,7 @@ public class StoreController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("ynDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

@@ -34,14 +34,7 @@
 	
 	<!-- File Upload -->
 	<beans:bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>	
-	
-	<interceptors>
-		<interceptor>
-			<mapping path="/**" />
-            <beans:bean class="com.tkbaru.common.RequestInitializeInterceptor"></beans:bean>
-        </interceptor>
-    </interceptors>
-		
+			
 	<context:component-scan base-package="com.tkbaru.web" />
 
 </beans:beans>

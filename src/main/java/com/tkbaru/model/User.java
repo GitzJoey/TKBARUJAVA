@@ -1,8 +1,11 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class User {
+public class User implements Serializable {
+	private static final long serialVersionUID = 3890210367688787057L;
+
 	public User() {
 		personEntity = new Person();
 		roleEntity = new Role();

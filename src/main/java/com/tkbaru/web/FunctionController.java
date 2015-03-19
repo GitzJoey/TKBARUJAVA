@@ -19,13 +19,14 @@ import com.tkbaru.model.Function;
 import com.tkbaru.service.FunctionService;
 
 @Controller
+@RequestMapping("/admin/function")
 public class FunctionController {
 	private static final Logger logger = LoggerFactory.getLogger(FunctionController.class);
 	
 	@Autowired
 	FunctionService functionManager;
 		
-	@RequestMapping(value = "/admin/function.html", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String functionPageLoad(Locale locale, Model model) {
 		logger.info("[functionPageLoad] " + "");
 
@@ -38,7 +39,7 @@ public class FunctionController {
 		return Constants.JSPPAGE_FUNCTION;
 	}
 
-	@RequestMapping(value = "/admin/function/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String functionAdd(Locale locale, Model model) {
 		logger.info("[functionAdd] " + "");
 		
@@ -49,7 +50,7 @@ public class FunctionController {
 		return Constants.JSPPAGE_FUNCTION;
 	}
 
-	@RequestMapping(value = "/admin/function/edit/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
 	public String functionEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[functionEdit] " + "");
 		
@@ -63,7 +64,7 @@ public class FunctionController {
 		return Constants.JSPPAGE_FUNCTION;
 	}
 
-	@RequestMapping(value = "/admin/function/delete/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String functionDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[functionDelete] " + "");
 		
@@ -72,10 +73,10 @@ public class FunctionController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/admin/function.html";
+		return "redirect:/admin/function";
 	}
 
-	@RequestMapping(value = "/admin/function/save.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func, RedirectAttributes redirectAttributes) {
 		
 		if (func.getFunctionId() == 0) {
@@ -89,7 +90,7 @@ public class FunctionController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/admin/function.html";
+		return "redirect:/admin/function";
 	}
 
 }

@@ -15,6 +15,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.BankAccount;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Person;
 import com.tkbaru.model.PhoneList;
 import com.tkbaru.model.Supplier;
@@ -41,11 +42,16 @@ public class SupplierController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String listSupplier(Locale locale, Model model) {
 		logger.info("[listSupplier] " + "");
 		
 		model.addAttribute("supplierList", supplierManager.getAllSupplier());
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -62,6 +68,7 @@ public class SupplierController {
 		
 		model.addAttribute("activeTab", "suppDataTab");
 
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -81,6 +88,7 @@ public class SupplierController {
 		
 		model.addAttribute("activeTab", "suppDataTab");
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -164,6 +172,7 @@ public class SupplierController {
 			model.addAttribute("activeTab", "bankAccTab");
 		}
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -198,6 +207,7 @@ public class SupplierController {
 		
 		model.addAttribute("activeTab", "bankAccTab");
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -250,6 +260,7 @@ public class SupplierController {
 			
 		}
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -284,6 +295,7 @@ public class SupplierController {
 		
 		model.addAttribute("activeTab", "picTab");
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -335,6 +347,7 @@ public class SupplierController {
 			
 		}
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

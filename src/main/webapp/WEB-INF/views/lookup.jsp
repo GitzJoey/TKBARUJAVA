@@ -10,7 +10,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 						
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/lookup.html");
+				window.location.href("${ pageContext.request.contextPath }/admin/lookup");
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -36,7 +36,7 @@
 					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/lookup/edit/" + id + ".html");	
+					$('#editTableSelection').attr("href", ctxpath + "/admin/lookup/edit/" + id);	
 				}				
 			});
 			
@@ -51,7 +51,7 @@
 					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/lookup/delete/" + id + ".html");	
+					$('#deleteTableSelection').attr("href", ctxpath + "/admin/lookup/delete/" + id);	
 				}								
 			});
 			
@@ -154,7 +154,7 @@
 									</button>
 									<ul class="dropdown-menu" role="menu">
 										<c:forEach items="${ categoryDDL }" var="catDDL">
-											<li role="presentation"><a role="menuitem" tabindex="-1" href="${ pageContext.request.contextPath }/admin/lookup/bycategory/${ catDDL.lookupCategory }.html">${ catDDL.lookupCategory }</a></li>
+											<li role="presentation"><a role="menuitem" tabindex="-1" href="${ pageContext.request.contextPath }/admin/lookup/bycategory/${ catDDL.lookupCategory }">${ catDDL.lookupCategory }</a></li>
 										</c:forEach>										
 									</ul>
 								</div>
@@ -209,7 +209,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/lookup/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/lookup/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -230,7 +230,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="lookupForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save.html">
+								<form:form id="lookupForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save">
 									<form:hidden path="lookupId"/>
 									<div class="form-group">
 										<label for="inputCategory" class="col-sm-2 control-label">Category</label>

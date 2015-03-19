@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Bank;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
 
@@ -27,6 +28,9 @@ public class BankController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+	
 	@RequestMapping(value="/upload", method = RequestMethod.GET)
 	public String bankUpload(Locale locale, Model model) {
 		logger.info("[bankUpload] " + "");
@@ -34,6 +38,7 @@ public class BankController {
 		model.addAttribute("bankForm", new Bank());
 		model.addAttribute("bankProviderDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -46,6 +51,7 @@ public class BankController {
 		
 		bankManager.bankUpload(bank);
 
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
 
@@ -56,6 +62,7 @@ public class BankController {
 	public String bankConsolidate(Locale locale, Model model) {
 		logger.info("[bankConsolidate] " + "");
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

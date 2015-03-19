@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Warehouse;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.WarehouseService;
@@ -29,11 +30,15 @@ public class WarehouseController {
 	
 	@Autowired
 	LookupService lookupManager;
-	
+
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(value="/dashboard", method = RequestMethod.GET)
 	public String warehouseDashboardPageLoad(Locale locale, Model model) {
 		logger.info("[warehousePageLoad] : " + "");
 			
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -47,6 +52,7 @@ public class WarehouseController {
 		List<Warehouse> wList = warehouseManager.getAllWarehouse();
 		
 		model.addAttribute("warehouseList", wList);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -60,6 +66,7 @@ public class WarehouseController {
 		model.addAttribute("warehouseForm", new Warehouse());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -77,6 +84,7 @@ public class WarehouseController {
 		model.addAttribute("warehouseForm", selectedWarehouse);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

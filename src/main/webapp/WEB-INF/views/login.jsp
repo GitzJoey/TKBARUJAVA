@@ -15,7 +15,7 @@
 					validating: 'glyphicon glyphicon-refresh'
 				},
 				fields: {
-					username: {
+					j_username: {
 						validators: {
 							notEmpty: { },
 							stringLength: { min: 4, max: 10 },
@@ -23,7 +23,7 @@
 	                   		different: { field: 'password' }							
 						}
 					},
-					password: {
+					j_password: {
                			validators: {
                    			notEmpty: {	},
                    			different: { field: 'username' },
@@ -63,13 +63,13 @@
 		                        <h3 class="panel-title">Sign In</h3>
 		                    </div>
 		                    <div class="panel-body">
-		                        <form id="loginForm" role="form" action="${pageContext.request.contextPath}/dologin.html" method="post">
+		                        <form id="loginForm" role="form" action="<c:url value="j_spring_security_check"/>" method="post">
 		                            <fieldset>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus>                                
+		                                    <input class="form-control" placeholder="UserName" name="j_username" type="text" autofocus>                                
 		                                </div>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+		                                    <input class="form-control" placeholder="Password" name="j_password" type="password" value="">
 		                                </div>
 		                                <button type="submit" class="btn btn-default">Submit</button>
 		                            </fieldset>

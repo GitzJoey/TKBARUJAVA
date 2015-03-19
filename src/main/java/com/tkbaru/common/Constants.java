@@ -58,4 +58,6 @@ public class Constants {
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";
 	public static final String JASPERREPORT_OUTPUTTYPE_CSV = "csv";
 	public static final String JASPERREPORT_OUTPUTTYPE_XLS = "xls";
+	
+	public static final String SESSIONKEY_LOGINCONTEXT = "loginContext"; 
 }

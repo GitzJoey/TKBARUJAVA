@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.service.ReportService;
 
 @Controller
@@ -27,6 +28,9 @@ public class ReportController {
 	@Autowired
 	ReportService reportManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
 	public String selectedReportPage(Locale locale, Model model, @PathVariable("reportid") String reportId) {
 		logger.info("[selectedReportPage] " + "id: " + reportId);

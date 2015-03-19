@@ -35,9 +35,5 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-	@RequestMapping(value = "/test.html", method = RequestMethod.GET)
-	public String test(Locale locale, Model model) {
-		return "test";
-	}
+
 }

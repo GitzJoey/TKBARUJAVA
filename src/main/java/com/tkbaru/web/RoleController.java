@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tkbaru.common.Constants;
 import com.tkbaru.common.Converter;
 import com.tkbaru.model.Function;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Role;
 import com.tkbaru.service.FunctionService;
 import com.tkbaru.service.LookupService;
@@ -39,10 +40,15 @@ public class RoleController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String rolePageLoad(Locale locale, Model model) {
 
 		model.addAttribute("rList", roleManager.getAllRole());
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -56,6 +62,7 @@ public class RoleController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("functionListLeft", functionManager.getAllFunctions());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -85,6 +92,7 @@ public class RoleController {
 		model.addAttribute("functionListRight", selectedRole.getFunctionList());
 		model.addAttribute("selectedFunction", selectedRole.getAllFunctionIdInString());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

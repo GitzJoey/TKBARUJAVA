@@ -21,13 +21,14 @@ import com.tkbaru.model.LookupDetail;
 import com.tkbaru.service.LookupService;
 
 @Controller
+@RequestMapping("/admin/lookup")
 public class LookupController {
 	private static final Logger logger = LoggerFactory.getLogger(LookupController.class);
 	
 	@Autowired
 	LookupService lookupManager;
 	
-	@RequestMapping(value = "/admin/lookup.html", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	public String lookupPageLoad(Locale locale, Model model) {
 		logger.info("[lookupPageLoad] " + "");
 		
@@ -41,7 +42,7 @@ public class LookupController {
 		return Constants.JSPPAGE_LOOKUP;
 	}
 
-	@RequestMapping(value = "/admin/lookup/bycategory/{category}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/bycategory/{category}", method = RequestMethod.GET)
 	public String lookupListByCat(Locale locale, Model model, @PathVariable String category) {
 		logger.info("[lookupListByCat] " + "");
 		
@@ -56,7 +57,7 @@ public class LookupController {
 		return Constants.JSPPAGE_LOOKUP;
 	}
 
-	@RequestMapping(value = "/admin/lookup/add.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String lookupAdd(Locale locale, Model model) {
 		logger.info("[lookupAdd] " + "");
 		
@@ -85,7 +86,7 @@ public class LookupController {
 		return Constants.JSPPAGE_LOOKUP;
 	}
 
-	@RequestMapping(value = "/admin/lookup/edit/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
 	public String lookupEdit(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[lookupEdit] " + "");
 		
@@ -100,7 +101,7 @@ public class LookupController {
 		return Constants.JSPPAGE_LOOKUP;
 	}
 
-	@RequestMapping(value = "/admin/lookup/delete/{selectedId}.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String lookupDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[lookupDelete] " + "");
 		
@@ -109,10 +110,10 @@ public class LookupController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/admin/lookup.html";
+		return "redirect:/admin/lookup";
 	}
 
-	@RequestMapping(value = "/admin/lookup/save.html", method = RequestMethod.POST)
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup, RedirectAttributes redirectAttributes) {
 		
 		for (LookupDetail ld:lookup.getLookupDetail()) {
@@ -132,6 +133,6 @@ public class LookupController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/admin/lookup.html";
+		return "redirect:/admin/lookup";
 	}
 }

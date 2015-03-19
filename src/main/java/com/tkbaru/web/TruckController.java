@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Truck;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.TruckService;
@@ -39,6 +40,9 @@ public class TruckController {
 	@Autowired
 	LookupService lookupManager;
 
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -53,6 +57,7 @@ public class TruckController {
 		
 		model.addAttribute("truckList", truckManager.getAllTruck());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -69,6 +74,7 @@ public class TruckController {
 		model.addAttribute("driverDDL", userManager.getAllUserByType(""));
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 	
@@ -87,6 +93,7 @@ public class TruckController {
 		model.addAttribute("driverDDL", userManager.getAllUser());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 

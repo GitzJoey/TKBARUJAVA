@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.PhoneList;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LookupService;
@@ -40,6 +41,9 @@ public class UserController {
 	@Autowired
 	StoreService storeManager;
 	
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String userPageLoad(Locale locale, Model model) {
 		logger.info("[userPageLoad] " + "");
@@ -47,6 +51,8 @@ public class UserController {
 		List<User> userdata = userManager.getAllUser();
 
 		model.addAttribute("userList", userdata);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -62,6 +68,7 @@ public class UserController {
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -80,6 +87,7 @@ public class UserController {
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -98,6 +106,7 @@ public class UserController {
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -145,6 +154,7 @@ public class UserController {
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -170,6 +180,7 @@ public class UserController {
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

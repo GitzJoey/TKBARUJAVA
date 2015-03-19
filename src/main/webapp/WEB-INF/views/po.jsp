@@ -172,7 +172,7 @@
 																	<div class="col-sm-9">
 																		<form:select class="form-control" path="supplierId">
 																			<option value="">Please Select</option>
-																			<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="companyName"/>
+																			<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="supplierName"/>
 																		</form:select>																		
 																	</div>
 																	<div class="col-sm-1">

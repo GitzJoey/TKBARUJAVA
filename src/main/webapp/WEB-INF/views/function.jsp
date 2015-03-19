@@ -12,7 +12,7 @@
 			});
 			
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/function.html");
+				window.location.href("${ pageContext.request.contextPath }/admin/function");
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -39,7 +39,7 @@
 					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#editTableSelection').attr("href", ctxpath + "/admin/function/edit/" + id + ".html");	
+					$('#editTableSelection').attr("href", ctxpath + "/admin/function/edit/" + id);	
 				}				
 			});
 			
@@ -55,7 +55,7 @@
 					jsAlert("Please select at least 1 function");
 					return false;	
 				} else {
-					$('#deleteTableSelection').attr("href", ctxpath + "/admin/function/delete/" + id + ".html");	
+					$('#deleteTableSelection').attr("href", ctxpath + "/admin/function/delete/" + id);	
 				}								
 			});
 			
@@ -179,7 +179,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/function/add.html"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/function/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
@@ -200,7 +200,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm" modelAttribute="fForm" action="${pageContext.request.contextPath}/admin/function/save.html">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm" modelAttribute="fForm" action="${pageContext.request.contextPath}/admin/function/save">
 									<form:hidden path="functionId"/>
 									<div class="form-group">
 										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
