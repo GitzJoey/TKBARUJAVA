@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.model.SalesOrder;
 
 @Controller
 @RequestMapping("/sales")
@@ -25,6 +26,7 @@ public class SalesOrderController {
 	public String salesNew(Locale locale, Model model) {
 		logger.info("[salesNew] " + "");
 
+		model.addAttribute("soForm", new SalesOrder());
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

@@ -158,6 +158,30 @@ INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, cr
 VALUES ('PO_STATUS', 'L013_C',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*PO Type - L014*/
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_TYPE', 'L014_S',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*SO Type - L015*/
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_TYPE', 'L015_S',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*SO Status - L016*/
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_STATUS', 'L016_D',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_STATUS', 'L016_WD',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_STATUS', 'L016_WP',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_STATUS', 'L016_C',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
 INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',

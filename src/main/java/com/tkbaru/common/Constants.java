@@ -53,6 +53,9 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_TRUCK_TYPE = "TRUCK_TYPE";
 	public static final String LOOKUPCATEGORY_WEIGHT_TYPE = "WEIGHT_TYPE";
 	public static final String LOOKUPCATEGORY_PO_TYPE = "PO_TYPE";
+	public static final String LOOKUPCATEGORY_PO_STATUS = "PO_STATUS";
+	public static final String LOOKUPCATEGORY_SO_TYPE = "SO_TYPE";
+	public static final String LOOKUPCATEGORY_SO_STATUS = "SO_STATUS";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";
