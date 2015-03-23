@@ -1,5 +1,23 @@
 package com.tkbaru.dao;
 
-public interface PurchaseOrderDAO {
+import java.util.List;
+
+import com.tkbaru.model.PurchaseOrder;
+
+public interface PurchaseOrderDAO
+
+{
+
+	public List<PurchaseOrder> getAllPurchaseOrder();
+
+	public PurchaseOrder getPurchaseOrderById(int selectedId);
+
+	public List<PurchaseOrder> getPurchaseOrderByIds(String selectedIdINClause);
+
+	public void addPurchaseOrder(PurchaseOrder prod);
+
+	public void editPurchaseOrder(PurchaseOrder prod);
+
+	public void deletePurchaseOrder(int selectedId);
 
 }
