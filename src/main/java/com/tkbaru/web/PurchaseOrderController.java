@@ -126,6 +126,31 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
 
+	@RequestMapping(value = "/revise/{selectedId}", method = RequestMethod.GET)
+	public String reviseForm(Locale locale, Model model,
+			@PathVariable Integer selectedId) {
+		logger.info("[revise] " + "");
+
+		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
+
+		model.addAttribute("reviseForm", selectedPo);
+		model.addAttribute("productSelectionDDL",
+				productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL",
+				supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL",
+				warehouseManager.getAllWarehouse());
+		// model.addAttribute("poTypeDDL",
+		// lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_REVISE;
+	}
+
 	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model,
 			@ModelAttribute("poForm") PurchaseOrder po,
@@ -196,7 +221,7 @@ public class PurchaseOrderController {
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 
-		model.addAttribute("poList", poManager.getAllPurchaseOrder());
+		model.addAttribute("paymentList", poManager.getAllPurchaseOrder());
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -222,7 +247,7 @@ public class PurchaseOrderController {
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 
-		model.addAttribute("poForm", po);
+		model.addAttribute("paymentForm", po);
 
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
@@ -250,7 +275,7 @@ public class PurchaseOrderController {
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 
-		model.addAttribute("poForm", po);
+		model.addAttribute("paymentForm", po);
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -272,7 +297,7 @@ public class PurchaseOrderController {
 	public String poRevise(Locale locale, Model model) {
 		logger.info("[poRevise] " + "");
 
-		model.addAttribute("poList", poManager.getAllPurchaseOrder());
+		model.addAttribute("reviseList", poManager.getAllPurchaseOrder());
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -297,6 +322,8 @@ public class PurchaseOrderController {
 		po.setStatusLookup(lookupManager.getLookupByKey("L013_C"));
 
 		if (po.getPoId() == 0) {
+			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			po.setCreatedDate(new Date());
 			poManager.addPurchaseOrder(po);
 		} else {
 			poManager.editPurchaseOrder(po);
@@ -310,6 +337,28 @@ public class PurchaseOrderController {
 				Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PURCHASEORDER;
+	}
+
+	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
+	public String reviseSave(Locale locale, Model model,
+			@ModelAttribute("reviseForm") PurchaseOrder po,
+			RedirectAttributes redirectAttributes) {
+		logger.info("[reviseSave] " + "");
+
+		po.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+		po.setUpdatedDate(new Date());
+		poManager.editPurchaseOrder(po);
+		
+		model.addAttribute("reviseList", poManager.getAllPurchaseOrder());
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
+				Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
+				Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_REVISE;
 	}
 
 	@RequestMapping(value = "/retrieve/supplier", method = RequestMethod.GET)
@@ -338,13 +387,13 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/addpayment", method = RequestMethod.POST)
 	public String poAddPayments(Locale locale, Model model,
-			@ModelAttribute("poForm") PurchaseOrder po) {
+			@ModelAttribute("paymentForm") PurchaseOrder po) {
 		logger.info("[poAddPayments] ");
 
 		Payment i = new Payment();
 		po.getPaymentList().add(i);
 
-		model.addAttribute("poForm", po);
+		model.addAttribute("paymentForm", po);
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -364,7 +413,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/removepayments/{varId}", method = RequestMethod.POST)
 	public String poRemovePayments(Locale locale, Model model,
-			@ModelAttribute("poForm") PurchaseOrder po,
+			@ModelAttribute("paymentForm") PurchaseOrder po,
 			@PathVariable String varId) {
 		logger.info("[poRemoveItems] " + "varId: " + varId);
 
@@ -378,7 +427,7 @@ public class PurchaseOrderController {
 
 		po.setPaymentList(iLNew);
 
-		model.addAttribute("poForm", po);
+		model.addAttribute("paymentForm", po);
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",

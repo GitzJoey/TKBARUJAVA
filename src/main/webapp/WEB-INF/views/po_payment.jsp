@@ -116,8 +116,8 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty poList}">
-												<c:forEach items="${ poList }" var="p" varStatus="pL">
+											<c:if test="${not empty paymentList}">
+												<c:forEach items="${ paymentList }" var="p" varStatus="pL">
 													<tr>
 														<td align="center"><input
 															id="cbx_<c:out value="${ p.poId }"/>" type="checkbox"
@@ -135,9 +135,9 @@
 									</table>
 								</div>
 								<a id="addNew" class="btn btn-sm btn-primary" href=""><span
-									class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp; <a
+									class="fa fa-plus fa-fw"></span>&nbsp;Add Payment</a>&nbsp;&nbsp;&nbsp; <a
 									id="editTableSelection" class="btn btn-sm btn-primary" href=""><span
-									class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
+									class="fa fa-edit fa-fw"></span>&nbsp;Edit Payment</a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
 					</c:when>
@@ -159,13 +159,22 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="paymentForm" role="form" class="form-horizontal"
-									modelAttribute="poForm"
+									modelAttribute="paymentForm"
 									action="${pageContext.request.contextPath}/po/savepayment">
 									<div id="tabpanel" role="tabpanel">
 										<ul id="list" class="nav nav-tabs" role="tablist">
 											<li role="presentation" class="active"><a href="#tab1"
-												aria-controls="tab1" role="tab" data-toggle="tab"> <span
+												aria-controls="tab1" role="tab" data-toggle="tab"> 
+												<c:choose>
+										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+												<span
+													class="fa fa-plus fa-fw"></span>&nbsp;Add Payment
+													</c:when>
+													<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+												<span
 													class="fa fa-plus fa-fw"></span>&nbsp;Edit Payment
+													</c:when>
+													</c:choose>
 											</a></li>
 										</ul>
 										<div class="tab-content">
@@ -227,7 +236,7 @@
 																				class="col-sm-3 control-label">Status</label>
 																			<div class="col-sm-9">
 																				<label id="inputPOStatus" class="control-label"><c:out
-																						value="${ statusLookup.lookupValue }"></c:out></label>
+																						value="${ paymentForm.statusLookup.lookupValue }"></c:out></label>
 																			</div>
 																		</div>
 																	</div>
@@ -310,7 +319,7 @@
 																			</thead>
 																			<tbody>
 																			<c:set var="total" value="${0}"/>
-																				<c:forEach items="${ poForm.itemsList }" var="iL"
+																				<c:forEach items="${ paymentForm.itemsList }" var="iL"
 																					varStatus="iLIdx">
 																					<tr>
 																						<td style="vertical-align: middle;"><form:hidden
@@ -424,7 +433,7 @@
 																					</thead>
 																					<tbody>
 																					<c:set var="totalPay" value="${0}"/>
-																						<c:forEach items="${ poForm.paymentList }"
+																						<c:forEach items="${ paymentForm.paymentList }"
 																							var="iL" varStatus="iLIdx">
 																							<tr>
 																								<td style="vertical-align: middle;"><form:hidden
