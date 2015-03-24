@@ -53,7 +53,7 @@ public class Customer {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
-
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
 				joinColumns={@JoinColumn(name="customer_id", referencedColumnName="customer_id")},

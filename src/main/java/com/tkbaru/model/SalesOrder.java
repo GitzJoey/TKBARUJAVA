@@ -15,6 +15,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
@@ -32,11 +33,11 @@ public class SalesOrder {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int salesId;
 	@Column(name="so_code")
-	private String SalesCode;
+	private String salesCode;
 	@Column(name="so_type")
-	private String SalesType;
+	private String salesType;
 	@Column(name="so_created")
-	private Date SalesCreatedDate;
+	private Date salesCreatedDate;
 	@Column(name="shipping_date")
 	private Date shippingDate;
 	@Column(name="customer_id")
@@ -74,6 +75,11 @@ public class SalesOrder {
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
 
+	@Transient
+	private String customerSearchQuery;
+	@Transient
+	private List<Customer> customerSearchResults;
+	
 	public int getSalesId() {
 		return salesId;
 	}
@@ -83,27 +89,27 @@ public class SalesOrder {
 	}
 
 	public String getSalesCode() {
-		return SalesCode;
+		return salesCode;
 	}
 
 	public void setSalesCode(String salesCode) {
-		SalesCode = salesCode;
+		this.salesCode = salesCode;
 	}
 
 	public String getSalesType() {
-		return SalesType;
+		return salesType;
 	}
 
 	public void setSalesType(String salesType) {
-		SalesType = salesType;
+		this.salesType = salesType;
 	}
 
 	public Date getSalesCreatedDate() {
-		return SalesCreatedDate;
+		return salesCreatedDate;
 	}
 
 	public void setSalesCreatedDate(Date salesCreatedDate) {
-		SalesCreatedDate = salesCreatedDate;
+		this.salesCreatedDate = salesCreatedDate;
 	}
 
 	public Date getShippingDate() {
@@ -186,6 +192,22 @@ public class SalesOrder {
 		this.paymentList = paymentList;
 	}
 
+	public String getCustomerSearchQuery() {
+		return customerSearchQuery;
+	}
+
+	public void setCustomerSearchQuery(String customerSearchQuery) {
+		this.customerSearchQuery = customerSearchQuery;
+	}
+
+	public List<Customer> getCustomerSearchResults() {
+		return customerSearchResults;
+	}
+
+	public void setCustomerSearchResults(List<Customer> customerSearchResults) {
+		this.customerSearchResults = customerSearchResults;
+	}
+
 	public Customer getCustomerLookup() {
 		return customerLookup;
 	}
@@ -204,9 +226,9 @@ public class SalesOrder {
 
 	@Override
 	public String toString() {
-		return "SalesOrder [salesId=" + salesId + ", SalesCode=" + SalesCode
-				+ ", SalesType=" + SalesType + ", SalesCreatedDate="
-				+ SalesCreatedDate + ", shippingDate=" + shippingDate
+		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode
+				+ ", salesType=" + salesType + ", salesCreatedDate="
+				+ salesCreatedDate + ", shippingDate=" + shippingDate
 				+ ", customerId=" + customerId + ", salesStatus=" + salesStatus
 				+ ", salesRemarks=" + salesRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy

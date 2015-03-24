@@ -1,5 +1,9 @@
 package com.tkbaru.service;
 
-public interface SearchService {
+import java.util.List;
 
+import com.tkbaru.model.Customer;
+
+public interface SearchService {
+	public List<Customer> searchCustomer(String searchQuery);
 }

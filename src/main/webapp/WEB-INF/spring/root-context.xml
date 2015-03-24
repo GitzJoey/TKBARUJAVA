@@ -194,6 +194,8 @@
 	<beans:bean id="WarehouseService" class="com.tkbaru.service.WarehouseServiceImpl"></beans:bean>
 	<beans:bean id="TruckService" class="com.tkbaru.service.TruckServiceImpl"></beans:bean>
 	<beans:bean id="PurchaseOrderService" class="com.tkbaru.service.PurchaseOrderServiceImpl"></beans:bean>
+	<beans:bean id="SalesOrderService" class="com.tkbaru.service.SalesOrderServiceImpl"></beans:bean>
+	<beans:bean id="SearchService" class="com.tkbaru.service.SearchServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />
