@@ -172,6 +172,9 @@
     <beans:bean id="PurchaseOrderDAO" class="com.tkbaru.dao.PurchaseOrderDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="SalesOrderDAO" class="com.tkbaru.dao.SalesOrderDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">

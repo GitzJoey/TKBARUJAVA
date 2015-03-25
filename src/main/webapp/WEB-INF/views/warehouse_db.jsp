@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,13 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+
+			$('#inflowTable, #outflowTable').DataTable({
+				"paging":   	false,
+		        "ordering": 	false,
+		        "info":     	false,
+		        "searching": 	false
+			});
 			
 			$('#hideInflow, #hideOutflow').click(function() {
 				var button = $(this).attr('id');
@@ -49,64 +57,77 @@
 				
 				<c:choose>
 					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
-						<div id="inflowPanel" class="panel panel-default">
+						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-mail-forward fa-rotate-90 fa-fw fa-2x"></span>Inflow
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Warehouse Dashboard
 								</h1>
 							</div>
 							<div class="panel-body">
+								<select class="form-control">
+									<option value="">Please Select</option>
+									<c:forEach items="${ warehouseSelectionDDL }" var="w">
+										<option value="${ w.warehouseId }"><c:out value="${ w.warehouseName }"/></option>
+									</c:forEach>
+								</select>
 								<br/>
+								<div id="inflowPanel" class="panel panel-default">
+									<div class="panel-heading">
+										<h1 class="panel-title">
+											<span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>Inflow
+										</h1>
+									</div>
+									<div class="panel-body">
+										<table id="inflowTable" class="table table-bordered table-hover display responsive">
+											<thead>
+												<tr>
+													<th>Product Name</th>
+													<th>Bruto</th>
+													<th>Netto</th>
+													<th>Tare</th>
+													<th>&nbsp;</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<ul class="list-group">
+										<li class="list-group-item">
+											<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
+										</li>
+									</ul>
+								</div>
 								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
+								<div id="outflowPanel" class="panel panel-default">
+									<div class="panel-heading">
+										<h1 class="panel-title">
+											<span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span>Outflow
+										</h1>
+									</div>
+									<div class="panel-body">
+										<table id="outflowTable" class="table table-bordered table-hover display responsive">
+											<thead>
+												<tr>
+													<th>Product Name</th>
+													<th>Bruto</th>
+													<th>Netto</th>
+													<th>Tare</th>
+													<th>&nbsp;</th>
+												</tr>
+											</thead>
+											<tbody>
+											</tbody>
+										</table>
+									</div>
+									<ul class="list-group">
+										<li class="list-group-item">
+											<button type="button" id="hideOutflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
+										</li>
+									</ul>
+								</div>
+							
 							</div>
-							<ul class="list-group">
-								<li class="list-group-item">
-									<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-								</li>
-							</ul>
-						</div>
-						<br/>
-						<div id="outflowPanel" class="panel panel-default">
-							<div class="panel-heading">
-								<h1 class="panel-title">
-									<span class="fa fa-mail-reply fa-rotate-90 fa-fw fa-2x"></span>Outflow
-								</h1>
-							</div>
-							<div class="panel-body">
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-							</div>
-							<ul class="list-group">
-								<li class="list-group-item">
-									<button type="button" id="hideOutflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-								</li>
-							</ul>
 						</div>
 					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">

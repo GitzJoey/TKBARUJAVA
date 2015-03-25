@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Lookup;
 import com.tkbaru.model.LookupDetail;
 import com.tkbaru.service.LookupService;
@@ -27,7 +28,10 @@ public class LookupController {
 	
 	@Autowired
 	LookupService lookupManager;
-	
+
+	@Autowired
+	private LoginContext loginContextSession;
+
 	@RequestMapping(method = RequestMethod.GET)
 	public String lookupPageLoad(Locale locale, Model model) {
 		logger.info("[lookupPageLoad] " + "");
@@ -36,6 +40,8 @@ public class LookupController {
 		
 		model.addAttribute("lookupList", lookupList);
 		model.addAttribute("categoryDDL", lookupManager.getAllCategory());
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -51,6 +57,8 @@ public class LookupController {
 		model.addAttribute("lookupList", lookupList);
 		model.addAttribute("categoryDDL", lookupManager.getAllCategory());
 		model.addAttribute("selectedCat", category);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -80,6 +88,8 @@ public class LookupController {
 		model.addAttribute("lookupForm", newl);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("MaintainabilityDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -95,6 +105,8 @@ public class LookupController {
 		model.addAttribute("lookupForm", l);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("MaintainabilityDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 

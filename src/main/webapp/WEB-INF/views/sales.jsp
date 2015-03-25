@@ -17,21 +17,28 @@
 					"paging":   	false,
 			        "ordering": 	false,
 			        "info":     	false,
-			        "searching": 	false
+			        "searching": 	false,
+			        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+						$('td:eq(5)', nRow).addClass( "actionCell" );
+					}
 				});
 
-			$('#searchButton').click(function() {
+			$('#searchButton, #newTab').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
-				
+
 				if (button == 'searchButton') {
+					$('#soForm').data('formValidation').enableFieldValidators('customerSearchQuery', true).revalidateField('customerSearchQuery');
 					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());	
+				} else if (button == 'newTab'){
+					$('#soForm').attr('action', ctxpath + "/addnewtab");
+					$('#soForm').submit();
 				} else {
 					return false;
 				}
 			});
 
-		    $('#searchCustomerResultTable tbody').on('click', 'td', function () {
+		    $('#searchCustomerResultTable tbody').on('click', 'td:not(".actionCell")', function() {
 				var tr = $(this).closest('tr');
 		        var row = searchTable.row(tr);
 		 
@@ -47,43 +54,6 @@
 		    function format ( d ) {		        
 		        return '<strong>Customer Details</strong><br/><br/>';
 		    }
-		    
-			$('#soForm')
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						soCode: {
-							validators: {
-								notEmpty: { }
-							}					
-						},
-						soCreatedDate: {
-							validators: {
-								notEmpty: { },
-								date: { format: 'DD-MM-YYYY' }
-							}					
-						},
-						shippingDate: {
-							validators: {
-								notEmpty: { },
-								date: { format: 'DD-MM-YYYY' }
-							}					
-						},
-						customerId: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						}
-					}										
-				});
 		});
 	</script>	
 </head>
@@ -145,11 +115,12 @@
 											<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
 												<thead>
 													<tr>
-														<th>Customer Name</th>
-														<th>Address</th>
-														<th>PIC</th>
-														<th>Bank Account</th>
-														<th>Status</th>
+														<th width="25%">Customer Name</th>
+														<th width="25%">Address</th>
+														<th width="20%">PIC</th>
+														<th width="20%">Bank Account</th>
+														<th width="5%">Status</th>
+														<th width="5%">&nbsp;</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -157,10 +128,28 @@
 														<c:forEach items="${ soForm.customerSearchResults }" varStatus="cIdx">
 															<tr>
 																<td><c:out value="${ soForm.customerSearchResults[cIdx.index].customerName }"></c:out></td>
-																<td></td>
-																<td></td>
-																<td></td>
-																<td></td>
+																<td>
+																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerAddress }"></c:out><br/>
+																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerCity }"></c:out><br/>
+																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerPhone }"></c:out><br/><br/>
+																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerRemarks }"></c:out>
+																</td>
+																<td>
+																	<c:forEach items="${ soForm.customerSearchResults[cIdx.index].picList }" varStatus="picIdx">
+																		<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
+																	</c:forEach>
+																</td>
+																<td>
+																	<c:forEach items="${ soForm.customerSearchResults[cIdx.index].bankAccList }" varStatus="baIdx">
+																		<c:out value="${ soForm.customerSearchResults[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
+																	</c:forEach>																	
+																</td>
+																<td align="center">
+																	<c:out value="${ soForm.customerSearchResults[cIdx.index].statusLookup.lookupValue }"/>
+																</td>
+																<td align="center" style="vertical-align: middle;">
+																	<button type="button" class="btn btn-primary btn-xs"><span class="fa fa-check"></span></button>
+																</td>
 															</tr>
 														</c:forEach>
 													</c:if>
@@ -172,7 +161,8 @@
 							</div>							
 							<div role="tabpanel">
 								<ul class="nav nav-tabs" role="tablist">
-									<li role="presentation" class="active"><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-plus fa-fw"></span>&nbsp;New Sales</a></li>
+									<li role="presentation" class="active"><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw"></span>&nbsp;New Sales</a></li>
+									<li role="presentation" class=""><a id="newTab" href="#soNewTab" role="tab"><span class="fa fa-plus fa-fw"></span></a></li>
 								</ul>
 
 								<div class="tab-content">
@@ -272,7 +262,7 @@
 																					<th width="10%">Unit</th>
 																					<th width="15%">Price/Unit</th>
 																					<th width="5%">&nbsp;</th>
-																					<th width="20%">Total Price</th>
+																					<th width="20%" class="text-right">Total Price</th>
 																				</tr>
 																			</thead>
 																			<tbody>
@@ -294,7 +284,7 @@
 																						<td>
 																							<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																						</td>
-																						<td>
+																						<td class="text-right">
 																							&nbsp;
 																						</td>
 																					</tr>
@@ -308,10 +298,10 @@
 																		<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
 																			<tbody>
 																				<tr>
-																					<td width="80%">
+																					<td width="80%" class="text-right">
 																						Total
 																					</td>
-																					<td width="20%">
+																					<td width="20%" class="text-right">
 																						12344556677
 																					</td>
 																				</tr>
@@ -339,6 +329,34 @@
 											</div>
 										</div>
 									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h1 class="panel-title">Remarks</h1>
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<div class="col-sm-12">
+																	<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>									
+									<div class="row">
+										<div class="col-md-7 col-offset-md-5">
+											<div class="btn-toolbar">
+												<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+												<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+											</div>
+										</div>
+									</div>							
 								</div>
 							</div>													
 						</form:form>

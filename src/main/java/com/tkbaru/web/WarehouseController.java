@@ -37,7 +37,9 @@ public class WarehouseController {
 	@RequestMapping(value="/dashboard", method = RequestMethod.GET)
 	public String warehouseDashboardPageLoad(Locale locale, Model model) {
 		logger.info("[warehousePageLoad] : " + "");
-			
+
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
