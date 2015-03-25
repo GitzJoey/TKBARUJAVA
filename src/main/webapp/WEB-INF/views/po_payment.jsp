@@ -10,7 +10,7 @@
 	$(document).ready(
 			function() {
 				var ctxpath = "${ pageContext.request.contextPath }";
-				
+
 				//$('#paymentDate').datetimepicker({
 				//	format : "DD-MM-YYYY"
 				//});
@@ -135,9 +135,10 @@
 									</table>
 								</div>
 								<a id="addNew" class="btn btn-sm btn-primary" href=""><span
-									class="fa fa-plus fa-fw"></span>&nbsp;Add Payment</a>&nbsp;&nbsp;&nbsp; <a
-									id="editTableSelection" class="btn btn-sm btn-primary" href=""><span
-									class="fa fa-edit fa-fw"></span>&nbsp;Edit Payment</a>&nbsp;&nbsp;&nbsp;
+									class="fa fa-plus fa-fw"></span>&nbsp;Add Payment</a>&nbsp;&nbsp;&nbsp;
+								<a id="editTableSelection" class="btn btn-sm btn-primary"
+									href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit
+									Payment</a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
 					</c:when>
@@ -162,21 +163,6 @@
 									modelAttribute="paymentForm"
 									action="${pageContext.request.contextPath}/po/savepayment">
 									<div id="tabpanel" role="tabpanel">
-										<ul id="list" class="nav nav-tabs" role="tablist">
-											<li role="presentation" class="active"><a href="#tab1"
-												aria-controls="tab1" role="tab" data-toggle="tab"> 
-												<c:choose>
-										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
-												<span
-													class="fa fa-plus fa-fw"></span>&nbsp;Add Payment
-													</c:when>
-													<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-												<span
-													class="fa fa-plus fa-fw"></span>&nbsp;Edit Payment
-													</c:when>
-													</c:choose>
-											</a></li>
-										</ul>
 										<div class="tab-content">
 											<div role="tabpanel" class="tab-pane active">
 												<br />
@@ -279,7 +265,7 @@
 													</div>
 												</div>
 												<div class="row">
-													<div class="col-md-8">
+													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
 																<h1 class="panel-title">New Transaction</h1>
@@ -318,9 +304,9 @@
 																				</tr>
 																			</thead>
 																			<tbody>
-																			<c:set var="total" value="${0}"/>
-																				<c:forEach items="${ paymentForm.itemsList }" var="iL"
-																					varStatus="iLIdx">
+																				<c:set var="total" value="${0}" />
+																				<c:forEach items="${ paymentForm.itemsList }"
+																					var="iL" varStatus="iLIdx">
 																					<tr>
 																						<td style="vertical-align: middle;"><form:hidden
 																								path="itemsList[${ iLIdx.index }].itemsId" /> <form:hidden
@@ -347,9 +333,11 @@
 																								<span class="fa fa-minus"></span>
 																							</button>
 																						</td>
-																						<td><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
+																						<td><c:out
+																								value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
 																					</tr>
-																					<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}"/>
+																					<c:set var="total"
+																						value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
 																				</c:forEach>
 																			</tbody>
 																		</table>
@@ -368,41 +356,41 @@
 																		</table>
 																	</div>
 																</div>
+
+
+
 															</div>
+
+
+
 														</div>
-													</div>
-													<div class="col-md-4">
-														<div class="panel panel-default">
-															<ul class="list-group">
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-																<li class="list-group-item"></li>
-															</ul>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-12">
-															<div class="panel panel-default">
-																<div class="panel-heading">
-																	<h1 class="panel-title">Remarks</h1>
-																</div>
-																<div class="panel-body">
-																	<div class="row">
-																		<div class="col-md-12">
-																			<div class="form-group">
-																				<div class="col-sm-12">
-																					<form:textarea class="form-control"
-																						path="poRemarks" rows="5" />
+
+														<div class="row">
+															<div class="col-md-12">
+																<div class="panel panel-default">
+																	<div class="panel-heading">
+																		<h1 class="panel-title">Remarks</h1>
+																	</div>
+																	<div class="panel-body">
+																		<div class="row">
+																			<div class="col-md-12">
+																				<div class="form-group">
+																					<div class="col-sm-12">
+																						<form:textarea class="form-control"
+																							path="poRemarks" rows="5" />
+																					</div>
 																				</div>
 																			</div>
 																		</div>
+
 																	</div>
 
 																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-md-12">
 																<div class="panel panel-default">
 																	<div class="panel-heading">
 																		<h1 class="panel-title">New Payment</h1>
@@ -432,7 +420,7 @@
 																						</tr>
 																					</thead>
 																					<tbody>
-																					<c:set var="totalPay" value="${0}"/>
+																						<c:set var="totalPay" value="${0}" />
 																						<c:forEach items="${ paymentForm.paymentList }"
 																							var="iL" varStatus="iLIdx">
 																							<tr>
@@ -471,7 +459,8 @@
 																										<span class="fa fa-minus"></span>
 																									</button></td>
 																							</tr>
-																							<c:set var="totalPay" value="${ totalPay+ iL.totalAmount}"/>
+																							<c:set var="totalPay"
+																								value="${ totalPay+ iL.totalAmount}" />
 																						</c:forEach>
 																					</tbody>
 																				</table>
@@ -493,9 +482,11 @@
 																		</div>
 																	</div>
 																</div>
+
 															</div>
 														</div>
 													</div>
+
 													<div class="col-md-7 col-offset-md-5">
 														<div class="btn-toolbar">
 															<button id="cancelButton" type="reset"

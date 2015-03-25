@@ -131,7 +131,7 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit PO
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Revise PO
 										</c:when>
 
 									</c:choose>
@@ -141,12 +141,6 @@
 								<form:form id="reviseForm" role="form" class="form-horizontal"
 									modelAttribute="reviseForm"
 									action="${pageContext.request.contextPath}/po/saverevise">
-									<ul id="list" class="nav nav-tabs" role="tablist">
-										<li role="presentation" class="active"><a href="#tab1"
-											aria-controls="tab1" role="tab" data-toggle="tab"><span
-												class="fa fa-plus fa-fw"></span>&nbsp;Revise PO</a></li>
-
-									</ul>
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active">
 											<br />

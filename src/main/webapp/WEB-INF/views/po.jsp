@@ -109,7 +109,7 @@
 								},
 								'poCreatedDate' : {
 									validators : {
-									//	notEmpty : {},
+										//	notEmpty : {},
 										date : {
 											format : 'DD-MM-YYYY'
 										}
@@ -117,7 +117,7 @@
 								},
 								'shippingDate' : {
 									validators : {
-									//	notEmpty : {},
+										//	notEmpty : {},
 										date : {
 											format : 'DD-MM-YYYY'
 										}
@@ -137,6 +137,64 @@
 								}
 							}
 						});
+
+						$('#poCreatedDate').on('change', function() {
+							$('#poCreatedDate').blur();
+						});
+
+						$('#list a[href="#addTab"]')
+								.on(
+										'click',
+										function() { // Click event on the "Add Tab" button
+											var nbrLiElem = ($('ul#list li').length) - 1; // Count how many <li> there are (minus 1 because one <li> is the "Add Tab" button)
+
+											// Add a <li></li> line before the last-child
+											// Including the complete structure: the li ID, the <a href=""></a> etc... check the Bootstrap togglable tabs structure
+											$('ul#list li:last-child')
+													.before(
+															'<li id="li'
+																	+ (nbrLiElem + 1)
+																	+ '"><a href="#tab'
+																	+ (nbrLiElem + 1)
+																	+ '" role="tab" data-toggle="tab">Tab '
+																	+ (nbrLiElem + 1)
+																	+ ' <button type="button" class="btn btn-warning btn-xs" onclick="removeTab('
+																	+ (nbrLiElem + 1)
+																	+ ');"><span class="glyphicon glyphicon-remove"></span></button></a>');
+
+											var newElem = $('#tab' + nbrLiElem).clone().attr('id', 'tab' + (nbrLiElem+1)).fadeIn('slow'); // create the new element via clone(), and manipulate it's ID using newNum value
+
+											 // inputPOCode
+									        newElem.find('.label_ttl').attr('for', 'ID' + newNum + '_title');
+									        newElem.find('.select_ttl').attr('id', 'ID' + newNum + '_title').attr('name', 'ID' + newNum + '_title').val('');
+									 
+									        // First name - text
+									        newElem.find('.label_fn').attr('for', 'ID' + newNum + '_first_name');
+									        newElem.find('.input_fn').attr('id', 'ID' + newNum + '_first_name').attr('name', 'ID' + newNum + '_first_name').val('');
+									 
+									        // Last name - text
+									        newElem.find('.label_ln').attr('for', 'ID' + newNum + '_last_name');
+									        newElem.find('.input_ln').attr('id', 'ID' + newNum + '_last_name').attr('name', 'ID' + newNum + '_last_name').val('');
+									 
+									        // Color - checkbox
+									        newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
+									        newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
+									 
+									        // Skate - radio
+									        newElem.find('.label_radio').attr('for', 'ID' + newNum + '_radioitem');
+									        newElem.find('.input_radio').attr('id', 'ID' + newNum + '_radioitem').attr('name', 'ID' + newNum + '_radioitem').val([]);
+									 
+									        // Email - text
+									        newElem.find('.label_email').attr('for', 'ID' + newNum + '_email_address');
+									        newElem.find('.input_email').attr('id', 'ID' + newNum + '_email_address').attr('name', 'ID' + newNum + '_email_address').val('');
+
+
+											// Add a <div></div> markup after the last-child of the <div class="tab-content">
+											$(
+													'div.tab-content div#tab'
+															+ nbrLiElem)
+													.after(newElem);
+										});
 					});
 </script>
 </head>
@@ -183,15 +241,17 @@
 						<form:form id="poForm" role="form" class="form-horizontal"
 							modelAttribute="poForm"
 							action="${pageContext.request.contextPath}/po/save">
-							<ul id="list" class="nav nav-tabs" role="tablist">
-								<li role="presentation" class="active"><a href="#tab1"
-									aria-controls="tab1" role="tab" data-toggle="tab"><span
-										class="fa fa-plus fa-fw"></span>&nbsp;New PO</a></li>
-
-							</ul>
-							<div class="tab-content">
-								<div role="tabpanel" class="tab-pane active">
+							<div role="tabpanel" class="tab-pane active">
+								<ul id="list" class="nav nav-tabs" role="tablist">
+									<li role="presentation" class="active"><a href="#tab1"
+										aria-controls="tab1" role="tab" data-toggle="tab"><span
+											class="fa fa-plus fa-fw"></span>&nbsp;New PO</a></li>
+									<li id="last"><a href="#addTab"><span
+											class="glyphicon glyphicon-plus"></span> Add Tab</a></li>
+								</ul>
+								<div class="tab-content">
 									<br />
+									<div role="tabpanel" class="tab-pane active" id="tab1">
 									<form:hidden path="poId" />
 									<div class="row">
 										<div class="col-md-12">
@@ -235,12 +295,13 @@
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">
-																<label for="inputPoDate" class="col-sm-3 control-label">PO
-																	Date</label>
+																<label for="poCreatedDate"
+																	class="col-sm-3 control-label">PO Date</label>
 																<div class="col-sm-9">
 																	<form:input type="text" class="form-control"
 																		id="poCreatedDate" name="poCreatedDate"
 																		path="poCreatedDate" placeholder="Enter PO Date"></form:input>
+
 																</div>
 															</div>
 															<div class="form-group">
@@ -328,13 +389,12 @@
 																	</tr>
 																</thead>
 																<tbody>
-																	<c:set var="total" value="${0}"/>
+																	<c:set var="total" value="${0}" />
 																	<c:forEach items="${ poForm.itemsList }" var="iL"
 																		varStatus="iLIdx">
 																		<tr>
 																			<td style="vertical-align: middle;"><form:hidden
-																					path="itemsList[${ iLIdx.index }].itemsId" />
-																				<form:hidden
+																					path="itemsList[${ iLIdx.index }].itemsId" /> <form:hidden
 																					path="itemsList[${ iLIdx.index }].productId" /> <c:out
 																					value="${iL.productLookup.productName }"></c:out></td>
 																			<td><form:input type="text"
@@ -356,9 +416,11 @@
 																					<span class="fa fa-minus"></span>
 																				</button>
 																			</td>
-																			<td><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
+																			<td><c:out
+																					value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
 																		</tr>
-                                                                    <c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}"/>
+																		<c:set var="total"
+																			value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
 																	</c:forEach>
 																</tbody>
 															</table>
@@ -379,21 +441,20 @@
 													</div>
 												</div>
 											</div>
-										</div>
-										
-										<div class="row">
-											<div class="col-md-12">
-												<div class="panel panel-default">
-													<div class="panel-heading">
-														<h1 class="panel-title">Remarks</h1>
-													</div>
-													<div class="panel-body">
-														<div class="row">
-															<div class="col-md-12">
-																<div class="form-group">
-																	<div class="col-sm-12">
-																		<form:textarea class="form-control" path="poRemarks"
-																			rows="5" />
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title">Remarks</h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<div class="col-sm-12">
+																			<form:textarea class="form-control" path="poRemarks"
+																				rows="5" />
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -402,6 +463,8 @@
 												</div>
 											</div>
 										</div>
+
+
 										<div class="col-md-7 col-offset-md-5">
 											<div class="btn-toolbar">
 												<button id="cancelButton" type="reset"
@@ -411,6 +474,7 @@
 											</div>
 										</div>
 									</div>
+								</div>
 								</div>
 							</div>
 						</form:form>
