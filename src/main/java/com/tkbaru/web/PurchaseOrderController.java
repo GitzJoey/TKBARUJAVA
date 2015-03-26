@@ -63,8 +63,6 @@ public class PurchaseOrderController {
 	@Autowired
 	private LoginContext loginContextSession;
 
-	private PurchaseOrderListContainer purchaseOrderListContainer;
-
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -79,11 +77,14 @@ public class PurchaseOrderController {
 	public String poNew(Locale locale, Model model) {
 		logger.info("[poNew] " + "");
 
-		PurchaseOrder po = new PurchaseOrder();
-		po.setPoStatus("L013_D");
-		po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+		if (loginContextSession.getPoForms().isEmpty()) {
+			PurchaseOrder po = new PurchaseOrder();
+			po.setPoStatus("L013_D");
+			po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+			loginContextSession.getPoForms().add(po);
+		}
 
-		model.addAttribute("poForm", po);
+		model.addAttribute("poForms", loginContextSession);
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -133,7 +134,7 @@ public class PurchaseOrderController {
 
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
 
-		model.addAttribute("reviseForm", selectedPo);
+		model.addAttribute("poForm", selectedPo);
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -200,6 +201,35 @@ public class PurchaseOrderController {
 		po.setItemsList(iLNew);
 
 		model.addAttribute("poForm", po);
+		model.addAttribute("productSelectionDDL",
+				productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL",
+				supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL",
+				warehouseManager.getAllWarehouse());
+		// model.addAttribute("poTypeDDL",
+		// lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PURCHASEORDER;
+	}
+
+	@RequestMapping(value = "/addpoform/{varId}", method = RequestMethod.POST)
+	public String addPoForm(Locale locale, Model model,
+			@ModelAttribute("poForms") LoginContext poForms,
+			@PathVariable String varId) {
+		logger.info("[poAddPoForm] ");
+
+		loginContextSession.setPoForms(poForms.getPoForms());
+
+		PurchaseOrder newPo = new PurchaseOrder();
+
+		loginContextSession.getPoForms().add(newPo);
+
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",
@@ -313,11 +343,14 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_REVISE;
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/save/{varId}", method = RequestMethod.POST)
 	public String poSave(Locale locale, Model model,
-			@ModelAttribute("poForm") PurchaseOrder po,
-			RedirectAttributes redirectAttributes) {
+			@ModelAttribute("poForms") LoginContext poForms,
+
+			@PathVariable String varId, RedirectAttributes redirectAttributes) {
 		logger.info("[poSave] " + "");
+		PurchaseOrder po = poForms.getPoForms().get(Integer.parseInt(varId));
+
 		po.setPoStatus("L013_C");
 		po.setStatusLookup(lookupManager.getLookupByKey("L013_C"));
 
@@ -329,10 +362,12 @@ public class PurchaseOrderController {
 			poManager.editPurchaseOrder(po);
 		}
 
+		loginContextSession.getPoForms().add(po);
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
+				Constants.PAGEMODE_ADD);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
 				Constants.ERRORFLAG_HIDE);
 
@@ -341,22 +376,21 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
 	public String reviseSave(Locale locale, Model model,
-			@ModelAttribute("reviseForm") PurchaseOrder po,
+			@ModelAttribute("poForm") PurchaseOrder po,
 			RedirectAttributes redirectAttributes) {
 		logger.info("[reviseSave] " + "");
 
 		po.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		po.setUpdatedDate(new Date());
+
 		poManager.editPurchaseOrder(po);
-		
-		model.addAttribute("reviseList", poManager.getAllPurchaseOrder());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
+				Constants.PAGEMODE_ADD);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
+				Constants.ERRORFLAG_SHOW);
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
@@ -373,16 +407,6 @@ public class PurchaseOrderController {
 				+ "";
 
 		return htmlTag;
-	}
-
-	public PurchaseOrderListContainer getPurchaseOrderListContainer() {
-
-		return purchaseOrderListContainer;
-	}
-
-	public void setPurchaseOrderListContainer(
-			PurchaseOrderListContainer purchaseOrderListContainer) {
-		this.purchaseOrderListContainer = purchaseOrderListContainer;
 	}
 
 	@RequestMapping(value = "/addpayment", method = RequestMethod.POST)
@@ -443,6 +467,26 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PO_PAYMENT;
+	}
+
+	@RequestMapping(value = "/savepayment", method = RequestMethod.POST)
+	public String paymentSave(Locale locale, Model model,
+			@ModelAttribute("paymentForm") PurchaseOrder po,
+			RedirectAttributes redirectAttributes) {
+		logger.info("[reviseSave] " + "");
+
+		po.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+		po.setUpdatedDate(new Date());
+		poManager.editPurchaseOrder(po);
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
+				Constants.PAGEMODE_ADD);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
+				Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_REVISE;
 	}
 
 }

@@ -142,59 +142,25 @@
 							$('#poCreatedDate').blur();
 						});
 
-						$('#list a[href="#addTab"]')
-								.on(
-										'click',
-										function() { // Click event on the "Add Tab" button
-											var nbrLiElem = ($('ul#list li').length) - 1; // Count how many <li> there are (minus 1 because one <li> is the "Add Tab" button)
+						$('#addTab').click(
+								function() {
+									var ref_this = $(".nav-tabs li.active").attr("id");
+									$('#poForm').attr('action',
+											ctxpath + "/po/addpoform/"+ref_this);
 
-											// Add a <li></li> line before the last-child
-											// Including the complete structure: the li ID, the <a href=""></a> etc... check the Bootstrap togglable tabs structure
-											$('ul#list li:last-child')
-													.before(
-															'<li id="li'
-																	+ (nbrLiElem + 1)
-																	+ '"><a href="#tab'
-																	+ (nbrLiElem + 1)
-																	+ '" role="tab" data-toggle="tab">Tab '
-																	+ (nbrLiElem + 1)
-																	+ ' <button type="button" class="btn btn-warning btn-xs" onclick="removeTab('
-																	+ (nbrLiElem + 1)
-																	+ ');"><span class="glyphicon glyphicon-remove"></span></button></a>');
+								});
 
-											var newElem = $('#tab' + nbrLiElem).clone().attr('id', 'tab' + (nbrLiElem+1)).fadeIn('slow'); // create the new element via clone(), and manipulate it's ID using newNum value
+						
+						
+						
 
-											 // inputPOCode
-									        newElem.find('.label_ttl').attr('for', 'ID' + newNum + '_title');
-									        newElem.find('.select_ttl').attr('id', 'ID' + newNum + '_title').attr('name', 'ID' + newNum + '_title').val('');
-									 
-									        // First name - text
-									        newElem.find('.label_fn').attr('for', 'ID' + newNum + '_first_name');
-									        newElem.find('.input_fn').attr('id', 'ID' + newNum + '_first_name').attr('name', 'ID' + newNum + '_first_name').val('');
-									 
-									        // Last name - text
-									        newElem.find('.label_ln').attr('for', 'ID' + newNum + '_last_name');
-									        newElem.find('.input_ln').attr('id', 'ID' + newNum + '_last_name').attr('name', 'ID' + newNum + '_last_name').val('');
-									 
-									        // Color - checkbox
-									        newElem.find('.label_checkboxitem').attr('for', 'ID' + newNum + '_checkboxitem');
-									        newElem.find('.input_checkboxitem').attr('id', 'ID' + newNum + '_checkboxitem').attr('name', 'ID' + newNum + '_checkboxitem').val([]);
-									 
-									        // Skate - radio
-									        newElem.find('.label_radio').attr('for', 'ID' + newNum + '_radioitem');
-									        newElem.find('.input_radio').attr('id', 'ID' + newNum + '_radioitem').attr('name', 'ID' + newNum + '_radioitem').val([]);
-									 
-									        // Email - text
-									        newElem.find('.label_email').attr('for', 'ID' + newNum + '_email_address');
-									        newElem.find('.input_email').attr('id', 'ID' + newNum + '_email_address').attr('name', 'ID' + newNum + '_email_address').val('');
+						$("button[name*='submitButton']").click(
+								function() {
+									var ref_this = $(".nav-tabs li.active").attr("id");
+									$('#poForm').attr('action',
+											ctxpath + "/po/save/" + ref_this);
 
-
-											// Add a <div></div> markup after the last-child of the <div class="tab-content">
-											$(
-													'div.tab-content div#tab'
-															+ nbrLiElem)
-													.after(newElem);
-										});
+								});
 					});
 </script>
 </head>
@@ -239,204 +205,127 @@
 					</div>
 					<div class="panel-body">
 						<form:form id="poForm" role="form" class="form-horizontal"
-							modelAttribute="poForm"
-							action="${pageContext.request.contextPath}/po/save">
+							modelAttribute="poForms">
 							<div role="tabpanel" class="tab-pane active">
 								<ul id="list" class="nav nav-tabs" role="tablist">
-									<li role="presentation" class="active"><a href="#tab1"
-										aria-controls="tab1" role="tab" data-toggle="tab"><span
-											class="fa fa-plus fa-fw"></span>&nbsp;New PO</a></li>
-									<li id="last"><a href="#addTab"><span
-											class="glyphicon glyphicon-plus"></span> Add Tab</a></li>
+									<c:forEach items="${ poForms.poForms }" var="poForm"
+										varStatus="poIdx">
+										<li role="presentation" class="" id="${poIdx.index}"><a
+											href="#tab${poIdx.index+1}"
+											aria-controls="tab${poIdx.index+1}" role="tab"
+											data-toggle="tab"><span class="fa fa-plus fa-fw"></span>&nbsp;New
+												PO ${poIdx.index+1}</a></li>
+									</c:forEach>
+									<li id="last">
+										<button id="addTab" type="submit"
+											class="btn btn-primary pull-right">
+											<span class="glyphicon glyphicon-plus"></span> Add PO
+										</button>
+									</li>
 								</ul>
 								<div class="tab-content">
 									<br />
-									<div role="tabpanel" class="tab-pane active" id="tab1">
-									<form:hidden path="poId" />
-									<div class="row">
-										<div class="col-md-12">
-											<div class="panel panel-default">
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-7">
-															<div class="form-group">
-																<label for="inputPOCode" class="col-sm-2 control-label">PO
-																	Code</label>
-																<div class="col-sm-5">
-																	<form:input type="text" class="form-control"
-																		id="inputPOCode" name="inputPOCode" path="poCode"
-																		placeholder="Enter PO Code"></form:input>
+									<c:forEach items="${ poForms.poForms }" var="poForm"
+										varStatus="poIdx">
+										<div role="tabpanel" class="tab-pane" id="tab${poIdx.index+1}">
+											<form:hidden path="poForms[${poIdx.index}].poId" />
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputPOCode"
+																			class="col-sm-2 control-label">PO Code</label>
+																		<div class="col-sm-5">
+																			<form:input type="text" class="form-control"
+																				id="poForms[${poIdx.index}].poCode" name="poForms[${poIdx.index}].poCode"
+																				path="poForms[${poIdx.index}].poCode"
+																				placeholder="Enter PO Code"></form:input>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label for="inputPOType"
+																			class="col-sm-2 control-label">PO Type</label>
+																		<div class="col-sm-8"></div>
+																	</div>
+																	<div class="form-group">
+																		<label for="inputSupplierId"
+																			class="col-sm-2 control-label">Supplier</label>
+																		<div class="col-sm-9">
+																			<form:select class="form-control"
+																				path="poForms[${poIdx.index}].supplierId">
+																				<option value="">Please Select</option>
+																				<form:options items="${ supplierSelectionDDL }"
+																					itemValue="supplierId" itemLabel="supplierName" />
+																			</form:select>
+																		</div>
+																		<div class="col-sm-1">
+																			<button id="supplierTooltip" type="button"
+																				class="btn btn-default" data-toggle="tooltip"
+																				data-trigger="hover" data-html="true"
+																				data-placement="right" data-title="">
+																				<span class="fa fa-external-link fa-fw"></span>
+																			</button>
+																		</div>
+																	</div>
+																</div>
+																<div class="col-md-5">
+																	<div class="form-group">
+																		<label for="poCreatedDate"
+																			class="col-sm-3 control-label">PO Date</label>
+																		<div class="col-sm-9">
+																			<form:input type="text" class="form-control"
+																				id="poCreatedDate" name="poCreatedDate"
+																				path="poForms[${poIdx.index}].poCreatedDate"
+																				placeholder="Enter PO Date"></form:input>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label for="inputPOStatus"
+																			class="col-sm-3 control-label">Status</label>
+																		<div class="col-sm-9">
+																			<label id="inputPOStatus" class="control-label"><c:out
+																					value="${ poForm.statusLookup.lookupValue }"></c:out></label>
+																		</div>
+																	</div>
 																</div>
 															</div>
-															<div class="form-group">
-																<label for="inputPOType" class="col-sm-2 control-label">PO
-																	Type</label>
-																<div class="col-sm-8"></div>
-															</div>
-															<div class="form-group">
-																<label for="inputSupplierId"
-																	class="col-sm-2 control-label">Supplier</label>
-																<div class="col-sm-9">
-																	<form:select class="form-control" path="supplierId">
-																		<option value="">Please Select</option>
-																		<form:options items="${ supplierSelectionDDL }"
-																			itemValue="supplierId" itemLabel="supplierName" />
-																	</form:select>
+															<hr>
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputShippingDate"
+																			class="col-sm-2 control-label">Shipping Date</label>
+																		<div class="col-sm-5">
+																			<form:input type="text" class="form-control"
+																				id="shippingDate" name="shippingDate"
+																				path="poForms[${poIdx.index}].shippingDate"
+																				placeholder="Enter Shipping Date"></form:input>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label for="inputWarehouseId"
+																			class="col-sm-2 control-label">Warehouse</label>
+																		<div class="col-sm-8">
+																			<form:select class="form-control"
+																				path="poForms[${poIdx.index}].warehouseId">
+																				<option value="">Please Select</option>
+																				<form:options items="${ warehouseSelectionDDL }"
+																					itemValue="warehouseId" itemLabel="warehouseName" />
+																			</form:select>
+																		</div>
+																	</div>
 																</div>
-																<div class="col-sm-1">
-																	<button id="supplierTooltip" type="button"
-																		class="btn btn-default" data-toggle="tooltip"
-																		data-trigger="hover" data-html="true"
-																		data-placement="right" data-title="">
-																		<span class="fa fa-external-link fa-fw"></span>
-																	</button>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-5">
-															<div class="form-group">
-																<label for="poCreatedDate"
-																	class="col-sm-3 control-label">PO Date</label>
-																<div class="col-sm-9">
-																	<form:input type="text" class="form-control"
-																		id="poCreatedDate" name="poCreatedDate"
-																		path="poCreatedDate" placeholder="Enter PO Date"></form:input>
-
+																<div class="col-md-5">
+																	<div class="form-group">
+																		<label for="inputPOStatus"
+																			class="col-sm-3 control-label"></label>
+																		<div class="col-sm-9"></div>
+																	</div>
 																</div>
 															</div>
-															<div class="form-group">
-																<label for="inputPOStatus"
-																	class="col-sm-3 control-label">Status</label>
-																<div class="col-sm-9">
-																	<label id="inputPOStatus" class="control-label"><c:out
-																			value="${ poForm.statusLookup.lookupValue }"></c:out></label>
-																</div>
-															</div>
-														</div>
-													</div>
-													<hr>
-													<div class="row">
-														<div class="col-md-7">
-															<div class="form-group">
-																<label for="inputShippingDate"
-																	class="col-sm-2 control-label">Shipping Date</label>
-																<div class="col-sm-5">
-																	<form:input type="text" class="form-control"
-																		id="shippingDate" name="shippingDate"
-																		path="shippingDate" placeholder="Enter Shipping Date"></form:input>
-																</div>
-															</div>
-															<div class="form-group">
-																<label for="inputWarehouseId"
-																	class="col-sm-2 control-label">Warehouse</label>
-																<div class="col-sm-8">
-																	<form:select class="form-control" path="warehouseId">
-																		<option value="">Please Select</option>
-																		<form:options items="${ warehouseSelectionDDL }"
-																			itemValue="warehouseId" itemLabel="warehouseName" />
-																	</form:select>
-																</div>
-															</div>
-														</div>
-														<div class="col-md-5">
-															<div class="form-group">
-																<label for="inputPOStatus"
-																	class="col-sm-3 control-label"></label>
-																<div class="col-sm-9"></div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-md-12">
-											<div class="panel panel-default">
-												<div class="panel-heading">
-													<h1 class="panel-title">New Transaction</h1>
-												</div>
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-11">
-															<select id="productSelect" class="form-control">
-																<option value="">Please Select</option>
-																<c:forEach items="${ productSelectionDDL }" var="psddl">
-																	<option value="${ psddl.productId }">${ psddl.productName }</option>
-																</c:forEach>
-															</select>
-														</div>
-														<div class="col-md-1">
-															<button id="addProdButton" type="submit"
-																class="btn btn-primary pull-right">
-																<span class="fa fa-plus"></span>
-															</button>
-														</div>
-													</div>
-													<br />
-													<div class="row">
-														<div class="col-md-12">
-															<table id="itemsListTable"
-																class="table table-bordered table-hover display responsive">
-																<thead>
-																	<tr>
-																		<th width="40%">Product Name</th>
-																		<th width="10%">Quantity</th>
-																		<th width="10%">Unit</th>
-																		<th width="15%">Price/Unit</th>
-																		<th width="5%">&nbsp;</th>
-																		<th width="20%">Total Price</th>
-																	</tr>
-																</thead>
-																<tbody>
-																	<c:set var="total" value="${0}" />
-																	<c:forEach items="${ poForm.itemsList }" var="iL"
-																		varStatus="iLIdx">
-																		<tr>
-																			<td style="vertical-align: middle;"><form:hidden
-																					path="itemsList[${ iLIdx.index }].itemsId" /> <form:hidden
-																					path="itemsList[${ iLIdx.index }].productId" /> <c:out
-																					value="${iL.productLookup.productName }"></c:out></td>
-																			<td><form:input type="text"
-																					class="form-control text-right"
-																					id="inputItemsQuantity" name="inputItemsQuantity"
-																					path="itemsList[${ iLIdx.index }].prodQuantity"
-																					placeholder="Enter Quantity"></form:input></td>
-																			<td></td>
-																			<td><form:input type="text"
-																					class="form-control text-right"
-																					id="inputItemsProdPrice" name="inputItemsProdPrice"
-																					path="itemsList[${ iLIdx.index }].prodPrice"
-																					placeholder="Enter Price"></form:input></td>
-
-																			<td>
-																				<button id="removeProdButton" type="submit"
-																					class="btn btn-primary pull-right"
-																					value="${ iLIdx.index }">
-																					<span class="fa fa-minus"></span>
-																				</button>
-																			</td>
-																			<td><c:out
-																					value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
-																		</tr>
-																		<c:set var="total"
-																			value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
-																	</c:forEach>
-																</tbody>
-															</table>
-														</div>
-													</div>
-													<div class="row">
-														<div class="col-md-12">
-															<table id="itemsTotalListTable"
-																class="table table-bordered table-hover display responsive">
-																<tbody>
-																	<tr>
-																		<td width="85%">Total</td>
-																		<td width="20%"><c:out value="${ total }"></c:out></td>
-																	</tr>
-																</tbody>
-															</table>
 														</div>
 													</div>
 												</div>
@@ -445,15 +334,110 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">Remarks</h1>
+															<h1 class="panel-title">New Transaction</h1>
 														</div>
 														<div class="panel-body">
 															<div class="row">
+																<div class="col-md-11">
+																	<select id="productSelect" class="form-control">
+																		<option value="">Please Select</option>
+																		<c:forEach items="${ productSelectionDDL }"
+																			var="psddl">
+																			<option value="${ psddl.productId }">${ psddl.productName }</option>
+																		</c:forEach>
+																	</select>
+																</div>
+																<div class="col-md-1">
+																	<button id="addProdButton" type="submit"
+																		class="btn btn-primary pull-right">
+																		<span class="fa fa-plus"></span>
+																	</button>
+																</div>
+															</div>
+															<br />
+															<div class="row">
 																<div class="col-md-12">
-																	<div class="form-group">
-																		<div class="col-sm-12">
-																			<form:textarea class="form-control" path="poRemarks"
-																				rows="5" />
+																	<table id="itemsListTable"
+																		class="table table-bordered table-hover display responsive">
+																		<thead>
+																			<tr>
+																				<th width="40%">Product Name</th>
+																				<th width="10%">Quantity</th>
+																				<th width="10%">Unit</th>
+																				<th width="15%">Price/Unit</th>
+																				<th width="5%">&nbsp;</th>
+																				<th width="20%">Total Price</th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																			<c:set var="total" value="${0}" />
+																			<c:forEach items="${ poForm.itemsList }" var="iL"
+																				varStatus="iLIdx">
+																				<tr>
+																					<td style="vertical-align: middle;"><form:hidden
+																							path="itemsList[${ iLIdx.index }].itemsId" /> <form:hidden
+																							path="itemsList[${ iLIdx.index }].productId" />
+																						<c:out value="${iL.productLookup.productName }"></c:out></td>
+																					<td><form:input type="text"
+																							class="form-control text-right"
+																							id="inputItemsQuantity" name="inputItemsQuantity"
+																							path="itemsList[${ iLIdx.index }].prodQuantity"
+																							placeholder="Enter Quantity"></form:input></td>
+																					<td></td>
+																					<td><form:input type="text"
+																							class="form-control text-right"
+																							id="inputItemsProdPrice"
+																							name="inputItemsProdPrice"
+																							path="itemsList[${ iLIdx.index }].prodPrice"
+																							placeholder="Enter Price"></form:input></td>
+
+																					<td>
+																						<button id="removeProdButton" type="submit"
+																							class="btn btn-primary pull-right"
+																							value="${ iLIdx.index }">
+																							<span class="fa fa-minus"></span>
+																						</button>
+																					</td>
+																					<td><c:out
+																							value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
+																				</tr>
+																				<c:set var="total"
+																					value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																			</c:forEach>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-12">
+																	<table id="itemsTotalListTable"
+																		class="table table-bordered table-hover display responsive">
+																		<tbody>
+																			<tr>
+																				<td width="85%">Total</td>
+																				<td width="20%"><c:out value="${ total }"></c:out></td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-heading">
+																	<h1 class="panel-title">Remarks</h1>
+																</div>
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<div class="col-sm-12">
+																					<form:textarea class="form-control"
+																						path="poForms[${poIdx.index}].poRemarks" rows="5" />
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																</div>
@@ -461,20 +445,17 @@
 														</div>
 													</div>
 												</div>
+												<div class="col-md-7 col-offset-md-5">
+													<div class="btn-toolbar">
+														<button id="cancelButton${poIdx.index}" type="reset"
+															class="btn btn-primary pull-right">Cancel</button>
+														<button id="submitButton${poIdx.index}" name="submitButton${poIdx.index}" type="submit"
+															class="btn btn-primary pull-right">Submit</button>
+													</div>
+												</div>
 											</div>
 										</div>
-
-
-										<div class="col-md-7 col-offset-md-5">
-											<div class="btn-toolbar">
-												<button id="cancelButton" type="reset"
-													class="btn btn-primary pull-right">Cancel</button>
-												<button id="submitButton" type="submit"
-													class="btn btn-primary pull-right">Submit</button>
-											</div>
-										</div>
-									</div>
-								</div>
+									</c:forEach>
 								</div>
 							</div>
 						</form:form>
