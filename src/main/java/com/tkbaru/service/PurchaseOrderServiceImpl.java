@@ -17,7 +17,7 @@ import com.tkbaru.model.PurchaseOrder;
 public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Autowired
 	PurchaseOrderDAO purchaseOrderDAO;
-	
+
 	@Autowired
 	LookupDAO lookupDAO;
 
@@ -71,13 +71,26 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	@Override
 	@Transactional
-	public void submitPurchaseOrder(PurchaseOrder purchaseOrder) {	
+	public void submitPurchaseOrder(PurchaseOrder purchaseOrder) {
 		try {
 			purchaseOrderDAO.addPurchaseOrder(purchaseOrder);
 		} catch (IllegalStateException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
+	@Override
+	@Transactional
+	public void savePayment(PurchaseOrder payment) {
+		purchaseOrderDAO.editPurchaseOrder(payment);
+
+	}
+
+	@Override
+	@Transactional
+	public List<PurchaseOrder> getPurchaseOrderByStatus(String status) {
+		return purchaseOrderDAO.getPurchaseOrderByStatus(status);
+	}
+
 }

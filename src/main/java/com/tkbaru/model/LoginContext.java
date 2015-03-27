@@ -19,7 +19,7 @@ public class LoginContext implements Serializable {
 
 	private User userLogin;
 	private String selectedMenu;
-	private List<PurchaseOrder> poForms = new ArrayList<PurchaseOrder>();
+	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
 
 	public User getUserLogin() {
 		return userLogin;
@@ -37,12 +37,12 @@ public class LoginContext implements Serializable {
 		this.selectedMenu = selectedMenu;
 	}
 
-	public List<PurchaseOrder> getPoForms() {
-		return poForms;
+	public List<PurchaseOrder> getPoList() {
+		return poList;
 	}
 
-	public void setPoForms(List<PurchaseOrder> poForms) {
-		this.poForms = poForms;
+	public void setPoList(List<PurchaseOrder> poList) {
+		this.poList = poList;
 	}
 
 	@Override

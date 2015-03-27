@@ -107,4 +107,29 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		return purchaseOrderList;
 	}
 
+	@Override
+	public void savePayment(PurchaseOrder payment) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.update(payment);
+		
+	}
+
+	@Override
+	public List<PurchaseOrder> getPurchaseOrderByStatus(String status) {
+		logger.info("[getPurchaseOrderByStatus] " + "status: "
+				+ status);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery(
+				"FROM PurchaseOrder where poStatus = :status ").setString("status", status).list();
+		
+		
+
+		for (PurchaseOrder po : purchaseOrderList) {
+			logger.info("PurchaseOrder : " + po.toString());
+		}
+
+		return purchaseOrderList;
+	}
+
 }

@@ -79,7 +79,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
+					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order Revise
 				</h1>
 
 				<c:choose>
@@ -88,8 +88,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-smile-o fa-fw fa-2x"></span>Purchase Order
-									List
+									<span class="fa fa-smile-o fa-fw fa-2x"></span>PO Revise List
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -105,7 +104,8 @@
 										</thead>
 										<tbody>
 											<c:if test="${not empty reviseList}">
-												<c:forEach items="${ reviseList }" var="i" varStatus="status">
+												<c:forEach items="${ reviseList }" var="i"
+													varStatus="status">
 													<tr>
 														<td align="center"><input
 															id="cbx_<c:out value="${ i.poId }"/>" type="checkbox"
@@ -156,8 +156,8 @@
 																			class="col-sm-2 control-label">PO Code</label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control"
-																				id="inputPOCode" name="inputPOCode" path="poCode"
-																				placeholder="Enter PO Code"></form:input>
+																				readonly="true" id="inputPOCode" name="inputPOCode"
+																				path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -169,11 +169,9 @@
 																		<label for="inputSupplierId"
 																			class="col-sm-2 control-label">Supplier</label>
 																		<div class="col-sm-9">
-																			<form:select class="form-control" path="supplierId">
-																				<option value="">Please Select</option>
-																				<form:options items="${ supplierSelectionDDL }"
-																					itemValue="supplierId" itemLabel="supplierName" />
-																			</form:select>
+																			<form:hidden path="supplierId" />
+																			<form:input type="text" class="form-control"
+																				path="supplierLookup.supplierName" readonly="true" />
 																		</div>
 																		<div class="col-sm-1">
 																			<button id="supplierTooltip" type="button"
@@ -191,16 +189,19 @@
 																			class="col-sm-3 control-label">PO Date</label>
 																		<div class="col-sm-9">
 																			<form:input type="text" class="form-control"
-																				id="poCreatedDate" name="poCreatedDate"
-																				path="poCreatedDate" placeholder="Enter PO Date"></form:input>
+																				readonly="true" id="poCreatedDate"
+																				name="poCreatedDate" path="poCreatedDate"
+																				placeholder="Enter PO Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label for="inputPOStatus"
 																			class="col-sm-3 control-label">Status</label>
 																		<div class="col-sm-9">
-																			<label id="inputPOStatus" class="control-label"><c:out
-																					value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
+																			<form:hidden path="poStatus"></form:hidden>
+																				<label id="inputPOStatus" class="control-label"><c:out
+																				value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
+																		   
 																		</div>
 																	</div>
 																</div>
@@ -213,8 +214,8 @@
 																			class="col-sm-2 control-label">Shipping Date</label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control"
-																				id="shippingDate" name="shippingDate"
-																				path="shippingDate"
+																				readonly="true" id="shippingDate"
+																				name="shippingDate" path="shippingDate"
 																				placeholder="Enter Shipping Date"></form:input>
 																		</div>
 																	</div>
@@ -222,18 +223,16 @@
 																		<label for="inputWarehouseId"
 																			class="col-sm-2 control-label">Warehouse</label>
 																		<div class="col-sm-8">
-																			<form:select class="form-control" path="warehouseId">
-																				<option value="">Please Select</option>
-																				<form:options items="${ warehouseSelectionDDL }"
-																					itemValue="warehouseId" itemLabel="warehouseName" />
-																			</form:select>
+
+																			<form:hidden path="warehouseId" />
+																			<form:input type="text" class="form-control"
+																				path="warehouseLookup.warehouseName" readonly="true" />
 																		</div>
 																	</div>
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-																		<label for="inputPOStatus"
-																			class="col-sm-3 control-label"></label>
+
 																		<div class="col-sm-9"></div>
 																	</div>
 																</div>
