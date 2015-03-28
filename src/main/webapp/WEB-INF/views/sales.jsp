@@ -46,7 +46,7 @@
 		        	row.child.hide();
 		            tr.removeClass('shown');
 		        } else {
-		            row.child( format(row.data()) ).show();
+		            row.child(format(row.data())).show();
 		            tr.addClass('shown');
 		        }
 		    });

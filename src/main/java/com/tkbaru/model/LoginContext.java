@@ -2,6 +2,9 @@ package com.tkbaru.model;
 
 import java.io.Serializable;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class LoginContext implements Serializable {
 	private static final long serialVersionUID = 6867902303108888160L;
 
