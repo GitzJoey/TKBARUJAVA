@@ -2,10 +2,6 @@ package com.tkbaru.model;
 
 import java.io.Serializable;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
-import org.springframework.stereotype.Component;
-
 public class LoginContext implements Serializable {
 	private static final long serialVersionUID = 6867902303108888160L;
 

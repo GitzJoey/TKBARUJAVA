@@ -162,7 +162,6 @@
 							<div role="tabpanel">
 								<ul class="nav nav-tabs" role="tablist">
 									<li role="presentation" class="active"><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw"></span>&nbsp;New Sales</a></li>
-									<li role="presentation" class=""><a id="newTab" href="#soNewTab" role="tab"><span class="fa fa-plus fa-fw"></span></a></li>
 								</ul>
 
 								<div class="tab-content">
