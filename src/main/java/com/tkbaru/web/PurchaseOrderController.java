@@ -11,9 +11,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.dao.ConcurrencyFailureException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,6 +28,7 @@ import com.tkbaru.common.Constants;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
+import com.tkbaru.model.Product;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.BankService;
@@ -36,6 +37,7 @@ import com.tkbaru.service.ProductService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.SupplierService;
 import com.tkbaru.service.WarehouseService;
+import com.tkbaru.validator.PurchaseOrderValidator;
 
 @Controller
 @RequestMapping("/po")
@@ -82,7 +84,10 @@ public class PurchaseOrderController {
 			PurchaseOrder po = new PurchaseOrder();
 			po.setPoStatus("L013_D");
 			po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			po.setCreatedDate(new Date());
 			loginContextSession.getPoList().add(po);
+
 		}
 
 		model.addAttribute("productSelectionDDL",
@@ -93,36 +98,10 @@ public class PurchaseOrderController {
 				warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
-
-		model.addAttribute("loginContext", loginContextSession);
-
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_PURCHASEORDER;
-	}
-
-	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
-	public String poEdit(Locale locale, Model model,
-			@PathVariable Integer selectedId) {
-		logger.info("[poEdit] " + "");
-
-		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
-
-		model.addAttribute("productSelectionDDL",
-				productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",
-				supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",
-				warehouseManager.getAllWarehouse());
-		model.addAttribute("poTypeDDL", lookupManager
-				.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
-
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PURCHASEORDER;
@@ -152,22 +131,36 @@ public class PurchaseOrderController {
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
-	
+
 	@RequestMapping(value = "/additems/{tabId}/{varId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model,
 			@ModelAttribute("loginContext") LoginContext loginContext,
-			@PathVariable String tabId,@PathVariable String varId) {
+			@PathVariable String tabId, @PathVariable String varId) {
 		logger.info("[poAddItems] " + "varId: " + varId);
 
-		Items i = new Items();
+		Items item = new Items();
 
-		i.setProductId(Integer.parseInt(varId));
-		i.setProductLookup(productManager.getProductById(Integer
-				.parseInt(varId)));
+		item.setProductId(Integer.parseInt(varId));
+		Product product = productManager
+				.getProductById(Integer.parseInt(varId));
+		item.setProductLookup(product);
+		item.setUnitCode(product.getBaseUnit());
+		item.setCreatedDate(new Date());
+		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 
-		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(i);
+		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()
+				.add(item);
+		
+		List<Items> itemList = new ArrayList<Items>();
+		for(Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()){
+			Product prod = productManager.getProductById(items.getProductId());
+			items.setProductLookup(prod);
+			itemList.add(items);
+		}
 		
 		loginContextSession.setPoList(loginContext.getPoList());
+
+		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(itemList);
 
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
@@ -178,7 +171,6 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -188,7 +180,7 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
-	public String poAddItems(Locale locale, Model model,
+	public String reviseAddItems(Locale locale, Model model,
 			@ModelAttribute("reviseForm") PurchaseOrder reviseForm,
 			@PathVariable String varId) {
 		logger.info("[poAddItems] " + "varId: " + varId);
@@ -196,8 +188,12 @@ public class PurchaseOrderController {
 		Items i = new Items();
 
 		i.setProductId(Integer.parseInt(varId));
-		i.setProductLookup(productManager.getProductById(Integer
-				.parseInt(varId)));
+		Product product = productManager
+				.getProductById(Integer.parseInt(varId));
+		i.setProductLookup(product);
+		i.setUnitCode(product.getBaseUnit());
+		i.setCreatedDate(new Date());
+		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 
 		reviseForm.getItemsList().add(i);
 
@@ -222,19 +218,19 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
 	public String poRemoveItems(Locale locale, Model model,
-			@ModelAttribute("loginContext") PurchaseOrder po,
+			@ModelAttribute("reviseForm") PurchaseOrder reviseForm,
 			@PathVariable String varId) {
 		logger.info("[poRemoveItems] " + "varId: " + varId);
 
 		List<Items> iLNew = new ArrayList<Items>();
 
-		for (int x = 0; x < po.getItemsList().size(); x++) {
+		for (int x = 0; x < reviseForm.getItemsList().size(); x++) {
 			if (x == Integer.parseInt(varId))
 				continue;
-			iLNew.add(po.getItemsList().get(x));
+			iLNew.add(reviseForm.getItemsList().get(x));
 		}
 
-		po.setItemsList(iLNew);
+		reviseForm.setItemsList(iLNew);
 
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
@@ -242,8 +238,41 @@ public class PurchaseOrderController {
 				supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",
 				warehouseManager.getAllWarehouse());
-		// model.addAttribute("poTypeDDL",
-		// lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PURCHASEORDER;
+	}
+	
+	@RequestMapping(value = "/removeitems/{tabId}/{varId}", method = RequestMethod.POST)
+	public String poRemoveItemsMulti(Locale locale, Model model,
+			@ModelAttribute("loginContext") LoginContext loginContext,
+			@PathVariable String tabId,@PathVariable String varId) {
+		logger.info("[poRemoveItems] " + "varId: " + varId);
+
+		List<Items> iLNew = new ArrayList<Items>();
+
+		for (int x = 0; x < loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().size(); x++) {
+			if (x == Integer.parseInt(varId))
+				continue;
+			iLNew.add(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().get(x));
+		}
+
+		loginContext.getPoList().get(Integer.parseInt(tabId)).setItemsList(iLNew);
+		
+		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList());
+
+		model.addAttribute("productSelectionDDL",
+				productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL",
+				supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL",
+				warehouseManager.getAllWarehouse());
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
@@ -253,13 +282,11 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
 
-	@RequestMapping(value = "/addpoform/{varId}", method = RequestMethod.POST)
-	public String addPoForm(Locale locale, Model model,
-			@PathVariable String varId) {
+	@RequestMapping(value = "/addpoform", method = RequestMethod.GET)
+	public String addPoForm(Locale locale, Model model) {
 		logger.info("[poAddPoForm] ");
 
 		PurchaseOrder newPo = new PurchaseOrder();
-		
 		newPo.setPoStatus("L013_D");
 		newPo.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
 		newPo.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -288,7 +315,8 @@ public class PurchaseOrderController {
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 
-		model.addAttribute("paymentList", poManager.getPurchaseOrderByStatus("L013_WP"));
+		model.addAttribute("paymentList",
+				poManager.getPurchaseOrderByStatus("L013_WP"));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
@@ -363,8 +391,10 @@ public class PurchaseOrderController {
 	@RequestMapping(value = "/save/{varId}", method = RequestMethod.POST)
 	public String poSave(Locale locale, Model model,
 			@ModelAttribute("loginContext") LoginContext loginContext,
-			RedirectAttributes redirectAttributes, @PathVariable String varId) {
+			BindingResult result, RedirectAttributes redirectAttributes,
+			@PathVariable String varId) {
 		logger.info("[poSave] " + "");
+
 		loginContextSession.setPoList(loginContext.getPoList());
 		PurchaseOrder po = loginContext.getPoList()
 				.get(Integer.parseInt(varId));
@@ -378,6 +408,17 @@ public class PurchaseOrderController {
 		} else {
 			poManager.editPurchaseOrder(po);
 		}
+		
+		List<Items> itemList = new ArrayList<Items>();
+		for(Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()){
+			Product prod = productManager.getProductById(items.getProductId());
+			items.setProductLookup(prod);
+			itemList.add(items);
+		}
+		
+		loginContextSession.setPoList(loginContext.getPoList());
+
+		loginContextSession.getPoList().get(Integer.parseInt(varId)).setItemsList(itemList);
 
 		model.addAttribute("productSelectionDDL",
 				productManager.getAllProduct());
@@ -396,6 +437,37 @@ public class PurchaseOrderController {
 				Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PURCHASEORDER;
+
+	}
+
+	@RequestMapping(value = "/cancel/{tabId}", method = RequestMethod.POST)
+	public String poCancel(Locale locale, Model model,
+			@ModelAttribute("loginContext") LoginContext loginContext,
+			BindingResult result, RedirectAttributes redirectAttributes,
+			@PathVariable String tabId) {
+		logger.info("[poCancel] " + "");
+
+		if (!loginContext.getPoList().isEmpty()) {
+			PurchaseOrder po = loginContext.getPoList().get(
+					Integer.parseInt(tabId));
+			po.setPoStatus("L013_D");
+			po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+			loginContext.getPoList().remove(po);
+			
+			List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
+			for(PurchaseOrder pos : loginContext.getPoList()){
+				pos.setStatusLookup(lookupManager.getLookupByKey(pos.getPoStatus()));
+				poList.add(pos);
+			}
+
+			loginContextSession.setPoList(poList);
+		}
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
+				loginContextSession);
+
+		return Constants.JSPPAGE_DASHBOARD;
+
 	}
 
 	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
@@ -416,14 +488,14 @@ public class PurchaseOrderController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
 				Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_SHOW);
+				Constants.ERRORFLAG_HIDE);
 
 		return "redirect:revise";
 	}
 
 	@RequestMapping(value = "/retrieve/supplier", method = RequestMethod.GET)
-	public @ResponseBody
-	String poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
+	public @ResponseBody String poRetrieveSupplier(
+			@RequestParam("supplierId") String supplierId) {
 		logger.info("[poRetrieveSupplier] " + "supplierId: " + supplierId);
 
 		Supplier supp = supplierManager.getSupplierById(Integer

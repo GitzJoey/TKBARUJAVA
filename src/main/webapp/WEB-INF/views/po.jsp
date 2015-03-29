@@ -9,41 +9,75 @@
 <script>
 	$(document)
 			.ready(
+
 					function() {
 						var ctxpath = "${ pageContext.request.contextPath }";
 
 						var tabCount = "${ loginContext.poList.size() }";
 
-						for (var i = 0; i < tabCount; i++) {
+						var activetab;
 
-							$('#poCreatedDate' + i).datetimepicker({
-								format : "DD-MM-YYYY"
-							});
-							$('#shippingDate' + i).datetimepicker({
-								format : "DD-MM-YYYY"
-							});
-						}
+						var productSelect;
 
-						$('#addProdButton, #removeProdButton').click(
-								function() {
-									var id = "";
-									var button = $(this).attr('id');
-									var ref_this = $(".nav-tabs li.active")
-											.attr("id");
-									if (button == 'addProdButton') {
-										id = $('#productSelect').val();
-										$('#poForm').attr(
-												'action',
-												ctxpath + "/po/additems/"
-														+ ref_this + "/" + id);
-									} else {
-										id = $(this).val();
-										$('#poForm').attr(
-												'action',
-												ctxpath + "/po/removeitems/"
-														+ id);
-									}
+						$('.poCreatedDate').datetimepicker({
+							format : "DD-MM-YYYY"
+						});
+
+						$('.poCreatedDate')
+								.on(
+										'dp.change dp.show',
+										function(e) {
+											$('#poForm').formValidation(
+													'revalidateField',
+													'poCreatedDate');
+										});
+						$('.shippingDate').datetimepicker({
+							format : "DD-MM-YYYY"
+						});
+
+						$('.shippingDate').on(
+								'dp.change dp.show',
+								function(e) {
+									$('#poForm').formValidation(
+											'revalidateField', 'shippingDate');
 								});
+
+						$('[id^="removeProdButton"]')
+								.click(
+										function() {
+											$('#poForm').formValidation('removeField','productSelect');
+											activetab = $(".nav-tabs li.active")
+													.attr("id");
+											var id = "";
+											id = $(this).val();
+
+											$('#poForm').attr(
+															'action',
+															ctxpath
+																	+ "/po/removeitems/"
+																	+ activetab
+																	+ "/"
+																	+ +id);
+
+										});
+
+						$('button[id*="addProdButton"]')
+								.click(
+										function() {
+
+											activetab = $(".nav-tabs li.active")
+													.attr("id");
+											productSelect = $(
+													"#productSelect"
+															+ activetab).val();
+
+											$('#poForm').attr(
+													'action',
+													ctxpath + "/po/additems/"
+															+ activetab + "/"
+															+ productSelect);
+
+										});
 
 						$('#itemsListTable').DataTable({
 							"paging" : false,
@@ -93,85 +127,171 @@
 											}
 										});
 
-						for (var i = 0; i < tabCount; i++) {
+						$("#poForm")
+								.formValidation(
+										{
+											locale : 'id_ID',
+											framework : 'bootstrap',
+											
+											excluded : 'disabled',
+											icon : {
+												valid : 'glyphicon glyphicon-ok',
+												invalid : 'glyphicon glyphicon-remove',
+												validating : 'glyphicon glyphicon-refresh'
+											},
+											fields : {
 
-							var poCode = "poList[".concat(i).concat("].poCode");
-							$('#poForm').formValidation({
-								
-								locale : 'id_ID',
-								framework : 'bootstrap',
-								excluded : ':disabled',
-								icon : {
-									valid : 'glyphicon glyphicon-ok',
-									invalid : 'glyphicon glyphicon-remove',
-									validating : 'glyphicon glyphicon-refresh'
-								},
-								fields : {
-									
-									'poList[0].poCode' : {
-										validators : {
-											notEmpty : {}
-										}
-									},
-									'poList[0].poCreatedDate' : {
-										validators : {
-											//	notEmpty : {},
-											date : {
-												format : 'DD-MM-YYYY'
-											}
-										}
-									},
-									'poList[0].shippingDate' : {
-										validators : {
-											//	notEmpty : {},
-											date : {
-												format : 'DD-MM-YYYY'
-											}
-										}
-									},
-									'poList[0].warehouseId' : {
-										icon : false,
-										validators : {
-											notEmpty : {}
-										}
-									},
-									'poList[0].supplierId' : {
-										icon : false,
-										validators : {
-											notEmpty : {}
-										}
-									}
-								}
-							});
+												'poCode' : {
+													selector : '.poCode',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.col-sm-5',
+													validators : {
+														notEmpty : {}
+													}
+												},
+												'poCreatedDate' : {
+													selector : '.poCreatedDate',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.col-sm-9',
+													validators : {
 
-						}
+														notEmpty : {},
+														date : {
+															format : 'DD-MM-YYYY'
+														}
+													}
+												},
+												'shippingDate' : {
+													selector : '.shippingDate',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.col-sm-5',
+													validators : {
+														notEmpty : {},
+														date : {
+															format : 'DD-MM-YYYY'
+														}
+													}
+												},
+												'warehouseId' : {
+													selector : '.warehouseId',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.col-sm-8',
+													icon : false,
+													validators : {
+														notEmpty : {}
+													}
+												},
+												'supplierId' : {
+													selector : '.supplierId',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.col-sm-9',
+													icon : false,
+													validators : {
+														notEmpty : {}
+													}
+												},
+												'productSelect' : {
+													selector : '.productSelect',
+													// The field is placed inside .col-xs-6 div instead of .form-group
+													row : '.row .col-md-11',
+													icon : false,
+													validators : {
+														callback : {
+															message : 'Silahkan pilih produk!',
+															callback : function(
+																	value,
+																	validator,
+																	$field) {
+																var productSelect = $(
+																		"#productSelect"
+																				+ activetab)
+																		.val();
+																if (productSelect == '') {
+																	return false;
+																} else {
+																	return true;
+																}
+
+															}
+														}
+													}
+												}
+											}
+										})
+								.on(
+										'click',
+										'button[id*="addProdButton"]',
+										function(e) {
+											$('#poForm').formValidation(
+													'revalidateField',
+													'productSelect');
+
+										})
+								.on(
+										'success.field.fv',
+										function(e, data) {
+											if (data.field == 'productSelect') {
+
+												var productSelect = $(
+														"#productSelect"
+																+ activetab)
+														.val();
+
+												// User choose given channel
+												if (productSelect != '') {
+													// Remove the success class from the container
+
+													$('#poForm')
+															.formValidation(
+																	'removeField',
+																	'productSelect');
+												}
+											}
+										});
 
 						$('#addTab').click(
+
 								function() {
-									var ref_this = $(".nav-tabs li.active")
-											.attr("id");
-									$('#poForm').attr(
-											'action',
-											ctxpath + "/po/addpoform/"
-													+ ref_this);
+									activetab = $(".nav-tabs li.active").attr(
+											"id");
+									$('#addTab').attr("href",
+											ctxpath + "/po/addpoform");
 
 								});
 
 						$("button[name*='submitButton']").click(
 								function() {
-									var ref_this = $(".nav-tabs li.active")
-											.attr("id");
+
+									$('#poForm').formValidation('removeField',
+											'productSelect');
+									activetab = $(".nav-tabs li.active").attr(
+											"id");
+
 									$('#poForm').attr('action',
-											ctxpath + "/po/save/" + ref_this);
+											ctxpath + "/po/save/" + activetab);
+
+								});
+						
+						
+
+						$('[id^="cancelButton"]').click(
+								function() {
+									$('#poForm').formValidation('removeField', 'poCode');
+									$('#poForm').formValidation('removeField','poCreatedDate');
+									$('#poForm').formValidation('removeField','shippingDate');
+									$('#poForm').formValidation('removeField','warehouseId');
+									$('#poForm').formValidation('removeField','supplierId');
+									$('#poForm').formValidation('removeField','productSelect');
+									activetab = $(".nav-tabs li.active").attr("id");
+									$('#poForm').attr("action",ctxpath + "/po/cancel/"+activetab);
 
 								});
 
-					});
+						$('#list a[href="#tab' + tabCount + '"]').tab('show');
 
-	$(window).load(function() {
-		$('#list a[href="#tab1"]').tab('show');
-	});
+					});
 </script>
+
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -222,15 +342,12 @@
 									<li role="presentation" class="" id="${poIdx.index}"><a
 										href="#tab${poIdx.index+1}"
 										aria-controls="tab${poIdx.index+1}" role="tab"
-										data-toggle="tab"><span class="fa fa-plus fa-fw"></span>&nbsp;New
+										data-toggle="tab"><span class="glyphicon glyphicon-plus"></span>&nbsp;New
 											PO ${poIdx.index+1}</a></li>
 								</c:forEach>
-								<li id="last">
-									<button id="addTab" type="submit"
-										class="btn btn-primary pull-right">
-										<span class="glyphicon glyphicon-plus"></span> Add PO
-									</button>
-								</li>
+								<li id="last"><a id="addTab"
+									class="btn btn-xs btn-default pull-right" href="#"><span
+										class="glyphicon glyphicon-plus"></span></a></li>
 							</ul>
 							<div class="tab-content">
 								<br />
@@ -248,7 +365,7 @@
 																	<label for="poCode" class="col-sm-2 control-label">PO
 																		Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control"
+																		<form:input type="text" class="form-control poCode"
 																			id="poCode${poIdx.index}"
 																			path="poList[${poIdx.index}].poCode"
 																			placeholder="Enter PO Code"></form:input>
@@ -271,7 +388,7 @@
 																	<label for="inputSupplierId${poIdx.index}"
 																		class="col-sm-2 control-label">Supplier</label>
 																	<div class="col-sm-9">
-																		<form:select class="form-control"
+																		<form:select class="form-control supplierId"
 																			id="inputSupplierId${poIdx.index}"
 																			path="poList[${poIdx.index}].supplierId">
 																			<option value="">Please Select</option>
@@ -294,18 +411,23 @@
 																	<label for="poCreatedDate"
 																		class="col-sm-3 control-label">PO Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control"
+																		<form:input type="text"
+																			class="form-control poCreatedDate"
 																			id="poCreatedDate${poIdx.index}"
 																			path="poList[${poIdx.index}].poCreatedDate"
 																			placeholder="Enter PO Date"></form:input>
 																	</div>
+
 																</div>
 																<div class="form-group">
 																	<label for="inputPOStatus${poIdx.index}"
 																		class="col-sm-3 control-label">Status</label>
 																	<div class="col-sm-9">
-																		<label id="inputPOStatus" class="control-label"><c:out
-																				value="${ loginContext.poList[poIdx.index].statusLookup.lookupValue }"></c:out></label>
+	                                                                   <form:hidden path="poList[${poIdx.index}].poStatus"/>
+	                                                                   
+	                                                                 
+																		<label id="inputPOStatus${poIdx.index}" class="control-label"><c:out
+																				value="${ poForm.statusLookup.lookupValue }"></c:out></label>
 																	</div>
 																</div>
 															</div>
@@ -317,24 +439,28 @@
 																	<label for="shippingDate${poIdx.index}"
 																		class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control"
+																		<form:input type="text"
+																			class="form-control shippingDate"
 																			id="shippingDate${poIdx.index}"
 																			path="poList[${poIdx.index}].shippingDate"
 																			placeholder="Enter Shipping Date"></form:input>
 																	</div>
+
 																</div>
 																<div class="form-group">
 																	<label for="inputWarehouseId${poIdx.index}"
 																		class="col-sm-2 control-label">Warehouse</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control"
+																		<form:select class="form-control warehouseId"
 																			id="inputWarehouseId${poIdx.index}"
 																			path="poList[${poIdx.index}].warehouseId">
 																			<option value="">Please Select</option>
 																			<form:options items="${ warehouseSelectionDDL }"
 																				itemValue="warehouseId" itemLabel="warehouseName" />
 																		</form:select>
+
 																	</div>
+
 																</div>
 															</div>
 															<div class="col-md-5">
@@ -357,9 +483,9 @@
 													</div>
 													<div class="panel-body">
 														<div class="row">
-															<div class="col-md-11">
-																<select id="productSelect"
-																	class="form-control">
+															<div class="col-md-11" id="product-select${poIdx.index}">
+																<select id="productSelect${poIdx.index}"
+																	class="form-control productSelect">
 																	<option value="">Please Select</option>
 																	<c:forEach items="${ productSelectionDDL }" var="psddl">
 																		<option value="${ psddl.productId }">${ psddl.productName }</option>
@@ -367,7 +493,7 @@
 																</select>
 															</div>
 															<div class="col-md-1">
-																<button id="addProdButton" type="submit"
+																<button id="addProdButton${poIdx.index}" type="submit"
 																	class="btn btn-primary pull-right">
 																	<span class="fa fa-plus"></span>
 																</button>
@@ -376,7 +502,7 @@
 														<br />
 														<div class="row">
 															<div class="col-md-12">
-																<table id="itemsListTable${poIdx.index}"
+																<table id="itemsListTable"
 																	class="table table-bordered table-hover display responsive">
 																	<thead>
 																		<tr>
@@ -396,27 +522,32 @@
 																			<tr>
 																				<td style="vertical-align: middle;"><form:hidden
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].itemsId" />
-																					<form:hidden
+																						<form:hidden
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].productId" />
-																					<c:out value="${iL.productLookup.productName }"></c:out></td>
+																					
+																						
+
+																					<label><c:out
+																							value="${ iL.productLookup.productName }"></c:out></label>
+																							</td>
 																				<td><form:input type="text"
 																						class="form-control text-right"
 																						id="inputItemsQuantity${poIdx.index}"
-																						name="inputItemsQuantity${poIdx.index}"
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity"
 																						placeholder="Enter Quantity"></form:input></td>
-																				<td></td>
+																				<td>
+																				
+																				<label><c:out
+																							value="${ iL.unitCode }"></c:out></label></td>
 																				<td><form:input type="text"
 																						class="form-control text-right"
 																						id="inputItemsProdPrice${poIdx.index}"
-																						name="inputItemsProdPrice${poIdx.index}"
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice"
 																						placeholder="Enter Price"></form:input></td>
 
 																				<td>
-																					<button id="removeProdButton" type="submit"
-																						class="btn btn-primary pull-right"
-																						value="${ iLIdx.index }">
+																					<button id="removeProdButton" type="submit" value="${ iLIdx.index }"
+																						class="btn btn-primary pull-right">
 																						<span class="fa fa-minus"></span>
 																					</button>
 																				</td>
@@ -432,7 +563,7 @@
 														</div>
 														<div class="row">
 															<div class="col-md-12">
-																<table id="itemsTotalListTable${poIdx.index}"
+																<table id="itemsTotalListTable"
 																	class="table table-bordered table-hover display responsive">
 																	<tbody>
 																		<tr>
@@ -456,7 +587,8 @@
 																	<div class="col-md-12">
 																		<div class="form-group">
 																			<div class="col-sm-12">
-																				<form:textarea class="form-control"
+																				<form:textarea id="poRemarks${poIdx.index}"
+																					class="form-control"
 																					path="poList[${poIdx.index}].poRemarks" rows="5" />
 																			</div>
 																		</div>
@@ -469,7 +601,7 @@
 											</div>
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
-													<button id="cancelButton${poIdx.index}" type="reset"
+													<button id="cancelButton${poIdx.index}" type="submit" 
 														class="btn btn-primary pull-right">Cancel</button>
 													<button id="submitButton${poIdx.index}"
 														name="submitButton${poIdx.index}" type="submit"
@@ -480,7 +612,6 @@
 									</div>
 								</c:forEach>
 							</div>
-
 						</form:form>
 					</div>
 				</div>
