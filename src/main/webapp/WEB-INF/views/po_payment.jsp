@@ -10,8 +10,8 @@
 	$(document).ready(
 			function() {
 				var ctxpath = "${ pageContext.request.contextPath }";
-				
-				var rowCount ="${ poForm.paymentList.size() }";
+
+				var rowCount = "${ poForm.paymentList.size() }";
 
 				// For each <li> inside #links
 				for (var i = 0; i < rowCount; i++) {
@@ -56,9 +56,9 @@
 							var button = $(this).attr('id');
 
 							if (button == 'addPayButton') {
-
+								id = $("#paymentTypeSelect").val();
 								$('#poForm').attr('action',
-										ctxpath + "/po/addpayment");
+										ctxpath + "/po/addpayment/" + id);
 							} else {
 								id = $(this).val();
 								$('#poForm').attr('action',
@@ -223,7 +223,7 @@
 																			<label for="inputPOStatus"
 																				class="col-sm-3 control-label">Status</label>
 																			<div class="col-sm-9">
-																			    <form:hidden path="poStatus"/>
+																				<form:hidden path="poStatus" />
 																				<label id="inputPOStatus" class="control-label"><c:out
 																						value="${ poForm.statusLookup.lookupValue }"></c:out></label>
 																			</div>
@@ -384,6 +384,14 @@
 																	</div>
 																	<div class="panel-body">
 																		<div class="row">
+																			<div class="col-md-11">
+																				<select id="paymentTypeSelect" class="form-control">
+																					<option value="">Please Select</option>
+																					<c:forEach items="${ paymentTypeDDL }" var="pddl">
+																						<option value="${ pddl.lookupKey }">${ pddl.lookupValue }</option>
+																					</c:forEach>
+																				</select>
+																			</div>
 																			<div class="col-md-1">
 																				<button id="addPayButton" type="submit"
 																					class="btn btn-primary pull-right">
@@ -398,9 +406,9 @@
 																					class="table table-bordered table-hover display responsive">
 																					<thead>
 																						<tr>
-																							<th width="20%">Payment Type</th>
-																							<th width="20%">Payment Date</th>
-																							<th width="15%">Bank</th>
+																							<th width="15%">Payment Type</th>
+																							<th width="15%">Payment Date</th>
+																							<th width="25%">Bank</th>
 																							<th width="15%">Effective Date</th>
 																							<th width="15%">Total Amount</th>
 																							<th width="5%">Linked</th>
@@ -413,31 +421,34 @@
 																						<c:forEach items="${ poForm.paymentList }"
 																							var="iL" varStatus="iLIdx">
 																							<tr>
-																								<td style="vertical-align: middle;"><form:input
-																										type="text" class="form-control text-right"
-																										id="paymentType" name="paymentType"
-																										path="paymentList[${ iLIdx.index }].paymentType"
-																										placeholder="Enter Payment Type"></form:input>
+																								<td style="vertical-align: middle;"><form:hidden
+																										path="paymentList[${ iLIdx.index }].paymentType" />
+
+																									<label><c:out
+																											value="${ iL.paymentTypeLookup.lookupValue }"></c:out></label>
 																								</td>
 																								<td id="tdPaymentDate${ iLIdx.index }">
 																									<div class="input-group">
 																										<form:input type="text" class="form-control"
 																											id="paymentDate${ iLIdx.index }"
-																											name="paymentDate${ iLIdx.index }"
 																											path="paymentList[${ iLIdx.index }].paymentDate"
 																											placeholder="DD-MM-YYYY"></form:input>
 																									</div>
 																								</td>
-																								<td><form:input type="text"
-																										class="form-control text-right" id="bankCode"
-																										name="bankCode"
-																										path="paymentList[${ iLIdx.index }].bankCode"
-																										placeholder="Enter Bank Code"></form:input></td>
+																								<td><c:forEach items="${ bankDDL }"
+																										var="bankL" varStatus="bankIdx">
+																										<form:checkbox
+																											path="paymentList[${ iLIdx.index }].bankCode" value="${ bankL.lookupKey }"
+																											label="${ bankL.lookupValue }" />
+																											<br>
+											
+
+																									</c:forEach></td>
 																								<td id="tdEffectiveDate${ iLIdx.index }">
 																									<div class="input-group">
-																										<form:input type="text"
-																											class="form-control"
-																											id="effectiveDate${ iLIdx.index }" name="effectiveDate${ iLIdx.index }"
+																										<form:input type="text" class="form-control"
+																											id="effectiveDate${ iLIdx.index }"
+																											name="effectiveDate${ iLIdx.index }"
 																											path="paymentList[${ iLIdx.index }].effectiveDate"
 																											placeholder="DD-MM-YYYY"></form:input>
 																									</div>
@@ -449,10 +460,7 @@
 																								<td><form:checkbox
 																										path="paymentList[${ iLIdx.index }].linked" />
 																								</td>
-																								<td><form:input type="text" readonly="true"
-																										class="form-control text-center"
-																										id="paymentStatus" name="paymentStatus"
-																										path="paymentList[${ iLIdx.index }].paymentStatus"></form:input></td>
+																								<td></td>
 																								<td><button id="removePayButton"
 																										type="submit"
 																										class="btn btn-primary pull-right"
