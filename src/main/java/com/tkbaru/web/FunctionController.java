@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Function;
+import com.tkbaru.model.LoginContext;
 import com.tkbaru.service.FunctionService;
 
 @Controller
@@ -25,6 +26,9 @@ public class FunctionController {
 	
 	@Autowired
 	FunctionService functionManager;
+
+	@Autowired
+	private LoginContext loginContextSession;
 		
 	@RequestMapping(method = RequestMethod.GET)
 	public String functionPageLoad(Locale locale, Model model) {
@@ -33,6 +37,8 @@ public class FunctionController {
 		List<Function> fList = functionManager.getAllFunctions();
 		
 		model.addAttribute("functionList", fList);
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -44,6 +50,8 @@ public class FunctionController {
 		logger.info("[functionAdd] " + "");
 		
 		model.addAttribute("fForm", new Function());
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
@@ -57,6 +65,8 @@ public class FunctionController {
 		Function f = functionManager.getFunctionById(selectedId);
 		
 		model.addAttribute("fForm", f);
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		

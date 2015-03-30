@@ -4,23 +4,21 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 @Component
-@Scope(proxyMode = ScopedProxyMode.INTERFACES, value = "session")
 public class LoginContext implements Serializable {
 	private static final long serialVersionUID = 6867902303108888160L;
 
 	public LoginContext() {
-
+		
 	}
-
+	
 	private User userLogin;
-	private String selectedMenu;
+	private String selectedMenu;	
+	private String selectedLanguage;
 	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
-
+	
 	public User getUserLogin() {
 		return userLogin;
 	}
@@ -37,6 +35,14 @@ public class LoginContext implements Serializable {
 		this.selectedMenu = selectedMenu;
 	}
 
+	public String getSelectedLanguage() {
+		return selectedLanguage;
+	}
+
+	public void setSelectedLanguage(String selectedLanguage) {
+		this.selectedLanguage = selectedLanguage;
+	}
+
 	public List<PurchaseOrder> getPoList() {
 		return poList;
 	}
@@ -44,11 +50,11 @@ public class LoginContext implements Serializable {
 	public void setPoList(List<PurchaseOrder> poList) {
 		this.poList = poList;
 	}
-
+	
 	@Override
 	public String toString() {
 		return "LoginContext [userLogin=" + userLogin + ", selectedMenu="
-				+ selectedMenu + "]";
+				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "]";
 	}
-
+	
 }

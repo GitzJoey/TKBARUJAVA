@@ -8,6 +8,30 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			var cTable = 
+				$('#consolidateTable').DataTable({
+					"paging":   	false,
+			        "ordering": 	false,
+			        "info":     	false
+				});
+
+			$('#consolidateTable tbody').on('click', 'td', function() {
+				var tr = $(this).closest('tr');
+		        var row = cTable.row(tr);
+		 
+		        if (row.child.isShown()) {
+		        	row.child.hide();
+		            tr.removeClass('shown');
+		        } else {
+		        	row.child(format(row.data())).show();
+		            tr.addClass('shown');
+		        }
+		    });
+
+			function format(d) {
+		        return '<strong>Bank Details</strong><br/><br/>';
+		    }
 		});
 	</script>	
 </head>
@@ -40,7 +64,123 @@
 
 				<c:choose>
 					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
-					
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-compress fa-fw fa-2x"></span>Consolidate
+								</h1>
+							</div>
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-12">
+										<div class="form-group">
+											<label for="inputTransactionDate" class="col-sm-2 control-label">Transaction Date</label>
+											<div class="col-sm-10">
+												<input type="text" class="form-control" id="inputStartDate" name="inputStartDate"/><!-- &nbsp;-&nbsp;<input type="text" class="form-control" id="inputEndDate" name="inputEndDate"/> -->
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-md-12">
+										<table id="consolidateTable" class="table table-hover table-bordered display responsive">
+											<thead>
+												<tr>
+													<th>Transaction Date</th>
+													<th>Description</th>
+													<th>Branch</th>
+													<th>Amount</th>
+													<th>&nbsp;</th>
+													<th>Balance</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+												<tr>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											</tbody>
+										</table>									
+									</div>
+								</div>	
+							</div>									
+						</div>					
 					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
 						<div class="panel panel-default">
@@ -85,7 +225,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								Contents
+								Content								
 							</div>
 						</div>
 					</c:when>

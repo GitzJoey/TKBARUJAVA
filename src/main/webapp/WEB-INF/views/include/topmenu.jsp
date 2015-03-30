@@ -10,7 +10,7 @@
       			</div>      			
 				<form class="navbar-form navbar-right" role="search">
 	  				<div class="form-group">
-	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search">
+	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search"/>
 	  				</div>
 	  				<a id="searchTopMenu" type="button" class="btn btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
 				</form>
