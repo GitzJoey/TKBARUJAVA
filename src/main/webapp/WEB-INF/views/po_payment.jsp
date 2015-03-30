@@ -459,7 +459,7 @@
 																									</div>
 																								</td>
 																								<td><c:if
-																										test="${ iL.paymentType == 'L014_TRANSFER' || iL.paymentType == 'L014_GIRO'}">
+																										test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
 																										<c:forEach items="${ bankDDL }" var="bankL"
 																											varStatus="bankIdx">
 																											<form:checkbox id="cbxBank${ iLIdx.index }" 
@@ -486,7 +486,7 @@
 																								<td><form:checkbox id="linked${ iLIdx.index }"
 																										path="paymentList[${ iLIdx.index }].linked" label="linked"/>
 																										<br>
-																									<c:if test="${ iL.paymentType == 'L014_CASH'}">
+																									<c:if test="${ iL.paymentType == 'L017_CASH'}">
 																										<c:forEach items="${ cashStatusDDL }"
 																											var="statusL" varStatus="statusIdx">
 																											<form:checkbox
@@ -498,13 +498,37 @@
 																									</c:if> 
 																									
 																									<c:if
-																										test="${ iL.paymentType == 'L014_TERM' }">
+																										test="${ iL.paymentType == 'L017_TERM' }">
 																										<c:forEach items="${ termStatusDDL }"
 																											var="statusL" varStatus="statusIdx">
 																											<form:checkbox id="cbx_term_${statusIdx.index}"
 																												path="paymentList[${ statusIdx.index }].paymentStatus"
 																												value="${ statusL.lookupKey }"
 																												label="${ statusL.lookupValue }" />
+																											<br>
+																										</c:forEach>
+																									</c:if>
+																									
+																									<c:if
+																										test="${ iL.paymentType == 'L017_GIRO' }">
+																										<c:forEach items="${ giroStatusDDL }"
+																											var="giroL" varStatus="giroIdx">
+																											<form:checkbox id="cbx_giro_${giroIdx.index}"
+																												path="paymentList[${ giroIdx.index }].paymentStatus"
+																												value="${ giroL.lookupKey }"
+																												label="${ giroL.lookupValue }" />
+																											<br>
+																										</c:forEach>
+																									</c:if> 
+																									
+																									<c:if
+																										test="${ iL.paymentType == 'L017_TRANSFER' }">
+																										<c:forEach items="${ transferStatusDDL }"
+																											var="transferL" varStatus="transferIdx">
+																											<form:checkbox id="cbx_giro_${transferIdx.index}"
+																												path="paymentList[${ transferIdx.index }].paymentStatus"
+																												value="${ transferL.lookupKey }"
+																												label="${ transferL.lookupValue }" />
 																											<br>
 																										</c:forEach>
 																									</c:if> 
