@@ -350,6 +350,14 @@ public class PurchaseOrderController {
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
@@ -554,6 +562,14 @@ public class PurchaseOrderController {
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
@@ -603,6 +619,15 @@ public class PurchaseOrderController {
 		poForm.setUpdatedDate(new Date());
 
 		poManager.editPurchaseOrder(poForm);
+		
+		model.addAttribute("cashStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager
+				.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);

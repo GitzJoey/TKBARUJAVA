@@ -49,6 +49,14 @@ public class Payment {
 	@JoinColumn(name = "payment_type", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
 	private Lookup paymentTypeLookup;
 
+	@ManyToOne
+	@JoinColumn(name = "status", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
+	private Lookup paymentStatusLookup;
+
+	@ManyToOne
+	@JoinColumn(name = "bank_code", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
+	private Lookup bankCodeLookup;
+
 	public int getPaymentId() {
 		return paymentId;
 	}
@@ -151,6 +159,22 @@ public class Payment {
 
 	public void setPaymentTypeLookup(Lookup paymentTypeLookup) {
 		this.paymentTypeLookup = paymentTypeLookup;
+	}
+
+	public Lookup getPaymentStatusLookup() {
+		return paymentStatusLookup;
+	}
+
+	public void setPaymentStatusLookup(Lookup paymentStatusLookup) {
+		this.paymentStatusLookup = paymentStatusLookup;
+	}
+
+	public Lookup getBankCodeLookup() {
+		return bankCodeLookup;
+	}
+
+	public void setBankCodeLookup(Lookup bankCodeLookup) {
+		this.bankCodeLookup = bankCodeLookup;
 	}
 
 	@Override
