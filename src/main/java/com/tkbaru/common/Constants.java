@@ -54,6 +54,10 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_WEIGHT_TYPE = "WEIGHT_TYPE";
 	public static final String LOOKUPCATEGORY_PO_TYPE = "PO_TYPE";
 	public static final String LOOKUPCATEGORY_PAYMENT_TYPE = "PAYMENT_TYPE";
+	public static final String LOOKUPCATEGORY_PAYMENT_STATUS_CASH = "PAYMENT_STATUS_CASH";
+	public static final String LOOKUPCATEGORY_PAYMENT_STATUS_TERM = "PAYMENT_STATUS_TERM";
+	public static final String LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER = "PAYMENT_STATUS_TRANSFER";
+	public static final String LOOKUPCATEGORY_PAYMENT_STATUS_GIRO = "PAYMENT_STATUS_GIRO";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";
