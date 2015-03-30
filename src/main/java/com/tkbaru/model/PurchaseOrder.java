@@ -20,12 +20,9 @@ import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 
 @Entity
-@Table(name="tb_purchaseorder")
+@Table(name="tb_po")
 @SuppressWarnings("unchecked")
 public class PurchaseOrder {
-	public PurchaseOrder() {
-		
-	}
 
 	@Id
 	@Column(name="po_id")

@@ -1,6 +1,8 @@
 package com.tkbaru.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.stereotype.Component;
 
@@ -15,6 +17,7 @@ public class LoginContext implements Serializable {
 	private User userLogin;
 	private String selectedMenu;	
 	private String selectedLanguage;
+	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
 	
 	public User getUserLogin() {
 		return userLogin;
@@ -40,6 +43,14 @@ public class LoginContext implements Serializable {
 		this.selectedLanguage = selectedLanguage;
 	}
 
+	public List<PurchaseOrder> getPoList() {
+		return poList;
+	}
+
+	public void setPoList(List<PurchaseOrder> poList) {
+		this.poList = poList;
+	}
+	
 	@Override
 	public String toString() {
 		return "LoginContext [userLogin=" + userLogin + ", selectedMenu="

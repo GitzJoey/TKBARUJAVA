@@ -56,6 +56,7 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_PO_STATUS = "PO_STATUS";
 	public static final String LOOKUPCATEGORY_SO_TYPE = "SO_TYPE";
 	public static final String LOOKUPCATEGORY_SO_STATUS = "SO_STATUS";
+	public static final String LOOKUPCATEGORY_PAYMENT_TYPE = "PAYMENT_TYPE";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";
