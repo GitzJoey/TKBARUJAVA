@@ -3,3 +3,4 @@
 /nb-configuration.xml
 /nbactions.xml
 /src/main/webapp/META-INF/context.xml
+/src/main/webapp/WEB-INF/spring/jdbc.properties
