@@ -93,6 +93,25 @@ public class SalesOrderController {
 	public String salesRevise(Locale locale, Model model) {
 		logger.info("[salesRevise] " + "");
 		
+		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("");
+		
+		model.addAttribute("reviseSalesList", soList);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_REVISE;
+	}
+
+	@RequestMapping(value="/revise/{selectedId}", method = RequestMethod.GET)
+	public String reviseSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		
+		model.addAttribute("reviseSalesForm", so);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

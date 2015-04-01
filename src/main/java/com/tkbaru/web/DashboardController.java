@@ -22,7 +22,7 @@ public class DashboardController {
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String dashboard(Locale locale, Model model) {
-		logger.info("[dashboard] " + "");
+		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
 		model.addAttribute("loginContext", loginContextSession);
 		
