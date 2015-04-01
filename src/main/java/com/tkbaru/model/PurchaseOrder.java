@@ -76,6 +76,10 @@ public class PurchaseOrder {
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
+	
+	@ManyToOne
+	@JoinColumn(name="po_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup poTypeLookup;
 
 	public int getPoId() {
 		return poId;
@@ -219,6 +223,14 @@ public class PurchaseOrder {
 
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getPoTypeLookup() {
+		return poTypeLookup;
+	}
+
+	public void setPoTypeLookup(Lookup poTypeLookup) {
+		this.poTypeLookup = poTypeLookup;
 	}
 
 	@Override

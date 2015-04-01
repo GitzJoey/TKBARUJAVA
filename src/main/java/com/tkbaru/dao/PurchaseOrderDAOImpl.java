@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -54,6 +55,9 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		try {
 			po = (PurchaseOrder) session.load(PurchaseOrder.class, new Integer(
 					selectedId));
+			Hibernate.initialize(po.getPoTypeLookup());
+			Hibernate.initialize(po.getItemsList());
+			Hibernate.initialize(po.getStatusLookup());
 		} catch (Exception err) {
 			logger.info(err.getMessage());
 		}

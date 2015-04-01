@@ -50,6 +50,58 @@
 										ctxpath + "/po/removeitems/" + id);
 							}
 						});
+
+				var supplier = $("#inputSupplierId").val()
+
+				$("#supplierTooltip").tooltip(
+						{
+							title : supplier
+						});
+
+				$("#reviseForm").formValidation({
+					locale : 'id_ID',
+					framework : 'bootstrap',
+					//	excluded : 'disabled',
+					icon : {
+						valid : 'glyphicon glyphicon-ok',
+						invalid : 'glyphicon glyphicon-remove',
+						validating : 'glyphicon glyphicon-refresh'
+					},
+					fields : {
+					  'productSelect' : {
+							row : '.row .col-md-11',
+							icon : false,
+							validators : {
+								callback : {
+									message : 'Silahkan pilih produk!',
+									callback : function(value, validator, $field) {
+										
+										var productSelect = $("#productSelect").val();
+										if (productSelect == '') {
+											return false;
+										} else {
+											return true;
+										}
+
+									}
+								}
+							}
+						}
+					}
+				}).on('click','button[id^="addProdButton"]',function(e) {
+					$('#reviseForm').formValidation('revalidateField','productSelect');
+				}).on('click','#submitButton',function(e) {
+					$('#reviseForm').formValidation('removeField','productSelect');
+				}).on('click','#removeProdButton',function(e) {
+					$('#reviseForm').formValidation('removeField','productSelect');
+				}).on('success.field.fv',function(e, data) {
+					if (data.field == 'productSelect') {
+						var productSelect = $("#productSelect").val();
+						if (productSelect != '') {
+							$('#reviseForm').formValidation('removeField','productSelect');
+						}
+					}
+			});
 			});
 </script>
 </head>
@@ -104,12 +156,9 @@
 										</thead>
 										<tbody>
 											<c:if test="${not empty reviseList}">
-												<c:forEach items="${ reviseList }" var="i"
-													varStatus="status">
+												<c:forEach items="${ reviseList }" var="i" varStatus="status">
 													<tr>
-														<td align="center"><input
-															id="cbx_<c:out value="${ i.poId }"/>" type="checkbox"
-															value="<c:out value="${ i.poId }"/>" /></td>
+														<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
 														<td><c:out value="${ i.poCode }"></c:out></td>
 														<td><c:out value="${ i.poCreatedDate }"></c:out></td>
 														<td><c:out value="${ i.supplierLookup.supplierName }"></c:out>
@@ -138,9 +187,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="reviseForm" role="form" class="form-horizontal"
-									modelAttribute="reviseForm"
-									action="${pageContext.request.contextPath}/po/saverevise">
+								<form:form id="reviseForm" role="form" class="form-horizontal" modelAttribute="reviseForm" action="${pageContext.request.contextPath}/po/saverevise">
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active">
 											<br />
@@ -163,14 +210,19 @@
 																	<div class="form-group">
 																		<label for="inputPOType"
 																			class="col-sm-2 control-label">PO Type</label>
-																		<div class="col-sm-8"></div>
+																		<div class="col-sm-8">
+																			<form:hidden path="poType"></form:hidden>
+																			<form:input type="text" class="form-control"
+																				readonly="true" id="inputPOType" name="inputPOType"
+																				path="poTypeLookup.lookupValue"></form:input>
+																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label for="inputSupplierId"
 																			class="col-sm-2 control-label">Supplier</label>
 																		<div class="col-sm-9">
 																			<form:hidden path="supplierId" />
-																			<form:input type="text" class="form-control"
+																			<form:input id="inputSupplierId" type="text" class="form-control"
 																				path="supplierLookup.supplierName" readonly="true" />
 																		</div>
 																		<div class="col-sm-1">
@@ -199,9 +251,9 @@
 																			class="col-sm-3 control-label">Status</label>
 																		<div class="col-sm-9">
 																			<form:hidden path="poStatus"></form:hidden>
-																				<label id="inputPOStatus" class="control-label"><c:out
-																				value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
-																		   
+																			<label id="inputPOStatus" class="control-label"><c:out
+																					value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
+
 																		</div>
 																	</div>
 																</div>
@@ -250,7 +302,7 @@
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-11">
-																	<select id="productSelect" class="form-control">
+																	<select id="productSelect" name="productSelect" class="form-control">
 																		<option value="">Please Select</option>
 																		<c:forEach items="${ productSelectionDDL }"
 																			var="psddl">
@@ -285,16 +337,19 @@
 																			<c:forEach items="${ reviseForm.itemsList }" var="iL"
 																				varStatus="iLIdx">
 																				<tr>
-																					<td style="vertical-align: middle;"><form:hidden
-																							path="itemsList[${ iLIdx.index }].itemsId" /> <form:hidden
-																							path="itemsList[${ iLIdx.index }].productId" />
+																					<td style="vertical-align: middle;">
+																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
+																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
 																					<td><form:input type="text"
 																							class="form-control text-right"
 																							id="inputItemsQuantity" name="inputItemsQuantity"
 																							path="itemsList[${ iLIdx.index }].prodQuantity"
 																							placeholder="Enter Quantity"></form:input></td>
-																					<td></td>
+																					<td>
+																					<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
+																					     <c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
+																					</td>
 																					<td><form:input type="text"
 																							class="form-control text-right"
 																							id="inputItemsProdPrice"
@@ -334,21 +389,20 @@
 															</div>
 														</div>
 													</div>
-												</div>
-
-												<div class="row">
-													<div class="col-md-12">
-														<div class="panel panel-default">
-															<div class="panel-heading">
-																<h1 class="panel-title">Remarks</h1>
-															</div>
-															<div class="panel-body">
-																<div class="row">
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<div class="col-sm-12">
-																				<form:textarea class="form-control" path="poRemarks"
-																					rows="5" />
+													<div class="row">
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-heading">
+																	<h1 class="panel-title">Remarks</h1>
+																</div>
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<div class="form-group">
+																				<div class="col-sm-12">
+																					<form:textarea id="poRemarks" class="form-control"
+																						path="poRemarks" rows="5" />
+																				</div>
 																			</div>
 																		</div>
 																	</div>
@@ -373,12 +427,8 @@
 						</div>
 					</c:when>
 				</c:choose>
-
 			</div>
-
 		</div>
-
 	</div>
-
 </body>
 </html>

@@ -10,9 +10,7 @@ public interface PurchaseOrderService {
 	public List<PurchaseOrder> getPurchaseOrderByIds(String selectedIds);
 	public List<PurchaseOrder> getPurchaseOrderByStatus(String status);
 	public void addPurchaseOrder(PurchaseOrder po);
-	public void submitPurchaseOrder(PurchaseOrder po);
 	public void editPurchaseOrder(PurchaseOrder po);
 	public void deletePurchaseOrder(int selectedId);
-	public void savePayment(PurchaseOrder payment);
 	
 }
