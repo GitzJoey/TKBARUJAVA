@@ -159,9 +159,10 @@ public class PurchaseOrderController {
 		reviseForm.setPoTypeLookup(lookupManager.getLookupByKey(reviseForm.getPoType()));
 
 		Items i = new Items();
-
 		i.setProductId(Integer.parseInt(varId));
+		
 		Product product = productManager.getProductById(Integer.parseInt(varId));
+		
 		i.setProductLookup(product);
 		i.setUnitCode(product.getBaseUnit());
 		i.setCreatedDate(new Date());
@@ -171,7 +172,7 @@ public class PurchaseOrderController {
 		
 		for (Items item : reviseForm.getItemsList()){
 			item.setProductLookup(productManager.getProductById(item.getProductId()));
-			
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
 		}
 
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
@@ -189,6 +190,9 @@ public class PurchaseOrderController {
 	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
 	public String poRemoveItems(Locale locale, Model model,@ModelAttribute("reviseForm") PurchaseOrder reviseForm,@PathVariable String varId) {
 		logger.info("[poRemoveItems] " + "varId: " + varId);
+		
+		reviseForm.setPoTypeLookup(lookupManager.getLookupByKey(reviseForm.getPoType()));
+		reviseForm.setStatusLookup(lookupManager.getLookupByKey(reviseForm.getPoStatus()));
 
 		List<Items> iLNew = new ArrayList<Items>();
 
@@ -199,15 +203,19 @@ public class PurchaseOrderController {
 		}
 
 		reviseForm.setItemsList(iLNew);
+		
+		for(Items item : reviseForm.getItemsList()){
+			item.setProductLookup(productManager.getProductById(item.getProductId()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+		}
+		
+		model.addAttribute("reviseForm", reviseForm);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
-		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return Constants.JSPPAGE_PURCHASEORDER;
+		return Constants.JSPPAGE_PO_REVISE;
 	}
 
 	@RequestMapping(value = "/removeitems/{tabId}/{varId}", method = RequestMethod.POST)
