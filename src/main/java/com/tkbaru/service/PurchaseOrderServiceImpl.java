@@ -71,24 +71,6 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
 	@Override
 	@Transactional
-	public void submitPurchaseOrder(PurchaseOrder purchaseOrder) {
-		try {
-			purchaseOrderDAO.addPurchaseOrder(purchaseOrder);
-		} catch (IllegalStateException e) {
-			e.printStackTrace();
-		}
-
-	}
-
-	@Override
-	@Transactional
-	public void savePayment(PurchaseOrder payment) {
-		purchaseOrderDAO.editPurchaseOrder(payment);
-
-	}
-
-	@Override
-	@Transactional
 	public List<PurchaseOrder> getPurchaseOrderByStatus(String status) {
 		return purchaseOrderDAO.getPurchaseOrderByStatus(status);
 	}

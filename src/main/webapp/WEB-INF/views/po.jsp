@@ -9,72 +9,43 @@
 <script>
 	$(document)
 			.ready(
-
 					function() {
 						var ctxpath = "${ pageContext.request.contextPath }";
-
 						var tabCount = "${ loginContext.poList.size() }";
-
 						var activetab;
-
 						var productSelect;
 
 						$('.poCreatedDate').datetimepicker({
 							format : "DD-MM-YYYY"
 						});
 
-						$('.poCreatedDate')
-								.on(
-										'dp.change dp.show',
-										function(e) {
-											$('#poForm').formValidation(
-													'revalidateField',
-													'poCreatedDate');
-										});
+						$('.poCreatedDate').on('dp.change dp.show',function(e) {
+							$('#poForm').formValidation('revalidateField', 'poCreatedDate');
+						});
+						
 						$('.shippingDate').datetimepicker({
 							format : "DD-MM-YYYY"
 						});
 
-						$('.shippingDate').on(
-								'dp.change dp.show',
-								function(e) {
-									$('#poForm').formValidation(
-											'revalidateField', 'shippingDate');
-								});
+						$('.shippingDate').on('dp.change dp.show', function(e) {
+							$('#poForm').formValidation('revalidateField', 'shippingDate');
+						});
 
-						$('[id^="removeProdButton"]').click(
-								function() {
-									$('#poForm').formValidation('removeField',
-											'productSelect');
-									activetab = $(".nav-tabs li.active").attr(
-											"id");
-									var id = "";
-									id = $(this).val();
+						$('[id^="removeProdButton"]').click(function() {
+							$('#poForm').formValidation('removeField', 'productSelect');
+							activetab = $(".nav-tabs li.active").attr("id");
+							var id = "";
+							id = $(this).val();
+							$('#poForm').attr('action', ctxpath + "/po/removeitems/"+ activetab + "/" + +id);
 
-									$('#poForm').attr(
-											'action',
-											ctxpath + "/po/removeitems/"
-													+ activetab + "/" + +id);
+						});
 
-								});
+						$('button[id^="addProdButton"]').click(function() {
 
-						$('button[id^="addProdButton"]')
-								.click(
-										function() {
-
-											activetab = $(".nav-tabs li.active")
-													.attr("id");
-											productSelect = $(
-													"#productSelect"
-															+ activetab).val();
-
-											$('#poForm').attr(
-													'action',
-													ctxpath + "/po/additems/"
-															+ activetab + "/"
-															+ productSelect);
-
-										});
+							activetab = $(".nav-tabs li.active").attr("id");
+							productSelect = $("#productSelect"+ activetab).val();
+							$('#poForm').attr('action',ctxpath + "/po/additems/"+ activetab + "/"+ productSelect);
+						});
 
 						$('#itemsListTable').DataTable({
 							"paging" : false,
@@ -90,217 +61,136 @@
 							"searching" : false
 						});
 
-						$('select[name="supplierId"]')
-								.change(
-										function() {
-											if ($('select[name="supplierId"]')
-													.val() != "") {
-												$
-														.ajax({
-															url : ctxpath
-																	+ "/po/retrieve/supplier",
-															data : 'supplierId='
-																	+ encodeURIComponent($(
-																			'select[name="supplierId"]')
-																			.val()),
-															type : "GET",
+						$('select[id^="inputSupplierId"]').change(function() {
+							if ($('select[id^="inputSupplierId"]').val() != "") {
+								$.ajax({
+									url : ctxpath+ "/po/retrieve/supplier",
+									data : 'supplierId='+ encodeURIComponent($('select[id^="inputSupplierId"]').val()),
+									type : "GET",
+									success : function(response) {
+										$('[id^="supplierTooltip"]').tooltip({ title : response });
+									},
+									error : function(xhr, status, error) {
+										alert(xhr.responseText);
+									}
+								});
+							}
+						});
 
-															success : function(
-																	response) {
-																$(
-																		'#supplierTooltip')
-																		.tooltip(
-																				{
-																					title : response
-																				});
-															},
-															error : function(
-																	xhr,
-																	status,
-																	error) {
-																alert(xhr.responseText);
-															}
-														});
-											}
-										});
-
-						$("#poForm")
-								.formValidation(
-										{
-											locale : 'id_ID',
-											framework : 'bootstrap',
-											button : {
-												selector : '[id^="submitButton"]',
-												disabled : 'disabled'
-											},
-											//	excluded : 'disabled',
-											icon : {
-												valid : 'glyphicon glyphicon-ok',
-												invalid : 'glyphicon glyphicon-remove',
-												validating : 'glyphicon glyphicon-refresh'
-											},
-											fields : {
-
-												'poCode' : {
-													selector : '.poCode',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.col-sm-5',
-													validators : {
-														notEmpty : {}
-													}
-												},
-												'poCreatedDate' : {
-													selector : '.poCreatedDate',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.col-sm-9',
-													validators : {
-
-														notEmpty : {},
-														date : {
-															format : 'DD-MM-YYYY'
-														}
-													}
-												},
-												'shippingDate' : {
-													selector : '.shippingDate',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.col-sm-5',
-													validators : {
-														notEmpty : {},
-														date : {
-															format : 'DD-MM-YYYY'
-														}
-													}
-												},
-												'warehouseId' : {
-													selector : '.warehouseId',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.col-sm-8',
-													icon : false,
-													validators : {
-														notEmpty : {}
-													}
-												},
-												'supplierId' : {
-													selector : '.supplierId',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.col-sm-9',
-													icon : false,
-													validators : {
-														notEmpty : {}
-													}
-												},
-												'productSelect' : {
-													selector : '.productSelect',
-													// The field is placed inside .col-xs-6 div instead of .form-group
-													row : '.row .col-md-11',
-													icon : false,
-													validators : {
-														callback : {
-															message : 'Silahkan pilih produk!',
-															callback : function(
-																	value,
-																	validator,
-																	$field) {
-																activetab = $(
-																		".nav-tabs li.active")
-																		.attr(
-																				"id");
-																var productSelect = $(
-																		"#productSelect"
-																				+ activetab)
-																		.val();
-																if (productSelect == '') {
-																	return false;
-																} else {
-																	return true;
-																}
-
-															}
-														}
-													}
+						$("#poForm").formValidation({
+							locale : 'id_ID',
+							framework : 'bootstrap',
+							button : {
+								selector : '[id^="submitButton"]',
+								disabled : 'disabled'
+							},
+							//	excluded : 'disabled',
+							icon : {
+								valid : 'glyphicon glyphicon-ok',
+								invalid : 'glyphicon glyphicon-remove',
+								validating : 'glyphicon glyphicon-refresh'
+							},
+							fields : {
+	
+								'poCode' : {
+									selector : '.poCode',
+									row : '.col-sm-5',
+									validators : {
+										notEmpty : {}
+									}
+								},
+								'poCreatedDate' : {
+									selector : '.poCreatedDate',
+									row : '.col-sm-9',
+									validators : {
+	
+										notEmpty : {},
+										date : {
+											format : 'DD-MM-YYYY'
+										}
+									}
+								},
+								'shippingDate' : {
+									selector : '.shippingDate',
+									row : '.col-sm-5',
+									validators : {
+										notEmpty : {},
+										date : {
+											format : 'DD-MM-YYYY'
+										}
+									}
+								},
+								'warehouseId' : {
+									selector : '.warehouseId',
+									row : '.col-sm-8',
+									icon : false,
+									validators : {
+										notEmpty : {}
+									}
+								},
+								'supplierId' : {
+									selector : '.supplierId',
+									
+									row : '.col-sm-9',
+									icon : false,
+									validators : {
+										notEmpty : {}
+									}
+								},
+								'productSelect' : {
+									selector : '.productSelect',
+									row : '.row .col-md-11',
+									icon : false,
+									validators : {
+										callback : {
+											message : 'Silahkan pilih produk!',
+											callback : function(value, validator, $field) {
+												activetab = $(".nav-tabs li.active").attr("id");
+												var productSelect = $("#productSelect"+ activetab).val();
+												if (productSelect == '') {
+													return false;
+												} else {
+													return true;
 												}
+	
 											}
-										})
-								.on(
-										'click',
-										'button[id^="addProdButton"]',
-										function(e) {
-											$('#poForm').formValidation(
-													'revalidateField',
-													'productSelect');
-
-										})
-								.on(
-										'success.field.fv',
-										function(e, data) {
-											if (data.field == 'productSelect') {
-												activetab = $(
-														".nav-tabs li.active")
-														.attr("id");
-												var productSelect = $(
-														"#productSelect"
-																+ activetab)
-														.val();
-
-												// User choose given channel
-												if (productSelect != '') {
-													// Remove the success class from the container
-
-													$('#poForm')
-															.formValidation(
-																	'removeField',
-																	'productSelect');
-												}
-											}
-										});
+										}
+									}
+								}
+							}
+						}).on('click','button[id^="addProdButton"]',function(e) {
+							$('#poForm').formValidation('revalidateField','productSelect');
+						}).on('success.field.fv',function(e, data) {
+							if (data.field == 'productSelect') {
+								activetab = $(".nav-tabs li.active").attr("id");
+								var productSelect = $("#productSelect"+ activetab).val();
+								if (productSelect != '') {
+									$('#poForm').formValidation('removeField','productSelect');
+								}
+							}
+					});
 
 						$('#addTab').click(
-
-								function() {
-									activetab = $(".nav-tabs li.active").attr(
-											"id");
-									$('#addTab').attr("href",
-											ctxpath + "/po/addpoform");
-
-								});
+							function() {
+								activetab = $(".nav-tabs li.active").attr("id");
+								$('#addTab').attr("href", ctxpath + "/po/addpoform");
+							}
+						);
 
 						$("button[id^='submitButton']").click(
-								function() {
-
-									$('#poForm').formValidation('removeField',
-											'productSelect');
-									activetab = $(".nav-tabs li.active").attr(
-											"id");
-
-									$('#poForm').attr('action',
-											ctxpath + "/po/save/" + activetab);
-
-								});
+							function() {
+								$('#poForm').formValidation('removeField','productSelect');
+								activetab = $(".nav-tabs li.active").attr("id");
+								$('#poForm').attr('action',ctxpath + "/po/save/" + activetab);
+							}
+						);
 
 						$('[id^="cancelButton"]').click(
-								function() {
-									//	$('#poForm').formValidation('removeField',
-									//			'poCode');
-									//	$('#poForm').formValidation('removeField',
-									//			'poCreatedDate');
-									//	$('#poForm').formValidation('removeField',
-									//			'shippingDate');
-									//	$('#poForm').formValidation('removeField',
-									//			'warehouseId');
-									//	$('#poForm').formValidation('removeField',
-									//			'supplierId');
-									//	$('#poForm').formValidation('removeField',
-									//			'productSelect');
-									activetab = $(".nav-tabs li.active").attr(
-											"id");
-									$('#poForm')
-											.attr(
-													"action",
-													ctxpath + "/po/cancel/"
-															+ activetab);
-
-								});
+							function() {
+								activetab = $(".nav-tabs li.active").attr("id");
+								$('#poForm').attr("action",ctxpath + "/po/cancel/"+ activetab);
+							}
+						);
 
 						$('#list a[href="#tab' + tabCount + '"]').tab('show');
 
@@ -395,7 +285,7 @@
 																			path="poList[${poIdx.index}].poType">
 																			<option value="">Please Select</option>
 																			<form:options items="${ poTypeDDL }"
-																				itemValue="lookupId" itemLabel="lookupValue" />
+																				itemValue="lookupKey" itemLabel="lookupValue" />
 																		</form:select>
 																	</div>
 																</div>
@@ -439,8 +329,6 @@
 																		class="col-sm-3 control-label">Status</label>
 																	<div class="col-sm-9">
 																		<form:hidden path="poList[${poIdx.index}].poStatus" />
-
-
 																		<label id="inputPOStatus${poIdx.index}"
 																			class="control-label"><c:out
 																				value="${ poForm.statusLookup.lookupValue }"></c:out></label>
@@ -461,7 +349,6 @@
 																			path="poList[${poIdx.index}].shippingDate"
 																			placeholder="Enter Shipping Date"></form:input>
 																	</div>
-
 																</div>
 																<div class="form-group">
 																	<label for="inputWarehouseId${poIdx.index}"
@@ -540,9 +427,6 @@
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].itemsId" />
 																					<form:hidden
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].productId" />
-
-
-
 																					<label><c:out
 																							value="${ iL.productLookup.productName }"></c:out></label>
 																				</td>
@@ -551,14 +435,15 @@
 																						id="inputItemsQuantity${poIdx.index}"
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity"
 																						placeholder="Enter Quantity"></form:input></td>
-																				<td><label><c:out
-																							value="${ iL.unitCode }"></c:out></label></td>
+																				<td><form:hidden
+																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
+																					<label><c:out
+																							value="${ iL.unitCodeLookup.lookupValue }"></c:out></label></td>
 																				<td><form:input type="text"
 																						class="form-control text-right"
 																						id="inputItemsProdPrice${poIdx.index}"
 																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice"
 																						placeholder="Enter Price"></form:input></td>
-
 																				<td>
 																					<button id="removeProdButton" type="submit"
 																						value="${ iLIdx.index }"
