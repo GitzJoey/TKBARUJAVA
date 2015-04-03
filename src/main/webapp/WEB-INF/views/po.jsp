@@ -23,9 +23,7 @@
 							$('#poForm').formValidation('revalidateField', 'poCreatedDate');
 						});
 						
-						$('.shippingDate').datetimepicker({
-							format : "DD-MM-YYYY"
-						});
+						$('.shippingDate').datetimepicker({ format : "DD-MM-YYYY" });
 
 						$('.shippingDate').on('dp.change dp.show', function(e) {
 							$('#poForm').formValidation('revalidateField', 'shippingDate');
@@ -101,7 +99,6 @@
 									selector : '.poCreatedDate',
 									row : '.col-sm-9',
 									validators : {
-	
 										notEmpty : {},
 										date : {
 											format : 'DD-MM-YYYY'
@@ -128,7 +125,6 @@
 								},
 								'supplierId' : {
 									selector : '.supplierId',
-									
 									row : '.col-sm-9',
 									icon : false,
 									validators : {
@@ -239,7 +235,9 @@
 										</a>
 									</li>
 								</c:forEach>
-								<li id="last"><a id="addTab" class="btn btn-xs btn-default pull-right" href="#"><span class="glyphicon glyphicon-plus"></span></a></li>
+								<li id="last">
+									<a id="addTab" class="btn btn-xs btn-default pull-right" href="#"><span class="glyphicon glyphicon-plus"></span></a>
+								</li>
 							</ul>
 							<div class="tab-content">
 								<br />
@@ -277,10 +275,7 @@
 																		</form:select>
 																	</div>
 																	<div class="col-sm-1">
-																		<button id="supplierTooltip${poIdx.index}"
-																			type="button" class="btn btn-default"
-																			data-toggle="tooltip" data-trigger="hover"
-																			data-html="true" data-placement="right" data-title="">
+																		<button id="supplierTooltip${poIdx.index}" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
 																			<span class="fa fa-external-link fa-fw"></span>
 																		</button>
 																	</div>
@@ -288,25 +283,18 @@
 															</div>
 															<div class="col-md-5">
 																<div class="form-group">
-																	<label for="poCreatedDate"
-																		class="col-sm-3 control-label">PO Date</label>
+																	<label for="poCreatedDate" class="col-sm-3 control-label">PO Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text"
-																			class="form-control poCreatedDate"
-																			id="poCreatedDate${poIdx.index}"
-																			path="poList[${poIdx.index}].poCreatedDate"
-																			placeholder="Enter PO Date"></form:input>
+																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${poIdx.index}" path="poList[${poIdx.index}].poCreatedDate" placeholder="Enter PO Date"></form:input>
 																	</div>
-
 																</div>
 																<div class="form-group">
-																	<label for="inputPOStatus${poIdx.index}"
-																		class="col-sm-3 control-label">Status</label>
+																	<label for="inputPOStatus${poIdx.index}" class="col-sm-3 control-label">Status</label>
 																	<div class="col-sm-9">
 																		<form:hidden path="poList[${poIdx.index}].poStatus" />
-																		<label id="inputPOStatus${poIdx.index}"
-																			class="control-label"><c:out
-																				value="${ poForm.statusLookup.lookupValue }"></c:out></label>
+																		<label id="inputPOStatus${poIdx.index}" class="control-label">
+																			<c:out value="${ poForm.statusLookup.lookupValue }"></c:out>
+																		</label>
 																	</div>
 																</div>
 															</div>
@@ -315,33 +303,24 @@
 														<div class="row">
 															<div class="col-md-7">
 																<div class="form-group">
-																	<label for="shippingDate${poIdx.index}"
-																		class="col-sm-2 control-label">Shipping Date</label>
+																	<label for="shippingDate${poIdx.index}" class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text"
-																			class="form-control shippingDate"
-																			id="shippingDate${poIdx.index}"
-																			path="poList[${poIdx.index}].shippingDate"
-																			placeholder="Enter Shipping Date"></form:input>
+																		<form:input type="text" class="form-control shippingDate" id="shippingDate${poIdx.index}" path="poList[${poIdx.index}].shippingDate" placeholder="Enter Shipping Date"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
 																	<label for="inputWarehouseId${poIdx.index}" class="col-sm-2 control-label">Warehouse</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control warehouseId"
-																			id="inputWarehouseId${poIdx.index}"
-																			path="poList[${poIdx.index}].warehouseId">
+																		<form:select class="form-control warehouseId" id="inputWarehouseId${poIdx.index}" path="poList[${poIdx.index}].warehouseId">
 																			<option value="">Please Select</option>
-																			<form:options items="${ warehouseSelectionDDL }"
-																				itemValue="warehouseId" itemLabel="warehouseName" />
+																			<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
 																		</form:select>
 																	</div>
 																</div>
 															</div>
 															<div class="col-md-5">
 																<div class="form-group">
-																	<label for="inputPOStatus"
-																		class="col-sm-3 control-label"></label>
+																	<label for="inputPOStatus" class="col-sm-3 control-label"></label>
 																	<div class="col-sm-9"></div>
 																</div>
 															</div>
@@ -367,8 +346,7 @@
 																</select>
 															</div>
 															<div class="col-md-1">
-																<button id="addProdButton${poIdx.index}" type="submit"
-																	class="btn btn-primary pull-right">
+																<button id="addProdButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">
 																	<span class="fa fa-plus"></span>
 																</button>
 															</div>
@@ -376,8 +354,7 @@
 														<br />
 														<div class="row">
 															<div class="col-md-12">
-																<table id="itemsListTable"
-																	class="table table-bordered table-hover display responsive">
+																<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																	<thead>
 																		<tr>
 																			<th width="40%">Product Name</th>
@@ -390,33 +367,28 @@
 																	</thead>
 																	<tbody>
 																		<c:set var="total" value="${0}" />
-																		<c:forEach
-																			items="${ loginContext.poList[poIdx.index].itemsList }"
-																			var="iL" varStatus="iLIdx">
+																		<c:forEach items="${ loginContext.poList[poIdx.index].itemsList }" var="iL" varStatus="iLIdx">
 																			<tr>
 																				<td style="vertical-align: middle;">
 																					<form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].itemsId" />
 																					<form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].productId" />
-																					<label><c:out value="${ iL.productLookup.productName }"></c:out></label>
+																					<label>
+																						<c:out value="${ iL.productLookup.productName }"></c:out>
+																					</label>
 																				</td>
-																				<td><form:input type="text"
-																						class="form-control text-right"
-																						id="inputItemsQuantity${poIdx.index}"
-																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity"
-																						placeholder="Enter Quantity"></form:input></td>
-																				<td><form:hidden
-																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
-																					<label><c:out
-																							value="${ iL.unitCodeLookup.lookupValue }"></c:out></label></td>
-																				<td><form:input type="text"
-																						class="form-control text-right"
-																						id="inputItemsProdPrice${poIdx.index}"
-																						path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice"
-																						placeholder="Enter Price"></form:input></td>
 																				<td>
-																					<button id="removeProdButton" type="submit"
-																						value="${ iLIdx.index }"
-																						class="btn btn-primary pull-right">
+																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																				</td>
+																				<td><form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
+																					<label>
+																						<c:out value="${ iL.unitCodeLookup.lookupValue }"></c:out>
+																					</label>
+																				</td>
+																				<td>
+																					<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>
+																				</td>
+																				<td>
+																					<button id="removeProdButton" type="submit" value="${ iLIdx.index }" class="btn btn-primary pull-right">
 																						<span class="fa fa-minus"></span>
 																					</button>
 																				</td>
@@ -424,8 +396,7 @@
 																					<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																				</td>
 																			</tr>
-																			<c:set var="total"
-																				value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																			<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
 																		</c:forEach>
 																	</tbody>
 																</table>
@@ -433,8 +404,7 @@
 														</div>
 														<div class="row">
 															<div class="col-md-12">
-																<table id="itemsTotalListTable"
-																	class="table table-bordered table-hover display responsive">
+																<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
 																	<tbody>
 																		<tr>
 																			<td width="85%">Total</td>

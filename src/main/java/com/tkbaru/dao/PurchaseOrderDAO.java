@@ -23,5 +23,7 @@ public interface PurchaseOrderDAO
 	public void deletePurchaseOrder(int selectedId);
 	
 	public void savePayment(PurchaseOrder payment);
+	
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status);
 
 }

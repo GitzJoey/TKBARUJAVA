@@ -180,6 +180,8 @@ $(document).ready(
 										<div role="tabpanel" class="tab-pane active">
 											<br />
 											<form:hidden path="poId" />
+											<form:hidden path="createdBy" />
+											<form:hidden path="createdDate" />
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">

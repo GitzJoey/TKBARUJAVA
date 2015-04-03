@@ -193,7 +193,7 @@ $(document).ready(function() {
 				</h1>
 				<c:choose>
 					<c:when
-						test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+						test="${ PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -236,7 +236,7 @@ $(document).ready(function() {
 						</div>
 					</c:when>
 					<c:when
-						test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
+						test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -250,6 +250,8 @@ $(document).ready(function() {
 											<div role="tabpanel" class="tab-pane active">
 												<br />
 												<form:hidden path="poId" />
+												<form:hidden path="createdBy" />
+												<form:hidden path="createdDate" />
 												<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
