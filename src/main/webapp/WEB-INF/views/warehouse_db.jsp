@@ -32,6 +32,19 @@
 					$('#poList').submit();
 				}
 			});
+			
+			$('[id^="receiptDate_"]').datetimepicker({
+				format : "DD-MM-YYYY"
+			});
+
+			//$('.receiptDate').on('dp.change dp.show',function(e) {
+			//	$('#poList').formValidation('revalidateField', 'receiptDate');
+			//});
+			
+			$('[id^="receiptButton_"]').click(function() {
+				var poid = $(this).val();
+				$('#poList').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+			});
 		});
 	</script>	
 </head>
@@ -71,7 +84,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-							<form:form id="poList" modelAttribute="dashboardModel" action="${pageContext.request.contextPath}/warehouse/dashboard">
+							<form:form id="poList" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard">
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
@@ -86,8 +99,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-									<c:forEach items="${ dashboardModel.purchaseOrderList }" var="po" varStatus="poIdx">
-									   <c:out value="${ po.poCode }"></c:out>
+									
 										<table id="inflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
@@ -95,28 +107,113 @@
 													<th>Bruto</th>
 													<th>Netto</th>
 													<th>Tare</th>
+													<th>Receipt Date</th>
 													<th>&nbsp;</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody >
+											
+											<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
+												<tr class="group">
+													<td>
+														<c:out value="${ po.poCode }"></c:out>
+													</td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+													<td></td>
+												</tr>
+											
 											<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
-											    <tr>
-											    	<td>${ iL.productId }</td>
-											    	<td>${ iL.prodQuantity }</td>
-											    	<td>
-												    	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
-												    		<form:input path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
-												    	</c:forEach>
-											    	</td>
-											    	<td></td>
-											    	<td></td>
-											    </tr>
+												<c:if test="${ not empty iL.receiptList }">
+												<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
+												 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
+													    <tr>
+												    	<td>
+													    	${ iL.productLookup.productName }
+												    	</td>
+											    		<td>${ iL.prodQuantity }</td>
+												    	<td>
+												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
+												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
+												    	</td>
+												    	<td>
+												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].tare"/>
+												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"></c:out>
+												    	</td>
+												    	<td>
+												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].receiptDate"/>
+												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"></c:out>
+												    	</td>
+												    	<td>
+													    		
+													    </td>
+											    	</tr>
+											    	</c:forEach>
+											    	<tr>
+												    	<td>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].createdBy"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].createdDate"/>
+													    	${ iL.productLookup.productName }
+												    	</td>
+											    		<td>${ iL.prodQuantity }</td>
+												    	<td>
+												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
+												    	</td>
+												    	<td>
+												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
+												    	</td>
+												    	<td id="col_receiptdate_${ totalReceipt }">
+												    		<form:input type="text" class="form-control receiptDate" id="receiptDate_${ totalReceipt }" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].receiptDate"/>
+												    	</td>
+												    	<td>
+													    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" value="${ po.poId }">Receipt</button>
+													    </td>
+											    	</tr>
+										    	</c:if>
+										    	
+										    	<c:if test="${ empty iL.receiptList }">
+											    	<tr>
+												    	<td>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].createdBy"/>
+													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].createdDate"/>
+													    	${ iL.productLookup.productName }
+												    	</td>
+											    		<td>${ iL.prodQuantity }</td>
+												    	<td>
+												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
+												    	</td>
+												    	<td>
+												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
+												    	</td>
+												    	<td id="col_receiptdate_0">
+												    		<form:input type="text" class="form-control receiptDate" id="receiptDate_0" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].receiptDate"/>
+												    	</td>
+												    	<td>
+													    		<button type="submit" id="receiptButton_0" value="${ po.poId }">Receipt</button>
+													    </td>
+											    	</tr>
+										    	</c:if>
+											</c:forEach>
 											</c:forEach>
 											</tbody>
 										</table>
-									</c:forEach>
+									
 									</div>
-									<ul class="list-group">
+									<ul class="list-group">       
 										<li class="list-group-item">
 											<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
 										</li>

@@ -439,8 +439,13 @@
 											</div>
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
-													<button id="cancelButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">Cancel</button>
-													<button id="submitButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">Submit</button>
+												    <c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">
+														<button id="cancelButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">Cancel</button>
+														<button id="submitButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">Submit</button>
+													</c:if>
+													<c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
+														<button id="cancelButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">Close</button>
+													</c:if>
 												</div>
 											</div>
 										</div>

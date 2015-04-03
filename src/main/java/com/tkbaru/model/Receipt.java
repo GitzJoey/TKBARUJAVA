@@ -24,8 +24,6 @@ public class Receipt {
 	private int receiptId;
 	@Column(name = "receipt_date")
 	private Date receiptDate;
-	@Column(name = "items_id")
-	private int itemsId;
 	@Column(name = "net")
 	private int net;
 	@Column(name = "tare")
@@ -38,10 +36,6 @@ public class Receipt {
 	private int updatedBy;
 	@Column(name = "updated_date")
 	private Date updatedDate;
-
-	@ManyToOne
-	@JoinColumn(name = "items_id", referencedColumnName = "items_id", unique = true, insertable = false, updatable = false)
-	private Items itemsLookup;
 	
 	public int getReceiptId() {
 		return receiptId;
@@ -57,14 +51,6 @@ public class Receipt {
 
 	public void setReceiptDate(Date receiptDate) {
 		this.receiptDate = receiptDate;
-	}
-
-	public int getItemsId() {
-		return itemsId;
-	}
-
-	public void setItemsId(int itemsId) {
-		this.itemsId = itemsId;
 	}
 
 	public int getNet() {
@@ -115,19 +101,9 @@ public class Receipt {
 		this.updatedDate = updatedDate;
 	}
 
-	public Items getItemsLookup() {
-		return itemsLookup;
-	}
-
-	public void setItemsLookup(Items itemsLookup) {
-		this.itemsLookup = itemsLookup;
-	}
-
-
 	@Override
 	public String toString() {
-		return "Receipt [receiptId=" + receiptId + ", itemsId="
-				+ itemsId + ", receiptDate=" + receiptDate
+		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate
 				+ ", net=" + net + ", tare=" + tare
 				+ ", createdBy="
 				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="

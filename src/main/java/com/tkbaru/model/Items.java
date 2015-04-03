@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -56,8 +57,11 @@ public class Items {
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
 	
-	@OneToMany(fetch=FetchType.EAGER)
-	@JoinColumn(name="items_id", referencedColumnName="items_id", unique=true, insertable=false, updatable=false)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name="tb_items_receipt", 
+				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
+				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
+//	private List<Receipt> receiptList = LazyList.decorate(new ArrayList<Payment>(), FactoryUtils.instantiateFactory(Receipt.class));
 	private List<Receipt> receiptList;
 
 	public int getItemsId() {
