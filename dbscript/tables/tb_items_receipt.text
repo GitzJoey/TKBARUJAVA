@@ -1,0 +1,5 @@
+DROP TABLE IF EXISTS `tb_items_receipt`;
+CREATE TABLE `tb_items_receipt` (
+  `items_id` int(11) DEFAULT NULL,
+  `receipt_id` int(11) DEFAULT NULL
+) ENGINE=InnoDB;

@@ -2,7 +2,6 @@
 CREATE TABLE `tb_receipt` (
   `receipt_id` int(11) NOT NULL AUTO_INCREMENT,
   `receipt_date` datetime DEFAULT NULL,
-  `items_id` int(11) DEFAULT NULL,
   `net` int(11) DEFAULT NULL,
   `tare` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,

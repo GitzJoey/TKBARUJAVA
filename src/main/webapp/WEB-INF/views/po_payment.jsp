@@ -464,6 +464,7 @@ $(document).ready(function() {
 																						<c:forEach items="${ poForm.paymentList }" var="iL" varStatus="iLIdx">
 																							<tr>
 																								<td style="vertical-align: middle;">
+																									<form:hidden path="paymentList[${ iLIdx.index }].paymentId" />
 																									<form:hidden path="paymentList[${ iLIdx.index }].paymentType" />
 																									<label><c:out value="${ poForm.paymentList[ iLIdx.index ].paymentTypeLookup.lookupValue }"></c:out></label>
 																								</td>
@@ -473,7 +474,7 @@ $(document).ready(function() {
 																									</div>
 																								</td>
 																								<td>
-																								<form:hidden path="paymentList[${ iLIdx.index }].bankCode"/>
+																								
 																								<c:if test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
 																									<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																										<c:set var="test" value="0" />
@@ -482,7 +483,8 @@ $(document).ready(function() {
 																										</c:if>
 																										<c:choose>
 																											<c:when test="${test == 1}">
-																											<form:checkbox id="cbxBank${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																												<form:hidden path="paymentList[${ iLIdx.index }].bankCode"/>
+																												<form:checkbox id="cbxBank${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																												<br>
 																											</c:when>
 																											<c:otherwise>

@@ -440,6 +440,10 @@ public class PurchaseOrderController {
 		
 		poForm.setPoTypeLookup(lookupManager.getLookupByKey(poForm.getPoType()));
 		poForm.setStatusLookup(lookupManager.getLookupByKey(poForm.getPoStatus()));
+		
+		for(Items item : poForm.getItemsList()){
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+		}
 
 		Payment i = new Payment();
 		i.setPaymentType(paymentType);
@@ -448,12 +452,14 @@ public class PurchaseOrderController {
 		
 		for(Payment payment : poForm.getPaymentList()){
 			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentType()));
+			if(payment.getBankCode()!=null){
+				payment.setBankCodeLookup(lookupManager.getLookupByKey(payment.getBankCode()));
+			}
 		}
 		
 		poForm.setPaymentList(poForm.getPaymentList());
-		for(Items item : poForm.getItemsList()){
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
-		}
+		
+		
 		
 		model.addAttribute("poForm", poForm);
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
@@ -507,6 +513,43 @@ public class PurchaseOrderController {
 		PurchaseOrder po = poManager.getPurchaseOrderById(poForm.getPoId());
 		po.setUpdatedDate(new Date());
 		po.setPaymentList(poForm.getPaymentList());
+	
+		long totalHutang = 0;
+		
+		for(Items items : po.getItemsList()){
+			totalHutang += (items.getProdQuantity() * items.getProdPrice());
+		}
+		
+		long totalPayment = 0;
+		
+		for(Payment payment : poForm.getPaymentList()){
+			
+			if(payment.getPaymentStatus() != null){
+			
+				if(payment.getPaymentType().equals("L017_CASH") && payment.getPaymentStatus().equals("L018_C")){
+					totalPayment += payment.getTotalAmount(); 
+				}
+				
+				if(payment.getPaymentType().equals("L017_GIRO") && payment.getPaymentStatus().equals("L021_FR")){
+					totalPayment += payment.getTotalAmount(); 
+				}
+				
+				if(payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")){
+					totalPayment += payment.getTotalAmount(); 
+				}
+				
+				if(payment.getPaymentType().equals("L017_TERM") && payment.getPaymentStatus().equals("L019_C")){
+					totalPayment += payment.getTotalAmount(); 
+				}
+			}
+			
+			
+		}
+		
+		if(totalHutang == totalPayment){
+			po.setPoStatus("L013_C");
+		}
+		
 		poManager.editPurchaseOrder(po);
 
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
