@@ -18,11 +18,18 @@
 			
 			$('#hideInflow, #hideOutflow').click(function() {
 				var button = $(this).attr('id');
-				
 				if (button == 'hideInflow') {
 					
 				} else {
 					
+				}
+			});
+
+			$('#warehouseSelect').on('change',function(e) {
+				var warehouseSelect = $("#warehouseSelect").val();
+				if(warehouseSelect != ''){
+					$('#poList').attr('action', ctxpath + "/warehouse/displayitems/"+warehouseSelect);
+					$('#poList').submit();
 				}
 			});
 		});
@@ -64,7 +71,8 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<select class="form-control">
+							<form:form id="poList" modelAttribute="dashboardModel" action="${pageContext.request.contextPath}/warehouse/dashboard">
+								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
 										<option value="${ w.warehouseId }"><c:out value="${ w.warehouseName }"/></option>
@@ -78,6 +86,8 @@
 										</h1>
 									</div>
 									<div class="panel-body">
+									<c:forEach items="${ dashboardModel.purchaseOrderList }" var="po" varStatus="poIdx">
+									   <c:out value="${ po.poCode }"></c:out>
 										<table id="inflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
@@ -89,8 +99,22 @@
 												</tr>
 											</thead>
 											<tbody>
+											<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
+											    <tr>
+											    	<td>${ iL.productId }</td>
+											    	<td>${ iL.prodQuantity }</td>
+											    	<td>
+												    	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
+												    		<form:input path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
+												    	</c:forEach>
+											    	</td>
+											    	<td></td>
+											    	<td></td>
+											    </tr>
+											</c:forEach>
 											</tbody>
 										</table>
+									</c:forEach>
 									</div>
 									<ul class="list-group">
 										<li class="list-group-item">
@@ -126,7 +150,7 @@
 										</li>
 									</ul>
 								</div>
-							
+							</form:form>
 							</div>
 						</div>
 					</c:when>

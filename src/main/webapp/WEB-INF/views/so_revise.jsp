@@ -66,37 +66,37 @@
 								<h1 class="panel-title">
 									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Revise SO List
 								</h1>
-							</div>								
-						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover">
-									<thead>
-										<tr>
-											<th width="5%">&nbsp;</th>
-											<th width="20%">Sales Code</th>
-											<th width="20%">Sales Date</th>
-											<th width="20%">Customer</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:if test="${not empty reviseSalesList}">
-											<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
-												<tr>
-													<td align="center">
-														<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
-													</td>
-													<td><c:out value="${ i.salesCode }"></c:out></td>
-													<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
-													<td><c:out value="${ i.customerLookup.customerName }"></c:out>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:if>
-									</tbody>
-								</table>
+							</div>					
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th width="5%">&nbsp;</th>
+												<th width="20%">Sales Code</th>
+												<th width="20%">Sales Date</th>
+												<th width="20%">Customer</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:if test="${not empty reviseSalesList}">
+												<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
+													<tr>
+														<td align="center">
+															<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
+														</td>
+														<td><c:out value="${ i.salesCode }"></c:out></td>
+														<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
+														<td><c:out value="${ i.customerLookup.customerName }"></c:out>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
+								</div>
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>								
 							</div>
-							<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>								
 						</div>
 					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						

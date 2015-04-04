@@ -84,6 +84,7 @@
                 <beans:value>com.tkbaru.model.Payment</beans:value>
                 <beans:value>com.tkbaru.model.PurchaseOrder</beans:value>
                 <beans:value>com.tkbaru.model.SalesOrder</beans:value>
+                <beans:value>com.tkbaru.model.Receipt</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -115,6 +116,7 @@
                 <beans:value>com.tkbaru.model.Payment</beans:value>
                 <beans:value>com.tkbaru.model.PurchaseOrder</beans:value>
                 <beans:value>com.tkbaru.model.SalesOrder</beans:value>
+                <beans:value>com.tkbaru.model.Receipt</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>

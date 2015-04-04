@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -35,8 +34,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[getAllPurchaseOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery(
-				"FROM PurchaseOrder").list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
 		for (PurchaseOrder po : purchaseOrderList) {
 			logger.info("PurchaseOrder : " + po.toString());
@@ -53,17 +51,12 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		PurchaseOrder po = null;
 
 		try {
-			po = (PurchaseOrder) session.load(PurchaseOrder.class, new Integer(
-					selectedId));
-			Hibernate.initialize(po.getPoTypeLookup());
-			Hibernate.initialize(po.getItemsList());
-			Hibernate.initialize(po.getStatusLookup());
+			po = (PurchaseOrder) session.load(PurchaseOrder.class, new Integer(selectedId));
 		} catch (Exception err) {
 			logger.info(err.getMessage());
 		}
 
-		logger.info("PurchaseOrder loaded successfully, PurchaseOrder details = "
-				+ po.toString());
+		logger.info("PurchaseOrder loaded successfully, PurchaseOrder details = " + po.toString());
 
 		return po;
 	}
@@ -88,8 +81,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[deletePurchaseOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
-		PurchaseOrder purchaseOrder = (PurchaseOrder) session.load(
-				PurchaseOrder.class, new Integer(selectedId));
+		PurchaseOrder purchaseOrder = (PurchaseOrder) session.load(PurchaseOrder.class, new Integer(selectedId));
 		if (null != purchaseOrder) {
 			session.delete(purchaseOrder);
 		}
@@ -97,12 +89,10 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 	@Override
 	public List<PurchaseOrder> getPurchaseOrderByIds(String selectedIdINClause) {
-		logger.info("[getPurchaseOrderByIds] " + "selectedIdINClause: "
-				+ selectedIdINClause);
+		logger.info("[getPurchaseOrderByIds] " + "selectedIdINClause: " + selectedIdINClause);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery(
-				"FROM PurchaseOrder").list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
 		for (PurchaseOrder po : purchaseOrderList) {
 			logger.info("PurchaseOrder : " + po.toString());
@@ -120,15 +110,25 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 	@Override
 	public List<PurchaseOrder> getPurchaseOrderByStatus(String status) {
-		logger.info("[getPurchaseOrderByStatus] " + "status: "
-				+ status);
+		logger.info("[getPurchaseOrderByStatus] " + "status: " + status);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery(
-				"FROM PurchaseOrder where poStatus = :status ").setString("status", status).list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where poStatus = :status ").setString("status", status).list();
 		
-		
+		for (PurchaseOrder po : purchaseOrderList) {
+			logger.info("PurchaseOrder : " + po.toString());
+		}
 
+		return purchaseOrderList;
+	}
+
+	@Override
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status) {
+		logger.info("[getPurchaseOrderByWarehouseId] " + "warehouseId: "+ warehouseId);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where warehouseId = :warehouseId and poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
+		
 		for (PurchaseOrder po : purchaseOrderList) {
 			logger.info("PurchaseOrder : " + po.toString());
 		}

@@ -1,115 +1,108 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 <script>
-	$(document).ready(
+$(document).ready(
+		
+	function() {
+		var ctxpath = "${ pageContext.request.contextPath }";
+		$('#editTableSelection, #deleteTableSelection').click(
+				function() {
+					var id = "";
+					var button = $(this).attr('id');
+
+					$('input[type="checkbox"][id^="cbx_"]').each(
+							function(index, item) {
+								if ($(item).prop('checked')) {
+									id = $(item).attr("value");
+								}
+							});
+					if (id == "") {
+						jsAlert("Please select at least 1 po");
+						return false;
+					} else {
+						if (button == 'editTableSelection') {
+							$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
+						} else {
+							$('#deleteTableSelection').attr("href",ctxpath + "/po/delete/" + id);
+						}
+					}
+				});
+
+		$('#addProdButton, #removeProdButton').click(
+				function() {
+					var id = "";
+					var button = $(this).attr('id');
+
+					if (button == 'addProdButton') {
+						id = $('#productSelect').val();
+						$('#reviseForm').attr('action',ctxpath + "/po/additems/" + id);
+					} else {
+						id = $(this).val();
+						$('#reviseForm').attr('action',ctxpath + "/po/removeitems/" + id);
+					}
+		});
+		
+		$('#submitButton').click(
 			function() {
-				var ctxpath = "${ pageContext.request.contextPath }";
-				$('#editTableSelection, #deleteTableSelection').click(
-						function() {
-							var id = "";
-							var button = $(this).attr('id');
+				$('#reviseForm').attr('action',ctxpath + "/po/saverevise");
+					
+		});
 
-							$('input[type="checkbox"][id^="cbx_"]').each(
-									function(index, item) {
-										if ($(item).prop('checked')) {
-											id = $(item).attr("value");
-										}
-									});
-							if (id == "") {
-								jsAlert("Please select at least 1 po");
-								return false;
-							} else {
-								if (button == 'editTableSelection') {
-									$('#editTableSelection').attr("href",
-											ctxpath + "/po/revise/" + id);
+		var supplier = $("#inputSupplierId").val()
+
+		$("#supplierTooltip").tooltip({ title : supplier });
+
+		$("#reviseForm").formValidation({
+			locale : 'id_ID',
+			framework : 'bootstrap',
+			//	excluded : 'disabled',
+			icon : {
+				valid : 'glyphicon glyphicon-ok',
+				invalid : 'glyphicon glyphicon-remove',
+				validating : 'glyphicon glyphicon-refresh'
+			},
+			fields : {
+			  'productSelect' : {
+					row : '.row .col-md-11',
+					icon : false,
+					validators : {
+						callback : {
+							message : 'Silahkan pilih produk!',
+							callback : function(value, validator, $field) {
+								var productSelect = $("#productSelect").val();
+								if (productSelect == '') {
+									return false;
 								} else {
-									$('#deleteTableSelection').attr("href",
-											ctxpath + "/po/delete/" + id);
+									return true;
 								}
-							}
-						});
 
-				$('#addProdButton, #removeProdButton').click(
-						function() {
-							var id = "";
-							var button = $(this).attr('id');
-
-							if (button == 'addProdButton') {
-								id = $('#productSelect').val();
-								$('#reviseForm').attr('action',
-										ctxpath + "/po/additems/" + id);
-							} else {
-								id = $(this).val();
-								$('#reviseForm').attr('action',
-										ctxpath + "/po/removeitems/" + id);
-							}
-						});
-
-				var supplier = $("#inputSupplierId").val()
-
-				$("#supplierTooltip").tooltip(
-						{
-							title : supplier
-						});
-
-				$("#reviseForm").formValidation({
-					locale : 'id_ID',
-					framework : 'bootstrap',
-					//	excluded : 'disabled',
-					icon : {
-						valid : 'glyphicon glyphicon-ok',
-						invalid : 'glyphicon glyphicon-remove',
-						validating : 'glyphicon glyphicon-refresh'
-					},
-					fields : {
-					  'productSelect' : {
-							row : '.row .col-md-11',
-							icon : false,
-							validators : {
-								callback : {
-									message : 'Silahkan pilih produk!',
-									callback : function(value, validator, $field) {
-										
-										var productSelect = $("#productSelect").val();
-										if (productSelect == '') {
-											return false;
-										} else {
-											return true;
-										}
-
-									}
-								}
 							}
 						}
 					}
-				}).on('click','button[id^="addProdButton"]',function(e) {
-					$('#reviseForm').formValidation('revalidateField','productSelect');
-				}).on('click','#submitButton',function(e) {
-					$('#reviseForm').formValidation('removeField','productSelect');
-				}).on('click','#removeProdButton',function(e) {
-					$('#reviseForm').formValidation('removeField','productSelect');
-				}).on('success.field.fv',function(e, data) {
-					if (data.field == 'productSelect') {
-						var productSelect = $("#productSelect").val();
-						if (productSelect != '') {
-							$('#reviseForm').formValidation('removeField','productSelect');
-						}
-					}
-			});
-			});
+				}
+			}
+		}).on('click','#addProdButton',function(e) {
+			$('#reviseForm').formValidation('revalidateField','productSelect');
+		}).on('click','#submitButton',function(e) {
+			$('#reviseForm').formValidation('removeField','productSelect');
+		}).on('click','#removeProdButton',function(e) {
+			$('#reviseForm').formValidation('removeField','productSelect');
+		}).on('err.field.fv', function(e, data) {
+			data.fv.disableSubmitButtons(false);
+        });
+});
 </script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
-
-		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
-
+	<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
 		<div class="row">
 			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
@@ -127,16 +120,13 @@
 						<br> ${errorMessageText}
 					</div>
 				</c:if>
-
 				<div id="jsAlerts"></div>
-
 				<h1>
 					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order Revise
 				</h1>
-
 				<c:choose>
 					<c:when
-						test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
+						test="${ PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -160,7 +150,7 @@
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
 														<td><c:out value="${ i.poCode }"></c:out></td>
-														<td><c:out value="${ i.poCreatedDate }"></c:out></td>
+														<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
 														<td><c:out value="${ i.supplierLookup.supplierName }"></c:out>
 														</td>
 													</tr>
@@ -169,8 +159,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="editTableSelection" class="btn btn-sm btn-primary"
-									href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
 							</div>
 						</div>
 					</c:when>
@@ -182,7 +171,6 @@
 										<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
 											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Revise PO
 										</c:when>
-
 									</c:choose>
 								</h1>
 							</div>
@@ -192,6 +180,8 @@
 										<div role="tabpanel" class="tab-pane active">
 											<br />
 											<form:hidden path="poId" />
+											<form:hidden path="createdBy" />
+											<form:hidden path="createdDate" />
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
@@ -202,34 +192,24 @@
 																		<label for="inputPOCode"
 																			class="col-sm-2 control-label">PO Code</label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control"
-																				readonly="true" id="inputPOCode" name="inputPOCode"
-																				path="poCode" placeholder="Enter PO Code"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" name="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputPOType"
-																			class="col-sm-2 control-label">PO Type</label>
+																		<label for="inputPOType" class="col-sm-2 control-label">PO Type</label>
 																		<div class="col-sm-8">
 																			<form:hidden path="poType"></form:hidden>
-																			<form:input type="text" class="form-control"
-																				readonly="true" id="inputPOType" name="inputPOType"
-																				path="poTypeLookup.lookupValue"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="inputPOType" name="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSupplierId"
-																			class="col-sm-2 control-label">Supplier</label>
+																		<label for="inputSupplierId" class="col-sm-2 control-label">Supplier</label>
 																		<div class="col-sm-9">
 																			<form:hidden path="supplierId" />
-																			<form:input id="inputSupplierId" type="text" class="form-control"
-																				path="supplierLookup.supplierName" readonly="true" />
+																			<form:input id="inputSupplierId" type="text" class="form-control" path="supplierLookup.supplierName" readonly="true" />
 																		</div>
 																		<div class="col-sm-1">
-																			<button id="supplierTooltip" type="button"
-																				class="btn btn-default" data-toggle="tooltip"
-																				data-trigger="hover" data-html="true"
-																				data-placement="right" data-title="">
+																			<button id="supplierTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
 																				<span class="fa fa-external-link fa-fw"></span>
 																			</button>
 																		</div>
@@ -237,23 +217,16 @@
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-																		<label for="inputPoDate"
-																			class="col-sm-3 control-label">PO Date</label>
+																		<label for="inputPoDate" class="col-sm-3 control-label">PO Date</label>
 																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control"
-																				readonly="true" id="poCreatedDate"
-																				name="poCreatedDate" path="poCreatedDate"
-																				placeholder="Enter PO Date"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="poCreatedDate" name="poCreatedDate" path="poCreatedDate" placeholder="Enter PO Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputPOStatus"
-																			class="col-sm-3 control-label">Status</label>
+																		<label for="inputPOStatus" class="col-sm-3 control-label">Status</label>
 																		<div class="col-sm-9">
 																			<form:hidden path="poStatus"></form:hidden>
-																			<label id="inputPOStatus" class="control-label"><c:out
-																					value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
-
+																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
 																		</div>
 																	</div>
 																</div>
@@ -262,29 +235,21 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputShippingDate"
-																			class="col-sm-2 control-label">Shipping Date</label>
+																		<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control"
-																				readonly="true" id="shippingDate"
-																				name="shippingDate" path="shippingDate"
-																				placeholder="Enter Shipping Date"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="shippingDate" path="shippingDate" placeholder="Enter Shipping Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputWarehouseId"
-																			class="col-sm-2 control-label">Warehouse</label>
+																		<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
 																		<div class="col-sm-8">
-
 																			<form:hidden path="warehouseId" />
-																			<form:input type="text" class="form-control"
-																				path="warehouseLookup.warehouseName" readonly="true" />
+																			<form:input type="text" class="form-control" path="warehouseLookup.warehouseName" readonly="true" />
 																		</div>
 																	</div>
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-
 																		<div class="col-sm-9"></div>
 																	</div>
 																</div>
@@ -304,15 +269,13 @@
 																<div class="col-md-11">
 																	<select id="productSelect" name="productSelect" class="form-control">
 																		<option value="">Please Select</option>
-																		<c:forEach items="${ productSelectionDDL }"
-																			var="psddl">
+																			<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
 																	</select>
 																</div>
 																<div class="col-md-1">
-																	<button id="addProdButton" type="submit"
-																		class="btn btn-primary pull-right">
+																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right">
 																		<span class="fa fa-plus"></span>
 																	</button>
 																</div>
@@ -334,41 +297,27 @@
 																		</thead>
 																		<tbody>
 																			<c:set var="total" value="${0}" />
-																			<c:forEach items="${ reviseForm.itemsList }" var="iL"
-																				varStatus="iLIdx">
+																			<c:forEach items="${ reviseForm.itemsList }" var="iL" varStatus="iLIdx">
 																				<tr>
 																					<td style="vertical-align: middle;">
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
-																					<td><form:input type="text"
-																							class="form-control text-right"
-																							id="inputItemsQuantity" name="inputItemsQuantity"
-																							path="itemsList[${ iLIdx.index }].prodQuantity"
-																							placeholder="Enter Quantity"></form:input></td>
+																					<td><form:input type="text" class="form-control text-right" id="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input></td>
 																					<td>
-																					<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
-																					     <c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
+																						<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
+																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																					</td>
-																					<td><form:input type="text"
-																							class="form-control text-right"
-																							id="inputItemsProdPrice"
-																							name="inputItemsProdPrice"
-																							path="itemsList[${ iLIdx.index }].prodPrice"
-																							placeholder="Enter Price"></form:input></td>
-
 																					<td>
-																						<button id="removeProdButton" type="submit"
-																							class="btn btn-primary pull-right"
-																							value="${ iLIdx.index }">
+																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input></td>
+																					<td>
+																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
 																							<span class="fa fa-minus"></span>
 																						</button>
 																					</td>
-																					<td><c:out
-																							value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
+																					<td><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
 																				</tr>
-																				<c:set var="total"
-																					value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -400,8 +349,7 @@
 																		<div class="col-md-12">
 																			<div class="form-group">
 																				<div class="col-sm-12">
-																					<form:textarea id="poRemarks" class="form-control"
-																						path="poRemarks" rows="5" />
+																					<form:textarea id="poRemarks" class="form-control" path="poRemarks" rows="5" />
 																				</div>
 																			</div>
 																		</div>
@@ -413,10 +361,8 @@
 												</div>
 												<div class="col-md-7 col-offset-md-5">
 													<div class="btn-toolbar">
-														<button id="cancelButton" type="reset"
-															class="btn btn-primary pull-right">Cancel</button>
-														<button id="submitButton" type="submit"
-															class="btn btn-primary pull-right">Submit</button>
+														<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+														<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 													</div>
 												</div>
 											</div>

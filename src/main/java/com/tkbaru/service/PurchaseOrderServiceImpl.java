@@ -75,4 +75,10 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return purchaseOrderDAO.getPurchaseOrderByStatus(status);
 	}
 
+	@Override
+	@Transactional
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status) {
+		return purchaseOrderDAO.getPurchaseOrderByWarehouseIdByStatus(warehouseId, status);
+	}
+
 }

@@ -1,15 +1,24 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
 
 @Entity
 @Table(name="tb_items")
@@ -46,6 +55,10 @@ public class Items {
 	@ManyToOne
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
+	
+	@OneToMany(fetch=FetchType.EAGER)
+	@JoinColumn(name="items_id", referencedColumnName="items_id", unique=true, insertable=false, updatable=false)
+	private List<Receipt> receiptList;
 
 	public int getItemsId() {
 		return itemsId;
@@ -133,6 +146,14 @@ public class Items {
 
 	public void setUnitCodeLookup(Lookup unitCodeLookup) {
 		this.unitCodeLookup = unitCodeLookup;
+	}
+	
+	public List<Receipt> getReceiptList() {
+		return receiptList;
+	}
+
+	public void setReceiptList(List<Receipt> receiptList) {
+		this.receiptList = receiptList;
 	}
 
 	@Override

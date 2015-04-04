@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -15,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.DashboardModel;
+import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.model.PurchaseOrder;
+import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Warehouse;
 import com.tkbaru.service.LookupService;
+import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.WarehouseService;
 
 @Controller
@@ -27,6 +33,9 @@ public class WarehouseController {
 
 	@Autowired
 	WarehouseService warehouseManager;
+	
+	@Autowired
+	PurchaseOrderService poManager;
 	
 	@Autowired
 	LookupService lookupManager;
@@ -40,6 +49,39 @@ public class WarehouseController {
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		
+		
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
+	}
+	
+	@RequestMapping(value="/displayitems/{warehouseId}", method = RequestMethod.POST)
+	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
+		logger.info("[warehousePageLoad] : " + "");
+		
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
+		
+		for(PurchaseOrder po : poList){
+			
+			for(Items items : po.getItemsList()){
+				
+				for(Receipt receipt : items.getReceiptList()){
+					receipt.setItemsId(items.getItemsId());
+				}
+			}
+			
+		}
+		
+		DashboardModel dashboardModel = new DashboardModel();
+		dashboardModel.setPurchaseOrderList(poList);
+		
+		
+		
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute("dashboardModel", dashboardModel);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

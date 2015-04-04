@@ -202,7 +202,7 @@
 								</div>
 							</div>
 							<div class="panel-body">
-								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>
+								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>aaa
 								<c:out value="${pageContext.request.requestURI }"/>
 								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/>
 								<br/>

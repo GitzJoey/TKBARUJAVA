@@ -122,9 +122,14 @@ public class SalesOrderController {
 	@RequestMapping(value="/payment", method = RequestMethod.GET)
 	public String salesPayment(Locale locale, Model model) {
 		logger.info("[salesPayment] " + "");
+
+		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("");
+		
+		model.addAttribute("paymentSalesList", soList);
+
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_SO_PAYMENT;
