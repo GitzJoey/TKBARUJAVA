@@ -2,6 +2,7 @@ package com.tkbaru.web;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -78,11 +79,11 @@ public class WarehouseController {
 		
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		
-		WarehouseDashboard dashboardModel = new WarehouseDashboard();
-		dashboardModel.setPurchaseOrderList(poList);
+		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
+		warehouseDashboard.setPurchaseOrderList(poList);
 		
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-		model.addAttribute("dashboardModel", dashboardModel);
+		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -166,38 +167,59 @@ public class WarehouseController {
 	}
 	
 	@RequestMapping(value="/savereceipt/{poId}", method = RequestMethod.POST)
-	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId) {	
-        		
+	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId) {
+		
+		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
+
+		PurchaseOrder poView = null;
+		
 		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()){
 			if(purchaseOrder.getPoId()==poId){
-				PurchaseOrder po = poManager.getPurchaseOrderById(poId);
-				po.setItemsList(purchaseOrder.getItemsList());
-				
-				Boolean isAllArrived = false;
-				
-				for(Items item : po.getItemsList()){
-					
-					long arrivalQuantity = 0;
-					
-					for(Receipt receipt : item.getReceiptList()){
-						arrivalQuantity += receipt.getNet();
+				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
+			}
+			
+		}
+		
+		List<Items> itemsList = poView.getItemsList();
+		
+		for(Items items : itemsList){
+			List<Receipt> receiptList = new ArrayList<Receipt>();
+			for(Receipt receipt : items.getReceiptList()){
+				if(receipt.getNet() > 0){
+					if(receipt.getReceiptId()==0){
+						receipt.setReceiptDate(new Date());
+						receipt.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						receipt.setCreatedDate(new Date());
 					}
-					
-					if(item.getProdQuantity()== arrivalQuantity){
-						isAllArrived = true;
-					}else{
-						isAllArrived = false;
-					}
+					receiptList.add(receipt);
 				}
-				
-				if(isAllArrived){
-					po.setPoStatus("L013_WP");
-				}
-				
-				poManager.editPurchaseOrder(po);
+			}
+			itemsList.get(itemsList.indexOf(items)).setReceiptList(receiptList);
+		}
+		
+		po.setItemsList( poView.getItemsList());
+		
+		Boolean isAllArrived = false;
+		for(Items item : po.getItemsList()){
+			
+			long arrivalQuantity = 0;
+			
+			for(Receipt receipt : item.getReceiptList()){
+				arrivalQuantity += receipt.getNet();
+			}
+			
+			if(item.getProdQuantity()== arrivalQuantity){
+				isAllArrived = true;
+			}else{
+				isAllArrived = false;
 			}
 		}
 		
+		if(isAllArrived){
+			po.setPoStatus("L013_WP");
+		}
+		
+		poManager.editPurchaseOrder(po);
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
