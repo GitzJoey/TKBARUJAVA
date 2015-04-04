@@ -33,17 +33,15 @@
 				}
 			});
 			
-			$('[id^="receiptDate_"]').datetimepicker({
-				format : "DD-MM-YYYY"
-			});
-
-			//$('.receiptDate').on('dp.change dp.show',function(e) {
-			//	$('#poList').formValidation('revalidateField', 'receiptDate');
-			//});
-			
 			$('[id^="receiptButton_"]').click(function() {
 				var poid = $(this).val();
-				$('#poList').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+				var pocode = $('#'+poid).val();
+				var result = confirm("Yakin isi data po "+pocode+" ?");
+				if (result) {
+					$('#poList').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+				}
+				
+				
 			});
 		});
 	</script>	
@@ -117,7 +115,7 @@
 												<tr class="group">
 													<td>
 													   <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-													    
+													   <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
 														<c:out value="${ po.poCode }"></c:out>
 													</td>
 													<td></td>
@@ -138,7 +136,7 @@
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
+												    		<!--<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>-->
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].receiptList[${receiptIdx.index}].receiptId"/>
 													    	${ iL.productLookup.productName }
 												    	</td>
@@ -186,7 +184,7 @@
 												    		
 												    	</td>
 												    	<td>
-													    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Receipt</button>
+												    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
 													    </td>
 											    	</tr>
 											    	</c:if>
@@ -199,7 +197,7 @@
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
+												    	  	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
 													    	${ iL.productLookup.productName }
 												    	</td>
 											    		<td>${ iL.prodQuantity }</td>
@@ -213,7 +211,7 @@
 												    		
 												    	</td>
 												    	<td>
-												    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Receipt</button>
+												    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit</button>
 													    </td>
 											    	</tr>
 										    	</c:if>

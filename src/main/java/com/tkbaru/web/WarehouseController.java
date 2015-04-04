@@ -73,6 +73,28 @@ public class WarehouseController {
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 	
+	
+	
+	@RequestMapping(value="/dashboard/{warehouseId}", method = RequestMethod.GET)
+	public String warehouseDashboardPageLoad(Locale locale, Model model,@PathVariable int warehouseId) {
+		logger.info("[warehousePageLoad] : " + "");
+
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
+		
+		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
+		warehouseDashboard.setPurchaseOrderList(poList);
+		
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute("warehouseDashboard", warehouseDashboard);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
+	}
+	
 	@RequestMapping(value="/displayitems/{warehouseId}", method = RequestMethod.POST)
 	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
 		logger.info("[warehousePageLoad] : " + "");
@@ -221,9 +243,10 @@ public class WarehouseController {
 		
 		poManager.editPurchaseOrder(po);
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/warehouse/dashboard";
+		return "redirect:/warehouse/dashboard/"+po.getWarehouseId();
 	}
 }
