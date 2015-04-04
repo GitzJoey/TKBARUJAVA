@@ -134,4 +134,19 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SO_PAYMENT;
 	}
+
+	@RequestMapping(value="/payment/addpayment/{selectedSO}", method = RequestMethod.GET)
+	public String salesAddPayment(Locale locale, Model model, @PathVariable Integer selectedSO) {
+		logger.info("[salesAddPayment] " + "selectedSO: " + selectedSO);
+
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedSO);
+		
+		model.addAttribute("paymentSalesForm", so);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_PAYMENT;
+	}
 }

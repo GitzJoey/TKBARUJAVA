@@ -74,7 +74,7 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>								
+								<a id="addNew" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Add Payment</a>								
 							</div>
 						</div>
 					</c:when>
