@@ -26,4 +26,17 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		return soList;
 	}
 
+	@Override
+	public List<SalesOrder> getSalesOrderByStatus(String statusCode) {
+		List<SalesOrder> soList = new ArrayList<SalesOrder>();
+		
+		return soList;
+	}
+
+	@Override
+	public SalesOrder getSalesOrderById(int selectedId) {
+		
+		return new SalesOrder();
+	}
+
 }

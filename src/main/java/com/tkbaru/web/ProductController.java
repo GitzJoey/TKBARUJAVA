@@ -99,10 +99,12 @@ public class ProductController {
 	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod, RedirectAttributes redirectAttributes) {	
 		logger.info("[saveProduct] " + "prod: " + prod.toString());
 	
-		for(ProductUnit pu:prod.getProductUnit()) {
-			if (pu.getProductEntity() == null) {
-				pu.setProductEntity(prod);
-			}
+		if (prod.getProductUnit() != null && prod.getProductUnit().size() > 0) {
+			for(ProductUnit pu:prod.getProductUnit()) {
+				if (pu.getProductEntity() == null) {
+					pu.setProductEntity(prod);
+				}
+			}			
 		}
 		
 		if (prod.getProductId() == 0) { productManager.addProduct(prod); }

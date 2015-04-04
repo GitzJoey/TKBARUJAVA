@@ -8,4 +8,6 @@ import com.tkbaru.model.SalesOrder;
 public interface SalesOrderService {
 	public List<Customer> searchCustomer(String querySearch);
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId);
+	public List<SalesOrder> getSalesOrderByStatus(String statusCode);
+	public SalesOrder getSalesOrderById(int selectedId);
 }

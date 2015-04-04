@@ -4,7 +4,7 @@
 		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
   			<div class="container-fluid">
   				<div class="navbar-header">
-    				<a class="navbar-brand" href="${pageContext.request.contextPath}/dashboard">
+    				<a class="navbar-brand" href="${ pageContext.request.contextPath }/dashboard">
 						<span class="fa fa-home fa-border"></span><span>&nbsp;&nbsp;&nbsp;</span><strong><c:out value="${ loginContext.userLogin.storeEntity.storeName }"/></strong>
       				</a>
       			</div>      			
@@ -18,8 +18,30 @@
 					<li class="dropdown">
 					 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-globe"></span></a>
 						<ul class="dropdown-menu">
-							<li><a href="#">English</a></li>
-							<li><a href="#">Indonesia</a></li>
+							<li>
+								<a href="${ requestScope['javax.servlet.forward.request_uri'] }?locale=en">
+									<c:choose>
+										<c:when test="${ cookie.tkbaruLocaleCookie.value == 'en' }">
+											<span class="fa fa-check-square-o fa-fw"></span>&nbsp;English
+										</c:when>
+										<c:otherwise>
+											<span class="fa fa-square-o fa-fw"></span>&nbsp;English
+										</c:otherwise>
+									</c:choose>
+								</a>
+							</li>
+							<li>
+								<a href="${ requestScope['javax.servlet.forward.request_uri'] }?locale=in">
+									<c:choose>
+										<c:when test="${ cookie.tkbaruLocaleCookie.value == 'in' }">
+											<span class="fa fa-check-square-o fa-fw"></span>&nbsp;Indonesia
+										</c:when>
+										<c:otherwise>
+											<span class="fa fa-square-o fa-fw"></span>&nbsp;Indonesia
+										</c:otherwise>
+									</c:choose>
+								</a>
+							</li>
 						</ul>
 					</li>
 				</ul>

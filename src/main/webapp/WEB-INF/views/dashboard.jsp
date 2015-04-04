@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -197,10 +198,13 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<div class="panel-title">
-									&nbsp;
+									<spring:message code="dashboard_test"/>
 								</div>
 							</div>
 							<div class="panel-body">
+								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>
+								<c:out value="${pageContext.request.requestURI }"/>
+								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/>
 								<br/>
 								<br/>
 								<br/>

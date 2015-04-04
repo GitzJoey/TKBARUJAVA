@@ -11,14 +11,15 @@ public class LoginContext implements Serializable {
 	private static final long serialVersionUID = 6867902303108888160L;
 
 	public LoginContext() {
-
+		
 	}
-
+	
 	private User userLogin;
-	private String selectedMenu;
+	private String selectedMenu;	
 	private String selectedLanguage;
 	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
 
+	
 	public User getUserLogin() {
 		return userLogin;
 	}
@@ -54,7 +55,7 @@ public class LoginContext implements Serializable {
 	@Override
 	public String toString() {
 		return "LoginContext [userLogin=" + userLogin + ", selectedMenu="
-				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "]";
+				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "poList Size: " + poList.size() + "]";
 	}
-
+	
 }
