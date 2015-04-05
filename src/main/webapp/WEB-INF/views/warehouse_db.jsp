@@ -9,12 +9,41 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 
-			$('#inflowTable, #outflowTable').DataTable({
+			$('#outflowTable').DataTable({
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,
 		        "searching": 	false
 			});
+			
+			var table = $('#inflowTable').DataTable({
+				"paging":   	false,
+		        "ordering": 	false,
+		        "info":     	false,
+		        "searching": 	false,
+		        "columnDefs": [
+		            { "visible": false, "targets": 2 }
+		        ],
+		       
+		        "displayLength": 25,
+		        "drawCallback": function ( settings ) {
+		            var api = this.api();
+		            var rows = api.rows( {page:'current'} ).nodes();
+		            var last=null;
+		 
+		            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
+		                if ( last !== group ) {
+		                    $(rows).eq( i ).before(
+		                        '<tr class="group"><td colspan="7">'+group+'</td></tr>'
+		                    );
+		 
+		                    last = group;
+		                }
+		            } );
+		        }
+		    } );
+		 
+		   
 			
 			$('#hideInflow, #hideOutflow').click(function() {
 				var button = $(this).attr('id');
@@ -28,8 +57,8 @@
 			$('#warehouseSelect').on('change',function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
 				if(warehouseSelect != ''){
-					$('#poList').attr('action', ctxpath + "/warehouse/displayitems/"+warehouseSelect);
-					$('#poList').submit();
+					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/displayitems/"+warehouseSelect);
+					$('#warehouseDashboardForm').submit();
 				}
 			});
 			
@@ -38,13 +67,19 @@
 				var pocode = $('#'+poid).val();
 				var result = confirm("Yakin isi data po "+pocode+" ?");
 				if (result) {
-					$('#poList').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+					$('#warehouseDashboardForm').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
 				}
 				
 				
 			});
 		});
 	</script>	
+	<style type="text/css">
+	tr.group,
+	tr.group:hover {
+    background-color: #ddd !important;
+}
+	</style>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -82,7 +117,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-							<form:form id="poList" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard">
+							<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard">
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
@@ -98,11 +133,13 @@
 									</div>
 									<div class="panel-body">
 									
-										<table id="inflowTable" class="table table-bordered table-hover display responsive">
+										<table id="inflowTable" class="display" cellspacing="0" width="100%">
 											<thead>
 												<tr>
+												
 													<th>Product Name</th>
 													<th>Bruto</th>
+													<th>Po Code</th>
 													<th>Netto</th>
 													<th>Tare</th>
 													<th>Receipt Date</th>
@@ -112,18 +149,10 @@
 											<tbody >
 											
 											<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
-												<tr class="group">
-													<td>
+												
 													   <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
 													   <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-														<c:out value="${ po.poCode }"></c:out>
-													</td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td></td>
-												</tr>
+														
 											
 											<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
 												<c:if test="${ not empty iL.receiptList }">
@@ -131,6 +160,7 @@
 												<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
 												 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
 													    <tr>
+													    
 												    	<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -141,6 +171,10 @@
 													    	${ iL.productLookup.productName }
 												    	</td>
 											    		<td>${ iL.prodQuantity }</td>
+											    		<td>
+													   
+														<c:out value="${ po.poCode }"></c:out>
+													    </td>
 												    	<td>
 												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
 												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
@@ -163,6 +197,7 @@
 											    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">
 											    	
 											    	<tr>
+												    	
 												    	<td>
 													    	
 													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
@@ -174,6 +209,10 @@
 													    	${ iL.productLookup.productName }
 												    	</td>
 											    		<td>${ iL.prodQuantity }</td>
+											    		 <td>
+													   
+														<c:out value="${ po.poCode }"></c:out>
+													    </td>
 												    	<td>
 												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
 												    	</td>
@@ -192,6 +231,7 @@
 										    	
 										    	<c:if test="${ empty iL.receiptList }">
 											    	<tr>
+											    	 
 												    	<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -201,6 +241,10 @@
 													    	${ iL.productLookup.productName }
 												    	</td>
 											    		<td>${ iL.prodQuantity }</td>
+											    		<td>
+													   
+														<c:out value="${ po.poCode }"></c:out>
+													    </td>
 												    	<td>
 												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
 												    	</td>

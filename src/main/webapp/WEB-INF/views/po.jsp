@@ -254,13 +254,13 @@
 																	<label for="poCode" class="col-sm-2 control-label">PO
 																		Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control poCode" id="poCode${poIdx.index}" path="poList[${poIdx.index}].poCode" placeholder="Enter PO Code"></form:input>
+																		<form:input type="text" class="form-control poCode" id="poCode${poIdx.index}" path="poList[${poIdx.index}].poCode" placeholder="Enter PO Code" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
 																	<label for="inputPOType${poIdx.index}" class="col-sm-2 control-label">PO Type</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control" id="inputPOType${poIdx.index}" path="poList[${poIdx.index}].poType">
+																		<form:select class="form-control" id="inputPOType${poIdx.index}" path="poList[${poIdx.index}].poType" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																			<option value="">Please Select</option>
 																			<form:options items="${ poTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue" />
 																		</form:select>
@@ -269,7 +269,7 @@
 																<div class="form-group">
 																	<label for="inputSupplierId${poIdx.index}" class="col-sm-2 control-label">Supplier</label>
 																	<div class="col-sm-9">
-																		<form:select class="form-control supplierId" id="inputSupplierId${poIdx.index}" path="poList[${poIdx.index}].supplierId">
+																		<form:select class="form-control supplierId" id="inputSupplierId${poIdx.index}" path="poList[${poIdx.index}].supplierId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																			<option value="">Please Select</option>
 																			<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="supplierName" />
 																		</form:select>
@@ -285,7 +285,7 @@
 																<div class="form-group">
 																	<label for="poCreatedDate" class="col-sm-3 control-label">PO Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${poIdx.index}" path="poList[${poIdx.index}].poCreatedDate" placeholder="Enter PO Date"></form:input>
+																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${poIdx.index}" path="poList[${poIdx.index}].poCreatedDate" placeholder="Enter PO Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
@@ -305,13 +305,13 @@
 																<div class="form-group">
 																	<label for="shippingDate${poIdx.index}" class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control shippingDate" id="shippingDate${poIdx.index}" path="poList[${poIdx.index}].shippingDate" placeholder="Enter Shipping Date"></form:input>
+																		<form:input type="text" class="form-control shippingDate" id="shippingDate${poIdx.index}" path="poList[${poIdx.index}].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
 																	<label for="inputWarehouseId${poIdx.index}" class="col-sm-2 control-label">Warehouse</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control warehouseId" id="inputWarehouseId${poIdx.index}" path="poList[${poIdx.index}].warehouseId">
+																		<form:select class="form-control warehouseId" id="inputWarehouseId${poIdx.index}" path="poList[${poIdx.index}].warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																			<option value="">Please Select</option>
 																			<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
 																		</form:select>
@@ -338,7 +338,7 @@
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-11" id="product-select${poIdx.index}">
-																<select id="productSelect${poIdx.index}" class="form-control productSelect">
+																<select id="productSelect${poIdx.index}" class="form-control productSelect" >
 																	<option value="">Please Select</option>
 																	<c:forEach items="${ productSelectionDDL }" var="psddl">
 																		<option value="${ psddl.productId }">${ psddl.productName }</option>
@@ -346,9 +346,11 @@
 																</select>
 															</div>
 															<div class="col-md-1">
-																<button id="addProdButton${poIdx.index}" type="submit" class="btn btn-primary pull-right">
+															<c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">
+																<button id="addProdButton${poIdx.index}" type="submit" class="btn btn-primary pull-right" >
 																	<span class="fa fa-plus"></span>
 																</button>
+															</c:if>
 															</div>
 														</div>
 														<br />
@@ -377,7 +379,7 @@
 																					</label>
 																				</td>
 																				<td>
-																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																				</td>
 																				<td><form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
 																					<label>
@@ -385,12 +387,14 @@
 																					</label>
 																				</td>
 																				<td>
-																					<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>
+																					<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																				</td>
 																				<td>
+																				<c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">
 																					<button id="removeProdButton" type="submit" value="${ iLIdx.index }" class="btn btn-primary pull-right">
 																						<span class="fa fa-minus"></span>
 																					</button>
+																				</c:if>
 																				</td>
 																				<td>
 																					<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
@@ -427,7 +431,7 @@
 																	<div class="col-md-12">
 																		<div class="form-group">
 																			<div class="col-sm-12">
-																				<form:textarea id="poRemarks${poIdx.index}" class="form-control" path="poList[${poIdx.index}].poRemarks" rows="5" />
+																				<form:textarea id="poRemarks${poIdx.index}" class="form-control" path="poList[${poIdx.index}].poRemarks" rows="5" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"/>
 																			</div>
 																		</div>
 																	</div>
