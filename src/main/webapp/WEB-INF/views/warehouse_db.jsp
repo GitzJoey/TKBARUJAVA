@@ -133,7 +133,7 @@
 									</div>
 									<div class="panel-body">
 									
-										<table id="inflowTable" class="display" cellspacing="0" width="100%">
+										<table id="inflowTable" class="table table-bordered table-hover display" width="100%">
 											<thead>
 												<tr>
 												
