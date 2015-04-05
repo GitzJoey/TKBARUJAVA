@@ -381,7 +381,7 @@
 																				<td>
 																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity${poIdx.index}" path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
 																				</td>
-																				<td><form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
+																				<td style="vertical-align: middle;"><form:hidden path="poList[${poIdx.index}].itemsList[${ iLIdx.index }].unitCode" />
 																					<label>
 																						<c:out value="${ iL.unitCodeLookup.lookupValue }"></c:out>
 																					</label>
