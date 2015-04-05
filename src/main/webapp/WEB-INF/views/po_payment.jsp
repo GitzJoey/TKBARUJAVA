@@ -360,6 +360,7 @@ $(document).ready(function() {
 																				<c:forEach items="${ poForm.itemsList }" var="iL" varStatus="iLIdx">
 																					<tr>
 																						<td style="vertical-align: middle;">
+																							<form:hidden path="itemsList[${ iLIdx.index }].itemsId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productLookup.productName"></form:hidden>
 																							<c:out value="${poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>

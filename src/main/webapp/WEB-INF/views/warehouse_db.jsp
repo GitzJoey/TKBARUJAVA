@@ -132,11 +132,9 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-									
 										<table id="inflowTable" class="table table-bordered table-hover display" width="100%">
 											<thead>
 												<tr>
-												
 													<th>Product Name</th>
 													<th>Bruto</th>
 													<th>Po Code</th>
@@ -149,69 +147,64 @@
 											<tbody >
 											
 											<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
-												
-													   <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-													   <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-														
-											
-											<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
+												<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
 												<c:if test="${ not empty iL.receiptList }">
 												<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
 												<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
 												 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
 													    <tr>
-													    
-												    	<td>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-												    		<!--<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>-->
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].receiptList[${receiptIdx.index}].receiptId"/>
-													    	${ iL.productLookup.productName }
-												    	</td>
-											    		<td>${ iL.prodQuantity }</td>
-											    		<td>
-													   
-														<c:out value="${ po.poCode }"></c:out>
-													    </td>
-												    	<td>
-												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
-												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
-												    	</td>
-												    	<td>
-												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].tare"/>
-												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"></c:out>
-												    	</td>
-												    	<td>
-												    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].receiptDate"/>
-												    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"></c:out>
-												    	</td>
-												    	<td>
-													    		
-													    </td>
-											    	</tr>
+														    <td>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
+													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].receiptList[${receiptIdx.index}].receiptId"/>
+														    	${ iL.productLookup.productName }
+													    	</td>
+												    		<td>${ iL.prodQuantity }</td>
+												    		<td>
+															    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
+															    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
+																<c:out value="${ po.poCode }"></c:out>
+														    </td>
+													    	<td>
+													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
+													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
+													    	</td>
+													    	<td>
+													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].tare"/>
+													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"></c:out>
+													    	</td>
+													    	<td>
+													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].receiptDate"/>
+													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"></c:out>
+													    	</td>
+													    	<td>
+														    		
+														    </td>
+												    	</tr>
 											    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
 											    	</c:forEach>
 											    	
 											    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">
 											    	
 											    	<tr>
-												    	
-												    	<td>
-													    	
-													    	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+											    		<td>
+												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-													    	
-													    	${ iL.productLookup.productName }
+												    		<c:out value="${ iL.productLookup.productName }"></c:out>
 												    	</td>
-											    		<td>${ iL.prodQuantity }</td>
-											    		 <td>
-													   
-														<c:out value="${ po.poCode }"></c:out>
+											    		<td>
+											    			<c:out value="${ iL.prodQuantity }"></c:out>
+											    		</td>
+											    		<td>
+														    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
+														    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
+															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
 												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
@@ -231,8 +224,7 @@
 										    	
 										    	<c:if test="${ empty iL.receiptList }">
 											    	<tr>
-											    	 
-												    	<td>
+											    		<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
@@ -242,8 +234,9 @@
 												    	</td>
 											    		<td>${ iL.prodQuantity }</td>
 											    		<td>
-													   
-														<c:out value="${ po.poCode }"></c:out>
+														    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
+														    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
+															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
 												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
@@ -263,7 +256,6 @@
 											</c:forEach>
 											</tbody>
 										</table>
-									
 									</div>
 									<ul class="list-group">       
 										<li class="list-group-item">
