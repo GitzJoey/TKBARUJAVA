@@ -9,4 +9,4 @@ CREATE TABLE `tb_receipt` (
   `updated_by` int(11) DEFAULT NULL,
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`receipt_id`)
-) ENGINE=InnoDB;
+);
