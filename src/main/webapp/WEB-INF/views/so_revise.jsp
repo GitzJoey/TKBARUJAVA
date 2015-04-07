@@ -28,7 +28,21 @@
 						return false;
 					}
 				}
-			});			
+			});		
+			
+			$('#addProdButton, #removeProdButton').click(
+					function() {
+						var id = "";
+						var button = $(this).attr('id');
+
+						if (button == 'addProdButton') {
+							id = $('#productSelect').val();
+							$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+						} else {
+							id = $(this).val();
+							$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
+						}
+			});
 		});
 	</script>	
 </head>
@@ -124,6 +138,7 @@
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																<div class="col-sm-8">
+																<form:hidden path="salesType"/>
 																	<form:select class="form-control" path="salesType">
 																		<option value="">Please Select</option>
 																		<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
@@ -151,6 +166,7 @@
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label">Status</label>
 																<div class="col-sm-9">
+																<form:hidden path="salesStatus"/>
 																	<label id="inputPOStatus" class="control-label"><c:out value="${ soForm.statusLookup.lookupValue }"></c:out></label>
 																</div>										
 															</div>
@@ -206,11 +222,11 @@
 																			</tr>
 																		</thead>
 																		<tbody>
-																			<c:forEach items="${ soForm.itemsList }" var="iL" varStatus="iLIdx">
+																			<c:forEach items="${ reviseSalesForm.itemsList }" var="iL" varStatus="iLIdx">
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
-																						<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
 																					<td>
 																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
@@ -266,6 +282,12 @@
 													</div>
 												</div>
 											</div>
+											<div class="col-md-7 col-offset-md-5">
+													<div class="btn-toolbar">
+														<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+														<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+													</div>
+												</div>
 										</div>
 									</div>
 								</form:form>

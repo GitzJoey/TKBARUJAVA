@@ -47,4 +47,25 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 		return salesOrderDAO.getSalesOrderById(selectedId);
 	}
 
+	@Override
+	@Transactional
+	public void addSalesOrder(SalesOrder so) {
+		salesOrderDAO.addSalesOrder(so);
+		
+	}
+
+	@Override
+	@Transactional
+	public void editSalesOrder(SalesOrder so) {
+		salesOrderDAO.editSalesOrder(so);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteSalesOrder(int selectedId) {
+		salesOrderDAO.deleteSalesOrder(selectedId);
+		
+	}
+
 }

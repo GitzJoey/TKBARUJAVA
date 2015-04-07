@@ -9,8 +9,15 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#inputPODate').datetimepicker({format: "DD-MM-YYYY"});
-			$('#inputShippingDate').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
+				$('#soForm').formValidation('revalidateField', 'inputSalesDate');
+			});
+			
+			$('[id^="inputShippingDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputShippingDate"]').on('dp.change dp.show',function(e) {
+				$('#soForm').formValidation('revalidateField', 'inputShippingDate');
+			});
 
 			var searchTable = 
 				$('#searchCustomerResultTable').DataTable({
@@ -24,18 +31,27 @@
 				});
 
 			$('#searchButton, #newTab').click(function() {
+				
 				var id = "";
 				var button = $(this).attr('id');
 
 				if (button == 'searchButton') {
-					$('#soForm').data('formValidation').enableFieldValidators('customerSearchQuery', true).revalidateField('customerSearchQuery');
-					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());	
+				//	$('#soForm').data('formValidation').enableFieldValidators('customerSearchQuery', true).revalidateField('customerSearchQuery');
+					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val()+"/"+$(this).val());	
 				} else if (button == 'newTab'){
-					$('#soForm').attr('action', ctxpath + "/addnewtab");
-					$('#soForm').submit();
+					$('#soForm').attr('action', ctxpath + "/sales/addnewtab");
+					//$('#soForm').submit();
 				} else {
 					return false;
 				}
+			});
+			
+			$('[id^="submitButton"]').click(function() {
+				
+				
+					$('#soForm').attr('action', ctxpath + "/sales/save/"+$(this).val());
+					//$('#soForm').submit();
+				
 			});
 
 		    $('#searchCustomerResultTable tbody').on('click', 'td:not(".actionCell")', function() {
@@ -54,6 +70,52 @@
 		    function format ( d ) {		        
 		        return '<strong>Customer Details</strong><br/><br/>';
 		    }
+		    
+		    $("#soForm").formValidation({
+				locale : 'id_ID',
+				framework : 'bootstrap',
+				button : {
+					selector : '[id^="submitButton"]',
+					disabled : 'disabled'
+				},
+				excluded : 'disabled',
+				icon : {
+					valid : 'glyphicon glyphicon-ok',
+					invalid : 'glyphicon glyphicon-remove',
+					validating : 'glyphicon glyphicon-refresh'
+				},
+				fields : {
+
+					'inputSalesCode' : {
+						selector : '[id^="inputSalesCode"]',
+						row : '.col-sm-5',
+						validators : {
+							notEmpty : {}
+						}
+					},
+					'inputSalesDate' : {
+						selector : '[id^="inputSalesDate"]',
+						row : '.col-sm-9',
+						validators : {
+							notEmpty : {},
+							date : {
+								format : 'DD-MM-YYYY'
+							}
+						}
+					},
+					'inputShippingDate' : {
+						selector : '[id^="inputShippingDate"]',
+						row : '.col-sm-5',
+						validators : {
+							notEmpty : {},
+							date : {
+								format : 'DD-MM-YYYY'
+							}
+						}
+					}
+				}
+			});
+
 		});
 	</script>	
 </head>
@@ -95,7 +157,8 @@
 						</h1>
 					</div>
 					<div class="panel-body">
-						<form:form id="soForm" role="form" class="form-horizontal" modelAttribute="soForm" action="${pageContext.request.contextPath}/so/save">
+						<form:form id="soForm" role="form" class="form-horizontal" modelAttribute="loginContext" action="${pageContext.request.contextPath}/sales/save">
+							
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<div class="row">
@@ -104,10 +167,10 @@
 												<table class="table nopaddingrow borderless">
 													<tr>
 														<td width="93%">
-															<form:input type="text" class="form-control" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" path="customerSearchQuery" placeholder="Search Customer Query"></form:input>
+															<input type="text" class="form-control" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" placeholder="Search Customer Query"></input>
 														</td>
 														<td width="7%" align="right">
-															<button id="searchButton" type="submit" class="btn btn-primary">Search</button>
+															<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
 														</td>
 													</tr>
 												</table>
@@ -124,28 +187,28 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:if test="${ not empty soForm.customerSearchResults }">
-														<c:forEach items="${ soForm.customerSearchResults }" varStatus="cIdx">
+													<c:if test="${ not empty customerSearchResults.soList[soIdx.index].customerSearchResults }">
+														<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults }" varStatus="cIdx">
 															<tr>
-																<td><c:out value="${ soForm.customerSearchResults[cIdx.index].customerName }"></c:out></td>
+																<td><c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerName }"></c:out></td>
 																<td>
-																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerAddress }"></c:out><br/>
-																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerCity }"></c:out><br/>
-																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerPhone }"></c:out><br/><br/>
-																	<c:out value="${ soForm.customerSearchResults[cIdx.index].customerRemarks }"></c:out>
+																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerAddress }"></c:out><br/>
+																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerCity }"></c:out><br/>
+																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerPhone }"></c:out><br/><br/>
+																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerRemarks }"></c:out>
 																</td>
 																<td>
-																	<c:forEach items="${ soForm.customerSearchResults[cIdx.index].picList }" varStatus="picIdx">
-																		<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
+																	<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].picList }" varStatus="picIdx">
+																		<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
 																	</c:forEach>
 																</td>
 																<td>
-																	<c:forEach items="${ soForm.customerSearchResults[cIdx.index].bankAccList }" varStatus="baIdx">
-																		<c:out value="${ soForm.customerSearchResults[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
+																	<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].bankAccList }" varStatus="baIdx">
+																		<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
 																	</c:forEach>																	
 																</td>
 																<td align="center">
-																	<c:out value="${ soForm.customerSearchResults[cIdx.index].statusLookup.lookupValue }"/>
+																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].statusLookup.lookupValue }"/>
 																</td>
 																<td align="center" style="vertical-align: middle;">
 																	<button type="button" class="btn btn-primary btn-xs"><span class="fa fa-check"></span></button>
@@ -162,12 +225,18 @@
 							<div role="tabpanel">
 								<ul class="nav nav-tabs" role="tablist">
 									<li role="presentation" class="active"><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw"></span>&nbsp;New Sales</a></li>
+								<li>
+									<button id="addTab" type="submit" class="btn btn-xs btn-default pull-right"><span class="glyphicon glyphicon-plus"></span></button>
+								</li>
 								</ul>
 
+								
 								<div class="tab-content">
+								<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
 									<div role="tabpanel" class="tab-pane active" id="soTab">
 										<br/>
-										<form:hidden path="salesId" />
+										
+										<form:hidden path="soList[${soIdx.index}].salesId" />
 										<div class="row">
 											<div class="col-md-12">
 												<div class="panel panel-default">
@@ -177,13 +246,13 @@
 																<div class="form-group">
 																	<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code"></form:input>
+																		<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code"></form:input>
 																	</div>										
 																</div>
 																<div class="form-group">
 																	<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control" path="salesType">
+																		<form:select class="form-control" path="soList[${soIdx.index}].salesType">
 																			<option value="">Please Select</option>
 																			<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																		</form:select>	
@@ -192,8 +261,8 @@
 																<div class="form-group">
 																	<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
 																	<div class="col-sm-9">
-																		<form:hidden path="customerId"/>
-																		<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																		<form:hidden path="soList[${soIdx.index}].customerId"/>
+																		<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="soList[${soIdx.index}].customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
 																	</div>
 																	<div class="col-sm-1">
 																		<button id="customerTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
@@ -204,7 +273,7 @@
 																<div class="form-group">
 																	<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date"></form:input>
+																		<form:input type="text" class="form-control" id="inputSalesDate" name="soList[${soIdx.index}].inputSalesDate" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date"></form:input>
 																	</div>										
 																</div>
 																<div class="form-group">
@@ -221,7 +290,7 @@
 																<div class="form-group">
 																	<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date"></form:input>
+																		<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="soList[${soIdx.index}].shippingDate" placeholder="Enter Shipping Date"></form:input>
 																	</div>										
 																</div>
 															</div>
@@ -339,7 +408,7 @@
 														<div class="col-md-12">
 															<div class="form-group">
 																<div class="col-sm-12">
-																	<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+																	<form:textarea class="form-control" path="soList[${soIdx.index}].salesRemarks" rows="5"/>
 																</div>
 															</div>
 														</div>
@@ -352,12 +421,15 @@
 										<div class="col-md-7 col-offset-md-5">
 											<div class="btn-toolbar">
 												<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-												<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+												<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }">Submit</button>
 											</div>
 										</div>
-									</div>							
+									</div>	
+									</c:forEach>						
 								</div>
-							</div>													
+								
+							</div>		
+																		
 						</form:form>
 					</div>					
 				</div>						

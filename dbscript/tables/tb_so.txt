@@ -12,5 +12,6 @@ CREATE TABLE `tb_so` (
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
+  `remarks` varchar(255),
   PRIMARY KEY (`so_id`)
 );

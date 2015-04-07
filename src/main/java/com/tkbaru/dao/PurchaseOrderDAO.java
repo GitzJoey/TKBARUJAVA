@@ -16,13 +16,13 @@ public interface PurchaseOrderDAO
 	
 	public List<PurchaseOrder> getPurchaseOrderByStatus(String status);
 
-	public void addPurchaseOrder(PurchaseOrder prod);
+	public void addPurchaseOrder(PurchaseOrder po);
 
-	public void editPurchaseOrder(PurchaseOrder prod);
+	public void editPurchaseOrder(PurchaseOrder po);
 
 	public void deletePurchaseOrder(int selectedId);
 	
-	public void savePayment(PurchaseOrder payment);
+	public void savePayment(PurchaseOrder po);
 	
 	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status);
 
