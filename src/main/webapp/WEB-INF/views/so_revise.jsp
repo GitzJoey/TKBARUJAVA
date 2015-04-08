@@ -226,13 +226,15 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
 																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
 																					<td>
 																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
 																					</td>
 																					<td>
-																						&nbsp;
+																						<form:hidden id="inputItemsUnitCode" name="inputItemsUnitCode" path="itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
+																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																					</td>
 																					<td>
 																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>

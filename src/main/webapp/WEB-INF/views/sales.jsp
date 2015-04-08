@@ -8,6 +8,7 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			var tabCount = "${ loginContext.soList.size() }";
 			
 			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
 			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
@@ -37,9 +38,9 @@
 
 				if (button == 'searchButton') {
 				//	$('#soForm').data('formValidation').enableFieldValidators('customerSearchQuery', true).revalidateField('customerSearchQuery');
-					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val()+"/"+$(this).val());	
+					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());	
 				} else if (button == 'newTab'){
-					$('#soForm').attr('action', ctxpath + "/sales/addnewtab");
+					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/${customerId}");
 					//$('#soForm').submit();
 				} else {
 					return false;
@@ -49,10 +50,18 @@
 			$('[id^="submitButton"]').click(function() {
 				
 				
-					$('#soForm').attr('action', ctxpath + "/sales/save/"+$(this).val());
+					$('#soForm').attr('action', ctxpath + "/sales/save/${ customerId }/"+$(this).val());
 					//$('#soForm').submit();
 				
 			});
+
+			$('[id^="selectCust"]').click(function() {
+				
+				
+				$('#soForm').attr('action', ctxpath + "/sales/select/cust/"+$(this).val());
+				
+			
+		});
 
 		    $('#searchCustomerResultTable tbody').on('click', 'td:not(".actionCell")', function() {
 				var tr = $(this).closest('tr');
@@ -115,6 +124,24 @@
 					}
 				}
 			});
+
+		    $('#addProdButton, #removeProdButton').click(
+					function() {
+						var id = "";
+						var button = $(this).attr('id');
+
+						if (button == 'addProdButton') {
+							activetab = $(".nav-tabs li.active").attr("id");
+							productSelect = $("#productSelect_"+ activetab).val();
+							$('#soForm').attr('action',ctxpath + "/sales/additems/${customerId}/"+ activetab + "/"+ productSelect);
+						} else {
+							id = $(this).val();
+							activetab = $(".nav-tabs li.active").attr("id");
+							$('#soForm').attr('action',ctxpath + "/sales/removeitems/${customerId}/"+ activetab + "/" + id);
+						}
+			});
+
+		    $('#list a[href="#soTab_' + tabCount + '"]').tab('show');
 
 		});
 	</script>	
@@ -187,31 +214,31 @@
 													</tr>
 												</thead>
 												<tbody>
-													<c:if test="${ not empty customerSearchResults.soList[soIdx.index].customerSearchResults }">
-														<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults }" varStatus="cIdx">
+													<c:if test="${ not empty customerList }">
+														<c:forEach items="${ customerList }" varStatus="cIdx">
 															<tr>
-																<td><c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerName }"></c:out></td>
+																<td><c:out value="${ customerList[cIdx.index].customerName }"></c:out></td>
 																<td>
-																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerAddress }"></c:out><br/>
-																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerCity }"></c:out><br/>
-																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerPhone }"></c:out><br/><br/>
-																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].customerRemarks }"></c:out>
+																	<c:out value="${ customerList[cIdx.index].customerAddress }"></c:out><br/>
+																	<c:out value="${ customerList[cIdx.index].customerCity }"></c:out><br/>
+																	<c:out value="${ customerList[cIdx.index].customerPhone }"></c:out><br/><br/>
+																	<c:out value="${ customerList[cIdx.index].customerRemarks }"></c:out>
 																</td>
 																<td>
-																	<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].picList }" varStatus="picIdx">
-																		<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
+																	<c:forEach items="${ customerList[cIdx.index].picList }" varStatus="picIdx">
+																		<c:out value="${ customerList[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
 																	</c:forEach>
 																</td>
 																<td>
-																	<c:forEach items="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].bankAccList }" varStatus="baIdx">
-																		<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
+																	<c:forEach items="${ customerList[cIdx.index].bankAccList }" varStatus="baIdx">
+																		<c:out value="${ customerList[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
 																	</c:forEach>																	
 																</td>
 																<td align="center">
-																	<c:out value="${ customerSearchResults.soList[soIdx.index].customerSearchResults[cIdx.index].statusLookup.lookupValue }"/>
+																	<c:out value="${ customerList[cIdx.index].statusLookup.lookupValue }"/>
 																</td>
 																<td align="center" style="vertical-align: middle;">
-																	<button type="button" class="btn btn-primary btn-xs"><span class="fa fa-check"></span></button>
+																	<button id="selectCust" type="submit" class="btn btn-primary btn-xs" value="${ customerList[cIdx.index].customerId }"><span class="fa fa-check"></span></button>
 																</td>
 															</tr>
 														</c:forEach>
@@ -224,16 +251,22 @@
 							</div>							
 							<div role="tabpanel">
 								<ul class="nav nav-tabs" role="tablist">
-									<li role="presentation" class="active"><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw"></span>&nbsp;New Sales</a></li>
-								<li>
-									<button id="addTab" type="submit" class="btn btn-xs btn-default pull-right"><span class="glyphicon glyphicon-plus"></span></button>
-								</li>
+								<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
+									
+									<li role="presentation" class="" id="${soIdx.index}"><a href="#soTab_${soIdx.index}" aria-controls="soTab_${soIdx.index}" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw">
+										</span>&nbsp;New Sales</a>
+									</li>
+								</c:forEach>
+									
+									<li>
+										<button id="newTab" type="submit" class="btn btn-xs btn-default pull-right"><span class="glyphicon glyphicon-plus"></span></button>
+									</li>
 								</ul>
 
 								
 								<div class="tab-content">
 								<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
-									<div role="tabpanel" class="tab-pane active" id="soTab">
+									<div role="tabpanel" class="tab-pane" id="soTab_${soIdx.index}">
 										<br/>
 										
 										<form:hidden path="soList[${soIdx.index}].salesId" />
@@ -279,7 +312,8 @@
 																<div class="form-group">
 																	<label for="inputSalesStatus" class="col-sm-3 control-label">Status</label>
 																	<div class="col-sm-9">
-																		<label id="inputPOStatus" class="control-label"><c:out value="${ soForm.statusLookup.lookupValue }"></c:out></label>
+																		<form:hidden path="soList[${soIdx.index}].salesStatus" />
+																		
 																	</div>										
 																</div>
 															</div>
@@ -308,7 +342,7 @@
 															<div class="panel-body">
 																<div class="row">
 																	<div class="col-md-11">
-																		<select id="productSelect" class="form-control">
+																		<select id="productSelect_${soIdx.index}" class="form-control">
 																			<option value="">Please Select</option>
 																			<c:forEach items="${ productSelectionDDL }" var="psddl">
 																				<option value="${ psddl.productId }">${ psddl.productName }</option>
@@ -337,17 +371,18 @@
 																				<c:forEach items="${ soForm.itemsList }" var="iL" varStatus="iLIdx">
 																					<tr>
 																						<td style="vertical-align: middle;">
-																							<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
+																							<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].itemsId"/>
+																							<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].productId"/>
 																							<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																							<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
 																						</td>
 																						<td>
 																							&nbsp;
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>
+																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>
 																						</td>
 																						<td>
 																							<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
@@ -396,8 +431,7 @@
 												</div>
 											</div>
 										</div>
-									</div>
-									<div class="row">
+										<div class="row">
 										<div class="col-md-12">
 											<div class="panel panel-default">
 												<div class="panel-heading">
@@ -416,8 +450,8 @@
 												</div>
 											</div>
 										</div>
-									</div>									
-									<div class="row">
+									</div>
+										<div class="row">
 										<div class="col-md-7 col-offset-md-5">
 											<div class="btn-toolbar">
 												<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
@@ -425,11 +459,11 @@
 											</div>
 										</div>
 									</div>	
-									</c:forEach>						
+										
+									</div>
+									</c:forEach>
 								</div>
-								
-							</div>		
-																		
+							</div>
 						</form:form>
 					</div>					
 				</div>						
