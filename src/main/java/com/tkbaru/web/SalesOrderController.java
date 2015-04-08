@@ -97,10 +97,7 @@ public class SalesOrderController {
 	@RequestMapping(value="/search/cust/{searchQuery}", method = RequestMethod.POST)
 	public String salesSearchCustomer(Locale locale, Model model,@PathVariable String searchQuery) {
 		logger.info("[salesSearchCustomer] " + "searchQuery: " + searchQuery);
-		
-		
-
-		List<Customer> custList = salesOrderManager.searchCustomer(searchQuery);
+		List<Customer> custList = customerManager.searchCustomer(searchQuery);
 		
 //		SalesOrder so = loginContext.getSoList().get(tabId);
 		

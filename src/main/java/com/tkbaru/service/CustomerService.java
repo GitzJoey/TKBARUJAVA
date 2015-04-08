@@ -10,5 +10,6 @@ public interface CustomerService {
 	public void addCustomer(Customer customer);
 	public void editCustomer(Customer customer);
 	public void deleteCustomer(int selectedId);
+	public List<Customer> searchCustomer(String searchQuery);
 
 }

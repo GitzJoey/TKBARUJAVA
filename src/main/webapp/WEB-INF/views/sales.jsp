@@ -9,6 +9,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			var tabCount = "${ loginContext.soList.size() }";
+			var lastTab = "${ loginContext.soList.size()-1 }";
 			
 			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
 			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
@@ -141,7 +142,7 @@
 						}
 			});
 
-		    $('#list a[href="#soTab_' + tabCount + '"]').tab('show');
+		    $('#list a[href="#soTab_' + lastTab + '"]').tab('show');
 
 		});
 	</script>	
@@ -250,7 +251,7 @@
 								</div>
 							</div>							
 							<div role="tabpanel">
-								<ul class="nav nav-tabs" role="tablist">
+								<ul id="list" class="nav nav-tabs" role="tablist">
 								<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
 									
 									<li role="presentation" class="" id="${soIdx.index}"><a href="#soTab_${soIdx.index}" aria-controls="soTab_${soIdx.index}" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw">
