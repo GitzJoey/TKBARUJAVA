@@ -36,8 +36,6 @@ public class Product {
 	private String productName;
 	@Column(name="product_description")
 	private String productDesc;
-	@Column(name="base_unit")
-	private String baseUnit;
 	@Transient
 	private MultipartFile imageBinary;
 	@Column(name="image_path")
@@ -55,19 +53,15 @@ public class Product {
 
 	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<ProductUnit> productUnit;
-
+	
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
-
+	/*
 	@ManyToOne
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
-
-	@ManyToOne
-	@JoinColumn(name="base_unit", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup baseUnitLookup;
-
+	*/
 	public int getProductId() {
 		return productId;
 	}
@@ -106,14 +100,6 @@ public class Product {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
-	}
-
-	public String getBaseUnit() {
-		return baseUnit;
-	}
-
-	public void setBaseUnit(String baseUnit) {
-		this.baseUnit = baseUnit;
 	}
 
 	public MultipartFile getImageBinary() {
@@ -187,7 +173,7 @@ public class Product {
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
 	}
-
+	/*
 	public Lookup getProductTypeLookup() {
 		return productTypeLookup;
 	}
@@ -195,25 +181,17 @@ public class Product {
 	public void setProductTypeLookup(Lookup productTypeLookup) {
 		this.productTypeLookup = productTypeLookup;
 	}
-
-	public Lookup getBaseUnitLookup() {
-		return baseUnitLookup;
-	}
-
-	public void setBaseUnitLookup(Lookup baseUnitLookup) {
-		this.baseUnitLookup = baseUnitLookup;
-	}
-
+	 */
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
 				+ productType + ", shortCode=" + shortCode + ", productName="
-				+ productName + ", productDesc=" + productDesc + ", baseUnit="
-				+ baseUnit + ", imageBinary=" + imageBinary + ", imagePath="
-				+ imagePath + ", productStatus=" + productStatus
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", productUnit=" + productUnit + "]";
+				+ productName + ", productDesc=" + productDesc
+				+ ", imageBinary=" + imageBinary + ", imagePath=" + imagePath
+				+ ", productStatus=" + productStatus + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", productUnit="
+				+ productUnit + "]";
 	}
 
 }

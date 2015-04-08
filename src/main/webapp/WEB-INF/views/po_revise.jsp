@@ -192,14 +192,14 @@ $(document).ready(
 																		<label for="inputPOCode"
 																			class="col-sm-2 control-label">PO Code</label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" name="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label for="inputPOType" class="col-sm-2 control-label">PO Type</label>
 																		<div class="col-sm-8">
 																			<form:hidden path="poType"></form:hidden>
-																			<form:input type="text" class="form-control" readonly="true" id="inputPOType" name="inputPOType" path="poTypeLookup.lookupValue"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -219,7 +219,7 @@ $(document).ready(
 																	<div class="form-group">
 																		<label for="inputPoDate" class="col-sm-3 control-label">PO Date</label>
 																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control" readonly="true" id="poCreatedDate" name="poCreatedDate" path="poCreatedDate" placeholder="Enter PO Date"></form:input>
+																			<form:input type="text" class="form-control" readonly="true" id="poCreatedDate" path="poCreatedDate" placeholder="Enter PO Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -303,21 +303,30 @@ $(document).ready(
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
-																					<td><form:input type="text" class="form-control text-right" id="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input></td>
 																					<td>
+																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																					</td>
+																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
-																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
+																						<label>
+																							<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
+																						</label>
 																					</td>
 																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input></td>
+																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input></td>
 																					<td>
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
 																							<span class="fa fa-minus"></span>
 																						</button>
 																					</td>
-																					<td><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></td>
+																					<td class="text-right"><label><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></label></td>
 																				</tr>
 																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																				<c:forEach items="${ iL.receiptList }" var="iR" varStatus="iRIdx">
+																				<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" /> 
+																				
+																				</c:forEach>
+																				
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -330,7 +339,7 @@ $(document).ready(
 																		<tbody>
 																			<tr>
 																				<td width="85%">Total</td>
-																				<td width="20%"><c:out value="${ total }"></c:out></td>
+																				<td width="20%" class="text-right"><c:out value="${ total }"></c:out></td>
 																			</tr>
 																		</tbody>
 																	</table>

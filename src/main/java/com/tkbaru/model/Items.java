@@ -1,6 +1,5 @@
 package com.tkbaru.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.apache.commons.collections.FactoryUtils;
-import org.apache.commons.collections.list.LazyList;
 
 @Entity
 @Table(name="tb_items")
@@ -57,11 +52,10 @@ public class Items {
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
 	@JoinTable(name="tb_items_receipt", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
-//	private List<Receipt> receiptList = LazyList.decorate(new ArrayList<Payment>(), FactoryUtils.instantiateFactory(Receipt.class));
 	private List<Receipt> receiptList;
 
 	public int getItemsId() {

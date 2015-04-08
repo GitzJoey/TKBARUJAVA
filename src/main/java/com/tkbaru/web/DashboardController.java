@@ -25,6 +25,8 @@ public class DashboardController {
 		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
 		model.addAttribute("loginContext", loginContextSession);
+
+		model.addAttribute("test", "testing.from.model");
 		
 		return "dashboard";
 	}

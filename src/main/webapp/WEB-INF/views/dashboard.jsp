@@ -202,15 +202,10 @@
 								</div>
 							</div>
 							<div class="panel-body">
-								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>aaa
-								<c:out value="${pageContext.request.requestURI }"/>
-								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
-								<br/>
+								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>aaa<br/>
+								<c:out value="${pageContext.request.requestURI }"/><br/>
+								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/><br/>
+								<spring:message code="${ test }"/><br/>
 								<br/>
 								<br/>
 								<br/>

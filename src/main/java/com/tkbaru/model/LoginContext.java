@@ -55,6 +55,5 @@ public class LoginContext implements Serializable {
 	public String toString() {
 		return "LoginContext [userLogin=" + userLogin + ", selectedMenu="
 				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "poList Size=" + poList.size() + "]";
-	}
-	
+	}	
 }

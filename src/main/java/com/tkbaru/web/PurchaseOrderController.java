@@ -27,7 +27,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
-import com.tkbaru.model.Lookup;
 import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.PurchaseOrder;
@@ -78,22 +77,19 @@ public class PurchaseOrderController {
 	public String poNew(Locale locale, Model model) {
 		logger.info("[poNew] " + "");
 
-		if (loginContextSession.getPoList().isEmpty()) {
-			
+		if (loginContextSession.getPoList().isEmpty()) {			
 			PurchaseOrder po = new PurchaseOrder();
 			po.setPoStatus("L013_D");
 			po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
 			loginContextSession.getPoList().add(po);
-
 		}
 		
 		for(PurchaseOrder po : loginContextSession.getPoList()){
 			for (Items items : po.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 
@@ -133,8 +129,6 @@ public class PurchaseOrderController {
 		item.setProductId(Integer.parseInt(varId));
 		Product product = productManager.getProductById(Integer.parseInt(varId));
 		item.setProductLookup(product);
-		item.setUnitCode(product.getBaseUnit());
-		item.setUnitCodeLookup(lookupManager.getLookupByKey(product.getBaseUnit()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
@@ -142,7 +136,6 @@ public class PurchaseOrderController {
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 
 		loginContextSession.setPoList(loginContext.getPoList());
@@ -168,7 +161,6 @@ public class PurchaseOrderController {
 		
 		Product product = productManager.getProductById(Integer.parseInt(varId));
 		i.setProductLookup(product);
-		i.setUnitCode(product.getBaseUnit());
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 
@@ -240,7 +232,6 @@ public class PurchaseOrderController {
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 		
 		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList());
@@ -361,9 +352,7 @@ public class PurchaseOrderController {
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
-			Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(unitCodeLookup);
 			itemList.add(items);
 		}
 

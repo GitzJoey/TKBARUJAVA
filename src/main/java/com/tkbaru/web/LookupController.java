@@ -18,7 +18,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Lookup;
-import com.tkbaru.model.LookupDetail;
 import com.tkbaru.service.LookupService;
 
 @Controller
@@ -69,23 +68,7 @@ public class LookupController {
 	public String lookupAdd(Locale locale, Model model) {
 		logger.info("[lookupAdd] " + "");
 		
-		Lookup newl = new Lookup();
-		
-		List<LookupDetail> ldlist = new ArrayList<LookupDetail>();
-		List<Lookup> langlookups = lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_LANGUAGE);
-		
-		for (Lookup langlookup:langlookups) {
-			LookupDetail newld = new LookupDetail();
-			newld.setLanguageCode(langlookup.getLookupKey());
-			newld.setLookupEntity(newl);
-			newld.setLanguageCodeLookup(lookupManager.getLookupByKey(langlookup.getLookupKey()));
-			
-			ldlist.add(newld);
-		}
-		
-		newl.setLookupDetail(ldlist);
-		
-		model.addAttribute("lookupForm", newl);
+		model.addAttribute("lookupForm", new Lookup());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("MaintainabilityDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 
@@ -127,12 +110,6 @@ public class LookupController {
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String lookupSave(Locale locale, Model model, @ModelAttribute("lookupForm") Lookup lookup, RedirectAttributes redirectAttributes) {
-		
-		for (LookupDetail ld:lookup.getLookupDetail()) {
-			if (ld.getLookupEntity() == null) {
-				ld.setLookupEntity(lookup);
-			}
-		}
 		
 		if (lookup.getLookupId() == 0) {
 			logger.info("[lookupSave] " + "addLookup: " + lookup.toString());

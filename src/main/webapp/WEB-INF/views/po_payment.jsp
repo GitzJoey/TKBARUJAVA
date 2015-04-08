@@ -365,7 +365,7 @@ $(document).ready(function() {
 																							<form:hidden path="itemsList[${ iLIdx.index }].productLookup.productName"></form:hidden>
 																							<c:out value="${poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
 																						</td>
-																						<td>
+																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodQuantity"></form:hidden>
 																							<label><c:out value="${ poForm.itemsList[ iLIdx.index ].prodQuantity }"></c:out></label>
 																						</td>
@@ -373,11 +373,11 @@ $(document).ready(function() {
 																							<form:hidden path="itemsList[${ iLIdx.index }].unitCode"></form:hidden>
 																							<c:out value="${poForm.itemsList[ iLIdx.index ].unitCodeLookup.lookupValue}"></c:out>
 																						</td>
-																						<td>
+																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodPrice"></form:hidden>
 																							<label><c:out value="${ poForm.itemsList[ iLIdx.index ].prodPrice }"></c:out></label>	
 																						</td>
-																						<td>
+																						<td class="text-right">
 																							<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																						</td>
 																					</tr>
@@ -394,7 +394,7 @@ $(document).ready(function() {
 																			<tbody>
 																				<tr>
 																					<td width="75%">Total</td>
-																					<td width="25%"><c:out value="${ total }"></c:out></td>
+																					<td width="25%" class="text-right"><c:out value="${ total }"></c:out></td>
 																				</tr>
 																			</tbody>
 																		</table>

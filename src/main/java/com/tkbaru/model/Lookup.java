@@ -2,18 +2,14 @@ package com.tkbaru.model;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -21,6 +17,7 @@ import javax.persistence.Transient;
 @Table(name="tb_lookup")
 public class Lookup implements Serializable {
 	private static final long serialVersionUID = 8477754720076849619L;
+
 	public Lookup() {
 		
 	}
@@ -37,6 +34,10 @@ public class Lookup implements Serializable {
 	private int orderNum;
 	@Column(name="status")
 	private String lookupStatus;
+	@Column(name="loc_msg_code")
+	private String localeMessageCodes;
+	@Column(name="val")
+	private String lookupValue;
 	@Column(name="maintainable")
 	private String lookupMaintainability;
 	@Column(name="created_by")
@@ -48,15 +49,6 @@ public class Lookup implements Serializable {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@OneToMany(mappedBy="lookupEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<LookupDetail> lookupDetail;
-
-	@Transient
-	private String languageCode = "L010_EN";
-	public void setLanguageCode(String languageCode) {
-		this.languageCode = languageCode;
-	}
-
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)	
 	private Lookup statusLookup;
@@ -65,30 +57,9 @@ public class Lookup implements Serializable {
 	@JoinColumn(name="maintainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup maintainabilityLookup;
 
-	public String getLanguageCode() {
-		return this.languageCode;		
-	}
-	
-	public String getLookupValue() {
-		if (this.lookupDetail.size() == 0) return "";
-		
-		for (LookupDetail ld:this.lookupDetail) {
-			if (ld.getLanguageCode().equals(this.languageCode)) {
-				return ld.getLookupValue();
-			}
-		}
-		return "";
-	}
-
-	public String getLookupAlternateValue() {
-		if (this.lookupDetail.size() == 0) return "";
-
-		for (LookupDetail ld:this.lookupDetail) {
-			if (ld.getLanguageCode().equals(this.languageCode)) {
-				return ld.getLookupAlternateValue();
-			}
-		}
-		return "";
+	@Transient
+	public String getI18nLookupValue() {
+		return this.localeMessageCodes;
 	}
 	
 	public int getLookupId() {
@@ -114,6 +85,18 @@ public class Lookup implements Serializable {
 	}
 	public void setOrderNum(int orderNum) {
 		this.orderNum = orderNum;
+	}	
+	public String getLookupValue() {
+		return lookupValue;
+	}
+	public void setLookupValue(String lookupValue) {
+		this.lookupValue = lookupValue;
+	}
+	public String getLocaleMessageCodes() {
+		return localeMessageCodes;
+	}
+	public void setLocaleMessageCodes(String localeMessageCodes) {
+		this.localeMessageCodes = localeMessageCodes;
 	}
 	public String getLookupStatus() {
 		return lookupStatus;
@@ -151,12 +134,6 @@ public class Lookup implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public List<LookupDetail> getLookupDetail() {
-		return lookupDetail;
-	}
-	public void setLookupDetail(List<LookupDetail> lookupDetail) {
-		this.lookupDetail = lookupDetail;
-	}	
 	public Lookup getStatusLookup() {
 		return statusLookup;
 	}
@@ -175,10 +152,10 @@ public class Lookup implements Serializable {
 		return "Lookup [lookupId=" + lookupId + ", lookupCategory="
 				+ lookupCategory + ", lookupKey=" + lookupKey + ", orderNum="
 				+ orderNum + ", lookupStatus=" + lookupStatus
-				+ ", lookupMaintainability=" + lookupMaintainability
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", lookupDetail=" + lookupDetail + ", languageCode="
-				+ languageCode + "]";
+				+ ", lookupValue=" + lookupValue + ", localeMessageCodes="
+				+ localeMessageCodes + ", lookupMaintainability="
+				+ lookupMaintainability + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + "]";
 	}
 }

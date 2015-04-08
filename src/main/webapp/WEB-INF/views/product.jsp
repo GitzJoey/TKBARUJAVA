@@ -158,9 +158,8 @@
 												<th width="5%">&nbsp;</th>
 												<th width="10%">Type</th>
 												<th width="10%">Code</th>
-												<th width="20%">Name</th>
-												<th width="10%">Base Unit</th>
-												<th width="35%">Description</th>
+												<th width="25%">Name</th>
+												<th width="40%">Description</th>
 												<th width="10%">Status</th>
 											</tr>
 										</thead>
@@ -169,10 +168,9 @@
 												<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-														<td><c:out value="${ i.productTypeLookup.lookupValue }"></c:out></td>
+														<td><c:out value="${ i.productType }"></c:out></td>
 														<td><c:out value="${ i.shortCode }"></c:out></td>
 														<td><c:out value="${ i.productName }"></c:out></td>
-														<td><c:out value="${ i.baseUnitLookup.lookupValue }"></c:out></td>
 														<td><c:out value="${ i.productDesc }"></c:out></td>
 														<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 													</tr>
@@ -242,23 +240,24 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputUnit" class="col-sm-2 control-label">Base Unit</label>
-										<div class="col-sm-2">											
-											<form:select class="form-control" path="baseUnit">
+										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="productStatus">
 												<option value="">Please Select</option>
-												<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>	
+												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+											</form:select>
 										</div>
-									</div>
+									</div>									
 									<div class="form-group">
-										<label for="inputUnitConversion" class="col-sm-2 control-label">Conversion</label>
-										<div class="col-sm-9">
+										<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
+										<div class="col-sm-10">
 											<div class="panel panel-default">
 												<table class="table table-bordered table-hover">
 													<thead>
 														<tr>
 															<th width="5%">&nbsp;</th>
-															<th width="15%">Conversion Unit</th>
+															<th width="20%">Conversion Unit</th>
+															<th width="10%" style="text-align: center;">Base Unit</th>
 															<th width="15%">Conversion Value</th>
 															<th width="35%">Remarks</th>
 														</tr>
@@ -276,9 +275,11 @@
 																		<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>
 																</td>
+																<td style="vertical-align: middle; text-align: center;">
+																	<form:checkbox path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
+																</td>
 																<td>
-																	<span id="convText">1 Tonne = </span>
-																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input>
+																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value" readonly=""></form:input>
 																</td>
 																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input></td>
 															</tr>
@@ -294,15 +295,6 @@
 											</div>
 										</div>
 									</div>
-									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
-										<div class="col-sm-3">
-											<form:select class="form-control" path="productStatus">
-												<option value="">Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>
-										</div>
-									</div>									
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>

@@ -34,11 +34,6 @@ public class LookupDAOImpl implements LookupDAO {
 		
 		List<Lookup> result = q.list();
 		
-		for(Lookup l:result) {
-			l.setLanguageCode(languageCode);
-			logger.info("Lookup : " + l.toString());
-		}		
-		
 		return result;
 	}
 
@@ -136,11 +131,6 @@ public class LookupDAOImpl implements LookupDAO {
 		
 		List<Lookup> result = q.list();
 		
-		for(Lookup l:result) {
-			l.setLanguageCode(languageCode);
-			logger.info("Lookup : " + l.toString());
-		}		
-		
 		return result;
 	}
 
@@ -153,11 +143,6 @@ public class LookupDAOImpl implements LookupDAO {
 		q.setParameter("keys", lookupKeys);
 		
 		List<Lookup> result = q.list();
-		
-		for(Lookup l:result) {
-			l.setLanguageCode(languageCode);
-			logger.info("Lookup : " + l.toString());
-		}		
 		
 		return result;
 	}
