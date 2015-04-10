@@ -37,7 +37,6 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
-import com.tkbaru.validator.SalesOrderValidator;
 
 @Controller
 @RequestMapping("/sales")
