@@ -10,10 +10,29 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			var lastTab = "${ loginContext.soList.size()-1 }";
 			
+			window.ParsleyValidator.setLocale('id');
+			window.ParsleyConfig = {
+				successClass: "has-success",
+			    errorClass: "has-error",
+			    classHandler: function(el) {
+			        return el.$element.closest(".form-group");
+			    },
+			    errorsWrapper: "<span class='help-block'></span>",
+			    errorTemplate: "<span></span>"
+			};
+			
 			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			
+			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
+			});
 			
 			
 			$('[id^="inputShippingDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			
+			$('[id^="inputShippingDate"]').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
+			});
 			
 
 			var searchTable = 
@@ -33,12 +52,14 @@
 				var button = $(this).attr('id');
 
 				if (button == 'searchButton') {
-
-					$('#soForm').parsley().validate('search');
-                    if($('#soForm').parsley().isValid('search')){
 					
-						$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());
+					$('#inputCustomerSearchQuery').parsley().validate();
+                    if(false==$('#inputCustomerSearchQuery').parsley().isValid()){
 					
+						return false;
+					
+                    }else{
+                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());
                     }
 
 				} else if (button == 'newTab'){
@@ -57,9 +78,17 @@
 					return false;
 				}
 				
+				$('#inputCustomerSearchQuery').parsley().destroy();
+				$('#soForm').parsley().validate();
+				if(false==$('#soForm').parsley().isValid()){
+					
+					return false;
+				
+                }else{
+				
 				$('#soForm').attr('action', ctxpath + "/sales/save/${ customerId }/"+$(this).val());
 					
-				
+                }
 			});
 
 			$('[id^="selectCust"]').click(function() {
@@ -245,7 +274,7 @@
 																<div class="form-group">
 																	<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="dataso"></form:input>
+																		<form:input type="text" class="form-control" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		<form:errors path="soList[${soIdx.index}].salesCode" cssClass="error"></form:errors>
 																	</div>										
 																</div>
@@ -262,7 +291,7 @@
 																	<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
 																	<div class="col-sm-9">
 																		<form:hidden path="soList[${soIdx.index}].customerId"/>
-																		<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																		<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																	</div>
 																	<div class="col-sm-1">
 																		<button id="customerTooltip" title="${ soForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
@@ -273,7 +302,7 @@
 																<div class="form-group">
 																	<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control" id="inputSalesDate_${soIdx.index}" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																		<form:input type="text" class="form-control" id="inputSalesDate_${soIdx.index}" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																	</div>										
 																</div>
 																<div class="form-group">
@@ -293,7 +322,7 @@
 																<div class="form-group">
 																	<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputShippingDate_${soIdx.index}" name="inputShippingDate_${soIdx.index}" path="soList[${soIdx.index}].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																		<form:input type="text" class="form-control" id="inputShippingDate_${soIdx.index}" name="inputShippingDate_${soIdx.index}" path="soList[${soIdx.index}].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																	</div>										
 																</div>
 															</div>

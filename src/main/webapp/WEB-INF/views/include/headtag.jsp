@@ -12,6 +12,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/formvalidation/dist/css/formValidation.min.css">
+	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 	
@@ -55,4 +56,6 @@
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/language/id_ID.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/parsley.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
