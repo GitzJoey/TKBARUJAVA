@@ -54,3 +54,5 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/framework/bootstrap.min.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/language/id_ID.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/parsley.js"></script>

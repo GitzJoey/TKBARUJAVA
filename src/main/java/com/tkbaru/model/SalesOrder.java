@@ -16,9 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="tb_so")
@@ -32,6 +34,9 @@ public class SalesOrder {
 	@Column(name="so_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int salesId;
+	
+	@NotNull(message="harus diisi")
+	@NotEmpty(message="harus diisi")
 	@Column(name="so_code")
 	private String salesCode;
 	@Column(name="so_type")

@@ -7,6 +7,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
+import com.tkbaru.validator.SalesOrderValidator;
 
 @Controller
 @RequestMapping("/sales")
@@ -241,8 +244,26 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/save/{customerId}/{tabId}", method = RequestMethod.POST)
-	public String salesSave(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext,@PathVariable int customerId, @PathVariable int tabId) {
+	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") @Valid LoginContext loginContext,BindingResult result,@PathVariable int customerId, @PathVariable int tabId) {
 		logger.info("[salesSave] " + "");
+
+		
+		if(result.hasErrors()){
+			Customer customer = customerManager.getCustomerById(customerId);
+			List<Customer> customerList = new ArrayList<Customer>();
+			customerList.add(customer);
+			loginContextSession.setSoList(loginContext.getSoList());
+			
+			model.addAttribute("customerId",customerId);
+			model.addAttribute("customerList",customerList);
+			model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+			model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+			model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
+			model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+
+			return Constants.JSPPAGE_SALESORDER;
+		}else{
 
 		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
@@ -290,6 +311,7 @@ public class SalesOrderController {
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_SALESORDER;
+		}
 
 	}
 	

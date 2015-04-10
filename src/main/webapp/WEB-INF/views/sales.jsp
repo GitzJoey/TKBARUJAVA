@@ -33,12 +33,14 @@
 				var button = $(this).attr('id');
 
 				if (button == 'searchButton') {
-				//	$('#soForm').data('formValidation').enableFieldValidators('customerSearchQuery', true).revalidateField('customerSearchQuery');
-				if ($('#inputCustomerSearchQuery').val() == "") {
-					jsAlert("Please insert search query");
-					return false;
-				}
-					$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());	
+
+					$('#soForm').parsley().validate('search');
+                    if($('#soForm').parsley().isValid('search')){
+					
+						$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());
+					
+                    }
+
 				} else if (button == 'newTab'){
 					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/${customerId}");
 				} else {
@@ -105,8 +107,15 @@
 
     		$('[id^="customerTooltip"]').tooltip();
 
+    		 
+
 		});
 	</script>	
+	<style type="text/css">
+            .error{
+                color:red;
+            }
+        </style>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -156,7 +165,7 @@
 												<table class="table nopaddingrow borderless">
 													<tr>
 														<td width="93%">
-															<input type="text" class="form-control" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" placeholder="Search Customer Query"></input>
+															<input type="text" class="form-control" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="search"></input>
 														</td>
 														<td width="7%" align="right">
 															<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
@@ -236,7 +245,8 @@
 																<div class="form-group">
 																	<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																		<form:input type="text" class="form-control" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="dataso"></form:input>
+																		<form:errors path="soList[${soIdx.index}].salesCode" cssClass="error"></form:errors>
 																	</div>										
 																</div>
 																<div class="form-group">

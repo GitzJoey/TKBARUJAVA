@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +20,7 @@ public class LoginContext implements Serializable {
 	private String selectedMenu;	
 	private String selectedLanguage;
 	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
+	@Valid
 	private List<SalesOrder> soList = new ArrayList<SalesOrder>();
 
 	
