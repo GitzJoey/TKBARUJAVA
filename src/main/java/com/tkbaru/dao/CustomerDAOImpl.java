@@ -87,7 +87,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public List<Customer> searchCustomer(String searchQuery) {
-		logger.info("[getAllCustomer] " + "");
+		logger.info("[searchCustomer] " +searchQuery);
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Customer> customerList = session.createQuery("FROM Customer where customerId like :customerId or customerName like :customerName").setString("customerId", searchQuery).setString("customerName", "%"+searchQuery+"%").list();

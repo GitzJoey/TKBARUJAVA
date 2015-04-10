@@ -22,7 +22,15 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 
 	@Override
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId) {
-		List<SalesOrder> soList = new ArrayList<SalesOrder>();
+		logger.info("[getAwaitingPaymentSales] " + "selectedCustomerId: " + selectedCustomerId);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status and customerId = :customerId ").setString("status", "L016_WP").setInteger("customerId", selectedCustomerId).list();
+		
+		for (SalesOrder so : soList) {
+			logger.info("SalesOrder : " + so.toString());
+		}
+
 		
 		return soList;
 	}
