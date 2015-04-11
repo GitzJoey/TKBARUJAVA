@@ -205,7 +205,7 @@
 								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>aaa<br/>
 								<c:out value="${pageContext.request.requestURI }"/><br/>
 								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/><br/>
-								<spring:message code="${ test }"/><br/>
+								<spring:message code="${ test }" text="notfound"/><br/>
 								<br/>
 								<br/>
 								<br/>

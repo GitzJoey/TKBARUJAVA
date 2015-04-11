@@ -2,7 +2,9 @@ package com.tkbaru.web;
 
 import java.util.Locale;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.User;
@@ -28,8 +31,15 @@ public class LoginController {
 	@Autowired
 	private LoginContext loginContextSession;
 	
+	@Autowired
+	CookieLocaleResolver localeResolver;
+	
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
-	public String loadLoginPage(Locale locale, Model model, @RequestParam(value="e", required=false) String errParam) {
+	public String loadLoginPage(Locale locale, 
+								Model model, 
+								@RequestParam(value="e", required=false) String errParam, 
+								HttpServletRequest request,
+								HttpServletResponse response) {
 		logger.info("[loadLoginPage] " + "");
 
 		String messageText = "";
@@ -62,6 +72,20 @@ public class LoginController {
 			return "login";			
 		}
 
+		boolean localeCookieFound = false;
+		Cookie[] cookies = request.getCookies();
+		if (cookies != null) {
+			for (Cookie c:cookies) {
+				if (c.getName().equals(localeResolver.getCookieName())) {
+					localeCookieFound = true;
+				}
+			}
+		}
+		
+		if (!localeCookieFound) {
+			response.addCookie(new Cookie(localeResolver.getCookieName(), "id"));
+		}
+		
 		model.addAttribute("hideLogin", false);
 		model.addAttribute("collapseFlag", "collapse");
 		model.addAttribute("messageText", messageText);

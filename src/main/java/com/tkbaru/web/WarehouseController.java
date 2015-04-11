@@ -64,8 +64,6 @@ public class WarehouseController {
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		
-		
-		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

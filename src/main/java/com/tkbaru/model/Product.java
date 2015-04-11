@@ -57,11 +57,11 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
-	/*
+	
 	@ManyToOne
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
-	*/
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -173,7 +173,7 @@ public class Product {
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
 	}
-	/*
+	
 	public Lookup getProductTypeLookup() {
 		return productTypeLookup;
 	}
@@ -181,7 +181,7 @@ public class Product {
 	public void setProductTypeLookup(Lookup productTypeLookup) {
 		this.productTypeLookup = productTypeLookup;
 	}
-	 */
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
