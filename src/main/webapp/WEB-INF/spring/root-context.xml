@@ -78,7 +78,6 @@
                 <beans:value>com.tkbaru.model.Bank</beans:value>
                 <beans:value>com.tkbaru.model.Warehouse</beans:value>
                 <beans:value>com.tkbaru.model.Lookup</beans:value>
-                <beans:value>com.tkbaru.model.LookupDetail</beans:value>
                 <beans:value>com.tkbaru.model.Truck</beans:value>
                 <beans:value>com.tkbaru.model.Items</beans:value>
                 <beans:value>com.tkbaru.model.Payment</beans:value>
@@ -110,7 +109,6 @@
 				<beans:value>com.tkbaru.model.Bank</beans:value>
 				<beans:value>com.tkbaru.model.Warehouse</beans:value>
                 <beans:value>com.tkbaru.model.Lookup</beans:value>
-                <beans:value>com.tkbaru.model.LookupDetail</beans:value>
 				<beans:value>com.tkbaru.model.Truck</beans:value>
                 <beans:value>com.tkbaru.model.Items</beans:value>
                 <beans:value>com.tkbaru.model.Payment</beans:value>

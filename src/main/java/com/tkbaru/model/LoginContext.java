@@ -54,10 +54,8 @@ public class LoginContext implements Serializable {
 
 	public void setPoList(List<PurchaseOrder> poList) {
 		this.poList = poList;
-	}	
+	}
 	
-	
-
 	public List<SalesOrder> getSoList() {
 		return soList;
 	}
@@ -73,3 +71,4 @@ public class LoginContext implements Serializable {
 	}
 	
 }
+

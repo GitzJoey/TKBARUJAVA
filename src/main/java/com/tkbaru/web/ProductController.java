@@ -97,8 +97,7 @@ public class ProductController {
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveProduct(Locale locale, Model model, @ModelAttribute("productForm") Product prod, RedirectAttributes redirectAttributes) {	
-		logger.info("[saveProduct] " + "prod: " + prod.toString());
-	
+
 		if (prod.getProductUnit() != null && prod.getProductUnit().size() > 0) {
 			for(ProductUnit pu:prod.getProductUnit()) {
 				if (pu.getProductEntity() == null) {
@@ -107,8 +106,13 @@ public class ProductController {
 			}			
 		}
 		
-		if (prod.getProductId() == 0) { productManager.addProduct(prod); }
-		else { productManager.editProduct(prod); }
+		if (prod.getProductId() == 0) { 
+			logger.info("[saveProduct] " + "addProduct: " + prod.toString());
+			productManager.addProduct(prod); 
+		} else {
+			logger.info("[saveProduct] " + "editProduct: " + prod.toString());
+			productManager.editProduct(prod); 
+		}
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

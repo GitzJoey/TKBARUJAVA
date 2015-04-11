@@ -101,7 +101,7 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+				//items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 		
@@ -188,8 +188,8 @@ public class SalesOrderController {
 		item.setProductId(productId);
 		Product product = productManager.getProductById(productId);
 		item.setProductLookup(product);
-		item.setUnitCode(product.getBaseUnit());
-		item.setUnitCodeLookup(lookupManager.getLookupByKey(product.getBaseUnit()));
+	//	item.setUnitCode(product.getBaseUnit());
+	//	item.setUnitCodeLookup(lookupManager.getLookupByKey(product.getBaseUnit()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		loginContext.getSoList().get(tabId).getItemsList().add(item);
@@ -197,7 +197,7 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+		//	items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 
 		loginContextSession.setSoList(loginContext.getSoList());
@@ -210,7 +210,7 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+		//		items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 		
@@ -248,7 +248,7 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+		//	items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 		
 		Customer customer = customerManager.getCustomerById(customerId);
@@ -329,9 +329,9 @@ public class SalesOrderController {
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
-			Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
+		//	Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 			items.setProductLookup(prod);
-			items.setUnitCodeLookup(unitCodeLookup);
+		//	items.setUnitCodeLookup(unitCodeLookup);
 			itemList.add(items);
 		}
 		
@@ -342,7 +342,7 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+		//		items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 			
@@ -401,7 +401,7 @@ public class SalesOrderController {
 		i.setProductId(varId);
 		Product product = productManager.getProductById(varId);
 		i.setProductLookup(product);
-		i.setUnitCode(product.getBaseUnit());
+	//	i.setUnitCode(product.getBaseUnit());
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.getItemsList().add(i);
@@ -471,8 +471,9 @@ public class SalesOrderController {
 	@RequestMapping(value="/payment", method = RequestMethod.GET)
 	public String salesPayment(Locale locale, Model model) {
 		logger.info("[salesPayment] " + "");
+
 		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("L016_WP");
-		model.addAttribute("reviseSalesList", soList);
+		model.addAttribute("paymentSalesList", soList);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -492,6 +493,22 @@ public class SalesOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_PAYMENT;
+	}
+
+	@RequestMapping(value="/payment/addpayment/{selectedSO}", method = RequestMethod.GET)
+	public String salesAddPayment(Locale locale, Model model, @PathVariable Integer selectedSO) {
+		logger.info("[salesAddPayment] " + "selectedSO: " + selectedSO);
+
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedSO);
+		
+		model.addAttribute("paymentSalesForm", so);
+		
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -629,9 +646,9 @@ public class SalesOrderController {
 			soForm.setSoTypeLookup(lookupManager.getLookupByKey(soForm.getSalesType()));
 			for (Items items : soForm.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
-				Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
+			//	Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 				items.setProductLookup(prod);
-				items.setUnitCodeLookup(unitCodeLookup);
+			//	items.setUnitCodeLookup(unitCodeLookup);
 			}
 		}
 

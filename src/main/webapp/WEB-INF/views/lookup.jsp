@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -164,8 +165,9 @@
 										<tr>
 											<th width="5%">&nbsp;</th>
 											<th width="20%">Category</th>
-											<th width="20%">Key</th>
-											<th width="40%">Value</th>
+											<th width="15%">Key</th>
+											<th width="25%">Locale Message Codes</th>
+											<th width="20%">Value</th>
 											<th width="5%">Order</th>
 											<th width="5%">Status</th>
 											<th width="5%">Maintainable</th>
@@ -178,29 +180,8 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.lookupId }"/>" type="checkbox" value="<c:out value="${ i.lookupId }"/>"/></td>
 													<td><c:out value="${ i.lookupCategory }"/></td>
 													<td><c:out value="${ i.lookupKey }"/></td>
-													<td>
-														<c:set var="lang" value=""></c:set>
-														<c:forEach var="j" varStatus="js" items="${ i.lookupDetail }">
-															<c:choose>
-																<c:when test="${ lang == '' }">
-																	<c:set var="lang" value="${ j.languageCode }"></c:set>
-																	<strong><c:out value="${ j.languageCodeLookup.lookupValue }"/></strong><br/>
-																	Value : <c:out value="${ j.lookupValue }"/><br/>
-																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
-																</c:when>
-																<c:when test="${ lang == j.languageCode }">
-																	Value : <c:out value="${ j.lookupValue }"/><br/>
-																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
-																</c:when>
-																<c:otherwise>
-																	<c:set var="lang" value="${ j.languageCode }"></c:set>
-																	<strong><c:out value="${ j.languageCodeLookup.lookupValue }"/></strong><br/>
-																	Value : <c:out value="${ j.lookupValue }"/><br/>
-																	Alternate Value : <c:out value="${ j.lookupAlternateValue }"/><br/>													
-																</c:otherwise>
-															</c:choose>
-														</c:forEach>
-													</td>
+													<td><c:out value="${ i.localeMessageCodes }"/></td>
+													<td><c:out value="${ i.lookupValue }"/></td>													
 													<td><c:out value="${ i.orderNum }"/></td>
 													<td><c:out value="${ i.statusLookup.lookupValue }"/></td>
 													<td><c:out value="${ i.maintainabilityLookup.lookupValue }"/></td>
@@ -245,30 +226,20 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputLocaleMessageCodes" class="col-sm-2 control-label">Locale Message Codes</label>
+										<div class="col-sm-5">
+											<form:input type="text" class="form-control" path="localeMessageCodes" placeholder="Enter Locale Message Codes"></form:input>
+										</div>
+									</div>									
+									<div class="form-group">
 										<label for="inputValue" class="col-sm-2 control-label">Value</label>
 										<div class="col-sm-5">
-											<c:forEach items="${ lookupForm.lookupDetail }" varStatus="lookupDetailIdx">
-												<div class="panel panel-default">
-													<div class="panel-body">
-														<form:hidden path="lookupDetail[${ lookupDetailIdx.index }].lookupDetailId"/>
-														<form:hidden path="lookupDetail[${ lookupDetailIdx.index }].languageCode"/>
-														<c:out value="${ lookupForm.lookupDetail[lookupDetailIdx.index].languageCodeLookup.lookupValue }"/>
-													</div>
-													<table class="table borderless">
-														<tr>
-															<td>
-																<form:input type="text" class="form-control" path="lookupDetail[${lookupDetailIdx.index}].lookupValue" placeholder="Enter Lookup Value"></form:input><br/>
-																<form:input type="text" class="form-control" path="lookupDetail[${lookupDetailIdx.index}].lookupAlternateValue" placeholder="Enter Lookup Alternate Value"></form:input>
-															</td>
-														</tr>
-													</table>
-												</div>	
-											</c:forEach>
+											<form:input type="text" class="form-control" path="lookupValue" placeholder="Enter Lookup Value"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
-										<div class="col-sm-2">
+										<div class="col-sm-1">
 											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
 										</div>
 									</div>
@@ -276,8 +247,10 @@
 										<label for="inputMaintainability" class="col-sm-2 control-label">Maintainable</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupMaintainability">
-												<option value="">Please Select</option>
-												<form:options items="${ MaintainabilityDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+												<option value=""><spring:message code="common.please_select"></spring:message></option>
+												<c:forEach items="${ MaintainabilityDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>									
@@ -285,8 +258,10 @@
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
 											<form:select class="form-control" path="lookupStatus">
-												<option value="">Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+												<option value=""><spring:message code="common.please_select"></spring:message></option>
+												<c:forEach items="${ statusDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>									

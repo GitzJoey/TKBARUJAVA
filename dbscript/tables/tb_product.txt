@@ -6,7 +6,6 @@ CREATE TABLE `tb_product` (
   `short_code` varchar(25) DEFAULT NULL,
   `product_name` varchar(95) DEFAULT NULL,
   `product_description` varchar(245) DEFAULT NULL,
-  `base_unit` varchar(10) DEFAULT NULL,
   `image_path` varchar(145) DEFAULT NULL,
   `status` varchar(15) DEFAULT NULL,
   `created_by` int(11) DEFAULT '0',

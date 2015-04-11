@@ -24,6 +24,8 @@ public class ProductUnit {
 	private int productUnitId;
 	@Column(name="unit_code")
 	private String unitCode;
+	@Column(name="is_base", columnDefinition="TINYINT", length=1)
+	private boolean baseUnit;
 	@Column(name="conversion_val")
 	private Long conversionValue;
 	@Column(name="remarks")
@@ -40,11 +42,11 @@ public class ProductUnit {
 	@ManyToOne
 	@JoinColumn(name="product_id", nullable=false)
 	private Product productEntity;
-
+	/*
 	@ManyToOne
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
-
+	*/
 	public int getProductUnitId() {
 		return productUnitId;
 	}
@@ -59,6 +61,14 @@ public class ProductUnit {
 
 	public void setUnitCode(String unitCode) {
 		this.unitCode = unitCode;
+	}
+
+	public boolean isBaseUnit() {
+		return baseUnit;
+	}
+
+	public void setBaseUnit(boolean baseUnit) {
+		this.baseUnit = baseUnit;
 	}
 
 	public Long getConversionValue() {
@@ -116,7 +126,7 @@ public class ProductUnit {
 	public void setProductEntity(Product productEntity) {
 		this.productEntity = productEntity;
 	}
-	
+	/*
 	public Lookup getUnitCodeLookup() {
 		return unitCodeLookup;
 	}
@@ -124,14 +134,15 @@ public class ProductUnit {
 	public void setUnitCodeLookup(Lookup unitCodeLookup) {
 		this.unitCodeLookup = unitCodeLookup;
 	}
-
+	*/
 	@Override
 	public String toString() {
 		return "ProductUnit [productUnitId=" + productUnitId + ", unitCode="
-				+ unitCode + ", conversionValue=" + conversionValue
-				+ ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+				+ unitCode + ", baseUnit=" + baseUnit + ", conversionValue="
+				+ conversionValue + ", unitRemarks=" + unitRemarks
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ "]";
 	}
 
 }

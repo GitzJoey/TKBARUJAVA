@@ -1,8 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -135,8 +134,8 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty reviseSalesList}">
-											<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
+										<c:if test="${not empty paymentSalesList}">
+											<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
 												<tr>
 													<td align="center">
 														<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
@@ -496,6 +495,7 @@
 						</div>	
 					</c:when>
 				</c:choose>					
+
 			</div>
 		</div>
 	</div>	

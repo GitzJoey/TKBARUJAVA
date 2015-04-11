@@ -1,6 +1,5 @@
 package com.tkbaru.model;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,11 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
-import org.apache.commons.collections.FactoryUtils;
-import org.apache.commons.collections.list.LazyList;
 
 @Entity
 @Table(name="tb_items")

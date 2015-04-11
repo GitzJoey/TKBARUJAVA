@@ -2,8 +2,6 @@ package com.tkbaru.dao;
 
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -13,15 +11,9 @@ import org.springframework.stereotype.Repository;
 import com.tkbaru.model.PurchaseOrder;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
-	private static final Logger logger = LoggerFactory
-			.getLogger(PurchaseOrderDAOImpl.class);
-
-	private DataSource dataSource;
-
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
+	private static final Logger logger = LoggerFactory.getLogger(PurchaseOrderDAOImpl.class);
 
 	private SessionFactory sessionFactory;
 

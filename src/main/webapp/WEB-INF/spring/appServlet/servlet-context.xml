@@ -17,7 +17,13 @@
 	<annotation-driven />
 
 	<beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
-        <beans:property name="basename" value="classpath:messages" />
+        <beans:property name="basenames">
+        	<beans:list>
+        		<beans:value>/WEB-INF/spring/i18n/common</beans:value>
+        		<beans:value>/WEB-INF/spring/i18n/dashboard</beans:value>
+        		<beans:value>/WEB-INF/spring/i18n/lookup</beans:value>
+        	</beans:list>
+        </beans:property>
         <beans:property name="defaultEncoding" value="UTF-8" />
     </beans:bean>
  

@@ -4,6 +4,8 @@ CREATE TABLE `tb_lookup` (
   `lookup_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
   `category` 		varchar(25) 	DEFAULT NULL,
   `lookup_key` 		varchar(15) 	DEFAULT NULL,
+  `loc_msg_code` 	varchar(45) 	DEFAULT NULL,
+  `val` 			varchar(245) 	DEFAULT NULL,
   `order_num` 		int(11) 		DEFAULT NULL,
   `status` 			varchar(15) 	DEFAULT NULL,
   `maintainable` 	varchar(10) 	DEFAULT NULL,
@@ -15,231 +17,288 @@ CREATE TABLE `tb_lookup` (
   UNIQUE KEY `lookup_key_UNIQUE` (`lookup_key`)
 );
 
-/*Status - L001*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*Status - L001 - 100*/
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('STATUS', 'L001_A', 
+		'STATUS.L001_A', 'Active',
 		1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('STATUS', 'L001_I',
-        2, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+		'STATUS.L001_I', 'Inactive',
+		2, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Salutation - L002*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_MR',
+		'SALUTATION.L002_MR', 'Mr',
         10, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SALUTATION', 'L002_MRS',
+		'SALUTATION.L002_MRS', 'Mrs',
         11, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*YesNoSelection - L003*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('YESNOSELECTION', 'L003_YES',
+		'YESNOSELECTION.L003_YES', 'Yes',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('YESNOSELECTION', 'L003_NO',
+		'YESNOSELECTION.L003_NO', 'No',
         2, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Product Type - L004*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_ML',
+		'PRODUCT_TYPE.L004_ML', 'Minyak',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_GL',
+		'PRODUCT_TYPE.L004_GL', 'Gula',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_TRG',
+		'PRODUCT_TYPE.L004_TRG', 'Terigu',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_ACI',
+		'PRODUCT_TYPE.L004_ACI', 'Aci/Tapioka',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_KDLL',
+		'PRODUCT_TYPE.L004_KDLL', 'Kedelai Lokal',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRODUCT_TYPE', 'L004_KDLI',
+		'PRODUCT_TYPE.L004_KDLI', 'Kedelai Import',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Unit - L005*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('UNIT', 'L005_DR',
+		'UNIT.L005_DR', 'Drum',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('UNIT', 'L005_KG',
+		'UNIT.L005_KG', 'Kilogram',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('UNIT', 'L005_TN',
+		'UNIT.L005_TN', 'Tonne',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('UNIT', 'L005_KN',
+		'UNIT.L005_KN', 'Kuintal',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Phone Provider - L006*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PHONE_PROVIDER', 'L006_TSEL',
+		'PHONE_PROVIDER.L006_TSEL', 'T-Sel',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PHONE_PROVIDER', 'L006_XL',
+		'PHONE_PROVIDER.L006_XL', 'Xl',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PHONE_PROVIDER', 'L006_ISAT',
+		'PHONE_PROVIDER.L006_ISAT', 'I-Sat',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PHONE_PROVIDER', 'L006_3',
+		'PHONE_PROVIDER.L006_3', 'Three',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
-VALUES ('PHONE_PROVIDER', 'L006_FLX',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
-VALUES ('PHONE_PROVIDER', 'L006_SMRTFRN',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
-VALUES ('PHONE_PROVIDER', 'L006_CRA',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));  
 
 /*Bank - L007*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('BANK', 'L007_BCA',
+		'BANK.L007_BCA', 'Bank Central Asia',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('BANK', 'L007_BDI',
+		'BANK.L007_BDI', 'Bank Danamon Indonesia',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Bank Transaction Direction - L008*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('TRX_DIRECTION', 'L008_DB',
+		'TRX_DIRECTION.L008_DB', 'Debit',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('TRX_DIRECTION', 'L008_CR',
+		'TRX_DIRECTION.L008_CR', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Currency Code - L009*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('CURR_CODE', 'L009_IDR',
+		'CURR_CODE.L009_IDR', 'IDR',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('CURR_CODE', 'L009_USD',
+		'CURR_CODE.L009_USD', 'USD',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Language - L010*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('LANGUAGE', 'L010_ID', 
+		'LANGUAGE.L010_ID', 'Indonesian',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('LANGUAGE', 'L010_EN', 
+		'LANGUAGE.L010_EN', 'English',
 		1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Truck Type - L011*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('TRUCK_TYPE', 'L011_OIL',
+		'TRUCK_TYPE.L011_OIL', 'Oil Truck',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('TRUCK_TYPE', 'L011_CARGO',
+		'TRUCK_TYPE.L011_CARGO', 'Cargo Truck',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Weight Type - L012*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('WEIGHT_TYPE', 'L012_MED',
+		'WEIGHT_TYPE.L012_MED', 'Medium Truck (6T)',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('WEIGHT_TYPE', 'L012_HEAVY',
+		'WEIGHT_TYPE.L012_HEAVY', 'Heavy Truck (25T)',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*PO Status - L013*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PO_STATUS', 'L013_D',
+		'PO_STATUS.L013_D', 'Draft',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PO_STATUS', 'L013_WA',
+		'PO_STATUS.L013_WA', 'Waiting For Arrival',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PO_STATUS', 'L013_WP',
+		'PO_STATUS.L013_WP', 'Waiting For Payments',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PO_STATUS', 'L013_C',
+		'PO_STATUS.L013_C', 'Closed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
-       /*PO Type - L014*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*PO Type - L014*/
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PO_TYPE', 'L014_S',
+		'PO_TYPE.L014_S', 'Standard PO',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*SO Type - L015*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SO_TYPE', 'L015_S',
+		'SO_TYPE.L015_S', 'Standard SO',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_TYPE', 'L015_WIN',
+		'SO_TYPE.L015_WIN', 'Walk In Customer',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*SO Status - L016*/
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SO_STATUS', 'L016_D',
+		'SO_STATUS.L016_D', 'Draft',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SO_STATUS', 'L016_WD',
+		'SO_STATUS.L016_WD', 'Awaiting For Delivery',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SO_STATUS', 'L016_WP',
+		'SO_STATUS.L016_WP', 'Awaiting For Payment',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('SO_STATUS', 'L016_C',
+		'SO_STATUS.L016_C', 'Closed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
 /*Payment Type L017 */
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_TYPE', 'L017_CASH',
+		'PAYMENT_TYPE.L017_CASH', 'Cash',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_TYPE', 'L017_TERM',
+		'PAYMENT_TYPE.L017_TERM', 'Term',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_TYPE', 'L017_TRANSFER',
+		'PAYMENT_TYPE.L017_TRANSFER', 'Transfer',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_TYPE', 'L017_GIRO',
+		'PAYMENT_TYPE.L017_GIRO', 'Giro',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
-/*Payment Cash L018 */
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*Payment Status Cash L018 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_CASH', 'L018_C',
+		'PAYMENT_STATUS_CASH.L018_C', 'Closed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
-/*Payment Cash L019 */
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*Payment Status Term L019 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('PAYMENT_STATUS_TERM', 'L019_WEF',
+		'PAYMENT_STATUS_TERM.L019_WEF', 'Waiting Effective Date',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_TERM', 'L019_C',
+		'PAYMENT_STATUS_TERM.L019_C', 'Closed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
-/*Payment Cash L020 */
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*Payment Status Transfer L020 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_TRANSFER', 'L020_A',
+		'PAYMENT_STATUS_TRANSFER.L020_A', 'Transfer A',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-        INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_TRANSFER', 'L020_B',
+		'PAYMENT_STATUS_TRANSFER.L020_B', 'Transfer B',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
-/*Payment Cash L021 */
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+/*Payment Status Giro L021 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_GIRO', 'L021_WE',
+		'PAYMENT_STATUS_GIRO.L021_WE', 'Waiting Effective Date',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_GIRO', 'L021_F',
+		'PAYMENT_STATUS_GIRO.L021_F', 'Failed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_STATUS_GIRO', 'L021_FR',
+		'PAYMENT_STATUS_GIRO.L021_FR', 'Failed & Returned',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
+		'', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
+		'', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
+		'', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
+		'', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, order_num, status, maintainable, created_by, created_date)
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',
+		'', '',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 */      
 COMMIT;
