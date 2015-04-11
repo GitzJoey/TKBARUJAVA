@@ -37,6 +37,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
+import com.tkbaru.service.StocksService;
 
 @Controller
 @RequestMapping("/sales")
@@ -60,6 +61,9 @@ public class SalesOrderController {
 	
 	@Autowired
 	CustomerService customerManager;
+	
+	@Autowired
+	StocksService stocksManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -181,9 +185,10 @@ public class SalesOrderController {
 	@RequestMapping(value = "/additems/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId,@PathVariable int tabId, @PathVariable int productId) {
 		logger.info("[soAddItems] " + "productId: " + productId);
+		long countStock=0;
 		
+		countStock = stocksManager.countStocksByProductId(productId);
 		
-
 		Items item = new Items();
 		item.setProductId(productId);
 		Product product = productManager.getProductById(productId);
@@ -294,25 +299,6 @@ public class SalesOrderController {
 	@RequestMapping(value="/save/{customerId}/{tabId}", method = RequestMethod.POST)
 	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId, @PathVariable int tabId) {
 		logger.info("[salesSave] " + "");
-
-		
-//		if(result.hasErrors()){
-//			Customer customer = customerManager.getCustomerById(customerId);
-//			List<Customer> customerList = new ArrayList<Customer>();
-//			customerList.add(customer);
-//			loginContextSession.setSoList(loginContext.getSoList());
-//			
-//			model.addAttribute("customerId",customerId);
-//			model.addAttribute("customerList",customerList);
-//			model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-//			model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-//			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-//			model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
-//			model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
-//
-//			return Constants.JSPPAGE_SALESORDER;
-//		}else{
-
 		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
 		so.setSalesStatus("L016_WD");
@@ -361,7 +347,6 @@ public class SalesOrderController {
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_SALESORDER;
-//		}
 
 	}
 	

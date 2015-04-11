@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.Stocks;
 import com.tkbaru.model.WarehouseDashboard;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
@@ -30,6 +31,7 @@ import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Warehouse;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.StocksService;
 import com.tkbaru.service.WarehouseService;
 
 @Controller
@@ -49,6 +51,9 @@ public class WarehouseController {
 	@Autowired
 	private LoginContext loginContextSession;
 	
+	@Autowired
+	StocksService stocksManager;
+	
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
@@ -63,9 +68,6 @@ public class WarehouseController {
 		logger.info("[warehousePageLoad] : " + "");
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-		
-		
-		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -80,12 +82,9 @@ public class WarehouseController {
 		logger.info("[warehousePageLoad] : " + "");
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-		
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
-		
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setPurchaseOrderList(poList);
-		
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -98,12 +97,9 @@ public class WarehouseController {
 	@RequestMapping(value="/displayitems/{warehouseId}", method = RequestMethod.POST)
 	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
 		logger.info("[warehousePageLoad] : " + "");
-		
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
-		
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setPurchaseOrderList(poList);
-		
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -118,7 +114,6 @@ public class WarehouseController {
 		logger.info("[warehousePageLoad] " + "");
 		
 		List<Warehouse> wList = warehouseManager.getAllWarehouse();
-		
 		model.addAttribute("warehouseList", wList);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
@@ -192,7 +187,6 @@ public class WarehouseController {
 	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId) {
 		
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
-
 		PurchaseOrder poView = null;
 		
 		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()){
@@ -203,7 +197,7 @@ public class WarehouseController {
 		}
 		
 		List<Items> itemsList = poView.getItemsList();
-		
+		List<Stocks> stocksList = new ArrayList<Stocks>();
 		for(Items items : itemsList){
 			List<Receipt> receiptList = new ArrayList<Receipt>();
 			for(Receipt receipt : items.getReceiptList()){
@@ -212,6 +206,13 @@ public class WarehouseController {
 						receipt.setReceiptDate(new Date());
 						receipt.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 						receipt.setCreatedDate(new Date());
+						Stocks stocks = new Stocks();
+						stocks.setPoId(poId);
+						stocks.setProductId(items.getProductId());
+						stocks.setProdQuantity(receipt.getNet());
+						stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						stocks.setCreatedDate(new Date());
+						stocksList.add(stocks);
 					}
 					receiptList.add(receipt);
 				}
@@ -241,7 +242,15 @@ public class WarehouseController {
 			po.setPoStatus("L013_WP");
 		}
 		
-		poManager.editPurchaseOrder(po);
+		try {
+			poManager.editPurchaseOrder(po);
+		} catch (Exception e) {
+			
+		}
+		
+		for(Stocks stocks: stocksList){
+			stocksManager.addOrCreateStocks(stocks);
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
