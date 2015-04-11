@@ -73,7 +73,7 @@ public class SalesOrderController {
 	public String salesNew(Locale locale, Model model) {
 		logger.info("[salesNew] " + "");
 		
-		if (loginContextSession.getPoList().isEmpty()) {
+		if (loginContextSession.getSoList().isEmpty()) {
 			
 			SalesOrder so = new SalesOrder();
 			so.setSalesStatus("L016_D");
@@ -84,6 +84,34 @@ public class SalesOrderController {
 
 		}
 		
+		int customerId=0;
+		Customer customer = null;
+		
+		for(SalesOrder soVar : loginContextSession.getSoList()){
+			try {
+				customer = customerManager.getCustomerById(soVar.getCustomerId());
+				soVar.setCustomerLookup(customer);
+			} catch (Exception e) {
+				
+			}
+			
+			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
+			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
+			customerId = soVar.getCustomerId();
+			for (Items items : soVar.getItemsList()) {
+				Product prod = productManager.getProductById(items.getProductId());
+				items.setProductLookup(prod);
+				items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
+			}
+		}
+		
+		List<Customer> customerList = new ArrayList<Customer>();
+		if(customer!=null){
+			customerList.add(customer);
+		}
+		
+		model.addAttribute("customerId", customerId);
+		model.addAttribute("customerList", customerList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -102,6 +130,7 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("searchQuery", searchQuery);
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -152,6 +181,8 @@ public class SalesOrderController {
 	@RequestMapping(value = "/additems/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId,@PathVariable int tabId, @PathVariable int productId) {
 		logger.info("[soAddItems] " + "productId: " + productId);
+		
+		
 
 		Items item = new Items();
 		item.setProductId(productId);
@@ -171,7 +202,11 @@ public class SalesOrderController {
 
 		loginContextSession.setSoList(loginContext.getSoList());
 		
-		for(SalesOrder soVar : loginContext.getSoList()){
+		for(SalesOrder soVar : loginContextSession.getSoList()){
+			soVar.setCustomerLookup(customerManager.getCustomerById(customerId));
+			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
+			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
+			
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
@@ -179,6 +214,8 @@ public class SalesOrderController {
 			}
 		}
 		
+		
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
@@ -209,6 +246,7 @@ public class SalesOrderController {
 		}
 		
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
@@ -219,13 +257,12 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/cancel/{tabId}", method = RequestMethod.POST)
-	public String poCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, BindingResult result, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
+	public String poCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[soCancel] " + "");
 
 		if (!loginContext.getSoList().isEmpty()) {
 			SalesOrder so = loginContext.getSoList().get(tabId);
-			so.setSalesStatus("L016_D");
-			so.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
+			
 			loginContext.getSoList().remove(so);
 			List<SalesOrder> soList = new ArrayList<SalesOrder>();
 			for (SalesOrder sos : loginContext.getSoList()) {
@@ -243,26 +280,26 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/save/{customerId}/{tabId}", method = RequestMethod.POST)
-	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") @Valid LoginContext loginContext,BindingResult result,@PathVariable int customerId, @PathVariable int tabId) {
+	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId, @PathVariable int tabId) {
 		logger.info("[salesSave] " + "");
 
 		
-		if(result.hasErrors()){
-			Customer customer = customerManager.getCustomerById(customerId);
-			List<Customer> customerList = new ArrayList<Customer>();
-			customerList.add(customer);
-			loginContextSession.setSoList(loginContext.getSoList());
-			
-			model.addAttribute("customerId",customerId);
-			model.addAttribute("customerList",customerList);
-			model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-			model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-			model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
-			model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
-
-			return Constants.JSPPAGE_SALESORDER;
-		}else{
+//		if(result.hasErrors()){
+//			Customer customer = customerManager.getCustomerById(customerId);
+//			List<Customer> customerList = new ArrayList<Customer>();
+//			customerList.add(customer);
+//			loginContextSession.setSoList(loginContext.getSoList());
+//			
+//			model.addAttribute("customerId",customerId);
+//			model.addAttribute("customerList",customerList);
+//			model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+//			model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+//			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+//			model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
+//			model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+//
+//			return Constants.JSPPAGE_SALESORDER;
+//		}else{
 
 		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
@@ -289,6 +326,7 @@ public class SalesOrderController {
 		for(SalesOrder soVar : loginContext.getSoList()){
 			soVar.setCustomerLookup(customerManager.getCustomerById(customerId));
 			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
+			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
@@ -301,6 +339,7 @@ public class SalesOrderController {
 		customerList.add(customer);
 		loginContextSession.setSoList(loginContext.getSoList());
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerId",customerId);
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
@@ -310,7 +349,7 @@ public class SalesOrderController {
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_SALESORDER;
-		}
+//		}
 
 	}
 	
@@ -331,6 +370,9 @@ public class SalesOrderController {
 	public String reviseSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
 		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		so.setCustomerLookup(customerManager.getCustomerById(so.getCustomerId()));
+		so.setStatusLookup(lookupManager.getLookupByKey(so.getSalesStatus()));
+		so.setSoTypeLookup(lookupManager.getLookupByKey(so.getSalesType()));
 		model.addAttribute("reviseSalesForm", so);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -355,6 +397,10 @@ public class SalesOrderController {
 			item.setProductLookup(productManager.getProductById(item.getProductId()));
 			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
 		}
+		
+		reviseSalesForm.setCustomerLookup(customerManager.getCustomerById(reviseSalesForm.getCustomerId()));
+		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
+		reviseSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesType()));
 
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -443,7 +489,11 @@ public class SalesOrderController {
 	public String poAddPayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, @PathVariable String paymentType) {
 		logger.info("[soAddPayments] ");
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
+		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
+		
+		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
 		for(Items item : paymentSalesForm.getItemsList()){
+			item.setProductLookup(productManager.getProductById(item.getProductId()));
 			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
 		}
 

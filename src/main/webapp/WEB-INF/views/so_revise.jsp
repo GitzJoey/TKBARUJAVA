@@ -9,6 +9,17 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
+			window.ParsleyValidator.setLocale('id');
+			window.ParsleyConfig = {
+				successClass: "has-success",
+			    errorClass: "has-error",
+			    classHandler: function(el) {
+			        return el.$element.closest(".form-group");
+			    },
+			    errorsWrapper: "<span class='help-block'></span>",
+			    errorTemplate: "<span></span>"
+			};
+			
 			$('#editTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
@@ -37,7 +48,14 @@
 
 						if (button == 'addProdButton') {
 							id = $('#productSelect').val();
-							$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+							$('#productSelect').parsley().validate();
+		                    if(false==$('#productSelect').parsley().isValid()){
+							
+								return false;
+							
+		                    }else{
+								$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+		                    }
 						} else {
 							id = $(this).val();
 							$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
@@ -140,11 +158,9 @@
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																<div class="col-sm-8">
-																<form:hidden path="salesType"/>
-																	<form:select class="form-control" path="salesType" disabled="true">
-																		<option value="">Please Select</option>
-																		<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																	</form:select>	
+																
+																 <form:hidden path="salesType"/>
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>	
 																</div>										
 															</div>
 															<div class="form-group">
@@ -198,12 +214,14 @@
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-11">
-																	<select id="productSelect" class="form-control">
+																<div class="form-group" style="padding-left: 2%">
+																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value="">Please Select</option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
 																	</select>
+																	</div>
 																</div>
 																<div class="col-md-1">
 																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>

@@ -8,7 +8,8 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
-			var lastTab = "${ loginContext.soList.size()-1 }";
+			var lastTab = "${activeTab}"==''?"${ loginContext.soList.size()-1 }" :"${activeTab}";
+			var activetab = $(".nav-tabs li.active").attr("id");
 			
 			window.ParsleyValidator.setLocale('id');
 			window.ParsleyConfig = {
@@ -78,8 +79,11 @@
 					return false;
 				}
 				
-				$('#inputCustomerSearchQuery').parsley().destroy();
-				$('#soForm').parsley().validate();
+				
+				$('#soForm').parsley({
+				    excluded: '[id="inputCustomerSearchQuery"], [id^="productSelect_"]'
+				}).validate();
+				
 				if(false==$('#soForm').parsley().isValid()){
 					
 					return false;
@@ -122,15 +126,33 @@
 						var button = $(this).attr('id');
 
 						if (button == 'addProdButton') {
+							
+							
 							activetab = $(".nav-tabs li.active").attr("id");
 							productSelect = $("#productSelect_"+ activetab).val();
-							$('#soForm').attr('action',ctxpath + "/sales/additems/${customerId}/"+ activetab + "/"+ productSelect);
+							
+							$('[id^="productSelect_"]').parsley().validate();
+		                    if(false==$('[id^="productSelect_"]').parsley().isValid()){
+							
+								return false;
+							
+		                    }else{
+		                    	$('#soForm').attr('action',ctxpath + "/sales/additems/${customerId}/"+ activetab + "/"+ productSelect);
+		                    }
+							
 						} else {
 							id = $(this).val();
 							activetab = $(".nav-tabs li.active").attr("id");
 							$('#soForm').attr('action',ctxpath + "/sales/removeitems/${customerId}/"+ activetab + "/" + id);
 						}
 			});
+		    
+		    $('[id^="cancelButton_"]').click(
+					function() {
+						activetab = $(".nav-tabs li.active").attr("id");
+						$('#soForm').attr("action",ctxpath + "/sales/cancel/"+ activetab);
+					}
+				);
 
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
 
@@ -190,18 +212,26 @@
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-md-12">
+										
 											<div class="table-responsive">
 												<table class="table nopaddingrow borderless">
+												
 													<tr>
+													
 														<td width="93%">
-															<input type="text" class="form-control" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="search"></input>
+														<div class="form-group" style="padding-left: 1.7%">
+															<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="search"></input>
+														</div>
 														</td>
 														<td width="7%" align="right">
 															<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
 														</td>
+														
 													</tr>
+													
 												</table>
-											</div>
+												</div>
+											
 											<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
 												<thead>
 													<tr>
@@ -274,17 +304,24 @@
 																<div class="form-group">
 																	<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																		<form:input type="text" class="form-control data-so" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		<form:errors path="soList[${soIdx.index}].salesCode" cssClass="error"></form:errors>
 																	</div>										
 																</div>
 																<div class="form-group">
 																	<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																	<div class="col-sm-8">
-																		<form:select class="form-control" path="soList[${soIdx.index}].salesType" disabled="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }">
+																	   <c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
+																	   <form:select class="form-control" path="soList[${soIdx.index}].salesType" disabled="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
 																			<option value="">Please Select</option>
 																			<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																		</form:select>	
+																		</form:select>
+																	   </c:if>
+																	   <c:if test="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }">
+																		   <form:hidden path="soList[${soIdx.index}].salesType"/>
+																			<form:input type="text" class="form-control" id="inputSalesType_${soIdx.index}" name="inputSalesType_${soIdx.index}" path="soList[${soIdx.index}].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																	   </c:if>
+																			
 																	</div>										
 																</div>
 																<div class="form-group">
@@ -302,7 +339,7 @@
 																<div class="form-group">
 																	<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control" id="inputSalesDate_${soIdx.index}" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																		<form:input type="text" class="form-control data-so" id="inputSalesDate_${soIdx.index}" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																	</div>										
 																</div>
 																<div class="form-group">
@@ -341,12 +378,14 @@
 															<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
 																<div class="row">
 																	<div class="col-md-11">
-																		<select id="productSelect_${soIdx.index}" class="form-control">
+																	<div class="form-group" style="padding-left: 2%">
+																		<select id="productSelect_${soIdx.index}" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																			<option value="">Please Select</option>
 																			<c:forEach items="${ productSelectionDDL }" var="psddl">
 																				<option value="${ psddl.productId }">${ psddl.productName }</option>
 																			</c:forEach>
 																		</select>
+																		</div>
 																	</div>
 																	<div class="col-md-1">
 																		<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
@@ -459,9 +498,12 @@
 										<div class="row">
 										<div class="col-md-7 col-offset-md-5">
 											<div class="btn-toolbar">
-												<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
 												<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
-												<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }">Submit</button>
+													<button id="cancelButton_${soIdx.index}" type="submit" class="btn btn-primary pull-right">Cancel</button>
+													<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }">Submit</button>
+												</c:if>
+												<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_WD' }">
+													<button id="cancelButton_${soIdx.index}" type="submit" class="btn btn-primary pull-right">Close</button>
 												</c:if>
 											</div>
 										</div>

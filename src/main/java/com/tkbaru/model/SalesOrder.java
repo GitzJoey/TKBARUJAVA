@@ -79,6 +79,11 @@ public class SalesOrder {
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
+	
+	@ManyToOne
+	@JoinColumn(name="so_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup soTypeLookup;
+
 
 	@Transient
 	private String customerSearchQuery;
@@ -227,6 +232,14 @@ public class SalesOrder {
 
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getSoTypeLookup() {
+		return soTypeLookup;
+	}
+
+	public void setSoTypeLookup(Lookup soTypeLookup) {
+		this.soTypeLookup = soTypeLookup;
 	}
 
 	@Override

@@ -10,6 +10,17 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			window.ParsleyValidator.setLocale('id');
+			window.ParsleyConfig = {
+				successClass: "has-success",
+			    errorClass: "has-error",
+			    classHandler: function(el) {
+			        return el.$element.closest(".form-group");
+			    },
+			    errorsWrapper: "<span class='help-block'></span>",
+			    errorTemplate: "<span></span>"
+			};
 
 			$('#editTableSelection').click(function() {
 				var id = "";
@@ -39,14 +50,21 @@
 
 				if (button == 'addPayButton') {
 					id = $("#paymentSelect").val();
+					$('#paymentSelect').parsley().validate();
+                    if(false==$('#paymentSelect').parsley().isValid()){
+					
+						return false;
+					
+                    }else{
 					$('#paymentSalesForm').attr('action',ctxpath + "/sales/addpayment/"+ id);
+                    }
 				} else {
 					id = $(this).val();
 					$('#paymentSalesForm').attr('action',ctxpath + "/sales/removepayment/"+ id);
 				}
 			});
 
-			$('[id^="paymentDate"]').datetimepicker({
+			$('[id^="paymentDate_"]').datetimepicker({
 				format : "DD-MM-YYYY"
 			});
 
@@ -54,7 +72,7 @@
 				$('#poForm').formValidation('revalidateField', 'paymentDate');
 			});
 
-			$('[id^="effectiveDate"]').datetimepicker({
+			$('[id^="effectiveDate_"]').datetimepicker({
 				format : "DD-MM-YYYY"
 			});
 
@@ -63,6 +81,8 @@
 			});
 
 			$('[id^="customerTooltip"]').tooltip();
+			
+			
 
 		});
 	</script>	
@@ -160,10 +180,7 @@
 																<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																<div class="col-sm-8">
 																<form:hidden path="salesType"/>
-																	<form:select class="form-control" path="salesType" disabled="true">
-																		<option value="">Please Select</option>
-																		<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																	</form:select>	
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>
 																</div>										
 															</div>
 															<div class="form-group">
@@ -324,12 +341,14 @@
 																	<div class="panel-body">
 																		<div class="row">
 																			<div class="col-md-11">
-																				<select id="paymentSelect" name="paymentSelect" class="form-control">
+																			<div class="form-group" style="padding-left: 2%">
+																				<select id="paymentSelect" name="paymentSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																					<option value="">Please Select</option>
 																					<c:forEach items="${ paymentTypeDDL }" var="pddl">
 																						<option value="${ pddl.lookupKey }">${ pddl.lookupValue }</option>
 																					</c:forEach>
 																				</select>
+																			</div>
 																			</div>
 																			<div class="col-md-1">
 																				<button id="addPayButton" type="submit" class="btn btn-primary pull-right">
@@ -364,7 +383,7 @@
 																								</td>
 																								<td id="tdPaymentDate${ iLIdx.index }">
 																									<div class="input-group">
-																										<form:input type="text" class="form-control paymentDate" id="paymentDate${ iLIdx.index }" path="paymentList[${ iLIdx.index }].paymentDate" placeholder="DD-MM-YYYY"></form:input>
+																										<form:input type="text" class="form-control paymentDate" id="paymentDate_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].paymentDate" placeholder="DD-MM-YYYY"></form:input>
 																									</div>
 																								</td>
 																								<td>
@@ -378,12 +397,12 @@
 																										<c:choose>
 																											<c:when test="${test == 1}">
 																												<form:hidden path="paymentList[${ iLIdx.index }].bankCode"/>
-																												<form:checkbox id="cbxBank${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																												<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																												<br>
 																											</c:when>
 																											<c:otherwise>
 																											<c:if test="${ empty paymentSalesForm.paymentList[ iLIdx.index ].bankCode }">
-																												<form:checkbox id="cbxBank${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																												<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																												<br>
 																											</c:if>
 																											</c:otherwise>
@@ -391,17 +410,17 @@
 																									</c:forEach>
 																								</c:if>
 																								</td>
-																								<td id="tdEffectiveDate${ iLIdx.index }">
+																								<td id="tdEffectiveDate_${ iLIdx.index }">
 																									<div class="input-group">
-																										<form:input type="text" class="form-control effectiveDate" id="effectiveDate${ iLIdx.index }" path="paymentList[${ iLIdx.index }].effectiveDate" placeholder="DD-MM-YYYY"></form:input>
+																										<form:input type="text" class="form-control effectiveDate" id="effectiveDate_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].effectiveDate" placeholder="DD-MM-YYYY"></form:input>
 																									</div>
 																								</td>
 																								<td>
 																									<div class="input-group">
-																										<form:input type="text" class="form-control text-right totalAmount" id="totalAmount${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount"></form:input>
+																										<form:input type="text" class="form-control text-right totalAmount" id="totalAmount_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount"></form:input>
 																									</div>
 																								</td>
-																								<td><form:checkbox id="linked${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
+																								<td><form:checkbox id="linked_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
 																								    <br>
 																								    <c:if test="${ paymentSalesForm.paymentList[ iLIdx.index ].paymentType == 'L017_CASH'}">
 																										<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
