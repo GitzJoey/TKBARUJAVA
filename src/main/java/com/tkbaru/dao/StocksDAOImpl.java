@@ -1,7 +1,9 @@
 package com.tkbaru.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,7 +22,45 @@ public class StocksDAOImpl implements StocksDAO {
 	public List<Stocks> getAllStocks() {
 		logger.info("[getAllStocks" + "");
 		
-		return null;
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Stocks> stocksList = session.createQuery("FROM Stocks").list();
+	
+		for(Stocks stock:stocksList) {
+			logger.info("Stocks	 : " + stock.toString());
+		}
+		
+		return stocksList;
+	}
+
+	@Override
+	public void addStocks(Stocks stocks) {
+		logger.info("[addStocks" + "");
+		
+		 Session session = this.sessionFactory.getCurrentSession();
+		
+	     session.persist(stocks);
+	        
+        logger.info("Stock added successfully, Stock Details = " + stocks.toString());		
+		
+	}
+
+	@Override
+	public void updateStocks(Stocks stocks) {
+		logger.info("[updateStocks" + "");
+		
+		 Session session = this.sessionFactory.getCurrentSession();
+		
+	     session.merge(stocks);
+	        
+	     logger.info("Stock update successfully, Stock Details = " + stocks.toString());
+		
+	}
+
+	@Override
+	public long countStocksByProductId(int productId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		long qty =(long) session.createQuery("select SUM(s.prodQuantity) FROM Stocks s where s.productId= :productId").setInteger("productId", productId).uniqueResult();
+		return qty;
 	}
 
 }

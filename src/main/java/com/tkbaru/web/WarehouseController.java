@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.model.Stocks;
 import com.tkbaru.model.WarehouseDashboard;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;

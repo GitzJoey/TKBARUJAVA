@@ -29,8 +29,8 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	@Override
 	@Transactional
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return salesOrderDAO.getAwaitingPaymentSales(selectedCustomerId);
 	}
 
 	@Override
@@ -45,6 +45,27 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	public SalesOrder getSalesOrderById(int selectedId) {
 		
 		return salesOrderDAO.getSalesOrderById(selectedId);
+	}
+
+	@Override
+	@Transactional
+	public void addSalesOrder(SalesOrder so) {
+		salesOrderDAO.addSalesOrder(so);
+		
+	}
+
+	@Override
+	@Transactional
+	public void editSalesOrder(SalesOrder so) {
+		salesOrderDAO.editSalesOrder(so);
+		
+	}
+
+	@Override
+	@Transactional
+	public void deleteSalesOrder(int selectedId) {
+		salesOrderDAO.deleteSalesOrder(selectedId);
+		
 	}
 
 }

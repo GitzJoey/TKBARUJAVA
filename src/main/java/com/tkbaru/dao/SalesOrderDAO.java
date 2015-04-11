@@ -8,4 +8,8 @@ public interface SalesOrderDAO {
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId);
 	public List<SalesOrder> getSalesOrderByStatus(String statusCode);
 	public SalesOrder getSalesOrderById(int selectedId);
+	public void addSalesOrder(SalesOrder so);
+	public void editSalesOrder(SalesOrder so);
+	public void deleteSalesOrder(int selectedId);
+	
 }

@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.Valid;
+
 import org.springframework.stereotype.Component;
 
 @Component
@@ -18,6 +20,9 @@ public class LoginContext implements Serializable {
 	private String selectedMenu;	
 	private String selectedLanguage;
 	private List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
+	@Valid
+	private List<SalesOrder> soList = new ArrayList<SalesOrder>();
+
 	
 	public User getUserLogin() {
 		return userLogin;
@@ -51,9 +56,19 @@ public class LoginContext implements Serializable {
 		this.poList = poList;
 	}
 	
+	public List<SalesOrder> getSoList() {
+		return soList;
+	}
+
+	public void setSoList(List<SalesOrder> soList) {
+		this.soList = soList;
+	}
+
 	@Override
 	public String toString() {
 		return "LoginContext [userLogin=" + userLogin + ", selectedMenu="
-				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "poList Size=" + poList.size() + "]";
-	}	
+				+ selectedMenu + ", selectedLanguage=" + selectedLanguage + "poList Size: " + poList.size() + "soList Size: " + soList.size() + "]";
+	}
+	
 }
+

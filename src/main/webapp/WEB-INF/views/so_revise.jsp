@@ -9,6 +9,17 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
+			window.ParsleyValidator.setLocale('id');
+			window.ParsleyConfig = {
+				successClass: "has-success",
+			    errorClass: "has-error",
+			    classHandler: function(el) {
+			        return el.$element.closest(".form-group");
+			    },
+			    errorsWrapper: "<span class='help-block'></span>",
+			    errorTemplate: "<span></span>"
+			};
+			
 			$('#editTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
@@ -28,7 +39,30 @@
 						return false;
 					}
 				}
-			});			
+			});		
+			
+			$('#addProdButton, #removeProdButton').click(
+					function() {
+						var id = "";
+						var button = $(this).attr('id');
+
+						if (button == 'addProdButton') {
+							id = $('#productSelect').val();
+							$('#productSelect').parsley().validate();
+		                    if(false==$('#productSelect').parsley().isValid()){
+							
+								return false;
+							
+		                    }else{
+								$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+		                    }
+						} else {
+							id = $(this).val();
+							$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
+						}
+			});
+
+			$('[id^="customerTooltip"]').tooltip();
 		});
 	</script>	
 </head>
@@ -118,16 +152,17 @@
 																<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																<div class="col-sm-5">
 																	<form:hidden path="salesId"/>
-																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code"></form:input>
+																	<form:hidden path="createdBy"/>
+																	<form:hidden path="createdDate"/>
+																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
 																</div>										
 															</div>
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																<div class="col-sm-8">
-																	<form:select class="form-control" path="salesType">
-																		<option value="">Please Select</option>
-																		<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																	</form:select>	
+																
+																 <form:hidden path="salesType"/>
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>	
 																</div>										
 															</div>
 															<div class="form-group">
@@ -137,7 +172,7 @@
 																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
 																</div>
 																<div class="col-sm-1">
-																	<button id="customerTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
+																	<button id="customerTooltip" title="${ reviseSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
 																</div>										
 															</div>
 														</div>
@@ -145,13 +180,14 @@
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
 																<div class="col-sm-9">
-																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date"></form:input>
+																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date" readonly="true"></form:input>
 																</div>										
 															</div>
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label">Status</label>
 																<div class="col-sm-9">
-																	<label id="inputPOStatus" class="control-label"><c:out value="${ soForm.statusLookup.lookupValue }"></c:out></label>
+																    <form:hidden path="salesStatus"/>
+																	<label id="inputPOStatus" class="control-label"><c:out value="${ reviseSalesForm.statusLookup.lookupValue }"></c:out></label>
 																</div>										
 															</div>
 														</div>
@@ -162,7 +198,7 @@
 															<div class="form-group">
 																<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 																<div class="col-sm-5">
-																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date"></form:input>
+																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
 																</div>										
 															</div>
 														</div>
@@ -180,12 +216,14 @@
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-11">
-																	<select id="productSelect" class="form-control">
+																<div class="form-group" style="padding-left: 2%">
+																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value="">Please Select</option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
 																	</select>
+																	</div>
 																</div>
 																<div class="col-md-1">
 																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
@@ -206,17 +244,20 @@
 																			</tr>
 																		</thead>
 																		<tbody>
-																			<c:forEach items="${ soForm.itemsList }" var="iL" varStatus="iLIdx">
+																		<c:set var="total" value="${0}" />
+																			<c:forEach items="${ reviseSalesForm.itemsList }" var="iL" varStatus="iLIdx">
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
-																						<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
+																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
 																					<td>
 																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
 																					</td>
 																					<td>
-																						&nbsp;
+																						<form:hidden id="inputItemsUnitCode" name="inputItemsUnitCode" path="itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
+																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																					</td>
 																					<td>
 																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input>
@@ -225,9 +266,10 @@
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																					</td>
 																					<td class="text-right">
-																						&nbsp;
+																						<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																					</td>
 																				</tr>
+																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -242,7 +284,7 @@
 																					Total
 																				</td>
 																				<td width="20%" class="text-right">
-																					12344556677
+																					<c:out value="${ total }"></c:out>
 																				</td>
 																			</tr>
 																		</tbody>
@@ -266,6 +308,32 @@
 													</div>
 												</div>
 											</div>
+											<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+												<div class="panel-heading">
+													<h1 class="panel-title">Remarks</h1>
+												</div>
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-md-12">
+															<div class="form-group">
+																<div class="col-sm-12">
+																	<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+											<div class="col-md-7 col-offset-md-5">
+													<div class="btn-toolbar">
+														<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+														<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+													</div>
+												</div>
 										</div>
 									</div>
 								</form:form>

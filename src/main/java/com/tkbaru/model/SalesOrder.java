@@ -16,9 +16,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="tb_so")
@@ -32,6 +34,9 @@ public class SalesOrder {
 	@Column(name="so_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int salesId;
+	
+	@NotNull(message="harus diisi")
+	@NotEmpty(message="harus diisi")
 	@Column(name="so_code")
 	private String salesCode;
 	@Column(name="so_type")
@@ -74,6 +79,11 @@ public class SalesOrder {
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
+	
+	@ManyToOne
+	@JoinColumn(name="so_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup soTypeLookup;
+
 
 	@Transient
 	private String customerSearchQuery;
@@ -222,6 +232,14 @@ public class SalesOrder {
 
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getSoTypeLookup() {
+		return soTypeLookup;
+	}
+
+	public void setSoTypeLookup(Lookup soTypeLookup) {
+		this.soTypeLookup = soTypeLookup;
 	}
 
 	@Override
