@@ -152,6 +152,8 @@
 																<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																<div class="col-sm-5">
 																	<form:hidden path="salesId"/>
+																	<form:hidden path="createdBy"/>
+																	<form:hidden path="createdDate"/>
 																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
 																</div>										
 															</div>

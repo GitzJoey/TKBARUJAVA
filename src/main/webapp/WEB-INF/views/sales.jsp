@@ -9,7 +9,6 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			var lastTab = "${activeTab}"==''?"${ loginContext.soList.size()-1 }" :"${activeTab}";
-			var activetab = $(".nav-tabs li.active").attr("id");
 			
 			window.ParsleyValidator.setLocale('id');
 			window.ParsleyConfig = {
@@ -162,11 +161,7 @@
 
 		});
 	</script>	
-	<style type="text/css">
-            .error{
-                color:red;
-            }
-        </style>
+	
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">

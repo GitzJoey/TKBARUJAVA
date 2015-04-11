@@ -214,8 +214,14 @@ public class SalesOrderController {
 			}
 		}
 		
+		Customer customer = customerManager.getCustomerById(customerId);
+		List<Customer> customerList = new ArrayList<Customer>();
+		customerList.add(customer);
+		
 		
 		model.addAttribute("activeTab", tabId);
+		model.addAttribute("customerId",customerId);
+		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
@@ -245,8 +251,14 @@ public class SalesOrderController {
 			items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 		
+		Customer customer = customerManager.getCustomerById(customerId);
+		List<Customer> customerList = new ArrayList<Customer>();
+		customerList.add(customer);
+		
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
 		model.addAttribute("activeTab", tabId);
+		model.addAttribute("customerId",customerId);
+		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
@@ -416,6 +428,8 @@ public class SalesOrderController {
 	public String poRemoveItems(Locale locale, Model model,@ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable String varId) {
 		logger.info("[poRemoveItems] " + "varId: " + varId);
 		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
+		reviseSalesForm.setCustomerLookup(customerManager.getCustomerById(reviseSalesForm.getCustomerId()));
+		reviseSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesType()));
 		List<Items> iLNew = new ArrayList<Items>();
 		for (int x = 0; x < reviseSalesForm.getItemsList().size(); x++) {
 			if (x == Integer.parseInt(varId))
@@ -490,6 +504,7 @@ public class SalesOrderController {
 		logger.info("[soAddPayments] ");
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
 		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
+		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
 		
 		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
 		for(Items item : paymentSalesForm.getItemsList()){
@@ -528,6 +543,14 @@ public class SalesOrderController {
 	@RequestMapping(value = "/removepayment/{varId}", method = RequestMethod.POST)
 	public String poRemovePayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm,@PathVariable String varId) {
 		logger.info("[poRemovePayment] " + "varId: " + varId);
+		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
+		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
+		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
+		for(Items item : paymentSalesForm.getItemsList()){
+			item.setProductLookup(productManager.getProductById(item.getProductId()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+		}
+		
 		List<Payment> payLNew = new ArrayList<Payment>();
 		for (int x = 0; x < paymentSalesForm.getPaymentList().size(); x++) {
 			if (x == Integer.parseInt(varId))
@@ -600,8 +623,11 @@ public class SalesOrderController {
 	public String addPoForm(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId) {
 		logger.info("[soAddNewTab] ");
 		
-		for(int i =0; i<loginContext.getSoList().size();i++){
-			for (Items items : loginContext.getSoList().get(i).getItemsList()) {
+		for(SalesOrder soForm : loginContext.getSoList()){
+			soForm.setCustomerLookup(customerManager.getCustomerById(customerId));
+			soForm.setStatusLookup(lookupManager.getLookupByKey(soForm.getSalesStatus()));
+			soForm.setSoTypeLookup(lookupManager.getLookupByKey(soForm.getSalesType()));
+			for (Items items : soForm.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 				items.setProductLookup(prod);
