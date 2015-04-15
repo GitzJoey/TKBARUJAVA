@@ -56,6 +56,14 @@
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/language/id_ID.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/app.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
+	
+	
+	
+	
