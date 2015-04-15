@@ -15,17 +15,13 @@ $(document).ready(function() {
 							format : "DD-MM-YYYY"
 						});
 
-						$('.paymentDate').on('dp.change dp.show',function(e) {
-							$('#poForm').formValidation('revalidateField', 'paymentDate');
-						});
+						
 
 						$('[id^="effectiveDate"]').datetimepicker({
 							format : "DD-MM-YYYY"
 						});
 
-						$('.effectiveDate').on('dp.change dp.show',function(e) {
-							$('#poForm').formValidation('revalidateField', 'effectiveDate');
-						});
+						
 
 						$('#addNew, #editTableSelection').click(function() {
 							var id = "";
@@ -56,8 +52,16 @@ $(document).ready(function() {
 									var button = $(this).attr('id');
 
 									if (button == 'addPayButton') {
-										id = $("#paymentSelect").val();
-										$('#poForm').attr('action',ctxpath + "/po/addpayment/"+ id);
+										$("#paymentSelect").parsley().validate();
+										
+										if(false==$('#paymentSelect').parsley().isValid()){
+											
+											return false;
+										
+							            }else{
+											id = $("#paymentSelect").val();
+											$('#poForm').attr('action',ctxpath + "/po/addpayment/"+ id);
+							            }
 									} else {
 										id = $(this).val();
 										$('#poForm').attr('action',ctxpath + "/po/removepayment/"+ id);
@@ -84,85 +88,6 @@ $(document).ready(function() {
 						var supplier = $("#inputSupplierId").val();
 
 						$("#supplierTooltip").tooltip({ title : supplier });
-
-						$("#poForm").formValidation(
-							{
-							locale : 'id_ID',
-							framework : 'bootstrap',
-							//	excluded : 'disabled',
-							icon : {
-								valid : 'glyphicon glyphicon-ok',
-								invalid : 'glyphicon glyphicon-remove',
-								validating : 'glyphicon glyphicon-refresh'
-							},
-							fields : {
-								'paymentDate' : {
-									selector : '.paymentDate',
-									row : '.input-group',
-									icon : false,
-									validators : {
-	
-										notEmpty : {},
-										date : {
-											format : 'DD-MM-YYYY'
-										}
-									}
-								},
-								'effectiveDate' : {
-									selector : '.effectiveDate',
-									row : '.input-group',
-									icon : false,
-									validators : {
-										notEmpty : {},
-										date : {
-											format : 'DD-MM-YYYY'
-										}
-									}
-								},
-								'totalAmount' : {
-									selector : '.totalAmount',
-									row : '.input-group',
-									icon : false,
-									validators : {
-										notEmpty : {},
-										greaterThan : {
-	                                                   value : 1
-											},
-										numeric :{}
-									}
-								},
-								'paymentSelect' : {
-									row : '.row .col-md-11',
-									icon : false,
-									validators : {
-										callback : {
-											message : 'Silahkan pilih payment type!',
-											callback : function(value, validator, $field) {
-												var productSelect = $("#paymentSelect").val();
-												if (productSelect == '') {
-													return false;
-												} else {
-													return true;
-												}
-	
-											}
-										}
-									}
-								}
-							}
-						}).on('click','#addPayButton',function(e) {
-							$('#poForm').formValidation('revalidateField','paymentSelect');
-						}).on('click','#submitButton',function(e) {
-							$('#poForm').formValidation('removeField','paymentSelect');
-						}).on('click','#removePayButton',function(e) {
-							$('#poForm').formValidation('removeField','paymentSelect');
-						}).on('success.field.fv',function(e, data) {
-							if (data.field == 'paymentSelect') {
-								if (paymentSelect != '') {
-									$('#poForm').formValidation('removeField','paymentSelect');
-								}
-							}
-					});
 
 });
 </script>
@@ -431,12 +356,14 @@ $(document).ready(function() {
 																	<div class="panel-body">
 																		<div class="row">
 																			<div class="col-md-11">
-																				<select id="paymentSelect" name="paymentSelect" class="form-control">
+																			<div class="form-group" style="padding-left: 2%">
+																				<select id="paymentSelect" name="paymentSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																					<option value="">Please Select</option>
 																					<c:forEach items="${ paymentTypeDDL }" var="pddl">
 																						<option value="${ pddl.lookupKey }">${ pddl.lookupValue }</option>
 																					</c:forEach>
 																				</select>
+																				</div>
 																			</div>
 																			<div class="col-md-1">
 																				<button id="addPayButton" type="submit" class="btn btn-primary pull-right">
