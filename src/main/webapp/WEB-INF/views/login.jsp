@@ -4,36 +4,6 @@
 <html>
 <head>
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
-	<script>
-		$(document).ready(function() {
-			$('#loginForm').formValidation({
-				framework: 'bootstrap',
-				locale: 'id_ID',
-				icon: {
-					valid: 'glyphicon glyphicon-ok',
-					invalid: 'glyphicon glyphicon-remove',
-					validating: 'glyphicon glyphicon-refresh'
-				},
-				fields: {
-					j_username: {
-						validators: {
-							notEmpty: { },
-							stringLength: { min: 4, max: 10 },
-							regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-	                   		different: { field: 'password' }							
-						}
-					},
-					j_password: {
-               			validators: {
-                   			notEmpty: {	},
-                   			different: { field: 'username' },
-                   			stringLength: { min: 6 }
-               			}
-           			}
-				}
-			});
-		});
-	</script>
 </head>
 <body>
     <div class="container-fluid">
@@ -63,13 +33,13 @@
 		                        <h3 class="panel-title">Sign In</h3>
 		                    </div>
 		                    <div class="panel-body">
-		                        <form id="loginForm" role="form" action="<c:url value="j_spring_security_check"/>" method="post">
+		                        <form id="loginForm" role="form" action="<c:url value="j_spring_security_check"/>" method="post" data-parsley-validate>
 		                            <fieldset>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="UserName" name="j_username" type="text" autofocus>                                
+		                                    <input class="form-control" placeholder="UserName" name="j_username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                                
 		                                </div>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="Password" name="j_password" type="password" value="">
+		                                    <input class="form-control" placeholder="Password" name="j_password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
 		                                </div>
 		                                <button type="submit" class="btn btn-default">Submit</button>
 		                            </fieldset>

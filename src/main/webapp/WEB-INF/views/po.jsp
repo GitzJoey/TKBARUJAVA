@@ -276,7 +276,11 @@
 																					</label>
 																				</td>
 																				<td style="vertical-align: middle;">
-																					<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
+																					<div class="form-group">
+																						<div class="col-sm-12">
+																							<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																						</div>
+																					</div>
 																				</td>
 																				<td style="vertical-align: middle;"><form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
 																					<label>
@@ -284,7 +288,11 @@
 																					</label>
 																				</td>
 																				<td style="vertical-align: middle;">
-																					<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"></form:input>
+																					<div class="form-group">
+																						<div class="col-sm-12">
+																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																						</div>
+																					</div>
 																				</td>
 																				<td style="vertical-align: middle;">
 																				<c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">

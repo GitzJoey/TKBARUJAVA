@@ -399,14 +399,22 @@
 																							<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
 																						</td>
 																						<td>
 																							<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
 																							<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																						<div class="form-group">
+																									<div class="col-sm-12">
+																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																						</div>
+																						</div>
 																						</td>
 																						<td>
 																						<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">

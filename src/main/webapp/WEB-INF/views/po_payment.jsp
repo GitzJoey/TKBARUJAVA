@@ -431,8 +431,10 @@ $(document).ready(function() {
 																									</div>
 																								</td>
 																								<td>
-																									<div class="input-group">
-																										<form:input type="text" class="form-control text-right totalAmount" id="totalAmount${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount"></form:input>
+																									<div class="form-group">
+																									<div class="col-sm-12">
+																										<form:input type="text" class="form-control text-right totalAmount" id="totalAmount${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																									</div>
 																									</div>
 																								</td>
 																								<td><form:checkbox id="linked${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />

@@ -159,8 +159,7 @@ $(document).ready(
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputPOCode"
-																			class="col-sm-2 control-label">PO Code</label>
+																		<label for="inputPOCode" class="col-sm-2 control-label">PO Code</label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
@@ -276,7 +275,11 @@ $(document).ready(
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
 																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
@@ -285,7 +288,13 @@ $(document).ready(
 																						</label>
 																					</td>
 																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input></td>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
+																					</td>
+																					
 																					<td>
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
 																							<span class="fa fa-minus"></span>
