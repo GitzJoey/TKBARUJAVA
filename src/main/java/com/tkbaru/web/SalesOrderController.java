@@ -7,15 +7,12 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +25,6 @@ import com.tkbaru.common.Constants;
 import com.tkbaru.model.Customer;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
-import com.tkbaru.model.Lookup;
 import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.SalesOrder;
@@ -78,14 +74,12 @@ public class SalesOrderController {
 		logger.info("[salesNew] " + "");
 		
 		if (loginContextSession.getSoList().isEmpty()) {
-			
 			SalesOrder so = new SalesOrder();
 			so.setSalesStatus("L016_D");
 			so.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
 			so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setCreatedDate(new Date());
 			loginContextSession.getSoList().add(so);
-
 		}
 		
 		int customerId=0;

@@ -324,7 +324,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="supplierForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save">
+								<form:form id="supplierForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save" data-parsley-validate="parsley">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
 											<li role="presentation" class="<c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>"><a href="#suppDataTab" aria-controls="suppDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Supplier Data</a></li>
@@ -341,25 +341,25 @@
 													<label for="inputSupplierName" class="col-sm-2 control-label">Supplier Name</label>
 													<div class="col-sm-3">
 														<form:hidden path="supplierId"/>
-														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputSupplierAddress" class="col-sm-2 control-label">Address</label>
 													<div class="col-sm-3">
-														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputCity" class="col-sm-2 control-label">City</label>
 													<div class="col-sm-5">											
-														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City"></form:input>
+														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
 													<div class="col-sm-4">
-														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="supplierPhone"  placeholder="Enter Supplier Phone Number"></form:input>
+														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="supplierPhone"  placeholder="Enter Supplier Phone Number" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
 												</div>                     
 												<div class="form-group">
@@ -413,17 +413,17 @@
 																			<div class="row">
 																				<label for="firstName" class="col-sm-2 control-label">Name</label>
 																				<div class="col-sm-4">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName"/>
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																				</div>
 																				<div class="col-sm-4">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName"/>
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																				</div>
 																			</div>
 																			<br/>
 																			<div class="row">
 																				<label for="addressLine1" class="col-sm-2 control-label">Address</label>
 																				<div class="col-sm-8">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1"/>
+																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
 																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
 																				</div>														
@@ -469,7 +469,7 @@
 																											</form:select>																						
 																										</td>
 																										<td>
-																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber"/>
+																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																										</td>
 																										<td>
 																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">

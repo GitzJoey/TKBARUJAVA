@@ -41,8 +41,16 @@ $(document).ready(
 					var button = $(this).attr('id');
 
 					if (button == 'addProdButton') {
-						id = $('#productSelect').val();
-						$('#reviseForm').attr('action',ctxpath + "/po/additems/" + id);
+						$("#productSelect").parsley().validate();
+						
+						if(false==$('#productSelect').parsley().isValid()){
+							
+							return false;
+						
+			            }else{
+							id = $('#productSelect').val();
+							$('#reviseForm').attr('action',ctxpath + "/po/additems/" + id);
+			            }
 					} else {
 						id = $(this).val();
 						$('#reviseForm').attr('action',ctxpath + "/po/removeitems/" + id);
@@ -59,44 +67,6 @@ $(document).ready(
 
 		$("#supplierTooltip").tooltip({ title : supplier });
 
-		$("#reviseForm").formValidation({
-			locale : 'id_ID',
-			framework : 'bootstrap',
-			//	excluded : 'disabled',
-			icon : {
-				valid : 'glyphicon glyphicon-ok',
-				invalid : 'glyphicon glyphicon-remove',
-				validating : 'glyphicon glyphicon-refresh'
-			},
-			fields : {
-			  'productSelect' : {
-					row : '.row .col-md-11',
-					icon : false,
-					validators : {
-						callback : {
-							message : 'Silahkan pilih produk!',
-							callback : function(value, validator, $field) {
-								var productSelect = $("#productSelect").val();
-								if (productSelect == '') {
-									return false;
-								} else {
-									return true;
-								}
-
-							}
-						}
-					}
-				}
-			}
-		}).on('click','#addProdButton',function(e) {
-			$('#reviseForm').formValidation('revalidateField','productSelect');
-		}).on('click','#submitButton',function(e) {
-			$('#reviseForm').formValidation('removeField','productSelect');
-		}).on('click','#removeProdButton',function(e) {
-			$('#reviseForm').formValidation('removeField','productSelect');
-		}).on('err.field.fv', function(e, data) {
-			data.fv.disableSubmitButtons(false);
-        });
 });
 </script>
 </head>
@@ -189,8 +159,7 @@ $(document).ready(
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputPOCode"
-																			class="col-sm-2 control-label">PO Code</label>
+																		<label for="inputPOCode" class="col-sm-2 control-label">PO Code</label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
@@ -267,12 +236,14 @@ $(document).ready(
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-11">
-																	<select id="productSelect" name="productSelect" class="form-control">
+																	<div class="form-group" style="padding-left: 2%">
+																	<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value="">Please Select</option>
 																			<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
 																	</select>
+																	</div>
 																</div>
 																<div class="col-md-1">
 																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right">
@@ -304,7 +275,11 @@ $(document).ready(
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
 																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity"></form:input>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
@@ -313,7 +288,13 @@ $(document).ready(
 																						</label>
 																					</td>
 																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price"></form:input></td>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
+																					</td>
+																					
 																					<td>
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
 																							<span class="fa fa-minus"></span>

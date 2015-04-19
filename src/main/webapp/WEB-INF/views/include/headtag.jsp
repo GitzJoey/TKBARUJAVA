@@ -50,12 +50,14 @@
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/formValidation.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/framework/bootstrap.min.js"></script>
-	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/formvalidation/dist/js/language/id_ID.js"></script>
-	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
+	
+	
+	
+	

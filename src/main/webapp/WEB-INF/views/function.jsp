@@ -59,58 +59,6 @@
 				}								
 			});
 			
-			$('#functionForm')
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						functionCode: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 }
-							}
-						},
-						module: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 }
-							}
-						},
-						menuName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 }
-							}
-						},
-						urlLink: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 }
-							}
-						},
-						orderNum: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 },
-								digits: { }
-							}
-						},
-						deepLevel: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 5, max: 30 },
-								digits: { }
-							}
-						}
-					}
-				});
-			
 			$('#functionListTable').DataTable();
 		});
 	</script>	
@@ -200,12 +148,12 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm" modelAttribute="fForm" action="${pageContext.request.contextPath}/admin/function/save">
+								<form:form id="functionForm" role="form" class="form-horizontal" commandName="fForm" modelAttribute="fForm" action="${pageContext.request.contextPath}/admin/function/save" data-parsley-validate="parsley">
 									<form:hidden path="functionId"/>
 									<div class="form-group">
 										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" path="functionCode" placeholder="Enter Function Code"></form:input>
+											<form:input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" path="functionCode" placeholder="Enter Function Code" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -229,7 +177,7 @@
 												</tr>
 												<tr>
 													<td colspan="2">
-														<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name"></form:input>
+														<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
 													</td>
 												</tr>
 											</table>
@@ -256,7 +204,7 @@
 												</tr>
 												<tr>
 													<td colspan="2">
-														<form:input type="text" class="form-control" id="inputMenuName" name="inputMenuName" path="menuName" placeholder="Menu Name"></form:input>
+														<form:input type="text" class="form-control" id="inputMenuName" name="inputMenuName" path="menuName" placeholder="Menu Name" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
 													</td>
 												</tr>
 											</table>
@@ -265,19 +213,19 @@
 									<div class="form-group">
 										<label for="inputUrlLink" class="col-sm-2 control-label">URL</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputUrlLink" name="inputUrlLink" path="urlLink" placeholder="URL"></form:input>
+											<form:input type="text" class="form-control" id="inputUrlLink" name="inputUrlLink" path="urlLink" placeholder="URL" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
 										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
+											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputDeepLevel" class="col-sm-2 control-label">Deep Level</label>
 										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputDeepLevel" name="inputDeepLevel" path="deepLevel" placeholder="Deep Level"></form:input>
+											<form:input type="text" class="form-control" id="inputDeepLevel" name="inputDeepLevel" path="deepLevel" placeholder="Deep Level" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">

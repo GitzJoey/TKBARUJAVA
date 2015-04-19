@@ -31,6 +31,7 @@ import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Warehouse;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.StocksService;
 import com.tkbaru.service.WarehouseService;
 
 @Controller
@@ -49,6 +50,9 @@ public class WarehouseController {
 
 	@Autowired
 	private LoginContext loginContextSession;
+	
+	@Autowired
+	StocksService stocksManager;
 	
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -100,6 +104,12 @@ public class WarehouseController {
 		
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		
+		for(PurchaseOrder po: poList){
+			po.getItemsList().size();
+			for(Items item: po.getItemsList()){
+				item.getReceiptList().size();
+			}
+		}
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setPurchaseOrderList(poList);
 		
@@ -202,7 +212,7 @@ public class WarehouseController {
 		}
 		
 		List<Items> itemsList = poView.getItemsList();
-		
+		List<Stocks> stocksList = new ArrayList<Stocks>();
 		for(Items items : itemsList){
 			List<Receipt> receiptList = new ArrayList<Receipt>();
 			for(Receipt receipt : items.getReceiptList()){
@@ -211,6 +221,13 @@ public class WarehouseController {
 						receipt.setReceiptDate(new Date());
 						receipt.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 						receipt.setCreatedDate(new Date());
+						Stocks stocks = new Stocks();
+						stocks.setPoId(poId);
+						stocks.setProductId(items.getProductId());
+						stocks.setProdQuantity(receipt.getNet());
+						stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						stocks.setCreatedDate(new Date());
+						stocksList.add(stocks);
 					}
 					receiptList.add(receipt);
 				}
@@ -240,7 +257,15 @@ public class WarehouseController {
 			po.setPoStatus("L013_WP");
 		}
 		
-		poManager.editPurchaseOrder(po);
+		try {
+			poManager.editPurchaseOrder(po);
+		} catch (Exception e) {
+			
+		}
+		
+		for(Stocks stocks: stocksList){
+			stocksManager.addOrCreateStocks(stocks);
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);

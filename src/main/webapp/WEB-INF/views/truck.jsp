@@ -48,55 +48,11 @@
 			});
       
 			$('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
+			$('#inputKirDate').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
+			});
 			
-			$('#truckForm')
-				.find('[name="truckType"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'truckType'); }).end()
-				.find('[name="weightType"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'weightType'); }).end()
-				.find('[name="driver"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'driver'); }).end()
-				.find('[name="truckStatus"]').change(function(e) { $('#truckForm').formValidation('revalidateField', 'truckStatus'); }).end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						truckType: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						weightType: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						plateNumber: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 4, max: 10 },
-								regexp: { regexp: /^[a-zA-Z0-9]+$/ }
-							}					
-						},
-						driver: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						truckStatus: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						}
-					}
-				});
+			
 		});
 	</script>	
 </head>
@@ -189,12 +145,12 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="truckForm" role="form" class="form-horizontal" modelAttribute="truckForm" action="${pageContext.request.contextPath}/truck/save">
+								<form:form id="truckForm" role="form" class="form-horizontal" modelAttribute="truckForm" action="${pageContext.request.contextPath}/truck/save" data-parsley-validate="parsley">
 									<form:hidden path="truckId" />									
 									<div class="form-group">
 										<label for="inputTruckType" class="col-sm-2 control-label">Truck Type</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="truckType">
+											<form:select class="form-control" path="truckType" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Select Truck Type</option>
 												<form:options items="${ truckTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
@@ -203,7 +159,7 @@
 									<div class="form-group">
 										<label for="inputWeightType" class="col-sm-2 control-label">Weight Type</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="weightType">
+											<form:select class="form-control" path="weightType" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Select Weight Type</option>
 												<form:options items="${ weightTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
@@ -212,19 +168,19 @@
 									<div class="form-group">
 										<label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
 										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputPlateNumber" path="plateNumber" placeholder="Enter Plate Number"></form:input>
+											<form:input type="text" class="form-control" id="inputPlateNumber" path="plateNumber" placeholder="Enter Plate Number" data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputKirDate" class="col-sm-2 control-label">KIR Date</label>
 										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputKirDate" path="kirDate" placeholder="Enter KIR Date"></form:input>
+											<form:input type="text" class="form-control" id="inputKirDate" path="kirDate" placeholder="Enter KIR Date" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>									
 									<div class="form-group">
 										<label for="inputDriver" class="col-sm-2 control-label">Driver</label>
 										<div class="col-sm-2">											
-											<form:select class="form-control" path="driver">
+											<form:select class="form-control" path="driver" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
 											</form:select>	
@@ -233,7 +189,7 @@
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">											
-											<form:select class="form-control" path="truckStatus">
+											<form:select class="form-control" path="truckStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>	

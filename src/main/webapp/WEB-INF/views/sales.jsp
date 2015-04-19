@@ -10,17 +10,6 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			var lastTab = "${activeTab}"==''?"${ loginContext.soList.size()-1 }" :"${activeTab}";
 			
-			window.ParsleyValidator.setLocale('id');
-			window.ParsleyConfig = {
-				successClass: "has-success",
-			    errorClass: "has-error",
-			    classHandler: function(el) {
-			        return el.$element.closest(".form-group");
-			    },
-			    errorsWrapper: "<span class='help-block'></span>",
-			    errorTemplate: "<span></span>"
-			};
-			
 			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
 			
 			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
@@ -35,16 +24,15 @@
 			});
 			
 
-			var searchTable = 
-				$('#searchCustomerResultTable').DataTable({
-					"paging":   	false,
-			        "ordering": 	false,
-			        "info":     	false,
-			        "searching": 	false,
-			        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
-						$('td:eq(5)', nRow).addClass( "actionCell" );
-					}
-				});
+			var searchTable = $('#searchCustomerResultTable').DataTable({
+								"paging":   	false,
+						        "ordering": 	false,
+						        "info":     	false,
+						        "searching": 	false,
+						        "fnRowCallback": function( nRow, aData, iDisplayIndex, iDisplayIndexFull ) {
+									$('td:eq(5)', nRow).addClass( "actionCell" );
+								}
+							});
 
 			$('#searchButton, #newTab').click(function() {
 				
@@ -215,7 +203,7 @@
 													
 														<td width="93%">
 														<div class="form-group" style="padding-left: 1.7%">
-															<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="search"></input>
+															<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
 														</div>
 														</td>
 														<td width="7%" align="right">
@@ -411,14 +399,22 @@
 																							<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
 																						</td>
 																						<td>
 																							<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
 																							<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																						</td>
 																						<td>
-																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"></form:input>
+																						<div class="form-group">
+																									<div class="col-sm-12">
+																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																						</div>
+																						</div>
 																						</td>
 																						<td>
 																						<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
