@@ -72,74 +72,6 @@
 			});
 			
 			$('#userListTable').DataTable();
-						
-			$('#userForm')
-				.find('[name="roleId"]')
-					.change(function(e) { $('#userForm').formValidation('revalidateField', 'roleId'); })
-					.end()
-				.find('[name="storeId"]')
-					.change(function(e) { $('#userForm').formValidation('revalidateField', 'storeId'); })
-					.end()
-				.find('[name="userStatus"]')
-					.change(function(e) { $('#userForm').formValidation('revalidateField', 'userStatus'); })
-					.end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						userName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 4, max: 10 },
-								regexp: { regexp: /^[a-zA-Z0-9]+$/ },
-		                   		different: { field: 'password' }								
-							}					
-						},
-						userPassword: {
-	               			validators: {
-	                   			notEmpty: {	},
-	                   			different: { field: 'username' },
-	                   			stringLength: { min: 6 }
-	               			}
-	           			},
-						roleId: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						storeId: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						userStatus: {
-							icon: false,
-							validators: {
-								notEmpty: {	}
-							}
-						},
-						'personEntity.firstName': {
-							validators: {
-								notEmpty: {	},
-								regexp: { regexp: /^[a-zA-Z]+$/ }
-							}							
-						},
-						'personEntity.lastName': {
-							validators: {
-								notEmpty: {	},
-								regexp: { regexp: /^[a-zA-Z]+$/ }
-							}							
-						}
-					}
-				});	
 		});
 	</script>	
 </head>
@@ -236,14 +168,14 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save" enctype="multipart/form-data">
+								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save" enctype="multipart/form-data" data-parsley-validate="parsley">
 									<form:hidden path="userId"/>
 									<div class="form-group">
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
 										<div class="col-sm-3">
 											<c:choose>
 												<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
-													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name"></form:input>
+													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 												</c:when>
 												<c:otherwise>
 													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" readonly="true"></form:input>
@@ -254,13 +186,13 @@
 									<div class="form-group">
 										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 										<div class="col-sm-3">
-											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password"></form:input>
+											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputRole" class="col-sm-2 control-label">Role</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="roleId">
+											<form:select class="form-control" path="roleId" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ roleDDL }" itemValue="roleId" itemLabel="roleName"></form:options>
 											</form:select>
@@ -269,7 +201,7 @@
 									<div class="form-group">
 										<label for="inputStore" class="col-sm-2 control-label">Store</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="storeId">
+											<form:select class="form-control" path="storeId" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ storeDDL }" itemValue="storeId" itemLabel="storeName"></form:options>
 											</form:select>
@@ -305,13 +237,13 @@
 									<div class="form-group">
 										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
 										<div class="col-sm-5">											
-											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name"></form:input>
+											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name" data-parsley-required="true" data-parsley-pattern="^[a-zA-Z]+$" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
 										<div class="col-sm-5">
-											<form:input path="personEntity.lastName" type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name"></form:input>
+											<form:input path="personEntity.lastName" type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name" data-parsley-required="true" data-parsley-pattern="^[a-zA-Z]+$"  data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

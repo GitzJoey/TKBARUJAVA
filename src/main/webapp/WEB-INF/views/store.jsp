@@ -46,47 +46,7 @@
 				}				
 			});
 
-			$('#storeForm')
-				.find('[name="isDefault"]')
-					.change(function(e) {
-						$('#storeForm').formValidation('revalidateField', 'isDefault');
-					})
-					.end()
-				.find('[name="storeStatus"]')
-					.change(function(e) {
-						$('#storeForm').formValidation('revalidateField', 'storeStatus');
-					})
-					.end()					
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						storeName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 6, max: 30 }
-							}
-						},
-						isDefault: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						},
-						storeStatus: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						}					
-					}
-				});			
+					
 		});
 	</script>	
 </head>
@@ -185,12 +145,12 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="storeForm" role="form" class="form-horizontal" modelAttribute="storeForm" action="${pageContext.request.contextPath}/admin/store/save"> 
+								<form:form id="storeForm" role="form" class="form-horizontal" modelAttribute="storeForm" action="${pageContext.request.contextPath}/admin/store/save" data-parsley-validate="parsley"> 
 									<form:hidden path="storeId"/>									
 									<div class="form-group">
 										<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputStoreName" name="inputStoreName" path="storeName" placeholder="Store Name"></form:input>
+											<form:input type="text" class="form-control" id="inputStoreName" name="inputStoreName" path="storeName" placeholder="Store Name" data-parsley-required="true" data-parsley-length="[6, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>										
 									</div>
 									<div class="form-group">
@@ -204,7 +164,7 @@
 									<div class="form-group">
 										<label for="inputIsDefault" class="col-sm-2 control-label">Is Default Store</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="isDefault">
+											<form:select class="form-control" path="isDefault" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ ynDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
@@ -219,7 +179,7 @@
 									<div class="form-group">
 										<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="storeStatus">
+											<form:select class="form-control" path="storeStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											

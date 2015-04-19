@@ -58,51 +58,6 @@
 			
 			$('#lookupListTable').DataTable();
 			
-			$('#lookupForm')
-				.find('[name="lookupMaintainability"]').change(function(e) { $('#lookupForm').formValidation('revalidateField', 'lookupMaintainability'); }).end()
-				.find('[name="lookupStatus"]').change(function(e) { $('#lookupForm').formValidation('revalidateField', 'lookupStatus'); }).end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						lookupCategory: {
-							validators: {
-								notEmpty: { }
-							}					
-						},
-						lookupKey: {
-	               			validators: {
-	                   			notEmpty: {	},
-	                   			stringLength: { min: 5 }
-	               			}
-	           			},
-						orderNum: {
-	               			validators: {
-	                   			notEmpty: {	},
-	                   			stringLength: { max: 3 },
-	                   			digits: { }
-	               			}
-	           			},
-	           			lookupMaintainability: {
-	           				icon: false,
-	           				validators: {
-	           					notEmpty: { }
-	           				}
-	           			},
-	           			lookupStatus: {
-	           				icon: false,
-	           				validators: {
-	           					notEmpty: { }
-	           				}
-	           			}
-					}
-				});
 		});
 	</script>	
 </head>
@@ -211,36 +166,36 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="lookupForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save">
+								<form:form id="lookupForm" role="form" class="form-horizontal" commandName="lookupForm" modelAttribute="lookupForm" action="${pageContext.request.contextPath}/admin/lookup/save" data-parsley-validate="parsley">
 									<form:hidden path="lookupId"/>
 									<div class="form-group">
 										<label for="inputCategory" class="col-sm-2 control-label">Category</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputCategory" name="inputCategory" path="lookupCategory" placeholder="Enter Category"></form:input>
+											<form:input type="text" class="form-control" id="inputCategory" name="inputCategory" path="lookupCategory" placeholder="Enter Category" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputLookupKey" class="col-sm-2 control-label">Lookup Key</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputLookupKey" name="inputLookupKey" path="lookupKey" placeholder="Enter Lookup Key"></form:input>
+											<form:input type="text" class="form-control" id="inputLookupKey" name="inputLookupKey" path="lookupKey" placeholder="Enter Lookup Key" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputLocaleMessageCodes" class="col-sm-2 control-label">Locale Message Codes</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" path="localeMessageCodes" placeholder="Enter Locale Message Codes"></form:input>
+											<form:input type="text" class="form-control" path="localeMessageCodes" placeholder="Enter Locale Message Codes" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>									
 									<div class="form-group">
 										<label for="inputValue" class="col-sm-2 control-label">Value</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" path="lookupValue" placeholder="Enter Lookup Value"></form:input>
+											<form:input type="text" class="form-control" path="lookupValue" placeholder="Enter Lookup Value" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputOrderNum" class="col-sm-2 control-label">Order</label>
 										<div class="col-sm-1">
-											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order"></form:input>
+											<form:input type="text" class="form-control" id="inputOrderNum" name="inputOrderNum" path="orderNum" placeholder="Order" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

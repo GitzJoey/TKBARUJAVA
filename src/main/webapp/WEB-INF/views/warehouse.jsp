@@ -34,36 +34,6 @@
 				window.location.href(ctxpath + "/warehouse");
 			});
 			
-			$('#warehouseForm')
-				.find('[name="warehouseStatus"]')
-					.change(function(e) {
-						$('#warehouseForm').formValidation('revalidateField', 'warehouseStatus');
-				})
-				.end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						warehouseName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 3, max: 30 }
-							}
-						},
-						warehouseStatus: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						}					
-					}
-				});
 		});
 	</script>	
 </head>
@@ -154,18 +124,18 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/warehouse/save"> 
+								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/warehouse/save" data-parsley-validate="parsley"> 
 									<form:hidden path="warehouseId"/>									
 									<div class="form-group">
 										<label for="inputWarehouseName" class="col-sm-2 control-label">Warehouse Name</label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputWarehouseName" name="inputWarehouseName" path="warehouseName" placeholder="Warehouse Name"></form:input>
+											<form:input type="text" class="form-control" id="inputWarehouseName" name="inputWarehouseName" path="warehouseName" placeholder="Warehouse Name" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>										
 									</div>
 									<div class="form-group">
 										<label for="inputWarehouseLocation" class="col-sm-2 control-label">Location</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputWarehouseLocation" name="inputWarehouseLocation" path="warehouseLocation"></form:input>
+											<form:input type="text" class="form-control" id="inputWarehouseLocation" name="inputWarehouseLocation" path="warehouseLocation" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>										
 									</div>
 									<div class="form-group">
@@ -177,7 +147,7 @@
 									<div class="form-group">
 										<label for="inputWarehouseStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="warehouseStatus">
+											<form:select class="form-control" path="warehouseStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											

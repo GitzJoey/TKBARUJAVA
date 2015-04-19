@@ -76,32 +76,7 @@
 				return false;
 			});
 			
-			$('#roleForm')
-				.find('[name="roleStatus"]').change(function() { $('#roleForm').formValidation('revalidateField', 'roleStatus'); }).end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						roleName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 3, max: 30 }
-							}
-						},
-						roleStatus: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						}
-					}
-				});
+			
 		});
 	</script>	
 </head>
@@ -192,19 +167,19 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save">
+								<form:form id="roleForm" role="form" class="form-horizontal" modelAttribute="roleForm" action="${pageContext.request.contextPath}/admin/role/save" data-parsley-validate="parsley">
 									<form:hidden path="roleId"/>
 									<input id="selectedFunc" name="selectedFunc" type="hidden" value="${selectedFunction}"/>
 									<div class="form-group">
 										<label for="inputRoleName" class="col-sm-2 control-label">Role Name</label>
 										<div class="col-sm-3">
-											<form:input path="roleName" type="text" class="form-control" id="inputRoleName" name="inputRoleName" placeholder="Enter Role Name"></form:input>
+											<form:input path="roleName" type="text" class="form-control" id="inputRoleName" name="inputRoleName" placeholder="Enter Role Name" data-parsley-required="true" data-parsley-length="[3, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputRoleStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="roleStatus">
+											<form:select class="form-control" path="roleStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											

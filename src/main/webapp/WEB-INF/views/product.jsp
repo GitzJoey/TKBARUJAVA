@@ -66,52 +66,7 @@
 				}
 			});
 			
-			$('#productForm')
-				.find('[name="productType"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'productType'); }).end()
-				.find('[name="baseUnit"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'baseUnit'); }).end()
-				.find('[name="productStatus"]').change(function(e) { $('#productForm').formValidation('revalidateField', 'productStatus'); }).end()
-				.formValidation({
-					locale: 'id_ID',
-					framework: 'bootstrap',
-					excluded: ':disabled',
-					icon: {
-						valid: 'glyphicon glyphicon-ok',
-						invalid: 'glyphicon glyphicon-remove',
-						validating: 'glyphicon glyphicon-refresh'
-					},
-					fields: {
-						productType: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						},
-						shortCode: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 1, max: 10 }
-							}							
-						},
-						productName: {
-							validators: {
-								notEmpty: { },
-								stringLength: { min: 3, max: 30 }
-							}														
-						},
-						baseUnit: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						},
-						productStatus: {
-							icon: false,
-							validators: {
-								notEmpty: { }
-							}
-						}
-					}					
-				});
+			
 		});
 	</script>	
 </head>
@@ -200,12 +155,12 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data">
+								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley">
 									<form:hidden path="productId"/>									
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="productType">
+											<form:select class="form-control" path="productType" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Select Product Type</option>
 												<form:options items="${ productTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
@@ -214,13 +169,13 @@
 									<div class="form-group">
 										<label for="inputShortCode" class="col-sm-2 control-label">Short Code</label>
 										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputShortCode" name="inputShortCode" path="shortCode" placeholder="Short Code"></form:input>
+											<form:input type="text" class="form-control" id="inputShortCode" name="inputShortCode" path="shortCode" placeholder="Short Code" data-parsley-required="true" data-parsley-length="[1, 10]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputProductName" class="col-sm-2 control-label">Product Name</label>
 										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputProductName" name="inputProductName" path="productName" placeholder="Enter Product Name"></form:input>
+											<form:input type="text" class="form-control" id="inputProductName" name="inputProductName" path="productName" placeholder="Enter Product Name" data-parsley-required="true" data-parsley-length="[3, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -242,7 +197,7 @@
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="productStatus">
+											<form:select class="form-control" path="productStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value="">Please Select</option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
