@@ -1,12 +1,12 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -16,8 +16,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
+
 @Entity
 @Table(name="tb_items")
+@SuppressWarnings("unchecked")
 public class Items {
 	public Items() {
 		
@@ -52,11 +56,11 @@ public class Items {
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
 	
-	@ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_items_receipt", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
-	private List<Receipt> receiptList;
+	private List<Receipt> receiptList= LazyList.decorate(new ArrayList<Receipt>(), FactoryUtils.instantiateFactory(Receipt.class));
 
 	public int getItemsId() {
 		return itemsId;
@@ -158,9 +162,9 @@ public class Items {
 	public String toString() {
 		return "Items [itemsId=" + itemsId + ", productId=" + productId
 				+ ", prodQuantity=" + prodQuantity + ", unitCode=" + unitCode
-				+ ", prodPrice=" + prodPrice + ", createdBy=" + createdBy
+				+ ", prodPrice=" + prodPrice +", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+				+ ", updatedDate=" + updatedDate +  ", receiptList=" + receiptList + "]";
 	}
 
 }

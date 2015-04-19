@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -98,6 +99,12 @@ public class WarehouseController {
 	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
 		logger.info("[warehousePageLoad] : " + "");
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
+		for(PurchaseOrder po: poList){
+			po.getItemsList().size();
+			for(Items item: po.getItemsList()){
+				item.getReceiptList().size();
+			}
+		}
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setPurchaseOrderList(poList);
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
