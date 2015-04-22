@@ -1,6 +1,5 @@
 package com.tkbaru.dao;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -12,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.tkbaru.model.SalesOrder;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class SalesOrderDAOImpl implements SalesOrderDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SalesOrderDAOImpl.class);
 
@@ -19,7 +19,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
     public void setSessionFactory(SessionFactory sf) {
         this.sessionFactory = sf;
     }
-
+	
 	@Override
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId) {
 		logger.info("[getAwaitingPaymentSales] " + "selectedCustomerId: " + selectedCustomerId);

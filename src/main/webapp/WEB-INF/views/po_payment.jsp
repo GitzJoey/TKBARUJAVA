@@ -54,11 +54,11 @@ $(document).ready(function() {
 									if (button == 'addPayButton') {
 										$("#paymentSelect").parsley().validate();
 										
-										if(false==$('#paymentSelect').parsley().isValid()){
+										if(false == $('#paymentSelect').parsley().isValid()) {
 											
 											return false;
 										
-							            }else{
+							            } else {
 											id = $("#paymentSelect").val();
 											$('#poForm').attr('action',ctxpath + "/po/addpayment/"+ id);
 							            }

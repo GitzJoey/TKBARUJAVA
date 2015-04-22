@@ -112,6 +112,7 @@ public class SalesOrderController {
 		model.addAttribute("customerList", customerList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -223,6 +224,7 @@ public class SalesOrderController {
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -260,6 +262,7 @@ public class SalesOrderController {
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -287,7 +290,6 @@ public class SalesOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 
 		return Constants.JSPPAGE_DASHBOARD;
-
 	}
 	
 	@RequestMapping(value="/save/{customerId}/{tabId}", method = RequestMethod.POST)
@@ -331,25 +333,27 @@ public class SalesOrderController {
 		customerList.add(customer);
 		loginContextSession.setSoList(loginContext.getSoList());
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
+		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerId",customerId);
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_SALESORDER;
-
 	}
-	
 
 	@RequestMapping(value="/revise", method = RequestMethod.GET)
 	public String salesRevise(Locale locale, Model model) {
 		logger.info("[salesRevise] " + "");
 		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("L016_WP");
+	
 		model.addAttribute("reviseSalesList", soList);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -364,8 +368,10 @@ public class SalesOrderController {
 		so.setCustomerLookup(customerManager.getCustomerById(so.getCustomerId()));
 		so.setStatusLookup(lookupManager.getLookupByKey(so.getSalesStatus()));
 		so.setSoTypeLookup(lookupManager.getLookupByKey(so.getSalesType()));
+		
 		model.addAttribute("reviseSalesForm", so);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -376,6 +382,7 @@ public class SalesOrderController {
 	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
 	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int varId) {
 		logger.info("[soAddItems] " + "varId: " + varId);
+		
 		Items i = new Items();
 		i.setProductId(varId);
 		Product product = productManager.getProductById(varId);
@@ -396,6 +403,7 @@ public class SalesOrderController {
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -406,6 +414,7 @@ public class SalesOrderController {
 	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
 	public String poRemoveItems(Locale locale, Model model,@ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable String varId) {
 		logger.info("[poRemoveItems] " + "varId: " + varId);
+		
 		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
 		reviseSalesForm.setCustomerLookup(customerManager.getCustomerById(reviseSalesForm.getCustomerId()));
 		reviseSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesType()));
@@ -439,7 +448,9 @@ public class SalesOrderController {
 		reviseSalesForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.setUpdatedDate(new Date());
 		salesOrderManager.editSalesOrder(reviseSalesForm);
+		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
@@ -452,7 +463,9 @@ public class SalesOrderController {
 		logger.info("[salesPayment] " + "");
 
 		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("L016_WP");
+		
 		model.addAttribute("paymentSalesList", soList);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -464,6 +477,7 @@ public class SalesOrderController {
 	public String paymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
 		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		
 		model.addAttribute("paymentSalesForm", so);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
@@ -472,6 +486,7 @@ public class SalesOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -487,7 +502,6 @@ public class SalesOrderController {
 		
 		model.addAttribute("paymentSalesForm", so);
 		
-
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -498,6 +512,7 @@ public class SalesOrderController {
 	@RequestMapping(value = "/addpayment/{paymentType}", method = RequestMethod.POST)
 	public String poAddPayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, @PathVariable String paymentType) {
 		logger.info("[soAddPayments] ");
+		
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
 		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
 		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
@@ -521,6 +536,7 @@ public class SalesOrderController {
 		}
 		
 		paymentSalesForm.setPaymentList(paymentSalesForm.getPaymentList());
+		
 		model.addAttribute("paymentSalesForm", paymentSalesForm);
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
@@ -529,6 +545,7 @@ public class SalesOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -539,6 +556,7 @@ public class SalesOrderController {
 	@RequestMapping(value = "/removepayment/{varId}", method = RequestMethod.POST)
 	public String poRemovePayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm,@PathVariable String varId) {
 		logger.info("[poRemovePayment] " + "varId: " + varId);
+		
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
 		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
 		paymentSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesType()));
@@ -562,6 +580,7 @@ public class SalesOrderController {
 		model.addAttribute("paymentSalesForm", paymentSalesForm);
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -572,6 +591,7 @@ public class SalesOrderController {
 	@RequestMapping(value = "/savepayment", method = RequestMethod.POST)
 	public String paymentSave(Locale locale, Model model,@ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm,RedirectAttributes redirectAttributes) {
 		logger.info("[paymentSave] " + "");
+		
 		SalesOrder po = salesOrderManager.getSalesOrderById(paymentSalesForm.getSalesId());
 		po.setUpdatedDate(new Date());
 		po.setPaymentList(paymentSalesForm.getPaymentList());
@@ -604,16 +624,17 @@ public class SalesOrderController {
 		}
 		
 		salesOrderManager.editSalesOrder(paymentSalesForm);
+		
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+		
 		return "redirect:payment";
 	}
-	
-	
 	
 	@RequestMapping(value = "/addnewtab/{customerId}", method = RequestMethod.POST)
 	public String addPoForm(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId) {
@@ -642,11 +663,13 @@ public class SalesOrderController {
 		List<Customer> custList = new ArrayList<Customer>();
 		custList.add(customer);
 		loginContextSession.getSoList().add(newSales);
+		
 		model.addAttribute("customerId", customerId);
 		model.addAttribute("customerList", custList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
+	
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

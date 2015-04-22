@@ -60,7 +60,6 @@ public class WarehouseController {
 		dateFormat.setLenient(true);
 		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat,true);
 		binder.registerCustomEditor(Date.class, orderDateEditor);
-
 	}
 
 	@RequestMapping(value="/dashboard", method = RequestMethod.GET)
@@ -75,8 +74,6 @@ public class WarehouseController {
 		
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
-	
-	
 	
 	@RequestMapping(value="/dashboard/{warehouseId}", method = RequestMethod.GET)
 	public String warehouseDashboardPageLoad(Locale locale, Model model,@PathVariable int warehouseId) {
@@ -100,7 +97,7 @@ public class WarehouseController {
 	
 	@RequestMapping(value="/displayitems/{warehouseId}", method = RequestMethod.POST)
 	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
-		logger.info("[warehousePageLoad] : " + "");
+		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId);
 		
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		
@@ -110,7 +107,9 @@ public class WarehouseController {
 				item.getReceiptList().size();
 			}
 		}
+
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
+		warehouseDashboard.setSelectedWarehouse(warehouseId);
 		warehouseDashboard.setPurchaseOrderList(poList);
 		
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
@@ -221,6 +220,7 @@ public class WarehouseController {
 						receipt.setReceiptDate(new Date());
 						receipt.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 						receipt.setCreatedDate(new Date());
+
 						Stocks stocks = new Stocks();
 						stocks.setPoId(poId);
 						stocks.setProductId(items.getProductId());
@@ -248,7 +248,7 @@ public class WarehouseController {
 			
 			if(item.getProdQuantity()== arrivalQuantity){
 				isAllArrived = true;
-			}else{
+			} else {
 				isAllArrived = false;
 			}
 		}
@@ -271,6 +271,6 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/warehouse/dashboard/"+po.getWarehouseId();
+		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
 	}
 }

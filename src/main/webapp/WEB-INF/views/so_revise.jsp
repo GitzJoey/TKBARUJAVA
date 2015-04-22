@@ -30,25 +30,22 @@
 				}
 			});		
 			
-			$('#addProdButton, #removeProdButton').click(
-					function() {
-						var id = "";
-						var button = $(this).attr('id');
-
-						if (button == 'addProdButton') {
-							id = $('#productSelect').val();
-							$('#productSelect').parsley().validate();
-		                    if(false==$('#productSelect').parsley().isValid()){
-							
-								return false;
-							
-		                    }else{
-								$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
-		                    }
-						} else {
-							id = $(this).val();
-							$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
-						}
+			$('#addProdButton, #removeProdButton').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+	
+				if (button == 'addProdButton') {
+					id = $('#productSelect').val();
+					$('#productSelect').parsley().validate();
+					if(false == $('#productSelect').parsley().isValid()) {
+						return false;
+					} else {
+						$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+					}
+				} else {
+					id = $(this).val();
+					$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
+				}
 			});
 
 			$('[id^="customerTooltip"]').tooltip();
@@ -102,7 +99,7 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${not empty reviseSalesList}">
+											<c:if test="${ not empty reviseSalesList }">
 												<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
 													<tr>
 														<td align="center">
@@ -126,7 +123,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Revise SO List
+									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Revise Sales
 								</h1>
 							</div>								
 							<div class="panel-body">
@@ -306,31 +303,31 @@
 												</div>
 											</div>
 											<div class="row">
-										<div class="col-md-12">
-											<div class="panel panel-default">
-												<div class="panel-heading">
-													<h1 class="panel-title">Remarks</h1>
-												</div>
-												<div class="panel-body">
-													<div class="row">
-														<div class="col-md-12">
-															<div class="form-group">
-																<div class="col-sm-12">
-																	<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title">Remarks</h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<div class="col-sm-12">
+																			<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
 											</div>
-										</div>
-									</div>
 											<div class="col-md-7 col-offset-md-5">
-													<div class="btn-toolbar">
-														<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-														<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
-													</div>
+												<div class="btn-toolbar">
+													<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+													<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 												</div>
+											</div>
 										</div>
 									</div>
 								</form:form>

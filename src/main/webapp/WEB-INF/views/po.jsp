@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,8 +19,7 @@
 			$(this).parsley().validate();
 		});
 
-		$('[id^="removeProdButton"]').click(function() {
-			
+		$('[id^="removeProdButton"]').click(function() {			
 			activetab = $(".nav-tabs li.active").attr("id");
 			$('#poForm').attr('action', ctxpath + "/po/removeitems/"+ activetab + "/" + +id);
 		});
@@ -30,11 +30,9 @@
 			
 			$("#productSelect" + activetab).parsley().validate();
 			
-			if(false==$('#poForm').parsley().isValid()){
-				
+			if(false == $('#poForm').parsley().isValid()) {
 				return false;
-			
-            }else{
+            } else {
 				$('#poForm').attr('action', ctxpath + "/po/additems/" + activetab + "/" + productSelect);	
             }
 		});
@@ -44,11 +42,9 @@
 			    excluded: '[id^="productSelect"]'
 			}).validate();
 			
-			if(false==$('#poForm').parsley().isValid()){
-				
+			if(false == $('#poForm').parsley().isValid()) {
 				return false;
-			
-            }else{
+            } else {
 				activetab = $(".nav-tabs li.active").attr("id");
 				$('#poForm').attr('action',ctxpath + "/po/save/" + activetab);
             }
@@ -88,8 +84,10 @@
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
-	<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
-	<div class="row">
+
+		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
+
+		<div class="row">
 			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
@@ -106,10 +104,13 @@
 						<br> ${errorMessageText}
 					</div>
 				</c:if>
+				
 				<div id="jsAlerts"></div>
+				
 				<h1>
 					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order
 				</h1>
+				
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
@@ -282,10 +283,18 @@
 																						</div>
 																					</div>
 																				</td>
-																				<td style="vertical-align: middle;"><form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
-																					<label>
-																						<c:out value="${ iL.unitCodeLookup.lookupValue }"></c:out>
-																					</label>
+																				<td style="vertical-align: middle;">
+																					<div class="form-group">
+																						<div class="col-md-12">																						
+																							<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																							<form:select class="form-control" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode">
+																								<option value=""><spring:message code="common.please_select"></spring:message></option>
+																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																									<form:option value="prdUnit.unitCode"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"></c:out></form:option>
+																								</c:forEach>
+																							</form:select>
+																						</div>
+																					</div>
 																				</td>
 																				<td style="vertical-align: middle;">
 																					<div class="form-group">

@@ -11,7 +11,6 @@
 	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	
-	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/formvalidation/dist/css/formValidation.min.css">
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">

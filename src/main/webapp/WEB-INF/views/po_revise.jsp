@@ -43,11 +43,11 @@ $(document).ready(
 					if (button == 'addProdButton') {
 						$("#productSelect").parsley().validate();
 						
-						if(false==$('#productSelect').parsley().isValid()){
+						if(false == $('#productSelect').parsley().isValid()) {
 							
 							return false;
 						
-			            }else{
+			            } else {
 							id = $('#productSelect').val();
 							$('#reviseForm').attr('action',ctxpath + "/po/additems/" + id);
 			            }

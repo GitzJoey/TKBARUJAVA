@@ -1,4 +1,3 @@
-//window.ParsleyValidator.setLocale('${ pageContext.request.locale.language }');
 window.ParsleyConfig = {
 	successClass: "has-success",
     errorClass: "has-error",
