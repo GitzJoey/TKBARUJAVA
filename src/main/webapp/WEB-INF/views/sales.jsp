@@ -10,14 +10,14 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			var lastTab = "${activeTab}"==''?"${ loginContext.soList.size()-1 }" :"${activeTab}";
 			
-			$('[id^="inputSalesDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputSalesDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
 			$('[id^="inputSalesDate"]').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();
 			});
 			
 			
-			$('[id^="inputShippingDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputShippingDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
 			$('[id^="inputShippingDate"]').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();

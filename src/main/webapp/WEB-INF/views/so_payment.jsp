@@ -52,17 +52,13 @@
 				}
 			});
 
-			$('[id^="paymentDate_"]').datetimepicker({
-				format : "DD-MM-YYYY"
-			});
+			$('[id^="paymentDate_"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 
 			$('.paymentDate').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();
 			});
 
-			$('[id^="effectiveDate_"]').datetimepicker({
-				format : "DD-MM-YYYY"
-			});
+			$('[id^="effectiveDate_"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 
 			$('.effectiveDate').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();

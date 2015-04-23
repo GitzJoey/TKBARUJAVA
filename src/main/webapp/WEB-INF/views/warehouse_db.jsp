@@ -77,7 +77,7 @@
 
 			//$('[id^="receiptDate_"]').datetimepicker({format:'DD-MM-YYYY H:mm',pickerPosition: "bottom-left"});
 			//$('.datetimepicker').datetimepicker({format:'DD-MM-YYYY H:mm'});
-			$('[id^="receiptDate_"]').datetimepicker({ format:'d/m/Y H:i' });
+			$('[id^="receiptDate_"]').datetimepicker({ format:'d-m-Y H:i' });
 			
 		});
 	</script>	
