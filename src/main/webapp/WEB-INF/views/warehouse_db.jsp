@@ -26,9 +26,9 @@
 		        ],
 		      
 		       
-		    //    "displayLength": 25,
+		        "displayLength": 25,
 		        "drawCallback": function ( settings ) {
-		        	$('.showCalendar').datepicker();
+		        	$('[id^="receiptDate_"]').datetimepicker({ format:'d-m-Y H:i' });
 		            var api = this.api();
 		            var rows = api.rows( {page:'current'} ).nodes();
 		            var last=null;
@@ -64,29 +64,35 @@
 				}
 			});
 			
-			$('[id^="receiptButton_"]').click(function() {
+			$('[id^="receiptButton_"]').click(function(event) {
 				var poid = $(this).val();
 				var pocode = $('#'+poid).val();
 				var result = confirm("Yakin isi data po "+pocode+" ?");
 				if (result) {
-					$('#warehouseDashboardForm').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+					// $('[data-parsley-group="'+pocode+'"]').parsley().validate();
+
+						   
+					//	if (false == $('[data-parsley-group="'+pocode+'"]').parsley.isValid() ) {
+					//		event.preventDefault();
+					//	     return false;
+					//	    }else{
+						    	$('#warehouseDashboardForm').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+					//	    }
+					
+				
 				}
 				
 				
 			});
-
-			//$('[id^="receiptDate_"]').datetimepicker({format:'DD-MM-YYYY H:mm',pickerPosition: "bottom-left"});
-			//$('.datetimepicker').datetimepicker({format:'DD-MM-YYYY H:mm'});
-			$('[id^="receiptDate_"]').datetimepicker({ format:'d-m-Y H:i' });
 			
 		});
 	</script>	
-	<!--  <style type="text/css">
-	tr.group,
-	tr.group:hover {
-    background-color: #ddd !important;
-}
-	</style> -->
+<style type="text/css">
+	tr.group, tr.group:hover 
+	{
+    	background-color: #ddd !important;
+	}
+</style>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -124,7 +130,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-							<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard">
+							<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard" >
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
@@ -197,7 +203,7 @@
 											    	
 											    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">
 											    	
-											    	<tr id="tr_${ poIdx.index }_${ iLIdx.index }_${ totalReceipt }">
+											    	<tr>
 											    		<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -215,21 +221,19 @@
 															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
-												    	
-												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
-												    	
+													    	<div class="form-group">
+													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
+													    	</div>
 												    	</td>
 												    	<td>
-												    	
-												    	
-												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
-												    	
+													    	<div class="form-group">
+													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
+													    	</div>
 												    	</td>
-												    	<td id="colReceiptDate_${poIdx.index}_${iLIdx.index}_${ totalReceipt }">
-												    	
-												    	<div class="form-group">
-												    		<form:input size="12" type="text" id="receiptDate_${poIdx.index}_${iLIdx.index}_${receiptIdx.index}" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].receiptDate"/>
-												    	</div>
+												    	<td>
+													    	<div class="form-group">
+													    		<form:input size="12" type="text" id="receiptDate_${poIdx.index}_${iLIdx.index}_${receiptIdx.index}" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].receiptDate"/>
+													    	</div>
 												    	</td>
 												    	<td>
 												    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
@@ -239,7 +243,7 @@
 										    	</c:if>
 										    	
 										    	<c:if test="${ empty iL.receiptList }">
-											    	<tr id="tr_${ poIdx.index }_${ iLIdx.index }_0">
+											    	<tr>
 											    		<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -255,25 +259,19 @@
 															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
-												    	
-												    	
-												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
-												    	
-												    	
+													    	<div class="form-group">
+													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net" data-parsley-group="${ po.poCode }" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>
+													    	</div>
 												    	</td>
 												    	<td>
-												    	
-												    	
-												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
-												    	
-												    	
+													    	<div class="form-group">
+													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
+													    	</div>
 												    	</td>
-												    	<td id="colReceiptDate_${poIdx.index}_${iLIdx.index}_0">
-												    	
-												    	<div class="form-group">
-												    		<form:input size="12" type="text" class="form-control" id="receiptDate_${poIdx.index}_${iLIdx.index}_0" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].receiptDate"/>
-												    	</div>
-												    	
+												    	<td>
+													    	<div class="form-group">
+													    		<form:input size="12" type="text" class="form-control" id="receiptDate_${poIdx.index}_${iLIdx.index}_0" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].receiptDate"/>
+													    	</div>
 												    	</td>
 												    	<td>
 												    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit</button>

@@ -14,14 +14,10 @@
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
-	
-	<!--  <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css"> -->
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/chartist-js/dist/chartist.min.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
-	
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4.custom/jquery-ui.css">
 	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">
 
@@ -35,8 +31,6 @@
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jQuery/jquery-2.x.min.js"></script>
 	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
-	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.js"></script>
 		
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
@@ -44,8 +38,6 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/JSON/json2.js"></script>
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
-	
-	<!-- <script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script> -->
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/chartist-js/dist/chartist.min.js"></script>
 	
