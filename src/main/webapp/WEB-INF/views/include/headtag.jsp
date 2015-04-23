@@ -11,7 +11,6 @@
 	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	
-	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/formvalidation/dist/css/formValidation.min.css">
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
@@ -21,14 +20,20 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/chartist-js/dist/chartist.min.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
+	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4.custom/jquery-ui.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/jquery.dataTables.min.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/dataTables.responsive.css">
 
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css">
+	
+	
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jQuery/jquery-2.x.min.js"></script>
+	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
 		
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 
@@ -57,6 +62,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
+	
+	
 	
 	
 	

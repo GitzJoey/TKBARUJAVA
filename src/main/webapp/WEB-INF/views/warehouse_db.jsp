@@ -24,9 +24,20 @@
 		        "columnDefs": [
 		            { "visible": false, "targets": 2 }
 		        ],
+		        "columns": [
+		                    { "width": "20%" },
+		                    { "width": "20%" },
+		                    null,
+		                    { "width": "10%" },
+		                    { "width": "10%" },
+		                    { "width": "10%" },
+		                    { "width": "10%" },
+		                  ]
+		       ,
 		       
-		        "displayLength": 25,
+		    //    "displayLength": 25,
 		        "drawCallback": function ( settings ) {
+		        	$('.showCalendar').datepicker();
 		            var api = this.api();
 		            var rows = api.rows( {page:'current'} ).nodes();
 		            var last=null;
@@ -72,14 +83,19 @@
 				
 				
 			});
+
+			//$('[id^="receiptDate_"]').datetimepicker({format:'DD-MM-YYYY H:mm',pickerPosition: "bottom-left"});
+			//$('.datetimepicker').datetimepicker({format:'DD-MM-YYYY H:mm'});
+			$('[id^="receiptDate_"]').datepicker({format:'DD-MM-YYYY H:mm'});
+			
 		});
 	</script>	
-	<style type="text/css">
+	<!--  <style type="text/css">
 	tr.group,
 	tr.group:hover {
     background-color: #ddd !important;
 }
-	</style>
+	</style> -->
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -132,7 +148,8 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display" width="100%">
+									
+										<table id="inflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
 													<th>Product Name</th>
@@ -189,7 +206,7 @@
 											    	
 											    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">
 											    	
-											    	<tr>
+											    	<tr id="tr_${ poIdx.index }_${ iLIdx.index }_${ totalReceipt }">
 											    		<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -207,13 +224,21 @@
 															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
-												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
+												    	
+												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
+												    	
 												    	</td>
 												    	<td>
-												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
+												    	
+												    	
+												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
+												    	
 												    	</td>
-												    	<td>
-												    		
+												    	<td id="colReceiptDate_${poIdx.index}_${iLIdx.index}_${ totalReceipt }">
+												    	
+												    	<div class="form-group">
+												    		<form:input size="12" type="text" id="receiptDate_${poIdx.index}_${iLIdx.index}_${receiptIdx.index}" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].receiptDate"/>
+												    	</div>
 												    	</td>
 												    	<td>
 												    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
@@ -223,7 +248,7 @@
 										    	</c:if>
 										    	
 										    	<c:if test="${ empty iL.receiptList }">
-											    	<tr>
+											    	<tr id="tr_${ poIdx.index }_${ iLIdx.index }_0">
 											    		<td>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
@@ -239,13 +264,25 @@
 															<c:out value="${ po.poCode }"></c:out>
 													    </td>
 												    	<td>
-												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
+												    	
+												    	
+												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
+												    	
+												    	
 												    	</td>
 												    	<td>
-												    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
+												    	
+												    	
+												    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
+												    	
+												    	
 												    	</td>
-												    	<td>
-												    		
+												    	<td id="colReceiptDate_${poIdx.index}_${iLIdx.index}_0">
+												    	
+												    	<div class="form-group">
+												    		<form:input size="12" type="text" class="form-control" id="receiptDate_${poIdx.index}_${iLIdx.index}_0" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].receiptDate"/>
+												    	</div>
+												    	
 												    	</td>
 												    	<td>
 												    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit</button>
@@ -256,6 +293,7 @@
 											</c:forEach>
 											</tbody>
 										</table>
+										
 									</div>
 									<ul class="list-group">       
 										<li class="list-group-item">
