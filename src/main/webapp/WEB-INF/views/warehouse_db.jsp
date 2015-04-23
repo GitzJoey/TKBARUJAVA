@@ -24,16 +24,7 @@
 		        "columnDefs": [
 		            { "visible": false, "targets": 2 }
 		        ],
-		        "columns": [
-		                    { "width": "20%" },
-		                    { "width": "20%" },
-		                    null,
-		                    { "width": "10%" },
-		                    { "width": "10%" },
-		                    { "width": "10%" },
-		                    { "width": "10%" },
-		                  ]
-		       ,
+		      
 		       
 		    //    "displayLength": 25,
 		        "drawCallback": function ( settings ) {
@@ -86,7 +77,7 @@
 
 			//$('[id^="receiptDate_"]').datetimepicker({format:'DD-MM-YYYY H:mm',pickerPosition: "bottom-left"});
 			//$('.datetimepicker').datetimepicker({format:'DD-MM-YYYY H:mm'});
-			$('[id^="receiptDate_"]').datepicker({format:'DD-MM-YYYY H:mm'});
+			$('[id^="receiptDate_"]').datetimepicker({ format:'d/m/Y H:i' });
 			
 		});
 	</script>	
