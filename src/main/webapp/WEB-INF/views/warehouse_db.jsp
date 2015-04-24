@@ -115,7 +115,7 @@
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
-										<option value="${ w.warehouseId }"><c:out value="${ w.warehouseName }"/></option>
+										<option value="${ w.warehouseId }" <c:if test="${ w.warehouseId == warehouseDashboard.selectedWarehouse }"><c:out value='selected="selected"'/></c:if>><c:out value="${ w.warehouseName }"/></option>
 									</c:forEach>
 								</select>
 								<br/>
