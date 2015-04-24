@@ -14,7 +14,7 @@
 		var activetab;
 		var productSelect;
 
-		$('.poCreatedDate, .shippingDate').datetimepicker({ format : "DD-MM-YYYY" });
+		$('.poCreatedDate, .shippingDate').datetimepicker({ format:'d-m-Y', timepicker:false });
 		$('.poCreatedDate, .shippingDate').on('dp.change dp.show',function(e) {
 			$(this).parsley().validate();
 		});

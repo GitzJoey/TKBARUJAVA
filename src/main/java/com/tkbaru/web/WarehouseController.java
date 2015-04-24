@@ -206,8 +206,7 @@ public class WarehouseController {
 		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()){
 			if(purchaseOrder.getPoId()==poId){
 				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
-			}
-			
+			}	
 		}
 		
 		List<Items> itemsList = poView.getItemsList();

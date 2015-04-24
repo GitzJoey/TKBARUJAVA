@@ -27,14 +27,15 @@
 		       
 		        "displayLength": 25,
 		        "drawCallback": function ( settings ) {
+		        	$('[id^="receiptDate_"]').datetimepicker({ format:'d-m-Y H:i' });
 		            var api = this.api();
 		            var rows = api.rows( {page:'current'} ).nodes();
 		            var last=null;
 		 
-		            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-		                if ( last !== group ) {
-		                    $(rows).eq( i ).before(
-		                        '<tr class="group"><td colspan="7">'+group+'</td></tr>'
+		            api.column(2, {page:'current'}).data().each(function (group, i) {
+		                if (last !== group) {
+		                    $(rows).eq(i).before(
+		                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
 		                    );		 
 		                    last = group;
 		                }
@@ -51,20 +52,20 @@
 				}
 			});
 
-			$('#warehouseSelect').on('change',function(e) {
+			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
 				if(warehouseSelect != ''){
-					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/displayitems/"+warehouseSelect);
+					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/displayitems/" + warehouseSelect);
 					$('#warehouseDashboardForm').submit();
 				}
 			});
 			
-			$('[id^="receiptButton_"]').click(function() {
+			$('[id^="receiptButton_"]').click(function(event) {
 				var poid = $(this).val();
-				var pocode = $('#'+poid).val();
-				var result = confirm("Yakin isi data po "+pocode+" ?");
+				var pocode = $('#' + poid).val();
+				var result = confirm("Yakin isi data po " + pocode + " ?");
 				if (result) {
-					$('#warehouseDashboardForm').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
+					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/savereceipt/" + poid);
 				}
 			});
 		});
@@ -118,6 +119,7 @@
 										<option value="${ w.warehouseId }" <c:if test="${ w.warehouseId == warehouseDashboard.selectedWarehouse }"><c:out value='selected="selected"'/></c:if>><c:out value="${ w.warehouseName }"/></option>
 									</c:forEach>
 								</select>
+								<form:hidden path="selectedWarehouse"/>
 								<br/>
 								<div id="inflowPanel" class="panel panel-default">
 									<div class="panel-heading">
@@ -126,7 +128,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display" width="100%">
+										<table id="inflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
 													<th>Product Name</th>

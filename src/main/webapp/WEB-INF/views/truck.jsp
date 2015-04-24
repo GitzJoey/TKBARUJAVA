@@ -47,7 +47,7 @@
 				}				
 			});
       
-			$('#inputKirDate').datetimepicker({format: "DD-MM-YYYY"});
+			$('#inputKirDate').datetimepicker({ format:'d-m-Y', timepicker:false });
 			$('#inputKirDate').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();
 			});

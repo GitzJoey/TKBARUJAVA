@@ -11,15 +11,11 @@
 $(document).ready(function() {
 						var ctxpath = "${ pageContext.request.contextPath }";
 
-						$('[id^="paymentDate"]').datetimepicker({
-							format : "DD-MM-YYYY"
-						});
+						$('[id^="paymentDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 
 						
 
-						$('[id^="effectiveDate"]').datetimepicker({
-							format : "DD-MM-YYYY"
-						});
+						$('[id^="effectiveDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 
 						
 
