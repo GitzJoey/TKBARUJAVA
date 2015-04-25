@@ -62,6 +62,9 @@ public class Product {
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
 	*/
+	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<Price> price;
+	
 	public int getProductId() {
 		return productId;
 	}
@@ -182,6 +185,14 @@ public class Product {
 		this.productTypeLookup = productTypeLookup;
 	}
 	 */
+	public List<Price> getPrice() {
+		return price;
+	}
+
+	public void setPrice(List<Price> price) {
+		this.price = price;
+	}
+	
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
@@ -193,5 +204,7 @@ public class Product {
 				+ updatedBy + ", updatedDate=" + updatedDate + ", productUnit="
 				+ productUnit + "]";
 	}
+
+	
 
 }
