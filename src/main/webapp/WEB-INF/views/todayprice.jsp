@@ -41,7 +41,7 @@
 		                    
 						} else {
 							id = $(this).val();
-							$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeprice/" + id);
+							$('#todayPriceForm').attr('action',ctxpath + "/price/removeprice/" + id);
 						}
 			});
 			
@@ -96,7 +96,8 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="20%">Item</th>
+												<th width="20%">Product</th>
+												<th width="20%">Price</th>
 												
 											</tr>
 										</thead>
@@ -106,6 +107,13 @@
 													<tr>
 														<td align="center"><input id="cbx_<c:out value="${ p.productId }"/>" type="checkbox" value="<c:out value="${ p.productId }"/>" /></td>
 														<td><c:out value="${ p.productName }"></c:out></td>
+														<td>
+															<c:if test="${not empty p.price }">
+																<c:forEach var="price" items="${ p.price }">
+																	<c:out value="${ price.levelId }"></c:out> <c:out value="${ price.price }"></c:out>
+																</c:forEach>
+															</c:if>
+														</td>
 														
 													</tr>
 												</c:forEach>
@@ -137,6 +145,7 @@
 																<div class="col-sm-5">
 																	<form:hidden path="productId"/>
 																	<form:input type="text" class="form-control" id="inputProductName" name="inputProductName" path="productName" placeholder="Enter Sales Code" readonly="true"></form:input>
+																
 																</div>										
 															</div>
 															
@@ -164,7 +173,7 @@
 																<button id="addPriceButton" type="submit" class="btn btn-primary pull-left">
 																	<span class="fa fa-plus"></span>
 																</button>
-																<br />
+																
 																
 																	<table id="priceListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
@@ -185,8 +194,11 @@
 																					    <form:hidden path="price[${ iLIdx.index }].priceId"/>
 																						<form:input type="text" size="15" class="form-control text-right" id="inputPrice" name="inputPrice" path="price[${ iLIdx.index }].price" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
 																					</td>
-																					<td><form:input type="text" size="10" class="form-control text-right" id="inputPriceLevel" name="inputPriceLevel" path="price[${ iLIdx.index }].levelId" placeholder="Enter Price Level" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
-																						
+																					<td>
+																						<form:select path="price[${ iLIdx.index }].levelId" class="form-control" id="inputPriceLevel" name="inputPriceLevel">
+																							<option value="">Please Select</option>
+																							<form:options items="${ priceLevelDDL }" itemValue="priceLevelId" itemLabel="levelName" />
+																						</form:select>
 																					</td>
 																					<td><form:input type="text" size="5" class="form-control" id="effectiveDate_${ iLIdx.index }" name="effectiveDate_${ iLIdx.index }" path="price[${ iLIdx.index }].effectiveDate" placeholder="Enter Effective Date" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
 																					

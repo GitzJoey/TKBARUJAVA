@@ -1,10 +1,26 @@
 package com.tkbaru.model;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.apache.commons.collections.FactoryUtils;
+import org.apache.commons.collections.list.LazyList;
 
 /**
  * Persistent class for entity stored in table "tb_price"
@@ -16,9 +32,9 @@ import javax.persistence.*;
 @Entity
 @Table(name="tb_price")
 
-public class Price implements Serializable {
+public class Price{
 
-    private static final long serialVersionUID = 1L;
+   
 
     
     @Id
@@ -33,7 +49,7 @@ public class Price implements Serializable {
     @Column(name="price")
     private BigDecimal price;
 
-    @Column(name="level_id")
+    @Column(name="price_level_id")
     private Integer levelId;
 
     @Temporal(TemporalType.TIMESTAMP)
@@ -157,6 +173,15 @@ public class Price implements Serializable {
 		this.product = product;
 	}
 
+//	public List<PriceLevel> getPriceLevel() {
+//		return priceLevel;
+//	}
+//
+//
+//	public void setPriceLevel(List<PriceLevel> priceLevel) {
+//		this.priceLevel = priceLevel;
+//	}
+
 
 	public String toString() { 
         StringBuffer sb = new StringBuffer(); 
@@ -180,6 +205,7 @@ public class Price implements Serializable {
         sb.append(updatedBy);
         sb.append("|");
         sb.append(updatedDate);
+//        sb.append(priceLevel.toString());
         return sb.toString(); 
     } 
 

@@ -25,6 +25,8 @@ import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
 import com.tkbaru.model.Product;
+import com.tkbaru.service.PriceLevelService;
+import com.tkbaru.service.PriceService;
 import com.tkbaru.service.ProductService;
 
 @Controller
@@ -37,6 +39,12 @@ public class PriceController {
 	
 	@Autowired
 	private ProductService productManager;
+	
+	@Autowired
+	private PriceService priceManager;
+	
+	@Autowired
+	private PriceLevelService priceLevelManager;
 	
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -64,7 +72,7 @@ public class PriceController {
 		logger.info("[updatePrice] " + "");
 		
 		Product product = productManager.getProductById(productId);
-		
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		model.addAttribute("todayPriceForm", product);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -83,6 +91,7 @@ public class PriceController {
 			todayPriceForm.setPrice(new ArrayList<Price>());
 		}
 		todayPriceForm.getPrice().add(i);
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		model.addAttribute("todayPriceForm", todayPriceForm);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -106,7 +115,7 @@ public class PriceController {
 		
 		
 		model.addAttribute("todayPriceForm", todayPriceForm);
-	
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -115,7 +124,9 @@ public class PriceController {
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveProduct(Locale locale, Model model, @ModelAttribute("todayPriceForm") Product todayPriceForm, RedirectAttributes redirectAttributes) {	
+	public String saveProduct(Locale locale, Model model, @ModelAttribute("todayPriceForm") Product todayPriceForm, RedirectAttributes redirectAttributes) {
+		
+		Product product = productManager.getProductById(todayPriceForm.getProductId());
 
 		if (todayPriceForm.getPrice() != null && todayPriceForm.getPrice().size() > 0) {
 			for(Price pu:todayPriceForm.getPrice()) {
@@ -126,12 +137,14 @@ public class PriceController {
 			}			
 		}
 		
+		product.setPrice(todayPriceForm.getPrice());
+		
 		if (todayPriceForm.getProductId() == 0) { 
 			logger.info("[saveProduct] " + "addProduct: " + todayPriceForm.toString());
-			productManager.addProduct(todayPriceForm); 
+			productManager.addProduct(product); 
 		} else {
 			logger.info("[saveProduct] " + "editProduct: " + todayPriceForm.toString());
-			productManager.editProduct(todayPriceForm); 
+			productManager.editProduct(product); 
 		}
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
