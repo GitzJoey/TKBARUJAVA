@@ -1,4 +1,5 @@
 ﻿DROP TABLE IF EXISTS `tb_receipt`;
+
 CREATE TABLE `tb_receipt` (
   `receipt_id` int(11) NOT NULL AUTO_INCREMENT,
   `receipt_date` datetime DEFAULT NULL,

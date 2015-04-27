@@ -54,18 +54,18 @@
 
 			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
-				if(warehouseSelect != ''){
-					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/displayitems/" + warehouseSelect);
-					$('#warehouseDashboardForm').submit();
+				if(warehouseSelect != '') {
+					window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect);
 				}
 			});
 			
 			$('[id^="receiptButton_"]').click(function(event) {
 				var poid = $(this).val();
 				var pocode = $('#' + poid).val();
+				var warehouseSelect = $("#warehouseSelect").val();
 				var result = confirm("Yakin isi data po " + pocode + " ?");
 				if (result) {
-					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/savereceipt/" + poid);
+					window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid);
 				}
 			});
 		});
@@ -111,15 +111,13 @@
 									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Warehouse Dashboard
 								</h1>
 							</div>
-							<div class="panel-body">
-							<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard">
+							<div class="panel-body">							
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
 										<option value="${ w.warehouseId }" <c:if test="${ w.warehouseId == warehouseDashboard.selectedWarehouse }"><c:out value='selected="selected"'/></c:if>><c:out value="${ w.warehouseName }"/></option>
 									</c:forEach>
 								</select>
-								<form:hidden path="selectedWarehouse"/>
 								<br/>
 								<div id="inflowPanel" class="panel panel-default">
 									<div class="panel-heading">
@@ -131,124 +129,69 @@
 										<table id="inflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
-													<th>Product Name</th>
-													<th>Bruto</th>
-													<th>Po Code</th>
-													<th>Netto</th>
-													<th>Tare</th>
-													<th>Receipt Date</th>
-													<th>&nbsp;</th>
+													<th width="40%">Product Name</th>
+													<th width="10%">Bruto</th>
+													<th width="10%">Po Code</th>
+													<th width="10%">Netto</th>
+													<th width="10%">Tare</th>
+													<th width="10%">Receipt Date</th>
+													<th width="10%">&nbsp;</th>
 												</tr>
 											</thead>
-											<tbody >
-											
-											<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
-												<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
-													<c:if test="${ not empty iL.receiptList }">
-														<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
-														<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
-													 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
-														    <tr>
-															    <td>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].receiptList[${receiptIdx.index}].receiptId"/>
-															    	${ iL.productLookup.productName }
-														    	</td>
-													    		<td>${ iL.prodQuantity }</td>
-													    		<td>
-																    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-																    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-																	<c:out value="${ po.poCode }"></c:out>
-															    </td>
-														    	<td>
-														    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
-														    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
-														    	</td>
-														    	<td>
-														    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].tare"/>
-														    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"></c:out>
-														    	</td>
-														    	<td>
-														    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].receiptDate"/>
-														    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"></c:out>
-														    	</td>
-														    	<td>
-															    		
-															    </td>
-													    	</tr>
-													    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
-												    	</c:forEach>
-											    	
-												    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
-													    	<tr>
-													    		<td>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-														    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-														    		<c:out value="${ iL.productLookup.productName }"></c:out>
-														    	</td>
-													    		<td>
-													    			<c:out value="${ iL.prodQuantity }"></c:out>
-													    		</td>
-													    		<td>
-																    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-																    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-																	<c:out value="${ po.poCode }"></c:out>
-															    </td>
-														    	<td>
-														    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
-														    	</td>
-														    	<td>
-														    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
-														    	</td>
-														    	<td>
-														    		
-														    	</td>
-														    	<td>
-														    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
-															    </td>
-													    	</tr>
+											<tbody >											
+												<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
+													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
+														
+														<c:if test="${ not empty iL.receiptList }">
+															<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
+															<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
+														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
+															    <tr>
+																    <td><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ po.poCode }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"/></td>
+															    	<td>
+																    		
+																    </td>
+														    	</tr>
+														    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
+													    	</c:forEach>
+												    	
+													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
+														    	<tr>
+														    		<td><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ po.poCode }"/></td>
+															    	<td></td>
+															    	<td></td>
+															    	<td></td>
+															    	<td style="vertical-align: middle;">
+															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
+																    </td>
+														    	</tr>
+												    		</c:if>
 											    		</c:if>
-										    		</c:if>
-										    	
-											    	<c:if test="${ empty iL.receiptList }">
-												    	<tr>
-												    		<td>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-													    	  	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-														    	${ iL.productLookup.productName }
-													    	</td>
-												    		<td>${ iL.prodQuantity }</td>
-												    		<td>
-															    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-															    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-																<c:out value="${ po.poCode }"></c:out>
-														    </td>
-													    	<td>
-													    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net"/>
-													    	</td>
-													    	<td>
-													    		<form:input type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
-													    	</td>
-													    	<td>
-													    		
-													    	</td>
-													    	<td>
-													    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit</button>
-														    </td>
-												    	</tr>
-											    	</c:if>
+											    	
+												    	<c:if test="${ empty iL.receiptList }">
+													    	<tr>
+													    		<td><c:out value="${ iL.productLookup.productName }"/></td>
+													    		<td><c:out value="${ iL.prodQuantity }"/></td>
+													    		<td><c:out value="${ po.poCode }"/></td>
+														    	<td></td>
+														    	<td></td>
+														    	<td></td>
+														    	<td>
+														    		<p data-placement="top">
+														    			<button type="button" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit 1</button>
+															    	</p>
+															    </td>
+													    	</tr>
+												    	</c:if>
+													</c:forEach>
 												</c:forEach>
-											</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -286,11 +229,30 @@
 										</li>
 									</ul>
 								</div>
-							</form:form>
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit PO Detail
+								</h1>
+							</div>
+							<div class="panel-body">
+								<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }">
+									<div class="form-group">
+										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+										<div class="col-sm-10">
+											<form:select class="form-control" disabled="disabled" path="selectedWarehouse">
+												<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
+											</form:select>
+										</div>
+									</div>
+									
+								</form:form>			
+							</div>
+						</div>
 					</c:when>
 				</c:choose>				
 			</div>

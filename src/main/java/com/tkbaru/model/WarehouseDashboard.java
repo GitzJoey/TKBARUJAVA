@@ -7,7 +7,9 @@ public class WarehouseDashboard {
 	public WarehouseDashboard() {
 		
 	}
+
 	private int selectedWarehouse;
+	private int selectedPO;
 	
 	List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
 
@@ -17,6 +19,14 @@ public class WarehouseDashboard {
 
 	public void setSelectedWarehouse(int selectedWarehouse) {
 		this.selectedWarehouse = selectedWarehouse;
+	}
+
+	public int getSelectedPO() {
+		return selectedPO;
+	}
+
+	public void setSelectedPO(int selectedPO) {
+		this.selectedPO = selectedPO;
 	}
 
 	public List<PurchaseOrder> getPurchaseOrderList() {

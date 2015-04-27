@@ -66,6 +66,7 @@ public class WarehouseController {
 	public String warehouseDashboardPageLoad(Locale locale, Model model) {
 		logger.info("[warehousePageLoad] : " + "");
 
+		model.addAttribute("warehouseDashboard", new WarehouseDashboard());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -76,29 +77,9 @@ public class WarehouseController {
 	}
 	
 	@RequestMapping(value="/dashboard/{warehouseId}", method = RequestMethod.GET)
-	public String warehouseDashboardPageLoad(Locale locale, Model model,@PathVariable int warehouseId) {
-		logger.info("[warehousePageLoad] : " + "");
-
-		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-		
-		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
-		
-		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
-		warehouseDashboard.setPurchaseOrderList(poList);
-		
-		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-		model.addAttribute("warehouseDashboard", warehouseDashboard);
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
-	}
-	
-	@RequestMapping(value="/displayitems/{warehouseId}", method = RequestMethod.POST)
 	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
 		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId);
-		
+			
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		
 		for(PurchaseOrder po: poList){
@@ -120,80 +101,32 @@ public class WarehouseController {
 		
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
-	
-	@RequestMapping(method = RequestMethod.GET)
-	public String warehousePageLoad(Locale locale, Model model) {		
-		logger.info("[warehousePageLoad] " + "");
-		
-		List<Warehouse> wList = warehouseManager.getAllWarehouse();
-		
-		model.addAttribute("warehouseList", wList);
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return Constants.JSPPAGE_WAREHOUSE;
-	}
-	
-	@RequestMapping(value="/add", method = RequestMethod.GET)
-	public String addWarehouse(Locale locale, Model model) {
-		logger.info("[addWarehouse] : " + "");
-		
-		model.addAttribute("warehouseForm", new Warehouse());
-		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return Constants.JSPPAGE_WAREHOUSE;
-	}
 
-	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
-	public String editWarehouse(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[editWarehouse] " + "selectedId = " + selectedId);
+	@RequestMapping(value="/dashboard/{warehouseId}/loadreceipt/{poId}", method = RequestMethod.GET)
+	public String loadReceipt(Locale locale, Model model, @PathVariable int warehouseId, @PathVariable int poId) {
+		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId + ", poId: " + poId);
+
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		
-		Warehouse selectedWarehouse = warehouseManager.getWarehouseById(selectedId);
-		
-		logger.info("[editWarehouse] " + "selectedWarehouse = " + selectedWarehouse.toString());
-		
-		model.addAttribute("warehouseForm", selectedWarehouse);
-		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		
+		for(PurchaseOrder po: poList){
+			po.getItemsList().size();
+			for(Items item: po.getItemsList()){
+				item.getReceiptList().size();
+			}
+		}
+
+		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
+		warehouseDashboard.setSelectedWarehouse(warehouseId);
+		warehouseDashboard.setSelectedPO(poId);
+		warehouseDashboard.setPurchaseOrderList(poList);
+
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return Constants.JSPPAGE_WAREHOUSE;
-	}
 
-	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteWarehouse(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
-		logger.info("[deleteWarehouse] " + "selectedId = " + selectedId);
-		
-		warehouseManager.deleteWarehouse(selectedId);
-		
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return "redirect:/warehouse";
-	}
-	
-	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {	
-        		
-		if (warehouse.getWarehouseId() == 0) {
-			logger.info("[saveWarehouse] " + "addWarehouse: " + warehouse.toString());
-			warehouseManager.addWarehouse(warehouse); 
-		} else { 
-			logger.info("[saveWarehouse] " + "editWarehouse: " + warehouse.toString());
-			warehouseManager.editWarehouse(warehouse); 
-		}
-		
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		return "redirect:/warehouse";
+		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 	
 	@RequestMapping(value="/savereceipt/{poId}", method = RequestMethod.POST)
@@ -271,5 +204,80 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
+	}	
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public String warehousePageLoad(Locale locale, Model model) {		
+		logger.info("[warehousePageLoad] " + "");
+		
+		List<Warehouse> wList = warehouseManager.getAllWarehouse();
+		
+		model.addAttribute("warehouseList", wList);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_WAREHOUSE;
+	}
+	
+	@RequestMapping(value="/add", method = RequestMethod.GET)
+	public String addWarehouse(Locale locale, Model model) {
+		logger.info("[addWarehouse] : " + "");
+		
+		model.addAttribute("warehouseForm", new Warehouse());
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_WAREHOUSE;
+	}
+
+	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
+	public String editWarehouse(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[editWarehouse] " + "selectedId = " + selectedId);
+		
+		Warehouse selectedWarehouse = warehouseManager.getWarehouseById(selectedId);
+		
+		logger.info("[editWarehouse] " + "selectedWarehouse = " + selectedWarehouse.toString());
+		
+		model.addAttribute("warehouseForm", selectedWarehouse);
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_WAREHOUSE;
+	}
+
+	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
+	public String deleteWarehouse(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
+		logger.info("[deleteWarehouse] " + "selectedId = " + selectedId);
+		
+		warehouseManager.deleteWarehouse(selectedId);
+		
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return "redirect:/warehouse";
+	}
+	
+	@RequestMapping(value="/save", method = RequestMethod.POST)
+	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {	
+        		
+		if (warehouse.getWarehouseId() == 0) {
+			logger.info("[saveWarehouse] " + "addWarehouse: " + warehouse.toString());
+			warehouseManager.addWarehouse(warehouse); 
+		} else { 
+			logger.info("[saveWarehouse] " + "editWarehouse: " + warehouse.toString());
+			warehouseManager.editWarehouse(warehouse); 
+		}
+		
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return "redirect:/warehouse";
 	}
 }
