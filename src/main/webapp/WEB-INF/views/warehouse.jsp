@@ -18,6 +18,7 @@
 						id = $(item).attr("value");	
 					}
 				});
+				
 				if (id == "") {
 					jsAlert("Please select at least 1 warehouse");
 					return false;	
@@ -33,7 +34,6 @@
 			$('#cancelButton').click(function() {
 				window.location.href(ctxpath + "/warehouse");
 			});
-			
 		});
 	</script>	
 </head>

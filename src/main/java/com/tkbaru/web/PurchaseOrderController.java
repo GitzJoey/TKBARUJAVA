@@ -70,7 +70,6 @@ public class PurchaseOrderController {
 		dateFormat.setLenient(true);
 		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat,true);
 		binder.registerCustomEditor(Date.class, orderDateEditor);
-
 	}
 
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
@@ -97,6 +96,7 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -109,11 +109,13 @@ public class PurchaseOrderController {
 		logger.info("[revise] " + "");
 
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
+
 		model.addAttribute("reviseForm", selectedPo);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -139,10 +141,12 @@ public class PurchaseOrderController {
 		}
 
 		loginContextSession.setPoList(loginContext.getPoList());
+
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -176,6 +180,7 @@ public class PurchaseOrderController {
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("reviseForm", reviseForm);
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -228,17 +233,18 @@ public class PurchaseOrderController {
 
 		loginContext.getPoList().get(Integer.parseInt(tabId)).setItemsList(iLNew);
 
-		
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
 		}
 		
 		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList());
+
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -257,10 +263,12 @@ public class PurchaseOrderController {
 		newPo.setCreatedDate(new Date());
 
 		loginContextSession.getPoList().add(newPo);
+
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -273,6 +281,7 @@ public class PurchaseOrderController {
 		logger.info("[poPayment] " + "");
 
 		model.addAttribute("paymentList",poManager.getPurchaseOrderByStatus("L013_WP"));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -294,6 +303,7 @@ public class PurchaseOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -306,11 +316,13 @@ public class PurchaseOrderController {
 		logger.info("[poPayment] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
+		
 		model.addAttribute("poForm", po);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -326,6 +338,7 @@ public class PurchaseOrderController {
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -358,10 +371,12 @@ public class PurchaseOrderController {
 
 		loginContextSession.setPoList(loginContext.getPoList());
 		loginContextSession.getPoList().get(Integer.parseInt(varId)).setItemsList(itemList);
+
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
@@ -392,7 +407,6 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 
 		return Constants.JSPPAGE_DASHBOARD;
-
 	}
 
 	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
@@ -404,6 +418,7 @@ public class PurchaseOrderController {
 		poManager.editPurchaseOrder(reviseForm);
 
 		model.addAttribute("reviseForm", reviseForm);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
@@ -448,8 +463,6 @@ public class PurchaseOrderController {
 		
 		poForm.setPaymentList(poForm.getPaymentList());
 		
-		
-		
 		model.addAttribute("poForm", poForm);
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
@@ -458,6 +471,7 @@ public class PurchaseOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -488,6 +502,7 @@ public class PurchaseOrderController {
 		model.addAttribute("poForm", poForm);
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -511,31 +526,24 @@ public class PurchaseOrderController {
 		
 		long totalPayment = 0;
 		
-		for(Payment payment : poForm.getPaymentList()){
-			
-			if(payment.getPaymentStatus() != null){
-			
-				if(payment.getPaymentType().equals("L017_CASH") && payment.getPaymentStatus().equals("L018_C")){
+		for(Payment payment : poForm.getPaymentList()) {
+			if(payment.getPaymentStatus() != null) {
+				if(payment.getPaymentType().equals("L017_CASH") && payment.getPaymentStatus().equals("L018_C")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				
-				if(payment.getPaymentType().equals("L017_GIRO") && payment.getPaymentStatus().equals("L021_FR")){
+				if(payment.getPaymentType().equals("L017_GIRO") && payment.getPaymentStatus().equals("L021_FR")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				
-				if(payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")){
+				if(payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				
-				if(payment.getPaymentType().equals("L017_TERM") && payment.getPaymentStatus().equals("L019_C")){
+				if(payment.getPaymentType().equals("L017_TERM") && payment.getPaymentStatus().equals("L019_C")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-			}
-			
-			
+			}	
 		}
 		
-		if(totalHutang == totalPayment){
+		if(totalHutang == totalPayment) {
 			po.setPoStatus("L013_C");
 		}
 		
@@ -545,8 +553,8 @@ public class PurchaseOrderController {
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 		return "redirect:payment";

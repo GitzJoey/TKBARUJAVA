@@ -57,11 +57,11 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
-	/*
+	
 	@ManyToOne
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
-	*/
+
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Price> price;
 	
@@ -180,7 +180,7 @@ public class Product {
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
 	}
-	/*
+	
 	public Lookup getProductTypeLookup() {
 		return productTypeLookup;
 	}
@@ -188,7 +188,7 @@ public class Product {
 	public void setProductTypeLookup(Lookup productTypeLookup) {
 		this.productTypeLookup = productTypeLookup;
 	}
-	 */
+
 	public List<Price> getPrice() {
 		return price;
 	}
@@ -204,6 +204,7 @@ public class Product {
 //	public void setStocks(List<Stocks> stocks) {
 //		this.stocks = stocks;
 //	}
+
 
 	@Override
 	public String toString() {

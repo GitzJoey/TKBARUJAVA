@@ -24,7 +24,6 @@
 		        "columnDefs": [
 		            { "visible": false, "targets": 2 }
 		        ],
-		      
 		       
 		        "displayLength": 25,
 		        "drawCallback": function ( settings ) {
@@ -33,19 +32,16 @@
 		            var rows = api.rows( {page:'current'} ).nodes();
 		            var last=null;
 		 
-		            api.column(2, {page:'current'} ).data().each( function ( group, i ) {
-		                if ( last !== group ) {
-		                    $(rows).eq( i ).before(
-		                        '<tr class="group"><td colspan="7">'+group+'</td></tr>'
-		                    );
-		 
+		            api.column(2, {page:'current'}).data().each(function (group, i) {
+		                if (last !== group) {
+		                    $(rows).eq(i).before(
+		                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+		                    );		 
 		                    last = group;
 		                }
-		            } );
+		            });
 		        }
-		    } );
-		 
-		   
+		    });
 			
 			$('#hideInflow, #hideOutflow').click(function() {
 				var button = $(this).attr('id');
@@ -56,43 +52,39 @@
 				}
 			});
 
-			$('#warehouseSelect').on('change',function(e) {
+			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
-				if(warehouseSelect != ''){
-					$('#warehouseDashboardForm').attr('action', ctxpath + "/warehouse/displayitems/"+warehouseSelect);
-					$('#warehouseDashboardForm').submit();
+				if(warehouseSelect != '') {
+					//window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect);
+					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect;
 				}
 			});
 			
 			$('[id^="receiptButton_"]').click(function(event) {
+				//alert($(this).closest('tr').children('td:eq(0)').text());   // admin
+				var itemId = $(this).closest('tr').find('td:eq(0)').attr('id');
+				var trid = $(this).closest('tr').attr('id');
+				
 				var poid = $(this).val();
-				var pocode = $('#'+poid).val();
-				var result = confirm("Yakin isi data po "+pocode+" ?");
+				var warehouseSelect = $("#warehouseSelect").val();
+				var result = confirm("Yakin isi data po " + trid + " ?");
 				if (result) {
-					// $('[data-parsley-group="'+pocode+'"]').parsley().validate();
-
-						   
-					//	if (false == $('[data-parsley-group="'+pocode+'"]').parsley.isValid() ) {
-					//		event.preventDefault();
-					//	     return false;
-					//	    }else{
-						    	$('#warehouseDashboardForm').attr('action',ctxpath + "/warehouse/savereceipt/"+ poid);
-					//	    }
-					
-				
+					//window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid);
+					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid+"/"+itemId;
 				}
-				
-				
 			});
 			
+			$('#inputReceiptDate').datetimepicker({ format:'d-m-Y H:i'});
+			$('#inputReceiptDate').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
+			});
 		});
 	</script>	
-<style type="text/css">
-	tr.group, tr.group:hover 
-	{
-    	background-color: #ddd !important;
-	}
-</style>
+	<style type="text/css">
+		tr.group, tr.group:hover {
+    		background-color: #ddd !important;
+		}
+	</style>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -129,12 +121,11 @@
 									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Warehouse Dashboard
 								</h1>
 							</div>
-							<div class="panel-body">
-							<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard" >
+							<div class="panel-body">							
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
-										<option value="${ w.warehouseId }"><c:out value="${ w.warehouseName }"/></option>
+										<option value="${ w.warehouseId }" <c:if test="${ w.warehouseId == warehouseDashboard.selectedWarehouse }"><c:out value='selected="selected"'/></c:if>><c:out value="${ w.warehouseName }"/></option>
 									</c:forEach>
 								</select>
 								<br/>
@@ -145,144 +136,74 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-									
 										<table id="inflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
-													<th>Product Name</th>
-													<th>Bruto</th>
-													<th>Po Code</th>
-													<th>Netto</th>
-													<th>Tare</th>
-													<th>Receipt Date</th>
-													<th>&nbsp;</th>
+													<th width="40%">Product Name</th>
+													<th width="10%">Bruto</th>
+													<th width="10%">Po Code</th>
+													<th width="10%">Netto</th>
+													<th width="10%">Tare</th>
+													<th width="10%">Receipt Date</th>
+													<th width="10%">&nbsp;</th>
 												</tr>
 											</thead>
-											<tbody >
-											
-											<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
-												<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
-												<c:if test="${ not empty iL.receiptList }">
-												<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
-												<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
-												 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
-													    <tr>
-														    <td>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-													    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].receiptList[${receiptIdx.index}].receiptId"/>
-														    	${ iL.productLookup.productName }
-													    	</td>
-												    		<td>${ iL.prodQuantity }</td>
-												    		<td>
-															    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-															    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-																<c:out value="${ po.poCode }"></c:out>
-														    </td>
-													    	<td>
-													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].net"/>
-													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:out>
-													    	</td>
-													    	<td>
-													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].tare"/>
-													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"></c:out>
-													    	</td>
-													    	<td>
-													    		<form:hidden path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${receiptIdx.index}].receiptDate"/>
-													    		<c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"></c:out>
-													    	</td>
-													    	<td>
-														    		
-														    </td>
-												    	</tr>
-											    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
-											    	</c:forEach>
+											<tbody >											
+												<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
+													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
+														
+														<c:if test="${ not empty iL.receiptList }">
+															<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
+															<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
+														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
+															    <tr>
+																    <td><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ po.poCode }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"/></td>
+															    	<td>
+																    		
+																    </td>
+														    	</tr>
+														    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
+													    	</c:forEach>
+												    	
+													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
+														    	<tr>
+														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ po.poCode }"/></td>
+															    	<td></td>
+															    	<td></td>
+															    	<td></td>
+															    	<td style="vertical-align: middle;">
+															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
+																    </td>
+														    	</tr>
+												    		</c:if>
+											    		</c:if>
 											    	
-											    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">
-											    	
-											    	<tr>
-											    		<td>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-												    		<c:out value="${ iL.productLookup.productName }"></c:out>
-												    	</td>
-											    		<td>
-											    			<c:out value="${ iL.prodQuantity }"></c:out>
-											    		</td>
-											    		<td>
-														    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-														    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-															<c:out value="${ po.poCode }"></c:out>
-													    </td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].net"/>
-													    	</div>
-												    	</td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].tare"/>
-													    	</div>
-												    	</td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="12" type="text" id="receiptDate_${poIdx.index}_${iLIdx.index}_${receiptIdx.index}" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[${ totalReceipt }].receiptDate"/>
-													    	</div>
-												    	</td>
-												    	<td>
-												    		<button type="submit" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }">Submit</button>
-													    </td>
-											    	</tr>
-											    	</c:if>
-										    	</c:if>
-										    	
-										    	<c:if test="${ empty iL.receiptList }">
-											    	<tr>
-											    		<td>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity"/>
-												    		<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice"/>
-												    	  	<form:hidden path="purchaseOrderList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode"/>
-													    	${ iL.productLookup.productName }
-												    	</td>
-											    		<td>${ iL.prodQuantity }</td>
-											    		<td>
-														    <form:hidden path="purchaseOrderList[${ poIdx.index }].poId"/>
-														    <form:hidden id="${ po.poId }" path="purchaseOrderList[${ poIdx.index }].poCode"/>
-															<c:out value="${ po.poCode }"></c:out>
-													    </td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].net" data-parsley-group="${ po.poCode }" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>
-													    	</div>
-												    	</td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="8" type="text" class="form-control text-right" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].tare"/>
-													    	</div>
-												    	</td>
-												    	<td>
-													    	<div class="form-group">
-													    		<form:input size="12" type="text" class="form-control" id="receiptDate_${poIdx.index}_${iLIdx.index}_0" path="purchaseOrderList[${poIdx.index}].itemsList[${iLIdx.index}].receiptList[0].receiptDate"/>
-													    	</div>
-												    	</td>
-												    	<td>
-												    		<button type="submit" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit</button>
-													    </td>
-											    	</tr>
-										    	</c:if>
-											</c:forEach>
-											</c:forEach>
+												    	<c:if test="${ empty iL.receiptList }">
+													    	<tr id="${ po.poCode }">
+													    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
+													    		<td><c:out value="${ iL.prodQuantity }"/></td>
+													    		<td><c:out value="${ po.poCode }"/></td>
+														    	<td></td>
+														    	<td></td>
+														    	<td></td>
+														    	<td>
+														    		<p data-placement="top">
+														    			<button type="button" class="btn btn-primary" id="receiptButton_0" value="${ po.poId }">Submit 1</button>
+															    	</p>
+															    </td>
+													    	</tr>
+												    	</c:if>
+													</c:forEach>
+												</c:forEach>
 											</tbody>
 										</table>
-										
 									</div>
 									<ul class="list-group">       
 										<li class="list-group-item">
@@ -318,11 +239,70 @@
 										</li>
 									</ul>
 								</div>
-							</form:form>
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit PO Detail
+								</h1>
+							</div>
+							<div class="panel-body">
+								<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
+									<div class="form-group">
+										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+										<div class="col-sm-10">
+											<form:select class="form-control" disabled="true" path="selectedWarehouse">
+												<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputPoCode" class="col-sm-2 control-label">PO Code</label>
+										<div class="col-sm-10">
+											<input class="form-control" value="${ selectedPoObject.poCode }" readonly="readonly"/>
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+										<div class="col-sm-10">
+											<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
+										</div>
+									</div>
+									
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Net</label>
+										<div class="col-sm-10">
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>
+												
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
+										<div class="col-sm-10">
+											<form:input class="form-control" path="receipt.tare"/>
+												
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputReceiptDate" class="col-sm-2 control-label">Receipt Date</label>
+										<div class="col-sm-10">
+											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>
+												
+										</div>
+									</div>
+									<div class="col-md-7 col-offset-md-5">
+										<div class="btn-toolbar">
+											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+										</div>
+									</div>
+								</form:form>			
+							</div>
+						</div>
 					</c:when>
 				</c:choose>				
 			</div>
