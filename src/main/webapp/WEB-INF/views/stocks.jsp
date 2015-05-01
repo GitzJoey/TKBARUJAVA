@@ -7,6 +7,41 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			var dt = $('#stockListTable').DataTable();
+			
+			var detailRows = [];
+			 
+		    $('#stockListTable tbody').on('click', 'tr td.detail-control', function() {
+		        var tr = $(this).closest('tr');
+		        var row = dt.row(tr);
+		        var idx = $.inArray(tr.attr('id'), detailRows);
+		 
+		        if (row.child.isShown()) {
+		            tr.removeClass('details');
+		            row.child.hide();
+		 
+		            detailRows.splice(idx, 1);
+		        }
+		        else {
+		            tr.addClass('details');
+		            row.child(format(row.data())).show();
+		 
+		            if (idx === -1) {
+		                detailRows.push(tr.attr('id'));
+		            }
+		        }
+		    });
+		    
+		    dt.on('draw', function() {
+		        $.each(detailRows, function(i, id) {
+		            $('#' + id + ' td.detail-control').trigger('click');
+		        });
+		    });
+		    
+		    function format(d) {
+		        return '<p>' + 'Details' + '</p>';
+		    }
 		});
 	</script>	
 </head>
@@ -36,17 +71,46 @@
 				<h1>
 					<span class="fa fa-eye fa-fw"></span>&nbsp;Monitoring
 				</h1>
-				
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h1 class="panel-title">
-							<span class="fa fa-database fa-fw fa-2x"></span>Stocks
-						</h1>
-					</div>
-					<div class="panel-body">
-						Contents
-					</div>
-				</div>				
+
+				<c:choose>
+					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-database fa-fw fa-2x"></span>Stocks
+								</h1>
+							</div>
+							<div class="panel-body">
+								<table id="stockListTable" class="table table-bordered table-hover display">
+									<thead>
+										<tr>
+											<th width="50%">Product Name</th>
+											<th width="20%">Inflow</th>
+											<th width="20%">Outflow</th>
+											<th width="10%">Detail</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${ not empty stocksList }">
+											<c:forEach items="${ stocksList }" var="s">
+												<tr>
+													<td><c:out value="${ s.productLookup.productName }"/></td>
+													<td></td>
+													<td></td>
+													<td class="center-align detail-control">
+														<span class="fa fa-plus fa-fw cursor-pointer"></span>
+													</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>											
+							</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+					</c:otherwise>
+				</c:choose>								
 			</div>
 		</div>
 	</div>	

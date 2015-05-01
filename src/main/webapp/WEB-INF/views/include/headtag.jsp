@@ -7,7 +7,7 @@
 	
     <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/theme-yeti/css/bootstrap.min.css">
     
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap-custom.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	

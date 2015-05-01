@@ -231,7 +231,7 @@
 																		<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>
 																</td>
-																<td style="vertical-align: middle; text-align: center;">
+																<td class="center-align">
 																	<form:checkbox path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
 																</td>
 																<td>

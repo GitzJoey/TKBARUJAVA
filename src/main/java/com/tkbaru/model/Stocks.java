@@ -7,13 +7,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_stocks")
 public class Stocks {
-	
-public Stocks() {
+	public Stocks() {
 		
 	}
 
@@ -35,56 +36,95 @@ public Stocks() {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
+	
+	@ManyToOne
+	@JoinColumn(name="po_id", unique=true, insertable=false, updatable=false)
+	private PurchaseOrder poLookup;
+
+	@ManyToOne
+	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
+	private Product productLookup;
+
 	public int getStocksId() {
 		return stocksId;
 	}
+
 	public void setStocksId(int stocksId) {
 		this.stocksId = stocksId;
 	}
-	
+
 	public int getPoId() {
 		return poId;
 	}
+
 	public void setPoId(int poId) {
 		this.poId = poId;
 	}
+
 	public int getProductId() {
 		return productId;
 	}
+
 	public void setProductId(int productId) {
 		this.productId = productId;
 	}
+
 	public long getProdQuantity() {
 		return prodQuantity;
 	}
+
 	public void setProdQuantity(long prodQuantity) {
 		this.prodQuantity = prodQuantity;
 	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public int getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(int updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
+
+	public PurchaseOrder getPoLookup() {
+		return poLookup;
+	}
+
+	public void setPoLookup(PurchaseOrder poLookup) {
+		this.poLookup = poLookup;
+	}
+
+	public Product getProductLookup() {
+		return productLookup;
+	}
+
+	public void setProductLookup(Product productLookup) {
+		this.productLookup = productLookup;
+	}
+
 	@Override
 	public String toString() {
 		return "Stocks [stocksId=" + stocksId + ", poId=" + poId+", productId=" + productId
@@ -92,6 +132,4 @@ public Stocks() {
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + "]";
 	}
-
-
 }

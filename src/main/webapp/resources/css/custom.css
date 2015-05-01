@@ -49,3 +49,16 @@ strong.title {
 .tiny {
 	font-size: 10px;
 }
+
+.center-align {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.cursor-crosshair {
+	cursor: crosshair;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}

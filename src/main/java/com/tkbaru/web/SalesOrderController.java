@@ -99,7 +99,6 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				//items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 		
@@ -180,24 +179,19 @@ public class SalesOrderController {
 	@RequestMapping(value = "/additems/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId,@PathVariable int tabId, @PathVariable int productId) {
 		logger.info("[soAddItems] " + "productId: " + productId);
-		long countStock=0;
-		
-		countStock = stocksManager.countStocksByProductId(productId);
 		
 		Items item = new Items();
 		item.setProductId(productId);
 		Product product = productManager.getProductById(productId);
 		item.setProductLookup(product);
-	//	item.setUnitCode(product.getBaseUnit());
-	//	item.setUnitCodeLookup(lookupManager.getLookupByKey(product.getBaseUnit()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+
 		loginContext.getSoList().get(tabId).getItemsList().add(item);
 
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-		//	items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 
 		loginContextSession.setSoList(loginContext.getSoList());
@@ -210,7 +204,6 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-		//		items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 		
@@ -249,7 +242,6 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-		//	items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 		}
 		
 		Customer customer = customerManager.getCustomerById(customerId);
@@ -311,9 +303,7 @@ public class SalesOrderController {
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
-		//	Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 			items.setProductLookup(prod);
-		//	items.setUnitCodeLookup(unitCodeLookup);
 			itemList.add(items);
 		}
 		
@@ -324,7 +314,6 @@ public class SalesOrderController {
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-		//		items.setUnitCodeLookup(lookupManager.getLookupByKey(prod.getBaseUnit()));
 			}
 		}
 			
@@ -387,7 +376,6 @@ public class SalesOrderController {
 		i.setProductId(varId);
 		Product product = productManager.getProductById(varId);
 		i.setProductLookup(product);
-	//	i.setUnitCode(product.getBaseUnit());
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.getItemsList().add(i);
@@ -646,9 +634,7 @@ public class SalesOrderController {
 			soForm.setSoTypeLookup(lookupManager.getLookupByKey(soForm.getSalesType()));
 			for (Items items : soForm.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
-			//	Lookup unitCodeLookup = lookupManager.getLookupByKey(prod.getBaseUnit());
 				items.setProductLookup(prod);
-			//	items.setUnitCodeLookup(unitCodeLookup);
 			}
 		}
 

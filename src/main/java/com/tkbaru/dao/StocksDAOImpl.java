@@ -1,15 +1,17 @@
 package com.tkbaru.dao;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Repository;
 
 import com.tkbaru.model.Stocks;
 
+@Repository
+@SuppressWarnings("unchecked")
 public class StocksDAOImpl implements StocksDAO {
 	private static final Logger logger = LoggerFactory.getLogger(StocksDAOImpl.class);
 
@@ -20,7 +22,7 @@ public class StocksDAOImpl implements StocksDAO {
     
 	@Override
 	public List<Stocks> getAllStocks() {
-		logger.info("[getAllStocks" + "");
+		logger.info("[getAllStocks]" + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Stocks> stocksList = session.createQuery("FROM Stocks").list();
