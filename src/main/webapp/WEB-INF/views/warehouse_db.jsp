@@ -173,7 +173,7 @@
 													    	</c:forEach>
 												    	
 													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
-														    	<tr>
+														    	<tr id="${ po.poCode }">
 														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td><c:out value="${ iL.prodQuantity }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
