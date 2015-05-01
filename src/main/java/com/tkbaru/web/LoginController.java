@@ -92,7 +92,7 @@ public class LoginController {
 		
 		return "login";
 	}
-
+	
 	@RequestMapping(value = "/dologin.html", method = RequestMethod.GET)	
 	public String dologin(Locale locale, Model model) {
 		logger.info("[doLogin] " + "");

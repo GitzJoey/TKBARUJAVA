@@ -348,7 +348,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/save/{varId}", method = RequestMethod.POST)
 	public String poSave(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable String varId) {
-		logger.info("[poSave] " + "");
+		logger.info("[poSave] " + "varId: " + varId);
 
 		loginContextSession.setPoList(loginContext.getPoList());
 		PurchaseOrder po = loginContext.getPoList().get(Integer.parseInt(varId));

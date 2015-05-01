@@ -1,12 +1,13 @@
 DROP TABLE IF EXISTS `tb_price_level`;
+
 CREATE TABLE `tb_price_level` (
-  `price_level_id` int(11) NOT NULL AUTO_INCREMENT,
-  `level_name` varchar(255) DEFAULT NULL,
-  `addition` decimal(10,2) DEFAULT NULL,
-  `subtraction` decimal(10,2) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `price_level_id`	int(11) 		NOT NULL AUTO_INCREMENT,
+  `level_name` 		varchar(255) 	DEFAULT NULL,
+  `addition` 		decimal(10,2) 	DEFAULT NULL,
+  `subtraction` 	decimal(10,2) 	DEFAULT NULL,
+  `created_by` 		int(11) 		DEFAULT '0',
+  `created_date` 	datetime 		DEFAULT NULL,
+  `updated_by` 		int(11) 		DEFAULT '0',
+  `updated_date` 	datetime 		DEFAULT NULL,
   PRIMARY KEY (`price_level_id`)
 );

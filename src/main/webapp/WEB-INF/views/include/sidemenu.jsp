@@ -24,7 +24,7 @@
 						<tr>
 							<td colspan="2">
 								<div class="btn-toolbar">
-									<a href="<c:url value="j_spring_security_logout"/>" class="btn btn-primary btn-xs pull-right"><span class="fa fa-child">&nbsp;Logout</span></a>
+									<a href="${ pageContext.request.contextPath }/logout.html" class="btn btn-primary btn-xs pull-right"><span class="fa fa-child">&nbsp;Logout</span></a>
 									<a href="${ pageContext.request.contextPath }/admin/user/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;Profile</span></a>
 								</div>
 							</td>

@@ -104,7 +104,7 @@ public class WarehouseController {
 
 	@RequestMapping(value="/dashboard/{warehouseId}/loadreceipt/{poId}/{itemId}", method = RequestMethod.GET)
 	public String loadReceipt(Locale locale, Model model, @PathVariable int warehouseId, @PathVariable int poId, @PathVariable int itemId) {
-		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId + ", poId: " + poId);
+		logger.info("[loadReceipt] : " + "selectedWarehouse: " + warehouseId + ", poId: " + poId);
 
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
 		PurchaseOrder selectedPoObject = null;
@@ -127,14 +127,13 @@ public class WarehouseController {
 		warehouseDashboard.setSelectedWarehouse(warehouseId);
 		warehouseDashboard.setSelectedPO(poId);
 		warehouseDashboard.setSelectedItems(itemId);
-		warehouseDashboard.setPurchaseOrderList(poList);
-		
-		
+		warehouseDashboard.setPurchaseOrderList(poList);		
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -144,26 +143,25 @@ public class WarehouseController {
 	
 	@RequestMapping(value="/savereceipt/{poId}", method = RequestMethod.POST)
 	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId) {
+		logger.info("[saveReceipt] " + "poId: " + poId);
 		
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
 
 		PurchaseOrder poView = null;
 		
-		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()){
-			if(purchaseOrder.getPoId()==poId){
+		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()) {
+			if(purchaseOrder.getPoId()==poId) {
 				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
 			}	
 		}
 		
-		
-		
 		List<Items> itemsList = poView.getItemsList();
 		List<Stocks> stocksList = new ArrayList<Stocks>();
-		for(Items items : itemsList){
+		for (Items items : itemsList) {
 			List<Receipt> receiptList = new ArrayList<Receipt>();
-			for(Receipt receipt : items.getReceiptList()){
-				if(receipt.getNet() > 0){
-					if(receipt.getReceiptId()==0){
+			for (Receipt receipt : items.getReceiptList()) {
+				if (receipt.getNet() > 0) {
+					if (receipt.getReceiptId() == 0) {
 						receipt.setReceiptDate(new Date());
 						receipt.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 						receipt.setCreatedDate(new Date());
@@ -185,22 +183,22 @@ public class WarehouseController {
 		po.setItemsList( poView.getItemsList());
 		
 		Boolean isAllArrived = false;
-		for(Items item : po.getItemsList()){
+		for (Items item : po.getItemsList()) {
 			
 			long arrivalQuantity = 0;
 			
-			for(Receipt receipt : item.getReceiptList()){
+			for (Receipt receipt : item.getReceiptList()) {
 				arrivalQuantity += receipt.getNet();
 			}
 			
-			if(item.getProdQuantity()== arrivalQuantity){
+			if (item.getProdQuantity()== arrivalQuantity) {
 				isAllArrived = true;
 			} else {
 				isAllArrived = false;
 			}
 		}
 		
-		if(isAllArrived){
+		if (isAllArrived) {
 			po.setPoStatus("L013_WP");
 		}
 		
@@ -210,7 +208,7 @@ public class WarehouseController {
 			
 		}
 		
-		for(Stocks stocks: stocksList){
+		for (Stocks stocks: stocksList) {
 			stocksManager.addOrCreateStocks(stocks);
 		}
 		
@@ -223,61 +221,60 @@ public class WarehouseController {
 	
 	@RequestMapping(value="/dashboard/savereceipt/{poId}/{itemId}", method = RequestMethod.POST)
 	public String saveDashboardReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId,@PathVariable int itemId) {
+		logger.info("[saveDashboardReceipt] " + "poId: " + poId + ", itemId: " + itemId);
 		
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
 		
 		List<Items> itemsList = po.getItemsList();
 		List<Stocks> stocksList = new ArrayList<Stocks>();
-		for(Items items : itemsList){
-			if(items.getItemsId() == itemId){
-			List<Receipt> receiptList = items.getReceiptList();
-			
-					if( warehouseDashboard.getReceipt().getReceiptId()==0){
-						warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
-						warehouseDashboard.getReceipt().setCreatedDate(new Date());
-
-						Stocks stocks = new Stocks();
-						stocks.setPoId(poId);
-						stocks.setProductId(items.getProductId());
-						stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
-						stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-						stocks.setCreatedDate(new Date());
-						stocksList.add(stocks);
-					}
-					receiptList.add(warehouseDashboard.getReceipt());
+		for(Items items : itemsList) {
+			if(items.getItemsId() == itemId) {
+				List<Receipt> receiptList = items.getReceiptList();
 				
+				if (warehouseDashboard.getReceipt().getReceiptId()==0) {
+					
+					warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
+					warehouseDashboard.getReceipt().setCreatedDate(new Date());
+	
+					Stocks stocks = new Stocks();
+					stocks.setPoId(poId);
+					stocks.setProductId(items.getProductId());
+					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+					stocks.setCreatedDate(new Date());
+					stocksList.add(stocks);
+				}
+				receiptList.add(warehouseDashboard.getReceipt());				
 			}
 		}
 		
-		
-		
 		Boolean isAllArrived = false;
-		for(Items item : po.getItemsList()){
+		for (Items item : po.getItemsList()) {
 			
 			long arrivalQuantity = 0;
 			
-			for(Receipt receipt : item.getReceiptList()){
+			for (Receipt receipt : item.getReceiptList()) {
 				arrivalQuantity += receipt.getNet();
 			}
 			
-			if(item.getProdQuantity()== arrivalQuantity){
+			if (item.getProdQuantity() == arrivalQuantity) {
 				isAllArrived = true;
 			} else {
 				isAllArrived = false;
 			}
 		}
 		
-		if(isAllArrived){
+		if (isAllArrived) {
 			po.setPoStatus("L013_WP");
 		}
-		
+	
 		try {
 			poManager.editPurchaseOrder(po);
 		} catch (Exception e) {
-			
-		}
 		
-		for(Stocks stocks: stocksList){
+		}
+	
+		for (Stocks stocks: stocksList) {
 			stocksManager.addOrCreateStocks(stocks);
 		}
 		
@@ -318,7 +315,7 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
 	public String editWarehouse(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[editWarehouse] " + "selectedId = " + selectedId);
+		logger.info("[editWarehouse] " + "selectedId: " + selectedId);
 		
 		Warehouse selectedWarehouse = warehouseManager.getWarehouseById(selectedId);
 		
@@ -336,7 +333,7 @@ public class WarehouseController {
 
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String deleteWarehouse(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
-		logger.info("[deleteWarehouse] " + "selectedId = " + selectedId);
+		logger.info("[deleteWarehouse] " + "selectedId: " + selectedId);
 		
 		warehouseManager.deleteWarehouse(selectedId);
 		

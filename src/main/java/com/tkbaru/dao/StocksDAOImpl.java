@@ -28,7 +28,7 @@ public class StocksDAOImpl implements StocksDAO {
 		List<Stocks> stocksList = session.createQuery("FROM Stocks").list();
 	
 		for(Stocks stock:stocksList) {
-			logger.info("Stocks	 : " + stock.toString());
+			logger.info("Stocks: " + stock.toString());
 		}
 		
 		return stocksList;

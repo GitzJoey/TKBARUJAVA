@@ -55,6 +55,10 @@ strong.title {
 	text-align: center;
 }
 
+.valign-middle {
+	vertical-align: middle;
+}
+
 .cursor-crosshair {
 	cursor: crosshair;
 }

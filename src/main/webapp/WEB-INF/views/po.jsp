@@ -19,18 +19,18 @@
 			$(this).parsley().validate();
 		});
 
-		$('[id^="removeProdButton"]').click(function() {			
+		$('[id^="removeProdButton"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
-			$('#poForm').attr('action', ctxpath + "/po/removeitems/"+ activetab + "/" + +id);
+			$('#poForm').attr('action', ctxpath + "/po/removeitems/" + activetab + "/" + +id);
 		});
 
-		$('button[id^="addProdButton"]').click(function() {			
+		$('button[id^="addProdButton"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
 			productSelect = $("#productSelect" + activetab).val();
 			
 			$("#productSelect" + activetab).parsley().validate();
 			
-			if(false == $('#poForm').parsley().isValid()) {
+			if (false == $('#poForm').parsley().isValid()) {		
 				return false;
             } else {
 				$('#poForm').attr('action', ctxpath + "/po/additems/" + activetab + "/" + productSelect);	
@@ -46,13 +46,13 @@
 				return false;
             } else {
 				activetab = $(".nav-tabs li.active").attr("id");
-				$('#poForm').attr('action',ctxpath + "/po/save/" + activetab);
+				$('#poForm').attr('action', ctxpath + "/po/save/" + activetab);
             }
 		});
 
 		$('[id^="cancelButton"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
-			$('#poForm').attr("action",ctxpath + "/po/cancel/"+ activetab);
+			$('#poForm').attr("action", ctxpath + "/po/cancel/" + activetab);
 		});
 
 		$('#list a[href="#tab' + tabCount + '"]').tab('show');
@@ -63,7 +63,7 @@
 			if ($('select[id="inputSupplierId' + tabIdx + '"]').val() != "") {
 				$.ajax({
 					url : ctxpath+ "/po/retrieve/supplier",
-					data : 'supplierId='+ encodeURIComponent($('select[id="inputSupplierId' + tabIdx + '"]').val()),
+					data : 'supplierId=' + encodeURIComponent($('select[id="inputSupplierId' + tabIdx + '"]').val()),
 					type : "GET",
 					success : function(response) {
 						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip({ title : response });
@@ -287,10 +287,10 @@
 																					<div class="form-group">
 																						<div class="col-md-12">																						
 																							<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
-																							<form:select class="form-control" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode">
+																							<form:select class="form-control" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																									<form:option value="prdUnit.unitCode"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"></c:out></form:option>
+																									<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"></c:out></form:option>
 																								</c:forEach>
 																							</form:select>
 																						</div>
