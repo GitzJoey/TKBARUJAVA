@@ -56,7 +56,7 @@ public class WarehouseController {
 	
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		dateFormat.setLenient(true);
 		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat,true);
 		binder.registerCustomEditor(Date.class, orderDateEditor);
