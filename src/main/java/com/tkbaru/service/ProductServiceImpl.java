@@ -79,4 +79,11 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.getProductByIds(selectedIds);
 	}
 
+	@Override
+	@Transactional
+	public List<Product> getProductHasInStock() {
+		
+		return productDAO.getProductHasInStock();
+	}
+
 }

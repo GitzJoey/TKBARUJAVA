@@ -93,4 +93,18 @@ public class ProductDAOImpl implements ProductDAO {
 		return productList;
 	}
 
+	@Override
+	public List<Product> getProductHasInStock() {
+		logger.info("[getAllProduct] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();		
+		List<Product> productList = session.createQuery("select distinct p FROM Product p inner join p.stocks s where s.prodQuantity > 0 ").list();
+	
+		for(Product prod:productList) {
+			logger.info("Product : " + prod.toString());
+		}
+		 
+		return productList;
+	}
+
 }

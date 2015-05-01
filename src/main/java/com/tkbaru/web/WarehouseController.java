@@ -102,15 +102,23 @@ public class WarehouseController {
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 
-	@RequestMapping(value="/dashboard/{warehouseId}/loadreceipt/{poId}", method = RequestMethod.GET)
-	public String loadReceipt(Locale locale, Model model, @PathVariable int warehouseId, @PathVariable int poId) {
+	@RequestMapping(value="/dashboard/{warehouseId}/loadreceipt/{poId}/{itemId}", method = RequestMethod.GET)
+	public String loadReceipt(Locale locale, Model model, @PathVariable int warehouseId, @PathVariable int poId, @PathVariable int itemId) {
 		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId + ", poId: " + poId);
 
 		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
+		PurchaseOrder selectedPoObject = null;
+		Items selectedItemsObject = null;
 		
 		for(PurchaseOrder po: poList){
+			if(po.getPoId()==poId){
+				selectedPoObject = po;
+			}
 			po.getItemsList().size();
 			for(Items item: po.getItemsList()){
+				if(item.getItemsId()==itemId){
+					selectedItemsObject = item;
+				}
 				item.getReceiptList().size();
 			}
 		}
@@ -118,10 +126,15 @@ public class WarehouseController {
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setSelectedWarehouse(warehouseId);
 		warehouseDashboard.setSelectedPO(poId);
+		warehouseDashboard.setSelectedItems(itemId);
 		warehouseDashboard.setPurchaseOrderList(poList);
+		
+		
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
+		model.addAttribute("selectedPoObject", selectedPoObject);
+		model.addAttribute("selectedItemsObject", selectedItemsObject);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -141,6 +154,8 @@ public class WarehouseController {
 				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
 			}	
 		}
+		
+		
 		
 		List<Items> itemsList = poView.getItemsList();
 		List<Stocks> stocksList = new ArrayList<Stocks>();
@@ -205,6 +220,73 @@ public class WarehouseController {
 		
 		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
 	}	
+	
+	@RequestMapping(value="/dashboard/savereceipt/{poId}/{itemId}", method = RequestMethod.POST)
+	public String saveDashboardReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int poId,@PathVariable int itemId) {
+		
+		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
+		
+		List<Items> itemsList = po.getItemsList();
+		List<Stocks> stocksList = new ArrayList<Stocks>();
+		for(Items items : itemsList){
+			if(items.getItemsId() == itemId){
+			List<Receipt> receiptList = items.getReceiptList();
+			
+					if( warehouseDashboard.getReceipt().getReceiptId()==0){
+						warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						warehouseDashboard.getReceipt().setCreatedDate(new Date());
+
+						Stocks stocks = new Stocks();
+						stocks.setPoId(poId);
+						stocks.setProductId(items.getProductId());
+						stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+						stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						stocks.setCreatedDate(new Date());
+						stocksList.add(stocks);
+					}
+					receiptList.add(warehouseDashboard.getReceipt());
+				
+			}
+		}
+		
+		
+		
+		Boolean isAllArrived = false;
+		for(Items item : po.getItemsList()){
+			
+			long arrivalQuantity = 0;
+			
+			for(Receipt receipt : item.getReceiptList()){
+				arrivalQuantity += receipt.getNet();
+			}
+			
+			if(item.getProdQuantity()== arrivalQuantity){
+				isAllArrived = true;
+			} else {
+				isAllArrived = false;
+			}
+		}
+		
+		if(isAllArrived){
+			po.setPoStatus("L013_WP");
+		}
+		
+		try {
+			poManager.editPurchaseOrder(po);
+		} catch (Exception e) {
+			
+		}
+		
+		for(Stocks stocks: stocksList){
+			stocksManager.addOrCreateStocks(stocks);
+		}
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
+	}
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String warehousePageLoad(Locale locale, Model model) {		

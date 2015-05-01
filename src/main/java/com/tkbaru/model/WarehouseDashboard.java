@@ -10,6 +10,8 @@ public class WarehouseDashboard {
 
 	private int selectedWarehouse;
 	private int selectedPO;
+	private int selectedItems;
+	private Receipt receipt;
 	
 	List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
 
@@ -35,5 +37,23 @@ public class WarehouseDashboard {
 
 	public void setPurchaseOrderList(List<PurchaseOrder> purchaseOrderList) {
 		this.purchaseOrderList = purchaseOrderList;
+	}
+
+	public int getSelectedItems() {
+		return selectedItems;
+	}
+
+	public void setSelectedItems(int selectedItems) {
+		this.selectedItems = selectedItems;
+	}
+
+	public Receipt getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(Receipt receipt) {
+		this.receipt = receipt;
 	}	
+	
+	
 }

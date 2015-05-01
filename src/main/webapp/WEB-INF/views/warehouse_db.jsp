@@ -55,18 +55,28 @@
 			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
 				if(warehouseSelect != '') {
-					window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect);
+					//window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect);
+					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect;
 				}
 			});
 			
 			$('[id^="receiptButton_"]').click(function(event) {
+				//alert($(this).closest('tr').children('td:eq(0)').text());   // admin
+				var itemId = $(this).closest('tr').find('td:eq(0)').attr('id');
+				var trid = $(this).closest('tr').attr('id');
+				
 				var poid = $(this).val();
-				var pocode = $('#' + poid).val();
 				var warehouseSelect = $("#warehouseSelect").val();
-				var result = confirm("Yakin isi data po " + pocode + " ?");
+				var result = confirm("Yakin isi data po " + trid + " ?");
 				if (result) {
-					window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid);
+					//window.location.href(ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid);
+					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid+"/"+itemId;
 				}
+			});
+			
+			$('#inputReceiptDate').datetimepicker({ format:'d-m-Y H:i'});
+			$('#inputReceiptDate').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
 			});
 		});
 	</script>	
@@ -162,7 +172,7 @@
 												    	
 													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
 														    	<tr>
-														    		<td><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td><c:out value="${ iL.prodQuantity }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
 															    	<td></td>
@@ -176,8 +186,8 @@
 											    		</c:if>
 											    	
 												    	<c:if test="${ empty iL.receiptList }">
-													    	<tr>
-													    		<td><c:out value="${ iL.productLookup.productName }"/></td>
+													    	<tr id="${ po.poCode }">
+													    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
 													    		<td><c:out value="${ iL.prodQuantity }"/></td>
 													    		<td><c:out value="${ po.poCode }"/></td>
 														    	<td></td>
@@ -240,16 +250,56 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }">
+								<form:form id="warehouseDashboardForm" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
 									<div class="form-group">
 										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
 										<div class="col-sm-10">
-											<form:select class="form-control" disabled="disabled" path="selectedWarehouse">
+											<form:select class="form-control" disabled="true" path="selectedWarehouse">
 												<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
 											</form:select>
 										</div>
 									</div>
+									<div class="form-group">
+										<label for="inputPoCode" class="col-sm-2 control-label">PO Code</label>
+										<div class="col-sm-10">
+											<input class="form-control" value="${ selectedPoObject.poCode }" readonly="readonly"/>
+											
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+										<div class="col-sm-10">
+											<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
+										</div>
+									</div>
 									
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Net</label>
+										<div class="col-sm-10">
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>
+												
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
+										<div class="col-sm-10">
+											<form:input class="form-control" path="receipt.tare"/>
+												
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputReceiptDate" class="col-sm-2 control-label">Receipt Date</label>
+										<div class="col-sm-10">
+											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>
+												
+										</div>
+									</div>
+									<div class="col-md-7 col-offset-md-5">
+										<div class="btn-toolbar">
+											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+										</div>
+									</div>
 								</form:form>			
 							</div>
 						</div>

@@ -61,6 +61,13 @@ public class Product {
 	@ManyToOne
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
+
+	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	private List<Price> price;
+	
+//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+//	@JoinColumn(name="product_id")
+//	private List<Stocks> stocks;
 	
 	public int getProductId() {
 		return productId;
@@ -182,6 +189,23 @@ public class Product {
 		this.productTypeLookup = productTypeLookup;
 	}
 
+	public List<Price> getPrice() {
+		return price;
+	}
+
+	public void setPrice(List<Price> price) {
+		this.price = price;
+	}
+	
+//	public List<Stocks> getStocks() {
+//		return stocks;
+//	}
+//
+//	public void setStocks(List<Stocks> stocks) {
+//		this.stocks = stocks;
+//	}
+
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
@@ -193,5 +217,7 @@ public class Product {
 				+ updatedBy + ", updatedDate=" + updatedDate + ", productUnit="
 				+ productUnit + "]";
 	}
+
+	
 
 }

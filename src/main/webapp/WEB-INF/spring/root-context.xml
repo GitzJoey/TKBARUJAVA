@@ -84,6 +84,8 @@
                 <beans:value>com.tkbaru.model.PurchaseOrder</beans:value>
                 <beans:value>com.tkbaru.model.SalesOrder</beans:value>
                 <beans:value>com.tkbaru.model.Receipt</beans:value>
+                <beans:value>com.tkbaru.model.Price</beans:value>
+                <beans:value>com.tkbaru.model.PriceLevel</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -115,6 +117,8 @@
                 <beans:value>com.tkbaru.model.PurchaseOrder</beans:value>
                 <beans:value>com.tkbaru.model.SalesOrder</beans:value>
                 <beans:value>com.tkbaru.model.Receipt</beans:value>
+                <beans:value>com.tkbaru.model.Price</beans:value>
+                 <beans:value>com.tkbaru.model.PriceLevel</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -175,6 +179,12 @@
     <beans:bean id="SalesOrderDAO" class="com.tkbaru.dao.SalesOrderDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+     <beans:bean id="PriceDAO" class="com.tkbaru.dao.PriceDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+    <beans:bean id="PriceLevelDAO" class="com.tkbaru.dao.PriceLevelDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -199,6 +209,8 @@
 	<beans:bean id="PurchaseOrderService" class="com.tkbaru.service.PurchaseOrderServiceImpl"></beans:bean>
 	<beans:bean id="SalesOrderService" class="com.tkbaru.service.SalesOrderServiceImpl"></beans:bean>
 	<beans:bean id="SearchService" class="com.tkbaru.service.SearchServiceImpl"></beans:bean>
+	<beans:bean id="PriceLevelService" class="com.tkbaru.service.PriceLevelServiceImpl"></beans:bean>
+	<beans:bean id="PriceService" class="com.tkbaru.service.PriceServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />

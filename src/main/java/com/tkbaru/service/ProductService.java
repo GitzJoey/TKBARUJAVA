@@ -11,5 +11,6 @@ public interface ProductService {
 	public void addProduct(Product product);
 	public void editProduct(Product product);
 	public void deleteProduct(int selectedId);
+	public List<Product> getProductHasInStock();
 
 }
