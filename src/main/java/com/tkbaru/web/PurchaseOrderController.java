@@ -133,12 +133,24 @@ public class PurchaseOrderController {
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
 
-		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
+		
+		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
+		
+		for(PurchaseOrder po : loginContext.getPoList()){	
+			po.setPoTypeLookup(lookupManager.getLookupByKey(po.getPoType()));
+			po.setSupplierLookup(supplierManager.getSupplierById(po.getSupplierId()));
+			po.setWarehouseLookup(warehouseManager.getWarehouseById(po.getWarehouseId()));
+			po.setStatusLookup(lookupManager.getLookupByKey(po.getPoStatus()));
+			
+			for(Items items : po.getItemsList()){
+				Product prod = productManager.getProductById(items.getProductId());
+				items.setProductLookup(prod);
+				
+			}
+		
 		}
+		
 
 		loginContextSession.setPoList(loginContext.getPoList());
 
@@ -351,6 +363,7 @@ public class PurchaseOrderController {
 		logger.info("[poSave] " + "varId: " + varId);
 
 		loginContextSession.setPoList(loginContext.getPoList());
+		
 		PurchaseOrder po = loginContext.getPoList().get(Integer.parseInt(varId));
 		po.setPoStatus("L013_WA");
 		po.setStatusLookup(lookupManager.getLookupByKey("L013_WA"));
@@ -367,6 +380,19 @@ public class PurchaseOrderController {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
 			itemList.add(items);
+		}
+		
+		for(PurchaseOrder poVar : loginContext.getPoList()){
+			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoType()));
+			poVar.setSupplierLookup(supplierManager.getSupplierById(poVar.getSupplierId()));
+			poVar.setWarehouseLookup(warehouseManager.getWarehouseById(poVar.getWarehouseId()));
+			poVar.setStatusLookup(lookupManager.getLookupByKey(poVar.getPoStatus()));
+			
+			for (Items items : poVar.getItemsList()) {
+				Product prod = productManager.getProductById(items.getProductId());
+				items.setProductLookup(prod);
+				
+			}
 		}
 
 		loginContextSession.setPoList(loginContext.getPoList());

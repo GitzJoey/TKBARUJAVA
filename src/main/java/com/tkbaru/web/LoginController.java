@@ -111,6 +111,8 @@ public class LoginController {
 		
 		SecurityContextHolder.getContext().setAuthentication(null);
 		
+		loginContextSession = null;
+		
 		String messageText = "";
 
 		model.addAttribute("collapseFlag", "collapse");

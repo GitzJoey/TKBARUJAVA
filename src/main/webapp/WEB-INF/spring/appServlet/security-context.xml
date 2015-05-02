@@ -16,7 +16,7 @@
 					default-target-url="/dologin.html"
 					authentication-failure-url="/login.html?e=invalid"/>
 					
-		<logout invalidate-session="false" logout-success-url="/logout.html"/>
+		<logout invalidate-session="true" logout-success-url="/logout.html"/>
 		
 		<session-management invalid-session-url="/login.html?e=session">
 			<concurrency-control expired-url="/login.html?e=expired"
