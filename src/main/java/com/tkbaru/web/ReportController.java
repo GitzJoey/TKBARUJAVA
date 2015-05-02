@@ -38,6 +38,10 @@ public class ReportController {
 		model.addAttribute("reportGroup", "");
 		model.addAttribute("reportId", reportId);
 		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+		
 		return Constants.JSPPAGE_REPORT;
 	}
 

@@ -21,7 +21,7 @@
 		<session-management invalid-session-url="/login.html?e=session">
 			<concurrency-control expired-url="/login.html?e=expired"
 								error-if-maximum-exceeded="true"
-								max-sessions="2"/>
+								max-sessions="1"/>
 		</session-management>
 	</http>
 	

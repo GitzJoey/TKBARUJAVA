@@ -17,9 +17,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.tkbaru.common.Constants;
 import com.tkbaru.dao.PriceLevelDAO;
 import com.tkbaru.model.LoginContext;
-import com.tkbaru.model.Price;
 import com.tkbaru.model.PriceLevel;
-import com.tkbaru.model.Product;
 
 @Controller
 @RequestMapping("/price")

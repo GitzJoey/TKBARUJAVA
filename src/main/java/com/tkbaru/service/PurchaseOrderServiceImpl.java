@@ -81,4 +81,19 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return purchaseOrderDAO.getPurchaseOrderByWarehouseIdByStatus(warehouseId, status);
 	}
 
+	@Override
+	public String generatePOCode() {
+		
+		String generatedPOCode = "";
+		
+		boolean exist = true;
+		
+		while (exist) {
+			generatedPOCode = generatePOCode();			
+			if (!purchaseOrderDAO.isExistingPOCode(generatedPOCode)) exist = false;
+		}
+		
+		return generatedPOCode;
+	}
+
 }

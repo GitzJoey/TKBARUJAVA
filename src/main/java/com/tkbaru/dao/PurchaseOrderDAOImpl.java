@@ -128,4 +128,16 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		return purchaseOrderList;
 	}
 
+	@Override
+	public boolean isExistingPOCode(String poCode) {
+		logger.info("[isExistingPOCode] " + "poCode: " + poCode);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		boolean exist = (long)session.createQuery("SELECT COUNT(*) FROM PurchaseOrder WHERE poCode = :poCode").setString("poCode", poCode).uniqueResult() > 0;
+		
+		logger.info("poCode " + poCode + " is exists: " + exist);
+
+		return false;
+	}
+
 }

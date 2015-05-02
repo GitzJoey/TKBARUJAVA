@@ -13,5 +13,6 @@ public interface PurchaseOrderService {
 	public void addPurchaseOrder(PurchaseOrder po);
 	public void editPurchaseOrder(PurchaseOrder po);
 	public void deletePurchaseOrder(int selectedId);
-	
+
+	public String generatePOCode();
 }

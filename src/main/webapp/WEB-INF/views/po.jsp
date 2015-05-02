@@ -285,12 +285,11 @@
 																				</td>
 																				<td style="vertical-align: middle;">
 																					<div class="form-group">
-																						<div class="col-md-12">																						
-																							<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																						<div class="col-md-12">
 																							<form:select class="form-control" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																									<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"></c:out></form:option>
+																									<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																								</c:forEach>
 																							</form:select>
 																						</div>
@@ -314,7 +313,7 @@
 																					<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																				</td>
 																			</tr>
-																			<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																			<c:set var="total" value="${ total + (iL.prodQuantity * iL.prodPrice) }" />
 																		</c:forEach>
 																	</tbody>
 																</table>

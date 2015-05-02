@@ -58,7 +58,7 @@ VALUES ('F_MON_STOCK', 'Monitoring', 'fa fa-eye fa-fw', 'Stocks','fa fa-database
 
 /*Reports*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT1', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 1','fa fa-plus fa-fw', '/report/id/rpt1', 700100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTTRX', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Transactions','fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 700100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_RPT_RPT2', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 2','fa fa-plus fa-fw', '/report/id/rpt2', 700200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
