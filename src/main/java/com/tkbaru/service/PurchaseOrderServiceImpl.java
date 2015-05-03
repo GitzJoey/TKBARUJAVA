@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.LookupDAO;
 import com.tkbaru.dao.PurchaseOrderDAO;
 import com.tkbaru.model.PurchaseOrder;
@@ -82,17 +83,17 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	}
 
 	@Override
+	@Transactional
 	public String generatePOCode() {
 		
 		String generatedPOCode = "";
+
+		RandomProvider r = new RandomProvider(6);
 		
-		boolean exist = true;
-		
-		while (exist) {
-			generatedPOCode = generatePOCode();			
-			if (!purchaseOrderDAO.isExistingPOCode(generatedPOCode)) exist = false;
-		}
-		
+		do {
+			generatedPOCode = r.generateAlphaNumericRandom();
+		} while (purchaseOrderDAO.isExistingPOCode(generatedPOCode));
+			
 		return generatedPOCode;
 	}
 

@@ -78,10 +78,15 @@ public class PurchaseOrderController {
 
 		if (loginContextSession.getPoList().isEmpty()) {			
 			PurchaseOrder po = new PurchaseOrder();
+
+			po.setPoCode(poManager.generatePOCode());
 			po.setPoStatus("L013_D");
 			po.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
+			po.setPoCreatedDate(new Date());
+			po.setShippingDate(new Date());
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
+			
 			loginContextSession.getPoList().add(po);
 		}
 		

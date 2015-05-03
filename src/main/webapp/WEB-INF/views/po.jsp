@@ -158,7 +158,7 @@
 																	<label for="poCode" class="col-sm-2 control-label">PO
 																		Code</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control poCode" id="poCode${ poIdx.index }" path="poList[${ poIdx.index }].poCode" placeholder="Enter PO Code" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																		<form:input type="text" class="form-control poCode" id="poCode${ poIdx.index }" path="poList[${ poIdx.index }].poCode" placeholder="Enter PO Code" readonly="true"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
@@ -292,7 +292,7 @@
 																			<th width="30%">Product Name</th>
 																			<th width="15%">Quantity</th>
 																			<th width="15%" class="text-right">Unit</th>
-																			<th width="15%" class="text-right">Price/Unit</th>
+																			<th width="15%" class="text-right">Price/Base Unit</th>
 																			<th width="5%">&nbsp;</th>
 																			<th width="20%" class="text-right">Total Price</th>
 																		</tr>
