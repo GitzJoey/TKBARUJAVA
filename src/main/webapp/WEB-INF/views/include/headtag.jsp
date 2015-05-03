@@ -36,8 +36,6 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/JSON/json2.js"></script>
-
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/moment/moment.js"></script>
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/chartist-js/dist/chartist.min.js"></script>
 	
