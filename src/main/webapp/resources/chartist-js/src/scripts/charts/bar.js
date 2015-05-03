@@ -57,7 +57,7 @@
     high: undefined,
     // Overriding the natural low of the chart allows you to zoom in or limit the charts lowest displayed value
     low: undefined,
-    // Padding of the chart drawing area to the container element and labels
+    // Padding of the chart drawing area to the container element and labels as a number or padding object {top: 5, right: 5, bottom: 5, left: 5}
     chartPadding: 5,
     // Specify the distance in pixel of bars in a group
     seriesBarDistance: 15,
@@ -88,6 +88,7 @@
   function createChart(options) {
     var seriesGroups = [],
       normalizedData = Chartist.normalizeDataArray(Chartist.getDataArray(this.data, options.reverseData), this.data.labels.length),
+      normalizedPadding = Chartist.normalizePadding(options.chartPadding, defaultOptions.padding),
       highLow;
 
     // Create new svg element
@@ -99,21 +100,23 @@
         return Array.prototype.slice.call(arguments).reduce(Chartist.sum, 0);
       });
 
-      highLow = Chartist.getHighLow([serialSums]);
+      highLow = Chartist.getHighLow([serialSums], options);
     } else {
-      highLow = Chartist.getHighLow(normalizedData);
+      highLow = Chartist.getHighLow(normalizedData, options);
     }
     // Overrides of high / low from settings
     highLow.high = +options.high || (options.high === 0 ? 0 : highLow.high);
     highLow.low = +options.low || (options.low === 0 ? 0 : highLow.low);
 
-    var chartRect = Chartist.createChartRect(this.svg, options);
+    var chartRect = Chartist.createChartRect(this.svg, options, defaultOptions.padding);
 
     var valueAxis,
-      labelAxis;
+      labelAxis,
+      axisX,
+      axisY;
 
     if(options.horizontalBars) {
-      labelAxis = new Chartist.StepAxis(
+      labelAxis = axisY = new Chartist.StepAxis(
         Chartist.Axis.units.y,
         chartRect,
         function timeAxisTransform(projectedValue) {
@@ -121,7 +124,7 @@
           return projectedValue;
         },
         {
-          x: options.chartPadding + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
+          x: normalizedPadding.left + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
           y: options.axisY.labelOffset.y - chartRect.height() / this.data.labels.length
         },
         {
@@ -130,7 +133,7 @@
         }
       );
 
-      valueAxis = new Chartist.LinearScaleAxis(
+      valueAxis = axisX = new Chartist.LinearScaleAxis(
         Chartist.Axis.units.x,
         chartRect,
         function valueAxisTransform(projectedValue) {
@@ -148,7 +151,7 @@
         }
       );
     } else {
-      labelAxis = new Chartist.StepAxis(
+      labelAxis = axisX = new Chartist.StepAxis(
         Chartist.Axis.units.x,
         chartRect,
         function timeAxisTransform(projectedValue) {
@@ -164,7 +167,7 @@
         }
       );
 
-      valueAxis = new Chartist.LinearScaleAxis(
+      valueAxis = axisY = new Chartist.LinearScaleAxis(
         Chartist.Axis.units.y,
         chartRect,
         function valueAxisTransform(projectedValue) {
@@ -172,7 +175,7 @@
           return projectedValue;
         },
         {
-          x: options.chartPadding + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
+          x: normalizedPadding.left + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
           y: options.axisY.labelOffset.y + (this.supportsForeignObject ? -15 : 0)
         },
         {
@@ -277,6 +280,8 @@
     this.eventEmitter.emit('created', {
       bounds: valueAxis.bounds,
       chartRect: chartRect,
+      axisX: axisX,
+      axisY: axisY,
       svg: this.svg,
       options: options
     });
@@ -323,6 +328,7 @@
     Chartist.Bar.super.constructor.call(this,
       query,
       data,
+      defaultOptions,
       Chartist.extend({}, defaultOptions, options),
       responsiveOptions);
   }

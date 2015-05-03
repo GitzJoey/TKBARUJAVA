@@ -67,7 +67,7 @@
     low: undefined,
     // Overriding the natural high of the chart allows you to zoom in or limit the charts highest displayed value
     high: undefined,
-    // Padding of the chart drawing area to the container element and labels
+    // Padding of the chart drawing area to the container element and labels as a number or padding object {top: 5, right: 5, bottom: 5, left: 5}
     chartPadding: 5,
     // When set to true, the last grid line on the x-axis is not drawn and the chart elements will expand to the full available width of the chart. For the last label to be drawn correctly you might need to add chart padding or offset the last label with a draw event handler.
     fullWidth: false,
@@ -95,17 +95,15 @@
    */
   function createChart(options) {
     var seriesGroups = [],
-      normalizedData = Chartist.normalizeDataArray(Chartist.getDataArray(this.data, options.reverseData), this.data.labels.length);
+      normalizedData = Chartist.normalizeDataArray(Chartist.getDataArray(this.data, options.reverseData), this.data.labels.length),
+      normalizedPadding = Chartist.normalizePadding(options.chartPadding, defaultOptions.padding);
 
     // Create new svg object
     this.svg = Chartist.createSvg(this.container, options.width, options.height, options.classNames.chart);
 
-    var chartRect = Chartist.createChartRect(this.svg, options);
+    var chartRect = Chartist.createChartRect(this.svg, options, defaultOptions.padding);
 
-    var highLow = Chartist.getHighLow(normalizedData);
-    // Overrides of high / low from settings
-    highLow.high = +options.high || (options.high === 0 ? 0 : highLow.high);
-    highLow.low = +options.low || (options.low === 0 ? 0 : highLow.low);
+    var highLow = Chartist.getHighLow(normalizedData, options);
 
     var axisX = new Chartist.StepAxis(
       Chartist.Axis.units.x,
@@ -132,7 +130,7 @@
         return projectedValue;
       },
       {
-        x: options.chartPadding + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
+        x: normalizedPadding.left + options.axisY.labelOffset.x + (this.supportsForeignObject ? -10 : 0),
         y: options.axisY.labelOffset.y + (this.supportsForeignObject ? -15 : 0)
       },
       {
@@ -282,6 +280,8 @@
     this.eventEmitter.emit('created', {
       bounds: axisY.bounds,
       chartRect: chartRect,
+      axisX: axisX,
+      axisY: axisY,
       svg: this.svg,
       options: options
     });
@@ -372,6 +372,7 @@
     Chartist.Line.super.constructor.call(this,
       query,
       data,
+      defaultOptions,
       Chartist.extend({}, defaultOptions, options),
       responsiveOptions);
   }

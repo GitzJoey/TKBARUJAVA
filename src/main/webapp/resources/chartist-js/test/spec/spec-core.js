@@ -122,6 +122,64 @@ describe('Chartist core', function() {
       );
     });
 
+    it('normalize mixed series for pie chart correctly', function() {
+      var data = {
+        series: [1, {value: 0}, 3, {value: 4}, 5, 6, 7, 8]
+      };
+
+      expect(Chartist.getDataArray(data)).toEqual(
+        [1, 0, 3, 4, 5, 6, 7, 8]
+      );
+    });
+
+    it('normalize mixed series with string values for pie chart correctly', function() {
+      var data = {
+        series: ['1', {value: '0'}, '3', {value: '4'}, '5', '6', '7', '8']
+      };
+
+      expect(Chartist.getDataArray(data)).toEqual(
+        [1, 0, 3, 4, 5, 6, 7, 8]
+      );
+    });
+
+    it('normalize mixed series types with string values correctly', function() {
+      var data = {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        series: [
+          {data: ['1', '0', '3', '4', '5', '6']},
+          ['1', {value: '0'}, '3', {value: '4'}, '5', '6', '7', '8'],
+          {data: ['1', '0', {value: '3'}]}
+        ]
+      };
+
+      expect(Chartist.normalizeDataArray(Chartist.getDataArray(data), data.labels.length)).toEqual(
+        [
+          [1, 0, 3, 4, 5, 6, 0, 0, 0, 0],
+          [1, 0, 3, 4, 5, 6, 7, 8, 0, 0],
+          [1, 0, 3, 0, 0, 0, 0, 0, 0, 0]
+        ]
+      );
+    });
+
+    it('normalize mixed series types with weird values correctly', function() {
+      var data = {
+        labels: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+        series: [
+          {data: [null, NaN, undefined, '4', '5', '6']},
+          ['1', {value: null}, '3', {value: NaN}, '5', '6', '7', '8'],
+          {data: ['1', '0', {value: undefined}]}
+        ]
+      };
+
+      expect(Chartist.normalizeDataArray(Chartist.getDataArray(data), data.labels.length)).toEqual(
+        [
+          [0, 0, 0, 4, 5, 6, 0, 0, 0, 0],
+          [1, 0, 3, 0, 5, 6, 7, 8, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+      );
+    });
+
     it('should normalize correctly with 0 values in data series array objects', function() {
       var data = {
         labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
@@ -140,6 +198,70 @@ describe('Chartist core', function() {
       expect(Chartist.normalizeDataArray(Chartist.getDataArray(data))).toEqual(
         [[1, 4, 2, 7, 2, 0]]
       );
+    });
+  });
+
+  describe('padding normalization tests', function () {
+    it('should normalize number padding', function() {
+      expect(Chartist.normalizePadding(10)).toEqual({
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      });
+    });
+
+    it('should normalize number padding when 0 is passed', function() {
+      expect(Chartist.normalizePadding(0)).toEqual({
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      });
+    });
+
+    it('should normalize empty padding object with default fallback', function() {
+      expect(Chartist.normalizePadding({})).toEqual({
+        top: 0,
+        right: 0,
+        bottom: 0,
+        left: 0
+      });
+    });
+
+    it('should normalize empty padding object with specified fallback', function() {
+      expect(Chartist.normalizePadding({}, 10)).toEqual({
+        top: 10,
+        right: 10,
+        bottom: 10,
+        left: 10
+      });
+    });
+
+    it('should normalize partial padding object with specified fallback', function() {
+      expect(Chartist.normalizePadding({
+        top: 5,
+        left: 5
+      }, 10)).toEqual({
+        top: 5,
+        right: 10,
+        bottom: 10,
+        left: 5
+      });
+    });
+
+    it('should not modify complete padding object', function() {
+      expect(Chartist.normalizePadding({
+        top: 5,
+        right: 5,
+        bottom: 5,
+        left: 5
+      }, 10)).toEqual({
+        top: 5,
+        right: 5,
+        bottom: 5,
+        left: 5
+      });
     });
   });
 });

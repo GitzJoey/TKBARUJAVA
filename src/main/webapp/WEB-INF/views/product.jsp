@@ -14,6 +14,20 @@
 				window.location.href(ctxpath + "/product");
 			});
 			
+			$('#submitButton').click(function() {
+				var baseUnitExist = false;
+				$('input[type="checkbox"][id^="productUnit"]').each(function(index, item) {
+					if ($(this).is(":checked")) {
+						baseUnitExist = true;
+					}
+				});
+				
+				if (!baseUnitExist) {
+					jsAlert("Must have at least 1 base unit");
+					return false;
+				}
+			});
+			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
 				var selected = $(this);
 				
@@ -65,9 +79,7 @@
 					
 					$('#productForm').attr('action', ctxpath + "/product/removeunit/" + id);
 				}
-			});
-			
-			
+			});			
 		});
 	</script>	
 </head>

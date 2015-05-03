@@ -90,7 +90,7 @@ sections:
             - type: code
               data:
                 lang: bash
-                code: cp bower_components/chartist/libdist/scss/settings/_chartist-settings.scss styles
+                code: cp bower_components/chartist/dist/scss/settings/_chartist-settings.scss styles
 
             - type: text
               data:
@@ -126,7 +126,7 @@ sections:
               data:
                 id: default-Sass-settings
                 button: Show default settings
-                path: site/styles/settings/_chartist-settings.scss
+                path: src/styles/settings/_chartist-settings.scss
                 lang: scss
 
   - title: Create your first chart
@@ -284,6 +284,23 @@ sections:
                       id: simple-start-fixed-chart
                       lang: js
 
+            - type: sub-section
+              data:
+                title: More than one chart on my page?
+                level: 5
+                items:
+                  - type: text
+                    data:
+                      text: >
+                              The example above uses the chartist default class to select the element where the chart should
+                              be created. This class is important for applying the right styles in the CSS of Chartist. If
+                              you need to create individual charts on one page, you should use IDs to initialize them separately.
+
+                  - type: code-snippet
+                    data:
+                      id: two-charts
+                      lang: html
+
       - type: sub-section
         data:
           title: The configuration of your chart
@@ -360,7 +377,9 @@ sections:
                 classes: hint-cross-browser
                 text: >
                         For IE9 you need to use a matchMedia polyfill. You should take a look at
-                        <a href="https://github.com/paulirish/matchMedia.js/">Paul Irish's matchMedia polyfill</a>.
+                        <a href="https://github.com/paulirish/matchMedia.js/">Paul Irish's matchMedia polyfill</a>. Make
+                        sure you include matchMedia.js as well as matchMedia.addListener.js as always both are needed
+                        to polyfill the full specification of window.matchMedia.
 
   - title: Advanced
     level: 3

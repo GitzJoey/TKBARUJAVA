@@ -4,7 +4,7 @@
  * @module Chartist.Core
  */
 var Chartist = {
-  version: '0.7.1'
+  version: '<%= pkg.version %>'
 };
 
 (function (window, document, Chartist) {
@@ -47,8 +47,8 @@ var Chartist = {
     var sources = Array.prototype.slice.call(arguments, 1);
     sources.forEach(function(source) {
       for (var prop in source) {
-        if (typeof source[prop] === 'object' && !(source[prop] instanceof Array)) {
-          target[prop] = Chartist.extend(target[prop], source[prop]);
+        if (typeof source[prop] === 'object' && source[prop] !== null && !(source[prop] instanceof Array)) {
+          target[prop] = Chartist.extend({}, target[prop], source[prop]);
         } else {
           target[prop] = source[prop];
         }
@@ -160,6 +160,27 @@ var Chartist = {
 
     return result;
   };
+
+  /**
+   * This helper function can be used to round values with certain precision level after decimal. This is used to prevent rounding errors near float point precision limit.
+   *
+   * @memberof Chartist.Core
+   * @param {Number} value The value that should be rounded with precision
+   * @param {Number} [digits] The number of digits after decimal used to do the rounding
+   * @returns {number} Rounded value
+   */
+  Chartist.roundWithPrecision = function(value, digits) {
+    var precision = Math.pow(10, digits || Chartist.precision);
+    return Math.round(value * precision) / precision;
+  };
+
+  /**
+   * Precision level used internally in Chartist for rounding. If you require more decimal places you can increase this number.
+   *
+   * @memberof Chartist.Core
+   * @type {number}
+   */
+  Chartist.precision = 8;
 
   /**
    * A map with characters to escape for strings to be safely used as attribute values.
@@ -287,10 +308,6 @@ var Chartist = {
    * @return {Array} A plain array that contains the data to be visualized in the chart
    */
   Chartist.getDataArray = function (data, reverse) {
-    var array = [],
-      value,
-      localData;
-
     // If the data should be reversed but isn't we need to reverse it
     // If it's reversed but it shouldn't we need to reverse it back
     // That's required to handle data updates correctly and to reflect the responsive configurations
@@ -299,27 +316,45 @@ var Chartist = {
       data.reversed = !data.reversed;
     }
 
-    for (var i = 0; i < data.series.length; i++) {
-      // If the series array contains an object with a data property we will use the property
-      // otherwise the value directly (array or number).
-      // We create a copy of the original data array with Array.prototype.push.apply
-      localData = typeof(data.series[i]) === 'object' && data.series[i].data !== undefined ? data.series[i].data : data.series[i];
-      if(localData instanceof Array) {
-        array[i] = [];
-        Array.prototype.push.apply(array[i], localData);
+    // Rcursively walks through nested arrays and convert string values to numbers and objects with value properties
+    // to values. Check the tests in data core -> data normalization for a detailed specification of expected values
+    function recursiveConvert(value) {
+      if(value === undefined || value === null || (typeof value === 'number' && isNaN(value))) {
+        return 0;
+      } else if((value.data || value) instanceof Array) {
+        return (value.data || value).map(recursiveConvert);
+      } else if(value.hasOwnProperty('value')) {
+        return recursiveConvert(value.value);
       } else {
-        array[i] = localData;
-      }
-
-      // Convert object values to numbers
-      for (var j = 0; j < array[i].length; j++) {
-        value = array[i][j];
-        value = value.value === 0 ? 0 : (value.value || value);
-        array[i][j] = +value;
+        return +value;
       }
     }
 
-    return array;
+    return data.series.map(recursiveConvert);
+  };
+
+  /**
+   * Converts a number into a padding object.
+   *
+   * @memberof Chartist.Core
+   * @param {Object|Number} padding
+   * @param {Number} [fallback] This value is used to fill missing values if a incomplete padding object was passed
+   * @returns {Object} Returns a padding object containing top, right, bottom, left properties filled with the padding number passed in as argument. If the argument is something else than a number (presumably already a correct padding object) then this argument is directly returned.
+   */
+  Chartist.normalizePadding = function(padding, fallback) {
+    fallback = fallback || 0;
+
+    return typeof padding === 'number' ? {
+      top: padding,
+      right: padding,
+      bottom: padding,
+      left: padding
+    } : {
+      top: typeof padding.top === 'number' ? padding.top : fallback,
+      right: typeof padding.right === 'number' ? padding.right : fallback,
+      bottom: typeof padding.bottom === 'number' ? padding.bottom : fallback,
+      left: typeof padding.left === 'number' ? padding.left : fallback
+    };
   };
 
   /**
@@ -382,7 +417,7 @@ var Chartist = {
    * @return {Number} The height of the area in the chart for the data series
    */
   Chartist.getAvailableHeight = function (svg, options) {
-    return Math.max((Chartist.stripUnit(options.height) || svg.height()) - (options.chartPadding * 2) - options.axisX.offset, 0);
+    return Math.max((Chartist.stripUnit(options.height) || svg.height()) - (options.chartPadding.top +  options.chartPadding.bottom) - options.axisX.offset, 0);
   };
 
   /**
@@ -390,25 +425,43 @@ var Chartist = {
    *
    * @memberof Chartist.Core
    * @param {Array} dataArray The array that contains the data to be visualized in the chart
+   * @param {Object} options The Object that contains all the optional values for the chart
    * @return {Object} An object that contains the highest and lowest value that will be visualized on the chart.
    */
-  Chartist.getHighLow = function (dataArray) {
+  Chartist.getHighLow = function (dataArray, options) {
     var i,
       j,
       highLow = {
-        high: -Number.MAX_VALUE,
-        low: Number.MAX_VALUE
-      };
+        high: options.high === undefined ? -Number.MAX_VALUE : +options.high,
+        low: options.low === undefined ? Number.MAX_VALUE : +options.low
+      },
+      findHigh = options.high === undefined,
+      findLow = options.low === undefined;
 
     for (i = 0; i < dataArray.length; i++) {
       for (j = 0; j < dataArray[i].length; j++) {
-        if (dataArray[i][j] > highLow.high) {
+        if (findHigh && dataArray[i][j] > highLow.high) {
           highLow.high = dataArray[i][j];
         }
 
-        if (dataArray[i][j] < highLow.low) {
+        if (findLow && dataArray[i][j] < highLow.low) {
           highLow.low = dataArray[i][j];
         }
+      }
+    }
+
+    // If high and low are the same because of misconfiguration or flat data (only the same value) we need
+    // to set the high or low to 0 depending on the polarity
+    if (highLow.high <= highLow.low) {
+      // If both values are 0 we set high to 1
+      if (highLow.low === 0) {
+        highLow.high = 1;
+      } else if (highLow.low < 0) {
+        // If we have the same negative value for the bounds we set bounds.high to 0
+        highLow.high = 0;
+      } else {
+        // If we have the same positive value for the bounds we set bounds.low to 0
+        highLow.low = 0;
       }
     }
 
@@ -433,21 +486,6 @@ var Chartist = {
         high: highLow.high,
         low: highLow.low
       };
-
-    // If high and low are the same because of misconfiguration or flat data (only the same value) we need
-    // to set the high or low to 0 depending on the polarity
-    if(bounds.high === bounds.low) {
-      // If both values are 0 we set high to 1
-      if(bounds.low === 0) {
-        bounds.high = 1;
-      } else if(bounds.low < 0) {
-        // If we have the same negative value for the bounds we set bounds.high to 0
-        bounds.high = 0;
-      } else {
-        // If we have the same positive value for the bounds we set bounds.low to 0
-        bounds.low = 0;
-      }
-    }
 
     // Overrides of high / low based on reference value, it will make sure that the invisible reference value is
     // used to generate the chart. This is useful when the chart always needs to contain the position of the
@@ -498,7 +536,7 @@ var Chartist = {
 
     bounds.values = [];
     for (i = bounds.min; i <= bounds.max; i += bounds.step) {
-      bounds.values.push(i);
+      bounds.values.push(Chartist.roundWithPrecision(i));
     }
 
     return bounds;
@@ -529,19 +567,26 @@ var Chartist = {
    * @memberof Chartist.Core
    * @param {Object} svg The svg element for the chart
    * @param {Object} options The Object that contains all the optional values for the chart
+   * @param {Number} [fallbackPadding] The fallback padding if partial padding objects are used
    * @return {Object} The chart rectangles coordinates inside the svg element plus the rectangles measurements
    */
-  Chartist.createChartRect = function (svg, options) {
+  Chartist.createChartRect = function (svg, options, fallbackPadding) {
     var yOffset = options.axisY ? options.axisY.offset || 0 : 0,
       xOffset = options.axisX ? options.axisX.offset || 0 : 0,
-      w = Chartist.stripUnit(options.width) || svg.width(),
-      h = Chartist.stripUnit(options.height) || svg.height();
+      // If width or height results in invalid value (including 0) we fallback to the unitless settings or even 0
+      w = svg.width() || Chartist.stripUnit(options.width) || 0,
+      h = svg.height() || Chartist.stripUnit(options.height) || 0,
+      normalizedPadding = Chartist.normalizePadding(options.chartPadding, fallbackPadding);
+
+    // If settings were to small to cope with offset (legacy) and padding, we'll adjust
+    w = Math.max(w, xOffset + normalizedPadding.left + normalizedPadding.right);
+    h = Math.max(h, yOffset + normalizedPadding.top + normalizedPadding.bottom);
 
     return {
-      x1: options.chartPadding + yOffset,
-      y1: Math.max(h - options.chartPadding - xOffset, options.chartPadding),
-      x2: Math.max(w - options.chartPadding, options.chartPadding + yOffset),
-      y2: options.chartPadding,
+      x1: normalizedPadding.left + yOffset,
+      y1: Math.max(h - normalizedPadding.bottom - xOffset, normalizedPadding.bottom),
+      x2: Math.max(w - normalizedPadding.right, normalizedPadding.right + yOffset),
+      y2: normalizedPadding.top,
       width: function () {
         return this.x2 - this.x1;
       },
@@ -577,7 +622,7 @@ var Chartist = {
     eventEmitter.emit('draw',
       Chartist.extend({
         type: 'grid',
-        axis: axis.units.pos,
+        axis: axis,
         index: index,
         group: group,
         element: gridElement
@@ -682,7 +727,7 @@ var Chartist = {
       mediaQueryListeners = [],
       i;
 
-    function updateCurrentOptions() {
+    function updateCurrentOptions(preventChangedEvent) {
       var previousOptions = currentOptions;
       currentOptions = Chartist.extend({}, baseOptions);
 
@@ -695,7 +740,7 @@ var Chartist = {
         }
       }
 
-      if(eventEmitter) {
+      if(eventEmitter && !preventChangedEvent) {
         eventEmitter.emit('optionsChanged', {
           previousOptions: previousOptions,
           currentOptions: currentOptions
@@ -720,7 +765,7 @@ var Chartist = {
       }
     }
     // Execute initially so we get the correct options
-    updateCurrentOptions();
+    updateCurrentOptions(true);
 
     return {
       get currentOptions() {
@@ -728,47 +773,6 @@ var Chartist = {
       },
       removeMediaQueryListeners: removeMediaQueryListeners
     };
-  };
-
-  //http://schepers.cc/getting-to-the-point
-  Chartist.catmullRom2bezier = function (crp, z) {
-    var d = [];
-    for (var i = 0, iLen = crp.length; iLen - 2 * !z > i; i += 2) {
-      var p = [
-        {x: +crp[i - 2], y: +crp[i - 1]},
-        {x: +crp[i], y: +crp[i + 1]},
-        {x: +crp[i + 2], y: +crp[i + 3]},
-        {x: +crp[i + 4], y: +crp[i + 5]}
-      ];
-      if (z) {
-        if (!i) {
-          p[0] = {x: +crp[iLen - 2], y: +crp[iLen - 1]};
-        } else if (iLen - 4 === i) {
-          p[3] = {x: +crp[0], y: +crp[1]};
-        } else if (iLen - 2 === i) {
-          p[2] = {x: +crp[0], y: +crp[1]};
-          p[3] = {x: +crp[2], y: +crp[3]};
-        }
-      } else {
-        if (iLen - 4 === i) {
-          p[3] = p[2];
-        } else if (!i) {
-          p[0] = {x: +crp[i], y: +crp[i + 1]};
-        }
-      }
-      d.push(
-        [
-          (-p[0].x + 6 * p[1].x + p[2].x) / 6,
-          (-p[0].y + 6 * p[1].y + p[2].y) / 6,
-          (p[1].x + 6 * p[2].x - p[3].x) / 6,
-          (p[1].y + 6 * p[2].y - p[3].y) / 6,
-          p[2].x,
-          p[2].y
-        ]
-      );
-    }
-
-    return d;
   };
 
 }(window, document, Chartist));

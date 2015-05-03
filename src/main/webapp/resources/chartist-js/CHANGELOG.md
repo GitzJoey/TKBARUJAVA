@@ -1,3 +1,19 @@
+v0.7.4 - 19 Apr 2015
+--------------------
+- Enhanced documentation site (Accessibility plugin, live example eval, fixed path to Sass settings, better HTML example of how to include Chartist, example how to include multiple charts on one page)
+- Added Arc to Chartist.Svg.Path
+- Refactored Chartist.Pie to make use of Svg.Path and expose path in events
+- Closing path of Pie if not a donut for correct strokes
+- Exposing axis objects in created event
+- Changed grid event to use axis object instead of string
+
+v0.7.3 - 27 Feb 2015
+--------------------
+- Fixed bugs in the chart.update method 
+- Fixed rounding precision issues in order of magnitude calculation
+- Fixed bug in Chartist.extend which caused merge problems from object properties into non-objects
+- Added possibility to use chartPadding with a padding object that contains top, right, bottom and left properties
+
 v0.7.2 - 12 Feb 2015
 --------------------
 - Added new line smoothing / interpolation module for configurable line smoothing

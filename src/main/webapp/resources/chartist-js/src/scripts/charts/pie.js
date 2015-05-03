@@ -17,9 +17,9 @@
     width: undefined,
     // Specify a fixed height for the chart as a string (i.e. '100px' or '50%')
     height: undefined,
-    // Padding of the chart drawing area to the container element and labels
+    // Padding of the chart drawing area to the container element and labels as a number or padding object {top: 5, right: 5, bottom: 5, left: 5}
     chartPadding: 5,
-    // Override the class names that get used to generate the SVG structure of the chart
+    // Override the class names that are used to generate the SVG structure of the chart
     classNames: {
       chart: 'ct-chart-pie',
       series: 'ct-series',
@@ -86,7 +86,7 @@
     // Create SVG.js draw
     this.svg = Chartist.createSvg(this.container, options.width, options.height, options.classNames.chart);
     // Calculate charting rect
-    chartRect = Chartist.createChartRect(this.svg, options, 0, 0);
+    chartRect = Chartist.createChartRect(this.svg, options, defaultOptions.padding);
     // Get biggest circle radius possible within chartRect
     radius = Math.min(chartRect.width() / 2, chartRect.height() / 2);
     // Calculate total of all series to get reference value or use total reference from optional options
@@ -113,7 +113,7 @@
 
     // Check if there is only one non-zero value in the series array.
     var hasSingleValInSeries = this.data.series.filter(function(val) {
-      return val !== 0;
+      return val.hasOwnProperty('value') ? val.value !== 0 : val !== 0;
     }).length === 1;
 
     // Draw the series
@@ -121,13 +121,11 @@
     for (var i = 0; i < this.data.series.length; i++) {
       seriesGroups[i] = this.svg.elem('g', null, null, true);
 
-      // If the series is an object and contains a name we add a custom attribute
-      if(this.data.series[i].name) {
-        seriesGroups[i].attr({
-          'series-name': this.data.series[i].name,
-          'meta': Chartist.serialize(this.data.series[i].meta)
-        }, Chartist.xmlNs.uri);
-      }
+      // If the series is an object and contains a name or meta data we add a custom attribute
+      seriesGroups[i].attr({
+        'series-name': this.data.series[i].name,
+        'meta': Chartist.serialize(this.data.series[i].meta)
+      }, Chartist.xmlNs.uri);
 
       // Use series class from series data or if not set generate one
       seriesGroups[i].addClass([
@@ -143,34 +141,32 @@
       }
 
       var start = Chartist.polarToCartesian(center.x, center.y, radius, startAngle - (i === 0 || hasSingleValInSeries ? 0 : 0.2)),
-        end = Chartist.polarToCartesian(center.x, center.y, radius, endAngle),
-        arcSweep = endAngle - startAngle <= 180 ? '0' : '1',
-        d = [
-          // Start at the end point from the cartesian coordinates
-          'M', end.x, end.y,
-          // Draw arc
-          'A', radius, radius, 0, arcSweep, 0, start.x, start.y
-        ];
+        end = Chartist.polarToCartesian(center.x, center.y, radius, endAngle);
+
+      // Create a new path element for the pie chart. If this isn't a donut chart we should close the path for a correct stroke
+      var path = new Chartist.Svg.Path(!options.donut)
+        .move(end.x, end.y)
+        .arc(radius, radius, 0, endAngle - startAngle > 180, 0, start.x, start.y);
 
       // If regular pie chart (no donut) we add a line to the center of the circle for completing the pie
-      if(options.donut === false) {
-        d.push('L', center.x, center.y);
+      if(!options.donut) {
+        path.line(center.x, center.y);
       }
 
       // Create the SVG path
       // If this is a donut chart we add the donut class, otherwise just a regular slice
-      var path = seriesGroups[i].elem('path', {
-        d: d.join(' ')
+      var pathElement = seriesGroups[i].elem('path', {
+        d: path.stringify()
       }, options.classNames.slice + (options.donut ? ' ' + options.classNames.donut : ''));
 
       // Adding the pie series value to the path
-      path.attr({
+      pathElement.attr({
         'value': dataArray[i]
       }, Chartist.xmlNs.uri);
 
       // If this is a donut, we add the stroke-width as style attribute
-      if(options.donut === true) {
-        path.attr({
+      if(options.donut) {
+        pathElement.attr({
           'style': 'stroke-width: ' + (+options.donutWidth) + 'px'
         });
       }
@@ -182,7 +178,8 @@
         totalDataSum: totalDataSum,
         index: i,
         group: seriesGroups[i],
-        element: path,
+        element: pathElement,
+        path: path.clone(),
         center: center,
         radius: radius,
         startAngle: startAngle,
@@ -230,7 +227,7 @@
    *
    * @memberof Chartist.Pie
    * @param {String|Node} query A selector query string or directly a DOM element
-   * @param {Object} data The data object in the pie chart needs to have a series property with a one dimensional data array. The values will be normalized against each other and don't necessarily need to be in percentage. The series property can also be an array of objects that contain a data property with the value and a className property to override the CSS class name for the series group.
+   * @param {Object} data The data object in the pie chart needs to have a series property with a one dimensional data array. The values will be normalized against each other and don't necessarily need to be in percentage. The series property can also be an array of value objects that contain a value property and a className property to override the CSS class name for the series group.
    * @param {Object} [options] The options object with options that override the default options. Check the examples for a detailed list.
    * @param {Array} [responsiveOptions] Specify an array of responsive option arrays which are a media query and options object pair => [[mediaQueryString, optionsObject],[more...]]
    * @return {Object} An object with a version and an update method to manually redraw the chart
@@ -271,17 +268,25 @@
    * });
    *
    * @example
-   * // Overriding the class names for individual series
+   * // Overriding the class names for individual series as well as a name and meta data.
+   * // The name will be written as ct:series-name attribute and the meta data will be serialized and written
+   * // to a ct:meta attribute.
    * new Chartist.Pie('.ct-chart', {
    *   series: [{
-   *     data: 20,
-   *     className: 'my-custom-class-one'
+   *     value: 20,
+   *     name: 'Series 1',
+   *     className: 'my-custom-class-one',
+   *     meta: 'Meta One'
    *   }, {
-   *     data: 10,
-   *     className: 'my-custom-class-two'
+   *     value: 10,
+   *     name: 'Series 2',
+   *     className: 'my-custom-class-two',
+   *     meta: 'Meta Two'
    *   }, {
-   *     data: 70,
-   *     className: 'my-custom-class-three'
+   *     value: 70,
+   *     name: 'Series 3',
+   *     className: 'my-custom-class-three',
+   *     meta: 'Meta Three'
    *   }]
    * });
    */
@@ -289,6 +294,7 @@
     Chartist.Pie.super.constructor.call(this,
       query,
       data,
+      defaultOptions,
       Chartist.extend({}, defaultOptions, options),
       responsiveOptions);
   }
