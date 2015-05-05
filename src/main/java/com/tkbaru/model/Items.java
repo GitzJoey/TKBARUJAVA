@@ -47,6 +47,12 @@ public class Items {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
+	@Column(name="base_unit_code")
+	private String baseUnitCode;
+	@Column(name="to_base_value")
+	private long toBaseValue;
+	@Column(name="to_base_qty")
+	private long toBaseQty;
 
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName="product_id", unique=true, insertable=false, updatable=false)
@@ -156,6 +162,30 @@ public class Items {
 
 	public void setReceiptList(List<Receipt> receiptList) {
 		this.receiptList = receiptList;
+	}
+
+	public String getBaseUnitCode() {
+		return baseUnitCode;
+	}
+
+	public void setBaseUnitCode(String baseUnitCode) {
+		this.baseUnitCode = baseUnitCode;
+	}
+
+	public long getToBaseValue() {
+		return toBaseValue;
+	}
+
+	public void setToBaseValue(long toBaseValue) {
+		this.toBaseValue = toBaseValue;
+	}
+
+	public long getToBaseQty() {
+		return toBaseQty;
+	}
+
+	public void setToBaseQty(long toBaseQty) {
+		this.toBaseQty = toBaseQty;
 	}
 
 	@Override

@@ -185,6 +185,9 @@
     <beans:bean id="PriceLevelDAO" class="com.tkbaru.dao.PriceLevelDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="ProductUnitDAO" class="com.tkbaru.dao.ProductUnitDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -211,6 +214,7 @@
 	<beans:bean id="SearchService" class="com.tkbaru.service.SearchServiceImpl"></beans:bean>
 	<beans:bean id="PriceLevelService" class="com.tkbaru.service.PriceLevelServiceImpl"></beans:bean>
 	<beans:bean id="PriceService" class="com.tkbaru.service.PriceServiceImpl"></beans:bean>
+	 <beans:bean id="ProductUnitService" class="com.tkbaru.service.ProductUnitServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />

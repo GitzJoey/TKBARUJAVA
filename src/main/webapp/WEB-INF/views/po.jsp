@@ -304,6 +304,9 @@
 																				<td style="vertical-align: middle;">
 																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId" />
 																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId" />
+																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
+																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
+																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
 																					<label>
 																						<c:out value="${ iL.productLookup.productName }"></c:out>
 																					</label>

@@ -29,11 +29,13 @@ import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
+import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
+import com.tkbaru.service.ProductUnitService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.SupplierService;
 import com.tkbaru.service.WarehouseService;
@@ -63,6 +65,9 @@ public class PurchaseOrderController {
 
 	@Autowired
 	private LoginContext loginContextSession;
+	
+	@Autowired
+	ProductUnitService productUnitManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -138,6 +143,8 @@ public class PurchaseOrderController {
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		ProductUnit productUnitBase = productUnitManager.getProductUnitByIsBase(item.getProductId());
+		item.setBaseUnitCode(productUnitBase.getUnitCode());
 
 		
 		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
@@ -151,6 +158,9 @@ public class PurchaseOrderController {
 			for(Items items : po.getItemsList()){
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
+				
+				
+				
 				
 			}
 		
@@ -184,6 +194,8 @@ public class PurchaseOrderController {
 		i.setProductLookup(product);
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		ProductUnit productUnitBase = productUnitManager.getProductUnitByIsBase(i.getProductId());
+		i.setBaseUnitCode(productUnitBase.getUnitCode());
 
 		reviseForm.getItemsList().add(i);
 		
@@ -372,6 +384,17 @@ public class PurchaseOrderController {
 		PurchaseOrder po = loginContext.getPoList().get(Integer.parseInt(varId));
 		po.setPoStatus("L013_WA");
 		po.setStatusLookup(lookupManager.getLookupByKey("L013_WA"));
+		
+		List<Items> itemList = new ArrayList<Items>();
+		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
+			Product prod = productManager.getProductById(items.getProductId());
+			items.setProductLookup(prod);
+			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
+		
+			items.setToBaseValue(productUnit.getConversionValue());
+			items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+			itemList.add(items);
+		}
 
 		if (po.getPoId() == 0) {
 			po.setCreatedDate(new Date());
@@ -380,12 +403,7 @@ public class PurchaseOrderController {
 			poManager.editPurchaseOrder(po);
 		}
 
-		List<Items> itemList = new ArrayList<Items>();
-		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-			itemList.add(items);
-		}
+		
 		
 		for(PurchaseOrder poVar : loginContext.getPoList()){
 			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoType()));
@@ -396,6 +414,7 @@ public class PurchaseOrderController {
 			for (Items items : poVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
+				
 				
 			}
 		}
@@ -446,6 +465,18 @@ public class PurchaseOrderController {
 
 		reviseForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseForm.setUpdatedDate(new Date());
+		
+		List<Items> itemList = new ArrayList<Items>();
+		for (Items items : reviseForm.getItemsList()) {
+			Product prod = productManager.getProductById(items.getProductId());
+			items.setProductLookup(prod);
+			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
+		
+			items.setToBaseValue(productUnit.getConversionValue());
+			items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+			itemList.add(items);
+		}
+		
 		poManager.editPurchaseOrder(reviseForm);
 
 		model.addAttribute("reviseForm", reviseForm);
