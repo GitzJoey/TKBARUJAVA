@@ -35,7 +35,6 @@ import com.tkbaru.model.Supplier;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
-import com.tkbaru.service.ProductUnitService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.SupplierService;
 import com.tkbaru.service.WarehouseService;
@@ -66,8 +65,7 @@ public class PurchaseOrderController {
 	@Autowired
 	private LoginContext loginContextSession;
 	
-	@Autowired
-	ProductUnitService productUnitManager;
+	
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -143,9 +141,12 @@ public class PurchaseOrderController {
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		ProductUnit productUnitBase = productUnitManager.getProductUnitByIsBase(item.getProductId());
-		item.setBaseUnitCode(productUnitBase.getUnitCode());
-
+		
+		for(ProductUnit productUnit :product.getProductUnit()){
+			if(productUnit.isBaseUnit() == true){
+				item.setBaseUnitCode(productUnit.getUnitCode());
+			}
+		}
 		
 		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
 		
@@ -194,9 +195,12 @@ public class PurchaseOrderController {
 		i.setProductLookup(product);
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		ProductUnit productUnitBase = productUnitManager.getProductUnitByIsBase(i.getProductId());
-		i.setBaseUnitCode(productUnitBase.getUnitCode());
-
+		
+		for(ProductUnit productUnit : product.getProductUnit()){
+			if(productUnit.isBaseUnit()){
+			i.setBaseUnitCode(productUnit.getUnitCode());
+			}
+		}
 		reviseForm.getItemsList().add(i);
 		
 		for (Items item : reviseForm.getItemsList()){
@@ -389,10 +393,17 @@ public class PurchaseOrderController {
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
+			
+			
+			for(ProductUnit productUnit : prod.getProductUnit()){
+				if(productUnit.getUnitCode().equals(items.getUnitCode())){
+				
+				items.setToBaseValue(productUnit.getConversionValue());
+				items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+				}
+			}
 		
-			items.setToBaseValue(productUnit.getConversionValue());
-			items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+			
 			itemList.add(items);
 		}
 
@@ -470,10 +481,13 @@ public class PurchaseOrderController {
 		for (Items items : reviseForm.getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
-		
-			items.setToBaseValue(productUnit.getConversionValue());
-			items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+			for(ProductUnit productUnit : prod.getProductUnit()){
+				if(productUnit.getUnitCode().equals(items.getUnitCode())){
+				
+				items.setToBaseValue(productUnit.getConversionValue());
+				items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+				}
+			}
 			itemList.add(items);
 		}
 		

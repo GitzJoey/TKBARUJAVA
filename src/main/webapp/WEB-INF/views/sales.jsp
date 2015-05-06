@@ -317,7 +317,7 @@
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-8">
+														<div class="col-md-10">
 															<div class="panel panel-default">
 																<div class="panel-heading">
 																	<h1 class="panel-title">
@@ -375,7 +375,7 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-md-12">
-																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[soIdx.index].salesStatus =='L013_WA' }">
+																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
 																											<c:forEach items="${ loginContext.soList[soIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
@@ -425,7 +425,7 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-4">
+														<div class="col-md-2">
 															<div class="panel panel-default">
 																<ul class="list-group">
 																	<li class="list-group-item"></li>

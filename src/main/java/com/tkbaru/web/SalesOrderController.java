@@ -1,6 +1,5 @@
 package com.tkbaru.web;
 
-import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ import com.tkbaru.model.SalesOrder;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
-import com.tkbaru.service.ProductUnitService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
 import com.tkbaru.service.StocksService;
@@ -63,9 +61,6 @@ public class SalesOrderController {
 	
 	@Autowired
 	StocksService stocksManager;
-	
-	@Autowired
-	ProductUnitService productUnitManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -192,8 +187,14 @@ public class SalesOrderController {
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		ProductUnit productUnitBase = productUnitManager.getProductUnitByIsBase(item.getProductId());
-		item.setBaseUnitCode(productUnitBase.getUnitCode());
+		
+		
+		for(ProductUnit productUnit : product.getProductUnit()){
+			if(productUnit.isBaseUnit()){
+				item.setBaseUnitCode(productUnit.getUnitCode());
+			}
+		}
+		
 
 		loginContext.getSoList().get(tabId).getItemsList().add(item);
 
@@ -307,9 +308,12 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
-			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
-			items.setToBaseValue(productUnit.getConversionValue());
-			items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+			for(ProductUnit productUnit : prod.getProductUnit()){
+				if(productUnit.getUnitCode().equals(items.getUnitCode())){
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+				}
+			}
 			itemList.add(items);
 		}
 
