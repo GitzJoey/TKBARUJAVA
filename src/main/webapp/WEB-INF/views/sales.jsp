@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,7 +17,7 @@
 				$(this).parsley().validate();
 			});
 						
-			$('[id^="inputShippingDate"]').datetimepicker({format: "DD-MM-YYYY"});
+			$('[id^="inputShippingDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
 			$('[id^="inputShippingDate"]').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();
@@ -371,9 +372,17 @@
 																								</div>
 																							</div>
 																							</td>
-																							<td>
-																								<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
-																								<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
+																							<td style="vertical-align: middle;">
+																								<div class="form-group no-margin">
+																									<div class="col-md-12">
+																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[soIdx.index].salesStatus =='L013_WA' }">
+																											<option value=""><spring:message code="common.please_select"></spring:message></option>
+																											<c:forEach items="${ loginContext.soList[soIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																											</c:forEach>
+																										</form:select>
+																									</div>
+																								</div>
 																							</td>
 																							<td>
 																							<div class="form-group">

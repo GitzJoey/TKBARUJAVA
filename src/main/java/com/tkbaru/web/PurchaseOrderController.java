@@ -392,7 +392,7 @@ public class PurchaseOrderController {
 			ProductUnit productUnit = productUnitManager.getProductUnitByProductIdByUnitCode(items.getProductId(), items.getUnitCode());
 		
 			items.setToBaseValue(productUnit.getConversionValue());
-			items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+			items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
 			itemList.add(items);
 		}
 

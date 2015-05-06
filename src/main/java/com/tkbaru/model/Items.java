@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,9 +51,9 @@ public class Items {
 	@Column(name="base_unit_code")
 	private String baseUnitCode;
 	@Column(name="to_base_value")
-	private long toBaseValue;
+	private Long toBaseValue;
 	@Column(name="to_base_qty")
-	private long toBaseQty;
+	private Long toBaseQty;
 
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName="product_id", unique=true, insertable=false, updatable=false)
@@ -172,19 +173,19 @@ public class Items {
 		this.baseUnitCode = baseUnitCode;
 	}
 
-	public long getToBaseValue() {
+	public Long getToBaseValue() {
 		return toBaseValue;
 	}
 
-	public void setToBaseValue(long toBaseValue) {
+	public void setToBaseValue(Long toBaseValue) {
 		this.toBaseValue = toBaseValue;
 	}
 
-	public long getToBaseQty() {
+	public Long getToBaseQty() {
 		return toBaseQty;
 	}
 
-	public void setToBaseQty(long toBaseQty) {
+	public void setToBaseQty(Long toBaseQty) {
 		this.toBaseQty = toBaseQty;
 	}
 
