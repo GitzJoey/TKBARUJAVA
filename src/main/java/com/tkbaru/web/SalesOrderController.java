@@ -27,6 +27,7 @@ import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
+import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
@@ -186,6 +187,14 @@ public class SalesOrderController {
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		
+		
+		for(ProductUnit productUnit : product.getProductUnit()){
+			if(productUnit.isBaseUnit()){
+				item.setBaseUnitCode(productUnit.getUnitCode());
+			}
+		}
+		
 
 		loginContext.getSoList().get(tabId).getItemsList().add(item);
 
@@ -292,6 +301,21 @@ public class SalesOrderController {
 		so.setSalesStatus("L016_WD");
 		so.setStatusLookup(lookupManager.getLookupByKey("L016_WD"));
 		so.setCustomerLookup(customerManager.getCustomerById(customerId));
+		
+		
+		
+		List<Items> itemList = new ArrayList<Items>();
+		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
+			Product prod = productManager.getProductById(items.getProductId());
+			items.setProductLookup(prod);
+			for(ProductUnit productUnit : prod.getProductUnit()){
+				if(productUnit.getUnitCode().equals(items.getUnitCode())){
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+				}
+			}
+			itemList.add(items);
+		}
 
 		if (so.getSalesId() == 0) {
 			so.setCreatedDate(new Date());
@@ -300,12 +324,7 @@ public class SalesOrderController {
 			salesOrderManager.editSalesOrder(so);
 		}
 
-		List<Items> itemList = new ArrayList<Items>();
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-			itemList.add(items);
-		}
+		
 		
 		for(SalesOrder soVar : loginContext.getSoList()){
 			soVar.setCustomerLookup(customerManager.getCustomerById(customerId));
