@@ -168,7 +168,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley">
+								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
 									<form:hidden path="productId"/>									
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
