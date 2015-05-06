@@ -361,8 +361,11 @@
 																					<c:forEach items="${ soForm.itemsList }" var="iL" varStatus="iLIdx">
 																						<tr>
 																							<td style="vertical-align: middle;">
-																								<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].itemsId"/>
-																								<form:hidden path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].productId"/>
+																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
+																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
+																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
 																								<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																							</td>
 																							<td>
