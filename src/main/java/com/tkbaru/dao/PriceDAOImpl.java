@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.tkbaru.model.Price;
 
 @Repository
+@SuppressWarnings("unchecked")
 public class PriceDAOImpl implements PriceDAO {
 	private static final Logger logger = LoggerFactory.getLogger(PriceDAOImpl.class);
 
