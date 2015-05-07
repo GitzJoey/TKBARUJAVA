@@ -1,6 +1,5 @@
 package com.tkbaru.model;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -62,6 +61,10 @@ public class Items {
 	@ManyToOne
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
+
+	@ManyToOne
+	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup baseUnitCodeLookup;	
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_items_receipt", 
@@ -141,30 +144,6 @@ public class Items {
 		this.updatedDate = updatedDate;
 	}
 
-	public Product getProductLookup() {
-		return productLookup;
-	}
-
-	public void setProductLookup(Product productLookup) {
-		this.productLookup = productLookup;
-	}
-
-	public Lookup getUnitCodeLookup() {
-		return unitCodeLookup;
-	}
-
-	public void setUnitCodeLookup(Lookup unitCodeLookup) {
-		this.unitCodeLookup = unitCodeLookup;
-	}
-	
-	public List<Receipt> getReceiptList() {
-		return receiptList;
-	}
-
-	public void setReceiptList(List<Receipt> receiptList) {
-		this.receiptList = receiptList;
-	}
-
 	public String getBaseUnitCode() {
 		return baseUnitCode;
 	}
@@ -189,13 +168,48 @@ public class Items {
 		this.toBaseQty = toBaseQty;
 	}
 
+	public Product getProductLookup() {
+		return productLookup;
+	}
+
+	public void setProductLookup(Product productLookup) {
+		this.productLookup = productLookup;
+	}
+
+	public Lookup getUnitCodeLookup() {
+		return unitCodeLookup;
+	}
+
+	public void setUnitCodeLookup(Lookup unitCodeLookup) {
+		this.unitCodeLookup = unitCodeLookup;
+	}
+
+	public Lookup getBaseUnitCodeLookup() {
+		return baseUnitCodeLookup;
+	}
+
+	public void setBaseUnitCodeLookup(Lookup baseUnitCodeLookup) {
+		this.baseUnitCodeLookup = baseUnitCodeLookup;
+	}
+
+	public List<Receipt> getReceiptList() {
+		return receiptList;
+	}
+
+	public void setReceiptList(List<Receipt> receiptList) {
+		this.receiptList = receiptList;
+	}
+
 	@Override
 	public String toString() {
 		return "Items [itemsId=" + itemsId + ", productId=" + productId
 				+ ", prodQuantity=" + prodQuantity + ", unitCode=" + unitCode
-				+ ", prodPrice=" + prodPrice +", createdBy=" + createdBy
+				+ ", prodPrice=" + prodPrice + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate +  ", receiptList=" + receiptList + "]";
+				+ ", updatedDate=" + updatedDate + ", baseUnitCode="
+				+ baseUnitCode + ", toBaseValue=" + toBaseValue
+				+ ", toBaseQty=" + toBaseQty + ", receiptList=" + receiptList
+				+ "]";
 	}
 
 }

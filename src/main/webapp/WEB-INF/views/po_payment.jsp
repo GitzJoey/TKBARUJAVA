@@ -1,97 +1,89 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
-<script>
-$(document).ready(function() {
-						var ctxpath = "${ pageContext.request.contextPath }";
+	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
+	<script>
+		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('[id^="paymentDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
+			
+			$('[id^="effectiveDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 
-						$('[id^="paymentDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
+			$('#addNew, #editTableSelection').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
 
-						
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");
+					}
+				});
+				
+				if (id == "") {
+					jsAlert("Please select at least 1 po");
+					return false;
+				} else {
+					if (button == 'addNew') {
+						$('#addNew').attr("href",ctxpath+ "/po/newpayment/"+ id);
+					} else if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href",ctxpath+ "/po/editpayment/"+ id);
+					}
+				}
+			});
 
-						$('[id^="effectiveDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
+			$('#addPayButton, #removePayButton').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
 
-						
+				if (button == 'addPayButton') {
+					$("#paymentSelect").parsley().validate();
+					
+					if(false == $('#paymentSelect').parsley().isValid()) {							
+						return false;						
+		            } else {
+						id = $("#paymentSelect").val();
+						$('#poForm').attr('action', ctxpath + "/po/addpayment/" + id);
+		            }
+				} else {
+					id = $(this).val();
+					$('#poForm').attr('action', ctxpath + "/po/removepayment/" + id);
+				}
+			});
 
-						$('#addNew, #editTableSelection').click(function() {
-							var id = "";
-							var button = $(this).attr('id');
+			$('[id^="cbxBank"]').click(function() {
+				var id = '';
 
-							$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
-								if ($(item).prop('checked')) 
-									{
-										id = $(item).attr("value");
-									}
-								});
+				$('input[type="checkbox"][id^="cbxBank"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");
+					}
+				});
 
-								if (id == "") 
-									{
-										jsAlert("Please select at least 1 po");
-										return false;
-									} else {
-										if (button == 'addNew') {
-											$('#addNew').attr("href",ctxpath+ "/po/newpayment/"+ id);
-										} else if (button == 'editTableSelection') {
-											$('#editTableSelection').attr("href",ctxpath+ "/po/editpayment/"+ id);
-										}
-									}
-							});
+				if (id != "") {
+					var result = confirm("Yakin untuk menambah payment ini?");
+					if (result) {
+						$('#submitButton').click();
+					}
+				}
+			});
 
-						$('#addPayButton, #removePayButton').click(function() {
-									var id = "";
-									var button = $(this).attr('id');
+			var supplier = $("#inputSupplierId").val();
 
-									if (button == 'addPayButton') {
-										$("#paymentSelect").parsley().validate();
-										
-										if(false == $('#paymentSelect').parsley().isValid()) {
-											
-											return false;
-										
-							            } else {
-											id = $("#paymentSelect").val();
-											$('#poForm').attr('action',ctxpath + "/po/addpayment/"+ id);
-							            }
-									} else {
-										id = $(this).val();
-										$('#poForm').attr('action',ctxpath + "/po/removepayment/"+ id);
-									}
-								});
-
-						$('[id^="cbxBank"]').click(function() {
-							var id = '';
-
-							$('input[type="checkbox"][id^="cbxBank"]').each(function(index, item) {
-								if ($(item).prop('checked')) {
-									id = $(item).attr("value");
-								}
-							});
-
-							if (id != "") {
-								var result = confirm("Yakin untuk menambah payment ini?");
-								if (result) {
-									$('#submitButton').click();
-								}
-							}
-						});
-
-						var supplier = $("#inputSupplierId").val();
-
-						$("#supplierTooltip").tooltip({ title : supplier });
-
-});
-</script>
+			$("#supplierTooltip").tooltip({ title : supplier });
+		});
+	</script>
 </head>
 <body>
-	<div id="wrapper" class="container-fluid"><jsp:include
-			page="/WEB-INF/views/include/topmenu.jsp"></jsp:include><div
-			class="row">
+	<div id="wrapper" class="container-fluid">
+	
+		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
+
+		<div class="row">
 			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
@@ -108,18 +100,19 @@ $(document).ready(function() {
 						<br> ${errorMessageText}
 					</div>
 				</c:if>
+				
 				<div id="jsAlerts"></div>
+				
 				<h1>
 					<span class="fa fa-truck fa-fw"></span>&nbsp;PO Payment
 				</h1>
+				
 				<c:choose>
-					<c:when
-						test="${ PAGEMODE == 'PAGEMODE_LIST' }">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-calculator fa-fw fa-2x"></span>&nbsp;PO
-									Payment
+									<span class="fa fa-calculator fa-fw fa-2x"></span>&nbsp;PO Payment
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -156,8 +149,7 @@ $(document).ready(function() {
 							</div>
 						</div>
 					</c:when>
-					<c:when
-						test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -246,7 +238,6 @@ $(document).ready(function() {
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-
 																		<div class="col-sm-9"></div>
 																	</div>
 																</div>
@@ -259,7 +250,7 @@ $(document).ready(function() {
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">New Transaction</h1>
+																<h1 class="panel-title">Transactions</h1>
 															</div>
 															<div class="panel-body">
 																<br />
@@ -284,7 +275,7 @@ $(document).ready(function() {
 																							<form:hidden path="itemsList[${ iLIdx.index }].itemsId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productLookup.productName"></form:hidden>
-																							<c:out value="${poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
+																							<c:out value="${ poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
 																						</td>
 																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodQuantity"></form:hidden>
@@ -292,7 +283,7 @@ $(document).ready(function() {
 																						</td>
 																						<td>
 																							<form:hidden path="itemsList[${ iLIdx.index }].unitCode"></form:hidden>
-																							<c:out value="${poForm.itemsList[ iLIdx.index ].unitCodeLookup.lookupValue}"></c:out>
+																							<c:out value="${ poForm.itemsList[ iLIdx.index ].unitCodeLookup.lookupValue }"></c:out>
 																						</td>
 																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodPrice"></form:hidden>
@@ -302,7 +293,7 @@ $(document).ready(function() {
 																							<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																						</td>
 																					</tr>
-																					<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																					<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
 																				</c:forEach>
 																			</tbody>
 																		</table>
@@ -314,7 +305,7 @@ $(document).ready(function() {
 																			class="table table-bordered table-hover display responsive">
 																			<tbody>
 																				<tr>
-																					<td width="75%">Total</td>
+																					<td width="75%" class="text-right">Total</td>
 																					<td width="25%" class="text-right"><c:out value="${ total }"></c:out></td>
 																				</tr>
 																			</tbody>
@@ -392,8 +383,8 @@ $(document).ready(function() {
 																									<form:hidden path="paymentList[${ iLIdx.index }].paymentType" />
 																									<label><c:out value="${ poForm.paymentList[ iLIdx.index ].paymentTypeLookup.lookupValue }"></c:out></label>
 																								</td>
-																								<td id="tdPaymentDate${ iLIdx.index }">
-																									<div class="input-group">
+																								<td id="tdPaymentDate${ iLIdx.index }" class="center-align">
+																									<div class="form-group no-margin input-group">
 																										<form:input type="text" class="form-control paymentDate" id="paymentDate${ iLIdx.index }" path="paymentList[${ iLIdx.index }].paymentDate" placeholder="DD-MM-YYYY"></form:input>
 																									</div>
 																								</td>
@@ -402,7 +393,7 @@ $(document).ready(function() {
 																								<c:if test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
 																									<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																										<c:set var="test" value="0" />
-																										<c:if test="${bankL.lookupKey == poForm.paymentList[iLIdx.index].bankCode}">
+																										<c:if test="${ bankL.lookupKey == poForm.paymentList[iLIdx.index].bankCode }">
 																											<c:set var="test" value="1" />
 																										</c:if>
 																										<c:choose>
@@ -428,9 +419,9 @@ $(document).ready(function() {
 																								</td>
 																								<td>
 																									<div class="form-group">
-																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right totalAmount" id="totalAmount${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
-																									</div>
+																										<div class="col-sm-12">
+																											<form:input type="text" class="form-control text-right totalAmount" id="totalAmount${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																										</div>
 																									</div>
 																								</td>
 																								<td><form:checkbox id="linked${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
@@ -467,7 +458,7 @@ $(document).ready(function() {
 																								</td>
 																							</tr>
 																							<c:set var="totalPay"
-																								value="${ totalPay+ iL.totalAmount}" />
+																								value="${ totalPay + iL.totalAmount }" />
 																						</c:forEach>
 																					</tbody>
 																				</table>
@@ -475,13 +466,11 @@ $(document).ready(function() {
 																		</div>
 																		<div class="row">
 																			<div class="col-md-12">
-																				<table id="itemsTotalListTable"
-																					class="table table-bordered table-hover display responsive">
+																				<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
 																					<tbody>
 																						<tr>
-																							<td width="60%">Total</td>
-																							<td width="20%"><c:out value="${ totalPay }"></c:out></td>
-																							<td width="20%"></td>
+																							<td width="75%" class="text-right">Total</td>
+																							<td width="25%" class="text-right"><c:out value="${ totalPay }"></c:out></td>
 																						</tr>
 																					</tbody>
 																				</table>
@@ -492,7 +481,6 @@ $(document).ready(function() {
 															</div>
 														</div>
 													</div>
-
 													<div class="col-md-7 col-offset-md-5">
 														<div class="btn-toolbar">
 															<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>

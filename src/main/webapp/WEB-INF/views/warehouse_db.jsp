@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,7 +28,6 @@
 		       
 		        "displayLength": 25,
 		        "drawCallback": function ( settings ) {
-		        	$('[id^="receiptDate_"]').datetimepicker({ format:'d-m-Y H:i' });
 		            var api = this.api();
 		            var rows = api.rows( {page:'current'} ).nodes();
 		            var last=null;
@@ -141,13 +141,14 @@
 										<table id="inflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
-													<th width="40%">Product Name</th>
-													<th width="10%">Bruto</th>
-													<th width="10%">Po Code</th>
-													<th width="10%">Netto</th>
-													<th width="10%">Tare</th>
-													<th width="10%">Receipt Date</th>
-													<th width="10%">&nbsp;</th>
+													<th width="36%">Product Name</th>
+													<th width="11%" class="center-align">Bruto</th>
+													<th width="2%">Po Code</th>
+													<th width="11%" class="center-align">Netto</th>
+													<th width="11%" class="center-align">Tare</th>
+													<th width="13%" class="center-align">Shipping Date</th>
+													<th width="13%" class="center-align">Receipt Date</th>
+													<th width="3%">&nbsp;</th>
 												</tr>
 											</thead>
 											<tbody >											
@@ -159,11 +160,12 @@
 															<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
 														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
 															    <tr>
-																    <td><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td><c:out value="${ iL.toBaseQty }"/></td>
+																    <td class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"/></td>
+															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"/></td>
 															    	<td>
 																    		
@@ -174,11 +176,12 @@
 												    	
 													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
 														    	<tr id="${ po.poCode }">
-														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td><c:out value="${ iL.toBaseQty }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
 															    	<td></td>
 															    	<td></td>
+															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 															    	<td></td>
 															    	<td class="center-align">
 															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
@@ -189,11 +192,12 @@
 											    	
 												    	<c:if test="${ empty iL.receiptList }">
 													    	<tr id="${ po.poCode }">
-													    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
-													    		<td><c:out value="${ iL.toBaseQty }"/></td>
+													    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+													    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
 													    		<td><c:out value="${ po.poCode }"/></td>
 														    	<td></td>
 														    	<td></td>
+														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 														    	<td></td>
 														    	<td class="center-align">
 														    		<button type="button" class="btn btn-xs btn-primary" id="receiptButton_0" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
@@ -291,6 +295,13 @@
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
 											<form:input class="form-control" path="receipt.tare"/>										
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+										<div class="col-sm-5">
+											<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedPoObject.shippingDate }" var="formattedShippingDate"/>
+											<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>												
 										</div>
 									</div>
 									<div class="form-group">

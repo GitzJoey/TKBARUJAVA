@@ -261,7 +261,7 @@
 											<div class="col-md-12">
 												<div class="panel panel-default">
 													<div class="panel-heading">
-														<h1 class="panel-title">New Transaction</h1>
+														<h1 class="panel-title">Transactions</h1>
 													</div>
 													<div class="panel-body">
 														<div class="row">

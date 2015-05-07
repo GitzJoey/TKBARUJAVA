@@ -55,6 +55,10 @@ strong.title {
 	text-align: center;
 }
 
+.right-align {
+	text-align: right;
+}
+
 .valign-middle {
 	vertical-align: middle;
 }
