@@ -191,7 +191,7 @@ public class WarehouseController {
 				arrivalQuantity += receipt.getNet();
 			}
 			
-			if (item.getProdQuantity()== arrivalQuantity) {
+			if (item.getToBaseQty()== arrivalQuantity) {
 				isAllArrived = true;
 			} else {
 				isAllArrived = false;
@@ -257,7 +257,7 @@ public class WarehouseController {
 				arrivalQuantity += receipt.getNet();
 			}
 			
-			if (item.getProdQuantity() == arrivalQuantity) {
+			if (item.getToBaseQty() == arrivalQuantity) {
 				isAllArrived = true;
 			} else {
 				isAllArrived = false;

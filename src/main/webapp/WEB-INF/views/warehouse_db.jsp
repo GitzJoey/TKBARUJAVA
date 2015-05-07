@@ -160,7 +160,7 @@
 														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
 															    <tr>
 																    <td><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ iL.toBaseQty }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"/></td>
@@ -172,10 +172,10 @@
 														    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
 													    	</c:forEach>
 												    	
-													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].prodQuantity }">											    	
+													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
 														    	<tr id="${ po.poCode }">
 														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td><c:out value="${ iL.prodQuantity }"/></td>
+														    		<td><c:out value="${ iL.toBaseQty }"/></td>
 														    		<td><c:out value="${ po.poCode }"/></td>
 															    	<td></td>
 															    	<td></td>
@@ -190,7 +190,7 @@
 												    	<c:if test="${ empty iL.receiptList }">
 													    	<tr id="${ po.poCode }">
 													    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
-													    		<td><c:out value="${ iL.prodQuantity }"/></td>
+													    		<td><c:out value="${ iL.toBaseQty }"/></td>
 													    		<td><c:out value="${ po.poCode }"/></td>
 														    	<td></td>
 														    	<td></td>
@@ -276,7 +276,7 @@
 										<div class="col-sm-2">
 											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
 												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-													<input class="form-control" value="${ iL.prodQuantity }" readonly="readonly"/>
+													<input class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
 												</c:if>
 											</c:forEach>
 										</div>
