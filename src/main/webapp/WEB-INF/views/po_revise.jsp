@@ -1,78 +1,79 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
-<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
-<script>
-$(document).ready(
-		
-	function() {
-		var ctxpath = "${ pageContext.request.contextPath }";
-		$('#editTableSelection, #deleteTableSelection').click(
-				function() {
-					var id = "";
-					var button = $(this).attr('id');
+	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
+	<script>
+		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('#editTableSelection, #deleteTableSelection').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
 
-					$('input[type="checkbox"][id^="cbx_"]').each(
-							function(index, item) {
-								if ($(item).prop('checked')) {
-									id = $(item).attr("value");
-								}
-							});
-					if (id == "") {
-						jsAlert("Please select at least 1 po");
-						return false;
-					} else {
-						if (button == 'editTableSelection') {
-							$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
-						} else {
-							$('#deleteTableSelection').attr("href",ctxpath + "/po/delete/" + id);
-						}
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");
 					}
 				});
 
-		$('#addProdButton, #removeProdButton').click(
-				function() {
-					var id = "";
-					var button = $(this).attr('id');
-
-					if (button == 'addProdButton') {
-						$("#productSelect").parsley().validate();
-						
-						if(false == $('#productSelect').parsley().isValid()) {
-							
-							return false;
-						
-			            } else {
-							id = $('#productSelect').val();
-							$('#reviseForm').attr('action',ctxpath + "/po/additems/" + id);
-			            }
+				if (id == "") {
+					jsAlert("Please select at least 1 po");
+					return false;
+				} else {
+					if (button == 'editTableSelection') {
+						$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
 					} else {
-						id = $(this).val();
-						$('#reviseForm').attr('action',ctxpath + "/po/removeitems/" + id);
+						$('#deleteTableSelection').attr("href",ctxpath + "/po/delete/" + id);
 					}
-		});
-		
-		$('#submitButton').click(
-			function() {
-				$('#reviseForm').attr('action',ctxpath + "/po/saverevise");
+				}
+			});
+
+			$('#addProdButton, #removeProdButton').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+
+				if (button == 'addProdButton') {
+					$("#productSelect").parsley().validate();
 					
+					if(false == $('#productSelect').parsley().isValid()) {						
+						return false;					
+		            } else {
+						id = $('#productSelect').val();
+						$('#reviseForm').attr('action', ctxpath + "/po/additems/" + id);
+		            }
+				} else {
+					id = $(this).val();
+					$('#reviseForm').attr('action', ctxpath + "/po/removeitems/" + id);
+				}
+			});
+		
+			$('#submitButton').click(function() {
+				$('#reviseForm').parsley({
+				    excluded: '[id^="productSelect"]'
+				}).validate();
+
+				if(false == $('#reviseForm').parsley().isValid()) {
+					return false;
+	            } else {
+					$('#reviseForm').attr('action', ctxpath + "/po/saverevise");
+	            }
+			});
+
+			var supplier = $("#inputSupplierId").val()
+			$("#supplierTooltip").tooltip({ title : supplier });
 		});
-
-		var supplier = $("#inputSupplierId").val()
-
-		$("#supplierTooltip").tooltip({ title : supplier });
-
-});
-</script>
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
-	<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
+	
+		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
+		
 		<div class="row">
 			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
@@ -90,10 +91,13 @@ $(document).ready(
 						<br> ${errorMessageText}
 					</div>
 				</c:if>
+
 				<div id="jsAlerts"></div>
+
 				<h1>
 					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order Revise
 				</h1>
+
 				<c:choose>
 					<c:when
 						test="${ PAGEMODE == 'PAGEMODE_LIST' }">
@@ -231,7 +235,7 @@ $(document).ready(
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">New Transaction</h1>
+															<h1 class="panel-title">Transactions</h1>
 														</div>
 														<div class="panel-body">
 															<div class="row">
@@ -258,10 +262,10 @@ $(document).ready(
 																		class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="40%">Product Name</th>
-																				<th width="10%">Quantity</th>
-																				<th width="10%">Unit</th>
-																				<th width="15%">Price/Unit</th>
+																				<th width="30%">Product Name</th>
+																				<th width="15%">Quantity</th>
+																				<th width="15%" class="text-right">Unit</th>
+																				<th width="15%" class="text-right">Price/Base Unit</th>
 																				<th width="5%">&nbsp;</th>
 																				<th width="20%">Total Price</th>
 																			</tr>
@@ -274,40 +278,47 @@ $(document).ready(
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
 																						<c:out value="${iL.productLookup.productName }"></c:out></td>
-																					<td>
-																						<div class="form-group">
+																					<td class="center-align">
+																						<div class="form-group no-margin">
 																							<div class="col-sm-12">
-																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
 																							</div>
 																						</div>
 																					</td>
 																					<td style="vertical-align: middle;">
-																						<form:hidden path="itemsList[${ iLIdx.index }].unitCode" />
-																						<label>
-																							<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
-																						</label>
-																					</td>
-																					<td>
-																						<div class="form-group">
-																							<div class="col-sm-12">
-																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																						<div class="form-group no-margin">
+																							<div class="col-md-12">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
+																									<option value=""><spring:message code="common.please_select"></spring:message></option>
+																									<c:forEach items="${ itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									</c:forEach>
+																								</form:select>
 																							</div>
 																						</div>
 																					</td>
-																					
-																					<td>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
+																					</td>																					
+																					<td style="vertical-align: middle;">
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
 																							<span class="fa fa-minus"></span>
 																						</button>
 																					</td>
-																					<td class="text-right"><label><c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out></label></td>
+																					<td style="vertical-align: middle;" class="text-right">
+																						<label>
+																							<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
+																						</label>
+																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
 																				<c:forEach items="${ iL.receiptList }" var="iR" varStatus="iRIdx">
-																				<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" /> 
-																				
-																				</c:forEach>
-																				
+																					<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" />																				
+																				</c:forEach>																				
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -319,7 +330,7 @@ $(document).ready(
 																		class="table table-bordered table-hover display responsive">
 																		<tbody>
 																			<tr>
-																				<td width="85%">Total</td>
+																				<td width="80%" class="text-right">Total</td>
 																				<td width="20%" class="text-right"><c:out value="${ total }"></c:out></td>
 																			</tr>
 																		</tbody>

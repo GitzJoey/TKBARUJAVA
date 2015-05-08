@@ -14,3 +14,5 @@ CREATE TABLE `tb_product` (
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
 );
+
+/* Palm Oil */
