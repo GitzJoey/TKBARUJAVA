@@ -323,7 +323,17 @@
 																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																									<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									<form:option value="${ prdUnit.unitCode }">
+																										<c:choose>
+																											<c:when test="${ prdUnit.baseUnit }">
+																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>*
+																											</c:when>
+																											<c:otherwise>
+																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
+																											</c:otherwise>
+																										</c:choose>
+																										
+																									</form:option>
 																								</c:forEach>
 																							</form:select>
 																						</div>

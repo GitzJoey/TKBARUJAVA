@@ -10,7 +10,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 
-			$('[id^="cancelButton"]').click(function() {
+			$('#cancelButton').click(function() {
 				window.location = (ctxpath + "/po/payment");
 			});
 
@@ -243,7 +243,7 @@
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">New Transaction</h1>
+																<h1 class="panel-title">Transactions</h1>
 															</div>
 															<div class="panel-body">
 																<br />
@@ -459,7 +459,25 @@
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">Form Payment</h1>
+																<h1 class="panel-title">
+																	<c:choose>
+																		<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' }">
+																			Transfer Payment
+																		</c:when>
+																		<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
+																			Giro Payment
+																		</c:when>
+																		<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TERM' }">
+																			Term Payment
+																		</c:when>
+																		<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
+																			Cash Payment
+																		</c:when>
+																		<c:otherwise>
+																			Payment
+																		</c:otherwise>
+																	</c:choose>
+																</h1>
 															</div>
 															<div class="panel-body">
 																<div class="row">

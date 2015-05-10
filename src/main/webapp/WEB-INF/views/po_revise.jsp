@@ -10,7 +10,11 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
-			
+
+			$('#cancelButton').click(function() {
+				window.location = (ctxpath + "/po/revise");
+			});
+
 			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
@@ -345,7 +349,7 @@
 														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
-																	<h1 class="panel-title">Remarks</h1>
+																	<h1 class="panel-title">Remarks</h1>																	
 																</div>
 																<div class="panel-body">
 																	<div class="row">
@@ -364,7 +368,7 @@
 												</div>
 												<div class="col-md-7 col-offset-md-5">
 													<div class="btn-toolbar">
-														<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
+														<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
 														<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 													</div>
 												</div>
