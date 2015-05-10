@@ -64,8 +64,6 @@ public class PurchaseOrderController {
 
 	@Autowired
 	private LoginContext loginContextSession;
-	
-	
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -316,30 +314,8 @@ public class PurchaseOrderController {
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
-
-	@RequestMapping(value = "/newpayment/{selectedPo}", method = RequestMethod.GET)
-	public String poPaymentAdd(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poNew] " + "");
-
-		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
-		
-		model.addAttribute("poForm", po);
-		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
-		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
-		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
-
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_PO_PAYMENT;
-	}
 	
-	@RequestMapping(value = "/cashpayment/{selectedPo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/payment/cash/{selectedPo}", method = RequestMethod.GET)
 	public String poCashPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
 		logger.info("[poNew] " + "");
 
@@ -366,7 +342,7 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
 	
-	@RequestMapping(value = "/transferpayment/{selectedPo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/payment/transfer/{selectedPo}", method = RequestMethod.GET)
 	public String poTransferPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
 		logger.info("[poNew] " + "");
 
@@ -393,7 +369,7 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
 	
-	@RequestMapping(value = "/giropayment/{selectedPo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/payment/giro/{selectedPo}", method = RequestMethod.GET)
 	public String poGiroPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
 		logger.info("[poNew] " + "");
 
@@ -420,7 +396,7 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
 	
-	@RequestMapping(value = "/termpayment/{selectedPo}", method = RequestMethod.GET)
+	@RequestMapping(value = "/payment/term/{selectedPo}", method = RequestMethod.GET)
 	public String poTermPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
 		logger.info("[poNew] " + "");
 
@@ -440,25 +416,6 @@ public class PurchaseOrderController {
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_PO_PAYMENT;
-	}
-
-	@RequestMapping(value = "/editpayment/{selectedPo}", method = RequestMethod.GET)
-	public String poPaymentEdit(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poPayment] " + "");
-
-		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
-		
-		model.addAttribute("poForm", po);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
-		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
-		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -517,8 +474,6 @@ public class PurchaseOrderController {
 		} else {
 			poManager.editPurchaseOrder(po);
 		}
-
-		
 		
 		for(PurchaseOrder poVar : loginContext.getPoList()){
 			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoType()));

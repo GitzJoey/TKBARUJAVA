@@ -367,20 +367,20 @@
 														</div>
 													</div>
 												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<div class="panel panel-default">
-															<div class="panel-heading">
-																<h1 class="panel-title">Remarks</h1>
-															</div>
-															<div class="panel-body">
-																<div class="row">
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<div class="col-sm-12">
-																				<form:textarea id="poRemarks${ poIdx.index }" class="form-control" path="poList[${ poIdx.index }].poRemarks" rows="5" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"/>
-																			</div>
-																		</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h1 class="panel-title">Remarks</h1>
+													</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<div class="col-sm-12">
+																		<form:textarea id="poRemarks${ poIdx.index }" class="form-control" path="poList[${ poIdx.index }].poRemarks" rows="5" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"/>
 																	</div>
 																</div>
 															</div>
@@ -388,6 +388,8 @@
 													</div>
 												</div>
 											</div>
+										</div>										
+										<div class="row">
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
 												    <c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">
