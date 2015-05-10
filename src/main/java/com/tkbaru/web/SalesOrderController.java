@@ -480,10 +480,94 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_PAYMENT;
 	}
 	
-	@RequestMapping(value="/newpayment/{selectedId}", method = RequestMethod.GET)
-	public String paymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+	
+	@RequestMapping(value="/giropayment/{selectedId}", method = RequestMethod.GET)
+	public String giroPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
 		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_GIRO");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_GIRO"));
+		
+		so.getPaymentList().add(payment);
+		
+		model.addAttribute("paymentSalesForm", so);
+		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_PAYMENT;
+	}
+	
+	@RequestMapping(value="/cashpayment/{selectedId}", method = RequestMethod.GET)
+	public String cashPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_CASH");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_CASH"));
+		
+		so.getPaymentList().add(payment);
+		
+		model.addAttribute("paymentSalesForm", so);
+		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_PAYMENT;
+	}
+	
+	@RequestMapping(value="/transferpayment/{selectedId}", method = RequestMethod.GET)
+	public String transferPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_TRANSFER");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TRANSFER"));
+		
+		so.getPaymentList().add(payment);
+		
+		model.addAttribute("paymentSalesForm", so);
+		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SO_PAYMENT;
+	}
+	
+	@RequestMapping(value="/termpayment/{selectedId}", method = RequestMethod.GET)
+	public String termPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_TERM");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TERM"));
+		
+		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
