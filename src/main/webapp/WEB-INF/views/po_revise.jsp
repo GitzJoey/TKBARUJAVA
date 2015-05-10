@@ -59,6 +59,9 @@
 
 				if(false == $('#reviseForm').parsley().isValid()) {
 					return false;
+	            } else if ($('#itemsListTable tbody tr').size() == 0) {
+	            	jsAlert('At least 1 transaction item needed');
+	            	return false;
 	            } else {
 					$('#reviseForm').attr('action', ctxpath + "/po/saverevise");
 	            }
@@ -258,8 +261,7 @@
 															<br />
 															<div class="row">
 																<div class="col-md-12">
-																	<table id="itemsListTable"
-																		class="table table-bordered table-hover display responsive">
+																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
 																				<th width="30%">Product Name</th>
@@ -287,10 +289,10 @@
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
-																							<div class="col-md-12">
+																							<div class="col-md-12">																							
 																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
 																									<option value=""><spring:message code="common.please_select"></spring:message></option>
-																									<c:forEach items="${ itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																									<c:forEach items="${ reviseForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																									</c:forEach>
 																								</form:select>

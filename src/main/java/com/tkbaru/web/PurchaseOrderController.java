@@ -159,14 +159,8 @@ public class PurchaseOrderController {
 			for(Items items : po.getItemsList()){
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				
-				
-				
-				
 			}
-		
 		}
-		
 
 		loginContextSession.setPoList(loginContext.getPoList());
 
@@ -198,9 +192,10 @@ public class PurchaseOrderController {
 		
 		for(ProductUnit productUnit : product.getProductUnit()){
 			if(productUnit.isBaseUnit()){
-			i.setBaseUnitCode(productUnit.getUnitCode());
+				i.setBaseUnitCode(productUnit.getUnitCode());
 			}
 		}
+		
 		reviseForm.getItemsList().add(i);
 		
 		for (Items item : reviseForm.getItemsList()){
