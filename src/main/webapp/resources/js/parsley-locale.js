@@ -1,0 +1,1 @@
+window.ParsleyValidator.setLocale(getCookie('tkbaruLocaleCookie') == "in" ? "id" : "en");

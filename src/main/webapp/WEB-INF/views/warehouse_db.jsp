@@ -80,6 +80,20 @@
 			$('#cancelButton').click(function() {				
 				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
 			});
+			
+			window.ParsleyValidator.addValidator('equalwithbruto', function (value, requirement) {
+				if (requirement == false) return true;
+				
+				if (Number($('#inputBruto').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val()))) {
+					return true;
+				} else {
+					return false;
+				}				
+			}, 32)
+			.addMessage('en', 'equalwithbruto', 'Netto and Tare value not equal with Bruto')
+			.addMessage('id', 'equalwithbruto', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
+
+			$('#warehouseDashboardForm').parsley();
 		});
 	</script>	
 	<style type="text/css">
@@ -278,7 +292,7 @@
 										<div class="col-sm-2">
 											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
 												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-													<input class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
+													<input id="inputBruto" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
 												</c:if>
 											</c:forEach>
 										</div>
@@ -286,13 +300,13 @@
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Net</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>												
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>												
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare"/>										
+											<form:input class="form-control" path="receipt.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>										
 										</div>
 									</div>
 									<div class="form-group">
@@ -321,6 +335,9 @@
 				</c:choose>				
 			</div>
 		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+		
 	</div>	
 </body>
 </html>

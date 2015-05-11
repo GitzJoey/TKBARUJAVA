@@ -28,20 +28,8 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>	
-	<c:choose>
-		<c:when test="${ cookie.tkbaruLocaleCookie.value == 'in' }">
-			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
-		</c:when>
-		<c:otherwise>
-			<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
-		</c:otherwise>
-	</c:choose>
-	
-	
-	
-	
-	
-	
-	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-locale.js"></script>
