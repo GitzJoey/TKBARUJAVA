@@ -343,6 +343,114 @@ public class PurchaseOrderController {
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
+	
+	@RequestMapping(value = "/cashpayment/{selectedPo}", method = RequestMethod.GET)
+	public String poCashPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
+		logger.info("[poNew] " + "");
+
+		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_CASH");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_CASH"));
+		
+		po.getPaymentList().add(payment);
+		
+		model.addAttribute("poForm", po);
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_PAYMENT;
+	}
+	
+	@RequestMapping(value = "/transferpayment/{selectedPo}", method = RequestMethod.GET)
+	public String poTransferPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
+		logger.info("[poNew] " + "");
+
+		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_TRANSFER");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TRANSFER"));
+		
+		po.getPaymentList().add(payment);
+		
+		model.addAttribute("poForm", po);
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_PAYMENT;
+	}
+	
+	@RequestMapping(value = "/giropayment/{selectedPo}", method = RequestMethod.GET)
+	public String poGiroPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
+		logger.info("[poNew] " + "");
+
+		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_GIRO");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_GIRO"));
+		
+		po.getPaymentList().add(payment);
+		
+		model.addAttribute("poForm", po);
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_PAYMENT;
+	}
+	
+	@RequestMapping(value = "/termpayment/{selectedPo}", method = RequestMethod.GET)
+	public String poTermPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
+		logger.info("[poNew] " + "");
+
+		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
+		Payment payment = new Payment();
+		payment.setPaymentType("L017_TERM");
+		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TERM"));
+		
+		po.getPaymentList().add(payment);
+		
+		model.addAttribute("poForm", po);
+		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_PAYMENT;
+	}
 
 	@RequestMapping(value = "/editpayment/{selectedPo}", method = RequestMethod.GET)
 	public String poPaymentEdit(Locale locale, Model model, @PathVariable Integer selectedPo) {
