@@ -692,6 +692,7 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+		
 		return "redirect:payment";
 	}
 
