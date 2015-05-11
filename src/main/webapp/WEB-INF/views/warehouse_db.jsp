@@ -156,7 +156,7 @@
 														
 														<c:if test="${ not empty iL.receiptList }">
 															<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
-															<c:set var="totalNetReceipt" value="${ 0 }"></c:set>
+															<c:set var="totalReceipt" value="${ 0 }"></c:set>
 														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
 															    <tr>
 																    <td><c:out value="${ iL.productLookup.productName }"/></td>
@@ -169,10 +169,10 @@
 																    		
 																    </td>
 														    	</tr>
-														    	<c:set var="totalNetReceipt" value="${ totalNetReceipt + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"></c:set>
+														    	<c:set var="totalReceipt" value="${ totalReceipt + (warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare) }"></c:set>
 													    	</c:forEach>
 												    	
-													    	<c:if test="${ totalNetReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
+													    	<c:if test="${ totalReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
 														    	<tr id="${ po.poCode }">
 														    		<td id="${ iL.itemsId }"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td><c:out value="${ iL.toBaseQty }"/></td>

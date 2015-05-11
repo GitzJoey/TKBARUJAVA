@@ -188,7 +188,7 @@ public class WarehouseController {
 			long arrivalQuantity = 0;
 			
 			for (Receipt receipt : item.getReceiptList()) {
-				arrivalQuantity += receipt.getNet();
+				arrivalQuantity += (receipt.getNet()+ receipt.getTare());
 			}
 			
 			if (item.getToBaseQty()== arrivalQuantity) {
@@ -254,7 +254,7 @@ public class WarehouseController {
 			long arrivalQuantity = 0;
 			
 			for (Receipt receipt : item.getReceiptList()) {
-				arrivalQuantity += receipt.getNet();
+				arrivalQuantity += ( receipt.getNet()+ receipt.getTare() );
 			}
 			
 			if (item.getToBaseQty() == arrivalQuantity) {
