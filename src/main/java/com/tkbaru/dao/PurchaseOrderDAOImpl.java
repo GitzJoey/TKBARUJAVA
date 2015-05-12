@@ -137,7 +137,6 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		
 		logger.info("poCode " + poCode + " is exists: " + exist);
 
-		return false;
+		return exist;
 	}
-
 }

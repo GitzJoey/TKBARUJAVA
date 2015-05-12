@@ -284,6 +284,8 @@ public class PurchaseOrderController {
 
 		PurchaseOrder newPo = new PurchaseOrder();
 		newPo.setPoStatus("L013_D");
+		newPo.setPoCreatedDate(new Date());
+		newPo.setShippingDate(new Date());
 		newPo.setStatusLookup(lookupManager.getLookupByKey("L013_D"));
 		newPo.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		newPo.setCreatedDate(new Date());
@@ -453,17 +455,14 @@ public class PurchaseOrderController {
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
+			items.setProductLookup(prod);			
 			
-			
-			for(ProductUnit productUnit : prod.getProductUnit()){
-				if(productUnit.getUnitCode().equals(items.getUnitCode())){
-				
-				items.setToBaseValue(productUnit.getConversionValue());
-				items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+			for (ProductUnit productUnit : prod.getProductUnit()) {
+				if (productUnit.getUnitCode().equals(items.getUnitCode())) {				
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
 				}
 			}
-		
 			
 			itemList.add(items);
 		}
@@ -484,8 +483,8 @@ public class PurchaseOrderController {
 			for (Items items : poVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
-				
-				
+				items.setBaseUnitCodeLookup(lookupManager.getLookupByKey(items.getBaseUnitCode()));
+				items.setUnitCodeLookup(lookupManager.getLookupByKey(items.getUnitCode()));
 			}
 		}
 

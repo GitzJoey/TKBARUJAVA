@@ -284,7 +284,7 @@
 																						</td>
 																						<td></td>
 																						<td class="text-right">
-																							<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
+																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
 																						</td>
 																					</tr>
 																					<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
@@ -299,7 +299,7 @@
 																			<tbody>
 																				<tr>
 																					<td width="80%" class="text-right">Total</td>
-																					<td width="20%" class="text-right"><c:out value="${ total }"></c:out></td>
+																					<td width="20%" class="text-right"><fmt:formatNumber type="number" pattern="##,###.00" value="${ total }" /></td>
 																				</tr>
 																			</tbody>
 																		</table>

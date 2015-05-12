@@ -75,3 +75,7 @@ strong.title {
 	text-align: center;
 	font-size: x-small;	
 }
+
+.dataTables_info {
+	font-size: 12px;
+}

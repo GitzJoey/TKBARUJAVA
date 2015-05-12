@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.SalesOrderDAO;
 import com.tkbaru.model.Customer;
 import com.tkbaru.model.SalesOrder;
@@ -66,6 +67,20 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	public void deleteSalesOrder(int selectedId) {
 		salesOrderDAO.deleteSalesOrder(selectedId);
 		
+	}
+
+	@Override
+	@Transactional
+	public String generateSalesCode() {
+		String generatedSalesCode = "";
+
+		RandomProvider r = new RandomProvider(6);
+		
+		do {
+			generatedSalesCode = r.generateAlphaNumericRandom();
+		} while (salesOrderDAO.isExistingSalesCode(generatedSalesCode));
+			
+		return generatedSalesCode;
 	}
 
 }

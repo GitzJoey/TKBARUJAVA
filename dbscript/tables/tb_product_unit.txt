@@ -7,9 +7,32 @@ CREATE TABLE `tb_product_unit` (
   `is_base` tinyint(1) DEFAULT '0',
   `conversion_val` int(11) DEFAULT NULL,
   `remarks` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`prod_unit_id`)
 );
+
+/* Palm Oil */
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (1, 'L005_KG', 1, 1, 'Base Unit', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (1, 'L005_DR', 0, 180, '1 Drum = 44 Kg', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/* Soybean */
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (2, 'L005_KG', 1, 1, 'Base Unit', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (2, 'L005_TN', 0, 1000, '1 Tonne = 1000 Kg', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/* Sugar */
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (3, 'L005_KG', 1, 1, 'Base Unit', 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_product_unit (product_id, unit_code, is_base, conversion_val, remarks, created_by, created_date)
+VALUES (3, 'L005_TN', 0, 1000, '1 Tonne = 1000 Kg', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;
