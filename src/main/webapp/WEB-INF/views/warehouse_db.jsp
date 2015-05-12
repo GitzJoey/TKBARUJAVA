@@ -80,6 +80,34 @@
 			$('#cancelButton').click(function() {				
 				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
 			});
+
+			$('#inputNet,#inputTare').on('keyup', function(e) {
+				
+				var valTotal = parseInt($("#inputNet").val()) + parseInt($("#inputTare").val());
+				if(valTotal == $("#inputBruto").val()) {
+					$('#inputNet').parent().parent().addClass('has-success').removeClass('has-error');
+					$('#inputTare').parent().parent().addClass('has-success').removeClass('has-error');
+				}else{
+					$('#inputNet').parent().parent().addClass('has-error').removeClass('has-success');
+					$('#inputTare').parent().parent().addClass('has-error').removeClass('has-success');
+				}
+			});
+
+			$('#submitButton').click(function(e){
+
+				var valTotal = parseInt($("#inputNet").val()) + parseInt($("#inputTare").val());
+				if(valTotal == $("#inputBruto").val()) {
+					$('#inputNet').parent().parent().addClass('has-success').removeClass('has-error');
+					$('#inputTare').parent().parent().addClass('has-success').removeClass('has-error');
+					return true;
+				}else{
+					$('#inputNet').parent().parent().addClass('has-error').removeClass('has-success');
+					$('#inputTare').parent().parent().addClass('has-error').removeClass('has-success');
+					return false;
+				}
+
+			});
+
 		});
 	</script>	
 	<style type="text/css">
@@ -276,7 +304,7 @@
 										<div class="col-sm-2">
 											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
 												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-													<input class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
+													<input class="form-control" id="inputBruto" value="${ iL.toBaseQty }" readonly="readonly"/>
 												</c:if>
 											</c:forEach>
 										</div>
@@ -284,13 +312,13 @@
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Net</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup"/>												
+											<form:input class="form-control" id="inputNet" path="receipt.net" />												
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare"/>										
+											<form:input class="form-control" id="inputTare" path="receipt.tare"/>										
 										</div>
 									</div>
 									<div class="form-group">
