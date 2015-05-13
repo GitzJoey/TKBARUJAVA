@@ -81,33 +81,6 @@
 				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
 			});
 
-			$('#inputNet,#inputTare').on('keyup', function(e) {
-				
-				var valTotal = parseInt($("#inputNet").val()) + parseInt($("#inputTare").val());
-				if(valTotal == $("#inputBruto").val()) {
-					$('#inputNet').parent().parent().addClass('has-success').removeClass('has-error');
-					$('#inputTare').parent().parent().addClass('has-success').removeClass('has-error');
-				}else{
-					$('#inputNet').parent().parent().addClass('has-error').removeClass('has-success');
-					$('#inputTare').parent().parent().addClass('has-error').removeClass('has-success');
-				}
-			});
-
-			$('#submitButton').click(function(e){
-
-				var valTotal = parseInt($("#inputNet").val()) + parseInt($("#inputTare").val());
-				if(valTotal == $("#inputBruto").val()) {
-					$('#inputNet').parent().parent().addClass('has-success').removeClass('has-error');
-					$('#inputTare').parent().parent().addClass('has-success').removeClass('has-error');
-					return true;
-				}else{
-					$('#inputNet').parent().parent().addClass('has-error').removeClass('has-success');
-					$('#inputTare').parent().parent().addClass('has-error').removeClass('has-success');
-					return false;
-				}
-
-			});
-
 		});
 	</script>	
 	<style type="text/css">
