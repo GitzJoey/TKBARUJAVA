@@ -17,7 +17,7 @@ CREATE TABLE `tb_lookup` (
   UNIQUE KEY `lookup_key_UNIQUE` (`lookup_key`)
 );
 
-/*Status - L001 - 100*/
+/*Status - L001*/
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('STATUS', 'L001_A', 
 		'STATUS.L001_A', 'Active',
