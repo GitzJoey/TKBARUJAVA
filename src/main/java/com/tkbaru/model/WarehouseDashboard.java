@@ -54,6 +54,4 @@ public class WarehouseDashboard {
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
 	}	
-	
-	
 }
