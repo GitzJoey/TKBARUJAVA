@@ -176,6 +176,12 @@
 																</div>										
 															</div>
 														</div>
+														<div class="form-group">
+															<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+															<div class="col-sm-9">
+																<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
+															</div>
+														</div>														
 														<div class="col-md-5">
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
@@ -206,25 +212,24 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-8">
+												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h1 class="panel-title">
-																New Transaction
+																Transactions
 															</h1>
 														</div>
-														<div class="panel-body">
-															
+														<div class="panel-body">															
 															<br/>
 															<div class="row">
 																<div class="col-md-12">
 																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="40%">Product Name</th>
-																				<th width="10%">Quantity</th>
-																				<th width="10%">Unit</th>
-																				<th width="15%">Price/Unit</th>
+																				<th width="30%">Product Name</th>
+																				<th width="15%">Quantity</th>
+																				<th width="15%" class="text-right">Unit</th>
+																				<th width="15%" class="text-right">Price/Base Unit</th>
 																				<th width="5%">&nbsp;</th>
 																				<th width="20%" class="text-right">Total Price</th>
 																			</tr>
@@ -238,15 +243,23 @@
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
 																						<c:out value="${ paymentSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
-																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="true"></form:input>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="true"></form:input>
+																							</div>
+																						</div>
 																					</td>
 																					<td>
 																						<form:hidden id="inputItemsUnitCode" name="inputItemsUnitCode" path="itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
 																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																					</td>
-																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="true"></form:input>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="true"></form:input>	
+																							</div>
+																						</div>
 																					</td>
 																					<td>
 																						
@@ -278,19 +291,6 @@
 																</div>														
 															</div>
 														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="panel panel-default">
-														<ul class="list-group">
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-														</ul>
 													</div>
 												</div>
 											</div>

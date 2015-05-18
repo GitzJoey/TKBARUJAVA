@@ -142,7 +142,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/select/cust/{customerid}", method = RequestMethod.POST)
-	public String salesSelectCustomer(Locale locale, Model model,@PathVariable int customerid) {
+	public String salesSelectCustomer(Locale locale, Model model, @PathVariable int customerid) {
 		logger.info("[salesSelectCustomer] " + "customerid: " + customerid);
 		
 		Customer customer = customerManager.getCustomerById(customerid);
@@ -179,6 +179,45 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SALESORDER;
 	}
+	
+	@RequestMapping(value="/select/walkincust", method = RequestMethod.POST)
+	public String salesSelectWalkInCustomer(Locale locale, Model model) {
+		logger.info("[salesSelectWalkInCustomer] " + "");
+		
+		Customer customer = customerManager.getCustomerById(0);
+		
+		List<Customer> custList = new ArrayList<Customer>();
+		custList.add(customer);
+				
+		List<SalesOrder> soList = new ArrayList<SalesOrder>();
+		
+		SalesOrder so = new SalesOrder();
+		so.setCustomerId(0);
+		so.setCustomerLookup(customer);
+		so.setSalesStatus("L016_D");
+		so.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
+		so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		so.setCreatedDate(new Date());
+		soList.add(so);
+		loginContextSession.setSoList(soList);
+		
+		model.addAttribute("customerList", custList);
+		List<SalesOrder> salesOrderList = salesOrderManager.getAwaitingPaymentSales(0);
+		if(salesOrderList != null){
+			loginContextSession.getSoList().addAll(salesOrderList);
+		}
+		
+		model.addAttribute("customerId", 0);
+		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
+		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_SALESORDER;
+	}	
 	
 	@RequestMapping(value = "/additems/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId,@PathVariable int tabId, @PathVariable int productId) {
