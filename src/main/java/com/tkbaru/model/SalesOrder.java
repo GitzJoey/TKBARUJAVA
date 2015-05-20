@@ -59,6 +59,8 @@ public class SalesOrder {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
+	@Column(name="walk_in_cust_det")
+	private String walkInCustDet;
 
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_so_items", 
@@ -240,6 +242,14 @@ public class SalesOrder {
 
 	public void setSoTypeLookup(Lookup soTypeLookup) {
 		this.soTypeLookup = soTypeLookup;
+	}
+
+	public String getWalkInCustDet() {
+		return walkInCustDet;
+	}
+
+	public void setWalkInCustDet(String walkInCustDet) {
+		this.walkInCustDet = walkInCustDet;
 	}
 
 	@Override

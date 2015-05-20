@@ -53,6 +53,7 @@
 			
 			$('[id^="submitButton"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
+				var salesType = $('#selectSoType').val();
 
 				if ($('#inputCustomerId_'+activetab).val() == "") {
 					jsAlert("Please select customer");
@@ -66,7 +67,9 @@
 				if(false == $('#soForm').parsley().isValid()) {	
 					return false;
                 } else {
-					$('#soForm').attr('action', ctxpath + "/sales/save/${ customerId }/"+$(this).val());
+                	
+						$('#soForm').attr('action', ctxpath + "/sales/save/${selectedSoType}/${ customerId }/"+$(this).val());
+                	
                 }
 			});
 
@@ -94,6 +97,7 @@
 		    $('#addProdButton, #removeProdButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
+				var salesType = $('#selectSoType').val();
 
 				if (button == 'addProdButton') {
 					activetab = $(".nav-tabs li.active").attr("id");
@@ -103,12 +107,14 @@
                     if(false == $('[id^="productSelect_"]').parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action',ctxpath + "/sales/additems/${customerId}/"+ activetab + "/"+ productSelect);
+                    	
+                    	$('#soForm').attr('action',ctxpath + "/sales/additems/${selectedSoType}/${customerId}/"+ activetab + "/"+ productSelect);
+                    	
                     }		
 				} else {
 					id = $(this).val();
 					activetab = $(".nav-tabs li.active").attr("id");
-					$('#soForm').attr('action',ctxpath + "/sales/removeitems/${customerId}/"+ activetab + "/" + id);
+					$('#soForm').attr('action',ctxpath + "/sales/removeitems/${selectedSoType}/${customerId}/"+ activetab + "/" + id);
 				}
 			});
 		    
@@ -120,6 +126,13 @@
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
 
     		$('[id^="customerTooltip"]').tooltip();
+    		
+    		$('#selectSoType').change(function(){
+    			if($('#selectSoType').val()!=''){
+	    			$('#soForm').attr("action",ctxpath + "/sales/select/sotype/"+ $('#selectSoType').val());
+	    			$('#soForm').submit();
+    			}
+    		});
 		});
 	</script>	
 </head>
@@ -162,7 +175,34 @@
 					</div>
 					<div class="panel-body">
 						<form:form id="soForm" role="form" class="form-horizontal" modelAttribute="loginContext" action="${pageContext.request.contextPath}/sales/save">
-							
+							<div class="panel panel-default">
+							<div class="panel-body">
+									<div class="row">
+									<div class="form-group">
+																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
+																		<div class="col-sm-8">
+																		  
+																		   <select class="form-control" id="selectSoType" >
+																				<option value="">Select</option>
+																				<c:forEach var="soTypeVar" items="${ soTypeDDL }">
+																				<c:choose>
+																				<c:when test="${ soTypeVar.lookupKey == selectedSoType }">
+																				<option value="${ soTypeVar.lookupKey }" selected="selected" >${ soTypeVar.lookupValue }</option>
+																				</c:when>
+																				<c:otherwise>
+																				<option value="${ soTypeVar.lookupKey }">${ soTypeVar.lookupValue }</option>
+																				</c:otherwise>
+																				</c:choose>
+																				</c:forEach>
+																			</select>
+																		   
+																				
+																		</div>										
+																	</div>
+									</div>
+							</div>
+							</div>
+							<c:if test="${ selectedSoType == 'L015_S' }">
 							<div class="panel panel-default">
 								<div class="panel-body">
 									<div class="row">
@@ -228,7 +268,8 @@
 										</div>
 									</div>
 								</div>
-							</div>							
+							</div>			
+							</c:if>
 							<div role="tabpanel">
 								<ul id="list" class="nav nav-tabs" role="tablist">
 									<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
@@ -261,28 +302,31 @@
 																	<div class="form-group">
 																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																		<div class="col-sm-8">
-																		   <c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
-																		   <form:select class="form-control" path="soList[${soIdx.index}].salesType" disabled="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
-																				<option value="">Please Select</option>
-																				<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																			</form:select>
-																		   </c:if>
-																		   <c:if test="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }">
-																			   <form:hidden path="soList[${soIdx.index}].salesType"/>
+																		  
+																			    <form:hidden path="soList[${soIdx.index}].salesType"/>
 																				<form:input type="text" class="form-control" id="inputSalesType_${soIdx.index}" name="inputSalesType_${soIdx.index}" path="soList[${soIdx.index}].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																		   </c:if>
-																				
+																		   
 																		</div>										
 																	</div>
 																	<div class="form-group">
 																		<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
+																		<c:choose>
+																		<c:when test="${ selectedSoType=='L015_S' }">
 																		<div class="col-sm-9">
 																			<form:hidden path="soList[${soIdx.index}].customerId"/>
 																			<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		</div>
 																		<div class="col-sm-1">
 																			<button id="customerTooltip" title="${ soForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
-																		</div>										
+																		</div>
+																		</c:when>
+																		<c:otherwise>
+																		<div class="col-sm-9">
+																			<form:hidden path="soList[${soIdx.index}].customerId"/>
+																			<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].walkInCustDet" placeholder="Walk In Customer" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																		</div>
+																		</c:otherwise>
+																		</c:choose>										
 																	</div>
 																</div>
 																<div class="col-md-5">
