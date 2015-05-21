@@ -135,10 +135,16 @@ public class SalesOrderController {
 		so.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
 		so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		so.setCreatedDate(new Date());
+		if(soTypeValue.equals("L015_WIN")){
+			so.setCustomerId(1);
+			so.setCustomerLookup(customerManager.getCustomerById(1));
+		}
 		soList.add(so);
 		loginContextSession.setSoList(soList);
 		
 		
+		
+		model.addAttribute("customerId", so.getCustomerId());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
@@ -268,59 +274,6 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value = "/additems/{soTypeValue}/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue,@PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[soAddItems] " + "productId: " + productId);
-		
-		Items item = new Items();
-		item.setProductId(productId);
-		Product product = productManager.getProductById(productId);
-		item.setProductLookup(product);
-		item.setCreatedDate(new Date());
-		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		
-		
-		for(ProductUnit productUnit : product.getProductUnit()){
-			if(productUnit.isBaseUnit()){
-				item.setBaseUnitCode(productUnit.getUnitCode());
-			}
-		}
-		
-
-		loginContext.getSoList().get(tabId).getItemsList().add(item);
-
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-		}
-
-		loginContextSession.setSoList(loginContext.getSoList());
-		
-		for(SalesOrder soVar : loginContextSession.getSoList()){
-			
-			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
-			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
-			
-			for (Items items : soVar.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-			}
-		}
-		
-	
-		
-		
-		model.addAttribute("activeTab", tabId);
-		
-		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
-		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("selectedSoType", soTypeValue);
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SALESORDER;
-	}
 	
 	
 	
@@ -354,41 +307,6 @@ public class SalesOrderController {
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("selectedSoType", soTypeValue);
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SALESORDER;
-	}
-	
-	@RequestMapping(value = "/removeitems/{soTypeValue}/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext,@PathVariable String soTypeValue, @PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[soRemoveItems] " + "varId: " + productId);
-
-		List<Items> iLNew = new ArrayList<Items>();
-
-		for (int x = 0; x < loginContext.getSoList().get(tabId).getItemsList().size(); x++) {
-			if (x == productId)
-				continue;
-			iLNew.add(loginContext.getSoList().get(tabId).getItemsList().get(x));
-		}
-
-		loginContext.getSoList().get(tabId).setItemsList(iLNew);
-		
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-		}
-		
-		
-		
-		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
-		model.addAttribute("activeTab", tabId);
-		model.addAttribute("selectedSoType",soTypeValue);
-		
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -514,61 +432,7 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value="/save/{soTypeValue}/{tabId}", method = RequestMethod.POST)
-	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext,@PathVariable String soTypeValue, @PathVariable int tabId) {
-		logger.info("[salesSave] " + "");
-		loginContextSession.setSoList(loginContext.getSoList());
-		SalesOrder so = loginContext.getSoList().get(tabId);
-		so.setSalesStatus("L016_WD");
-		so.setStatusLookup(lookupManager.getLookupByKey("L016_WD"));
-		
-		List<Items> itemList = new ArrayList<Items>();
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-			for(ProductUnit productUnit : prod.getProductUnit()){
-				if(productUnit.getUnitCode().equals(items.getUnitCode())){
-					items.setToBaseValue(productUnit.getConversionValue());
-					items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
-				}
-			}
-			itemList.add(items);
-		}
-
-		if (so.getSalesId() == 0) {
-			so.setCreatedDate(new Date());
-			salesOrderManager.addSalesOrder(so);
-		} else {
-			salesOrderManager.editSalesOrder(so);
-		}
-
-		
-		
-		for(SalesOrder soVar : loginContext.getSoList()){
-			
-			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
-			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
-			for (Items items : soVar.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-			}
-		}
-			
 	
-		loginContextSession.setSoList(loginContext.getSoList());
-		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
-		
-		model.addAttribute("activeTab", tabId);
-		
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("selectedSoType", soTypeValue);
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SALESORDER;
-	}
 
 
 	@RequestMapping(value="/revise", method = RequestMethod.GET)
@@ -982,37 +846,4 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value = "/addnewtab", method = RequestMethod.POST)
-	public String addPoForm(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext) {
-		logger.info("[soAddNewTab] ");
-		
-		for(SalesOrder soForm : loginContext.getSoList()){
-			
-			soForm.setStatusLookup(lookupManager.getLookupByKey(soForm.getSalesStatus()));
-			soForm.setSoTypeLookup(lookupManager.getLookupByKey(soForm.getSalesType()));
-			for (Items items : soForm.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-			}
-		}
-
-		SalesOrder newSales = new SalesOrder();
-	
-		newSales.setSalesStatus("L016_D");
-		newSales.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
-		newSales.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		newSales.setCreatedDate(new Date());
-		
-		loginContextSession.getSoList().add(newSales);
-	
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-	
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SALESORDER;
-	}
 }

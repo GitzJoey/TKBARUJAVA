@@ -161,6 +161,14 @@
 																	<button id="customerTooltip" title="${ reviseSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
 																</div>										
 															</div>
+															<div class="form-group">
+																<c:if test="${ reviseSalesForm.salesType == 'L015_WIN' }">
+																	<label for="inputWalkInCustDet" class="col-sm-2 control-label">Customer Detail</label>
+																	<div class="col-sm-9">
+																		<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDet" readonly="true"></form:textarea>
+																	</div>
+																</c:if>
+															</div>
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">
