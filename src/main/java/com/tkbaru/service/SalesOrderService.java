@@ -13,4 +13,6 @@ public interface SalesOrderService {
 	public void addSalesOrder(SalesOrder so);
 	public void editSalesOrder(SalesOrder so);
 	public void deleteSalesOrder(int selectedId);
+
+	public String generateSalesCode();
 }

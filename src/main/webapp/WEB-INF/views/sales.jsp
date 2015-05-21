@@ -19,7 +19,7 @@
 						
 			$('[id^="inputShippingDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
-			$('[id^="inputShippingDate"]').on('dp.change dp.show',function(e) {
+			$('[id^="inputShippingDate"]').on('dp.change dp.show', function(e) {
 				$(this).parsley().validate();
 			});
 			
@@ -54,27 +54,31 @@
 			$('[id^="submitButton"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
 				var salesType = $('#selectSoType').val();
+				
+				if(salesType=='L015_S'){
 
 				if ($('#inputCustomerId_'+activetab).val() == "") {
 					jsAlert("Please select customer");
 					return false;
 				}
 				
+				}
 				$('#soForm').parsley({
 				    excluded: '[id="inputCustomerSearchQuery"], [id^="productSelect_"]'
 				}).validate();
 				
+				
 				if(false == $('#soForm').parsley().isValid()) {	
 					return false;
                 } else {
-                	
-						$('#soForm').attr('action', ctxpath + "/sales/save/${selectedSoType}/${ customerId }/"+$(this).val());
-                	
+					$('#soForm').attr('action', ctxpath + "/sales/save/${selectedSoType}/${ customerId }/"+$(this).val());
+
                 }
 			});
 
 			$('[id^="selectCust"]').click(function() {
-				$('#soForm').attr('action', ctxpath + "/sales/select/cust/"+$(this).val());
+				var activetab = $(".nav-tabs li.active").attr("id");
+				$('#soForm').attr('action', ctxpath + "/sales/select/cust/" + $(this).val() + "/" + activetab);
 			});
 
 		    $('#searchCustomerResultTable tbody').on('click', 'td:not(".actionCell")', function() {
@@ -107,20 +111,21 @@
                     if(false == $('[id^="productSelect_"]').parsley().isValid()) {
 						return false;
                     } else {
-                    	
+
                     	$('#soForm').attr('action',ctxpath + "/sales/additems/${selectedSoType}/${customerId}/"+ activetab + "/"+ productSelect);
-                    	
+
                     }		
 				} else {
 					id = $(this).val();
 					activetab = $(".nav-tabs li.active").attr("id");
 					$('#soForm').attr('action',ctxpath + "/sales/removeitems/${selectedSoType}/${customerId}/"+ activetab + "/" + id);
+
 				}
 			});
 		    
 		    $('[id^="cancelButton_"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
-				$('#soForm').attr("action",ctxpath + "/sales/cancel/"+ activetab);
+				$('#soForm').attr("action", ctxpath + "/sales/cancel/" + activetab);
 			});
 
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
@@ -128,13 +133,30 @@
     		$('[id^="customerTooltip"]').tooltip();
     		
     		$('#selectSoType').change(function(){
+    			var activetab = $(".nav-tabs li.active").attr("id");
+    			var salesType = $('#selectSoType').val()
     			if($('#selectSoType').val()!=''){
-	    			$('#soForm').attr("action",ctxpath + "/sales/select/sotype/"+ $('#selectSoType').val());
+	    			$('#soForm').attr("action",ctxpath + "/sales/select/sotype/" + salesType + "/" + activetab);
 	    			$('#soForm').submit();
     			}
     		});
+    		
+    		$('.showOrHide').click(function(){
+                $('#panelSearchCustomer').toggle();
+             });
 		});
-	</script>	
+	</script>
+	<style type="text/css">
+	.panel-heading a:after {
+	    font-family:'Glyphicons Halflings';
+	    content:"\e114";
+	    float: right;
+	    color: grey;
+	}
+	.panel-heading a.collapsed:after {
+	    content:"\e080";
+	}
+	</style>		
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -175,105 +197,12 @@
 					</div>
 					<div class="panel-body">
 						<form:form id="soForm" role="form" class="form-horizontal" modelAttribute="loginContext" action="${pageContext.request.contextPath}/sales/save">
-							<div class="panel panel-default">
-							<div class="panel-body">
-									<div class="row">
-									<div class="form-group">
-																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
-																		<div class="col-sm-8">
-																		  
-																		   <select class="form-control" id="selectSoType" >
-																				<option value="">Select</option>
-																				<c:forEach var="soTypeVar" items="${ soTypeDDL }">
-																				<c:choose>
-																				<c:when test="${ soTypeVar.lookupKey == selectedSoType }">
-																				<option value="${ soTypeVar.lookupKey }" selected="selected" >${ soTypeVar.lookupValue }</option>
-																				</c:when>
-																				<c:otherwise>
-																				<option value="${ soTypeVar.lookupKey }">${ soTypeVar.lookupValue }</option>
-																				</c:otherwise>
-																				</c:choose>
-																				</c:forEach>
-																			</select>
-																		   
-																				
-																		</div>										
-																	</div>
-									</div>
-							</div>
-							</div>
-							<c:if test="${ selectedSoType == 'L015_S' }">
-							<div class="panel panel-default">
-								<div class="panel-body">
-									<div class="row">
-										<div class="col-md-12">							
-											<div class="table-responsive">
-												<table class="table nopaddingrow borderless">
-													<tr>
-														<td width="93%">
-														<div class="form-group" style="padding-left: 1.7%">
-															<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
-														</div>
-														</td>
-														<td width="7%" align="right">
-															<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
-														</td>
-													</tr>
-												</table>
-											</div>
-											
-											<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
-												<thead>
-													<tr>
-														<th width="25%">Customer Name</th>
-														<th width="25%">Address</th>
-														<th width="20%">PIC</th>
-														<th width="20%">Bank Account</th>
-														<th width="5%">Status</th>
-														<th width="5%">&nbsp;</th>
-													</tr>
-												</thead>
-												<tbody>
-													<c:if test="${ not empty customerList }">
-														<c:forEach items="${ customerList }" varStatus="cIdx">
-															<tr>
-																<td><c:out value="${ customerList[cIdx.index].customerName }"></c:out></td>
-																<td>
-																	<c:out value="${ customerList[cIdx.index].customerAddress }"></c:out><br/>
-																	<c:out value="${ customerList[cIdx.index].customerCity }"></c:out><br/>
-																	<c:out value="${ customerList[cIdx.index].customerPhone }"></c:out><br/><br/>
-																	<c:out value="${ customerList[cIdx.index].customerRemarks }"></c:out>
-																</td>
-																<td>
-																	<c:forEach items="${ customerList[cIdx.index].picList }" varStatus="picIdx">
-																		<c:out value="${ customerList[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
-																	</c:forEach>
-																</td>
-																<td>
-																	<c:forEach items="${ customerList[cIdx.index].bankAccList }" varStatus="baIdx">
-																		<c:out value="${ customerList[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
-																	</c:forEach>																	
-																</td>
-																<td align="center">
-																	<c:out value="${ customerList[cIdx.index].statusLookup.lookupValue }"/>
-																</td>
-																<td align="center" style="vertical-align: middle;">
-																	<button id="selectCust" type="submit" class="btn btn-primary btn-xs" value="${ customerList[cIdx.index].customerId }"><span class="fa fa-check"></span></button>
-																</td>
-															</tr>
-														</c:forEach>
-													</c:if>
-												</tbody>
-											</table>
-										</div>
-									</div>
-								</div>
-							</div>			
-							</c:if>
+							
+							
 							<div role="tabpanel">
 								<ul id="list" class="nav nav-tabs" role="tablist">
 									<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
-										<li role="presentation" class="" id="${soIdx.index}"><a href="#soTab_${soIdx.index}" aria-controls="soTab_${soIdx.index}" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw">
+										<li role="presentation" class="" id="${ soIdx.index }"><a href="#soTab_${ soIdx.index }" aria-controls="soTab_${ soIdx.index }" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw">
 											</span>&nbsp;New Sales</a>
 										</li>
 									</c:forEach>
@@ -283,9 +212,9 @@
 								</ul>
 								<div class="tab-content">
 									<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
-										<div role="tabpanel" class="tab-pane" id="soTab_${soIdx.index}">
+										<div role="tabpanel" class="tab-pane" id="soTab_${ soIdx.index }">
 											<br/>
-											<form:hidden path="soList[${soIdx.index}].salesId" />
+											<form:hidden path="soList[${ soIdx.index }].salesId" />
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
@@ -295,57 +224,148 @@
 																	<div class="form-group">
 																		<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control data-so" id="inputSalesCode_${soIdx.index}" name="inputSalesCode_${soIdx.index}" path="soList[${soIdx.index}].salesCode" placeholder="Enter Sales Code" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																			<form:errors path="soList[${soIdx.index}].salesCode" cssClass="error"></form:errors>
+																			<form:input type="text" class="form-control data-so" id="inputSalesCode_${ soIdx.index }" name="inputSalesCode_${ soIdx.index }" path="soList[${ soIdx.index }].salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
 																		</div>										
 																	</div>
 																	<div class="form-group">
 																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																		<div class="col-sm-8">
-																		  
-																			    <form:hidden path="soList[${soIdx.index}].salesType"/>
-																				<form:input type="text" class="form-control" id="inputSalesType_${soIdx.index}" name="inputSalesType_${soIdx.index}" path="soList[${soIdx.index}].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																		   
-																		</div>										
+																		 <c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
+																		   <form:select id="selectSoType" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
+																				<option value="">Please Select</option>
+																				<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																			</form:select>
+																		   </c:if>
+																		   <c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
+																			   <form:hidden path="soList[${ soIdx.index }].salesType"/>
+																				<form:input type="text" class="form-control" id="inputSalesType_${ soIdx.index }" name="inputSalesType_${ soIdx.index }" path="soList[${ soIdx.index }].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																		   </c:if></div>										
 																	</div>
 																	<div class="form-group">
 																		<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
-																		<c:choose>
-																		<c:when test="${ selectedSoType=='L015_S' }">
+																		
 																		<div class="col-sm-9">
-																			<form:hidden path="soList[${soIdx.index}].customerId"/>
-																			<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																			<form:hidden path="soList[${ soIdx.index }].customerId"/>
+																			<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		</div>
 																		<div class="col-sm-1">
 																			<button id="customerTooltip" title="${ soForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
+
 																		</div>
-																		</c:when>
-																		<c:otherwise>
-																		<div class="col-sm-9">
-																			<form:hidden path="soList[${soIdx.index}].customerId"/>
-																			<form:input type="text" class="form-control" id="inputCustomerId_${soIdx.index}" name="inputCustomerId_${soIdx.index}" path="soList[${soIdx.index}].walkInCustDet" placeholder="Walk In Customer" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																		</div>
-																		</c:otherwise>
-																		</c:choose>										
+																										
+
 																	</div>
+																	<c:if test="${ selectedSoType == 'L015_WIN' }">
+																	<div class="form-group">
+																		<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																		<div class="col-sm-9">
+																			<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }"/>
+																		</div>
+
+																	</div>
+																	</c:if>
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
 																		<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
 																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${soIdx.index}" path="soList[${soIdx.index}].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${ soIdx.index }" path="soList[${ soIdx.index }].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																		</div>										
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSalesStatus_${soIdx.index}" class="col-sm-3 control-label">Status</label>
+																		<label for="inputSalesStatus_${ soIdx.index }" class="col-sm-3 control-label">Status</label>
 																		<div class="col-sm-9">
-																			<form:hidden path="soList[${soIdx.index}].salesStatus" />
-																			<label id="inputSalesStatus_${soIdx.index}" class="control-label">
+																			<form:hidden path="soList[${ soIdx.index }].salesStatus" />
+																			<label id="inputSalesStatus_${ soIdx.index }" class="control-label">
 																				<c:out value="${ soForm.statusLookup.lookupValue }"></c:out>
 																			</label>
 																		</div>										
 																	</div>
 																</div>
+															</div>
+															<div class="row">
+																<c:if test="${ selectedSoType == 'L015_S' }">
+																	<div class="col-sm-12">
+																	
+																		<div id="panelSearchCustomer" class="panel panel-default">
+																			<div class="panel-heading">
+																	             <h4 class="panel-title">
+																			        <a data-toggle="collapse" data-target="#collapseOne" 
+																			           href="#collapseOne">
+																			         Search Customer Panel
+																			        </a>
+																	      		</h4>
+																	      	</div>
+																	        <div id="collapseOne" class="panel-collapse collapse in">
+																			<div class="panel-body">
+																				<div class="row">
+																					<div class="col-md-12">							
+																						<div class="table-responsive">
+																							<table class="table nopaddingrow borderless">
+																								<tr>
+																									<td width="93%">
+																									<div class="form-group" style="padding-left: 1.7%">
+																										<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
+																									</div>
+																									</td>
+																									<td width="7%" align="right">
+																										<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
+																									</td>
+																								</tr>
+																							</table>
+																						</div>
+																						
+																						<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
+																							<thead>
+																								<tr>
+																									<th width="25%">Customer Name</th>
+																									<th width="25%">Address</th>
+																									<th width="20%">PIC</th>
+																									<th width="20%">Bank Account</th>
+																									<th width="5%">Status</th>
+																									<th width="5%">&nbsp;</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<c:if test="${ not empty customerList }">
+																									<c:forEach items="${ customerList }" varStatus="cIdx">
+																										<tr>
+																											<td><c:out value="${ customerList[cIdx.index].customerName }"></c:out></td>
+																											<td>
+																												<c:out value="${ customerList[cIdx.index].customerAddress }"></c:out><br/>
+																												<c:out value="${ customerList[cIdx.index].customerCity }"></c:out><br/>
+																												<c:out value="${ customerList[cIdx.index].customerPhone }"></c:out><br/><br/>
+																												<c:out value="${ customerList[cIdx.index].customerRemarks }"></c:out>
+																											</td>
+																											<td>
+																												<c:forEach items="${ customerList[cIdx.index].picList }" varStatus="picIdx">
+																													<c:out value="${ customerList[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
+																												</c:forEach>
+																											</td>
+																											<td>
+																												<c:forEach items="${ customerList[cIdx.index].bankAccList }" varStatus="baIdx">
+																													<c:out value="${ customerList[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
+																												</c:forEach>																	
+																											</td>
+																											<td align="center">
+																												<c:out value="${ customerList[cIdx.index].statusLookup.lookupValue }"/>
+																											</td>
+																											<td align="center" style="vertical-align: middle;">
+																												<button id="selectCust" type="submit" class="btn btn-primary btn-xs" value="${ customerList[cIdx.index].customerId }"><span class="fa fa-check"></span></button>
+																											</td>
+																										</tr>
+																									</c:forEach>
+																								</c:if>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		</div>
+																		</div>
+																</c:if>									
+																	
 															</div>
 															<hr>
 															<div class="row">
@@ -353,7 +373,7 @@
 																	<div class="form-group">
 																		<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control" id="inputShippingDate_${soIdx.index}" name="inputShippingDate_${soIdx.index}" path="soList[${soIdx.index}].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																		</div>										
 																	</div>
 																</div>
@@ -361,19 +381,19 @@
 														</div>
 													</div>
 													<div class="row">
-														<div class="col-md-10">
+														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
 																	<h1 class="panel-title">
-																		New Transaction
+																		Transactions
 																	</h1>
 																</div>
 																<div class="panel-body">
-																<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
+																<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
 																	<div class="row">
 																		<div class="col-md-11">
 																		<div class="form-group" style="padding-left: 2%">
-																			<select id="productSelect_${soIdx.index}" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
+																			<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																				<option value="">Please Select</option>
 																				<c:forEach items="${ productSelectionDDL }" var="psddl">
 																					<option value="${ psddl.productId }">${ psddl.productName }</option>
@@ -386,16 +406,17 @@
 																		</div>
 																	</div>
 																	</c:if>
+																	
 																	<br/>
 																	<div class="row">
 																		<div class="col-md-12">
-																			<table id="itemsListTable_${soIdx.index}" class="table table-bordered table-hover display responsive">
+																			<table id="itemsListTable_${ soIdx.index }" class="table table-bordered table-hover display responsive">
 																				<thead>
 																					<tr>
-																						<th width="40%">Product Name</th>
-																						<th width="10%">Quantity</th>
-																						<th width="10%">Unit</th>
-																						<th width="15%">Price/Unit</th>
+																						<th width="30%">Product Name</th>
+																						<th width="15%">Quantity</th>
+																						<th width="15%" class="text-right">Unit</th>
+																						<th width="15%" class="text-right">Price/Base Unit</th>
 																						<th width="5%">&nbsp;</th>
 																						<th width="20%" class="text-right">Total Price</th>
 																					</tr>
@@ -412,42 +433,42 @@
 																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
 																								<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																							</td>
-																							<td>
-																							<div class="form-group">
-																								<div class="col-sm-12">
-																									<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							<td style="vertical-align: middle;">
+																								<div class="form-group no-margin">
+																									<div class="col-sm-12">
+																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																									</div>
 																								</div>
-																							</div>
 																							</td>
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-md-12">
-																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }">
+																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
-																											<c:forEach items="${ loginContext.soList[soIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																											</c:forEach>
 																										</form:select>
 																									</div>
 																								</div>
 																							</td>
-																							<td>
-																							<div class="form-group">
-																										<div class="col-sm-12">
-																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${soIdx.index}].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
-																							</div>
-																							</div>
+																							<td style="vertical-align: middle;">
+																								<div class="form-group no-margin">
+																									<div class="col-sm-12">
+																										<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																									</div>
+																								</div>
 																							</td>
 																							<td>
-																							<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
-																								<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
-																							</c:if>
+																								<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
+																									<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
+																								</c:if>
 																							</td>
 																							<td class="text-right">
 																								<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																							</td>
 																						</tr>
-																						<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																						<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
 																					</c:forEach>
 																				</tbody>
 																			</table>
@@ -472,19 +493,6 @@
 																</div>
 															</div>
 														</div>
-														<div class="col-md-2">
-															<div class="panel panel-default">
-																<ul class="list-group">
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																	<li class="list-group-item"></li>
-																</ul>
-															</div>
-														</div>
 													</div>
 												</div>
 											</div>
@@ -499,7 +507,7 @@
 																<div class="col-md-12">
 																	<div class="form-group">
 																		<div class="col-sm-12">
-																			<form:textarea class="form-control" path="soList[${soIdx.index}].salesRemarks" rows="5" readonly="${ loginContext.soList[soIdx.index].salesStatus !='L016_D' }"/>
+																			<form:textarea class="form-control" path="soList[${ soIdx.index }].salesRemarks" rows="5" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }"/>
 																		</div>
 																	</div>
 																</div>
@@ -511,12 +519,12 @@
 											<div class="row">
 												<div class="col-md-7 col-offset-md-5">
 													<div class="btn-toolbar">
-														<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_D' }">
-															<button id="cancelButton_${soIdx.index}" type="submit" class="btn btn-primary pull-right">Cancel</button>
+														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
+															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right">Cancel</button>
 															<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }">Submit</button>
 														</c:if>
-														<c:if test="${ loginContext.soList[soIdx.index].salesStatus =='L016_WD' }">
-															<button id="cancelButton_${soIdx.index}" type="submit" class="btn btn-primary pull-right">Close</button>
+														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus =='L016_WD' }">
+															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right">Close</button>
 														</c:if>
 													</div>
 												</div>
@@ -530,6 +538,9 @@
 				</div>						
 			</div>
 		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+	
 	</div>	
 </body>
 </html>

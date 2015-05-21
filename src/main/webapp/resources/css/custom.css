@@ -55,6 +55,10 @@ strong.title {
 	text-align: center;
 }
 
+.right-align {
+	text-align: right;
+}
+
 .valign-middle {
 	vertical-align: middle;
 }
@@ -65,4 +69,13 @@ strong.title {
 
 .cursor-pointer {
 	cursor: pointer;
+}
+
+.footer {
+	text-align: center;
+	font-size: x-small;	
+}
+
+.dataTables_info {
+	font-size: 12px;
 }

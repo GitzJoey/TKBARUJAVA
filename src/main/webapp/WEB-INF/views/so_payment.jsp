@@ -24,14 +24,14 @@
 					jsAlert("Please select at least 1 po");
 					return false;
 				} else {
-					if(button == 'cashPayButton'){
-						$('#cashPayButton').attr("href",ctxpath+ "/sales/cashpayment/"+ id);
-					} else if(button == 'transferPayButton'){
-						$('#transferPayButton').attr("href",ctxpath+ "/sales/transferpayment/"+ id);
-					} else if(button == 'termPayButton'){
-						$('#termPayButton').attr("href",ctxpath+ "/sales/termpayment/"+ id);
-					} else if(button == 'giroPayButton'){
-						$('#giroPayButton').attr("href",ctxpath+ "/sales/giropayment/"+ id);
+					if (button == 'cashPayButton') {
+						$('#cashPayButton').attr("href", ctxpath + "/sales/cashpayment/" + id);
+					} else if (button == 'transferPayButton') {
+						$('#transferPayButton').attr("href", ctxpath + "/sales/transferpayment/" + id);
+					} else if (button == 'termPayButton') {
+						$('#termPayButton').attr("href", ctxpath + "/sales/termpayment/" + id);
+					} else if (button == 'giroPayButton') {
+						$('#giroPayButton').attr("href", ctxpath + "/sales/giropayment/" + id);
 					}				
 				}
 			});
@@ -176,6 +176,12 @@
 																</div>										
 															</div>
 														</div>
+														<div class="form-group">
+															<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+															<div class="col-sm-9">
+																<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
+															</div>
+														</div>														
 														<div class="col-md-5">
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
@@ -206,25 +212,24 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-8">
+												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h1 class="panel-title">
-																New Transaction
+																Transactions
 															</h1>
 														</div>
-														<div class="panel-body">
-															
+														<div class="panel-body">															
 															<br/>
 															<div class="row">
 																<div class="col-md-12">
 																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="40%">Product Name</th>
-																				<th width="10%">Quantity</th>
-																				<th width="10%">Unit</th>
-																				<th width="15%">Price/Unit</th>
+																				<th width="30%">Product Name</th>
+																				<th width="15%">Quantity</th>
+																				<th width="15%" class="text-right">Unit</th>
+																				<th width="15%" class="text-right">Price/Base Unit</th>
 																				<th width="5%">&nbsp;</th>
 																				<th width="20%" class="text-right">Total Price</th>
 																			</tr>
@@ -238,15 +243,23 @@
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
 																						<c:out value="${ paymentSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
-																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="true"></form:input>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="true"></form:input>
+																							</div>
+																						</div>
 																					</td>
 																					<td>
 																						<form:hidden id="inputItemsUnitCode" name="inputItemsUnitCode" path="itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
 																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
 																					</td>
-																					<td>
-																						<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="true"></form:input>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="true"></form:input>	
+																							</div>
+																						</div>
 																					</td>
 																					<td>
 																						
@@ -278,19 +291,6 @@
 																</div>														
 															</div>
 														</div>
-													</div>
-												</div>
-												<div class="col-md-4">
-													<div class="panel panel-default">
-														<ul class="list-group">
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-														</ul>
 													</div>
 												</div>
 											</div>
@@ -390,7 +390,8 @@
 																						</div>
 																						</div>
 																					</td>
-																					<td><form:checkbox id="linked_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
+																					<td>
+																						<form:checkbox id="linked_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
 																					    <br>
 																					    <form:hidden path="paymentList[${ iLIdx.index }].paymentStatus"/>
 																					    <c:if test="${ paymentSalesForm.paymentList[ iLIdx.index ].paymentType == 'L017_CASH'}">
@@ -401,19 +402,19 @@
 																						</c:if> 
 																						<c:if test="${ iL.paymentType == 'L017_TERM' }">
 																							<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																								<form:checkbox id="cbx_term_${statusIdx.index}" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" disabled="true" />
+																								<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" disabled="true" />
 																								<br>
 																							</c:forEach>
 																						</c:if>
 																						<c:if test="${ iL.paymentType == 'L017_TRANSFER' }">
 																							<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
-																								<form:checkbox id="cbx_transfer_${transferIdx.index}" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true" />
+																								<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true" />
 																								<br>
 																							</c:forEach>
 																						</c:if>
 																						<c:if test="${ iL.paymentType == 'L017_GIRO' }">
 																							<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
-																								<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true" />
+																								<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true" />
 																								<br>
 																							</c:forEach>
 																						</c:if> 
@@ -443,121 +444,107 @@
 																</div>
 															</div>
 														</div>
-													</div>
-													
+													</div>													
 													<div class="row">
-													    
-													    <div class="col-md-12">
-																<div class="panel panel-default">
-																	<div class="panel-heading">
-																		<h1 class="panel-title">Form Payment</h1>
-																	</div>
-																	<div class="panel-body">
-																	<div class="row">
-																<div class="col-md-7">
-																	<div class="form-group">
-																		<label for="inputPaymentDate" class="col-sm-2 control-label">Payment Type</label>
-																		<div class="col-sm-5">
-																			<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
-																			<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
-																		</div>
-																	</div>
-																	<c:if test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' || paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO'}">
-																	<div class="form-group">
-																		<label for="inputBank"
-																			class="col-sm-2 control-label">Bank</label>
-																		<div class="col-sm-8">
-																			
-																		<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
-																			<c:set var="test" value="0" />
-																			<c:if test="${bankL.lookupKey == paymentSalesForm.paymentList[lastIdx].bankCode}">
-																				<c:set var="test" value="1" />
-																			</c:if>
-																			<c:choose>
-																				<c:when test="${test == 1}">
-																					<form:hidden path="paymentList[${ lastIdx }].bankCode"/>
-																					<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${lastIdx}].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
-																					<br>
-																				</c:when>
-																				<c:otherwise>
-																				<c:if test="${ empty paymentSalesForm.paymentList[ lastIdx ].bankCode }">
-																					<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
-																					<br>
-																				</c:if>
-																				</c:otherwise>
-																			</c:choose>
-																		</c:forEach>
-																								
-																		</div>
-																	</div>
-																	</c:if>
-																	<div class="form-group">
-																		<label for="inputEffectiveDate"
-																			class="col-sm-2 control-label">Effective Date</label>
-																		<div class="col-sm-9">
-																			
-																			<form:input id="inputEffectiveDate" type="text" class="form-control datepicker" path="paymentList[${ lastIdx }].effectiveDate" data-parsley-required="true" data-parsley-trigger="change"  />
-																		</div>
-																		
-																	</div>
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-heading">
+																	<h1 class="panel-title">Form Payment</h1>
 																</div>
-																<div class="col-md-5">
-																	<div class="form-group">
-																		<label for="inputPaymentDate"
-																			class="col-sm-3 control-label">Payment Date</label>
-																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputPaymentDate" class="col-sm-2 control-label">Payment Type</label>
+																				<div class="col-sm-5">
+																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
+																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
+																				</div>
+																			</div>
+																			<c:if test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' || paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO'}">
+																				<div class="form-group">
+																					<label for="inputBank" class="col-sm-2 control-label">Bank</label>
+																					<div class="col-sm-8">
+																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
+																							<c:set var="test" value="0" />
+																							<c:if test="${ bankL.lookupKey == paymentSalesForm.paymentList[lastIdx].bankCode }">
+																								<c:set var="test" value="1" />
+																							</c:if>
+																							<c:choose>
+																								<c:when test="${ test == 1 }">
+																									<form:hidden path="paymentList[${ lastIdx }].bankCode"/>
+																									<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${lastIdx}].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																									<br>
+																								</c:when>
+																								<c:otherwise>
+																									<c:if test="${ empty paymentSalesForm.paymentList[ lastIdx ].bankCode }">
+																										<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<br>
+																									</c:if>
+																								</c:otherwise>
+																							</c:choose>
+																						</c:forEach>
+																					</div>
+																				</div>
+																			</c:if>
+																			<div class="form-group">
+																				<label for="inputEffectiveDate" class="col-sm-2 control-label">Effective Date</label>
+																				<div class="col-sm-9">
+																					<form:input id="inputEffectiveDate" type="text" class="form-control datepicker" path="paymentList[${ lastIdx }].effectiveDate" data-parsley-required="true" data-parsley-trigger="change"  />
+																				</div>
+																			</div>
 																		</div>
-																	</div>
-																	<div class="form-group">
-																		<label for="inputTotalAmount"
-																			class="col-sm-3 control-label">Total Amount</label>
-																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
-																		</div>
-																	</div>
-																	<div class="form-group">
-																		<label for="linked_${ lastIdx }" class="col-sm-3 control-label">Status</label>
-																		<div class="col-sm-9">
-																		<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="linked" />
-																	    <br>
-																	    <c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
-																			<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
-																				<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" />
-																				<br>
-																			</c:forEach>
-																		</c:if> 
-																		<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TERM' }">
-																			<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																				<form:checkbox id="cbx_term_${statusIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
-																				<br>
-																			</c:forEach>
-																		</c:if>
-																		<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
-																			<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
-																				<form:checkbox id="cbx_transfer_${transferIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
-																				<br>
-																			</c:forEach>
-																		</c:if>
-																		<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO' }">
-																			<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
-																				<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
-																				<br>
-																			</c:forEach>
-																		</c:if> 
+																		<div class="col-md-5">
+																			<div class="form-group">
+																				<label for="inputPaymentDate" class="col-sm-3 control-label">Payment Date</label>
+																				<div class="col-sm-9">
+																					<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label for="inputTotalAmount" class="col-sm-3 control-label">Total Amount</label>
+																				<div class="col-sm-9">
+																					<form:input type="text" class="form-control" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label">Status</label>
+																				<div class="col-sm-9">
+																					<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="linked" />
+																				    <br>
+																				    <c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
+																						<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
+																							<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" />
+																							<br>
+																						</c:forEach>
+																					</c:if> 
+																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TERM' }">
+																						<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
+																							<form:checkbox id="cbx_term_${statusIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
+																							<br>
+																						</c:forEach>
+																					</c:if>
+																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
+																						<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
+																							<form:checkbox id="cbx_transfer_${transferIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
+																							<br>
+																						</c:forEach>
+																					</c:if>
+																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO' }">
+																						<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
+																							<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
+																							<br>
+																						</c:forEach>
+																					</c:if> 
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																</div>
 															</div>
-																	</div>
-																</div>
-														</div>
-													    
-													    </div>
-													
+														</div>													    
+													</div>
 												</div>
-												
-												
 											</div>
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
@@ -571,10 +558,12 @@
 							</div>
 						</div>	
 					</c:when>
-				</c:choose>					
-
+				</c:choose>
 			</div>
 		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+	
 	</div>	
 </body>
 </html>

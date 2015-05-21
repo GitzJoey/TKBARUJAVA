@@ -2,7 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,19 +22,20 @@
 		$('[id^="removeProdButton_"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
 			id = $(this).val();
-			$('#poForm').attr('action', ctxpath + "/po/removeitems/" + activetab + "/" + +id);
+			$('#poForm').attr('action', ctxpath + "/po/removeitems/" + activetab + "/" + id);
 		});
 
 		$('button[id^="addProdButton"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
 			productSelect = $("#productSelect" + activetab).val();
+						
+			$('#poForm').parsley().validate('poTab' + activetab);
 			
-			$('#poForm').parsley().validate();
-			
-			if (false == $('#poForm').parsley().isValid()) {		
+			if (false == $('#poForm').parsley().isValid('poTab' + activetab)) {		
 				return false;
-            } else {
-				$('#poForm').attr('action', ctxpath + "/po/additems/" + activetab + "/" + productSelect);	
+            } else {            	
+            	$('#poForm').parsley().destroy();
+            	$('#poForm').attr('action', ctxpath + "/po/additems/" + activetab + "/" + productSelect);
             }
 		});
 
@@ -76,13 +76,15 @@
 				});
 			}
 		});
-
+		
 		$('#addTab').click(function() {
+			activetab = $(".nav-tabs li.active").attr("id");
+			
 			$('#poForm').parsley({
 				excluded: '[id^="productSelect"]'
 			}).validate();
 			
-			if (false == $('#poForm').parsley().isValid()) { return false; }
+			if (false == $('#poForm').parsley().isValid('poTab' + activetab, true)) { return false; }
 			
 			activetab = $(".nav-tabs li.active").attr("id");
 			$('#addTab').attr("href", ctxpath + "/po/addpoform");
@@ -170,7 +172,7 @@
 																	    		<form:input type="text" class="form-control" id="poType_${ poIdx.index }" path="poList[${ poIdx.index }].poTypeLookup.lookupValue" placeholder="Enter PO Code" readonly="true"></form:input>
 																	    	</c:when>
 																	    	<c:otherwise>
-																				<form:select class="form-control" id="inputPOType${ poIdx.index }" path="poList[${ poIdx.index }].poType" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change">
+																				<form:select class="form-control" id="inputPOType${ poIdx.index }" path="poList[${ poIdx.index }].poType" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
 																					<option value="">Please Select</option>
 																					<form:options items="${ poTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue" />
 																				</form:select>
@@ -187,7 +189,7 @@
 																	    	<form:input type="text" class="form-control" id="supplier_${ poIdx.index }" path="poList[${ poIdx.index }].supplierLookup.supplierName" readonly="true"></form:input>
 																	    </c:when>
 																	    <c:otherwise>
-																		<form:select class="form-control supplierId" id="inputSupplierId${ poIdx.index }" path="poList[${ poIdx.index }].supplierId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change">
+																		<form:select class="form-control supplierId" id="inputSupplierId${ poIdx.index }" path="poList[${ poIdx.index }].supplierId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
 																			<option value="">Please Select</option>
 																			<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="supplierName" />
 																		</form:select>
@@ -205,7 +207,7 @@
 																<div class="form-group">
 																	<label for="poCreatedDate" class="col-sm-3 control-label">PO Date</label>
 																	<div class="col-sm-9">
-																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${ poIdx.index }" path="poList[${ poIdx.index }].poCreatedDate" placeholder="Enter PO Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${ poIdx.index }" path="poList[${ poIdx.index }].poCreatedDate" placeholder="Enter PO Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
@@ -225,30 +227,30 @@
 																<div class="form-group">
 																	<label for="shippingDate${ poIdx.index }" class="col-sm-2 control-label">Shipping Date</label>
 																	<div class="col-sm-5">
-																		<form:input type="text" class="form-control shippingDate" id="shippingDate${ poIdx.index }" path="poList[${ poIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																		<form:input type="text" class="form-control shippingDate" id="shippingDate${ poIdx.index }" path="poList[${ poIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
 																	<label for="inputWarehouseId${ poIdx.index }" class="col-sm-2 control-label">Warehouse</label>
 																	<div class="col-sm-8">
-																	<c:choose>
-																	    <c:when test="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
-																	        <form:hidden path="poList[${ poIdx.index }].warehouseId"/>
-																	    	<form:input type="text" class="form-control" id="warehouse_${ poIdx.index }" path="poList[${ poIdx.index }].warehouseLookup.warehouseName" readonly="true"></form:input>
-																	    </c:when>
-																	    <c:otherwise>
-																		<form:select class="form-control warehouseId" id="inputWarehouseId${ poIdx.index }" path="poList[${ poIdx.index }].warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change">
-																			<option value="">Please Select</option>
-																			<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
-																		</form:select>
-																		</c:otherwise>
+																		<c:choose>
+																		    <c:when test="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
+																		        <form:hidden path="poList[${ poIdx.index }].warehouseId"/>
+																		    	<form:input type="text" class="form-control" id="warehouse_${ poIdx.index }" path="poList[${ poIdx.index }].warehouseLookup.warehouseName" readonly="true"></form:input>
+																		    </c:when>
+																		    <c:otherwise>
+																				<form:select class="form-control warehouseId" id="inputWarehouseId${ poIdx.index }" path="poList[${ poIdx.index }].warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
+																					<option value="">Please Select</option>
+																					<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
+																				</form:select>
+																			</c:otherwise>
 																		</c:choose>
 																	</div>
 																</div>
 															</div>
 															<div class="col-md-5">
 																<div class="form-group">
-																	<label for="inputPOStatus" class="col-sm-3 control-label"></label>
+																	<label for="inputEmpty" class="col-sm-3 control-label"></label>
 																	<div class="col-sm-9"></div>
 																</div>
 															</div>
@@ -261,13 +263,13 @@
 											<div class="col-md-12">
 												<div class="panel panel-default">
 													<div class="panel-heading">
-														<h1 class="panel-title">New Transaction</h1>
+														<h1 class="panel-title">Transactions</h1>
 													</div>
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-11" id="product-select${ poIdx.index }">
 																<div class="form-group" style="padding-left: 2%">
-																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change">
+																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
 																		<option value="">Please Select</option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
@@ -314,17 +316,26 @@
 																				<td class="center-align">
 																					<div class="form-group no-margin">
 																						<div class="col-sm-12">
-																							<form:input type="text" class="form-control text-right no-margin" id="inputItemsQuantity${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" min="1" data-parsley-trigger="keyup"></form:input>
+																							<form:input type="text" class="form-control text-right no-margin" id="inputItemsQuantity${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" min="1" data-parsley-trigger="keyup" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																						</div>
 																					</div>
 																				</td>
 																				<td style="vertical-align: middle;">
 																					<div class="form-group no-margin">
-																						<div class="col-md-12">
-																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
+																						<div class="col-md-12">																							
+																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-group="poTab${ poIdx.index }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																									<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									<form:option value="${ prdUnit.unitCode }">
+																										<c:choose>
+																											<c:when test="${ prdUnit.baseUnit }">
+																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>*
+																											</c:when>
+																											<c:otherwise>
+																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
+																											</c:otherwise>
+																										</c:choose>																										
+																									</form:option>
 																								</c:forEach>
 																							</form:select>
 																						</div>
@@ -333,7 +344,7 @@
 																				<td style="vertical-align: middle;">
 																					<div class="form-group no-margin">
 																						<div class="col-sm-12">
-																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice${ poIdx.index }" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }" data-parsley-type="number" data-parsley-trigger="keyup" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																						</div>
 																					</div>
 																				</td>
@@ -368,20 +379,20 @@
 														</div>
 													</div>
 												</div>
-												<div class="row">
-													<div class="col-md-12">
-														<div class="panel panel-default">
-															<div class="panel-heading">
-																<h1 class="panel-title">Remarks</h1>
-															</div>
-															<div class="panel-body">
-																<div class="row">
-																	<div class="col-md-12">
-																		<div class="form-group">
-																			<div class="col-sm-12">
-																				<form:textarea id="poRemarks${ poIdx.index }" class="form-control" path="poList[${ poIdx.index }].poRemarks" rows="5" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"/>
-																			</div>
-																		</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<div class="panel panel-default">
+													<div class="panel-heading">
+														<h1 class="panel-title">Remarks</h1>
+													</div>
+													<div class="panel-body">
+														<div class="row">
+															<div class="col-md-12">
+																<div class="form-group">
+																	<div class="col-sm-12">
+																		<form:textarea id="poRemarks${ poIdx.index }" class="form-control" path="poList[${ poIdx.index }].poRemarks" rows="5" readonly="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }"/>
 																	</div>
 																</div>
 															</div>
@@ -389,6 +400,8 @@
 													</div>
 												</div>
 											</div>
+										</div>										
+										<div class="row">
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
 												    <c:if test="${ loginContext.poList[poIdx.index].poStatus =='L013_D' }">
@@ -409,6 +422,9 @@
 				</div>
 			</div>
 		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+	
 	</div>
 </body>
 </html>

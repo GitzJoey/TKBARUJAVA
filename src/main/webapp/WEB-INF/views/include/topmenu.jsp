@@ -20,26 +20,12 @@
 						<ul class="dropdown-menu">
 							<li>
 								<a href="${ requestScope['javax.servlet.forward.request_uri'] }?locale=en">
-									<c:choose>
-										<c:when test="${ cookie.tkbaruLocaleCookie.value == 'en' }">
-											<span class="fa fa-check-square-o fa-fw"></span>&nbsp;English
-										</c:when>
-										<c:otherwise>
-											<span class="fa fa-square-o fa-fw"></span>&nbsp;English
-										</c:otherwise>
-									</c:choose>
+									English
 								</a>
 							</li>
 							<li>
 								<a href="${ requestScope['javax.servlet.forward.request_uri'] }?locale=in">
-									<c:choose>
-										<c:when test="${ cookie.tkbaruLocaleCookie.value == 'in' }">
-											<span class="fa fa-check-square-o fa-fw"></span>&nbsp;Indonesia
-										</c:when>
-										<c:otherwise>
-											<span class="fa fa-square-o fa-fw"></span>&nbsp;Indonesia
-										</c:otherwise>
-									</c:choose>
+									Indonesia
 								</a>
 							</li>
 						</ul>

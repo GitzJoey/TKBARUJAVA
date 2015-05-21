@@ -96,4 +96,16 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		
 	}
 
+	@Override
+	public boolean isExistingSalesCode(String salesCode) {
+		logger.info("[isExistingSalesCode] " + "salesCode: " + salesCode);
+
+		Session session = this.sessionFactory.getCurrentSession();
+		boolean exist = (long)session.createQuery("SELECT COUNT(*) FROM SalesOrder WHERE salesCode = :salesCode").setString("salesCode", salesCode).uniqueResult() > 0;
+		
+		logger.info("salesCode " + salesCode + " is exists: " + exist);
+
+		return exist;
+	}
+
 }

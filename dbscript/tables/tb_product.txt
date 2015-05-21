@@ -14,3 +14,17 @@ CREATE TABLE `tb_product` (
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
 );
+
+/* Palm Oil */
+INSERT INTO tb_product (product_type, short_code, product_name, product_description, status, created_by, created_date)
+VALUES ('L004_ML', 'ML1', 'Minyak Curah', 'Minyak Curah', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/* Soybean */
+INSERT INTO tb_product (product_type, short_code, product_name, product_description, status, created_by, created_date)
+VALUES ('L004_KDLI', 'BIJO', 'Kedelai Bola Hijau', 'Kedelai Bola Hijau', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/* Sugar */
+INSERT INTO tb_product (product_type, short_code, product_name, product_description, status, created_by, created_date)
+VALUES ('L004_GL', 'GL1', 'Gula', 'Gula', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+
+COMMIT;

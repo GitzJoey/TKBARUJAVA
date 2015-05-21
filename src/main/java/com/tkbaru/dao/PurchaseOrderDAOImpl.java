@@ -116,7 +116,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 	@Override
 	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status) {
-		logger.info("[getPurchaseOrderByWarehouseId] " + "warehouseId: "+ warehouseId + "poStatus: " + status);
+		logger.info("[getPurchaseOrderByWarehouseId] " + "warehouseId: "+ warehouseId + ", poStatus: " + status);
 
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where warehouseId = :warehouseId and poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
@@ -137,7 +137,6 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		
 		logger.info("poCode " + poCode + " is exists: " + exist);
 
-		return false;
+		return exist;
 	}
-
 }

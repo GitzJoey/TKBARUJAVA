@@ -11,5 +11,6 @@ public interface SalesOrderDAO {
 	public void addSalesOrder(SalesOrder so);
 	public void editSalesOrder(SalesOrder so);
 	public void deleteSalesOrder(int selectedId);
-	
+
+	public boolean isExistingSalesCode(String salesCode);
 }

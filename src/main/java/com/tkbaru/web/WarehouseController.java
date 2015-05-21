@@ -149,8 +149,8 @@ public class WarehouseController {
 
 		PurchaseOrder poView = null;
 		
-		for(PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()) {
-			if(purchaseOrder.getPoId()==poId) {
+		for (PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()) {
+			if (purchaseOrder.getPoId() == poId) {
 				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
 			}	
 		}
@@ -183,8 +183,8 @@ public class WarehouseController {
 		po.setItemsList( poView.getItemsList());
 		
 		Boolean isAllArrived = false;
-		for (Items item : po.getItemsList()) {
-			
+		
+		for (Items item : po.getItemsList()) {			
 			long arrivalQuantity = 0;
 			
 			for (Receipt receipt : item.getReceiptList()) {

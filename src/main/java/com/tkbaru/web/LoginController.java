@@ -40,7 +40,7 @@ public class LoginController {
 								@RequestParam(value="e", required=false) String errParam, 
 								HttpServletRequest request,
 								HttpServletResponse response) {
-		logger.info("[loadLoginPage] " + "");
+		logger.info("[loadLoginPage] " + "locale.getLanguage(): " + locale.getLanguage());
 
 		String messageText = "";
 		
@@ -78,12 +78,13 @@ public class LoginController {
 			for (Cookie c:cookies) {
 				if (c.getName().equals(localeResolver.getCookieName())) {
 					localeCookieFound = true;
+					logger.info("[loadLoginPage] " + "tkbaruLocaleCookie Value: " + c.getValue());
 				}
 			}
 		}
 		
 		if (!localeCookieFound) {
-			response.addCookie(new Cookie(localeResolver.getCookieName(), "id"));
+			response.addCookie(new Cookie(localeResolver.getCookieName(), locale.getLanguage()));
 		}
 		
 		model.addAttribute("hideLogin", false);

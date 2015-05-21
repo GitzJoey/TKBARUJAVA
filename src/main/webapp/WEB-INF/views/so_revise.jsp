@@ -161,6 +161,12 @@
 																	<button id="customerTooltip" title="${ reviseSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
 																</div>										
 															</div>
+															<div class="form-group">
+																<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																<div class="col-sm-9">
+																	<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
+																</div>
+															</div>															
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">
@@ -192,11 +198,11 @@
 												</div>
 											</div>
 											<div class="row">
-												<div class="col-md-8">
+												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
 															<h1 class="panel-title">
-																New Transaction
+																Transactions
 															</h1>
 														</div>
 														<div class="panel-body">
@@ -221,10 +227,10 @@
 																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="40%">Product Name</th>
-																				<th width="10%">Quantity</th>
-																				<th width="10%">Unit</th>
-																				<th width="15%">Price/Unit</th>
+																				<th width="30%">Product Name</th>
+																				<th width="15%">Quantity</th>
+																				<th width="15%" class="text-right">Unit</th>
+																				<th width="15%" class="text-right">Price/Base Unit</th>
 																				<th width="5%">&nbsp;</th>
 																				<th width="20%" class="text-right">Total Price</th>
 																			</tr>
@@ -288,19 +294,6 @@
 														</div>
 													</div>
 												</div>
-												<div class="col-md-4">
-													<div class="panel panel-default">
-														<ul class="list-group">
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-															<li class="list-group-item"></li>
-														</ul>
-													</div>
-												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
@@ -337,6 +330,9 @@
 				</c:choose>
 			</div>
 		</div>
+		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+	
 	</div>	
 </body>
 </html>
