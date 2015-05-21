@@ -167,6 +167,7 @@
 																	<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
 																</div>
 															</div>															
+
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">

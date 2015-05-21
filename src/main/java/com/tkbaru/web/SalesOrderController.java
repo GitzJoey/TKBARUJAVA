@@ -139,8 +139,10 @@ public class SalesOrderController {
 		so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		so.setCreatedDate(new Date());
 		if(soTypeValue.equals("L015_WIN")){
+
 			so.setCustomerId(0);
 			so.setCustomerLookup(customerManager.getCustomerById(0));
+
 		}
 		soList.add(so);
 		loginContextSession.setSoList(soList);
@@ -149,9 +151,7 @@ public class SalesOrderController {
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSoTypeLookup(lookupManager.getLookupByKey(soTypeValue));
 			
 		}
-		
-		
-		
+
 		model.addAttribute("customerId", 0);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
@@ -310,10 +310,6 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	
-	
-	
-	
 	@RequestMapping(value = "/removeitems/{soTypeValue}/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext,@PathVariable String soTypeValue,@PathVariable int customerId, @PathVariable int tabId, @PathVariable int productId) {
 		logger.info("[soRemoveItems] " + "varId: " + productId);
@@ -350,8 +346,7 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SALESORDER;
 	}
-	
-	
+
 	
 	@RequestMapping(value = "/removeitems/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable int productId) {
@@ -926,3 +921,4 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 }
+

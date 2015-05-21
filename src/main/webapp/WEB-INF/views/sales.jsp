@@ -101,7 +101,7 @@
 		    $('#addProdButton, #removeProdButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
-				var salesType = $('#selectSoType').val();
+				
 
 				if (button == 'addProdButton') {
 					activetab = $(".nav-tabs li.active").attr("id");
@@ -144,6 +144,7 @@
     		$('.showOrHide').click(function(){
                 $('#panelSearchCustomer').toggle();
              });
+
 		});
 	</script>
 	<style type="text/css">
@@ -156,7 +157,9 @@
 	.panel-heading a.collapsed:after {
 	    content:"\e080";
 	}
+
 	</style>		
+
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -197,8 +200,6 @@
 					</div>
 					<div class="panel-body">
 						<form:form id="soForm" role="form" class="form-horizontal" modelAttribute="loginContext" action="${pageContext.request.contextPath}/sales/save">
-							
-							
 							<div role="tabpanel">
 								<ul id="list" class="nav nav-tabs" role="tablist">
 									<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
@@ -218,6 +219,7 @@
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
+													
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-7">
@@ -242,7 +244,8 @@
 																		   </c:if></div>										
 																	</div>
 																	<div class="form-group">
-																		<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
+
+																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label">Customer</label>
 																		
 																		<div class="col-sm-9">
 																			<form:hidden path="soList[${ soIdx.index }].customerId"/>
@@ -253,7 +256,6 @@
 
 																		</div>
 																										
-
 																	</div>
 																	<c:if test="${ selectedSoType == 'L015_WIN' }">
 																	<div class="form-group">
@@ -282,6 +284,90 @@
 																		</div>										
 																	</div>
 																</div>
+															</div>
+															<div class="row">
+																<c:if test="${ selectedSoType == 'L015_S' }">
+																	<div class="col-sm-12">
+																	
+																		<div id="panelSearchCustomer" class="panel panel-default">
+																			<div class="panel-heading">
+																	             <h4 class="panel-title">
+																			        <a data-toggle="collapse" data-target="#collapseOne" 
+																			           href="#collapseOne">
+																			         Search Customer Panel
+																			        </a>
+																	      		</h4>
+																	      	</div>
+																	        <div id="collapseOne" class="panel-collapse collapse in">
+																			<div class="panel-body">
+																				<div class="row">
+																					<div class="col-md-12">							
+																						<div class="table-responsive">
+																							<table class="table nopaddingrow borderless">
+																								<tr>
+																									<td width="93%">
+																									<div class="form-group" style="padding-left: 1.7%">
+																										<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
+																									</div>
+																									</td>
+																									<td width="7%" align="right">
+																										<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
+																									</td>
+																								</tr>
+																							</table>
+																						</div>
+																						
+																						<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
+																							<thead>
+																								<tr>
+																									<th width="25%">Customer Name</th>
+																									<th width="25%">Address</th>
+																									<th width="20%">PIC</th>
+																									<th width="20%">Bank Account</th>
+																									<th width="5%">Status</th>
+																									<th width="5%">&nbsp;</th>
+																								</tr>
+																							</thead>
+																							<tbody>
+																								<c:if test="${ not empty customerList }">
+																									<c:forEach items="${ customerList }" varStatus="cIdx">
+																										<tr>
+																											<td><c:out value="${ customerList[cIdx.index].customerName }"></c:out></td>
+																											<td>
+																												<c:out value="${ customerList[cIdx.index].customerAddress }"></c:out><br/>
+																												<c:out value="${ customerList[cIdx.index].customerCity }"></c:out><br/>
+																												<c:out value="${ customerList[cIdx.index].customerPhone }"></c:out><br/><br/>
+																												<c:out value="${ customerList[cIdx.index].customerRemarks }"></c:out>
+																											</td>
+																											<td>
+																												<c:forEach items="${ customerList[cIdx.index].picList }" varStatus="picIdx">
+																													<c:out value="${ customerList[cIdx.index].picList[picIdx.index].firstName }"/>&nbsp;<c:out value="${ soForm.customerSearchResults[cIdx.index].picList[picIdx.index].firstName }"/><br/>
+																												</c:forEach>
+																											</td>
+																											<td>
+																												<c:forEach items="${ customerList[cIdx.index].bankAccList }" varStatus="baIdx">
+																													<c:out value="${ customerList[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
+																												</c:forEach>																	
+																											</td>
+																											<td align="center">
+																												<c:out value="${ customerList[cIdx.index].statusLookup.lookupValue }"/>
+																											</td>
+																											<td align="center" style="vertical-align: middle;">
+																												<button id="selectCust" type="submit" class="btn btn-primary btn-xs" value="${ customerList[cIdx.index].customerId }"><span class="fa fa-check"></span></button>
+																											</td>
+																										</tr>
+																									</c:forEach>
+																								</c:if>
+																							</tbody>
+																						</table>
+																					</div>
+																				</div>
+																			</div>
+																		</div>
+																		</div>
+																		</div>
+																</c:if>									
+																	
 															</div>
 															<div class="row">
 																<c:if test="${ selectedSoType == 'L015_S' }">
