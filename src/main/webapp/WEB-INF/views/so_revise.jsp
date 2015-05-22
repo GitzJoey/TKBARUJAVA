@@ -164,7 +164,7 @@
 															<div class="form-group">
 																<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																<div class="col-sm-9">
-																	<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
+																	<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="true"/>
 																</div>
 															</div>															
 

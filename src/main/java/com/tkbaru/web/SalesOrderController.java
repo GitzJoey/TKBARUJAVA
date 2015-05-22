@@ -149,6 +149,12 @@ public class SalesOrderController {
 		}else{
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSalesType(soTypeValue);
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSoTypeLookup(lookupManager.getLookupByKey(soTypeValue));
+			if(soTypeValue.equals("L015_WIN")){
+
+				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerId(0);
+				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerLookup(customerManager.getCustomerById(0));
+
+			}
 			
 		}
 
