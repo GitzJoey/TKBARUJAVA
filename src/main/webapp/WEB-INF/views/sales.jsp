@@ -33,16 +33,17 @@
 								}
 							});
 
-			$('#searchButton, #newTab').click(function() {
+			$('[id^="searchButton_"], #newTab').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
+				var activetab = $(".nav-tabs li.active").attr("id");
 
-				if (button == 'searchButton') {
-					$('#inputCustomerSearchQuery').parsley().validate();
-                    if(false == $('#inputCustomerSearchQuery').parsley().isValid()) {
+				if (button == 'searchButton_'+activetab) {
+					$('#inputCustomerSearchQuery_'+activetab).parsley().validate();
+                    if(false == $('#inputCustomerSearchQuery_'+activetab).parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery').val());
+                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery_'+activetab).val());
                     }
 				} else if (button == 'newTab') {
 					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/${customerId}");
@@ -53,7 +54,7 @@
 			
 			$('[id^="submitButton"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
-				var salesType = $('#selectSoType').val();
+				var salesType = $('[id^="selectSoType_"]').val();
 				
 				if(salesType=='L015_S'){
 
@@ -64,7 +65,7 @@
 				
 				}
 				$('#soForm').parsley({
-				    excluded: '[id="inputCustomerSearchQuery"], [id^="productSelect_"]'
+				    excluded: '[id^="inputCustomerSearchQuery_"], [id^="productSelect_"]'
 				}).validate();
 				
 				
@@ -133,29 +134,29 @@
 
     		$('[id^="customerTooltip"]').tooltip();
     		
-    		$('#selectSoType').change(function(){
+    		$('[id^="selectSoType_"]').change(function(){
     			var activetab = $(".nav-tabs li.active").attr("id");
-    			var salesType = $('#selectSoType').val();
-    			if($('#selectSoType').val()!=''){
+    			var salesType = $('[id^="selectSoType_"]').val();
+    			if($('[id^="selectSoType_"]').val()!=''){
 	    			$('#soForm').attr("action",ctxpath + "/sales/select/sotype/" + salesType + "/" + activetab);
 	    			$('#soForm').submit();
     			}
     		});
     		
-    		$('#showOrHide').click(function(){
-                	$('#panelSearchCustomer').toggle();
-                	if($('#panelSearchCustomer').is(':visible')){
-                		$("#showOrHide").html('Hide Panel Search Customer');
+    		$('[id^="showOrHide_"]').click(function(){
+                	$('[id^="panelSearchCustomer_"]').toggle();
+                	if($('[id^="panelSearchCustomer_"]').css('display')=='none'){
+                		$('[id^="showOrHide_"]').html('Show Panel Search Customer');
                     }else{
-                    	$("#showOrHide").html('Show Panel Search Customer');
+                    	$('[id^="showOrHide_"]').html('Hide Panel Search Customer');
                     }
              });
 
             function hiddenPanelSearchCustomer(){
-            	var salesType = $('#selectSoType').val();
+            	var salesType = $('[id^="selectSoType_"]').val();
             	
-                   if((!('${ customerId }' == '0' || '${ customerId }' == '')) &&  salesType == 'L015_S'){
-                	   $('#panelSearchCustomer').hide();
+                   if((!('${ customerId }' == '1' || '${ customerId }' == '')) &&  salesType == 'L015_S'){
+                	   $('[id^="panelSearchCustomer_"]').hide();
                    }
              }
 
@@ -236,7 +237,7 @@
 																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
 																		<div class="col-sm-8">
 																		 <c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
-																		   <form:select id="selectSoType" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
+																		   <form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
 																				<option value="">Please Select</option>
 																				<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																			</form:select>
@@ -292,10 +293,10 @@
 																<c:if test="${ selectedSoType == 'L015_S' }">
 																	<div class="col-sm-12">
 																	<div>
-																	<button id="showOrHide" type="button">Show</button>
+																	<button id="showOrHide_${ soIdx.index }" type="button">Show Panel Search Customer</button>
 																	</div>
 																	
-																		<div id="panelSearchCustomer" class="panel panel-default" style="display: block;">
+																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default" style="display: block;">
 																			<div class="panel-heading">
 																	             <h4 class="panel-title">
 																			        <a data-toggle="collapse" data-target="#collapseOne" 
@@ -313,11 +314,11 @@
 																								<tr>
 																									<td width="93%">
 																									<div class="form-group" style="padding-left: 1.7%">
-																										<input type="text" class="form-control search" id="inputCustomerSearchQuery" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
+																										<input type="text" class="form-control search" id="inputCustomerSearchQuery_${ soIdx.index }" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
 																									</div>
 																									</td>
 																									<td width="7%" align="right">
-																										<button id="searchButton" type="submit" class="btn btn-primary" >Search</button>
+																										<button id="searchButton_${ soIdx.index }" type="submit" class="btn btn-primary" >Search</button>
 																									</td>
 																								</tr>
 																							</table>

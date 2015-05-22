@@ -139,10 +139,8 @@ public class SalesOrderController {
 		so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		so.setCreatedDate(new Date());
 		if(soTypeValue.equals("L015_WIN")){
-
-			so.setCustomerId(0);
-			so.setCustomerLookup(customerManager.getCustomerById(0));
-
+			so.setCustomerId(1);
+			so.setCustomerLookup(customerManager.getCustomerById(1));
 		}
 		soList.add(so);
 		loginContextSession.setSoList(soList);
@@ -150,15 +148,13 @@ public class SalesOrderController {
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSalesType(soTypeValue);
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSoTypeLookup(lookupManager.getLookupByKey(soTypeValue));
 			if(soTypeValue.equals("L015_WIN")){
-
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerId(0);
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerLookup(customerManager.getCustomerById(0));
-
+				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerId(1);
+				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerLookup(customerManager.getCustomerById(1));
 			}
 			
 		}
 
-		model.addAttribute("customerId", 0);
+		model.addAttribute("customerId", 1);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
@@ -174,14 +170,12 @@ public class SalesOrderController {
 	public String salesSearchCustomer(Locale locale, Model model,@PathVariable String searchQuery) {
 		logger.info("[salesSearchCustomer] " + "searchQuery: " + searchQuery);
 		List<Customer> custList = customerManager.searchCustomer(searchQuery);
-		
 		model.addAttribute("customerList", custList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("searchQuery", searchQuery);
 		model.addAttribute("selectedSoType", "L015_S");
-
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
