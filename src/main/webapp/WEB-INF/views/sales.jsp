@@ -38,15 +38,16 @@
 				var button = $(this).attr('id');
 				var activetab = $(".nav-tabs li.active").attr("id");
 
-				if (button == 'searchButton_'+activetab) {
-					$('#inputCustomerSearchQuery_'+activetab).parsley().validate();
-                    if(false == $('#inputCustomerSearchQuery_'+activetab).parsley().isValid()) {
+				if (button == 'searchButton_' + activetab) {
+					$('#inputCustomerSearchQuery_' + activetab).parsley().validate();
+                    
+					if(false == $('#inputCustomerSearchQuery_' + activetab).parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery_'+activetab).val());
+                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery_' + activetab).val());
                     }
 				} else if (button == 'newTab') {
-					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/${customerId}");
+					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/");
 				} else {
 					return false;
 				}
@@ -72,7 +73,7 @@
 				if (false == $('#soForm').parsley().isValid()) {	
 					return false;
                 } else {
-					$('#soForm').attr('action', ctxpath + "/sales/save/${selectedSoType}/${ customerId }/"+$(this).val());
+					$('#soForm').attr('action', ctxpath + "/sales/save/" + salesType + "/${ customerId }/" + $(this).val());
                 }
 			});
 
@@ -103,6 +104,7 @@
 				var button = $(this).attr('id');
 				var activetab = $(".nav-tabs li.active").attr("id");
 				var salesType = $('[id="selectSoType_' + activetab + '"]').val(); 
+				var custId = $('input[id="soList_' + activetab + '_customerId"]').val();
 				
 				if (button == 'addProdButton') {
 					productSelect = $("#productSelect_"+ activetab).val();
@@ -111,11 +113,11 @@
                     if(false == $('[id^="productSelect_"]').parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/${customerId}/" + activetab + "/" + productSelect);
+                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/" + custId + "/" + activetab + "/" + productSelect);
                     }		
 				} else {
 					id = $(this).val();
-					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/${customerId}/" + activetab + "/" + id);
+					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/" + custId + "/" + activetab + "/" + id);
 				}
 			});
 		    
@@ -236,7 +238,7 @@
 																	<div class="form-group">
 																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label">Customer</label>
 																		<div class="col-sm-10">
-																			<form:hidden path="soList[${ soIdx.index }].customerId"/>
+																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerId"/>
 																			<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		</div>
 																	</div>
@@ -248,7 +250,7 @@
 																			</div>
 																		</div>
 																	</c:if>							
-																	<c:if test="${ selectedSoType == 'L015_S' && not empty loginContext.soList[soIdx.index].customerId && loginContext.soList[soIdx.index].customerId != 0 }">
+																	<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_S' && not empty loginContext.soList[soIdx.index].customerId && loginContext.soList[soIdx.index].customerId != 0 }">
 																		<div class="form-group">
 																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">

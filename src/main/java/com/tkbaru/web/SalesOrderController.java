@@ -111,7 +111,6 @@ public class SalesOrderController {
 			customerList.add(customer);
 		}
 		
-		model.addAttribute("customerId", customerId);
 		model.addAttribute("customerList", customerList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
@@ -158,7 +157,6 @@ public class SalesOrderController {
 			}	
 		}
 
-		model.addAttribute("customerId", 1);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
@@ -207,11 +205,9 @@ public class SalesOrderController {
 			loginContextSession.getSoList().addAll(salesOrderList);
 		}
 		
-		model.addAttribute("customerId", customerid);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("selectedSoType", "L015_S");
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -250,7 +246,6 @@ public class SalesOrderController {
 			loginContextSession.getSoList().addAll(salesOrderList);
 		}
 		
-		model.addAttribute("customerId", 0);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
@@ -304,11 +299,10 @@ public class SalesOrderController {
 		customerList.add(customer);
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("customerId",customerId);
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("selectedSoType", soTypeValue);
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -341,11 +335,10 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("customerId",customerId);
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("selectedSoType", soTypeValue);
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -458,7 +451,6 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("customerId",customerId);
 		model.addAttribute("customerList",customerList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -877,7 +869,6 @@ public class SalesOrderController {
 		custList.add(customer);
 		loginContextSession.getSoList().add(newSales);
 		
-		model.addAttribute("customerId", customerId);
 		model.addAttribute("customerList", custList);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -891,11 +882,10 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/addnewtab", method = RequestMethod.POST)
-	public String addPoForm(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext) {
-		logger.info("[soAddNewTab] ");
+	public String soAddNewTab(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext) {
+		logger.info("[soAddNewTab] " + "");
 		
-		for(SalesOrder soForm : loginContext.getSoList()){
-			
+		for(SalesOrder soForm : loginContext.getSoList()){			
 			soForm.setStatusLookup(lookupManager.getLookupByKey(soForm.getSalesStatus()));
 			soForm.setSoTypeLookup(lookupManager.getLookupByKey(soForm.getSalesType()));
 			for (Items items : soForm.getItemsList()) {
@@ -906,6 +896,9 @@ public class SalesOrderController {
 
 		SalesOrder newSales = new SalesOrder();
 	
+		newSales.setSalesCode(salesOrderManager.generateSalesCode());
+		newSales.setShippingDate(new Date());
+		newSales.setSalesCreatedDate(new Date());
 		newSales.setSalesStatus("L016_D");
 		newSales.setStatusLookup(lookupManager.getLookupByKey("L016_D"));
 		newSales.setCreatedBy(loginContextSession.getUserLogin().getUserId());
