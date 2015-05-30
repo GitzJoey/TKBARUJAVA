@@ -69,14 +69,12 @@
 				}).validate();
 				
 				
-				if(false == $('#soForm').parsley().isValid()) {	
+				if (false == $('#soForm').parsley().isValid()) {	
 					return false;
                 } else {
-                    
 					$('#soForm').attr('action', ctxpath + "/sales/save/${selectedSoType}/${ customerId }/"+$(this).val());
-
                 }
-				});
+			});
 
 			$('[id^="selectCust"]').click(function() {
 				var activetab = $(".nav-tabs li.active").attr("id");
@@ -103,25 +101,21 @@
 		    $('#addProdButton, #removeProdButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
+				var activetab = $(".nav-tabs li.active").attr("id");
+				var salesType = $('[id="selectSoType_' + activetab + '"]').val(); 
 				
-
 				if (button == 'addProdButton') {
-					activetab = $(".nav-tabs li.active").attr("id");
 					productSelect = $("#productSelect_"+ activetab).val();
 					
 					$('[id^="productSelect_"]').parsley().validate();
                     if(false == $('[id^="productSelect_"]').parsley().isValid()) {
 						return false;
                     } else {
-
-                    	$('#soForm').attr('action',ctxpath + "/sales/additems/${selectedSoType}/${customerId}/"+ activetab + "/"+ productSelect);
-
+                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/${customerId}/" + activetab + "/" + productSelect);
                     }		
 				} else {
 					id = $(this).val();
-					activetab = $(".nav-tabs li.active").attr("id");
-					$('#soForm').attr('action',ctxpath + "/sales/removeitems/${selectedSoType}/${customerId}/"+ activetab + "/" + id);
-
+					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/${customerId}/" + activetab + "/" + id);
 				}
 			});
 		    
@@ -132,36 +126,25 @@
 
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
 
-    		$('[id^="customerTooltip"]').tooltip();
-    		
-    		$('[id^="selectSoType_"]').change(function(){
+    		$('[id^="selectSoType_"]').change(function() {
     			var activetab = $(".nav-tabs li.active").attr("id");
-    			var salesType = $('[id^="selectSoType_"]').val();
-    			if($('[id^="selectSoType_"]').val()!=''){
-	    			$('#soForm').attr("action",ctxpath + "/sales/select/sotype/" + salesType + "/" + activetab);
+    			var salesType = $('[id="selectSoType_' + activetab + '"]').val();
+    			
+    			if (salesType != '') {
+	    			$('#soForm').attr("action", ctxpath + "/sales/select/type/" + salesType + "/" + activetab);
 	    			$('#soForm').submit();
     			}
     		});
     		
-    		$('[id^="showOrHide_"]').click(function(){
-                	$('[id^="panelSearchCustomer_"]').toggle();
-                	if($('[id^="panelSearchCustomer_"]').css('display')=='none'){
-                		$('[id^="showOrHide_"]').html('Show Panel Search Customer');
-                    }else{
-                    	$('[id^="showOrHide_"]').html('Hide Panel Search Customer');
-                    }
-             });
+    		$('[id^="submitSalesType_"]').click(function() {
+    			var activetab = $(".nav-tabs li.active").attr("id");
+    			var salesType = $('[id="selectSoType_' + activetab + '"]').val();    			
 
-            function hiddenPanelSearchCustomer(){
-            	var salesType = $('[id^="selectSoType_"]').val();
-            	
-                   if((!('${ customerId }' == '1' || '${ customerId }' == '')) &&  salesType == 'L015_S'){
-                	   $('[id^="panelSearchCustomer_"]').hide();
-                   }
-             }
-
-            hiddenPanelSearchCustomer();
-
+    			if (salesType != '') {
+	    			$('#soForm').attr("action", ctxpath + "/sales/select/type/" + salesType + "/" + activetab);
+	    			$('#soForm').submit();
+    			}
+    		});    		
 		});
 	</script>
 </head>
@@ -223,7 +206,6 @@
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
-													
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-7">
@@ -235,40 +217,44 @@
 																	</div>
 																	<div class="form-group">
 																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
-																		<div class="col-sm-8">
-																		 <c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
-																		   <form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
-																				<option value="">Please Select</option>
-																				<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																			</form:select>
-																		   </c:if>
-																		   <c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
-																			   <form:hidden path="soList[${ soIdx.index }].salesType"/>
+																		<div class="col-sm-7">
+																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
+																		   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
+																					<option value="">Please Select</option>
+																					<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																				</form:select>
+																			</c:if>
+																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
+																				<form:hidden path="soList[${ soIdx.index }].salesType"/>
 																				<form:input type="text" class="form-control" id="inputSalesType_${ soIdx.index }" name="inputSalesType_${ soIdx.index }" path="soList[${ soIdx.index }].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																		   </c:if></div>										
+																		   </c:if>
+																		</div>
+																		<div class="col-sm-1">
+																			<button id="submitSalesType_${ soIdx.index }" type="button" class="btn btn-default pull-right"><span class="fa fa-repeat fa-fw"></span></button>
+																		</div>																		
 																	</div>
 																	<div class="form-group">
-
 																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label">Customer</label>
-																		
-																		<div class="col-sm-9">
+																		<div class="col-sm-10">
 																			<form:hidden path="soList[${ soIdx.index }].customerId"/>
 																			<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																		</div>
-																		<div class="col-sm-1">
-																			<button id="customerTooltip" title="${ soForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
-
-																		</div>
-																										
 																	</div>
-																	<c:if test="${ selectedSoType == 'L015_WIN' }">
-																	<div class="form-group">
-																		<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																		<div class="col-sm-9">
-																			<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }"/>
+																	<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_WIN' }">
+																		<div class="form-group">
+																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" placeholder="Enter Walk In Customer Detail"/>
+																			</div>
 																		</div>
-
-																	</div>
+																	</c:if>							
+																	<c:if test="${ selectedSoType == 'L015_S' && not empty loginContext.soList[soIdx.index].customerId && loginContext.soList[soIdx.index].customerId != 0 }">
+																		<div class="form-group">
+																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly">Customer Details&#13;&#10;Here</textarea>
+																			</div>
+																		</div>
 																	</c:if>
 																</div>
 																<div class="col-md-5">
@@ -288,34 +274,26 @@
 																		</div>										
 																	</div>
 																</div>
-															</div>
-															<div class="row">
-																<c:if test="${ selectedSoType == 'L015_S' }">
-																	<div class="col-sm-12">
-																	<div>
-																	<button id="showOrHide_${ soIdx.index }" type="button">Show Panel Search Customer</button>
-																	</div>
-																	
-																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default" style="display: block;">
+															</div>									
+															<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_S' && loginContext.soList[soIdx.index].customerId == 0 }">
+																<div class="row">
+																	<div class="col-md-12">
+																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default">
 																			<div class="panel-heading">
 																	             <h4 class="panel-title">
-																			        <a data-toggle="collapse" data-target="#collapseOne" 
-																			           href="#collapseOne">
-																			         Search Customer Panel
-																			        </a>
+																	             	Search Customer
 																	      		</h4>
 																	      	</div>
-																	        <div id="collapseOne" class="panel-collapse collapse in">
 																			<div class="panel-body">
 																				<div class="row">
-																					<div class="col-md-12">							
+																					<div class="col-md-12">
 																						<div class="table-responsive">
 																							<table class="table nopaddingrow borderless">
 																								<tr>
 																									<td width="93%">
-																									<div class="form-group" style="padding-left: 1.7%">
-																										<input type="text" class="form-control search" id="inputCustomerSearchQuery_${ soIdx.index }" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
-																									</div>
+																										<div class="form-group" style="padding-left: 1.7%">
+																											<input type="text" class="form-control search" id="inputCustomerSearchQuery_${ soIdx.index }" name="inputCustomerSearchQuery" value="${ searchQuery }" placeholder="Search Customer Query" data-parsley-required="true" data-parsley-trigger="keyup"></input>
+																										</div>
 																									</td>
 																									<td width="7%" align="right">
 																										<button id="searchButton_${ soIdx.index }" type="submit" class="btn btn-primary" >Search</button>
@@ -323,7 +301,6 @@
 																								</tr>
 																							</table>
 																						</div>
-																						
 																						<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
 																							<thead>
 																								<tr>
@@ -370,11 +347,10 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>
-																		</div>
-																		</div>
-																</c:if>
-															</div>
+																		</div>			
+																	</div>
+																</div>
+															</c:if>
 															<hr>
 															<div class="row">
 																<div class="col-md-7">
