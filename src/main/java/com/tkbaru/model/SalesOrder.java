@@ -61,7 +61,7 @@ public class SalesOrder {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
-
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_so_items", 
 				joinColumns={@JoinColumn(name="so_id", referencedColumnName="so_id")},
@@ -199,6 +199,7 @@ public class SalesOrder {
 	public void setSoTypeLookup(Lookup soTypeLookup) {
 		this.soTypeLookup = soTypeLookup;
 	}
+
 	public String getCustomerSearchQuery() {
 		return customerSearchQuery;
 	}
@@ -211,7 +212,7 @@ public class SalesOrder {
 	public void setCustomerSearchResults(List<Customer> customerSearchResults) {
 		this.customerSearchResults = customerSearchResults;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode

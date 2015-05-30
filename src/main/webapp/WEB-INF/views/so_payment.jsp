@@ -175,13 +175,16 @@
 																	<button id="customerTooltip" title="${ paymentSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
 																</div>										
 															</div>
-														</div>
-														<div class="form-group">
-															<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-															<div class="col-sm-9">
-																<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus !='L016_D' }"/>
+															<div class="form-group">
+																<c:if test="${ paymentSalesForm.salesType == 'L015_WIN' }">
+																	<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
+																	<div class="col-sm-9">
+																		<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDetail" readonly="true"></form:textarea>
+																	</div>
+																</c:if>
 															</div>
-														</div>														
+														</div>
+																										
 														<div class="col-md-5">
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
