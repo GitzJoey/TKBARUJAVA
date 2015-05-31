@@ -64,7 +64,7 @@ public class WarehouseController {
 
 	@RequestMapping(value="/dashboard", method = RequestMethod.GET)
 	public String warehouseDashboardPageLoad(Locale locale, Model model) {
-		logger.info("[warehousePageLoad] : " + "");
+		logger.info("[warehouseDashboardPageLoad] : " + "");
 
 		model.addAttribute("warehouseDashboard", new WarehouseDashboard());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
@@ -77,18 +77,11 @@ public class WarehouseController {
 	}
 	
 	@RequestMapping(value="/dashboard/{warehouseId}", method = RequestMethod.GET)
-	public String warehouseDashboardLoadProduct(Locale locale, Model model, @PathVariable int warehouseId) {
-		logger.info("[warehousePageLoad] : " + "selectedWarehouse: " + warehouseId);
+	public String warehouseDashboardLoadByWarehouseId(Locale locale, Model model, @PathVariable int warehouseId) {
+		logger.info("[warehouseDashboardLoadByWarehouseId] : " + "selectedWarehouse: " + warehouseId);
 			
-		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");
-		
-		for(PurchaseOrder po: poList){
-			po.getItemsList().size();
-			for(Items item: po.getItemsList()){
-				item.getReceiptList().size();
-			}
-		}
-
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId,"L013_WA");		
+				
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setSelectedWarehouse(warehouseId);
 		warehouseDashboard.setPurchaseOrderList(poList);

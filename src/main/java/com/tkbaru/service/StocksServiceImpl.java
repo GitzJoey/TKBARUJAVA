@@ -18,25 +18,36 @@ public class StocksServiceImpl implements StocksService {
 	@Override
 	@Transactional
 	public List<Stocks> getAllStocks() {
+		
 		return stocksDAO.getAllStocks();
 	}
 
 	@Override
 	@Transactional
 	public void addOrCreateStocks(Stocks stocks) {
+		
 		stocksDAO.addStocks(stocks);
 	}
 
 	@Override
 	@Transactional
 	public void updateStocks(Stocks stocks) {
+		
 		stocksDAO.updateStocks(stocks);
 	}
 
 	@Override
 	@Transactional
 	public long countStocksByProductId(int productId) {
+		
 		return stocksDAO.countStocksByProductId(productId);
+	}
+
+	@Override
+	@Transactional
+	public List<Stocks> getAllStocksByWarehouseId(int warehouseId) {
+		
+		return stocksDAO.getAllStocksByWarehouseId(warehouseId);
 	}
 
 }

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,8 +48,10 @@
 					$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
 				}
 			});
-
-			$('[id^="customerTooltip"]').tooltip();
+			
+		    $('#cancelButton').click(function() {
+		    	window.location.href(ctxpath + "/sales/revise");
+			});
 		});
 	</script>	
 </head>
@@ -153,21 +156,27 @@
 															</div>
 															<div class="form-group">
 																<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
-																<div class="col-sm-9">
+																<div class="col-sm-10">
 																	<form:hidden path="customerId"/>
 																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
-																</div>
-																<div class="col-sm-1">
-																	<button id="customerTooltip" title="${ reviseSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
-																</div>										
+																</div>						
 															</div>
-															<div class="form-group">
-																<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																<div class="col-sm-9">
-																	<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="true"/>
+															<c:if test="${ reviseSalesForm.salesType == 'L015_WIN' }">
+																<div class="form-group">
+																	<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																	<div class="col-sm-10">
+																		<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="true"/>
+																	</div>
 																</div>
-															</div>															
-
+															</c:if>
+															<c:if test="${ reviseSalesForm.salesType == 'L015_S' }">
+																<div class="form-group">
+																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																	<div class="col-sm-10">
+																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly">Customer Details&#13;&#10;Here</textarea>
+																	</div>
+																</div>
+															</c:if>															
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">
@@ -245,32 +254,40 @@
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
 																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																					</td>
-																					<td>
-																						<div class="form-group">
+																					<td style="vertical-align:middle;">
+																						<div class="form-group no-margin">
 																							<div class="col-sm-12">
 																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
 																							</div>
 																						</div>
 																					</td>
-																					<td>
-																						<form:hidden id="inputItemsUnitCode" name="inputItemsUnitCode" path="itemsList[${ iLIdx.index }].unitCode" ></form:hidden>
-																						<c:out value="${iL.unitCodeLookup.lookupValue}"></c:out>
-																					</td>
-																					<td>
-																					<div class="form-group">
-																						<div class="col-sm-12">
-																							<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-md-12">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode">
+																									<option value=""><spring:message code="common.please_select"></spring:message></option>
+																									<c:forEach items="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									</c:forEach>
+																								</form:select>
+																							</div>
 																						</div>
-																					</div>
+																					</td>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
 																					</td>
 																					<td>
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																					</td>
-																					<td class="text-right">
+																					<td style="vertical-align: middle; text-align: right;">
 																						<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
 																			</c:forEach>
 																		</tbody>
 																	</table>

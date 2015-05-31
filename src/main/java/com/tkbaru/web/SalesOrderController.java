@@ -466,7 +466,7 @@ public class SalesOrderController {
 	public String salesRevise(Locale locale, Model model) {
 		logger.info("[salesRevise] " + "");
 		
-		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("L016_WP");
+		List<SalesOrder> soList = salesOrderManager.getSalesOrderByStatus("L016_WD");
 	
 		model.addAttribute("reviseSalesList", soList);
 		

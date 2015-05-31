@@ -27,9 +27,7 @@ public class StocksDAOImpl implements StocksDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Stocks> stocksList = session.createQuery("FROM Stocks").list();
 	
-		for(Stocks stock:stocksList) {
-			logger.info("Stocks: " + stock.toString());
-		}
+		logger.info("Stocks retrieved: " + stocksList.size());
 		
 		return stocksList;
 	}
@@ -63,6 +61,21 @@ public class StocksDAOImpl implements StocksDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		long qty =(long) session.createQuery("select SUM(s.prodQuantity) FROM Stocks s where s.productId= :productId").setInteger("productId", productId).uniqueResult();
 		return qty;
+	}
+
+	@Override
+	public List<Stocks> getAllStocksByWarehouseId(int warehouseId) {
+		logger.info("[getAllStocksByWarehouseId] " + "warehouseId: " + warehouseId);
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		List<Stocks> stocksList = session.createQuery(
+				"SELECT s FROM Stocks s " +
+				"INNER JOIN s.poLookup " +
+				"WHERE s.poLookup.warehouseId = :whId").setInteger("whId", warehouseId).list();
+	
+		logger.info("Stocks in warehouseId " + warehouseId + ": " + stocksList.size());
+		
+		return stocksList;
 	}
 
 }

@@ -14,7 +14,7 @@ public class WarehouseDashboard {
 	private Receipt receipt;
 	
 	List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
-
+	
 	public int getSelectedWarehouse() {
 		return selectedWarehouse;
 	}

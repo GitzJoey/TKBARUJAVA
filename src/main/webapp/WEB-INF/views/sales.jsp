@@ -450,7 +450,7 @@
 																									<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																								</c:if>
 																							</td>
-																							<td class="text-right">
+																							<td style="vertical-align: middle; text-align: right;">
 																								<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
 																							</td>
 																						</tr>

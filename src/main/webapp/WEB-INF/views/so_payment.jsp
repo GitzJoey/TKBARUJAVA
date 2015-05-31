@@ -59,8 +59,10 @@
 			$('.datepicker').on('dp.change dp.show',function(e) {
 				$(this).parsley().validate();
 			});
-
-			$('[id^="customerTooltip"]').tooltip();
+			
+		    $('#cancelButton').click(function() {
+		    	window.location.href(ctxpath + "/sales/revise");
+			});
 		});
 	</script>	
 </head>
@@ -98,40 +100,40 @@
 								<h1 class="panel-title">
 									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Payment SO List
 								</h1>
-							</div>								
-						</div>
-						<div class="panel-body">
-							<div class="table-responsive">
-								<table class="table table-bordered table-hover">
-									<thead>
-										<tr>
-											<th width="5%">&nbsp;</th>
-											<th width="20%">Sales Code</th>
-											<th width="20%">Sales Date</th>
-											<th width="20%">Customer</th>
-										</tr>
-									</thead>
-									<tbody>
-										<c:if test="${not empty paymentSalesList}">
-											<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
-												<tr>
-													<td align="center">
-														<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
-													</td>
-													<td><c:out value="${ i.salesCode }"></c:out></td>
-													<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
-													<td><c:out value="${ i.customerLookup.customerName }"></c:out>
-													</td>
-												</tr>
-											</c:forEach>
-										</c:if>
-									</tbody>
-								</table>
-							</div>
+							</div>						
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table class="table table-bordered table-hover">
+										<thead>
+											<tr>
+												<th width="5%">&nbsp;</th>
+												<th width="20%">Sales Code</th>
+												<th width="20%">Sales Date</th>
+												<th width="20%">Customer</th>
+											</tr>
+										</thead>
+										<tbody>
+											<c:if test="${not empty paymentSalesList}">
+												<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
+													<tr>
+														<td align="center">
+															<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
+														</td>
+														<td><c:out value="${ i.salesCode }"></c:out></td>
+														<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
+														<td><c:out value="${ i.customerLookup.customerName }"></c:out>
+														</td>
+													</tr>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
+								</div>
 								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Cash Payment</a>&nbsp;&nbsp;&nbsp;
 								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Transfer Payment</a>&nbsp;&nbsp;&nbsp;
 								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Giro Payment</a>&nbsp;&nbsp;&nbsp;
 								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Term Payment</a>&nbsp;&nbsp;&nbsp;							
+							</div>
 						</div>
 					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						
@@ -167,24 +169,28 @@
 															</div>
 															<div class="form-group">
 																<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
-																<div class="col-sm-9">
+																<div class="col-sm-10">
 																	<form:hidden path="customerId"/>
 																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
 																</div>
-																<div class="col-sm-1">
-																	<button id="customerTooltip" title="${ paymentSalesForm.customerLookup.customerName }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title=""><span class="fa fa-external-link fa-fw"></span></button>
-																</div>										
 															</div>
-															<div class="form-group">
-																<c:if test="${ paymentSalesForm.salesType == 'L015_WIN' }">
+															<c:if test="${ paymentSalesForm.salesType == 'L015_WIN' }">
+																<div class="form-group">																
 																	<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
 																	<div class="col-sm-9">
 																		<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDetail" readonly="true"></form:textarea>
 																	</div>
-																</c:if>
-															</div>
-														</div>
-																										
+																</div>
+															</c:if>
+															<c:if test="${ paymentSalesForm.salesType == 'L015_S' }">
+																<div class="form-group">
+																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																	<div class="col-sm-10">
+																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly">Customer Details&#13;&#10;Here</textarea>
+																	</div>
+																</div>
+															</c:if>															
+														</div>					
 														<div class="col-md-5">
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
