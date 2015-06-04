@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.service.ReportService;
+import com.tkbaru.service.StocksService;
 
 @Controller
 @RequestMapping("/report")
@@ -29,6 +30,9 @@ public class ReportController {
 	ReportService reportManager;
 	
 	@Autowired
+	StocksService stocksManager;
+	
+	@Autowired
 	private LoginContext loginContextSession;
 
 	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
@@ -37,6 +41,14 @@ public class ReportController {
 
 		model.addAttribute("reportGroup", "");
 		model.addAttribute("reportId", reportId);
+
+		switch (reportId.toUpperCase()) {
+			case "RPTMNTR":
+				model.addAttribute("stocksList", stocksManager.getAllStocks());
+				break;
+			default:
+				break;
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
@@ -45,6 +57,7 @@ public class ReportController {
 		return Constants.JSPPAGE_REPORT;
 	}
 
+	
 	@RequestMapping(value="/gen/{outputType}/{reportName}", method = RequestMethod.GET)
 	public ModelAndView selectedReportPage(Locale locale, 
 										Model model, 

@@ -36,4 +36,9 @@ public class HomeController {
 		return "home";
 	}
 
+	@RequestMapping(value = "/template.html", method = RequestMethod.GET)
+	public String template(Locale locale, Model model) {
+		
+		return "template";
+	}
 }

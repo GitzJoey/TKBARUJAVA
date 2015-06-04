@@ -32,8 +32,22 @@
 				</c:if>
 				
 				<div id="jsAlerts"></div>
-				
-				Contents
+
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h1 class="panel-title">
+							<span class="fa fa-plus fa-fw fa-2x"></span>Title
+						</h1>
+					</div>
+					
+					<c:choose>
+						<c:when test="${true}">
+							<div class="panel-body">
+								Contents
+							</div>
+						</c:when>
+					</c:choose>
+				</div>
 			</div>
 		</div>
 		

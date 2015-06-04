@@ -31,6 +31,7 @@ import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Warehouse;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.StocksService;
 import com.tkbaru.service.WarehouseService;
 
@@ -44,7 +45,10 @@ public class WarehouseController {
 	
 	@Autowired
 	PurchaseOrderService poManager;
-	
+
+	@Autowired
+	SalesOrderService salesManager;
+
 	@Autowired
 	LookupService lookupManager;
 

@@ -50,23 +50,17 @@ VALUES ('F_BANK_UPLOAD', 'Bank', 'fa fa-bank fa-fw', 'Upload','fa fa-cloud-uploa
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
 VALUES ('F_BANK_CONSOLIDATE', 'Bank', 'fa fa-bank fa-fw', 'Consolidate','fa fa-compress fa-fw', '/bank/consolidate', 500200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 
-/*Monitoring*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MON_DELIVERY', 'Monitoring', 'fa fa-eye fa-fw', 'Today Delivery','fa fa-bus fa-fw', '/monitor/todaydelivery', 600100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MON_STOCK', 'Monitoring', 'fa fa-eye fa-fw', 'Stocks','fa fa-database fa-fw', '/monitor/stocks', 600200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-
 /*Reports*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTTRX', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Transactions','fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 700100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTTRX', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Transactions','fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 600100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT2', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 2','fa fa-plus fa-fw', '/report/id/rpt2', 700200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTMNTR', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Monitoring','fa fa-eye fa-fw', '/report/id/rptmntr', 600200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 700300, 3, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 600300, 3, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTMASTER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Master Data','fa fa-file-text-o fa-fw', '/report/id/rptmaster', 798100, 4, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTMASTER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Master Data','fa fa-file-text-o fa-fw', '/report/id/rptmaster', 698100, 4, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTADMIN', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Admin Data','glyphicon glyphicon-cog', '/report/id/rptadmin', 799100, 5, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT_RPTADMIN', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Admin Data','glyphicon glyphicon-cog', '/report/id/rptadmin', 699100, 5, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Master Data*/
 INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
