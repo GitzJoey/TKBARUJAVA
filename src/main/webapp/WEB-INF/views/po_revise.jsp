@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
@@ -316,9 +316,7 @@
 																						</button>
 																					</td>
 																					<td style="vertical-align: middle;" class="text-right">
-																						<label>
-																							<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
-																						</label>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
 																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
@@ -337,7 +335,9 @@
 																		<tbody>
 																			<tr>
 																				<td width="80%" class="text-right">Total</td>
-																				<td width="20%" class="text-right"><c:out value="${ total }"></c:out></td>
+																				<td width="20%" class="text-right">
+																					<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
+																				</td>
 																			</tr>
 																		</tbody>
 																	</table>

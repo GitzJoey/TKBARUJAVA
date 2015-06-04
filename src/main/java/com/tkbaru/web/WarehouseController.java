@@ -162,6 +162,7 @@ public class WarehouseController {
 						Stocks stocks = new Stocks();
 						stocks.setPoId(poId);
 						stocks.setProductId(items.getProductId());
+						stocks.setWarehouseId(poView.getWarehouseId());
 						stocks.setProdQuantity(receipt.getNet());
 						stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 						stocks.setCreatedDate(new Date());
@@ -232,6 +233,7 @@ public class WarehouseController {
 					Stocks stocks = new Stocks();
 					stocks.setPoId(poId);
 					stocks.setProductId(items.getProductId());
+					stocks.setWarehouseId(po.getWarehouseId());
 					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocks.setCreatedDate(new Date());

@@ -26,6 +26,8 @@ public class Stocks {
 	private int poId;
 	@Column(name="product_id")
 	private int productId;
+	@Column(name="warehouse_id")
+	private int warehouseId;
 	@Column(name="quantity")
 	private long prodQuantity;
 	@Column(name="created_by")
@@ -44,6 +46,10 @@ public class Stocks {
 	@ManyToOne
 	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
 	private Product productLookup;
+
+	@ManyToOne
+	@JoinColumn(name="warehouse_id", unique=true, insertable=false, updatable=false)
+	private Warehouse warehouseLookup;
 
 	public int getStocksId() {
 		return stocksId;
@@ -67,6 +73,14 @@ public class Stocks {
 
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	public int getWarehouseId() {
+		return warehouseId;
+	}
+
+	public void setWarehouseId(int warehouseId) {
+		this.warehouseId = warehouseId;
 	}
 
 	public long getProdQuantity() {
@@ -125,11 +139,21 @@ public class Stocks {
 		this.productLookup = productLookup;
 	}
 
+	public Warehouse getWarehouseLookup() {
+		return warehouseLookup;
+	}
+
+	public void setWarehouseLookup(Warehouse warehouseLookup) {
+		this.warehouseLookup = warehouseLookup;
+	}
+
 	@Override
 	public String toString() {
-		return "Stocks [stocksId=" + stocksId + ", poId=" + poId+", productId=" + productId
+		return "Stocks [stocksId=" + stocksId + ", poId=" + poId
+				+ ", productId=" + productId + ", warehouseId=" + warehouseId
 				+ ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + "]";
 	}
+
 }

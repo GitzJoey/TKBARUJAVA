@@ -3,6 +3,7 @@ CREATE TABLE `tb_stocks` (
   `stocks_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
   `po_id` 			int(11) 	DEFAULT NULL,
   `product_id` 		int(11) 	DEFAULT NULL,
+  `warehouse_id` 	int(11) 	DEFAULT NULL,
   `quantity` 		int(11) 	DEFAULT NULL,
   `created_by` 		int(11) 	DEFAULT NULL,
   `created_date` 	datetime 	DEFAULT NULL,

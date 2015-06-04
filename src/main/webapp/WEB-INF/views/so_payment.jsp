@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -224,9 +224,7 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">
-																Transactions
-															</h1>
+															<h1 class="panel-title">Transactions</h1>
 														</div>
 														<div class="panel-body">															
 															<br/>
@@ -274,7 +272,7 @@
 																						
 																					</td>
 																					<td class="text-right">
-																						<c:out value="${ (iL.prodQuantity * iL.prodPrice) }"></c:out>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
 																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
@@ -292,7 +290,7 @@
 																					Total
 																				</td>
 																				<td width="20%" class="text-right">
-																					<c:out value="${ total }"></c:out>
+																					<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
 																				</td>
 																			</tr>
 																		</tbody>
