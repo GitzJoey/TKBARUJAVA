@@ -1,38 +1,21 @@
 package com.tkbaru.sms;
 
-import java.io.IOException;
-
-import org.smslib.AGateway.Protocols;
-import org.smslib.GatewayException;
 import org.smslib.Library;
 import org.smslib.OutboundMessage;
 import org.smslib.Service;
-import org.smslib.TimeoutException;
-import org.smslib.modem.ModemGateway.IPProtocols;
 import org.smslib.modem.SerialModemGateway;
 
-public class SMSSendService {
-
-	private String message;
-	private String recepientNo;
-
-	public SMSSendService(String recepientNo, String message) {
-		this.message = message;
-		this.recepientNo = recepientNo;
-	}
+public class SmsService {
 
 	public void startService() throws Exception {
 		SmsSentHandler outgoingMessage = new SmsSentHandler();
+		SmsReceivedHandler pesanMasuk = new SmsReceivedHandler();
 
 		GatewayStatusHandler statusGateway = new GatewayStatusHandler();
 
 		System.out.println(Library.getLibraryDescription());
 		System.out.println("Version: " + Library.getLibraryVersion());
-		SerialModemGateway gateway = new SerialModemGateway("modem.com6", "COM6", 115200, "Huawei", "E169");
-
-//		gateway.setIpProtocol(IPProtocols.BINARY);
-//
-//		gateway.setProtocol(Protocols.PDU);
+		SerialModemGateway gateway = new SerialModemGateway("modem.com6", "COM6", 115200, "Huawei", "E153");
 
 		gateway.setInbound(true);
 
@@ -40,6 +23,7 @@ public class SMSSendService {
 
 		gateway.setSimPin("0000");
 
+		Service.getInstance().setInboundMessageNotification(pesanMasuk);
 		Service.getInstance().setOutboundMessageNotification(outgoingMessage);
 		Service.getInstance().setGatewayStatusNotification(statusGateway);
 
@@ -62,6 +46,10 @@ public class SMSSendService {
 
 		System.out.println("  Battery Level: " + gateway.getBatteryLevel() + "%");
 
+	}
+
+	public void send(String recepientNo, String message) throws Exception {
+
 		Service.getInstance().createGroup("mygroup");
 		Service.getInstance().addToGroup("mygroup", recepientNo);
 
@@ -69,11 +57,11 @@ public class SMSSendService {
 
 		Service.getInstance().sendMessage(msg);
 
-		System.out.println(msg);
+	}
+
+	public void stopService() throws Exception {
 
 		Service.getInstance().stopService();
-
-		Service.getInstance().removeGateway(gateway);
 
 	}
 
