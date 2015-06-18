@@ -17,29 +17,29 @@ public class SmsIn {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "sms_inbox_id")
-	private int smsInboxId;
-	@Column(name = "from")
-	private String from;
+	@Column(name = "sms_in_id")
+	private int smsInId;
+	@Column(name = "sender")
+	private String sender;
 	@Column(name = "message")
 	private String message;
 	@Column(name = "created_date")
 	private Date createdDate;
 
-	public int getSmsInboxId() {
-		return smsInboxId;
+	public int getSmsInId() {
+		return smsInId;
 	}
 
-	public void setSmsInboxId(int smsInboxId) {
-		this.smsInboxId = smsInboxId;
+	public void setSmsInId(int smsInId) {
+		this.smsInId = smsInId;
 	}
 
-	public String getFrom() {
-		return from;
+	public String getSender() {
+		return sender;
 	}
 
-	public void setFrom(String from) {
-		this.from = from;
+	public void setSender(String sender) {
+		this.sender = sender;
 	}
 
 	public String getMessage() {
@@ -60,7 +60,7 @@ public class SmsIn {
 
 	@Override
 	public String toString() {
-		return "SmsInbox [smsInboxId=" + smsInboxId + "]";
+		return "SmsInbox [smsInboxId=" + smsInId + "]";
 	}
 
 }

@@ -107,7 +107,7 @@
 										<label for="inputTo" class="col-sm-2 control-label">To</label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputTo"
-												path="to" placeholder="Enter Recepient"></form:input>
+												path="recipient" placeholder="Enter Recepient"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

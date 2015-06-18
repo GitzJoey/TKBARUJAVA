@@ -5,9 +5,9 @@ import java.util.List;
 import com.tkbaru.model.SmsIn;
 
 public interface SmsInDAO {
-	public List<SmsIn> getAllSmsInbox();
-	public SmsIn getSmsInboxById(int selectedId);
-	public void addSmsInbox(SmsIn sms);
-	public void editSmsInbox(SmsIn sms);
-	public void deleteSmsInbox(int selectedId);
+	public List<SmsIn> getAllSmsIn();
+	public SmsIn getSmsInById(int selectedId);
+	public void addSmsIn(SmsIn sms);
+	public void editSmsIn(SmsIn sms);
+	public void deleteSmsIn(int selectedId);
 }

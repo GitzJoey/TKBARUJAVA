@@ -1,0 +1,7 @@
+CREATE TABLE `tb_sms_out` (
+  `sms_out_id` int(11) NOT NULL AUTO_INCREMENT,
+  `recipient` varchar(255) DEFAULT NULL,
+  `message` varchar(255) DEFAULT NULL,
+  `created_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`sms_out_id`)
+);

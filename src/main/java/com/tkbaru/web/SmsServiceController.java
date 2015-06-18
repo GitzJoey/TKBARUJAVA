@@ -20,6 +20,7 @@ import com.tkbaru.service.RoleService;
 import com.tkbaru.service.StoreService;
 import com.tkbaru.service.UserService;
 import com.tkbaru.sms.SmsService;
+import com.tkbaru.sms.SmsServiceImpl;
 
 @Controller
 @RequestMapping("/sms")
@@ -40,12 +41,14 @@ public class SmsServiceController {
 	@Autowired
 	private LoginContext loginContextSession;
 
+	@Autowired
+	SmsService smsService;
+
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public String start(Locale locale, Model model) {
 
-		SmsService sms = new SmsService();
 		try {
-			sms.startService();
+			smsService.startService();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -55,30 +58,11 @@ public class SmsServiceController {
 
 		return "sms_start";
 	}
-	
-	
-	
-	@RequestMapping(value = "/stop", method = RequestMethod.GET)
-	public String stop(Locale locale, Model model) {
 
-		try {
-			Service.getInstance().stopService();
-		} catch (TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (GatewayException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SMSLibException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+	@RequestMapping(value = "/stop", method = RequestMethod.GET)
+	public String stop(Locale locale, Model model) throws Exception {
+
+		smsService.stopService();
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

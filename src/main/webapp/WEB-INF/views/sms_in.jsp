@@ -2,61 +2,16 @@
 	pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <!DOCTYPE html>
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 <script>
-	$(document).ready(
-			function() {
-				var ctxpath = "${ pageContext.request.contextPath }";
+	$(document).ready(function() {
+		var ctxpath = "${ pageContext.request.contextPath }";
 
-				$('#cancelButton').click(function() {
-					window.location.href(ctxpath + "/truck");
-				});
-
-				$('input[type="checkbox"][id^="cbx_"]').click(
-						function() {
-							var selected = $(this);
-
-							$('input[type="checkbox"][id^="cbx_"]').each(
-									function(index, item) {
-										if ($(item).attr("id") != $(selected)
-												.attr("id")) {
-											if ($(item).prop("checked")) {
-												$(item).prop("checked", false);
-											}
-										}
-									});
-						});
-
-				$('#editTableSelection, #deleteTableSelection').click(
-						function() {
-							var id = "";
-							var button = $(this).attr('id');
-
-							$('input[type="checkbox"][id^="cbx_"]').each(
-									function(index, item) {
-										if ($(item).prop('checked')) {
-											id = $(item).attr("value");
-										}
-									});
-
-							if (id == "") {
-								jsAlert("Please select at least 1 truck");
-								return false;
-							} else {
-								if (button == 'editTableSelection') {
-									$('#editTableSelection').attr("href",
-											ctxpath + "/truck/edit/" + id);
-								} else {
-									$('#deleteTableSelection').attr("href",
-											ctxpath + "/truck/delete/" + id);
-								}
-							}
-						});
-
-			});
+	});
 </script>
 </head>
 <body>
@@ -86,50 +41,52 @@
 
 				<h1>
 					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;SMS
-					SEND
+					Received
 				</h1>
+
+
 
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-truck fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;Send
-							SMS
+							<span class="fa fa-smile-o fa-fw fa-2x"></span>SMS List
 						</h1>
 					</div>
 					<div class="panel-body">
-						<form:form id="sendForm" role="form" class="form-horizontal"
-							modelAttribute="smsOut"
-							action="${pageContext.request.contextPath}/smsout/send">
-							<div class="row">
-								<div class="col-md-7">
-									<div class="form-group">
-										<label for="inputTo" class="col-sm-2 control-label">To</label>
-										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputTo"
-												path="to" placeholder="Enter Recepient"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputMessage" class="col-sm-2 control-label">Message</label>
-										<div class="col-sm-8">
-											<form:textarea type="text" class="form-control" rows="3"
-												cols="20" id="inputMessage" path="message"></form:textarea>
-										</div>
-									</div>
+						<div class="table-responsive">
+							<table class="table table-bordered table-hover">
+								<thead>
+									<tr>
+										<th width="5%">&nbsp;</th>
+										<th width="20%">From</th>
+										<th width="20%">Message</th>
+										<th width="20%">Date</th>
+									</tr>
+								</thead>
+								<tbody>
+									<c:if test="${not empty smsList}">
+										<c:forEach items="${ smsList }" var="i" varStatus="status">
+											<tr>
+												<td align="center"><input
+													id="cbx_<c:out value="${ i.smsInId }"/>" type="checkbox"
+													value="<c:out value="${ i.smsInId }"/>" /></td>
+												<td><c:out value="${ i.sender }"></c:out></td>
+												<td><c:out value="${ i.message }"></c:out><td><fmt:formatDate pattern="dd-MM-yyyy"
+														value="${ i.createdDate }" /></td>
+
+
+											</tr>
+												</c:forEach>
+											</c:if>
+										</tbody>
+									</table>
 								</div>
+								<a id="editTableSelection" class="btn btn-sm btn-primary"
+							href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
 							</div>
-							<div class="col-md-7 col-offset-md-5">
-								<div class="btn-toolbar">
-									<button id="cancelButton" type="button"
-										class="btn btn-primary pull-right">Cancel</button>
-									<button id="submitButton" type="submit"
-										class="btn btn-primary pull-right">Submit</button>
-								</div>
-							</div>
-						</form:form>
-					</div>
-				</div>
+						</div>
+				
 			</div>
 		</div>
 

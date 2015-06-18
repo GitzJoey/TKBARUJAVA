@@ -121,6 +121,8 @@
                 <beans:value>com.tkbaru.model.Receipt</beans:value>
                 <beans:value>com.tkbaru.model.Price</beans:value>
                 <beans:value>com.tkbaru.model.PriceLevel</beans:value>
+                <beans:value>com.tkbaru.model.SmsIn</beans:value>
+                <beans:value>com.tkbaru.model.SmsOut</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -187,6 +189,12 @@
     <beans:bean id="PriceLevelDAO" class="com.tkbaru.dao.PriceLevelDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+     <beans:bean id="SmsInDAO" class="com.tkbaru.dao.SmsInDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
+     <beans:bean id="SmsOutDAO" class="com.tkbaru.dao.SmsOutDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
    
     
     <!-- declare spring Service -->
@@ -214,6 +222,9 @@
 	<beans:bean id="SearchService" class="com.tkbaru.service.SearchServiceImpl"></beans:bean>
 	<beans:bean id="PriceLevelService" class="com.tkbaru.service.PriceLevelServiceImpl"></beans:bean>
 	<beans:bean id="PriceService" class="com.tkbaru.service.PriceServiceImpl"></beans:bean>
+	<beans:bean id="SmsInService" class="com.tkbaru.service.SmsInServiceImpl"></beans:bean>
+	<beans:bean id="SmsOutService" class="com.tkbaru.service.SmsOutServiceImpl"></beans:bean>
+	<beans:bean id="SmsService" class="com.tkbaru.sms.SmsServiceImpl"></beans:bean>
 	
 	
 	<!-- Jasper -->

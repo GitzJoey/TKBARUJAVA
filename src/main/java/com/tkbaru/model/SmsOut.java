@@ -7,6 +7,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.apache.lucene.document.Field.TermVector;
 
 @Entity
 @Table(name = "tb_sms_out")
@@ -17,29 +21,30 @@ public class SmsOut {
 
 	@Id
 	@GeneratedValue
-	@Column(name = "sms_outbox_id")
-	private int smsOutboxId;
-	@Column(name = "to")
-	private String to;
+	@Column(name = "sms_out_id")
+	private int smsOutId;
+	@Column(name = "recipient")
+	private String recipient;
 	@Column(name = "message")
 	private String message;
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date")
 	private Date createdDate;
 
-	public int getSmsOutboxId() {
-		return smsOutboxId;
+	public int getSmsOutId() {
+		return smsOutId;
 	}
 
-	public void setSmsOutboxId(int smsOutboxId) {
-		this.smsOutboxId = smsOutboxId;
+	public void setSmsOutId(int smsOutId) {
+		this.smsOutId = smsOutId;
 	}
 
-	public String getTo() {
-		return to;
+	public String getRecipient() {
+		return recipient;
 	}
 
-	public void setTo(String to) {
-		this.to = to;
+	public void setRecipient(String recipient) {
+		this.recipient = recipient;
 	}
 
 	public String getMessage() {
@@ -60,7 +65,7 @@ public class SmsOut {
 
 	@Override
 	public String toString() {
-		return "SmsSend [smsSendId=" + smsOutboxId + "]";
+		return "SmsSend [smsSendId=" + smsOutId + "]";
 	}
 
 }

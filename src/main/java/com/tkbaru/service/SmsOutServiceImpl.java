@@ -15,7 +15,7 @@ import com.tkbaru.model.SmsOut;
 public class SmsOutServiceImpl implements SmsOutService {
 
 	@Autowired
-	SmsOutDAO smsOutboxDAO;
+	SmsOutDAO smsOutDAO;
 
 	@Autowired
 	ServletContext servletContext;
@@ -24,34 +24,34 @@ public class SmsOutServiceImpl implements SmsOutService {
 	@Transactional
 	public List<SmsOut> getAllSmsOutbox() {
 
-		return smsOutboxDAO.getAllSmsOutbox();
+		return smsOutDAO.getAllSmsOutbox();
 	}
 
 	@Override
 	@Transactional
 	public SmsOut getSmsOutboxById(int selectedId) {
 
-		return smsOutboxDAO.getSmsOutboxById(selectedId);
+		return smsOutDAO.getSmsOutboxById(selectedId);
 	}
 
 	@Override
 	@Transactional
 	public void addSmsOutbox(SmsOut smsOutbox) {
-		smsOutboxDAO.addSmsOutbox(smsOutbox);
+		smsOutDAO.addSmsOutbox(smsOutbox);
 	}
 
 	@Override
 	@Transactional
 	public void editSmsOutbox(SmsOut smsOutbox) {
 
-		smsOutboxDAO.editSmsOutbox(smsOutbox);
+		smsOutDAO.editSmsOutbox(smsOutbox);
 	}
 
 	@Override
 	@Transactional
 	public void deleteSmsOutbox(int selectedId) {
 
-		smsOutboxDAO.deleteSmsOutbox(selectedId);
+		smsOutDAO.deleteSmsOutbox(selectedId);
 	}
 
 }

@@ -21,22 +21,22 @@ public class SmsInDAOImpl implements SmsInDAO {
     }
     
 	@Override	
-	public List<SmsIn> getAllSmsInbox() {
-		logger.info("[getAllSmsInbox] " + "");
+	public List<SmsIn> getAllSmsIn() {
+		logger.info("[getAllSmsIn] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<SmsIn> smsList = session.createQuery("FROM SmsInbox").list();
+		List<SmsIn> smsList = session.createQuery("FROM SmsIn").list();
 	
 		for(SmsIn sms:smsList) {
-			logger.info("SmsInbox : " + sms.toString());
+			logger.info("SmsIn : " + sms.toString());
 		}
 		
 		return smsList;
 	}
 
 	@Override
-	public SmsIn getSmsInboxById(int selectedId) {
-		logger.info("[getSmsInboxById] " + "");
+	public SmsIn getSmsInById(int selectedId) {
+		logger.info("[getSmsInById] " + "");
         
 		Session session = this.sessionFactory.getCurrentSession();
 		SmsIn sms = null;
@@ -47,30 +47,30 @@ public class SmsInDAOImpl implements SmsInDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("SmsInbox loaded successfully, SmsInbox details = " + sms.toString());
+        logger.info("SmsIn loaded successfully, SmsIn details = " + sms.toString());
                 
         return sms;	
 	}
 
 	@Override
-	public void addSmsInbox(SmsIn sms) {
-		logger.info("[addSmsInbox] " + "");
+	public void addSmsIn(SmsIn sms) {
+		logger.info("[addSmsIn] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(sms);		
 	}
 
 	@Override
-	public void editSmsInbox(SmsIn sms) {
-		logger.info("[editSmsInbox] " + "");
+	public void editSmsIn(SmsIn sms) {
+		logger.info("[editSmsIn] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(sms);		
 	}
 
 	@Override
-	public void deleteSmsInbox(int selectedId) {
-		logger.info("[deleteSmsInbox] " + "");
+	public void deleteSmsIn(int selectedId) {
+		logger.info("[deleteSmsIn] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
         SmsIn sms = (SmsIn) session.load(SmsIn.class, new Integer(selectedId));

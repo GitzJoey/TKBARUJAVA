@@ -15,43 +15,43 @@ import com.tkbaru.model.SmsIn;
 public class SmsInServiceImpl implements SmsInService {
 
 	@Autowired
-	SmsInDAO smsOutboxDAO;
+	SmsInDAO smsInDAO;
 
 	@Autowired
 	ServletContext servletContext;
 
 	@Override
 	@Transactional
-	public List<SmsIn> getAllSmsInbox() {
+	public List<SmsIn> getAllSmsIn() {
 
-		return smsOutboxDAO.getAllSmsInbox();
+		return smsInDAO.getAllSmsIn();
 	}
 
 	@Override
 	@Transactional
-	public SmsIn getSmsInboxById(int selectedId) {
+	public SmsIn getSmsInById(int selectedId) {
 
-		return smsOutboxDAO.getSmsInboxById(selectedId);
+		return smsInDAO.getSmsInById(selectedId);
 	}
 
 	@Override
 	@Transactional
-	public void addSmsInbox(SmsIn smsOutbox) {
-		smsOutboxDAO.addSmsInbox(smsOutbox);
+	public void addSmsIn(SmsIn smsOutbox) {
+		smsInDAO.addSmsIn(smsOutbox);
 	}
 
 	@Override
 	@Transactional
-	public void editSmsInbox(SmsIn smsOutbox) {
+	public void editSmsIn(SmsIn smsOutbox) {
 
-		smsOutboxDAO.editSmsInbox(smsOutbox);
+		smsInDAO.editSmsIn(smsOutbox);
 	}
 
 	@Override
 	@Transactional
-	public void deleteSmsInbox(int selectedId) {
+	public void deleteSmsIn(int selectedId) {
 
-		smsOutboxDAO.deleteSmsInbox(selectedId);
+		smsInDAO.deleteSmsIn(selectedId);
 	}
 
 }

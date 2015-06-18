@@ -40,10 +40,10 @@ public class SmsInController {
 
 	
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String sms(Locale locale, Model model) {
 
-		model.addAttribute("smsInList", smsInManager.getAllSmsInbox());
+		model.addAttribute("smsList", smsInManager.getAllSmsIn());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);

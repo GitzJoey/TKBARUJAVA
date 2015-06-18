@@ -46,36 +46,7 @@
 						</h1>
 					</div>
 					<div class="panel-body">
-						<form:form id="sendForm" role="form" class="form-horizontal"
-							modelAttribute="smsOut"
-							action="${pageContext.request.contextPath}/smsout/send">
-							<div class="row">
-								<div class="col-md-7">
-									<div class="form-group">
-										<label for="inputTo" class="col-sm-2 control-label">To</label>
-										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputTo"
-												path="to" placeholder="Enter Recepient"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputMessage" class="col-sm-2 control-label">Message</label>
-										<div class="col-sm-8">
-											<form:textarea type="text" class="form-control" rows="3"
-												cols="20" id="inputMessage" path="message"></form:textarea>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="col-md-7 col-offset-md-5">
-								<div class="btn-toolbar">
-									<button id="cancelButton" type="button"
-										class="btn btn-primary pull-right">Cancel</button>
-									<button id="submitButton" type="submit"
-										class="btn btn-primary pull-right">Submit</button>
-								</div>
-							</div>
-						</form:form>
+						SMS STOP
 					</div>
 				</div>
 			</div>
