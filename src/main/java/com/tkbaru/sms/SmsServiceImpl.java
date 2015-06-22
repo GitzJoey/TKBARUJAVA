@@ -89,20 +89,13 @@ public class SmsServiceImpl implements SmsService {
 
 		@Override
 		public void process(AGateway gateway, MessageTypes msgType, InboundMessage inboundMessage) {
-
-			SmsIn newSms = new SmsIn();
-			newSms.setSender(inboundMessage.getOriginator());
-			newSms.setMessage(inboundMessage.getText());
-			newSms.setCreatedDate(inboundMessage.getDate());
-
-			smsInService.addSmsIn(newSms);
-
+							
 			// AUTO RESPONSE Message
 
 			if (inboundMessage.getText().equalsIgnoreCase("ASK PRICE")) {
 
 				OutboundMessage msg = new OutboundMessage("+" + inboundMessage.getOriginator(), inboundMessage.getText() + " AUTO REPLY");
-
+                
 				try {
 					Service.getInstance().sendMessage(msg);
 				} catch (TimeoutException e) {
@@ -125,22 +118,28 @@ public class SmsServiceImpl implements SmsService {
 				smsOut.setCreatedDate(new Date());
 				smsOutService.addSmsOutbox(smsOut);
 
-				try {
-					Service.getInstance().deleteMessage(inboundMessage);
-				} catch (TimeoutException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (GatewayException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
+			}
+			
+			SmsIn newSms = new SmsIn();
+			newSms.setSender(inboundMessage.getOriginator());
+			newSms.setMessage(inboundMessage.getText());
+			newSms.setCreatedDate(inboundMessage.getDate());
+			smsInService.addSmsIn(newSms);
+			
+			try {
+				Service.getInstance().deleteMessage(inboundMessage);
+			} catch (TimeoutException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (GatewayException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 
 		}
@@ -149,6 +148,7 @@ public class SmsServiceImpl implements SmsService {
 	private class SmsSentHandler implements IOutboundMessageNotification {
 		public void process(AGateway gateway, OutboundMessage msg) {
 			System.out.println("SmsSentHandler handler called from Gateway: " + gateway.getGatewayId());
+		
 			System.out.println(msg);
 
 		}

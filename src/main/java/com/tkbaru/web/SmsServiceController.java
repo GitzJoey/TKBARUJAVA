@@ -1,12 +1,7 @@
 package com.tkbaru.web;
 
-import java.io.IOException;
 import java.util.Locale;
 
-import org.smslib.GatewayException;
-import org.smslib.SMSLibException;
-import org.smslib.Service;
-import org.smslib.TimeoutException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,7 +15,6 @@ import com.tkbaru.service.RoleService;
 import com.tkbaru.service.StoreService;
 import com.tkbaru.service.UserService;
 import com.tkbaru.sms.SmsService;
-import com.tkbaru.sms.SmsServiceImpl;
 
 @Controller
 @RequestMapping("/sms")
