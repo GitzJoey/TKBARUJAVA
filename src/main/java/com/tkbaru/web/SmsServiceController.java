@@ -17,7 +17,7 @@ import com.tkbaru.service.UserService;
 import com.tkbaru.sms.SmsService;
 
 @Controller
-@RequestMapping("/sms")
+@RequestMapping("/admin/sms")
 public class SmsServiceController {
 
 	@Autowired
@@ -37,6 +37,15 @@ public class SmsServiceController {
 
 	@Autowired
 	SmsService smsService;
+	
+	@RequestMapping(value = "", method = RequestMethod.GET)
+	public String sms(Locale locale, Model model) {
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return "sms";
+	}
 
 	@RequestMapping(value = "/start", method = RequestMethod.GET)
 	public String start(Locale locale, Model model) {

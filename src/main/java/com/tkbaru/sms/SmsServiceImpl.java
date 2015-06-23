@@ -18,8 +18,10 @@ import org.smslib.TimeoutException;
 import org.smslib.modem.SerialModemGateway;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.tkbaru.model.Modem;
 import com.tkbaru.model.SmsIn;
 import com.tkbaru.model.SmsOut;
+import com.tkbaru.service.ModemService;
 import com.tkbaru.service.SmsInService;
 import com.tkbaru.service.SmsOutService;
 
@@ -31,17 +33,21 @@ public class SmsServiceImpl implements SmsService {
 
 	@Autowired
 	SmsInService smsInService;
+	
+	@Autowired
+	ModemService modemService;
 
 	public void startService() throws Exception {
 
 		System.out.println(Library.getLibraryDescription());
 		System.out.println("Version: " + Library.getLibraryVersion());
-		SerialModemGateway gateway = new SerialModemGateway("modem.com6", "COM6", 9600, "Huawei", "E153");
+		Modem modem = modemService.getModemById(1);
+		SerialModemGateway gateway = new SerialModemGateway("modem1", modem.getPort(), modem.getBaudRate(), modem.getManufacturer(), modem.getModel());
 
 		gateway.setInbound(true);
 		gateway.setOutbound(true);
 		gateway.setSimPin("0000");
-		gateway.setSmscNumber("+62818445009");
+		gateway.setSmscNumber(modem.getSmsCenter());
 
 		Service.getInstance().setInboundMessageNotification(new SmsReceivedHandler());
 		Service.getInstance().setOutboundMessageNotification(new SmsSentHandler());
@@ -147,7 +153,7 @@ public class SmsServiceImpl implements SmsService {
 
 	private class SmsSentHandler implements IOutboundMessageNotification {
 		public void process(AGateway gateway, OutboundMessage msg) {
-			System.out.println("SmsSentHandler handler called from Gateway: " + gateway.getGatewayId());
+			System.out.println("Sms SentHandler handler called from Gateway: " + gateway.getGatewayId());
 		
 			System.out.println(msg);
 

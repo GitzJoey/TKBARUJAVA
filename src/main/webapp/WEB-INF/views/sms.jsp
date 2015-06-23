@@ -35,18 +35,22 @@
 
 				<h1>
 					<span class="fa fa-cog fa-flip-horizontal fa-fw"></span>&nbsp;SMS
-					Service Status
+					Service
 				</h1>
 
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-cog fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;SMS service has been stopped
+							<span class="fa fa-cog fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;
+							Start/Stop
 						</h1>
 					</div>
 					<div class="panel-body">
-						SMS service has been stopped
+						<a href="${ pageContext.request.contextPath }/admin/sms/start"
+							class="btn btn-default">Start sms service</a> <a
+							href="${ pageContext.request.contextPath }/admin/sms/stop"
+							class="btn btn-default">Stop sms service</a>
 					</div>
 				</div>
 			</div>

@@ -34,16 +34,16 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;SMS
-					START
+					<span class="fa fa-cog fa-flip-horizontal fa-fw"></span>&nbsp;SMS Service Status
+			
 				</h1>
 
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-truck fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;
-							SMS START
+							<span class="fa fa-cog fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;
+							SMS service has been started
 						</h1>
 					</div>
 					

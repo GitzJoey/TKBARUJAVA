@@ -26,6 +26,10 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	
+	<listener>
+        <listener-class>com.tkbaru.sms.SmsContextListener</listener-class>
+	</listener>
 
 	<!-- Processes application requests -->
 	<servlet>

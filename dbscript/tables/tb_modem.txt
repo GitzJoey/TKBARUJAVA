@@ -1,0 +1,11 @@
+CREATE TABLE `tb_modem` (
+  `modem_id` int(11) NOT NULL AUTO_INCREMENT,
+  `port` varchar(255) DEFAULT NULL,
+  `manufacturer` varchar(255) DEFAULT NULL,
+  `model` varchar(255) DEFAULT NULL,
+  `baud_rate` int(11) DEFAULT NULL,
+  `sms_center` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`modem_id`)
+);
+
+INSERT INTO `tb_modem` VALUES (1,'COM6','Huawei','E153',9600,'+62818445009');

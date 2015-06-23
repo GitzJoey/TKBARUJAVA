@@ -11,6 +11,13 @@
 	$(document).ready(function() {
 		var ctxpath = "${ pageContext.request.contextPath }";
 
+		$('#smsList').DataTable({
+			"paging":   	false,
+	        "ordering": 	false,
+	        "info":     	false,
+	        "searching": 	true
+		});
+
 	});
 </script>
 </head>
@@ -40,7 +47,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;SMS
+					<span class="fa fa-envelope fa-flip-horizontal fa-fw"></span>&nbsp;SMS
 					Received
 				</h1>
 
@@ -50,12 +57,12 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-smile-o fa-fw fa-2x"></span>SMS List
+							<span class="fa fa-envelope fa-fw fa-2x"></span>SMS List
 						</h1>
 					</div>
 					<div class="panel-body">
 						<div class="table-responsive">
-							<table class="table table-bordered table-hover">
+							<table class="table table-bordered table-hover" id="smsList">
 								<thead>
 									<tr>
 										<th width="5%">&nbsp;</th>
@@ -82,8 +89,6 @@
 										</tbody>
 									</table>
 								</div>
-								<a id="editTableSelection" class="btn btn-sm btn-primary"
-							href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
 							</div>
 						</div>
 				

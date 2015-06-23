@@ -6,58 +6,7 @@
 <html>
 <head>
 <jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
-<script>
-	$(document).ready(
-			function() {
-				var ctxpath = "${ pageContext.request.contextPath }";
 
-				$('#cancelButton').click(function() {
-					window.location.href(ctxpath + "/truck");
-				});
-
-				$('input[type="checkbox"][id^="cbx_"]').click(
-						function() {
-							var selected = $(this);
-
-							$('input[type="checkbox"][id^="cbx_"]').each(
-									function(index, item) {
-										if ($(item).attr("id") != $(selected)
-												.attr("id")) {
-											if ($(item).prop("checked")) {
-												$(item).prop("checked", false);
-											}
-										}
-									});
-						});
-
-				$('#editTableSelection, #deleteTableSelection').click(
-						function() {
-							var id = "";
-							var button = $(this).attr('id');
-
-							$('input[type="checkbox"][id^="cbx_"]').each(
-									function(index, item) {
-										if ($(item).prop('checked')) {
-											id = $(item).attr("value");
-										}
-									});
-
-							if (id == "") {
-								jsAlert("Please select at least 1 truck");
-								return false;
-							} else {
-								if (button == 'editTableSelection') {
-									$('#editTableSelection').attr("href",
-											ctxpath + "/truck/edit/" + id);
-								} else {
-									$('#deleteTableSelection').attr("href",
-											ctxpath + "/truck/delete/" + id);
-								}
-							}
-						});
-
-			});
-</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -85,39 +34,68 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-paper-plane fa-flip-horizontal fa-fw"></span>&nbsp;Send SMS
+					<span class="fa fa-cog fa-flip-horizontal fa-fw"></span>&nbsp;Modem
 				</h1>
 
 
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-paper-plane fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;Send
-							SMS
+							<span class="fa fa-cog fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;
+							Setting
 						</h1>
 					</div>
 					<div class="panel-body">
 						<form:form id="sendForm" role="form" class="form-horizontal"
-							modelAttribute="smsOut"
-							action="${pageContext.request.contextPath}/admin/smsout/send">
+							modelAttribute="modem"
+							action="${pageContext.request.contextPath}/admin/modem/save">
 							<div class="row">
 								<div class="col-md-7">
 									<div class="form-group">
-										<label for="inputTo" class="col-sm-2 control-label">To</label>
+										<label for="inputModemId" class="col-sm-2 control-label">ID</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputTo"
-												path="recipient" placeholder="Enter Recepient"></form:input>
+											<form:input type="text" class="form-control" id="inputModemId"
+												path="modemId" readonly="true"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputMessage" class="col-sm-2 control-label">Message</label>
+										<label for="inputPort" class="col-sm-2 control-label">Port</label>
 										<div class="col-sm-8">
-											<form:textarea type="text" class="form-control" rows="3"
-												cols="20" id="inputMessage" path="message"></form:textarea>
+											<form:input type="text" class="form-control" 
+												id="inputPort" path="port"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputManufacturer" class="col-sm-2 control-label">Manufacturer</label>
+										<div class="col-sm-8">
+											<form:input type="text" class="form-control" 
+												id="inputManufacturer" path="manufacturer"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputModel" class="col-sm-2 control-label">Model</label>
+										<div class="col-sm-8">
+											<form:input type="text" class="form-control" 
+												id="inputModel" path="model"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputBaudRate" class="col-sm-2 control-label">Baud Rate</label>
+										<div class="col-sm-8">
+											<form:input type="text" class="form-control" 
+												id="inputBaudRate" path="baudRate"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputSmsc" class="col-sm-2 control-label">SMS Center</label>
+										<div class="col-sm-8">
+											<form:input type="text" class="form-control" 
+												id="inputSmsc" path="smsCenter"></form:input>
 										</div>
 									</div>
 								</div>
 							</div>
+							
 							<div class="col-md-7 col-offset-md-5">
 								<div class="btn-toolbar">
 									<button id="cancelButton" type="button"

@@ -17,7 +17,7 @@ import com.tkbaru.service.StoreService;
 import com.tkbaru.service.UserService;
 
 @Controller
-@RequestMapping("/smsin")
+@RequestMapping("/admin/smsin")
 public class SmsInController {
 
 	@Autowired
