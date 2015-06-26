@@ -71,6 +71,12 @@ public class Items {
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
 	private List<Receipt> receiptList= LazyList.decorate(new ArrayList<Receipt>(), FactoryUtils.instantiateFactory(Receipt.class));
+	
+	@ManyToMany(cascade=CascadeType.ALL)
+	@JoinTable(name="tb_items_deliver", 
+				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
+				inverseJoinColumns={@JoinColumn(name="deliver_id", referencedColumnName="deliver_id")})
+	private List<Deliver> deliverList= LazyList.decorate(new ArrayList<Deliver>(), FactoryUtils.instantiateFactory(Deliver.class));
 
 	public int getItemsId() {
 		return itemsId;
@@ -199,6 +205,16 @@ public class Items {
 	public void setReceiptList(List<Receipt> receiptList) {
 		this.receiptList = receiptList;
 	}
+	
+	
+
+	public List<Deliver> getDeliverList() {
+		return deliverList;
+	}
+
+	public void setDeliverList(List<Deliver> deliverList) {
+		this.deliverList = deliverList;
+	}
 
 	@Override
 	public String toString() {
@@ -209,7 +225,7 @@ public class Items {
 				+ ", updatedDate=" + updatedDate + ", baseUnitCode="
 				+ baseUnitCode + ", toBaseValue=" + toBaseValue
 				+ ", toBaseQty=" + toBaseQty + ", receiptList=" + receiptList
-				+ "]";
+				+ ", deliverList=" + deliverList+"]";
 	}
 
 }

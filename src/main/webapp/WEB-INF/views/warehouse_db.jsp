@@ -14,7 +14,26 @@
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,
-		        "searching": 	false
+		        "searching": 	false,
+		        "columnDefs": [
+		            { "visible": false, "targets": 2 }
+		        ],
+		       
+		        "displayLength": 25,
+		        "drawCallback": function ( settings ) {
+		            var api = this.api();
+		            var rows = api.rows( {page:'current'} ).nodes();
+		            var last=null;
+		 
+		            api.column(2, {page:'current'}).data().each(function (group, i) {
+		                if (last !== group) {
+		                    $(rows).eq(i).before(
+		                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+		                    );		 
+		                    last = group;
+		                }
+		            });
+		        }
 			});
 			
 			var table = $('#inflowTable').DataTable({
@@ -68,6 +87,18 @@
 				var result = confirm("Yakin isi data po " + trid + " ?");
 				if (result) {
 					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid + "/" + itemId;
+				}
+			});
+
+			$('[id^="deliverButton_"]').click(function(event) {
+				var itemId = $(this).closest('tr').find('td:eq(0)').attr('id');
+				var trid = $(this).closest('tr').attr('id');
+				
+				var poid = $(this).val();
+				var warehouseSelect = $("#warehouseSelect").val();
+				var result = confirm("Yakin isi data sales " + trid + " ?");
+				if (result) {
+					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loaddeliver/" + poid + "/" + itemId;
 				}
 			});
 			
@@ -235,17 +266,72 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="outflowTable" class="table table-bordered table-hover display responsive">
+										<table id="outflowTable" class="table table-bordered table-hover display">
 											<thead>
 												<tr>
-													<th>Product Name</th>
-													<th>Bruto</th>
-													<th>Netto</th>
-													<th>Tare</th>
-													<th>&nbsp;</th>
+													<th width="36%">Product Name</th>
+													<th width="11%" class="center-align">Bruto</th>
+													<th width="2%">Po Code</th>
+													<th width="11%" class="center-align">Netto</th>
+													<th width="11%" class="center-align">Tare</th>
+													<th width="13%" class="center-align">Shipping Date</th>
+													<th width="13%" class="center-align">Deliver Date</th>
+													<th width="3%">&nbsp;</th>
 												</tr>
 											</thead>
-											<tbody>
+											<tbody >											
+												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="po" varStatus="poIdx">
+													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
+														
+														<c:if test="${ not empty iL.receiptList }">
+															<c:set var="totalReceipt" value="${ iL.deliverList.size() }"></c:set>
+															<c:set var="totalReceipt" value="${ 0 }"></c:set>
+														 	<c:forEach items="${ iL.deliverList }" var="receipt" varStatus="receiptIdx">
+															    <tr>
+																    <td class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/></td>
+														    		<td><c:out value="${ po.salesCode }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].net }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].tare }"/></td>
+															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
+															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].deliverDate }"/></td>
+															    	<td></td>
+														    	</tr>
+														    	<c:set var="totalReceipt" value="${ totalReceipt + (warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].net + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare) }"></c:set>
+													    	</c:forEach>
+												    	
+													    	<c:if test="${ totalReceipt <  warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
+														    	<tr id="${ po.poCode }">
+														    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+														    		<td><c:out value="${ iL.toBaseQty }"/></td>
+														    		<td><c:out value="${ po.poCode }"/></td>
+															    	<td></td>
+															    	<td></td>
+															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
+															    	<td></td>
+															    	<td class="center-align">
+															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.salesId }"><span class="fa fa-edit fa-fw"></span></button>
+																    </td>
+														    	</tr>
+												    		</c:if>
+											    		</c:if>
+											    	
+												    	<c:if test="${ empty iL.deliverList }">
+													    	<tr id="${ po.salesCode }">
+													    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+													    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
+													    		<td><c:out value="${ po.salesCode }"/></td>
+														    	<td></td>
+														    	<td></td>
+														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
+														    	<td></td>
+														    	<td class="center-align">
+														    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_0" value="${ po.salesId }"><span class="fa fa-edit fa-fw"></span></button>
+															    </td>
+													    	</tr>
+												    	</c:if>
+													</c:forEach>
+												</c:forEach>
 											</tbody>
 										</table>
 									</div>
@@ -326,6 +412,84 @@
 										<label for="inputReceiptDate" class="col-sm-2 control-label">Receipt Date</label>
 										<div class="col-sm-5">
 											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>												
+										</div>
+									</div>
+									<div class="col-md-7 col-offset-md-5">
+										<div class="btn-toolbar">
+											<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+										</div>
+									</div>
+								</form:form>
+							</div>
+						</div>
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT_OUT'}">						
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit Sales Order Detail
+								</h1>
+							</div>
+							<div class="panel-body">
+								<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
+									<div class="form-group">
+										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+										<div class="col-sm-5">
+											<form:select class="form-control" disabled="true" path="selectedWarehouse">
+												<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputPoCode" class="col-sm-2 control-label">PO Code</label>
+										<div class="col-sm-3">
+											<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+										<div class="col-sm-8">
+											<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
+										</div>
+									</div>									
+									<div class="form-group">
+										<label for="inputBruto" class="col-sm-2 control-label">Bruto</label>
+										<div class="col-sm-2">
+											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
+												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
+													<input id="inputBruto" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
+												</c:if>
+											</c:forEach>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Net</label>
+										<div class="col-sm-2">
+
+											<form:input class="form-control" path="deliver.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>												
+
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
+										<div class="col-sm-2">
+
+											<form:input class="form-control" path="deliver.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>										
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+										<div class="col-sm-5">
+											<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedSoObject.shippingDate }" var="formattedShippingDate"/>
+											<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>												
+
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputDeliverDate" class="col-sm-2 control-label">Receipt Date</label>
+										<div class="col-sm-5">
+											<form:input id="inputDeliverDate" class="form-control" path="deliver.deliverDate" data-parsley-required="true" data-parsley-trigger="change"/>												
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">

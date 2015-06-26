@@ -41,6 +41,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status ").setString("status", statusCode).list();
+	
 		
 		for (SalesOrder so : soList) {
 			logger.info("SalesOrder : " + so.toString());

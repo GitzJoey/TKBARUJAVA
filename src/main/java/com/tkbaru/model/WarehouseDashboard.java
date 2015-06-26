@@ -5,16 +5,18 @@ import java.util.List;
 
 public class WarehouseDashboard {
 	public WarehouseDashboard() {
-		
+
 	}
 
 	private int selectedWarehouse;
 	private int selectedPO;
+	private int selectedSales;
 	private int selectedItems;
 	private Receipt receipt;
-	
-	List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
-	
+	private Deliver deliver;
+	private List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
+	private List<SalesOrder> salesOrderList = new ArrayList<SalesOrder>();
+
 	public int getSelectedWarehouse() {
 		return selectedWarehouse;
 	}
@@ -53,5 +55,30 @@ public class WarehouseDashboard {
 
 	public void setReceipt(Receipt receipt) {
 		this.receipt = receipt;
-	}	
+	}
+
+	public List<SalesOrder> getSalesOrderList() {
+		return salesOrderList;
+	}
+
+	public void setSalesOrderList(List<SalesOrder> salesOrderList) {
+		this.salesOrderList = salesOrderList;
+	}
+
+	public int getSelectedSales() {
+		return selectedSales;
+	}
+
+	public void setSelectedSales(int selectedSales) {
+		this.selectedSales = selectedSales;
+	}
+
+	public Deliver getDeliver() {
+		return deliver;
+	}
+
+	public void setDeliver(Deliver deliver) {
+		this.deliver = deliver;
+	}
+
 }
