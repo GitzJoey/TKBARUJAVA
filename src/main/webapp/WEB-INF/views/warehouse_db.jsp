@@ -108,6 +108,12 @@
 				$(this).parsley().validate();
 			});
 			
+			$('#inputDeliverDate').datetimepicker({ format:'d-m-Y H:i'});
+			
+			$('#inputDeliverDate').on('dp.change dp.show',function(e) {
+				$(this).parsley().validate();
+			});
+			
 			$('#cancelButton').click(function() {				
 				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
 			});
@@ -116,6 +122,8 @@
 				if (requirement == false) return true;
 				
 				if (Number($('#inputBruto').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val()))) {
+					return true;
+				} else if (Number($('#inputBrutoDeliver').val()) == (Number($('input[name="deliver.net"]').val()) + Number($('input[name="deliver.tare"]').val()))) {
 					return true;
 				} else {
 					return false;
@@ -432,7 +440,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
+								<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedItems }/${ warehouseDashboard.selectedWarehouse }" data-parsley-validate="parsley">
 									<div class="form-group">
 										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
 										<div class="col-sm-5">
@@ -442,7 +450,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPoCode" class="col-sm-2 control-label">PO Code</label>
+										<label for="inputPoCode" class="col-sm-2 control-label">Sales Code</label>
 										<div class="col-sm-3">
 											<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
 										</div>
@@ -454,11 +462,11 @@
 										</div>
 									</div>									
 									<div class="form-group">
-										<label for="inputBruto" class="col-sm-2 control-label">Bruto</label>
+										<label for="inputBrutoDeliver" class="col-sm-2 control-label">Bruto</label>
 										<div class="col-sm-2">
-											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
+											<c:forEach items="${ selectedSoObject.itemsList }" var="iL">
 												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-													<input id="inputBruto" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
+													<input id="inputBrutoDeliver" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
 												</c:if>
 											</c:forEach>
 										</div>
@@ -487,7 +495,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputDeliverDate" class="col-sm-2 control-label">Receipt Date</label>
+										<label for="inputDeliverDate" class="col-sm-2 control-label">Deliver Date</label>
 										<div class="col-sm-5">
 											<form:input id="inputDeliverDate" class="form-control" path="deliver.deliverDate" data-parsley-required="true" data-parsley-trigger="change"/>												
 										</div>

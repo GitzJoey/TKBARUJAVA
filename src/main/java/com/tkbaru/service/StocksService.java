@@ -9,6 +9,6 @@ public interface StocksService {
 	public void addOrCreateStocks(Stocks stocks);
 	public void updateStocks(Stocks stocks);
 	long countStocksByProductId(int productId);
-	
+	long findStockByProductIdAndByWarehouseId(int productId, int warehouseId);
 	public List<Stocks> getAllStocksByWarehouseId(int warehouseId);
 }

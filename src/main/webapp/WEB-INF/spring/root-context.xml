@@ -204,6 +204,9 @@
      <beans:bean id="ModemDAO" class="com.tkbaru.dao.ModemDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="StocksOutDAO" class="com.tkbaru.dao.StocksOutDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
    
     
     <!-- declare spring Service -->
@@ -235,6 +238,7 @@
 	<beans:bean id="SmsOutService" class="com.tkbaru.service.SmsOutServiceImpl"></beans:bean>
 	<beans:bean id="SmsService" class="com.tkbaru.sms.SmsServiceImpl"></beans:bean>
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
+	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
 	
 	
 	<!-- Jasper -->

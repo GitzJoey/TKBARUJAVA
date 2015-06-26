@@ -388,6 +388,19 @@ public class WarehouseController {
 				item.getReceiptList().size();
 			}
 		}
+		
+		long currentStock = 0;
+		
+		try {
+			currentStock = stocksManager.findStockByProductIdAndByWarehouseId(selectedItemsObject.getProductId(), warehouseId);
+		} catch (Exception e) {
+			return "redirect:/warehouse/dashboard/"+warehouseId;
+		}
+		
+		
+		if(currentStock == 0){
+			return "redirect:/warehouse/dashboard/"+warehouseId;
+		}
 
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setSelectedWarehouse(warehouseId);
@@ -407,9 +420,11 @@ public class WarehouseController {
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 	
-	@RequestMapping(value="/dashboard/savedeliver/{salesId}/{itemId}", method = RequestMethod.POST)
-	public String saveDashboardDeliver(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int salesId,@PathVariable int itemId) {
+	@RequestMapping(value="/dashboard/savedeliver/{salesId}/{itemId}/{warehouseId}", method = RequestMethod.POST)
+	public String saveDashboardDeliver(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes,@PathVariable int salesId,@PathVariable int itemId,@PathVariable int warehouseId) {
 		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId + ", itemId: " + itemId);
+		
+		
 		
 		SalesOrder sales = salesManager.getSalesOrderById(salesId);
 		
@@ -425,9 +440,10 @@ public class WarehouseController {
 					warehouseDashboard.getDeliver().setCreatedDate(new Date());
 	
 					StocksOut stocksOut = new StocksOut();
+					stocksOut.setSalesId(salesId);
 					stocksOut.setProductId(items.getProductId());
-					stocksOut.setWarehouseId(warehouseDashboard.getSelectedWarehouse());
-					stocksOut.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocksOut.setWarehouseId(warehouseId);
+					stocksOut.setProdQuantity(warehouseDashboard.getDeliver().getNet());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocksOut.setCreatedDate(new Date());
 					stocksList.add(stocksOut);
@@ -441,8 +457,8 @@ public class WarehouseController {
 			
 			long arrivalQuantity = 0;
 			
-			for (Receipt receipt : item.getReceiptList()) {
-				arrivalQuantity += ( receipt.getNet()+ receipt.getTare() );
+			for (Deliver deliver : item.getDeliverList()) {
+				arrivalQuantity += ( deliver.getNet()+ deliver.getTare() );
 			}
 			
 			if (item.getToBaseQty() == arrivalQuantity) {

@@ -9,6 +9,6 @@ public interface StocksDAO {
 	void addStocks(Stocks stocks);
 	void updateStocks(Stocks stocks);
 	long countStocksByProductId(int productId);
-	
+	long findStockByProductIdAndByWarehouseId(int productId, int warehouseId);
 	public List<Stocks> getAllStocksByWarehouseId(int warehouseId);
 }

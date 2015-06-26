@@ -12,54 +12,52 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="tb_stocks_out")
+@Table(name = "tb_stocks_out")
 public class StocksOut {
 	public StocksOut() {
-		
+
 	}
 
 	@Id
-	@Column(name="stocks_out_id")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "stocks_out_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int stocksOutId;
-	@Column(name="stocks_id")
-	private int stocksId;
-	@Column(name="product_id")
+	@Column(name = "so_id")
+	private int salesId;
+	@Column(name = "product_id")
 	private int productId;
-	@Column(name="warehouse_id")
+	@Column(name = "warehouse_id")
 	private int warehouseId;
-	@Column(name="quantity")
+	@Column(name = "quantity")
 	private long prodQuantity;
-	@Column(name="created_by")
+	@Column(name = "created_by")
 	private int createdBy;
-	@Column(name="created_date")
+	@Column(name = "created_date")
 	private Date createdDate;
-	@Column(name="updated_by")
+	@Column(name = "updated_by")
 	private int updatedBy;
-	@Column(name="updated_date")
+	@Column(name = "updated_date")
 	private Date updatedDate;
-	
+
 	@ManyToOne
-	@JoinColumn(name="stocks_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name = "stocks_id", unique = true, insertable = false, updatable = false)
 	private Stocks stocksLookup;
 
 	@ManyToOne
-	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name = "product_id", unique = true, insertable = false, updatable = false)
 	private Product productLookup;
 
 	@ManyToOne
-	@JoinColumn(name="warehouse_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name = "warehouse_id", unique = true, insertable = false, updatable = false)
 	private Warehouse warehouseLookup;
 
-	public int getStocksId() {
-		return stocksId;
+	public int getSalesId() {
+		return salesId;
 	}
 
-	public void setStocksId(int stocksId) {
-		this.stocksId = stocksId;
+	public void setSalesId(int salesId) {
+		this.salesId = salesId;
 	}
-
-	
 
 	public int getStocksOutId() {
 		return stocksOutId;
@@ -133,8 +131,6 @@ public class StocksOut {
 		this.updatedDate = updatedDate;
 	}
 
-	
-
 	public Product getProductLookup() {
 		return productLookup;
 	}
@@ -153,8 +149,8 @@ public class StocksOut {
 
 	@Override
 	public String toString() {
-		return "Stocks [stocksId=" + stocksId + ", stocksId=" + stocksId
-				+ ", productId=" + productId + ", warehouseId=" + warehouseId
+		return "Stocks [stocksOutId=" + stocksOutId + ", productId="
+				+ productId + ", warehouseId=" + warehouseId
 				+ ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + "]";

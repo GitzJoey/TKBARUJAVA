@@ -78,4 +78,12 @@ public class StocksDAOImpl implements StocksDAO {
 		return stocksList;
 	}
 
+	@Override
+	public long findStockByProductIdAndByWarehouseId(int productId,
+			int warehouseId) {
+		Session session = this.sessionFactory.getCurrentSession();
+		long qty =(long) session.createQuery("select SUM(s.prodQuantity) FROM Stocks s where s.productId= :productId and s.warehouseId = :warehouseId").setInteger("productId", productId).setInteger("warehouseId", warehouseId).uniqueResult();
+		return qty;
+	}
+
 }
