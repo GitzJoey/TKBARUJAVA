@@ -151,8 +151,8 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				<c:if test="${ERRORPAGE == 'ERRORPAGE_SHOW'}">
-	    			<div class="alert alert-danger alert-dismissible collapse" role="alert">
+				<c:if test="${ERRORFLAG == 'ERRORFLAG_SHOW' }">
+	    			<div class="alert alert-danger alert-dismissible" role="alert">
 	  					<button type="button" class="close" data-dismiss="alert">
 	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 	  					</button>
@@ -176,7 +176,8 @@
 									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Warehouse Dashboard
 								</h1>
 							</div>
-							<div class="panel-body">							
+							<div class="panel-body">	
+									
 								<select class="form-control" id="warehouseSelect">
 									<option value="">Please Select</option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
