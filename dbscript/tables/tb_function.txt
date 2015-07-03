@@ -8,8 +8,8 @@ CREATE TABLE `tb_function` (
   `menu_name` 			varchar(45) DEFAULT NULL,
   `menu_icon` 			varchar(45) DEFAULT NULL,
   `url` 				varchar(45) DEFAULT NULL,
+  `parent_function_id` 	int(11) 	DEFAULT NULL,
   `order_num` 			int(11) 	DEFAULT NULL,
-  `deep_level` 			int(11) 	DEFAULT NULL,
   `created_by` 			int(11) 	DEFAULT '0',
   `created_date` 		datetime 	DEFAULT NULL,
   `updated_by` 			int(11) 	DEFAULT '0',
@@ -19,79 +19,80 @@ CREATE TABLE `tb_function` (
 
 
 /*Purchase Order*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_PURCHASEORDER', 'Purchase Order', 'fa fa-truck fa-fw', 'Purchase Order','fa fa-truck fa-fw', '/po/add', 100100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_REVISE', 'Purchase Order', 'fa fa-truck fa-fw', 'Revise PO','fa fa-code-fork fa-rotate-180 fa-fw', '/po/revise', 100200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PO_PAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_PO_PURCHASEORDER', 'Purchase Order', 'fa fa-truck fa-fw', 'Purchase Order','fa fa-truck fa-fw', '/po/add', 100100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_PO_REVISE', 'Purchase Order', 'fa fa-truck fa-fw', 'Revise PO','fa fa-code-fork fa-rotate-180 fa-fw', '/po/revise', 100200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_PO_PAYMENT', 'Purchase Order', 'fa fa-truck fa-fw', 'PO Payment','fa fa-calculator fa-fw', '/po/payment', 100300, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Sales Order*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SO_SALESORDER', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Sales Order','fa fa-cart-arrow-down fa-fw', '/sales/add', 200100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SO_REVISE', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Revise SO','fa fa fa-code-fork fa-fw', '/sales/revise', 200200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_SO_PAYMENT', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'SO Payment','fa fa-calculator fa-fw', '/sales/payment', 200300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_SO_SALESORDER', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Sales Order','fa fa-cart-arrow-down fa-fw', '/sales/add', 200100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_SO_REVISE', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'Revise SO','fa fa fa-code-fork fa-fw', '/sales/revise', 200200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_SO_PAYMENT', 'Sales Order', 'fa fa-cart-arrow-down fa-fw', 'SO Payment','fa fa-calculator fa-fw', '/sales/payment', 200300, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Price*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PRICE_TODAYPRICE', 'Price', 'fa fa-dollar fa-fw', 'Today Price','fa  fa-barcode fa-fw', '/price/todayprice', 300100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_PRICE_PRICELEVEL', 'Price', 'fa fa-dollar fa-fw', 'Price Level','fa  fa-table fa-fw', '/price/pricelevel', 300200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_PRICE_TODAYPRICE', 'Price', 'fa fa-dollar fa-fw', 'Today Price','fa  fa-barcode fa-fw', '/price/todayprice', 300100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_PRICE_PRICELEVEL', 'Price', 'fa fa-dollar fa-fw', 'Price Level','fa  fa-table fa-fw', '/price/pricelevel', 300200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Warehouse*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_WH_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', 'Dashboard','fa fa-wrench fa-fw', '/warehouse/dashboard', 400100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_WH_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', 'Dashboard','fa fa-wrench fa-fw', '/warehouse/dashboard', 400100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Bank*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_BANK_UPLOAD', 'Bank', 'fa fa-bank fa-fw', 'Upload','fa fa-cloud-upload fa-fw', '/bank/upload', 500100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_BANK_CONSOLIDATE', 'Bank', 'fa fa-bank fa-fw', 'Consolidate','fa fa-compress fa-fw', '/bank/consolidate', 500200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_BANK_UPLOAD', 'Bank', 'fa fa-bank fa-fw', 'Upload','fa fa-cloud-upload fa-fw', '/bank/upload', 500100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_BANK_CONSOLIDATE', 'Bank', 'fa fa-bank fa-fw', 'Consolidate','fa fa-compress fa-fw', '/bank/consolidate', 500200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Reports*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTTRX', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Transactions','fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 600100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTMNTR', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Monitoring','fa fa-eye fa-fw', '/report/id/rptmntr', 600200, 2, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 600300, 3, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTMASTER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Master Data','fa fa-file-text-o fa-fw', '/report/id/rptmaster', 698100, 4, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_RPT_RPTADMIN', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Admin Data','glyphicon glyphicon-cog', '/report/id/rptadmin', 699100, 5, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_RPT_RPTTRX', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Transactions','fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 600100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_RPT_RPTMNTR', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Monitoring','fa fa-eye fa-fw', '/report/id/rptmntr', 600200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_RPT_RPT3', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Report 3','fa fa-plus fa-fw', '/report/id/rpt3', 600300, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_RPT_RPTMASTER', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Master Data','fa fa-file-text-o fa-fw', '/report/id/rptmaster', 698100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_RPT_RPTADMIN', 'Reports', 'fa fa-bar-chart-o fa-fw', 'Admin Data','glyphicon glyphicon-cog', '/report/id/rptadmin', 699100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Master Data*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MASTER_CUSTOMER', 'Master Data', 'fa fa-file-text-o fa-fw', 'Customer', 'fa fa-smile-o fa-fw', '/customer', 998100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MASTER_SUPPLIER', 'Master Data', 'fa fa-file-text-o fa-fw', 'Supplier', 'fa fa-building-o fa-fw', '/supplier', 998200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MASTER_PRODUCT', 'Master Data', 'fa fa-file-text-o fa-fw', 'Product', 'fa fa-cubes fa-fw', '/product', 998300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MASTER_WAREHOUSE', 'Master Data', 'fa fa-file-text-o fa-fw', 'Warehouse', 'fa fa-wrench fa-fw', '/warehouse', 998400, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_MASTER_TRUCK', 'Master Data', 'fa fa-file-text-o fa-fw', 'Truck', 'fa fa-truck fa-flip-horizontal fa-fw', '/truck', 998500, 1, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_MASTER_CUSTOMER', 'Master Data', 'fa fa-file-text-o fa-fw', 'Customer', 'fa fa-smile-o fa-fw', '/customer', 998100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_MASTER_SUPPLIER', 'Master Data', 'fa fa-file-text-o fa-fw', 'Supplier', 'fa fa-building-o fa-fw', '/supplier', 998200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_MASTER_PRODUCT', 'Master Data', 'fa fa-file-text-o fa-fw', 'Product', 'fa fa-cubes fa-fw', '/product', 998300, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_MASTER_WAREHOUSE', 'Master Data', 'fa fa-file-text-o fa-fw', 'Warehouse', 'fa fa-wrench fa-fw', '/warehouse', 998400, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_MASTER_TRUCK', 'Master Data', 'fa fa-file-text-o fa-fw', 'Truck', 'fa fa-truck fa-flip-horizontal fa-fw', '/truck', 998500, 0, 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Admin Menu*/
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User', 'fa fa-user fa-fw', '/admin/user', 999100, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_STORE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Store', 'fa fa-umbrella fa-fw', '/admin/store', 999200, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role', 'fa fa-tree fa-fw', '/admin/role', 999300, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function', 'fa fa-minus-square fa-fw', '/admin/function', 999400, 1, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup', 'fa fa-hand-o-up fa-fw', '/admin/lookup', 999500, 2, 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES('F_ADM_SMS','Admin Menu','glyphicon glyphicon-cog','SMS Service','fa fa-cog fa-fw','/admin/sms',999600,1,0,(SELECT CURRENT_TIMESTAMP()))
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES('F_ADM_SMS_IN','Admin Menu','glyphicon glyphicon-cog','SMS In','fa fa-envelope fa-fw','/admin/smsin',999700,1,0,(SELECT CURRENT_TIMESTAMP()))
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES('F_ADM_SMS_OUT','Admin Menu','glyphicon glyphicon-cog','SMS Out','fa fa-paper-plane fa-fw','/admin/smsout',999800,1,0,(SELECT CURRENT_TIMESTAMP()))
-INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level, created_by, created_date)
-VALUES('F_ADM_MODEM','Admin Menu','glyphicon glyphicon-cog','Modem Setting','fa fa-cog fa-fw','/admin/modem',999900,1,0,(SELECT CURRENT_TIMESTAMP()))
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_ADM_USER', 'Admin Menu', 'glyphicon glyphicon-cog', 'User', 'fa fa-user fa-fw', '/admin/user', 999100, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_ADM_STORE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Store', 'fa fa-umbrella fa-fw', '/admin/store', 999200, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_ADM_ROLE', 'Admin Menu', 'glyphicon glyphicon-cog', 'Role', 'fa fa-tree fa-fw', '/admin/role', 999300, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_ADM_FUNCTION', 'Admin Menu', 'glyphicon glyphicon-cog', 'Function', 'fa fa-minus-square fa-fw', '/admin/function', 999400, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_ADM_LOOKUP', 'Admin Menu', 'glyphicon glyphicon-cog', 'Lookup', 'fa fa-hand-o-up fa-fw', '/admin/lookup', 999500, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES('F_ADM_SMS', 'Admin Menu', 'glyphicon glyphicon-cog', 'SMS Service', 'fa fa-cog fa-fw', '/admin/sms', 999600, 0, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_ADM_SMS_IN', 'Admin Menu', 'glyphicon glyphicon-cog', 'SMS In', 'fa fa-envelope fa-fw', '/admin/smsin', 999601, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_ADM_SMS';
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_ADM_SMS_OUT', 'Admin Menu', 'glyphicon glyphicon-cog', 'SMS Out', 'fa fa-paper-plane fa-fw', '/admin/smsout', 999602, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_ADM_SMS';
+INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_ADM_MODEM', 'Admin Menu', 'glyphicon glyphicon-cog', 'Modem Setting', 'fa fa-cog fa-fw', '/admin/modem', 999603, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_ADM_SMS';
 
 COMMIT;

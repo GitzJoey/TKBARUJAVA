@@ -1,8 +1,10 @@
-package com.tkbaru.sms;
+package com.tkbaru.service;
 
 import java.io.IOException;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.smslib.AGateway;
 import org.smslib.AGateway.GatewayStatuses;
 import org.smslib.GatewayException;
@@ -21,12 +23,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.tkbaru.model.Modem;
 import com.tkbaru.model.SmsIn;
 import com.tkbaru.model.SmsOut;
-import com.tkbaru.service.ModemService;
-import com.tkbaru.service.SmsInService;
-import com.tkbaru.service.SmsOutService;
 
 @org.springframework.stereotype.Service
 public class SmsServiceImpl implements SmsService {
+	private static final Logger logger = LoggerFactory.getLogger(SmsServiceImpl.class);
 
 	@Autowired
 	SmsOutService smsOutService;
@@ -38,44 +38,46 @@ public class SmsServiceImpl implements SmsService {
 	ModemService modemService;
 
 	public void startService() throws Exception {
-
-		System.out.println(Library.getLibraryDescription());
-		System.out.println("Version: " + Library.getLibraryVersion());
+		logger.info("[startService] " + "");
+		
+		logger.info(Library.getLibraryDescription());
+		logger.info("Version: " + Library.getLibraryVersion());
+		
 		Modem modem = modemService.getModemById(1);
-		SerialModemGateway gateway = new SerialModemGateway("modem1", modem.getPort(), modem.getBaudRate(), modem.getManufacturer(), modem.getModel());
+		SerialModemGateway gateway = null;
+		try {
+			gateway = new SerialModemGateway("modem1", modem.getPort(), modem.getBaudRate(), modem.getManufacturer(), modem.getModel());
+			gateway.setInbound(true);
+			gateway.setOutbound(true);
+			gateway.setSimPin("0000");
+			gateway.setSmscNumber(modem.getSmsCenter());
 
-		gateway.setInbound(true);
-		gateway.setOutbound(true);
-		gateway.setSimPin("0000");
-		gateway.setSmscNumber(modem.getSmsCenter());
+			Service.getInstance().setInboundMessageNotification(new SmsReceivedHandler());
+			Service.getInstance().setOutboundMessageNotification(new SmsSentHandler());
+			Service.getInstance().setGatewayStatusNotification(new GatewayStatusHandler());
 
-		Service.getInstance().setInboundMessageNotification(new SmsReceivedHandler());
-		Service.getInstance().setOutboundMessageNotification(new SmsSentHandler());
-		Service.getInstance().setGatewayStatusNotification(new GatewayStatusHandler());
+			Service.getInstance().addGateway(gateway);
 
-		Service.getInstance().addGateway(gateway);
+			Service.getInstance().startService();
 
-		Service.getInstance().startService();
+			logger.info("");
+			logger.info("Modem Information:");
+			logger.info("  Manufacturer: " + gateway.getManufacturer());
+			logger.info("  Model: " + gateway.getModel());
+			logger.info("  Serial No: " + gateway.getSerialNo());
+			logger.info("  SIM IMSI: " + gateway.getImsi());
+			logger.info("  Signal Level: " + gateway.getSignalLevel() + " dBm");
+			logger.info("  Battery Level: " + gateway.getBatteryLevel() + "%");
 
-		System.out.println();
-		System.out.println("Modem Information:");
-
-		System.out.println("  Manufacturer: " + gateway.getManufacturer());
-
-		System.out.println("  Model: " + gateway.getModel());
-
-		System.out.println("  Serial No: " + gateway.getSerialNo());
-
-		System.out.println("  SIM IMSI: " + gateway.getImsi());
-
-		System.out.println("  Signal Level: " + gateway.getSignalLevel() + " dBm");
-
-		System.out.println("  Battery Level: " + gateway.getBatteryLevel() + "%");
-
+		} catch (Exception err) {
+			logger.info("[startService] " + "Unable to create SerialModemGateway: " + err.getMessage());
+			System.out.println("[startService] " + "Unable to create SerialModemGateway: " + err.getMessage());
+		}
 	}
 
 	public void send(String recepientNo, String message) throws Exception {
-
+		logger.info("[send] " + "recepientNo: " + recepientNo + ", message: " + message);
+		
 		Service.getInstance().createGroup("mygroup");
 		Service.getInstance().addToGroup("mygroup", recepientNo);
 
@@ -86,16 +88,17 @@ public class SmsServiceImpl implements SmsService {
 	}
 
 	public void stopService() throws Exception {
-
+		logger.info("[stopService] " + "");
+		
 		Service.getInstance().stopService();
 
 	}
 
 	private class SmsReceivedHandler implements IInboundMessageNotification {
-
+		
 		@Override
 		public void process(AGateway gateway, MessageTypes msgType, InboundMessage inboundMessage) {
-							
+			logger.info("[SmsReceivedHandler - process] " + "");
 			// AUTO RESPONSE Message
 
 			if (inboundMessage.getText().equalsIgnoreCase("ASK PRICE")) {
@@ -153,9 +156,11 @@ public class SmsServiceImpl implements SmsService {
 
 	private class SmsSentHandler implements IOutboundMessageNotification {
 		public void process(AGateway gateway, OutboundMessage msg) {
-			System.out.println("Sms SentHandler handler called from Gateway: " + gateway.getGatewayId());
+			logger.info("[SmsSentHandler - process] " + "");
+			
+			logger.info("Sms SentHandler handler called from Gateway: " + gateway.getGatewayId());
 		
-			System.out.println(msg);
+			logger.info(msg.toString());
 
 		}
 	}
@@ -164,6 +169,7 @@ public class SmsServiceImpl implements SmsService {
 
 		@Override
 		public void process(AGateway gateway, GatewayStatuses oldStatus, GatewayStatuses newStatus) {
+			logger.info("[GatewayStatusHandler - process] " + "");
 
 		}
 

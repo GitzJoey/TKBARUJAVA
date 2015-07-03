@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `tb_modem`;
+
 CREATE TABLE `tb_modem` (
   `modem_id` int(11) NOT NULL AUTO_INCREMENT,
   `port` varchar(255) DEFAULT NULL,
@@ -9,3 +11,5 @@ CREATE TABLE `tb_modem` (
 );
 
 INSERT INTO `tb_modem` VALUES (1,'COM6','Huawei','E153',9600,'+62818445009');
+
+COMMIT;

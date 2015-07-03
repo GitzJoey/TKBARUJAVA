@@ -79,3 +79,7 @@ strong.title {
 .dataTables_info {
 	font-size: 12px;
 }
+
+.submenu-left-margin {
+	margin-left: 15px;
+}

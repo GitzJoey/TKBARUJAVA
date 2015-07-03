@@ -27,9 +27,7 @@ public class RoleDAOImpl implements RoleDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Role> roleList = session.createQuery("FROM Role").list();
 	
-		for(Role role:roleList) {
-			logger.info("Role : " + role.toString());
-		}
+		logger.info("Role Count: " + roleList.size());
 		
 		return roleList;
 	}
@@ -57,6 +55,7 @@ public class RoleDAOImpl implements RoleDAO {
 		logger.info("[addRole] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.save(role);
         
         logger.info("Role added successfully, Role Details = " + role.toString());		
@@ -67,7 +66,8 @@ public class RoleDAOImpl implements RoleDAO {
 		logger.info("[editRole] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(role);
+	    
+		session.update(role);
 	    
 	    logger.info("Role updated successfully, Role Details = " + role.toString());			
 	}
@@ -77,7 +77,9 @@ public class RoleDAOImpl implements RoleDAO {
 		logger.info("[deleteRole] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Role role = (Role) session.load(Role.class, new Integer(selectedId));
+        
         if(null != role){
             session.delete(role);
         }

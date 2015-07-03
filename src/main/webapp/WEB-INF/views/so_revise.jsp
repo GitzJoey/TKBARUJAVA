@@ -283,10 +283,10 @@
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																					</td>
 																					<td style="vertical-align: middle; text-align: right;">
-																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
+																				<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
 																			</c:forEach>
 																		</tbody>
 																	</table>

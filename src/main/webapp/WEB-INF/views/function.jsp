@@ -107,8 +107,8 @@
 											<th width="20%">Module</th>
 											<th width="20%">Menu Name</th>
 											<th width="20%">Url</th>
-											<th width="5%">Order</th>
-											<th width="5%">Deep Level</th>
+											<th width="5%">Parent Function Id</th>
+											<th width="5%">Order</th>											
 										</tr>
 									</thead>
 									<tbody>
@@ -121,7 +121,7 @@
 													<td><span class="<c:out value="${ i.menuIcon }"></c:out>">&nbsp;</span><c:out value="${ i.menuName }"></c:out></td>
 													<td><c:out value="${ i.urlLink }"/></td>
 													<td><c:out value="${ i.orderNum }"/></td>
-													<td><c:out value="${ i.deepLevel }"/></td>
+													<td><c:out value="${ i.parentFunctionId }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -223,9 +223,9 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputDeepLevel" class="col-sm-2 control-label">Deep Level</label>
+										<label for="inputParentFunctionId" class="col-sm-2 control-label">Parent Function Id</label>
 										<div class="col-sm-2">
-											<form:input type="text" class="form-control" id="inputDeepLevel" name="inputDeepLevel" path="deepLevel" placeholder="Deep Level" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+											<form:input type="text" class="form-control" id="inputParentFunctionId" name="inputParentFunctionId" path="parentFunctionId" placeholder="Parent Function Id" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="col-md-3 offset-md-9">

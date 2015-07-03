@@ -27,9 +27,7 @@ public class SmsInDAOImpl implements SmsInDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<SmsIn> smsList = session.createQuery("FROM SmsIn").list();
 	
-		for(SmsIn sms:smsList) {
-			logger.info("SmsIn : " + sms.toString());
-		}
+		logger.info("SmsIn Count: " + smsList.toString());
 		
 		return smsList;
 	}
@@ -57,6 +55,7 @@ public class SmsInDAOImpl implements SmsInDAO {
 		logger.info("[addSmsIn] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(sms);		
 	}
 
@@ -65,7 +64,8 @@ public class SmsInDAOImpl implements SmsInDAO {
 		logger.info("[editSmsIn] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(sms);		
+	    
+		session.update(sms);		
 	}
 
 	@Override
@@ -73,10 +73,11 @@ public class SmsInDAOImpl implements SmsInDAO {
 		logger.info("[deleteSmsIn] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         SmsIn sms = (SmsIn) session.load(SmsIn.class, new Integer(selectedId));
+        
         if(null != sms){
             session.delete(sms);
         }		
 	}
-
 }

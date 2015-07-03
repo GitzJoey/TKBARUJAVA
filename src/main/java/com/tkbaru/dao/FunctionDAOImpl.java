@@ -29,16 +29,16 @@ public class FunctionDAOImpl implements FunctionDAO {
 		
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery =  
-				"SELECT function_id,     " +
-				"		function_code,   " +
-				"		module,          " +
-				"		module_icon,     " +
-				"		menu_name,       " +
-				"		menu_icon,       " +
-				"		url,             " +
-				"		order_num,       " +
-				"		deep_level       " +
-				"FROM tb_function        " ;
+				"SELECT function_id,     	" +
+				"		function_code,   	" +
+				"		module,          	" +
+				"		module_icon,     	" +
+				"		menu_name,       	" +
+				"		menu_icon,       	" +
+				"		url,             	" +
+				"		order_num,       	" +
+				"		parent_function_id	" +
+				"FROM tb_function        	" ;
 	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
@@ -54,12 +54,12 @@ public class FunctionDAOImpl implements FunctionDAO {
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setDeepLevel(Integer.valueOf(String.valueOf(row.get("deep_level"))));
+			res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
 			
 			result.add(res);
 		}
 		
-		for (Function f:result) { logger.info("f: " + f.toString()); }
+		logger.info("Function size: " + result.size());
 		
 		return result;
 	}
@@ -71,17 +71,17 @@ public class FunctionDAOImpl implements FunctionDAO {
 		Function result = new Function();
 		
 		String sqlquery = 
-				"SELECT function_id,     " +
-				"		function_code,   " +
-				"		module,          " +
-				"		module_icon,     " +
-				"		menu_name,       " +
-				"		menu_icon,       " +
-				"		url,             " +
-				"		order_num,       " +
-				"		deep_level       " +
-				"FROM tb_function        " +
-				"WHERE function_id = ?   " ;
+				"SELECT function_id,     	" +
+				"		function_code,   	" +
+				"		module,          	" +
+				"		module_icon,     	" +
+				"		menu_name,       	" +
+				"		menu_icon,       	" +
+				"		url,             	" +
+				"		order_num,       	" +
+				"		parent_function_id	" +
+				"FROM tb_function        	" +
+				"WHERE function_id = ?   	" ;
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		result = jdbcTemplate.queryForObject(sqlquery, new Object[] { selectedId }, new RowMapper<Function>() {
@@ -97,7 +97,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 				f.setMenuIcon(rs.getString("menu_icon"));
 				f.setUrlLink(rs.getString("url"));
 				f.setOrderNum(rs.getInt("order_num"));
-				f.setDeepLevel(rs.getInt("deep_level"));
+				f.setParentFunctionId(rs.getInt("parent_function_id"));
 
 				return f;
 			}
@@ -110,7 +110,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 	public void addFunction(Function func) {
 		logger.info("[addFunction] " + "");
 		
-        String sql = "INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, deep_level) " +
+        String sql = "INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id) " +
         				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -118,7 +118,7 @@ public class FunctionDAOImpl implements FunctionDAO {
         try {
 	        jdbcTemplate.update(sql, new Object[] { func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
 	        										func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(), 
-	        										func.getDeepLevel() });
+	        										func.getParentFunctionId() });
         } catch(Exception err) {
         	logger.info ("Error : " + err.getMessage());
         }
@@ -128,7 +128,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 	public void editFunction(Function func) {
 		logger.info("[editFunction] " + "");
 		
-        String query = "UPDATE tb_function SET function_code = ?, module = ?, module_icon = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, deep_level = ? " +
+        String query = "UPDATE tb_function SET function_code = ?, module = ?, module_icon = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, parent_function_id = ? " +
         				"WHERE function_id = ? ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -139,7 +139,7 @@ public class FunctionDAOImpl implements FunctionDAO {
             Object[] args = new Object[] { 
             		func.getFunctionCode(), func.getModule(), func.getModuleIcon(), 
 					func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(), 
-					func.getDeepLevel(), func.getFunctionId() };
+					func.getParentFunctionId(), func.getFunctionId() };
 
             out = jdbcTemplate.update(query, args);        	
         } catch (Exception err) {
@@ -173,17 +173,17 @@ public class FunctionDAOImpl implements FunctionDAO {
 		
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery =  
-				"SELECT function_id,     " +
-				"		function_code,   " +
-				"		module,          " +
-				"		module_icon,     " +
-				"		menu_name,       " +
-				"		menu_icon,       " +
-				"		url,             " +
-				"		order_num,       " +
-				"		deep_level       " +
-				"FROM tb_function        " +
-				"WHERE function_id IN    " + selectedIds;
+				"SELECT function_id,     	" +
+				"		function_code,   	" +
+				"		module,          	" +
+				"		module_icon,     	" +
+				"		menu_name,       	" +
+				"		menu_icon,       	" +
+				"		url,             	" +
+				"		order_num,       	" +
+				"		parent_function_id	" +
+				"FROM tb_function        	" +
+				"WHERE function_id IN    	" + selectedIds;
 	
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
@@ -199,12 +199,12 @@ public class FunctionDAOImpl implements FunctionDAO {
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setDeepLevel(Integer.valueOf(String.valueOf(row.get("deep_level"))));
+			res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
 			
 			result.add(res);
 		}
 		
-		for (Function f:result) { logger.info("f: " + f.toString()); }
+		logger.info("Function size: " + result.size());
 		
 		return result;
 	}

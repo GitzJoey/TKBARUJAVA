@@ -11,18 +11,20 @@ import com.tkbaru.model.Function;
 public class FunctionServiceImpl implements FunctionService {
 
 	@Autowired
-	FunctionDAO functionDAO;
+	FunctionDAO functionDAO;	
 	
 	@Override
 	public List<Function> getAllFunctions() {
+		List<Function> lf = functionDAO.getAllFunctions(); 
 		
-		return functionDAO.getAllFunctions();
+		return lf;
 	}
 
 	@Override
 	public Function getFunctionById(int selectedId) {
+		Function f = functionDAO.getFunctionById(selectedId);
 		
-		return functionDAO.getFunctionById(selectedId);
+		return f;
 	}
 
 	@Override
@@ -45,8 +47,9 @@ public class FunctionServiceImpl implements FunctionService {
 
 	@Override
 	public List<Function> getFunctionById(List<Integer> selectedIds) {
-		
-		return functionDAO.getFunctionById("(" + Converter.convertToCommaSeparated(selectedIds) + ")");
+		List<Function> lfs = functionDAO.getFunctionById("(" + Converter.convertToCommaSeparated(selectedIds) + ")");
+
+		return lfs;
 	}
 
 }

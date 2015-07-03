@@ -284,10 +284,10 @@
 																						</td>
 																						<td></td>
 																						<td class="text-right">
-																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
+																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																						</td>
 																					</tr>
-																					<c:set var="total" value="${ total + (iL.prodQuantity * iL.prodPrice) }" />
+																					<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
 																				</c:forEach>
 																			</tbody>
 																		</table>

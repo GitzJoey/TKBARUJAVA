@@ -28,9 +28,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Warehouse> whList = session.createQuery("FROM Warehouse").list();
 	
-		for(Warehouse wh:whList) {
-			logger.info("Warehouse : " + wh.toString());
-		}
+		logger.info("Warehouse Count: " + whList.size());
 		
 		return whList;
 	}
@@ -58,6 +56,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		logger.info("[addWarehouse] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(warehouse);
         
         logger.info("Warehouse added successfully, Warehouse Details = " + warehouse.toString());		
@@ -68,7 +67,8 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		logger.info("[editWarehouse] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(warehouse);
+	 
+		session.update(warehouse);
 	    
 	    logger.info("Warehouse updated successfully, Warehouse Details = " + warehouse.toString());			
 	}
@@ -85,5 +85,4 @@ public class WarehouseDAOImpl implements WarehouseDAO {
         
         logger.info("Warehouse deleted successfully, Warehouse details = " + warehouse.toString());
 	}
-
 }

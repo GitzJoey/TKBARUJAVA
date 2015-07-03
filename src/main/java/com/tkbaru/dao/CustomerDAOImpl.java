@@ -27,10 +27,8 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Customer> customerList = session.createQuery("FROM Customer").list();
 	
-		for(Customer cust:customerList) {
-			logger.info("Customer : " + cust.toString());
-		}
-		
+		logger.info("Customer Count: " + customerList.size());
+
 		return customerList;
 	}
 
@@ -87,14 +85,12 @@ public class CustomerDAOImpl implements CustomerDAO {
 
 	@Override
 	public List<Customer> searchCustomer(String searchQuery) {
-		logger.info("[searchCustomer] " + searchQuery);
+		logger.info("[searchCustomer] " + "searchQuery: " + searchQuery);
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Customer> customerList = session.createQuery("FROM Customer WHERE customerId != 1 AND customerName LIKE :customerName").setString("customerName", "%"+searchQuery+"%").list();
 	
-		for(Customer cust:customerList) {
-			logger.info("Customer : " + cust.toString());
-		}
+		logger.info("Customer Count: " + customerList.toString());
 		
 		return customerList;
 	}

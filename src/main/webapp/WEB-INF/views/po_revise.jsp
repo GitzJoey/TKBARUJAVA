@@ -316,10 +316,10 @@
 																						</button>
 																					</td>
 																					<td style="vertical-align: middle;" class="text-right">
-																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
+																				<c:set var="total" value="${ total+ (iL.toBaseQty * iL.prodPrice) }" />
 																				<c:forEach items="${ iL.receiptList }" var="iR" varStatus="iRIdx">
 																					<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" />																				
 																				</c:forEach>																				

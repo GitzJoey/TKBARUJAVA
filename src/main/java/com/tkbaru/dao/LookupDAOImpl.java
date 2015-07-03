@@ -44,10 +44,8 @@ public class LookupDAOImpl implements LookupDAO {
 		Session session = this.sessionFactory.getCurrentSession();	
 		List<Lookup> result = session.createQuery("FROM Lookup").list();
 		
-		for(Lookup l:result) {
-			logger.info("Lookup : " + l.toString());
-		}		
-		
+		logger.info("Lookup Count: " + result.size());
+
 		return result;
 	}
 
@@ -71,6 +69,8 @@ public class LookupDAOImpl implements LookupDAO {
 
 	@Override
 	public List<Lookup> getAllCategory() {
+		logger.info("[getAllCategory] " + "");
+
 		Session session = this.sessionFactory.getCurrentSession();
 		
 		 Criteria crit = (Criteria) session.createCriteria(Lookup.class);
