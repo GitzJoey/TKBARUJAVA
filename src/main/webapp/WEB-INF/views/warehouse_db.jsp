@@ -387,9 +387,7 @@
 										<div class="col-sm-2">
 											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
 												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-
 													<input id="inputBruto" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
-
 												</c:if>
 											</c:forEach>
 										</div>
@@ -397,24 +395,20 @@
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Net</label>
 										<div class="col-sm-2">
-
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>												
-
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>												
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
-
-											<form:input class="form-control" path="receipt.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>										
+											<form:input class="form-control" path="receipt.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>										
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 										<div class="col-sm-5">
 											<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedPoObject.shippingDate }" var="formattedShippingDate"/>
-											<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>												
-
+											<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>
 										</div>
 									</div>
 									<div class="form-group">

@@ -239,7 +239,7 @@
 													</div>
 												</div>
 												<div class="row">
-													<c:set var="lastIdx" value="${ poForm.paymentList.size()-1 }"></c:set>
+													<c:set var="lastIdx" value="${ poForm.paymentList.size() - 1 }"></c:set>
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
@@ -253,8 +253,7 @@
 																			<thead>
 																				<tr>
 																					<th width="30%">Product Name</th>
-																					<th width="15%">Quantity</th>
-																					<th width="15%" class="text-right">Unit</th>
+																					<th width="30%">Quantity</th>
 																					<th width="15%" class="text-right">Price/Base Unit</th>
 																					<th width="5%">&nbsp;</th>
 																					<th width="20%" class="text-right">Total Price</th>
@@ -268,15 +267,13 @@
 																							<form:hidden path="itemsList[${ iLIdx.index }].itemsId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productId"></form:hidden>
 																							<form:hidden path="itemsList[${ iLIdx.index }].productLookup.productName"></form:hidden>
-																							<c:out value="${poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
-																						</td>
-																						<td class="text-right">
-																							<form:hidden path="itemsList[${ iLIdx.index }].prodQuantity"></form:hidden>
-																							<label><c:out value="${ poForm.itemsList[ iLIdx.index ].prodQuantity }"></c:out></label>
+																							<c:out value="${ poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
 																						</td>
 																						<td>
-																							<form:hidden path="itemsList[${ iLIdx.index }].unitCode"></form:hidden>
-																							<c:out value="${poForm.itemsList[ iLIdx.index ].unitCodeLookup.lookupValue}"></c:out>
+																							<label>
+																								Bruto : <c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/>&nbsp;(<c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/>)<br/>
+																								Netto : <c:out value="${ poForm.itemsList[ iLIdx.index ].receiptList[0].net }"></c:out>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/>
+																							</label>
 																						</td>
 																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodPrice"></form:hidden>
@@ -284,10 +281,10 @@
 																						</td>
 																						<td></td>
 																						<td class="text-right">
-																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
+																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ (poForm.itemsList[ iLIdx.index ].receiptList[0].net * iL.prodPrice) }"></fmt:formatNumber>
 																						</td>
 																					</tr>
-																					<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
+																					<c:set var="total" value="${ total + (poForm.itemsList[ iLIdx.index ].receiptList[0].net * iL.prodPrice) }" />
 																				</c:forEach>
 																			</tbody>
 																		</table>

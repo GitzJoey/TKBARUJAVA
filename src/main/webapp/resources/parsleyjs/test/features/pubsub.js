@@ -2,15 +2,17 @@ define(function () {
   return function () {
     describe('PubSub', function () {
       it('listen() without context', function (done) {
-        $.listen('foo', function (arg) {
-          expect(arg).to.be('bar');
-          done();
-        });
+        expectWarning(function(){
+          $.listen('foo', function (instance, arg) {
+            expect(arg).to.be('bar');
+            done();
+          });
+        })
         $.emit('foo', 'bar');
       });
       it('listen() with context', function (done) {
         var obj = { foo: function (bar) { return 'foo' + bar; } };
-        $.listen('foo', obj, function (arg) {
+        $.listen('foo', obj, function (instance, arg) {
           expect(this.foo(arg)).to.be('foobar');
           done();
         });
@@ -60,21 +62,18 @@ define(function () {
 
         $.emit('foo', $('#field1').psly());
       });
-      it('unsubscribeTo()', function () {
+      it('unsubscribeTo()', function (done) {
         $('body').append('<input type="text" id="element" />');
-        $.listen('foo', $.noop);
-        $.listenTo($('#element').psly(), 'foo', $.noop);
-        expect($.subscribed()).to.have.key('foo');
-        expect($.subscribed().foo.length).to.be(2);
+        $.listen('foo', function() { done(); });
+        $.listenTo($('#element').psly(), 'foo', function() { expect(true).to.be(false); });
         $.unsubscribeTo($('#element').psly(), 'foo');
-        expect($.subscribed().foo.length).to.be(1);
+        $.emit('foo', $('#element').psly())
       });
       it('unsubscribe()', function () {
-        $.listen('foo', $.noop);
-        expect($.subscribed()).to.have.key('foo');
-        expect($.subscribed().foo.length).to.be(1);
-        $.unsubscribe('foo', $.noop);
-        expect($.subscribed().foo.length).to.be(0);
+        var fn = function() { expect(true).to.be(false); };
+        $.listen('foo', fn);
+        $.unsubscribe('foo', fn);
+        $.emit('foo');
       });
       afterEach(function () {
         $('#element, #element2').remove();

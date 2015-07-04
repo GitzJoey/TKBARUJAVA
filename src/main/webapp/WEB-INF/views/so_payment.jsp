@@ -322,7 +322,7 @@
 												</div>
 											</div>
 											<div class="row">
-											<c:set var="lastIdx" value="${ paymentSalesForm.paymentList.size()-1 }"></c:set>
+											<c:set var="lastIdx" value="${ paymentSalesForm.paymentList.size() - 1 }"></c:set>
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">

@@ -4,11 +4,13 @@
 // Events like onkeyup when field is invalid or on form submit. These validation methods adds an
 // Extra `remote` validator which could not be simply added like other `ParsleyExtra` validators
 // Because returns promises instead of booleans.
+(function($){
+
 window.ParsleyExtend = window.ParsleyExtend || {};
-window.ParsleyExtend = $.extend(window.ParsleyExtend, {
+window.ParsleyExtend = $.extend(true, window.ParsleyExtend, {
   asyncSupport: true,
 
-  asyncValidators: $.extend({
+  asyncValidators: {
     'default': {
       fn: function (xhr) {
         return 'resolved' === xhr.state();
@@ -22,7 +24,7 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
       },
       url: false
     }
-  }, window.ParsleyExtend.asyncValidators),
+  },
 
   addAsyncValidator: function (name, fn, url, options) {
     this.asyncValidators[name.toLowerCase()] = {
@@ -67,7 +69,7 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
     return this._asyncValidateForm(undefined, event)
       .done(function () {
         // If user do not have prevented the event, re-submit form
-        if (!that.submitEvent.isDefaultPrevented())
+        if (that._trigger('submit') && !that.submitEvent.isDefaultPrevented())
           that.$element.trigger($.extend($.Event('submit'), { parsley: true }));
       });
   },
@@ -77,7 +79,7 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
     // do not validate if val length < min threshold on first validation. Once field have been validated once and info
     // about success or failure have been displayed, always validate with this trigger to reflect every yalidation change.
     if (new RegExp('key').test(event.type))
-      if (!this._ui.validationInformationVisible  && this.getValue().length <= this.options.validationThreshold)
+      if (!this._ui.validationInformationVisible && this.getValue().length <= this.options.validationThreshold)
         return;
 
     this._ui.validatedOnce = true;
@@ -92,7 +94,7 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
 
     this._refreshFields();
 
-    $.emit('parsley:form:validate', this);
+    this._trigger('validate');
 
     for (var i = 0; i < this.fields.length; i++) {
 
@@ -105,13 +107,13 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
 
     return $.when.apply($, promises)
       .done(function () {
-        $.emit('parsley:form:success', that);
+        that._trigger('success');
       })
       .fail(function () {
-        $.emit('parsley:form:error', that);
+        that._trigger('error');
       })
       .always(function () {
-        $.emit('parsley:form:validated', that);
+        that._trigger('validated');
       });
   },
 
@@ -134,17 +136,17 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
   _asyncValidateField: function (force) {
     var that = this;
 
-    $.emit('parsley:field:validate', this);
+    this._trigger('validate');
 
     return this._asyncIsValidField(force)
       .done(function () {
-        $.emit('parsley:field:success', that);
+        that._trigger('success');
       })
       .fail(function () {
-        $.emit('parsley:field:error', that);
+        that._trigger('error');
       })
       .always(function () {
-        $.emit('parsley:field:validated', that);
+        that._trigger('validated');
       });
   },
 
@@ -210,7 +212,7 @@ window.ParsleyExtend = $.extend(window.ParsleyExtend, {
         this._xhr.abort();
 
       // Make ajax call
-      this._xhr =  $.ajax(ajaxOptions)
+      this._xhr = $.ajax(ajaxOptions);
 
       // Store remote call result to avoid next calls with exact same parameters
       this._remoteCache[csr] = this._xhr;
@@ -261,3 +263,9 @@ window.ParsleyConfig.validators.remote = {
   },
   priority: -1
 };
+
+window.Parsley.on('form:submit', function () {
+  this._remoteCache = {};
+});
+
+})(jQuery);
