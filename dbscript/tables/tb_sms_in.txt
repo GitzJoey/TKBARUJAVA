@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `tb_sms_in`;
+
 CREATE TABLE `tb_sms_in` (
   `sms_in_id` int(11) NOT NULL AUTO_INCREMENT,
   `sender` varchar(255) DEFAULT NULL,

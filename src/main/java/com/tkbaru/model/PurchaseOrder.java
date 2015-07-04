@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -53,13 +54,13 @@ public class PurchaseOrder {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_po_items", 
 				joinColumns={@JoinColumn(name="po_id", referencedColumnName="po_id")},
 				inverseJoinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")})
 	private List<Items> itemsList = LazyList.decorate(new ArrayList<Items>(), FactoryUtils.instantiateFactory(Items.class));
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_po_payment", 
 				joinColumns={@JoinColumn(name="po_id", referencedColumnName="po_id")},
 				inverseJoinColumns={@JoinColumn(name="payment_id", referencedColumnName="payment_id")})

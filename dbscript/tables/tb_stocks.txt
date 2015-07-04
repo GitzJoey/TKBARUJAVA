@@ -1,4 +1,5 @@
 DROP TABLE IF EXISTS `tb_stocks`;
+
 CREATE TABLE `tb_stocks` (
   `stocks_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
   `po_id` 			int(11) 	DEFAULT NULL,

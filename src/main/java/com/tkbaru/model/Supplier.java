@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -56,20 +57,20 @@ public class Supplier {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_supplier_bankacc", 
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
 				inverseJoinColumns={@JoinColumn(name="bankacc_id", referencedColumnName="bankacc_id")})
 	private List<BankAccount> bankAccList = LazyList.decorate(new ArrayList<BankAccount>(), FactoryUtils.instantiateFactory(BankAccount.class));
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_supplier_pic", 
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
 				inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
 	private List<Person> picList = LazyList.decorate(new ArrayList<Person>(), FactoryUtils.instantiateFactory(Person.class));
 
-	@ManyToMany
-	@JoinTable(name="tb_supplier_prod", 
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinTable(name="tb_supplier_prod",
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
 				inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")})
 	private List<Product> prodList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));

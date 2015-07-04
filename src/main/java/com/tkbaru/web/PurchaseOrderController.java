@@ -98,12 +98,12 @@ public class PurchaseOrderController {
 			}
 		}
 
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -117,12 +117,12 @@ public class PurchaseOrderController {
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
 
 		model.addAttribute("reviseForm", selectedPo);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -167,7 +167,7 @@ public class PurchaseOrderController {
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -238,7 +238,7 @@ public class PurchaseOrderController {
 		
 		model.addAttribute("reviseForm", reviseForm);
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -266,12 +266,12 @@ public class PurchaseOrderController {
 		
 		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList());
 
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -292,12 +292,12 @@ public class PurchaseOrderController {
 
 		loginContextSession.getPoList().add(newPo);
 
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -308,9 +308,9 @@ public class PurchaseOrderController {
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 
-		model.addAttribute("paymentList",poManager.getPurchaseOrderByStatus("L013_WP"));
+		model.addAttribute("paymentList", poManager.getPurchaseOrderByStatus("L013_WP"));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -332,10 +332,10 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -359,12 +359,12 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -386,10 +386,10 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -413,12 +413,12 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -431,11 +431,11 @@ public class PurchaseOrderController {
 		
 		model.addAttribute("reviseList",poManager.getPurchaseOrderByStatus("L013_WA"));
 		
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -491,14 +491,14 @@ public class PurchaseOrderController {
 		loginContextSession.setPoList(loginContext.getPoList());
 		loginContextSession.getPoList().get(Integer.parseInt(varId)).setItemsList(itemList);
 
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute("supplierSelectionDDL",supplierManager.getAllSupplier());
-		model.addAttribute("warehouseSelectionDDL",warehouseManager.getAllWarehouse());
+		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_PURCHASEORDER;
 
@@ -523,7 +523,7 @@ public class PurchaseOrderController {
 			loginContextSession.setPoList(poList);
 		}
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 
 		return Constants.JSPPAGE_DASHBOARD;
 	}
@@ -553,9 +553,9 @@ public class PurchaseOrderController {
 
 		model.addAttribute("reviseForm", reviseForm);
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_EDIT);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:revise";
 	}
@@ -601,12 +601,12 @@ public class PurchaseOrderController {
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -637,7 +637,7 @@ public class PurchaseOrderController {
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -683,12 +683,12 @@ public class PurchaseOrderController {
 		
 		poManager.editPurchaseOrder(po);
 
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 		
