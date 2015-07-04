@@ -98,7 +98,7 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[getAllProduct] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<Product> productList = session.createQuery("SELECT DISTINCT p FROM Product p INNER JOIN p.stocks s WHERE p.productId = s.productId AND s.prodQuantity > 0 ").list();
+		List<Product> productList = session.createQuery("SELECT p FROM Stocks s INNER JOIN s.productLookup p WHERE s.prodQuantity > 0 ").list();
 	
 		logger.info("List Products In Stocks: ");
 		for(Product prod:productList) {
