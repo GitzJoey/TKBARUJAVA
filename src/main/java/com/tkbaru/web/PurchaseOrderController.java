@@ -31,6 +31,7 @@ import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.PurchaseOrder;
+import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Supplier;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
@@ -73,6 +74,18 @@ public class PurchaseOrderController {
 		binder.registerCustomEditor(Date.class, orderDateEditor);
 	}
 
+	private long getNetto(Items item) {
+		long result = 0;
+		
+		if (item.getReceiptList().size() == 0) return result;
+		
+		for (Receipt r : item.getReceiptList()) {
+			result += r.getNet();
+		}
+		
+		return result;
+	}
+
 	@RequestMapping(value = "/add", method = RequestMethod.GET)
 	public String poNew(Locale locale, Model model) {
 		logger.info("[poNew] " + "");
@@ -112,7 +125,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/revise/{selectedId}", method = RequestMethod.GET)
 	public String reviseForm(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[revise] " + "");
+		logger.info("[reviseForm] " + "");
 
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
 
@@ -308,7 +321,7 @@ public class PurchaseOrderController {
 	public String poPayment(Locale locale, Model model) {
 		logger.info("[poPayment] " + "");
 
-		model.addAttribute("paymentList", poManager.getPurchaseOrderByStatus("L013_WP"));
+		model.addAttribute("poList", poManager.getPurchaseOrderByStatus("L013_WP"));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
@@ -316,7 +329,21 @@ public class PurchaseOrderController {
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
-	
+
+	@RequestMapping(value = "/payment/view/{selectedId}", method = RequestMethod.GET)
+	public String poPaymentView(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[poPaymentView] " + "selectedId: " + selectedId);
+
+		model.addAttribute("poForm", poManager.getPurchaseOrderById(selectedId));
+		model.addAttribute("ViewMode", true);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_PO_PAYMENT;
+	}
+
 	@RequestMapping(value = "/payment/cash/{selectedPo}", method = RequestMethod.GET)
 	public String poCashPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
 		logger.info("[poNew] " + "");
@@ -346,7 +373,7 @@ public class PurchaseOrderController {
 	
 	@RequestMapping(value = "/payment/transfer/{selectedPo}", method = RequestMethod.GET)
 	public String poTransferPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poNew] " + "");
+		logger.info("[poTransferPayment] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
@@ -373,7 +400,7 @@ public class PurchaseOrderController {
 	
 	@RequestMapping(value = "/payment/giro/{selectedPo}", method = RequestMethod.GET)
 	public String poGiroPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poNew] " + "");
+		logger.info("[poGiroPayment] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
@@ -400,7 +427,7 @@ public class PurchaseOrderController {
 	
 	@RequestMapping(value = "/payment/term/{selectedPo}", method = RequestMethod.GET)
 	public String poTermPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poNew] " + "");
+		logger.info("[poTermPayment] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
@@ -561,8 +588,7 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/retrieve/supplier", method = RequestMethod.GET)
-	public @ResponseBody
-	String poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
+	public @ResponseBody String poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
 		logger.info("[poRetrieveSupplier] " + "supplierId: " + supplierId);
 
 		Supplier supp = supplierManager.getSupplierById(Integer.parseInt(supplierId));
@@ -643,7 +669,7 @@ public class PurchaseOrderController {
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
-
+	
 	@RequestMapping(value = "/savepayment", method = RequestMethod.POST)
 	public String paymentSave(Locale locale, Model model,@ModelAttribute("poForm") PurchaseOrder poForm,RedirectAttributes redirectAttributes) {
 		logger.info("[paymentSave] " + "");
@@ -655,7 +681,7 @@ public class PurchaseOrderController {
 		long totalHutang = 0;
 		
 		for(Items items : po.getItemsList()){
-			totalHutang += (items.getProdQuantity() * items.getProdPrice());
+			totalHutang += (getNetto(items) * items.getProdPrice());
 		}
 		
 		long totalPayment = 0;

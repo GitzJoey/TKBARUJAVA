@@ -73,6 +73,8 @@
 
 			var supplier = $("#inputSupplierId").val()
 			$("#supplierTooltip").tooltip({ title : supplier });
+			
+			$('#reviseTableList').DataTable();
 		});
 	</script>
 </head>
@@ -115,31 +117,28 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="20%">PO Code</th>
-												<th width="20%">PO Date</th>
-												<th width="20%">Supplier</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty reviseList}">
-												<c:forEach items="${ reviseList }" var="i" varStatus="status">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
-														<td><c:out value="${ i.poCode }"></c:out></td>
-														<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
-														<td><c:out value="${ i.supplierLookup.supplierName }"></c:out>
-														</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="reviseTableList" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="20%">PO Code</th>
+											<th width="20%">PO Date</th>
+											<th width="20%">Supplier</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty reviseList}">
+											<c:forEach items="${ reviseList }" var="i" varStatus="status">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
+													<td><c:out value="${ i.poCode }"></c:out></td>
+													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
+													<td><c:out value="${ i.supplierLookup.supplierName }"></c:out></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
 							</div>
 						</div>
