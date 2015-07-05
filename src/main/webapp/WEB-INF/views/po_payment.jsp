@@ -113,8 +113,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<table id="poPaymentListTable"
-									class="table table-bordered table-hover display responsive">
+								<table id="poPaymentListTable" class="table table-bordered table-hover display responsive">
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
@@ -124,7 +123,7 @@
 											<th width="10%" class="text-right">Total</th>
 											<th width="10%" class="text-right">Paid</th>
 											<th width="10%" class="text-right">Outstanding</th>
-									</tr>
+										</tr>
 									</thead>
 									<tbody>
 										<c:if test="${not empty poList}">
@@ -399,14 +398,12 @@
 																													<div class="checkbox">
 																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																													</div>
-																													<br>
 																												</c:when>
 																												<c:otherwise>
 																												<c:if test="${ empty poForm.paymentList[ ilIdx.index ].bankCode }">
 																													<div class="checkbox">
 																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																													</div>
-																													<br>
 																												</c:if>
 																												</c:otherwise>
 																											</c:choose>
@@ -434,7 +431,6 @@
 																										<div class="checkbox">
 																											<form:checkbox id="cbx_cash_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" disabled="true"/>
 																										</div>
-																										<br>
 																									</c:forEach>
 																								</c:if> 
 																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TERM' }">
@@ -442,7 +438,6 @@
 																										<div class="checkbox">
 																											<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" disabled="true"/>
 																										</div>
-																										<br>
 																									</c:forEach>
 																								</c:if>
 																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TRANSFER' }">
@@ -450,7 +445,6 @@
 																										<div class="checkbox">
 																											<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true"/>
 																										</div>
-																										<br>
 																									</c:forEach>
 																								</c:if>
 																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_GIRO' }">
@@ -458,7 +452,6 @@
 																										<div class="checkbox">
 																											<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true"/>
 																										</div>
-																										<br>
 																									</c:forEach>
 																								</c:if>
 																							</td>

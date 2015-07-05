@@ -1,3 +1,58 @@
+version 4.2.3
+=============
+**Date**: 21-Jun-2015
+
+1. (enh #336): Fixes to reset preview via `initUploadSuccess`.
+
+version 4.2.2
+=============
+**Date**: 18-Jun-2015
+
+1. (enh #332): Bump nuget and bower package versions.
+
+version 4.2.1
+=============
+**Date**: 15-Jun-2015
+
+1. (enh #279, #280): Fixed error for failed response types.
+2. (enh #287): Add Brazilian Portugese (pt-BR) translations.
+3. (bug #295): Validate `overwriteInitial` correctly for ajax uploads.
+4. (enh #296): Fixed license identifiers in bower.json and composer.json.
+5. (enh #297): Add Romanian translations.
+6. (enh #299): Enhancements for displaying uploaded file thumbnails.
+    - New property `showUploadedThumbs` that will display uploaded thumbnails until the remove/clear button is explicitly pressed.
+    - New event `filesuccessremove`. This will be triggered on removing the uploaded thumbnail using the thumbnail delete button. The event shares the following parameters:
+        - `id`: the HTML id attribute of the thumbnail container 
+      The `event` can be set to return `false` to abort the thumbnail removal.
+7. (enh #302): Add Greek (el) translations.
+8. (enh #303): Validate only files to be dragged and dropped.
+9. (enh #305): Implement better cleanup of memory with `revokeObjectURL`.
+10. (enh #307): Allow setting thumbnail frame css class and attributes via `initialPreviewConfig`.
+11. (enh #308): Better check for `data.error` being empty.
+12. (enh #309): Fixes for older browsers.
+13. (bug #310): Set missing caption icon on error.
+14. (bug #315): Fix parsing of preview settings for default (other) preview.
+15. (bug #327): More correct clearing of preview.
+16. (bug #328): Implement image dimension validations.
+    - New properties added to the plugin:
+        - `minImageWidth`
+        - `minImageHeight`
+        - `maxImageWidth`
+        - `maxImageHeight`
+        - `msgImageWidthSmall`
+        - `msgImageHeightSmall`
+        - `msgImageWidthLarge`
+        - `msgImageHeightLarge`
+17. (enh #329): Message translation updates.
+18. (enh #330): Minor enhancements in validating preview and progress bar display.
+
+version 4.2.0
+=============
+**Date**: 11-May-2015
+
+1. (enh #275): Add Czech & Slovakian translations.
+2. (enh #277): New `language` property to allow configuring multi lang widgets on same page.
+
 version 4.1.9
 =============
 **Date**: 02-May-2015

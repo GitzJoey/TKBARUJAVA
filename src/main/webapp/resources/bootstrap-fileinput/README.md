@@ -1,7 +1,7 @@
 bootstrap-fileinput
 ====================
 
-[![BOWER version](https://badge-me.herokuapp.com/api/bower/kartik-v/bootstrap-fileinput.png)](http://badges.enytc.com/for/bower/kartik-v/bootstrap-fileinput)
+[![Bower version](https://badge.fury.io/bo/bootstrap-fileinput.svg)](http://badge.fury.io/bo/bootstrap-fileinput)
 [![Latest Stable Version](https://poser.pugx.org/kartik-v/bootstrap-fileinput/v/stable)](https://packagist.org/packages/kartik-v/bootstrap-fileinput)
 [![License](https://poser.pugx.org/kartik-v/bootstrap-fileinput/license)](https://packagist.org/packages/kartik-v/bootstrap-fileinput)
 [![Packagist Downloads](https://poser.pugx.org/kartik-v/bootstrap-fileinput/downloads)](https://packagist.org/packages/kartik-v/bootstrap-fileinput)
@@ -12,7 +12,7 @@ An enhanced HTML 5 file input for Bootstrap 3.x with file preview for various fi
 
 This plugin was initially inspired by [this blog article](http://www.abeautifulsite.net/blog/2013/08/whipping-file-inputs-into-shape-with-bootstrap-3/) and [Jasny's File Input plugin](http://jasny.github.io/bootstrap/javascript/#fileinput). But the plugin has now matured with various additional features and enhancements to be a complete (yet simple) file management tool and solution for web developers. 
 
-> NOTE: The latest version of the plugin v4.1.9 has been released. Refer the [CHANGE LOG](https://github.com/kartik-v/bootstrap-fileinput/blob/master/CHANGE.md) for details. 
+> NOTE: The latest version of the plugin v4.2.3 has been released. Refer the [CHANGE LOG](https://github.com/kartik-v/bootstrap-fileinput/blob/master/CHANGE.md) for details. 
 
 ## Features  
 
@@ -99,11 +99,11 @@ You can use the `bower` package manager to install. Run:
 ### Using Composer
 You can use the `composer` package manager to install. Either run:
 
-    $ php composer.phar require kartik-v/bootstrap-fileinput "dev-master"
+    $ php composer.phar require kartik-v/bootstrap-fileinput "@dev"
 
 or add:
 
-    "kartik-v/bootstrap-fileinput": "dev-master"
+    "kartik-v/bootstrap-fileinput": "@dev"
 
 to your composer.json file
 
@@ -155,6 +155,9 @@ As shown in the installation section, translations are now enabled with release 
 ## Plugin Options
 The plugin supports these following options:
 
+### language
+_string_ language configuration for the plugin to enable the plugin to display messages for your locale (you must set the ISO code for the language). You can have multiple language widgets on the same page. The locale JS file for the language code must be defined as mentioned in the translations section. The file must be loaded after `fileinput.js`.
+
 ### showCaption
 _boolean_ whether to display the file caption. Defaults to `true`.
 
@@ -169,6 +172,9 @@ _boolean_ whether to display the file upload button. Defaults to `true`. This wi
 
 ### showCancel
 _boolean_ whether to display the file upload cancel button. Defaults to `true`. This will be only enabled and displayed when an AJAX upload is in process.
+
+### showUploadedThumbs
+_boolean_ whether to persist display of the uploaded file thumbnails in the preview window (for ajax uploads) until the remove/clear button is pressed. Defaults to `true`.  When set to `false`, a next batch of files selected for upload will clear these thumbnails from preview.
 
 ### captionClass
 _string_ any additional CSS class to append to the caption container.
@@ -229,6 +235,8 @@ _array_, the configuration for setting up important properties for each `initial
     - `width`: _string_, the CSS width of the image/content displayed.
     - `url`: _string_, the URL for deleting the image/content in the initial preview via AJAX post response. This will default to `deleteUrl` if not set.
     - `key`: _string|object_, the key that will be passed as data to the `url` via AJAX POST.
+    - `frameClass`: _string_, the additional frame css class to set for the file's thumbnail frame.
+    - `frameAttr`: _object_, the HTML attribute settings (set as key:value pairs) for the thumbnail frame.
     - `extra`: _object|function_, the extra data that will be passed as data to the initial preview delete url/AJAX server call via POST. This will default to `deleteExtraData` if not set.
 
 An example configuration of `initialPreviewConfig` (for the previously set `initialPreviewContent`) can be:
@@ -253,6 +261,11 @@ initialPreviewConfig: [
         width: '120px', 
         url: '/localhost/avatar/delete', 
         key: 101, 
+        frameClass: 'my-custom-frame-css',
+        frameAttr: {
+            style: 'height:80px',
+            title: 'My Custom Title',
+        },
         extra: function() { 
             return {id: $("#id").val()};
         },
@@ -765,6 +778,18 @@ function() {
 }
 ```
 
+### maxImageWidth
+_int_ the maximum allowed image width in `px` if you are uploading image files. Defaults to `null` which means no limit on image width.
+
+### maxImageHeight
+_int_ the maximum allowed image height in `px` if you are uploading image files. Defaults to `null` which means no limit on image height.
+
+### minImageWidth
+_int_ the minimum allowed image width in `px` if you are uploading image files. Defaults to `null` which means no limit on image width.
+
+### minImageHeight
+_int_ the minimum allowed image height in `px` if you are uploading image files. Defaults to `null` which means no limit on image height.
+
 ### maxFileSize
 _float_ the maximum file size for upload in KB.  If set to `0`, it means size allowed is unlimited. Defaults to `0`.
 
@@ -926,6 +951,50 @@ _string_ the progress message displayed in caption window when multiple (more th
 _string_ the message displayed when a folder has been dragged to the drop zone. Defaults to `Drag & drop files only! {n} folder(s) dropped were skipped.`. The following variables will be replaced The following variables will be replaced:
 
 - `{n}`: the number of folders dropped.
+
+### msgImageWidthSmall
+_string_ the exception message to be displayed when the file selected for preview is an image and its width is less than the `minImageWidth` setting. Defaults to:
+
+```
+Width of image file "{name}" must be at least {size} px.
+```
+where:
+
+- `{name}`: will be replaced by the file name being uploaded
+- `{size}`: will be replaced by the `minImageWidth` setting.
+
+### msgImageHeightSmall
+_string_ the exception message to be displayed when the file selected for preview is an image and its height is less than the `minImageHeight` setting. Defaults to:
+
+```
+Width of image file "{name}" must be at least {size} px.
+```
+where:
+
+- `{name}`: will be replaced by the file name being uploaded
+- `{size}`: will be replaced by the `minImageHeight` setting.
+
+### msgImageWidthLarge
+_string_ the exception message to be displayed when the file selected for preview is an image and its width exceeds the `maxImageWidth` setting. Defaults to:
+
+```
+Width of image file "{name}" cannot exceed {size} px.
+```
+where:
+
+- `{name}`: will be replaced by the file name being uploaded
+- `{size}`: will be replaced by the `maxImageWidth` setting.
+
+### msgImageHeightLarge
+_string_ the exception message to be displayed when the file selected for preview is an image and its height exceeds the `maxImageHeight` setting. Defaults to:
+
+```
+Height of image file "{name}" cannot exceed {size} px.
+```
+where:
+
+- `{name}`: will be replaced by the file name being uploaded
+- `{size}`: will be replaced by the `maxImageHeight` setting.
 
 ### progressClass
 _string_ the upload progress bar CSS class to be applied when AJAX upload is in process (applicable only for ajax uploads). Defaults to `progress-bar progress-bar-success progress-bar-striped active`. 
@@ -1289,6 +1358,22 @@ $('#input-id').on('filebatchuploadcomplete', function(event, files, extra) {
 });
 ```
 
+#### filesuccessremove
+This event is triggered after a successfully uploaded thumbnail is removed using the thumbnail delete button. This is usually applicable when you have **showUploadedThumbs** set to `true`. Additional parameters available are: 
+
+- `id`: the HTML ID attribute for the thumbnail container element.
+
+The event can return `false` to abort the thumbnail removal.
+
+```js
+$('#input-id').on('filesuccessremove', function(event, id) {
+    if (some_processing_function(id)) {
+       console.log('Uploaded thumbnail successfully removed');
+    } else {
+        return false; // abort the thumbnail removal
+    }
+});
+```
 #### filedisabled
 This event is triggered when the file input widget is disabled (prevents any modification) using the `disable` method.
 
@@ -1463,6 +1548,7 @@ The above abort will be triggered at time of upload for (ajax uploads) OR at for
 ```js
 $('#input').on('filecustomerror', function(event, params) {
    // params.abortData will contain the additional abort data passed
+   // params.abortMessage will contain the aborted error message passed
 });
 ```
 

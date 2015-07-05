@@ -31,10 +31,12 @@
     accuracy: 3
   };
 
-  function element(command, params, pathElements, pos, relative) {
-    pathElements.splice(pos, 0, Chartist.extend({
+  function element(command, params, pathElements, pos, relative, data) {
+    var pathElement = Chartist.extend({
       command: relative ? command.toLowerCase() : command.toUpperCase()
-    }, params));
+    }, params, data ? { data: data } : {} );
+
+    pathElements.splice(pos, 0, pathElement);
   }
 
   function forEachParam(pathElements, cb) {
@@ -95,13 +97,14 @@
    * @param {Number} x The x coordinate for the move element.
    * @param {Number} y The y coordinate for the move element.
    * @param {Boolean} [relative] If set to true the move element will be created with relative coordinates (lowercase letter)
+   * @param {*} [data] Any data that should be stored with the element object that will be accessible in pathElement
    * @return {Chartist.Svg.Path} The current path object for easy call chaining.
    */
-  function move(x, y, relative) {
+  function move(x, y, relative, data) {
     element('M', {
       x: +x,
       y: +y
-    }, this.pathElements, this.pos++, relative);
+    }, this.pathElements, this.pos++, relative, data);
     return this;
   }
 
@@ -112,13 +115,14 @@
    * @param {Number} x The x coordinate for the line element.
    * @param {Number} y The y coordinate for the line element.
    * @param {Boolean} [relative] If set to true the line element will be created with relative coordinates (lowercase letter)
+   * @param {*} [data] Any data that should be stored with the element object that will be accessible in pathElement
    * @return {Chartist.Svg.Path} The current path object for easy call chaining.
    */
-  function line(x, y, relative) {
+  function line(x, y, relative, data) {
     element('L', {
       x: +x,
       y: +y
-    }, this.pathElements, this.pos++, relative);
+    }, this.pathElements, this.pos++, relative, data);
     return this;
   }
 
@@ -133,9 +137,10 @@
    * @param {Number} x The x coordinate for the target point of the curve element.
    * @param {Number} y The y coordinate for the target point of the curve element.
    * @param {Boolean} [relative] If set to true the curve element will be created with relative coordinates (lowercase letter)
+   * @param {*} [data] Any data that should be stored with the element object that will be accessible in pathElement
    * @return {Chartist.Svg.Path} The current path object for easy call chaining.
    */
-  function curve(x1, y1, x2, y2, x, y, relative) {
+  function curve(x1, y1, x2, y2, x, y, relative, data) {
     element('C', {
       x1: +x1,
       y1: +y1,
@@ -143,7 +148,7 @@
       y2: +y2,
       x: +x,
       y: +y
-    }, this.pathElements, this.pos++, relative);
+    }, this.pathElements, this.pos++, relative, data);
     return this;
   }
 
@@ -159,9 +164,10 @@
    * @param {Number} x The x coordinate for the target point of the curve element.
    * @param {Number} y The y coordinate for the target point of the curve element.
    * @param {Boolean} [relative] If set to true the curve element will be created with relative coordinates (lowercase letter)
+   * @param {*} [data] Any data that should be stored with the element object that will be accessible in pathElement
    * @return {Chartist.Svg.Path} The current path object for easy call chaining.
    */
-  function arc(rx, ry, xAr, lAf, sf, x, y, relative) {
+  function arc(rx, ry, xAr, lAf, sf, x, y, relative, data) {
     element('A', {
       rx: +rx,
       ry: +ry,
@@ -170,7 +176,7 @@
       sf: +sf,
       x: +x,
       y: +y
-    }, this.pathElements, this.pos++, relative);
+    }, this.pathElements, this.pos++, relative, data);
     return this;
   }
 
@@ -300,16 +306,61 @@
    * This function clones a whole path object with all its properties. This is a deep clone and path element objects will also be cloned.
    *
    * @memberof Chartist.Svg.Path
+   * @param {Boolean} [close] Optional option to set the new cloned path to closed. If not specified or false, the original path close option will be used.
    * @return {Chartist.Svg.Path}
    */
-  function clone() {
-    var c = new Chartist.Svg.Path(this.close);
+  function clone(close) {
+    var c = new Chartist.Svg.Path(close || this.close);
     c.pos = this.pos;
     c.pathElements = this.pathElements.slice().map(function cloneElements(pathElement) {
       return Chartist.extend({}, pathElement);
     });
     c.options = Chartist.extend({}, this.options);
     return c;
+  }
+
+  /**
+   * Split a Svg.Path object by a specific command in the path chain. The path chain will be split and an array of newly created paths objects will be returned. This is useful if you'd like to split an SVG path by it's move commands, for example, in order to isolate chunks of drawings.
+   *
+   * @memberof Chartist.Svg.Path
+   * @param {String} command The command you'd like to use to split the path
+   * @return {Array<Chartist.Svg.Path>}
+   */
+  function splitByCommand(command) {
+    var split = [
+      new Chartist.Svg.Path()
+    ];
+
+    this.pathElements.forEach(function(pathElement) {
+      if(pathElement.command === command.toUpperCase() && split[split.length - 1].pathElements.length !== 0) {
+        split.push(new Chartist.Svg.Path());
+      }
+
+      split[split.length - 1].pathElements.push(pathElement);
+    });
+
+    return split;
+  }
+
+  /**
+   * This static function on `Chartist.Svg.Path` is joining multiple paths together into one paths.
+   *
+   * @memberof Chartist.Svg.Path
+   * @param {Array<Chartist.Svg.Path>} paths A list of paths to be joined together. The order is important.
+   * @param {boolean} close If the newly created path should be a closed path
+   * @param {Object} options Path options for the newly created path.
+   * @return {Chartist.Svg.Path}
+   */
+
+  function join(paths, close, options) {
+    var joinedPath = new Chartist.Svg.Path(close, options);
+    for(var i = 0; i < paths.length; i++) {
+      var path = paths[i];
+      for(var j = 0; j < path.pathElements.length; j++) {
+        joinedPath.pathElements.push(path.pathElements[j]);
+      }
+    }
+    return joinedPath;
   }
 
   Chartist.Svg.Path = Chartist.Class.extend({
@@ -325,8 +376,10 @@
     transform: transform,
     parse: parse,
     stringify: stringify,
-    clone: clone
+    clone: clone,
+    splitByCommand: splitByCommand
   });
 
   Chartist.Svg.Path.elementDescriptions = elementDescriptions;
+  Chartist.Svg.Path.join = join;
 }(window, document, Chartist));

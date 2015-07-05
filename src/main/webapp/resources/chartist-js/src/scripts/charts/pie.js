@@ -21,10 +21,11 @@
     chartPadding: 5,
     // Override the class names that are used to generate the SVG structure of the chart
     classNames: {
-      chart: 'ct-chart-pie',
+      chartPie: 'ct-chart-pie',
+      chartDonut: 'ct-chart-donut',
       series: 'ct-series',
-      slice: 'ct-slice',
-      donut: 'ct-donut',
+      slicePie: 'ct-slice-pie',
+      sliceDonut: 'ct-slice-donut',
       label: 'ct-label'
     },
     // The start angle of the pie chart in degrees where 0 points north. A higher value offsets the start angle clockwise.
@@ -39,6 +40,8 @@
     showLabel: true,
     // Label position offset from the standard position which is half distance of the radius. This value can be either positive or negative. Positive values will position the label away from the center.
     labelOffset: 0,
+    // This option can be set to 'inside', 'outside' or 'center'. Positioned with 'inside' the labels will be placed on half the distance of the radius to the border of the Pie by respecting the 'labelOffset'. The 'outside' option will place the labels at the border of the pie and 'center' will place the labels in the absolute center point of the chart. The 'center' option only makes sense in conjunction with the 'labelOffset' option.
+    labelPosition: 'inside',
     // An interpolation function for the label value
     labelInterpolationFnc: Chartist.noop,
     // Label direction can be 'neutral', 'explode' or 'implode'. The labels anchor will be positioned based on those settings as well as the fact if the labels are on the right or left side of the center of the chart. Usually explode is useful when labels are positioned far away from the center.
@@ -84,7 +87,7 @@
       dataArray = Chartist.getDataArray(this.data, options.reverseData);
 
     // Create SVG.js draw
-    this.svg = Chartist.createSvg(this.container, options.width, options.height, options.classNames.chart);
+    this.svg = Chartist.createSvg(this.container, options.width, options.height,options.donut ? options.classNames.chartDonut : options.classNames.chartPie);
     // Calculate charting rect
     chartRect = Chartist.createChartRect(this.svg, options, defaultOptions.padding);
     // Get biggest circle radius possible within chartRect
@@ -99,9 +102,18 @@
     // See this proposal for more details: http://lists.w3.org/Archives/Public/www-svg/2003Oct/0000.html
     radius -= options.donut ? options.donutWidth / 2  : 0;
 
-    // If a donut chart then the label position is at the radius, if regular pie chart it's half of the radius
-    // see https://github.com/gionkunz/chartist-js/issues/21
-    labelRadius = options.donut ? radius : radius / 2;
+    // If labelPosition is set to `outside` or a donut chart is drawn then the label position is at the radius,
+    // if regular pie chart it's half of the radius
+    if(options.labelPosition === 'outside' || options.donut) {
+      labelRadius = radius;
+    } else if(options.labelPosition === 'center') {
+      // If labelPosition is center we start with 0 and will later wait for the labelOffset
+      labelRadius = 0;
+    } else {
+      // Default option is 'inside' where we use half the radius so the label will be placed in the center of the pie
+      // slice
+      labelRadius = radius / 2;
+    }
     // Add the offset to the labelRadius where a negative offset means closed to the center of the chart
     labelRadius += options.labelOffset;
 
@@ -119,18 +131,18 @@
     // Draw the series
     // initialize series groups
     for (var i = 0; i < this.data.series.length; i++) {
+      var series = this.data.series[i];
       seriesGroups[i] = this.svg.elem('g', null, null, true);
 
       // If the series is an object and contains a name or meta data we add a custom attribute
       seriesGroups[i].attr({
-        'series-name': this.data.series[i].name,
-        'meta': Chartist.serialize(this.data.series[i].meta)
+        'series-name': series.name
       }, Chartist.xmlNs.uri);
 
       // Use series class from series data or if not set generate one
       seriesGroups[i].addClass([
         options.classNames.series,
-        (this.data.series[i].className || options.classNames.series + '-' + Chartist.alphaNumerate(i))
+        (series.className || options.classNames.series + '-' + Chartist.alphaNumerate(i))
       ].join(' '));
 
       var endAngle = startAngle + dataArray[i] / totalDataSum * 360;
@@ -157,11 +169,12 @@
       // If this is a donut chart we add the donut class, otherwise just a regular slice
       var pathElement = seriesGroups[i].elem('path', {
         d: path.stringify()
-      }, options.classNames.slice + (options.donut ? ' ' + options.classNames.donut : ''));
+      }, options.donut ? options.classNames.sliceDonut : options.classNames.slicePie);
 
       // Adding the pie series value to the path
       pathElement.attr({
-        'value': dataArray[i]
+        'value': dataArray[i],
+        'meta': Chartist.serialize(series.meta)
       }, Chartist.xmlNs.uri);
 
       // If this is a donut, we add the stroke-width as style attribute
@@ -177,6 +190,8 @@
         value: dataArray[i],
         totalDataSum: totalDataSum,
         index: i,
+        meta: series.meta,
+        series: series,
         group: seriesGroups[i],
         element: pathElement,
         path: path.clone(),
@@ -192,22 +207,24 @@
         var labelPosition = Chartist.polarToCartesian(center.x, center.y, labelRadius, startAngle + (endAngle - startAngle) / 2),
           interpolatedValue = options.labelInterpolationFnc(this.data.labels ? this.data.labels[i] : dataArray[i], i);
 
-        var labelElement = seriesGroups[i].elem('text', {
-          dx: labelPosition.x,
-          dy: labelPosition.y,
-          'text-anchor': determineAnchorPosition(center, labelPosition, options.labelDirection)
-        }, options.classNames.label).text('' + interpolatedValue);
+        if(interpolatedValue || interpolatedValue === 0) {
+          var labelElement = seriesGroups[i].elem('text', {
+            dx: labelPosition.x,
+            dy: labelPosition.y,
+            'text-anchor': determineAnchorPosition(center, labelPosition, options.labelDirection)
+          }, options.classNames.label).text('' + interpolatedValue);
 
-        // Fire off draw event
-        this.eventEmitter.emit('draw', {
-          type: 'label',
-          index: i,
-          group: seriesGroups[i],
-          element: labelElement,
-          text: '' + interpolatedValue,
-          x: labelPosition.x,
-          y: labelPosition.y
-        });
+          // Fire off draw event
+          this.eventEmitter.emit('draw', {
+            type: 'label',
+            index: i,
+            group: seriesGroups[i],
+            element: labelElement,
+            text: '' + interpolatedValue,
+            x: labelPosition.x,
+            y: labelPosition.y
+          });
+        }
       }
 
       // Set next startAngle to current endAngle. Use slight offset so there are no transparent hairline issues

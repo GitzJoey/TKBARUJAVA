@@ -46,7 +46,7 @@
 				}				
 			});
 
-					
+			$('#storeList').dataTable();					
 		});
 	</script>	
 </head>
@@ -86,44 +86,42 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="15%">Store Name</th>
-												<th width="70%">Details</th>
-												<th width="5%">Default</th>
-												<th width="5%">Status</th>												
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty storeList}">
-												<c:forEach items="${ storeList }" var="i" varStatus="storeIdx">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.storeId }"/>" type="checkbox" value="<c:out value="${ i.storeId }"/>"/></td>
-														<td><c:out value="${ i.storeName }"></c:out></td>
-														<td>
-															<strong><c:out value="${ i.storeName }"></c:out></strong><br/><br/>
-															<c:out value="${ i.storeAddress1 }"></c:out><br/>
-															<c:out value="${ i.storeAddress2 }"></c:out><br/>
-															<c:out value="${ i.storeAddress3 }"></c:out><br/>
-															<br/>
-															NPWP : <c:out value="${ i.npwpNumber }"/><br/>
-															<br/>
-														</td>
-														<td>
-															<c:out value="${ i.isDefaultLookup.lookupValue }"/><br/>
-														</td>
-														<td>
-															<c:out value="${ i.storeStatusLookup.lookupValue }"/><br/>
-														</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="storeList" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="15%">Store Name</th>
+											<th width="70%">Details</th>
+											<th width="5%">Default</th>
+											<th width="5%">Status</th>												
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty storeList}">
+											<c:forEach items="${ storeList }" var="i" varStatus="storeIdx">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.storeId }"/>" type="checkbox" value="<c:out value="${ i.storeId }"/>"/></td>
+													<td><c:out value="${ i.storeName }"></c:out></td>
+													<td>
+														<strong><c:out value="${ i.storeName }"></c:out></strong><br/><br/>
+														<c:out value="${ i.storeAddress1 }"></c:out><br/>
+														<c:out value="${ i.storeAddress2 }"></c:out><br/>
+														<c:out value="${ i.storeAddress3 }"></c:out><br/>
+														<br/>
+														NPWP : <c:out value="${ i.npwpNumber }"/><br/>
+														<br/>
+													</td>
+													<td>
+														<c:out value="${ i.isDefaultLookup.lookupValue }"/><br/>
+													</td>
+													<td>
+														<c:out value="${ i.storeStatusLookup.lookupValue }"/><br/>
+													</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/store/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>

@@ -46,7 +46,7 @@
 											</a>
 					                	</h4>
 					              	</div>
-									<div id="collapse_<c:out value="${ fList.functionCode }"/>" class="panel-collapse collapse in">
+									<div id="collapse_<c:out value="${ fList.functionCode }"/>" class="panel-collapse collapse">
 										<ul class="list-group">
 											<fmt:parseNumber var="intCurrentDeepLevel" integerOnly="true" type="number" value="1" />				
 											<c:forEach items="${ loginContext.userLogin.roleEntity.functionList }" var="ffList">
