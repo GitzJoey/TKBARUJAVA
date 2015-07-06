@@ -258,7 +258,6 @@
 													</div>
 												</div>
 												<div class="row">
-													<c:set var="lastIdx" value="${ poForm.paymentList.size() - 1 }"></c:set>
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
@@ -296,7 +295,7 @@
 																						</td>
 																						<td class="text-right">
 																							<form:hidden path="itemsList[${ iLIdx.index }].prodPrice"></form:hidden>
-																							<label><c:out value="${ poForm.itemsList[ iLIdx.index ].prodPrice }"></c:out></label>	
+																							<label><c:out value="${ poForm.itemsList[ iLIdx.index ].prodPrice }"></c:out></label>
 																						</td>
 																						<td></td>
 																						<td class="text-right">
@@ -351,7 +350,7 @@
 															<div class="panel-heading">
 																<h1 class="panel-title">Payment History</h1>
 															</div>
-															<div class="panel-body">																		
+															<div class="panel-body">									
 																<div class="row">
 																	<div class="col-md-12">
 																		<table id="paymentListTable" class="table table-bordered table-hover display responsive">
@@ -369,7 +368,7 @@
 																			<tbody>
 																				<c:set var="totalPay" value="${ 0 }" />
 																				<c:forEach items="${ poForm.paymentList }" var="iL" varStatus="ilIdx" >
-																					<c:if test="${ ilIdx.index < lastIdx }">
+																					<c:if test="${ poForm.paymentList[ ilIdx.index].paymentId != 0 }">																					
 																						<tr>
 																							<td style="vertical-align: middle;">
 																								<form:hidden path="paymentList[${ ilIdx.index }].paymentId" />
@@ -489,6 +488,7 @@
 														</div>
 													</div>
 												</div>
+												<c:set var="lastIdx" value="${ poForm.paymentList.size() - 1 }"/>
 												<c:if test="${ ViewMode != 'true' }">
 													<div class="row">
 														<div class="col-md-12">
@@ -524,20 +524,20 @@
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
 																				</div>
 																			</div>
-																			<c:if test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' || poForm.paymentList[lastIdx].paymentType == 'L017_GIRO'}">
+																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO'}">
 																				<div class="form-group">
 																					<label for="inputBank" class="col-sm-2 control-label">Bank</label>
 																					<div class="col-sm-8">																			
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
-																							<c:if test="${bankL.lookupKey == poForm.paymentList[lastIdx].bankCode}">
+																							<c:if test="${ bankL.lookupKey == poForm.paymentList[ lastIdx ].bankCode }">
 																								<c:set var="test" value="1" />
 																							</c:if>
 																							<c:choose>
-																								<c:when test="${test == 1}">
+																								<c:when test="${ test == 1 }">
 																									<form:hidden path="paymentList[${ lastIdx }].bankCode"/>
 																									<div class="checkbox">
-																										<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${lastIdx}].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																									</div>
 																								</c:when>
 																								<c:otherwise>
@@ -605,21 +605,21 @@
 																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TERM' }">
 																						<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_term_${statusIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
+																								<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if>
 																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
 																						<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_transfer_${transferIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
+																								<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if>
 																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO' }">
 																						<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
+																								<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if> 

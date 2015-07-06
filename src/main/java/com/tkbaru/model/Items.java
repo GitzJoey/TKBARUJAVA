@@ -206,8 +206,6 @@ public class Items {
 	public void setReceiptList(List<Receipt> receiptList) {
 		this.receiptList = receiptList;
 	}
-	
-	
 
 	public List<Deliver> getDeliverList() {
 		return deliverList;
@@ -219,14 +217,10 @@ public class Items {
 
 	@Override
 	public String toString() {
-		return "Items [itemsId=" + itemsId + ", productId=" + productId
-				+ ", prodQuantity=" + prodQuantity + ", unitCode=" + unitCode
-				+ ", prodPrice=" + prodPrice + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", baseUnitCode="
-				+ baseUnitCode + ", toBaseValue=" + toBaseValue
-				+ ", toBaseQty=" + toBaseQty + ", receiptList=" + receiptList
-				+ ", deliverList=" + deliverList+"]";
+		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", prodQuantity=" + prodQuantity
+				+ ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", baseUnitCode="
+				+ baseUnitCode + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + "]";
 	}
 
 }

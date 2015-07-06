@@ -33,13 +33,14 @@
 		                        <h3 class="panel-title">Sign In</h3>
 		                    </div>
 		                    <div class="panel-body">
-		                        <form id="loginForm" role="form" action="<c:url value="j_spring_security_check"/>" method="post" data-parsley-validate>
+		                        <form id="loginForm" role="form" action="<c:url value="/login"/>" method="post" data-parsley-validate>
 		                            <fieldset>
+										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="UserName" name="j_username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                                
+		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                                
 		                                </div>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="Password" name="j_password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
+		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
 		                                </div>
 		                                <button type="submit" class="btn btn-default">Submit</button>
 		                            </fieldset>
