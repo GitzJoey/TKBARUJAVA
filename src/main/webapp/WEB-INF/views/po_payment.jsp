@@ -386,7 +386,7 @@
 																							<td>
 																								<div class="input-group">
 																									<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ ilIdx.index ].paymentType == 'L017_GIRO'}">
-																										<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
+																										<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">																											
 																											<c:set var="test" value="0" />
 																											<c:if test="${ bankL.lookupKey == poForm.paymentList[ ilIdx.index ].bankCode }">
 																												<c:set var="test" value="1" />

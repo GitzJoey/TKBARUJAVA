@@ -334,8 +334,13 @@ public class PurchaseOrderController {
 	public String poPaymentView(Locale locale, Model model, @PathVariable Integer selectedId) {
 		logger.info("[poPaymentView] " + "selectedId: " + selectedId);
 
-		model.addAttribute("poForm", poManager.getPurchaseOrderById(selectedId));
 		model.addAttribute("ViewMode", true);
+		model.addAttribute("poForm", poManager.getPurchaseOrderById(selectedId));
+		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
+		model.addAttribute("cashStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
+		model.addAttribute("transferStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
+		model.addAttribute("termStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
+		model.addAttribute("giroStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
