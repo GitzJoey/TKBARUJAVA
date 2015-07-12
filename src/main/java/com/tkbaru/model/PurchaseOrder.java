@@ -54,13 +54,13 @@ public class PurchaseOrder {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_po_items", 
 				joinColumns={@JoinColumn(name="po_id", referencedColumnName="po_id")},
 				inverseJoinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")})
 	private List<Items> itemsList = LazyList.decorate(new ArrayList<Items>(), FactoryUtils.instantiateFactory(Items.class));
 
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_po_payment", 
 				joinColumns={@JoinColumn(name="po_id", referencedColumnName="po_id")},
 				inverseJoinColumns={@JoinColumn(name="payment_id", referencedColumnName="payment_id")})

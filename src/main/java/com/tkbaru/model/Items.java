@@ -67,13 +67,13 @@ public class Items {
 	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup baseUnitCodeLookup;	
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_items_receipt", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
 	private List<Receipt> receiptList= LazyList.decorate(new ArrayList<Receipt>(), FactoryUtils.instantiateFactory(Receipt.class));
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_items_deliver", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="deliver_id", referencedColumnName="deliver_id")})

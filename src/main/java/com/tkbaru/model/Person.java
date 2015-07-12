@@ -59,7 +59,7 @@ public class Person {
 	@Transient
 	private MultipartFile imageBinary;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_person_phonelist", joinColumns={ @JoinColumn(name="person_id", referencedColumnName="person_id") }, inverseJoinColumns={ @JoinColumn(name="phonelist_id", referencedColumnName="phonelist_id") })
 	private List<PhoneList> phoneList = LazyList.decorate(new ArrayList<PhoneList>(), FactoryUtils.instantiateFactory(PhoneList.class));
 
