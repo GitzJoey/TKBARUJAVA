@@ -22,20 +22,6 @@
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
 
-	<filter>
-		<filter-name>hibernateFilter</filter-name>
-		<filter-class>org.springframework.orm.hibernate4.support.OpenSessionInViewFilter</filter-class>
-		<init-param>
-			<param-name>sessionFactoryBeanName</param-name>
-			<param-value>hibernate4AnnotatedSessionFactory</param-value>
-		</init-param>
-	</filter>
-
-	<filter-mapping>
-		<filter-name>hibernateFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>

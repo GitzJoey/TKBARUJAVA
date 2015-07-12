@@ -10,8 +10,6 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.apache.lucene.document.Field.TermVector;
-
 @Entity
 @Table(name = "tb_sms_out")
 public class SmsOut {
