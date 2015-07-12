@@ -46,7 +46,7 @@ public class ProductUnit {
 	@ManyToOne
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup unitCodeLookup;
-	
+
 	public int getProductUnitId() {
 		return productUnitId;
 	}

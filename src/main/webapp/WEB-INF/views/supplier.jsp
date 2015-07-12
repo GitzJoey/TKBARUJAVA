@@ -634,7 +634,13 @@
 																		<td><c:out value="${ i.productTypeLookup.lookupValue }"></c:out></td>
 																		<td><c:out value="${ i.shortCode }"></c:out></td>
 																		<td><c:out value="${ i.productName }"></c:out></td>
-																		<td><c:out value="${ i.baseUnitLookup.lookupValue }"></c:out></td>
+																		<td>
+																			<c:forEach items="${ i.productUnit }" var="pu">
+																				<c:if test="${ pu.baseUnit == 'true' }">
+																					<c:out value="${ pu.unitCodeLookup.lookupValue }"></c:out>
+																				</c:if>	
+																			</c:forEach>
+																		</td>
 																		<td><c:out value="${ i.productDesc }"></c:out></td>
 																		<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
 																	</tr>

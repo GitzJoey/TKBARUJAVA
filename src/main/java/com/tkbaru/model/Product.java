@@ -65,10 +65,6 @@ public class Product {
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Price> price;
 	
-//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//	@JoinColumn(name="product_id")
-//	private List<Stocks> stocks;
-	
 	public int getProductId() {
 		return productId;
 	}
@@ -197,15 +193,6 @@ public class Product {
 		this.price = price;
 	}
 	
-//	public List<Stocks> getStocks() {
-//		return stocks;
-//	}
-//
-//	public void setStocks(List<Stocks> stocks) {
-//		this.stocks = stocks;
-//	}
-
-
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", productType="
@@ -217,7 +204,5 @@ public class Product {
 				+ updatedBy + ", updatedDate=" + updatedDate + ", productUnit="
 				+ productUnit + "]";
 	}
-
-	
 
 }
