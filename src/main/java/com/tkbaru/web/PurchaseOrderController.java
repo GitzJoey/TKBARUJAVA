@@ -189,7 +189,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
 	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm, @PathVariable String varId) {
-		logger.info("[poAddItems] " + "varId: " + varId);
+		logger.info("[reviseAddItems] " + "varId: " + varId);
 		
 		reviseForm.setPoTypeLookup(lookupManager.getLookupByKey(reviseForm.getPoType()));
 
@@ -260,7 +260,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/removeitems/{tabId}/{varId}", method = RequestMethod.POST)
 	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String tabId, @PathVariable String varId) {
-		logger.info("[poRemoveItems] " + "varId: " + varId);
+		logger.info("[poRemoveItemsMulti] " + "varId: " + varId);
 
 		List<Items> iLNew = new ArrayList<Items>();
 
@@ -293,7 +293,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/addpoform", method = RequestMethod.GET)
 	public String addPoForm(Locale locale, Model model) {
-		logger.info("[poAddPoForm] ");
+		logger.info("[addPoForm] ");
 
 		PurchaseOrder newPo = new PurchaseOrder();
 		newPo.setPoStatus("L013_D");
@@ -346,7 +346,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/payment/cash/{selectedPo}", method = RequestMethod.GET)
 	public String poCashPayment(Locale locale, Model model, @PathVariable Integer selectedPo) {
-		logger.info("[poNew] " + "");
+		logger.info("[poCashPayment] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();

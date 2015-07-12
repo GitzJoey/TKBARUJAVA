@@ -168,7 +168,7 @@ public class SalesOrderController {
 	}
 
 	@RequestMapping(value="/search/cust/{searchQuery}", method = RequestMethod.POST)
-	public String salesSearchCustomer(Locale locale, Model model,@PathVariable String searchQuery) {
+	public String salesSearchCustomer(Locale locale, Model model, @PathVariable String searchQuery) {
 		logger.info("[salesSearchCustomer] " + "searchQuery: " + searchQuery);
 		
 		List<Customer> custList = customerManager.searchCustomer(searchQuery);
@@ -187,7 +187,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/select/cust/{customerid}/{tabId}", method = RequestMethod.POST)
-	public String salesSelectCustomer(Locale locale, Model model, @PathVariable int customerid,@PathVariable int tabId) {
+	public String salesSelectCustomer(Locale locale, Model model, @PathVariable int customerid, @PathVariable int tabId) {
 		logger.info("[salesSelectCustomer] " + "customerid: " + customerid);
 		
 		Customer customer = customerManager.getCustomerById(customerid);
@@ -307,8 +307,8 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/removeitems/{soTypeValue}/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext,@PathVariable String soTypeValue,@PathVariable int customerId, @PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[soRemoveItems] " + "varId: " + productId);
+	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue, @PathVariable int customerId, @PathVariable int tabId, @PathVariable int productId) {
+		logger.info("[poRemoveItemsMulti] " + "varId: " + productId);
 
 		List<Items> iLNew = new ArrayList<Items>();
 
@@ -345,7 +345,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value = "/removeitems/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[soRemoveItems] " + "varId: " + productId);
+		logger.info("[poRemoveItemsMulti] " + "varId: " + productId);
 
 		List<Items> iLNew = new ArrayList<Items>();
 
@@ -376,7 +376,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/cancel/{tabId}", method = RequestMethod.POST)
-	public String poCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
+	public String soCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[soCancel] " + "");
 
 		if (!loginContext.getSoList().isEmpty()) {
@@ -398,7 +398,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/save/{soTypeValue}/{customerId}/{tabId}", method = RequestMethod.POST)
-	public String salesSave(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue,@PathVariable int customerId, @PathVariable int tabId) {
+	public String salesSave(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue,@PathVariable int customerId, @PathVariable int tabId) {
 		logger.info("[salesSave] " + "");
 		
 		loginContextSession.setSoList(loginContext.getSoList());
@@ -492,7 +492,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
 	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int varId) {
-		logger.info("[soAddItems] " + "varId: " + varId);
+		logger.info("[reviseAddItems] " + "varId: " + varId);
 		
 		Items i = new Items();
 		i.setProductId(varId);
@@ -523,8 +523,8 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
-	public String poRemoveItems(Locale locale, Model model,@ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable String varId) {
-		logger.info("[poRemoveItems] " + "varId: " + varId);
+	public String soRemoveItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable String varId) {
+		logger.info("[soRemoveItems] " + "varId: " + varId);
 		
 		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
 		reviseSalesForm.setCustomerLookup(customerManager.getCustomerById(reviseSalesForm.getCustomerId()));
@@ -586,7 +586,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value="/giropayment/{selectedId}", method = RequestMethod.GET)
 	public String giroPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		logger.info("[giroPaymentSelectedSales] " + "selectedId: " + selectedId);
 	
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
@@ -613,7 +613,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value="/cashpayment/{selectedId}", method = RequestMethod.GET)
 	public String cashPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		logger.info("[cashPaymentSelectedSales] " + "selectedId: " + selectedId);
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
@@ -640,7 +640,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value="/transferpayment/{selectedId}", method = RequestMethod.GET)
 	public String transferPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		logger.info("[transferPaymentSelectedSales] " + "selectedId: " + selectedId);
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
@@ -667,7 +667,7 @@ public class SalesOrderController {
 	
 	@RequestMapping(value="/termpayment/{selectedId}", method = RequestMethod.GET)
 	public String termPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
+		logger.info("[termPaymentSelectedSales] " + "selectedId: " + selectedId);
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
@@ -708,7 +708,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/addpayment/{paymentType}", method = RequestMethod.POST)
-	public String poAddPayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, @PathVariable String paymentType) {
+	public String soAddPayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, @PathVariable String paymentType) {
 		logger.info("[soAddPayments] ");
 		
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
@@ -752,8 +752,8 @@ public class SalesOrderController {
 	}
 
 	@RequestMapping(value = "/removepayment/{varId}", method = RequestMethod.POST)
-	public String poRemovePayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm,@PathVariable String varId) {
-		logger.info("[poRemovePayment] " + "varId: " + varId);
+	public String soRemovePayments(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, @PathVariable String varId) {
+		logger.info("[soRemovePayment] " + "varId: " + varId);
 		
 		paymentSalesForm.setStatusLookup(lookupManager.getLookupByKey(paymentSalesForm.getSalesStatus()));
 		paymentSalesForm.setCustomerLookup(customerManager.getCustomerById(paymentSalesForm.getCustomerId()));
@@ -787,7 +787,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/savepayment", method = RequestMethod.POST)
-	public String paymentSave(Locale locale, Model model,@ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm,RedirectAttributes redirectAttributes) {
+	public String paymentSave(Locale locale, Model model, @ModelAttribute("paymentSalesForm") SalesOrder paymentSalesForm, RedirectAttributes redirectAttributes) {
 		logger.info("[paymentSave] " + "");
 		
 		SalesOrder po = salesOrderManager.getSalesOrderById(paymentSalesForm.getSalesId());
@@ -835,8 +835,8 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/addnewtab/{customerId}", method = RequestMethod.POST)
-	public String addPoForm(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId) {
-		logger.info("[soAddNewTab] ");
+	public String addSalesForm(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int customerId) {
+		logger.info("[addSalesForm] ");
 		
 		for (SalesOrder soForm : loginContext.getSoList()) {
 			soForm.setCustomerLookup(customerManager.getCustomerById(customerId));
@@ -876,7 +876,7 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/addnewtab", method = RequestMethod.POST)
-	public String soAddNewTab(Locale locale, Model model,@ModelAttribute("loginContext") LoginContext loginContext) {
+	public String soAddNewTab(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext) {
 		logger.info("[soAddNewTab] " + "");
 		
 		for(SalesOrder soForm : loginContext.getSoList()){			
@@ -910,5 +910,5 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SALESORDER;
 	}
-}
 
+}
