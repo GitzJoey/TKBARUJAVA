@@ -671,7 +671,7 @@ public class PurchaseOrderController {
 	}
 	
 	@RequestMapping(value = "/savepayment", method = RequestMethod.POST)
-	public String paymentSave(Locale locale, Model model,@ModelAttribute("poForm") PurchaseOrder poForm,RedirectAttributes redirectAttributes) {
+	public String paymentSave(Locale locale, Model model, @ModelAttribute("poForm") PurchaseOrder poForm, RedirectAttributes redirectAttributes) {
 		logger.info("[paymentSave] " + "");
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(poForm.getPoId());

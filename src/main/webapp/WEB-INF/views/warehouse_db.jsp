@@ -401,7 +401,7 @@
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>										
+											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true"/>										
 										</div>
 									</div>
 									<div class="form-group">
