@@ -1,14 +1,20 @@
 package com.tkbaru.model;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_function")
@@ -45,9 +51,13 @@ public class Function {
 	private int updatedBy;
 	@Column(name="updated_date")
 	private Date updatedDate;
-
-	@Transient
-	private List<Function> subFunctions;
+    
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumn(name="parent_function_id",insertable=false, updatable=false)
+    private Function function;
+ 
+    @OneToMany(mappedBy="function", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    private Set<Function> subFunctions = new HashSet<Function>();
 	
 	public int getFunctionId() {
 		return functionId;
@@ -153,11 +163,19 @@ public class Function {
 		this.updatedDate = updatedDate;
 	}
 
-	public List<Function> getSubFunctions() {
+	public Function getFunction() {
+		return function;
+	}
+
+	public void setFunction(Function function) {
+		this.function = function;
+	}
+
+	public Set<Function> getSubFunctions() {
 		return subFunctions;
 	}
 
-	public void setSubFunctions(List<Function> subFunctions) {
+	public void setSubFunctions(Set<Function> subFunctions) {
 		this.subFunctions = subFunctions;
 	}
 
@@ -167,7 +185,7 @@ public class Function {
 				+ ", moduleIcon=" + moduleIcon + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", urlLink="
 				+ urlLink + ", orderNum=" + orderNum + ", parentFunctionId=" + parentFunctionId + ", createdBy="
 				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + "]";
+				+ updatedDate + ", subFunctions="+ subFunctions +"]";
 	}
 	
 }

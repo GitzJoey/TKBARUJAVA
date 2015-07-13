@@ -52,4 +52,10 @@ public class FunctionServiceImpl implements FunctionService {
 		return lfs;
 	}
 
+	@Override
+	public List<Function> getChildFunctions(int selectedId) {
+		List<Function> lfs = functionDAO.getChildFunctions(selectedId);
+		return lfs;
+	}
+
 }

@@ -61,6 +61,13 @@
 														</c:when>
 														<c:otherwise>
 															<li class="list-group-item"><span class="<c:out value="${ ffList.menuIcon }"/>"></span><a href="${pageContext.request.contextPath}<c:out value="${ ffList.urlLink }"/>">&nbsp;<c:out value="${ ffList.menuName }"/></a></li>
+														    <c:if test="${ not empty ffList.subFunctions }">
+															    <ul>
+																    <c:forEach items="${ ffList.subFunctions }" var="sfList">
+													                    <li><span class="<c:out value="${ sfList.menuIcon }"/>"></span><a href="${pageContext.request.contextPath}<c:out value="${ sfList.urlLink }"/>">&nbsp;<c:out value="${ sfList.menuName }"/></a></li>
+													                </c:forEach>
+												                </ul>
+											                </c:if>
 														</c:otherwise>
 													</c:choose>														
 												</c:if>
