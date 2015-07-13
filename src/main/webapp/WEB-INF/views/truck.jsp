@@ -52,7 +52,7 @@
 				$(this).parsley().validate();
 			});
 			
-			
+			$('#truckListTable').dataTable();			
 		});
 	</script>	
 </head>
@@ -92,38 +92,36 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="10%">Truck Type</th>
-												<th width="10%">Weight Type</th>
-												<th width="10%">Plate Number</th>
-												<th width="10%">KIR Date</th>
-												<th width="15%">Driver</th>
-												<th width="15%">Status</th>
-												<th width="30%">Remarks</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty truckList}">
-												<c:forEach items="${ truckList }" var="i" varStatus="truckIdx">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.truckId }"/>" type="checkbox" value="<c:out value="${ i.truckId }"/>"/></td>
-														<td><c:out value="${ i.truckTypeLookup.lookupValue }"></c:out></td>
-														<td><c:out value="${ i.weightTypeLookup.lookupValue }"></c:out></td>
-														<td><c:out value="${ i.plateNumber }"></c:out></td>
-														<td><c:out value="${ i.kirDate }"></c:out></td>
-														<td><c:out value="${ i.driver }"></c:out></td>
-														<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
-														<td><c:out value="${ i.remarks }"></c:out></td>														
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="truckListTable" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="10%">Truck Type</th>
+											<th width="10%">Weight Type</th>
+											<th width="10%">Plate Number</th>
+											<th width="10%">KIR Date</th>
+											<th width="15%">Driver</th>
+											<th width="15%">Status</th>
+											<th width="30%">Remarks</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty truckList}">
+											<c:forEach items="${ truckList }" var="i" varStatus="truckIdx">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.truckId }"/>" type="checkbox" value="<c:out value="${ i.truckId }"/>"/></td>
+													<td><c:out value="${ i.truckTypeLookup.lookupValue }"></c:out></td>
+													<td><c:out value="${ i.weightTypeLookup.lookupValue }"></c:out></td>
+													<td><c:out value="${ i.plateNumber }"></c:out></td>
+													<td><c:out value="${ i.kirDate }"></c:out></td>
+													<td><c:out value="${ i.driver }"></c:out></td>
+													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
+													<td><c:out value="${ i.remarks }"></c:out></td>														
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>

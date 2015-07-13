@@ -2,7 +2,7 @@ requirejs.config({
     baseUrl: '../../',
 
     paths: {
-      jquery: 'bower_components/jquery/jquery',
+      jquery: 'bower_components/jquery/dist/jquery',
       vendors: 'bower_components',
       modules: 'node_modules'
     },
@@ -16,7 +16,7 @@ requirejs.config({
     },
 
     shim: {
-      'vendors/jquery/jquery': {
+      'vendors/jquery/dist/jquery': {
         exports: '$'
       },
       'modules/mocha/mocha': {
@@ -44,25 +44,22 @@ require([
 
   describe('AMD', function () {
     it('should have Parsley defined', function () {
-      expect(window.Parsley).to.be.a('function');
+      expect(window.Parsley).to.be.a('object');
     });
     it('should register some window globals', function () {
       expect(window.ParsleyUI).not.to.be(undefined);
       expect(window.ParsleyUtils).not.to.be(undefined);
       expect(window.ParsleyValidator).not.to.be(undefined);
     });
-    it('should throw an error if no element given', function () {
-      expect(Parsley).to.throwException();
-    });
     it('should return ParsleyForm instance if instantiated on a form', function () {
       $('body').append('<form id="element"></form>');
-      var parsleyInstance = new Parsley($('#element'));
+      var parsleyInstance = $('#element').parsley();
       expect(parsleyInstance).to.be.an('object');
       expect(parsleyInstance.__class__).to.be('ParsleyForm');
     });
     it('should return ParsleyField instance if instantiated on a field', function () {
       $('body').append('<input id="element" />');
-      var parsleyInstance = new Parsley($('#element'));
+      var parsleyInstance = $('#element').parsley();
       expect(parsleyInstance).to.be.an('object');
       expect(parsleyInstance.__class__).to.be('ParsleyField');
     });

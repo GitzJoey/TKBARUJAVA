@@ -8,16 +8,13 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.model.PriceLevel;
 
 
 @Repository
-@Transactional
 @SuppressWarnings("unchecked")
 public class PriceLevelDAOImpl implements PriceLevelDAO {
-
 	private static final Logger logger = LoggerFactory.getLogger(PriceLevelDAOImpl.class);
 
     private SessionFactory sessionFactory;
@@ -60,6 +57,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 		logger.info("[addPriceLevel] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+
         session.persist(priceLevel);		
 	}
 
@@ -68,19 +66,21 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 		logger.info("[editPriceLevel] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(priceLevel);		
+	    
+		session.update(priceLevel);		
 	}
+	
 	@Override
-	public void delete(Integer priceLevelId) {
-		logger.info("[delete] " + "");
+	public void deletePriceLevel(Integer priceLevelId) {
+		logger.info("[deletePriceLevel] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         PriceLevel priceLevel = (PriceLevel) session.load(PriceLevel.class, new Integer(priceLevelId));
+        
         if(null != priceLevel){
             session.delete(priceLevel);
-        }		
-		
+        }
 	}
 
-	
 }

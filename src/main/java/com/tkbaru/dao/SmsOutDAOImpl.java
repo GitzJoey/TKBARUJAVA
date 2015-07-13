@@ -25,13 +25,11 @@ public class SmsOutDAOImpl implements SmsOutDAO {
 		logger.info("[getAllSmsOutbox] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<SmsOut> productList = session.createQuery("FROM SmsOutbox").list();
+		List<SmsOut> smsList = session.createQuery("FROM SmsOutbox").list();
 	
-		for(SmsOut prod:productList) {
-			logger.info("SmsOutbox : " + prod.toString());
-		}
+		logger.info("SmsOutbox : " + smsList.toString());
 		
-		return productList;
+		return smsList;
 	}
 
 	@Override
@@ -39,17 +37,17 @@ public class SmsOutDAOImpl implements SmsOutDAO {
 		logger.info("[getSmsOutboxById] " + "");
         
 		Session session = this.sessionFactory.getCurrentSession();
-		SmsOut prod = null;
+		SmsOut sms = null;
         
         try {
-        	prod = (SmsOut) session.load(SmsOut.class, new Integer(selectedId));
+        	sms = (SmsOut) session.load(SmsOut.class, new Integer(selectedId));
         } catch (Exception err) {
         	logger.info(err.getMessage());
         }
         
-        logger.info("SmsOutbox loaded successfully, SmsOutbox details = " + prod.toString());
+        logger.info("SmsOutbox loaded successfully, SmsOutbox details = " + sms.toString());
                 
-        return prod;	
+        return sms;	
 	}
 
 	@Override
@@ -57,7 +55,8 @@ public class SmsOutDAOImpl implements SmsOutDAO {
 		logger.info("[addSmsOutbox] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
-        session.persist(prod);		
+        
+        session.persist(prod);
 	}
 
 	@Override
@@ -65,7 +64,8 @@ public class SmsOutDAOImpl implements SmsOutDAO {
 		logger.info("[editSmsOutbox] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(prod);		
+	    
+		session.update(prod);		
 	}
 
 	@Override
@@ -73,10 +73,11 @@ public class SmsOutDAOImpl implements SmsOutDAO {
 		logger.info("[deleteSmsOutbox] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         SmsOut product = (SmsOut) session.load(SmsOut.class, new Integer(selectedId));
+        
         if(null != product){
             session.delete(product);
         }		
 	}
-
 }

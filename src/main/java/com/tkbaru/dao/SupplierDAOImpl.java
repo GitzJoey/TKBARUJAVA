@@ -42,6 +42,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 		logger.info("[addNewSupplier] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(supplier);
 	}
 
@@ -50,7 +51,8 @@ public class SupplierDAOImpl implements SupplierDAO {
 		logger.info("[editSupplier] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(supplier);
+	    
+		session.update(supplier);
 	}
 
 	@Override
@@ -60,9 +62,8 @@ public class SupplierDAOImpl implements SupplierDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Supplier> supplierList = session.createQuery("FROM Supplier").list();
 
-		for(Supplier supp:supplierList) {
-			logger.info("Supplier : " + supp.toString());
-		}
+		logger.info("Supplier : " + supplierList.size());
+
 		return supplierList;
 	}
 
@@ -71,10 +72,11 @@ public class SupplierDAOImpl implements SupplierDAO {
 		logger.info("[deleteSupplier] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Supplier supplier = (Supplier) session.load(Supplier.class, new Integer(selectedId));
+        
         if(null != supplier){
             session.delete(supplier);
         }
 	}
-
 }

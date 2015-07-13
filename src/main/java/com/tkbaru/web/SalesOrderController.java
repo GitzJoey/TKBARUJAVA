@@ -86,7 +86,6 @@ public class SalesOrderController {
 			loginContextSession.getSoList().add(so);
 		}
 		
-		int customerId=0;
 		Customer customer = null;
 		
 		for (SalesOrder soVar : loginContextSession.getSoList()) {
@@ -99,7 +98,7 @@ public class SalesOrderController {
 			
 			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
 			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
-			customerId = soVar.getCustomerId();
+			
 			for (Items items : soVar.getItemsList()) {
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
@@ -159,7 +158,7 @@ public class SalesOrderController {
 
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -177,7 +176,7 @@ public class SalesOrderController {
 		model.addAttribute("customerList", custList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("searchQuery", searchQuery);
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -207,7 +206,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -216,9 +215,6 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-
-	
-
 	@RequestMapping(value="/select/walkincust", method = RequestMethod.POST)
 	public String salesSelectWalkInCustomer(Locale locale, Model model) {
 		logger.info("[salesSelectWalkInCustomer] " + "");
@@ -248,7 +244,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -303,7 +299,7 @@ public class SalesOrderController {
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -335,11 +331,11 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("customerList",customerList);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("customerList", customerList);
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -366,15 +362,13 @@ public class SalesOrderController {
 			items.setProductLookup(prod);
 		}
 		
-		
-		
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
 		model.addAttribute("activeTab", tabId);
 		
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -398,7 +392,7 @@ public class SalesOrderController {
 			loginContextSession.setSoList(soList);
 		}
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 
 		return Constants.JSPPAGE_DASHBOARD;
 	}
@@ -455,7 +449,7 @@ public class SalesOrderController {
 		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
@@ -487,7 +481,7 @@ public class SalesOrderController {
 		so.setSoTypeLookup(lookupManager.getLookupByKey(so.getSalesType()));
 		
 		model.addAttribute("reviseSalesForm", so);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -517,7 +511,7 @@ public class SalesOrderController {
 		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
 		reviseSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesType()));
 
-		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		
@@ -550,8 +544,8 @@ public class SalesOrderController {
 		}
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -568,7 +562,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
@@ -602,7 +596,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -629,7 +623,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -656,7 +650,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -683,7 +677,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -750,7 +744,7 @@ public class SalesOrderController {
 		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -785,7 +779,7 @@ public class SalesOrderController {
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -870,11 +864,11 @@ public class SalesOrderController {
 		loginContextSession.getSoList().add(newSales);
 		
 		model.addAttribute("customerList", custList);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 	
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -906,11 +900,11 @@ public class SalesOrderController {
 		
 		loginContextSession.getSoList().add(newSales);
 	
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 	
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 

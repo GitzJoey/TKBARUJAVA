@@ -11,7 +11,7 @@
 (function ($) {
     "use strict";
 
-    $.fn.fileinput.locales.pt= {
+    $.fn.fileinputLocales['pt'] = {
         fileSingle: 'ficheiro',
         filePlural: 'ficheiros',
         browseLabel: 'Procurar &hellip;',
@@ -36,8 +36,10 @@
         msgProgress: 'A carregar ficheiro {index} de {files} - {name} - {percent}% completo.',
         msgSelected: '{n} {files} seleccionados',
         msgFoldersNotAllowed: 'Arrastar e largar ficheiros apenas! {n} pasta(s) ignoradas.',
+        msgImageWidthSmall: 'Largura do arquivo de imagem "{name}" deve ser pelo menos {size} px.',
+        msgImageHeightSmall: 'Altura do arquivo de imagem "{name}" deve ser pelo menos {size} px.',
+        msgImageWidthLarge: 'Largura do arquivo de imagem "{name}" não pode exceder {size} px.',
+        msgImageHeightLarge: 'Altura do arquivo de imagem "{name}" não pode exceder {size} px.',
         dropZoneTitle: 'Arrastar e largar ficheiros aqui &hellip;'
     };
-
-    $.extend($.fn.fileinput.defaults, $.fn.fileinput.locales.pt);
 })(window.jQuery);

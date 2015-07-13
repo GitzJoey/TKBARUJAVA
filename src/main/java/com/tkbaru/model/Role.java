@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -52,11 +53,12 @@ public class Role {
 		return r;
 	}	
 
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="tb_role_function", 
 			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
 			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
 	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
+//	List<Function> functionList;
 
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)

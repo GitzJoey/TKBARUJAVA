@@ -44,10 +44,8 @@ public class PriceDAOImpl implements PriceDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Price> priceList = session.createQuery("FROM Price").list();
 	
-		for(Price price:priceList) {
-			logger.info("Price : " + price.toString());
-		}
-		
+		logger.info("Price Count: " + priceList.size());
+
 		return priceList;
 	}
 	@Override
@@ -55,6 +53,7 @@ public class PriceDAOImpl implements PriceDAO {
 		logger.info("[addPrice] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(price);		
 	}
 
@@ -63,17 +62,20 @@ public class PriceDAOImpl implements PriceDAO {
 		logger.info("[editPrice] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(price);		
+	    
+		session.update(price);		
 	}
+	
 	@Override
 	public void delete(Integer priceId) {
 		logger.info("[delete] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Price price = (Price) session.load(Price.class, new Integer(priceId));
+        
         if(null != price){
             session.delete(price);
-        }		
-		
+        }				
 	}
 }

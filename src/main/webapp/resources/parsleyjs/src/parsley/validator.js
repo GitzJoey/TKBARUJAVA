@@ -1,6 +1,7 @@
 define('parsley/validator', [
+  'parsley/defaults',
   'validator'
-], function (Validator) {
+], function (ParsleyDefaults, Validator) {
 
   // This is needed for Browserify usage that requires Validator.js through module.exports
   Validator = 'undefined' !== typeof Validator ? Validator : ('undefined' !== typeof module ? module.exports : null);
@@ -18,11 +19,13 @@ define('parsley/validator', [
   ParsleyValidator.prototype = {
     init: function (validators, catalog) {
       this.catalog = catalog;
+      // Copy prototype's validators:
+      this.validators = $.extend({}, this.validators);
 
       for (var name in validators)
         this.addValidator(name, validators[name].fn, validators[name].priority, validators[name].requirementsTransformer);
 
-      $.emit('parsley:validator:init');
+      window.Parsley.trigger('parsley:validator:init');
     },
 
     // Set new messages locale if we have dictionary loaded in ParsleyConfig.i18n
@@ -62,7 +65,34 @@ define('parsley/validator', [
 
     // Add a new validator
     addValidator: function (name, fn, priority, requirementsTransformer) {
-      this.validators[name.toLowerCase()] = function (requirements) {
+      if (this.validators[name])
+        ParsleyUtils.warn('Validator "' + name + '" is already defined.');
+      else if (ParsleyDefaults.hasOwnProperty(name)) {
+        ParsleyUtils.warn('"' + name + '" is a restricted keyword and is not a valid validator name.');
+        return;
+      };
+      return this._setValidator(name, fn, priority, requirementsTransformer);
+    },
+
+    updateValidator: function (name, fn, priority, requirementsTransformer) {
+      if (!this.validators[name]) {
+        ParsleyUtils.warn('Validator "' + name + '" is not already defined.');
+        return this.addValidator(name, fn, priority, requirementsTransformer);
+      }
+      return this._setValidator(name, fn, priority, requirementsTransformer);
+    },
+
+    removeValidator: function (name) {
+      if (!this.validators[name])
+        ParsleyUtils.warn('Validator "' + name + '" is not defined.');
+
+      delete this.validators[name];
+
+      return this;
+    },
+
+    _setValidator: function (name, fn, priority, requirementsTransformer) {
+      this.validators[name] = function (requirements) {
         return $.extend(new Validator.Assert().Callback(fn, requirements), {
           priority: priority,
           requirementsTransformer: requirementsTransformer
@@ -72,26 +102,17 @@ define('parsley/validator', [
       return this;
     },
 
-    updateValidator: function (name, fn, priority, requirementsTransformer) {
-      return this.addValidator(name, fn, priority, requirementsTransformer);
-    },
-
-    removeValidator: function (name) {
-      delete this.validators[name];
-
-      return this;
-    },
-
     getErrorMessage: function (constraint) {
       var message;
 
       // Type constraints are a bit different, we have to match their requirements too to find right error message
-      if ('type' === constraint.name)
-        message = this.catalog[this.locale][constraint.name][constraint.requirements];
-      else
+      if ('type' === constraint.name) {
+        var typeMessages = this.catalog[this.locale][constraint.name] || {};
+        message = typeMessages[constraint.requirements];
+      } else
         message = this.formatMessage(this.catalog[this.locale][constraint.name], constraint.requirements);
 
-      return '' !== message ? message : this.catalog[this.locale].defaultMessage;
+      return message || this.catalog[this.locale].defaultMessage || this.catalog.en.defaultMessage;
     },
 
     // Kind of light `sprintf()` implementation
@@ -138,7 +159,42 @@ define('parsley/validator', [
             assert = new Validator.Assert().Regexp('^\\w+$', 'i');
             break;
           case 'url':
-            assert = new Validator.Assert().Regexp('(https?:\\/\\/)?(www\\.)?[-a-zA-Z0-9@:%._\\+~#=]{2,256}\\.[a-z]{2,24}\\b([-a-zA-Z0-9@:%_\\+.~#?&//=]*)', 'i');
+            // Thanks to https://gist.github.com/dperini/729294
+            // Voted best validator in https://mathiasbynens.be/demo/url-regex
+            // Modified to make scheme optional and allow local IPs
+            assert = new Validator.Assert().Regexp(
+              "^" +
+                // protocol identifier
+                "(?:(?:https?|ftp)://)?" + // ** mod: make scheme optional
+                // user:pass authentication
+                "(?:\\S+(?::\\S*)?@)?" +
+                "(?:" +
+                  // IP address exclusion
+                  // private & local networks
+                  // "(?!(?:10|127)(?:\\.\\d{1,3}){3})" +   // ** mod: allow local networks
+                  // "(?!(?:169\\.254|192\\.168)(?:\\.\\d{1,3}){2})" +  // ** mod: allow local networks
+                  // "(?!172\\.(?:1[6-9]|2\\d|3[0-1])(?:\\.\\d{1,3}){2})" +  // ** mod: allow local networks
+                  // IP address dotted notation octets
+                  // excludes loopback network 0.0.0.0
+                  // excludes reserved space >= 224.0.0.0
+                  // excludes network & broacast addresses
+                  // (first & last IP address of each class)
+                  "(?:[1-9]\\d?|1\\d\\d|2[01]\\d|22[0-3])" +
+                  "(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}" +
+                  "(?:\\.(?:[1-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))" +
+                "|" +
+                  // host name
+                  "(?:(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)" +
+                  // domain name
+                  "(?:\\.(?:[a-z\\u00a1-\\uffff0-9]-*)*[a-z\\u00a1-\\uffff0-9]+)*" +
+                  // TLD identifier
+                  "(?:\\.(?:[a-z\\u00a1-\\uffff]{2,}))" +
+                ")" +
+                // port number
+                "(?::\\d{2,5})?" +
+                // resource path
+                "(?:/\\S*)?" +
+              "$", 'i');
             break;
           default:
             throw new Error('validator type `' + type + '` is not supported');

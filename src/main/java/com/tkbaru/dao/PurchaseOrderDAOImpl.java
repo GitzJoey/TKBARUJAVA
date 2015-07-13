@@ -28,9 +28,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
-		for (PurchaseOrder po : purchaseOrderList) {
-			logger.info("PurchaseOrder : " + po.toString());
-		}
+		logger.info("PurchaseOrder : " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -56,7 +54,9 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 	@Override
 	public void addPurchaseOrder(PurchaseOrder po) {
 		logger.info("[addPurchaseOrder] " + "");
+		
 		Session session = this.sessionFactory.getCurrentSession();
+		
 		session.persist(po);
 	}
 
@@ -65,6 +65,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[editPurchaseOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
+		
 		session.update(po);
 	}
 
@@ -73,7 +74,9 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[deletePurchaseOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
+		
 		PurchaseOrder purchaseOrder = (PurchaseOrder) session.load(PurchaseOrder.class, new Integer(selectedId));
+		
 		if (null != purchaseOrder) {
 			session.delete(purchaseOrder);
 		}
@@ -86,18 +89,18 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
-		for (PurchaseOrder po : purchaseOrderList) {
-			logger.info("PurchaseOrder : " + po.toString());
-		}
+		logger.info("PurchaseOrder : " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
 
 	@Override
 	public void savePayment(PurchaseOrder payment) {
-		Session session = this.sessionFactory.getCurrentSession();
-		session.update(payment);
+		logger.info("[savePayment] " + "");
 		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		session.update(payment);
 	}
 
 	@Override
@@ -107,9 +110,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where poStatus = :status ").setString("status", status).list();
 		
-		for (PurchaseOrder po : purchaseOrderList) {
-			logger.info("PurchaseOrder : " + po.toString());
-		}
+		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -121,9 +122,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where warehouseId = :warehouseId and poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
 		
-		for (PurchaseOrder po : purchaseOrderList) {
-			logger.info("PurchaseOrder : " + po.toString());
-		}
+		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}

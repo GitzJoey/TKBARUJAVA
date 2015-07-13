@@ -96,8 +96,8 @@
         <beans:property name="hibernateProperties">
             <beans:props>
                 <beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</beans:prop>
-                <beans:prop key="hibernate.show_sql">true</beans:prop>
-				<beans:prop key="hibernate.hbm2ddl.auto"></beans:prop>
+                <beans:prop key="hibernate.show_sql">false</beans:prop>
+				<beans:prop key="hibernate.hbm2ddl.auto"></beans:prop>				
             </beans:props>
         </beans:property>
         <beans:property name="packagesToScan">
@@ -236,7 +236,7 @@
 	<beans:bean id="PriceService" class="com.tkbaru.service.PriceServiceImpl"></beans:bean>
 	<beans:bean id="SmsInService" class="com.tkbaru.service.SmsInServiceImpl"></beans:bean>
 	<beans:bean id="SmsOutService" class="com.tkbaru.service.SmsOutServiceImpl"></beans:bean>
-	<beans:bean id="SmsService" class="com.tkbaru.sms.SmsServiceImpl"></beans:bean>
+	<beans:bean id="SmsService" class="com.tkbaru.service.SmsServiceImpl"></beans:bean>
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
 	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
 	

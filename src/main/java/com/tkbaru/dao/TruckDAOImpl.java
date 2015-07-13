@@ -34,24 +34,30 @@ public class TruckDAOImpl implements TruckDAO {
 	@Override
 	public Truck getTruckById(int id) {
 		logger.info("[getTruckById] id = {}", id);
-		Truck truck = null;
-		Session session = this.sessionFactory.getCurrentSession();
+		
+		Truck truck = null;		
+		Session session = this.sessionFactory.getCurrentSession();	
 		truck = (Truck) session.get(Truck.class, id);
+		
 		return truck;
 	}
 
 	@Override
 	public void addTruck(Truck truck) {
 		logger.info("[addTruck] " + "");
-        Session session = this.sessionFactory.getCurrentSession();
-        session.persist(truck);				
+        
+		Session session = this.sessionFactory.getCurrentSession();
+        
+		session.persist(truck);				
 	}
 
 	@Override
 	public void editTruck(Truck truck) {
 		logger.info("[editTruck] " + "");
-        Session session = this.sessionFactory.getCurrentSession();
-        session.update(truck);				
+        
+		Session session = this.sessionFactory.getCurrentSession();
+        
+		session.update(truck);				
 	}
 
 	@Override
@@ -59,7 +65,9 @@ public class TruckDAOImpl implements TruckDAO {
 		logger.info("[deleteTruck] id = {}", id);
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Truck truck = (Truck) session.load(Truck.class, id);
+        
         if(null != truck){
             session.delete(truck);
         }				

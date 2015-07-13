@@ -63,6 +63,8 @@
 		    $('#cancelButton').click(function() {
 		    	window.location.href(ctxpath + "/sales/revise");
 			});
+		
+		    $('#paymentListTable').DataTable();
 		});
 	</script>	
 </head>
@@ -102,33 +104,29 @@
 								</h1>
 							</div>						
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="20%">Sales Code</th>
-												<th width="20%">Sales Date</th>
-												<th width="20%">Customer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty paymentSalesList}">
-												<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
-													<tr>
-														<td align="center">
-															<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
-														</td>
-														<td><c:out value="${ i.salesCode }"></c:out></td>
-														<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
-														<td><c:out value="${ i.customerLookup.customerName }"></c:out>
-														</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="paymentListTable" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="20%">Sales Code</th>
+											<th width="20%">Sales Date</th>
+											<th width="20%">Customer</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty paymentSalesList}">
+											<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
+													<td><a href="${ pageContext.request.contextPath }/so/payment/view/${ i.salesId }"><c:out value="${ i.salesCode }"/></a></td>
+													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
+													<td><c:out value="${ i.customerLookup.customerName }"></c:out>
+													</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Cash Payment</a>&nbsp;&nbsp;&nbsp;
 								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Transfer Payment</a>&nbsp;&nbsp;&nbsp;
 								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Giro Payment</a>&nbsp;&nbsp;&nbsp;
@@ -272,10 +270,10 @@
 																						
 																					</td>
 																					<td class="text-right">
-																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice)}" />
+																				<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -322,7 +320,7 @@
 												</div>
 											</div>
 											<div class="row">
-											<c:set var="lastIdx" value="${ paymentSalesForm.paymentList.size()-1 }"></c:set>
+											<c:set var="lastIdx" value="${ paymentSalesForm.paymentList.size() - 1 }"></c:set>
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">

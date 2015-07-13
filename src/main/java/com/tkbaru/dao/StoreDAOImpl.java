@@ -28,9 +28,7 @@ public class StoreDAOImpl implements StoreDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Store> storeList = session.createQuery("FROM Store").list();
 	
-		for(Store s:storeList) {
-			logger.info("Store : " + s.toString());
-		}
+		logger.info("Store Count: " + storeList.size());
 		
 		return storeList;
 	}
@@ -58,6 +56,7 @@ public class StoreDAOImpl implements StoreDAO {
 		logger.info("[addStore] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(store);
         
         logger.info("Store added successfully, Store Details = " + store.toString());		
@@ -68,7 +67,8 @@ public class StoreDAOImpl implements StoreDAO {
 		logger.info("[editStore] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(store);
+	    
+		session.update(store);
 	    
 	    logger.info("Store updated successfully, Store Details = " + store.toString());			
 	}
@@ -78,7 +78,9 @@ public class StoreDAOImpl implements StoreDAO {
 		logger.info("[deleteStore] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Store store = (Store) session.load(Store.class, new Integer(selectedId));
+        
         if(null != store){
             session.delete(store);
         }
@@ -111,11 +113,11 @@ public class StoreDAOImpl implements StoreDAO {
 		logger.info("[batchEditStore] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    for (Store s:stores) {
+	    
+		for (Store s:stores) {
 	    	session.update(s);
 	    }
 	    
 	    logger.info("Batch Edit Store updated successfully");					
 	}
-
 }

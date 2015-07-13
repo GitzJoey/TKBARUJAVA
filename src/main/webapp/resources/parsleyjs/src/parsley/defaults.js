@@ -4,7 +4,7 @@
 // eg: `data-parsley-stop-on-first-failing-constraint="false"`
 
 define('parsley/defaults', function () {
-  return {
+  var ParsleyDefaults = {
     // ### General
 
     // Default data-namespace for DOM API
@@ -18,6 +18,14 @@ define('parsley/defaults', function () {
 
     // Stop validating field on highest priority failing constraint
     priorityEnabled: true,
+
+    // ### Field only
+
+    // identifier used to group together inputs (e.g. radio buttons...)
+    multiple: null,
+
+    // identifier (or array of identifiers) used to validate only a select group of inputs
+    group: null,
 
     // ### UI
     // Enable\Disable error messages
@@ -52,4 +60,6 @@ define('parsley/defaults', function () {
     // li elem that would receive error message
     errorTemplate: '<li></li>'
   };
+
+  return ParsleyDefaults;
 });

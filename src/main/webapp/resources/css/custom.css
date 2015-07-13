@@ -60,7 +60,11 @@ strong.title {
 }
 
 .valign-middle {
-	vertical-align: middle;
+	vertical-align: middle; !important
+}
+
+.valign-top {
+	vertical-align: top;	
 }
 
 .cursor-crosshair {
@@ -78,4 +82,8 @@ strong.title {
 
 .dataTables_info {
 	font-size: 12px;
+}
+
+.submenu-left-margin {
+	margin-left: 15px;
 }

@@ -53,6 +53,8 @@
 		    $('#cancelButton').click(function() {
 		    	window.location.href(ctxpath + "/sales/revise");
 			});
+		    
+			$('#reviseTableList').DataTable();
 		});
 	</script>	
 </head>
@@ -92,33 +94,28 @@
 								</h1>
 							</div>					
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="20%">Sales Code</th>
-												<th width="20%">Sales Date</th>
-												<th width="20%">Customer</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${ not empty reviseSalesList }">
-												<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
-													<tr>
-														<td align="center">
-															<input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" />
-														</td>
-														<td><c:out value="${ i.salesCode }"></c:out></td>
-														<td><c:out value="${ i.salesCreatedDate }"></c:out></td>
-														<td><c:out value="${ i.customerLookup.customerName }"></c:out>
-														</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="reviseTableList" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="20%">Sales Code</th>
+											<th width="20%">Sales Date</th>
+											<th width="20%">Customer</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${ not empty reviseSalesList }">
+											<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
+													<td><c:out value="${ i.salesCode }"></c:out></td>
+													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
+													<td><c:out value="${ i.customerLookup.customerName }"></c:out></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>								
 							</div>
 						</div>
@@ -283,10 +280,10 @@
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
 																					</td>
 																					<td style="vertical-align: middle; text-align: right;">
-																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.prodQuantity * iL.prodPrice) }"></fmt:formatNumber>
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>
-																				<c:set var="total" value="${ total+ (iL.prodQuantity * iL.prodPrice) }" />
+																				<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
 																			</c:forEach>
 																		</tbody>
 																	</table>

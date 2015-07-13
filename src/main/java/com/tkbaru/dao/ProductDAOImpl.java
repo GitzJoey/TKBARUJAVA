@@ -27,9 +27,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Product> productList = session.createQuery("FROM Product").list();
 	
-		for(Product prod:productList) {
-			logger.info("Product : " + prod.toString());
-		}
+		logger.info("Product Count: " + productList.size());
 		
 		return productList;
 	}
@@ -57,6 +55,7 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[addProduct] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(prod);		
 	}
 
@@ -65,7 +64,8 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[editProduct] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(prod);		
+	    
+		session.update(prod);		
 	}
 
 	@Override
@@ -73,7 +73,9 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[deleteProduct] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Product product = (Product) session.load(Product.class, new Integer(selectedId));
+        
         if(null != product){
             session.delete(product);
         }		
@@ -86,9 +88,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Product> productList = session.createQuery("FROM Product").list();
 	
-		for(Product prod:productList) {
-			logger.info("Product : " + prod.toString());
-		}
+		logger.info("Product Count : " + productList.size());
 		
 		return productList;
 	}
@@ -98,11 +98,9 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[getAllProduct] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<Product> productList = session.createQuery("select distinct p FROM Product p inner join p.stocks s where s.prodQuantity > 0 ").list();
+		List<Product> productList = session.createQuery("SELECT p FROM Stocks s INNER JOIN s.productLookup p WHERE s.prodQuantity > 0 ").list();
 	
-		for(Product prod:productList) {
-			logger.info("Product : " + prod.toString());
-		}
+		logger.info("List Products In Stocks: " +  productList.toString());
 		 
 		return productList;
 	}

@@ -27,10 +27,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status and customerId = :customerId ").setString("status", "L016_WP").setInteger("customerId", selectedCustomerId).list();
 		
-		for (SalesOrder so : soList) {
-			logger.info("SalesOrder : " + so.toString());
-		}
-
+		logger.info("SalesOrder Count: " + soList.size());
 		
 		return soList;
 	}
@@ -42,11 +39,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status ").setString("status", statusCode).list();
 	
-		
-		for (SalesOrder so : soList) {
-			logger.info("SalesOrder : " + so.toString());
-		}
-
+		logger.info("SalesOrder Count: " + soList.size());
 		
 		return soList;
 	}
@@ -65,15 +58,17 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		}
 
 		logger.info("SalesOrder loaded successfully, SalesOrder details = " + so.toString());
+
 		return so;
 	}
 
 	@Override
 	public void addSalesOrder(SalesOrder so) {
 		logger.info("[addSalesOrder] " + "");
-		Session session = this.sessionFactory.getCurrentSession();
-		session.persist(so);
 		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		session.persist(so);
 	}
 
 	@Override
@@ -81,8 +76,8 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		logger.info("[editSalesOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(so);
 		
+		session.update(so);
 	}
 
 	@Override
@@ -90,11 +85,12 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		logger.info("[deleteSalesOrder] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
+		
 		SalesOrder purchaseOrder = (SalesOrder) session.load(SalesOrder.class, new Integer(selectedId));
+		
 		if (null != purchaseOrder) {
 			session.delete(purchaseOrder);
 		}
-		
 	}
 
 	@Override

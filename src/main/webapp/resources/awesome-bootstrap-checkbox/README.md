@@ -3,19 +3,7 @@ Awesome Bootstrap Checkbox
 
 Font Awesome Bootstrap Checkboxes &amp; Radios plugin. Pure css way to make inputs look prettier. **No javascript**!
 
-**[Demo](http://awesome-bootstrap-checkbox.okendoken.com/demo/index.html)**
-
-
-Repository moved. Update your urls!
-------------
-
-We have transferred Awesome Bootstrap Checkbox to a new location under our organization account - https://github.com/flatlogic/awesome-bootstrap-checkbox. Though Gihub provides
-redirects from old urls, we strongly recommend updating any existing local clones to point to the new repository URL. You can
-do this by using `git remote` on the command line:
-
-````bash
-git remote set-url origin https://github.com/flatlogic/awesome-bootstrap-checkbox.git
-````
+**[Demo](http://flatlogic.github.io/awesome-bootstrap-checkbox/demo/)**
 
 Use
 ------------
@@ -50,6 +38,13 @@ We have to alter it a bit:
 ````
 That's it. It will work. But it **will not** work if you nest input inside label or put label before input.
 
+If you want to enable **Opera 12** and earlier support  just add class `styled` to `input` element:
+````
+...
+<input type="checkbox" id="checkbox1" style="styled">
+...
+````
+
 Radios
 ------------
 
@@ -73,12 +68,14 @@ It's the same for radios. Markup has to be the following:
 </form>
 ````
 
-Brand Colors
+Brand Colors and other features
 ------------
 
 You may use `checkbox-primary`, `checkbox-danger`, `radio-info`, etc to style checkboxes and radios with brand bootstrap colors.
 
 `checkbox-circle` is for rounded checkboxes.
+
+`checkbox-single` and `radio-single` for inputs without label text.
 
 Glyphicons way (Opt-out Font Awesome)
 ------------
@@ -95,6 +92,20 @@ If you want to use glyphicons instead of font-awesome then override `.checkbox` 
     font-size: 9px;
 }
 ````
+
+Using SASS
+----------
+
+As per example in the `demo` folder, to use these **awesome** you'll have to `@import` the following library parts:
+
+````scss
+@import "../bootstrap/bootstrap/variables";
+@import "../bootstrap/bootstrap/mixins";
+
+@import "../font-awesome/variables";
+````
+
+Adjust this to the path where your bootstrap and font-awesome files are located.
 
 Credits
 ------------

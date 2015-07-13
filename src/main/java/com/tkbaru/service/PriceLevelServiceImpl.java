@@ -48,7 +48,7 @@ public class PriceLevelServiceImpl implements PriceLevelService {
 	@Transactional
 	public void deletePriceLevel(int selectedId) {
 
-		priceLevelDAO.delete(selectedId);		
+		priceLevelDAO.deletePriceLevel(selectedId);		
 	}
 
 }

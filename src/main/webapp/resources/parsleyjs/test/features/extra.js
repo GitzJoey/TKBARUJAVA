@@ -2,6 +2,7 @@ define('features/extra', [
   'extra/validator/comparison',
   'extra/validator/dateiso',
   'extra/validator/words',
+  'extra/validator/notequalto',
 ], function () {
 
   return function (ParsleyValidator) {
@@ -10,11 +11,16 @@ define('features/extra', [
         expect(window.ParsleyConfig.validators).to.have.key('dateiso');
         var parsleyValidator = new ParsleyValidator(window.ParsleyConfig.validators);
 
-        expect(parsleyValidator.validate('', parsleyValidator.validators.dateiso())).not.to.be(true);
-        expect(parsleyValidator.validate('foo', parsleyValidator.validators.dateiso())).not.to.be(true);
-        expect(parsleyValidator.validate('1986-30-01', parsleyValidator.validators.dateiso())).not.to.be(true);
-        expect(parsleyValidator.validate('1986-12-45', parsleyValidator.validators.dateiso())).not.to.be(true);
-        expect(parsleyValidator.validate('1986-12-01', parsleyValidator.validators.dateiso())).to.be(true);
+        var expectValidation = function(value, name, requirements) {
+          var validator = parsleyValidator.validators[name](requirements);
+          return expect(parsleyValidator.validate(value, validator));
+        };
+
+        expectValidation('',           'dateiso').not.to.be(true);
+        expectValidation('foo',        'dateiso').not.to.be(true);
+        expectValidation('1986-30-01', 'dateiso').not.to.be(true);
+        expectValidation('1986-12-45', 'dateiso').not.to.be(true);
+        expectValidation('1986-12-01', 'dateiso').to.be(true);
       });
       it('should have gt validator', function () {
         expect(window.ParsleyValidator.validators).to.have.key('gt');
@@ -149,6 +155,20 @@ define('features/extra', [
         $('#element').val('foo bar baz qux bux');
         expect($('#element').psly().isValid()).to.be(false);
       });
+
+      it('should have a notequalto validator', function () {
+        $('body').append('<input type="text" id="element" data-parsley-notequalto="hello" value="hello"/>'
+            + '<input type="text" class="fixture not" value="world"/>');
+        var p = $('#element').psly();
+        expect(p.isValid()).to.be(false);
+        $('#element').val('world');
+        expect(p.isValid()).to.be(true);
+        $('#element').attr('data-parsley-notequalto', '.not');
+        expect(p.isValid()).to.be(false);
+        $('#element').val('hello');
+        expect(p.isValid()).to.be(true);
+      });
+
       it('should have a bind.js plugin allowing to give pure json validation config to parsley constructor', function (done) {
         require(['extra/plugin/bind'], function () {
           $('body').append(
@@ -181,7 +201,7 @@ define('features/extra', [
         });
       });
       afterEach(function () {
-        $('#element, .parsley-errors-list').remove();
+        $('#element, .fixture, .parsley-errors-list').remove();
       });
     });
   };

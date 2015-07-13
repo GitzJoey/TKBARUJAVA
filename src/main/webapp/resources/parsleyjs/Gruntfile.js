@@ -23,7 +23,7 @@ module.exports = function (grunt) {
     sync: {
       all: {
         options: {
-          sync: ['author', 'name', 'version', 'license', 'main', 'keywords'],
+          sync: ['author', 'name', 'license', 'main', 'keywords'],
           from: 'package.json',
           to: 'bower.json'
         }
@@ -181,24 +181,16 @@ module.exports = function (grunt) {
   /** Tasks here **/
   grunt.registerTask('default', []);
   grunt.registerTask('configure', ['bower:install']);
-  grunt.registerTask('build', ['requirejs', 'replace:dist', 'uglify:min']);
+  grunt.registerTask('build-std', ['requirejs', 'replace:dist', 'uglify:min']);
   grunt.registerTask('build-remote', ['concat:remote', 'uglify:remote']);
   grunt.registerTask('build-annotated-source', ['docco:source', 'replace:annotated']);
-  grunt.registerTask('build-all', ['configure', 'clean:dist', 'build', 'build-remote', 'build-annotated-source', 'sync']);
+  grunt.registerTask('build', ['configure', 'clean:dist', 'build-std', 'build-remote', 'build-annotated-source', 'sync']);
+  grunt.registerTask('build-all', ['build']);
 };
 
 var rdefineEnd = /\}\);[^}\w]*$/;
 
 function convert(name, path, contents) {
-  // Convert ParsleyDefaults and ParsleyUtils that needs a special treatment
-  if (/(defaults|utils)/.test(path)) {
-    name = (/parsley\/([\w-]+)/.exec(name)[1]);
-
-    return contents
-      .replace(/define\([\w\W]*?return/, "  var Parsley" + name.charAt(0).toUpperCase() + name.slice(1) + " =")
-      .replace(rdefineEnd, "");
-  }
-
   // Update original validatorjs for non-AMD implementation
   if (/(dist\/validator.js)/.test(path)) {
 

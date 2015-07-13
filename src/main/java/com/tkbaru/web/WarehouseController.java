@@ -70,8 +70,9 @@ public class WarehouseController {
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
 		dateFormat.setLenient(true);
-		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat,
-				true);
+
+		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+
 		binder.registerCustomEditor(Date.class, orderDateEditor);
 	}
 
@@ -80,11 +81,11 @@ public class WarehouseController {
 		logger.info("[warehouseDashboardPageLoad] : " + "");
 
 		model.addAttribute("warehouseDashboard", new WarehouseDashboard());
-		model.addAttribute("warehouseSelectionDDL",
-				warehouseManager.getAllWarehouse());
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -92,13 +93,12 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/dashboard/{warehouseId}", method = RequestMethod.GET)
-	public String warehouseDashboardLoadByWarehouseId(Locale locale,
-			Model model, @PathVariable int warehouseId) {
-		logger.info("[warehouseDashboardLoadByWarehouseId] : "
-				+ "selectedWarehouse: " + warehouseId);
 
-		List<PurchaseOrder> poList = poManager
-				.getPurchaseOrderByWarehouseIdByStatus(warehouseId, "L013_WA");
+	public String warehouseDashboardLoadByWarehouseId(Locale locale, Model model, @PathVariable int warehouseId) {
+		logger.info("[warehouseDashboardLoadByWarehouseId] : " + "selectedWarehouse: " + warehouseId);
+
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId, "L013_WA");
+
 		List<SalesOrder> soList = salesManager.getSalesOrderByStatus("L016_WD");
 
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
@@ -106,8 +106,8 @@ public class WarehouseController {
 		warehouseDashboard.setPurchaseOrderList(poList);
 		warehouseDashboard.setSalesOrderList(soList);
 
-		model.addAttribute("warehouseSelectionDDL",
-				warehouseManager.getAllWarehouse());
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
 				loginContextSession);
@@ -118,14 +118,13 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/dashboard/{warehouseId}/loadreceipt/{poId}/{itemId}", method = RequestMethod.GET)
-	public String loadReceipt(Locale locale, Model model,
-			@PathVariable int warehouseId, @PathVariable int poId,
-			@PathVariable int itemId) {
-		logger.info("[loadReceipt] : " + "selectedWarehouse: " + warehouseId
-				+ ", poId: " + poId);
 
-		List<PurchaseOrder> poList = poManager
-				.getPurchaseOrderByWarehouseIdByStatus(warehouseId, "L013_WA");
+	public String loadReceipt(Locale locale, Model model, @PathVariable int warehouseId, @PathVariable int poId, @PathVariable int itemId) {
+		logger.info("[loadReceipt] : " + "selectedWarehouse: " + warehouseId + ", poId: " + poId);
+
+
+		List<PurchaseOrder> poList = poManager.getPurchaseOrderByWarehouseIdByStatus(warehouseId, "L013_WA");
+
 		PurchaseOrder selectedPoObject = null;
 		Items selectedItemsObject = null;
 
@@ -154,8 +153,9 @@ public class WarehouseController {
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -163,23 +163,22 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/savereceipt/{poId}", method = RequestMethod.POST)
-	public String saveReceipt(
-			Locale locale,
-			Model model,
-			@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard,
-			RedirectAttributes redirectAttributes, @PathVariable int poId) {
+
+	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int poId) {
+
 		logger.info("[saveReceipt] " + "poId: " + poId);
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
 
 		PurchaseOrder poView = null;
 
-		for (PurchaseOrder purchaseOrder : warehouseDashboard
-				.getPurchaseOrderList()) {
+
+		for (PurchaseOrder purchaseOrder : warehouseDashboard.getPurchaseOrderList()) {
+
 			if (purchaseOrder.getPoId() == poId) {
-				poView = warehouseDashboard.getPurchaseOrderList().get(
-						warehouseDashboard.getPurchaseOrderList().indexOf(
-								purchaseOrder));
+
+				poView = warehouseDashboard.getPurchaseOrderList().get(warehouseDashboard.getPurchaseOrderList().indexOf(purchaseOrder));
+
 			}
 		}
 
@@ -243,25 +242,16 @@ public class WarehouseController {
 			stocksManager.addOrCreateStocks(stocks);
 		}
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
 	}
 
 	@RequestMapping(value = "/dashboard/savereceipt/{poId}/{itemId}", method = RequestMethod.POST)
-	public String saveDashboardReceipt(
-			Locale locale,
-			Model model,
-			@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard,
-			RedirectAttributes redirectAttributes, @PathVariable int poId,
-			@PathVariable int itemId) {
-		logger.info("[saveDashboardReceipt] " + "poId: " + poId + ", itemId: "
-				+ itemId);
+	public String saveDashboardReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int poId, @PathVariable int itemId) {
+		logger.info("[saveDashboardReceipt] " + "poId: " + poId + ", itemId: " + itemId);
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
 
@@ -273,18 +263,15 @@ public class WarehouseController {
 
 				if (warehouseDashboard.getReceipt().getReceiptId() == 0) {
 
-					warehouseDashboard.getReceipt().setCreatedBy(
-							loginContextSession.getUserLogin().getUserId());
+					warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					warehouseDashboard.getReceipt().setCreatedDate(new Date());
 
 					Stocks stocks = new Stocks();
 					stocks.setPoId(poId);
 					stocks.setProductId(items.getProductId());
 					stocks.setWarehouseId(po.getWarehouseId());
-					stocks.setProdQuantity(warehouseDashboard.getReceipt()
-							.getNet());
-					stocks.setCreatedBy(loginContextSession.getUserLogin()
-							.getUserId());
+					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocks.setCreatedDate(new Date());
 					stocksList.add(stocks);
 				}
@@ -293,7 +280,9 @@ public class WarehouseController {
 		}
 
 		Boolean isAllArrived = false;
+
 		for (Items item : po.getItemsList()) {
+
 
 			long arrivalQuantity = 0;
 
@@ -322,15 +311,15 @@ public class WarehouseController {
 			stocksManager.addOrCreateStocks(stocks);
 		}
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
 
 		return "redirect:/warehouse/dashboard/" + po.getWarehouseId();
 	}
+
+
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String warehousePageLoad(Locale locale, Model model) {
@@ -355,8 +344,9 @@ public class WarehouseController {
 		model.addAttribute("statusDDL", lookupManager
 				.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -368,18 +358,18 @@ public class WarehouseController {
 			@PathVariable Integer selectedId) {
 		logger.info("[editWarehouse] " + "selectedId: " + selectedId);
 
-		Warehouse selectedWarehouse = warehouseManager
-				.getWarehouseById(selectedId);
 
-		logger.info("[editWarehouse] " + "selectedWarehouse = "
-				+ selectedWarehouse.toString());
+		Warehouse selectedWarehouse = warehouseManager.getWarehouseById(selectedId);
+
+		logger.info("[editWarehouse] " + "selectedWarehouse = " + selectedWarehouse.toString());
+
 
 		model.addAttribute("warehouseForm", selectedWarehouse);
-		model.addAttribute("statusDDL", lookupManager
-				.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
+		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
@@ -392,38 +382,32 @@ public class WarehouseController {
 			RedirectAttributes redirectAttributes) {
 		logger.info("[deleteWarehouse] " + "selectedId: " + selectedId);
 
+
 		warehouseManager.deleteWarehouse(selectedId);
 
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_DELETE);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/warehouse";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String saveWarehouse(Locale locale, Model model,
-			@ModelAttribute("warehouseForm") Warehouse warehouse,
-			RedirectAttributes redirectAttributes) {
+	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {
 
 		if (warehouse.getWarehouseId() == 0) {
-			logger.info("[saveWarehouse] " + "addWarehouse: "
-					+ warehouse.toString());
+			logger.info("[saveWarehouse] " + "addWarehouse: " + warehouse.toString());
 			warehouseManager.addWarehouse(warehouse);
 		} else {
-			logger.info("[saveWarehouse] " + "editWarehouse: "
-					+ warehouse.toString());
+			logger.info("[saveWarehouse] " + "editWarehouse: " + warehouse.toString());
 			warehouseManager.editWarehouse(warehouse);
 		}
 
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return "redirect:/warehouse";
 	}
+
 
 	@RequestMapping(value = "/dashboard/{warehouseId}/loaddeliver/{salesId}/{itemId}", method = RequestMethod.GET)
 	public String loadDeliver(Locale locale, Model model,
@@ -456,10 +440,10 @@ public class WarehouseController {
 			currentStock = stocksManager.findStockByProductIdAndByWarehouseId(
 					selectedItemsObject.getProductId(), warehouseId);
 		} catch (Exception e) {
-			model.addAttribute("warehouseSelectionDDL",
-					warehouseManager.getAllWarehouse());
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-					loginContextSession);
+
+			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 			model.addAttribute("errorMessageText", "Invalid Warehouse");
 			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
@@ -468,10 +452,10 @@ public class WarehouseController {
 		}
 
 		if (currentStock == 0) {
-			model.addAttribute("warehouseSelectionDDL",
-					warehouseManager.getAllWarehouse());
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-					loginContextSession);
+
+			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 			model.addAttribute("errorMessageText", "Invalid Stock");
 			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
@@ -486,14 +470,14 @@ public class WarehouseController {
 			warehouseDashboard.setSelectedItems(itemId);
 			warehouseDashboard.setSalesOrderList(salesList);
 
-			model.addAttribute("warehouseSelectionDDL",
-					warehouseManager.getAllWarehouse());
+
+			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 			model.addAttribute("warehouseDashboard", warehouseDashboard);
 			model.addAttribute("selectedSoObject", selectedSoObject);
 			model.addAttribute("selectedItemsObject", selectedItemsObject);
 
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-					loginContextSession);
+			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+
 			model.addAttribute(Constants.PAGEMODE, "PAGEMODE_EDIT_OUT");
 			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		}
@@ -502,14 +486,10 @@ public class WarehouseController {
 	}
 
 	@RequestMapping(value = "/dashboard/savedeliver/{salesId}/{itemId}/{warehouseId}", method = RequestMethod.POST)
-	public String saveDashboardDeliver(
-			Locale locale,
-			Model model,
-			@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard,
-			RedirectAttributes redirectAttributes, @PathVariable int salesId,
-			@PathVariable int itemId, @PathVariable int warehouseId) {
-		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId
-				+ ", itemId: " + itemId);
+
+	public String saveDashboardDeliver(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int salesId, @PathVariable int itemId, @PathVariable int warehouseId) {
+		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId + ", itemId: " + itemId);
+
 
 		SalesOrder sales = salesManager.getSalesOrderById(salesId);
 
@@ -521,8 +501,9 @@ public class WarehouseController {
 
 				if (warehouseDashboard.getDeliver().getDeliverId() == 0) {
 
-					warehouseDashboard.getDeliver().setCreatedBy(
-							loginContextSession.getUserLogin().getUserId());
+
+					warehouseDashboard.getDeliver().setCreatedBy(loginContextSession.getUserLogin().getUserId());
+
 					warehouseDashboard.getDeliver().setCreatedDate(new Date());
 
 					StocksOut stocksOut = new StocksOut();
@@ -570,14 +551,12 @@ public class WarehouseController {
 			stocksOutManager.addOrCreateStocksOut(stocks);
 		}
 
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,
-				loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,
-				Constants.PAGEMODE_LIST);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,
-				Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/warehouse/dashboard/"
-				+ warehouseDashboard.getSelectedWarehouse();
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return "redirect:/warehouse/dashboard/" + warehouseDashboard.getSelectedWarehouse();
+
 	}
 }

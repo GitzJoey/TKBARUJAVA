@@ -27,9 +27,7 @@ public class ModemDAOImpl implements ModemDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Modem> modemList = session.createQuery("FROM Modem").list();
 	
-		for(Modem modem:modemList) {
-			logger.info("Modem : " + modem.toString());
-		}
+		logger.info("Modem Count: " + modemList.size());
 		
 		return modemList;
 	}
@@ -57,6 +55,7 @@ public class ModemDAOImpl implements ModemDAO {
 		logger.info("[addModem] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         session.persist(modem);		
 	}
 
@@ -65,7 +64,8 @@ public class ModemDAOImpl implements ModemDAO {
 		logger.info("[editModem] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
-	    session.update(modem);		
+	    
+		session.update(modem);		
 	}
 
 	@Override
@@ -73,7 +73,9 @@ public class ModemDAOImpl implements ModemDAO {
 		logger.info("[deleteModem] " + "");
 		
         Session session = this.sessionFactory.getCurrentSession();
+        
         Modem modem = (Modem) session.load(Modem.class, new Integer(selectedId));
+        
         if(null != modem){
             session.delete(modem);
         }		

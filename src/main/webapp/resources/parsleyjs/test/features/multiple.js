@@ -7,9 +7,12 @@ define(function () {
             '<input type="checkbox" name="hello[]" id="check1" value="1" />'  +
             '<input type="checkbox" name="{{ hello }}" id="check2" value="2" />'  +
             '<input type="checkbox" name="$hello$" id="check3" value="3" />'  +
+            '<input type="checkbox" name="hello world[ x ]" id="check4" value="4" />'  +
             '<input type="checkbox" value="foo" />' +
           '</form>');
-        $('#element').parsley();
+        expectWarning(function() {
+          $('#element').parsley();
+        });
       });
       it('should return same ParsleyMultiple instance for each field in same multiple group, and it should count as one field in form', function () {
         $('body').append(
@@ -32,7 +35,9 @@ define(function () {
             '<input type="checkbox" name="check" id="check3" value="3" />'  +
             '<input type="checkbox" value="foo" />' +
           '</form>');
-        $('#element').parsley();
+        expectWarning(function(){
+          $('#element').parsley();
+        });
         expect($('#check1').attr('data-parsley-multiple')).to.be('check');
         expect($('#check2').attr('data-parsley-multiple')).to.be('check');
         expect($('#check3').attr('data-parsley-multiple')).to.be('check');
@@ -86,7 +91,7 @@ define(function () {
           '</form>');
 
         // if not required, field is optional and do not fail
-        expect($('#check1').parsley().isValid()).to.be.eql([]);
+        expect($('#check1').parsley().isValid()).to.be.eql(true);
         expect($('#element').parsley().isValid()).to.be(true);
 
         // once required, it fails if not rightly checked
@@ -105,7 +110,7 @@ define(function () {
             '<option value="2">2</option>'  +
             '<option value="3">3</option>'  +
           '</select>');
-        var parsleyField = new Parsley($('#element'));
+        var parsleyField = $('#element').parsley();
         expect(parsleyField.__class__).to.be('ParsleyFieldMultiple');
         expect(parsleyField.options.multiple).to.be('foo');
         expect(parsleyField.getValue()).to.be.eql([]);
@@ -127,10 +132,11 @@ define(function () {
       });
       it('should not bind radio or checkboxes without a name or and id or a multiple option', function () {
         $('body').append('<input type="radio" value="foo" />');
-        window.console.warn = sinon.spy();
-        var parsleyInstance = $('input[type=radio]').psly();
+        var parsleyInstance =
+          expectWarning(function() {
+            return $('input[type=radio]').psly();
+          });
         expect(parsleyInstance.__class__).to.be('Parsley');
-        expect(window.console.warn.called).to.be(true);
         $('input[type=radio]').attr('id', 'element');
         parsleyInstance = $('#element').parsley();
         expect(parsleyInstance.__class__).to.be('ParsleyFieldMultiple');
@@ -184,9 +190,13 @@ define(function () {
           '<form id="element">' +
             '<input name="foo" type="hidden" value="0"/>' +
             '<input name="foo" id="check" type="checkbox" value="1"/>' +
+            '<input name="foo" id="check-2" type="checkbox" value="2"/>' +
+          '</form>' +
+          '<form id="element-2">' +
+            '<input name="foo" id="other-check" type="checkbox" value="3"/>' +
           '</form>');
-        $('#element').parsley();
-        expect($('#check').parsley().$elements.length).to.be(1);
+        $('#element, #element-2').parsley();
+        expect($('#check').parsley().$elements.length).to.be(2);
       });
       it('should handle form namespace configuration inheritance and click events while multiple binding through ParsleyForm', function () {
         $('body').append(
@@ -219,9 +229,7 @@ define(function () {
         expect(parsleyInstance.$elements.length).to.be(3);
       });
       afterEach(function () {
-        window.ParsleyConfig = { i18n: window.ParsleyConfig.i18n, validators: window.ParsleyConfig.validators };
-
-        $('#element, .parsley-errors-list').remove();
+        $('#element, #element-2, .parsley-errors-list').remove();
       });
     });
   };

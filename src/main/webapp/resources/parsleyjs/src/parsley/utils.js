@@ -1,66 +1,53 @@
 define('parsley/utils', function () {
-  return {
+  var globalID = 1,
+    pastWarnings = {};
+
+  var ParsleyUtils = {
     // Parsley DOM-API
     // returns object from dom attributes and values
-    // if attr is given, returns bool if attr present in DOM or not
-    attr: function ($element, namespace, checkAttr) {
+    attr: function ($element, namespace, obj) {
       var
-        attribute,
-        obj = {},
-        msie = this.msieversion(),
+        attribute, attributes,
         regex = new RegExp('^' + namespace, 'i');
 
-      if ('undefined' === typeof $element || 'undefined' === typeof $element[0])
-        return {};
-
-      for (var i in $element[0].attributes) {
-        attribute = $element[0].attributes[i];
-
-        if ('undefined' !== typeof attribute && null !== attribute && (!msie || msie >= 8 || attribute.specified) && regex.test(attribute.name)) {
-          if ('undefined' !== typeof checkAttr && new RegExp(checkAttr + '$', 'i').test(attribute.name))
-            return true;
-
-          obj[this.camelize(attribute.name.replace(namespace, ''))] = this.deserializeValue(attribute.value);
+      if ('undefined' === typeof obj)
+        obj = {};
+      else {
+        // Clear all own properties. This won't affect prototype's values
+        for (var i in obj) {
+          if (obj.hasOwnProperty(i))
+            delete obj[i];
         }
       }
 
-      return 'undefined' === typeof checkAttr ? obj : false;
+      if ('undefined' === typeof $element || 'undefined' === typeof $element[0])
+        return obj;
+
+      attributes = $element[0].attributes;
+      for (var i = attributes.length; i--; ) {
+        attribute = attributes[i];
+
+        if (attribute && attribute.specified && regex.test(attribute.name)) {
+          obj[this.camelize(attribute.name.slice(namespace.length))] = this.deserializeValue(attribute.value);
+        }
+      }
+
+      return obj;
+    },
+
+    checkAttr: function ($element, namespace, checkAttr) {
+      return $element.is('[' + namespace + checkAttr + ']');
     },
 
     setAttr: function ($element, namespace, attr, value) {
       $element[0].setAttribute(this.dasherize(namespace + attr), String(value));
     },
 
-    // Recursive object / array getter
-    get: function (obj, path) {
-      var
-        i = 0,
-        paths = (path || '').split('.');
-
-      while (this.isObject(obj) || this.isArray(obj)) {
-        obj = obj[paths[i++]];
-        if (i === paths.length)
-          return obj;
-      }
-
-      return undefined;
-    },
-
-    hash: function (length) {
-      return String(Math.random()).substring(2, length ? length + 2 : 9);
+    generateID: function () {
+      return '' + globalID++;
     },
 
     /** Third party functions **/
-    // Underscore isArray
-    isArray: function (mixed) {
-      return Object.prototype.toString.call(mixed) === '[object Array]';
-    },
-
-    // Underscore isObject
-    isObject: function (mixed) {
-      return mixed === Object(mixed);
-    },
-
     // Zepto deserialize function
     deserializeValue: function (value) {
       var num;
@@ -79,7 +66,7 @@ define('parsley/utils', function () {
 
     // Zepto camelize function
     camelize: function (str) {
-      return str.replace(/-+(.)?/g, function(match, chr) {
+      return str.replace(/-+(.)?/g, function (match, chr) {
         return chr ? chr.toUpperCase() : '';
       });
     },
@@ -93,17 +80,39 @@ define('parsley/utils', function () {
         .toLowerCase();
     },
 
-    // http://support.microsoft.com/kb/167820
-    // http://stackoverflow.com/questions/19999388/jquery-check-if-user-is-using-ie
-    msieversion: function () {
-      var
-        ua = window.navigator.userAgent,
-        msie = ua.indexOf('MSIE ');
+    warn: function() {
+      if (window.console && window.console.warn)
+        window.console.warn.apply(window.console, arguments);
+    },
 
-      if (msie > 0 || !!navigator.userAgent.match(/Trident.*rv\:11\./))
-        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    warnOnce: function(msg) {
+      if (!pastWarnings[msg]) {
+        pastWarnings[msg] = true;
+        this.warn.apply(this, arguments);
+      }
+    },
 
-      return 0;
-   }
+    _resetWarnings: function() {
+      pastWarnings = {};
+    },
+
+    // Object.create polyfill, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill
+    objectCreate: Object.create || (function () {
+      var Object = function () {};
+      return function (prototype) {
+        if (arguments.length > 1) {
+          throw Error('Second argument not supported');
+        }
+        if (typeof prototype != 'object') {
+          throw TypeError('Argument must be an object');
+        }
+        Object.prototype = prototype;
+        var result = new Object();
+        Object.prototype = null;
+        return result;
+      };
+    })()
   };
+
+  return ParsleyUtils;
 });

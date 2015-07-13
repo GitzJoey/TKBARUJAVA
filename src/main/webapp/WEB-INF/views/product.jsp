@@ -79,7 +79,9 @@
 					
 					$('#productForm').attr('action', ctxpath + "/product/removeunit/" + id);
 				}
-			});			
+			});
+			
+			$('#productListTable').dataTable();
 		});
 	</script>	
 </head>
@@ -119,34 +121,32 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="10%">Type</th>
-												<th width="10%">Code</th>
-												<th width="25%">Name</th>
-												<th width="40%">Description</th>
-												<th width="10%">Status</th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty productList}">
-												<c:forEach items="${ productList }" var="i" varStatus="productIdx">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-														<td><fmt:message key="${ i.productTypeLookup.i18nLookupValue }"/></td>
-														<td><c:out value="${ i.shortCode }"></c:out></td>
-														<td><c:out value="${ i.productName }"></c:out></td>
-														<td><c:out value="${ i.productDesc }"></c:out></td>
-														<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="productListTable" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="10%">Type</th>
+											<th width="10%">Code</th>
+											<th width="25%">Name</th>
+											<th width="40%">Description</th>
+											<th width="10%">Status</th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty productList}">
+											<c:forEach items="${ productList }" var="i" varStatus="productIdx">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
+													<td><fmt:message key="${ i.productTypeLookup.i18nLookupValue }"/></td>
+													<td><c:out value="${ i.shortCode }"></c:out></td>
+													<td><c:out value="${ i.productName }"></c:out></td>
+													<td><c:out value="${ i.productDesc }"></c:out></td>
+													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/product/add"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>

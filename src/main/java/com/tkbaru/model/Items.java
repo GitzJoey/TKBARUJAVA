@@ -7,6 +7,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -66,13 +67,13 @@ public class Items {
 	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup baseUnitCodeLookup;	
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_items_receipt", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="receipt_id", referencedColumnName="receipt_id")})
 	private List<Receipt> receiptList= LazyList.decorate(new ArrayList<Receipt>(), FactoryUtils.instantiateFactory(Receipt.class));
 	
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	@JoinTable(name="tb_items_deliver", 
 				joinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")},
 				inverseJoinColumns={@JoinColumn(name="deliver_id", referencedColumnName="deliver_id")})
@@ -205,8 +206,6 @@ public class Items {
 	public void setReceiptList(List<Receipt> receiptList) {
 		this.receiptList = receiptList;
 	}
-	
-	
 
 	public List<Deliver> getDeliverList() {
 		return deliverList;
@@ -218,14 +217,10 @@ public class Items {
 
 	@Override
 	public String toString() {
-		return "Items [itemsId=" + itemsId + ", productId=" + productId
-				+ ", prodQuantity=" + prodQuantity + ", unitCode=" + unitCode
-				+ ", prodPrice=" + prodPrice + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", baseUnitCode="
-				+ baseUnitCode + ", toBaseValue=" + toBaseValue
-				+ ", toBaseQty=" + toBaseQty + ", receiptList=" + receiptList
-				+ ", deliverList=" + deliverList+"]";
+		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", prodQuantity=" + prodQuantity
+				+ ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", baseUnitCode="
+				+ baseUnitCode + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + "]";
 	}
 
 }

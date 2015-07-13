@@ -99,6 +99,8 @@ public class LoginController {
 		logger.info("[doLogin] " + "");
 
 		User userdata = loginManager.createUserContext(SecurityContextHolder.getContext().getAuthentication().getName());
+	
+		if (loginContextSession == null) loginContextSession = new LoginContext();
 		loginContextSession.setUserLogin(userdata);
 		
 		model.addAttribute("loginContext", loginContextSession);
