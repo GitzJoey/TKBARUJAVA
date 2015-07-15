@@ -42,7 +42,7 @@ public class Function {
 	@Column(name="order_num")
 	private int orderNum;
 	@Column(name="parent_function_id")
-	private int parentFunctionId;
+	private Integer parentFunctionId;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -123,11 +123,11 @@ public class Function {
 		this.orderNum = orderNum;
 	}
 
-	public int getParentFunctionId() {
+	public Integer getParentFunctionId() {
 		return parentFunctionId;
 	}
 
-	public void setParentFunctionId(int parentFunctionId) {
+	public void setParentFunctionId(Integer parentFunctionId) {
 		this.parentFunctionId = parentFunctionId;
 	}
 
