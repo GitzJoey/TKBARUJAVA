@@ -8,13 +8,11 @@ import java.util.Map;
 
 import javax.sql.DataSource;
 
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
-import com.tkbaru.model.Customer;
 import com.tkbaru.model.Function;
 
 public class FunctionDAOImpl implements FunctionDAO {
@@ -31,10 +29,16 @@ public class FunctionDAOImpl implements FunctionDAO {
 		logger.info("[getAllFunctions] " + "");
 
 		List<Function> result = new ArrayList<Function>();
-		String sqlquery = "SELECT function_id,     	" + "		function_code,   	" + "		module,          	"
-				+ "		module_icon,     	" + "		menu_name,       	" + "		menu_icon,       	"
-				+ "		url,             	" + "		order_num,       	" + "		parent_function_id	"
-				+ "FROM tb_function        	";
+		String sqlquery = 	"SELECT function_id,     	" + 
+							"		function_code,   	" + 
+							"		module,          	" + 
+							"		module_icon,     	" + 
+							"		menu_name,       	" + 
+							"		menu_icon,       	" + 
+							"		url,             	" + 
+							"		order_num,       	" + 
+							"		parent_function_id	" + 
+							"FROM tb_function        	";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
@@ -66,10 +70,17 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 		Function result = new Function();
 
-		String sqlquery = "SELECT function_id,     	" + "		function_code,   	" + "		module,          	"
-				+ "		module_icon,     	" + "		menu_name,       	" + "		menu_icon,       	"
-				+ "		url,             	" + "		order_num,       	" + "		parent_function_id	"
-				+ "FROM tb_function        	" + "WHERE function_id = ?   	";
+		String sqlquery = 	"SELECT function_id,     	" + 
+							"		function_code,   	" + 
+							"		module,          	" + 
+							"		module_icon,     	" + 
+							"		menu_name,       	" + 
+							"		menu_icon,       	" + 
+							"		url,             	" + 
+							"		order_num,       	" + 
+							"		parent_function_id	" + 
+							"FROM tb_function        	" + 
+							"WHERE function_id = ?   	";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		result = jdbcTemplate.queryForObject(sqlquery, new Object[] { selectedId }, new RowMapper<Function>() {
@@ -161,10 +172,17 @@ public class FunctionDAOImpl implements FunctionDAO {
 		logger.info("[getFunctionById] " + "selectedIds: " + selectedIds);
 
 		List<Function> result = new ArrayList<Function>();
-		String sqlquery = "SELECT function_id,     	" + "		function_code,   	" + "		module,          	"
-				+ "		module_icon,     	" + "		menu_name,       	" + "		menu_icon,       	"
-				+ "		url,             	" + "		order_num,       	" + "		parent_function_id	"
-				+ "FROM tb_function        	" + "WHERE function_id IN    	" + selectedIds;
+		String sqlquery = 	"SELECT function_id,     	" + 
+							"		function_code,   	" + 
+							"		module,          	" + 
+							"		module_icon,     	" + 
+							"		menu_name,       	" + 
+							"		menu_icon,       	" + 
+							"		url,             	" + 
+							"		order_num,       	" + 
+							"		parent_function_id	" + 
+							"FROM tb_function        	" + 
+							"WHERE function_id IN    	" + selectedIds;
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
@@ -195,10 +213,16 @@ public class FunctionDAOImpl implements FunctionDAO {
 		logger.info("[getAllFunctions] " + "");
 
 		List<Function> result = new ArrayList<Function>();
-		String sqlquery = "SELECT function_id,     	" + "		function_code,   	" + "		module,          	"
-				+ "		module_icon,     	" + "		menu_name,       	" + "		menu_icon,       	"
-				+ "		url,             	" + "		order_num,       	" + "		parent_function_id	"
-				+ "FROM tb_function where parent_function_id="+selectedId;
+		String sqlquery = 	"SELECT function_id,     	" + 
+							"		function_code,   	" + 
+							"		module,          	" + 
+							"		module_icon,     	" + 
+							"		menu_name,       	" + 
+							"		menu_icon,       	" + 
+							"		url,             	" + 
+							"		order_num,       	" + 
+							"		parent_function_id	" + 
+							"FROM tb_function where parent_function_id = " + selectedId;
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 		List<Map<String, Object>> rows = jdbcTemplate.queryForList(sqlquery);
