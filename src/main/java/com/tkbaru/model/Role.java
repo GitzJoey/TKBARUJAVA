@@ -58,7 +58,6 @@ public class Role {
 			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},
 			inverseJoinColumns={@JoinColumn(name="function_id", referencedColumnName="function_id")})
 	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
-//	List<Function> functionList;
 
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
