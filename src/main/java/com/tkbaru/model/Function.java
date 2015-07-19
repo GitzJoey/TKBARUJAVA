@@ -52,10 +52,10 @@ public class Function {
 	private Date updatedDate;
     
     @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="parent_function_id",insertable=false, updatable=false)
+    @JoinColumn(name="parent_function_id", insertable=false, updatable=false)
     private Function function;
  
-    @OneToMany(mappedBy="function", fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    @OneToMany(mappedBy="function", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private Set<Function> subFunctions = new HashSet<Function>();
 	
 	public int getFunctionId() {
