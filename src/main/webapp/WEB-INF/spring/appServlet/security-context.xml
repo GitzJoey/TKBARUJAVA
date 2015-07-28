@@ -16,12 +16,10 @@
 					default-target-url="/dologin.html"
 					authentication-failure-url="/login.html?e=invalid" />
 					
-		<logout logout-url="/logout.html" invalidate-session="true" />
+		<logout />
 		
 		<session-management invalid-session-url="/login.html?e=session">
-			<concurrency-control expired-url="/login.html?e=expired"
-								error-if-maximum-exceeded="true"
-								max-sessions="1"/>
+			<concurrency-control expired-url="/login.html?e=expired" error-if-maximum-exceeded="true" max-sessions="1"/>
 		</session-management>
 	</http>
 	

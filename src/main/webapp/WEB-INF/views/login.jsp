@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +19,14 @@
   					</button>
   					<strong>Warning!</strong>
   					<br>
-  					${messageText}
+  					<c:choose>
+	  					<c:when test="${ not empty SPRING_SECURITY_LAST_EXCEPTION }">
+	  						<spring:message code="spring_security_${ SPRING_SECURITY_LAST_EXCEPTION.message }" text="${ SPRING_SECURITY_LAST_EXCEPTION.message }"></spring:message>
+  						</c:when>
+  						<c:otherwise>
+  							${messageText}
+  						</c:otherwise>
+  					</c:choose>
 				</div>
     		</div>
     	</div>
