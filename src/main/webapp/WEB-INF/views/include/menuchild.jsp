@@ -8,7 +8,7 @@
 		<c:choose>
 			<c:when test="${ fn:length(f.subFunctions) gt 0 }">
 				<li>
-					<a href="#"><c:out value="${ f.menuName }"/></a>					
+					<a href="#"><i class="fa fa-plus fa-fw"></i><c:out value="${ f.menuName }"/></a>					
 					<c:set var="functionList" value="${ f.subFunctions }" scope="request"/>
 					<c:set var="parentScope" value="${ f.functionId }" scope="request"/>
 					<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
@@ -17,6 +17,7 @@
 			<c:otherwise>
 				<li>
 					<a href="#">
+						<i class="fa fa-plus fa-fw"></i>
 						<c:out value="${ f.menuName }"/>
 					</a>
 				</li>
