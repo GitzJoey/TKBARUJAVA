@@ -28,10 +28,6 @@ public class Function {
 	private int functionId;
 	@Column(name="function_code")
 	private String functionCode;
-	@Column(name="module")
-	private String module;
-	@Column(name="module_icon")
-	private String moduleIcon;
 	@Column(name="menu_name")
 	private String menuName;
 	@Column(name="menu_icon")
@@ -57,7 +53,7 @@ public class Function {
  
     @OneToMany(mappedBy="function", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Function> subFunctions = new ArrayList<Function>();
-	
+
 	public int getFunctionId() {
 		return functionId;
 	}
@@ -72,22 +68,6 @@ public class Function {
 
 	public void setFunctionCode(String functionCode) {
 		this.functionCode = functionCode;
-	}
-
-	public String getModule() {
-		return module;
-	}
-
-	public void setModule(String module) {
-		this.module = module;
-	}
-
-	public String getModuleIcon() {
-		return moduleIcon;
-	}
-
-	public void setModuleIcon(String moduleIcon) {
-		this.moduleIcon = moduleIcon;
 	}
 
 	public String getMenuName() {
@@ -180,11 +160,10 @@ public class Function {
 
 	@Override
 	public String toString() {
-		return "Function [functionId=" + functionId + ", functionCode=" + functionCode + ", module=" + module
-				+ ", moduleIcon=" + moduleIcon + ", menuName=" + menuName + ", menuIcon=" + menuIcon + ", urlLink="
-				+ urlLink + ", orderNum=" + orderNum + ", parentFunctionId=" + parentFunctionId + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + ", subFunctions="+ subFunctions +"]";
+		return "Function [functionId=" + functionId + ", functionCode=" + functionCode + ", menuName=" + menuName
+				+ ", menuIcon=" + menuIcon + ", urlLink=" + urlLink + ", orderNum=" + orderNum + ", parentFunctionId="
+				+ parentFunctionId + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", subFunctions=" + subFunctions + "]";
 	}
-	
+    
 }

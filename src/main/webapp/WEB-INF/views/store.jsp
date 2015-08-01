@@ -128,12 +128,12 @@
 							</div>
 						</div>						
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
 									<c:choose>
-										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Store
 										</c:when>
 										<c:otherwise>

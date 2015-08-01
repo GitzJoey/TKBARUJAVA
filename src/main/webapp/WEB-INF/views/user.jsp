@@ -153,12 +153,12 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
 									<c:choose>
-										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add User
 										</c:when>
 										<c:otherwise>
@@ -174,7 +174,7 @@
 										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
 										<div class="col-sm-3">
 											<c:choose>
-												<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+												<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 												</c:when>
 												<c:otherwise>

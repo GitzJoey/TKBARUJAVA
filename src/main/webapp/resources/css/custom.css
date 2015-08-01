@@ -98,7 +98,7 @@ strong.title {
 }
 
 .navgoco-root > li a.root-menu {
-	font-size: 21px;	
+	font-size: 16px;	
 }
 
 .navgoco {
@@ -118,9 +118,6 @@ strong.title {
     color: #333;
     display: block;
     outline: none;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
     text-decoration: none;
 }
 
@@ -151,13 +148,13 @@ strong.title {
 }
 
 .navgoco li a {
-    font-size: 18px;
-    line-height: 20px;
-    padding: 5px 15px;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 8px 15px;
 }
 
 .navgoco > li > a {
-    font-size: 18px;
+    font-size: 16px;
     line-height: 20px;
-    padding: 5px 15px;
+    padding: 8px 15px;
 }

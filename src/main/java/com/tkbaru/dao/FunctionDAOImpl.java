@@ -31,8 +31,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery = 	"SELECT function_id,     	" + 
 							"		function_code,   	" + 
-							"		module,          	" + 
-							"		module_icon,     	" + 
 							"		menu_name,       	" + 
 							"		menu_icon,       	" + 
 							"		url,             	" + 
@@ -48,8 +46,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 			res.setFunctionId(Integer.valueOf(String.valueOf(row.get("function_id"))));
 			res.setFunctionCode(String.valueOf(row.get("function_code")));
-			res.setModule(String.valueOf(row.get("module")));
-			res.setModuleIcon(String.valueOf(row.get("module_icon")));
 			res.setMenuName(String.valueOf(row.get("menu_name")));
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
@@ -72,8 +68,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 		String sqlquery = 	"SELECT function_id,     	" + 
 							"		function_code,   	" + 
-							"		module,          	" + 
-							"		module_icon,     	" + 
 							"		menu_name,       	" + 
 							"		menu_icon,       	" + 
 							"		url,             	" + 
@@ -90,8 +84,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 				f.setFunctionId(rs.getInt("function_id"));
 				f.setFunctionCode(rs.getString("function_code"));
-				f.setModule(rs.getString("module"));
-				f.setModuleIcon(rs.getString("module_icon"));
 				f.setMenuName(rs.getString("menu_name"));
 				f.setMenuIcon(rs.getString("menu_icon"));
 				f.setUrlLink(rs.getString("url"));
@@ -109,7 +101,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 	public void addFunction(Function func) {
 		logger.info("[addFunction] " + "");
 
-		String sql = "INSERT INTO tb_function (function_code, module, module_icon, menu_name, menu_icon, url, order_num, parent_function_id) "
+		String sql = "INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id) "
 				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -117,9 +109,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 		try {
 			jdbcTemplate
 					.update(sql,
-							new Object[] { func.getFunctionCode(), func.getModule(), func.getModuleIcon(),
-									func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(),
-									func.getParentFunctionId() });
+							new Object[] { func.getFunctionCode(), func.getMenuName(), func.getMenuIcon(), 
+									func.getUrlLink(), func.getOrderNum(), func.getParentFunctionId() });
 		} catch (Exception err) {
 			logger.info("Error : " + err.getMessage());
 		}
@@ -129,7 +120,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 	public void editFunction(Function func) {
 		logger.info("[editFunction] " + "");
 
-		String query = "UPDATE tb_function SET function_code = ?, module = ?, module_icon = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, parent_function_id = ? "
+		String query = "UPDATE tb_function SET function_code = ?, menu_name = ?, menu_icon = ?, url = ?, order_num = ?, parent_function_id = ? "
 				+ "WHERE function_id = ? ";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -137,9 +128,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 		int out = 0;
 
 		try {
-			Object[] args = new Object[] { func.getFunctionCode(), func.getModule(), func.getModuleIcon(),
-					func.getMenuName(), func.getMenuIcon(), func.getUrlLink(), func.getOrderNum(),
-					func.getParentFunctionId(), func.getFunctionId() };
+			Object[] args = new Object[] { func.getFunctionCode(), func.getMenuName(), func.getMenuIcon(), 
+					func.getUrlLink(), func.getOrderNum(), func.getParentFunctionId(), func.getFunctionId() };
 
 			out = jdbcTemplate.update(query, args);
 		} catch (Exception err) {
@@ -174,8 +164,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery = 	"SELECT function_id,     	" + 
 							"		function_code,   	" + 
-							"		module,          	" + 
-							"		module_icon,     	" + 
 							"		menu_name,       	" + 
 							"		menu_icon,       	" + 
 							"		url,             	" + 
@@ -192,8 +180,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 			res.setFunctionId(Integer.valueOf(String.valueOf(row.get("function_id"))));
 			res.setFunctionCode(String.valueOf(row.get("function_code")));
-			res.setModule(String.valueOf(row.get("module")));
-			res.setModuleIcon(String.valueOf(row.get("module_icon")));
 			res.setMenuName(String.valueOf(row.get("menu_name")));
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
@@ -215,8 +201,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 		List<Function> result = new ArrayList<Function>();
 		String sqlquery = 	"SELECT function_id,     	" + 
 							"		function_code,   	" + 
-							"		module,          	" + 
-							"		module_icon,     	" + 
 							"		menu_name,       	" + 
 							"		menu_icon,       	" + 
 							"		url,             	" + 
@@ -232,8 +216,6 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 			res.setFunctionId(Integer.valueOf(String.valueOf(row.get("function_id"))));
 			res.setFunctionCode(String.valueOf(row.get("function_code")));
-			res.setModule(String.valueOf(row.get("module")));
-			res.setModuleIcon(String.valueOf(row.get("module_icon")));
 			res.setMenuName(String.valueOf(row.get("menu_name")));
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));

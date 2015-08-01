@@ -126,7 +126,7 @@
 					<div class="panel-heading">
 						<h1 class="panel-title">
 							<c:choose>
-								<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+								<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 									<span class="fa fa-truck fa-fw fa-2x"></span>&nbsp;New Purchase Order
 								</c:when>
 							</c:choose>

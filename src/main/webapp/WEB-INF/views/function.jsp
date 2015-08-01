@@ -6,11 +6,7 @@
 <head>
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
-		$(document).ready(function() {
-			$('#inputMenuIcon, #inputModuleIcon').change(function() {
-				$("#" + $(this).attr('id') + "Sample").attr('class', $(this).val());
-			});
-			
+		$(document).ready(function() {			
 			$('#cancelButton').click(function() {				
 				window.location.href("${ pageContext.request.contextPath }/admin/function");
 			});
@@ -104,20 +100,18 @@
 										<tr>
 											<th width="5%">&nbsp;</th>
 											<th width="15%">Function Code</th>
-											<th width="20%">Module</th>
-											<th width="20%">Menu Name</th>
-											<th width="20%">Url</th>
+											<th width="25%">Menu Name</th>
+											<th width="25%">Url</th>
 											<th width="5%">Parent Function Id</th>
 											<th width="5%">Order</th>											
 										</tr>
 									</thead>
 									<tbody>
 										<c:if test="${not empty functionList}">
-											<c:forEach var="i" varStatus="status" items="${functionList}">
+											<c:forEach var="i" varStatus="status" items="${ functionList }">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.functionId }"/>" type="checkbox" value="<c:out value="${ i.functionId }"/>"/></td>
-													<td><c:out value="${i.functionCode}"></c:out></td>
-													<td><span class="<c:out value="${ i.moduleIcon }"></c:out>">&nbsp;</span><c:out value="${ i.module }"></c:out></td>
+													<td><c:out value="${ i.functionCode }"></c:out></td>
 													<td><span class="<c:out value="${ i.menuIcon }"></c:out>">&nbsp;</span><c:out value="${ i.menuName }"></c:out></td>
 													<td><c:out value="${ i.urlLink }"/></td>
 													<td><c:out value="${ i.orderNum }"/></td>
@@ -133,12 +127,12 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
 									<c:choose>
-										<c:when test="${PAGEMODE == 'PAGEMODE_ADD'}">
+										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Function
 										</c:when>
 										<c:otherwise>
@@ -154,33 +148,6 @@
 										<label for="inputFunctionCode" class="col-sm-2 control-label">Function Code</label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputFunctionCode" name="inputFunctionCode" path="functionCode" placeholder="Enter Function Code" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputModule" class="col-sm-2 control-label">Module</label>
-										<div class="col-sm-3">
-											<table class="table borderless nopaddingrow no-margin">
-												<tr>
-													<td>
-														<form:input type="text" class="form-control" id="inputModuleIcon" name="inputModuleIcon" path="moduleIcon" placeholder="Module Name Icon"></form:input>
-													</td>
-													<td>
-														<c:choose>
-															<c:when test="${ not empty fForm.moduleIcon }">
-																<span id="inputModuleIconSample" class="${ fForm.moduleIcon }"></span>
-															</c:when>
-															<c:otherwise>
-																<span id="inputModuleIconSample" class=""></span>
-															</c:otherwise>
-														</c:choose>
-													</td>
-												</tr>
-												<tr>
-													<td colspan="2">
-														<form:input type="text" class="form-control" id="inputModule" name="inputModule" path="module" placeholder="Module Name" data-parsley-required="true" data-parsley-length="[5, 30]" data-parsley-trigger="keyup"></form:input>
-													</td>
-												</tr>
-											</table>
 										</div>
 									</div>
 									<div class="form-group">
