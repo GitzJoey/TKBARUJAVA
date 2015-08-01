@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.tkbaru.model.Function;
 import com.tkbaru.model.LoginContext;
 
 @Controller
@@ -26,7 +27,9 @@ public class DashboardController {
 
 		model.addAttribute("loginContext", loginContextSession);
 
-		model.addAttribute("test", "testing.from.model");
+		for (Function f:loginContextSession.getUserLogin().getRoleEntity().getFunctionList()) {
+			logger.info(f.toString());
+		}
 		
 		return "dashboard";
 	}

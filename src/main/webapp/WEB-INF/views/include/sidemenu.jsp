@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 
 				<div id="userprofile">
 					<table class="table borderless">
@@ -31,6 +33,14 @@
 						</tr>
 					</table>
 				</div>
+
+				<ul id="menu">
+					<li>
+						<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
+						<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
+						<c:remove var="functionList" scope="request"/>					
+					</li>
+				</ul>
 
 				<div class="panel-group" id="accordion">
 					<c:set var="currentModule" value=""/>

@@ -53,6 +53,18 @@ public class Role {
 		return r;
 	}	
 
+	public List<Function> getAllRootFunctions() {
+		List<Function> fL = new ArrayList<Function>();
+	
+		for (Function f:this.functionList) { 
+			if (f.getParentFunctionId() == null) {
+				fL.add(f);
+			}
+		}
+		
+		return fL;
+	}
+	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name="tb_role_function", 
 			joinColumns={@JoinColumn(name="role_id", referencedColumnName="role_id")},

@@ -1,8 +1,8 @@
 package com.tkbaru.model;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -56,7 +56,7 @@ public class Function {
     private Function function;
  
     @OneToMany(mappedBy="function", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
-    private Set<Function> subFunctions = new HashSet<Function>();
+    private List<Function> subFunctions = new ArrayList<Function>();
 	
 	public int getFunctionId() {
 		return functionId;
@@ -170,11 +170,11 @@ public class Function {
 		this.function = function;
 	}
 
-	public Set<Function> getSubFunctions() {
+	public List<Function> getSubFunctions() {
 		return subFunctions;
 	}
 
-	public void setSubFunctions(Set<Function> subFunctions) {
+	public void setSubFunctions(List<Function> subFunctions) {
 		this.subFunctions = subFunctions;
 	}
 
