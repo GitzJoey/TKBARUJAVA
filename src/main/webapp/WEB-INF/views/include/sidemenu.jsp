@@ -39,13 +39,20 @@
 						</div>					
 					</div>
 				</div>
-
+				
 				<div class="panel panel-default">
-					<ul class="navgoco navgoco-root">
-						<li><a class="root-menu" href="#"><i class="fa fa-plus fa-fw"></i>Menu</a>							
-							<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
-							<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
-							<c:remove var="functionList" scope="request"/>
-						</li>
-					</ul>					
+					<div class="panel-body">
+						<ul id="menu" class="metismenu">
+							<li class="active">
+								<a href="#">
+					            	<span class="sidebar-nav-item-icon fa fa-github fa-lg"></span>
+									<span class="sidebar-nav-item">Menu</span>
+									<span class="fa arrow"></span>
+					            </a>
+								<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
+								<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
+								<c:remove var="functionList" scope="request"/>
+							</li>
+						</ul>						
+					</div>
 				</div>

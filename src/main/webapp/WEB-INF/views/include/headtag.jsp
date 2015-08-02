@@ -15,6 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/dataTables.responsive.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jQuery/jquery-2.x.min.js"></script>
@@ -37,12 +38,16 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-locale.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/navgoco/src/jquery.cookie.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/navgoco/src/jquery.navgoco.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	
 	<script type="text/javascript">
     	$(document).ready(function() {
-        	$('.navgoco').navgoco({
+			$(function () {
+    			$('#menu').metisMenu();
+    		});
+    		
+			$('.navgoco').navgoco({
         		accordion: true,
         		openClass: 'active',
         		save: true,
