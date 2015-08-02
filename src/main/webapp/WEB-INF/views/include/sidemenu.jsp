@@ -31,7 +31,10 @@
 					</div>
 					<div class="panel-footer">
 						<div class="btn-toolbar">
-							<a href="${ pageContext.request.contextPath }/logout.html" class="btn btn-primary btn-xs pull-right"><span class="fa fa-child">&nbsp;Logout</span></a>
+							<form action="${ pageContext.request.contextPath }/logout" method="post">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  								<input type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"/>
+							</form>
 							<a href="${ pageContext.request.contextPath }/admin/user/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;Profile</span></a>
 						</div>					
 					</div>

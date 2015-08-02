@@ -59,10 +59,12 @@ public class LoginController {
 				messageText = "Invalid username or password";	
 			} else if (errParam.equalsIgnoreCase("expired")) {
 				messageText = "Session expired";
+			} else if (errParam.equalsIgnoreCase("relogin")){
+				messageText = "You are successfully logout. please login again.";
 			} else if (errParam.equalsIgnoreCase("session")) {
 				messageText = "Invalid Session";
 			} else {
-				messageText = "";
+				
 			}
 			
 			model.addAttribute("hideLogin", false);
@@ -106,21 +108,5 @@ public class LoginController {
 		model.addAttribute("loginContext", loginContextSession);
 		
 		return "redirect:/dashboard";
-	}
-
-	@RequestMapping(value = "/logout.html", method = RequestMethod.GET)
-	public String dologout(Locale locale, Model model, HttpServletRequest httpServletRequest) {
-		logger.info("[dologout] " + "");
-		
-		SecurityContextHolder.getContext().setAuthentication(null);
-		
-		loginContextSession = null;
-		
-		String messageText = "";
-
-		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
-						
-		return "login";		
 	}
 }
