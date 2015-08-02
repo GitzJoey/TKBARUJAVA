@@ -1,0 +1,35 @@
+{
+  "name": "jquery.flot.tooltip",
+  "version": "0.8.5",
+  "description": "easy-to-use tooltips for Flot charts",
+  "website": "https://github.com/krzysu/flot.tooltip",
+  "directories": {
+    "example": "examples"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "grunt": "latest",
+    "grunt-contrib-jshint": "latest",
+    "grunt-contrib-watch": "latest",
+    "grunt-contrib-uglify": "latest",
+    "grunt-contrib-concat": "latest",
+    "grunt-contrib-connect": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krzysu/flot.tooltip"
+  },
+  "keywords": [
+    "flot",
+    "tooltip",
+    "javascript",
+    "js",
+    "grunt"
+  ],
+  "authors": ["Krzysztof Urbas @krzysu [myviews.pl]", "Evan Steinkerchner @Roundaround"],
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}
