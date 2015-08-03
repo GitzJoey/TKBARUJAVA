@@ -39,12 +39,15 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-locale.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/navgoco/src/jquery.cookie.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/metisMenu.cookie.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	
 	<script type="text/javascript">
     	$(document).ready(function() {
 			$(function () {
-    			$('#menu').metisMenu();
+    			$('#menu').metisMenu({
+    				cookieName: "metisMenuState"
+    			});
     		});
     	});
 	</script>

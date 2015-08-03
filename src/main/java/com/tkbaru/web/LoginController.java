@@ -1,5 +1,8 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
 
 import javax.servlet.http.Cookie;
@@ -74,6 +77,10 @@ public class LoginController {
 			return "login";			
 		}
 
+		List<String> metisMenuCookies = new ArrayList<String>(Arrays.asList(
+			"metisMenuState_0", "metisMenuState_1", "metisMenuState_2", "metisMenuState_3", "metisMenuState_4", "metisMenuState_5", "metisMenuState_6", "metisMenuState_7", "metisMenuState_8", "metisMenuState_9" 
+		));
+		
 		boolean localeCookieFound = false;
 		Cookie[] cookies = request.getCookies();
 		if (cookies != null) {
@@ -81,6 +88,9 @@ public class LoginController {
 				if (c.getName().equals(localeResolver.getCookieName())) {
 					localeCookieFound = true;
 					logger.info("[loadLoginPage] " + "tkbaruLocaleCookie Value: " + c.getValue());
+				}
+				if (metisMenuCookies.contains(c.getName())) {
+					logger.info("[loadLoginPage] " + "metisMenuState: " + c.getName() + ", Value: " + c.getValue());
 				}
 			}
 		}
