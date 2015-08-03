@@ -7,14 +7,20 @@
     				<a class="navbar-brand" href="${ pageContext.request.contextPath }/dashboard">
 						<span class="fa fa-home fa-border"></span><span>&nbsp;&nbsp;&nbsp;</span><strong><c:out value="${ loginContext.userLogin.storeEntity.storeName }"/></strong>
       				</a>
+	                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-nav">
+	                    <span class="sr-only">Toggle navigation</span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                    <span class="icon-bar"></span>
+	                </button>      				
       			</div>      			
-				<form class="navbar-form navbar-right" role="search">
+				<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
 	  				<div class="form-group">
 	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search"/>
 	  				</div>
 	  				<a id="searchTopMenu" type="button" class="btn btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
 				</form>
-				<ul class="nav navbar-nav pull-right">
+				<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
 					<li class="dropdown">
 					 <a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-globe"></span></a>
 						<ul class="dropdown-menu">
@@ -31,7 +37,7 @@
 						</ul>
 					</li>
 				</ul>
-      			<p class="navbar-text pull-right">
+      			<p class="navbar-text pull-right hidden-xs hidden-sm">
       				<marquee scrollamount="2">
       					*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       				</marquee>

@@ -46,20 +46,5 @@
 			$(function () {
     			$('#menu').metisMenu();
     		});
-    		
-			$('.navgoco').navgoco({
-        		accordion: true,
-        		openClass: 'active',
-        		save: true,
-                cookie: {
-                    name: 'navgoco',
-                    expires: 1,
-                    path: '/'
-                },
-                slide: {
-                    duration: 400,
-                    easing: 'swing'
-                }
-        	});
     	});
 	</script>

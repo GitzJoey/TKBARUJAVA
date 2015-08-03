@@ -40,15 +40,10 @@
 					</div>
 				</div>
 				
-				<div class="panel panel-default">
-					<div class="panel-body">
-						<ul id="menu" class="metismenu">
+				<div class="navbar-default sidebar" role="navigation">
+					<div class="sidebar-nav navbar-collapse override-navbar-collapse">
+						<ul id="menu" class="nav metismenu">
 							<li class="active">
-								<a href="#">
-					            	<span class="sidebar-nav-item-icon fa fa-github fa-lg"></span>
-									<span class="sidebar-nav-item">Menu</span>
-									<span class="fa arrow"></span>
-					            </a>
 								<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
 								<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
 								<c:remove var="functionList" scope="request"/>
@@ -56,3 +51,5 @@
 						</ul>						
 					</div>
 				</div>
+				
+				<br/>

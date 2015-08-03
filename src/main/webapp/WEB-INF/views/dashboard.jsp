@@ -1261,11 +1261,10 @@
 		});
 	</script>
 </head>
-<body>
+<body>	
+	<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
+	
 	<div id="wrapper" class="container-fluid">
-
-		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
-
 		<div class="row">
 			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>

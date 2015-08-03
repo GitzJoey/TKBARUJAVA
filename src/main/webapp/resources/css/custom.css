@@ -83,3 +83,76 @@ strong.title {
 .dataTables_info {
 	font-size: 12px;
 }
+
+.sidebar {
+	display: block;
+	width: 100%;
+	background: #333;
+}
+
+.sidebar-nav {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+}
+
+.sidebar-nav ul {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+
+.sidebar-nav a, .sidebar-nav a:hover, .sidebar-nav a:focus, .sidebar-nav a:active {
+	outline: none;
+}
+
+.sidebar-nav ul li, .sidebar-nav ul a {
+	display: block;
+}
+
+.sidebar-nav ul a {
+	padding: 10px 20px;
+	color: #23527C;
+	border-top: 1px solid rgba(0, 0, 0, 0.3);
+	box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset;
+	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+}
+
+.sidebar-nav ul a:hover, .sidebar-nav ul a:focus, .sidebar-nav ul a:active {
+	color: #000000;
+	text-decoration: none;
+}
+
+.sidebar-nav ul ul a {
+	padding: 10px 20px;
+	background-color: rgba(244, 244, 244, 1);
+}
+
+.sidebar-nav ul ul ul a {
+	padding: 10px 20px;
+	background-color: rgba(255, 255, 255, 1);
+}
+
+.sidebar-nav ul ul a:hover, .sidebar-nav ul ul a:focus, .sidebar-nav ul ul a:active {
+	background-color: rgba(230, 230, 230, 1);
+}
+
+.sidebar-nav-item {
+	padding-left: 3px;
+}
+
+.sidebar-nav-item-icon {
+	padding-right: 3px;
+}
+
+.override-navbar-collapse {
+	padding-right: 0px;
+	padding-left: 0px;
+	border-top: 0px;	
+}
+
+.metismenu > li > ul > li > ul	> li > a {
+	padding-left: 35px;
+}
+
+.metismenu > li > ul > li > ul	> li > ul > li > a {
+	padding-left: 55px;
+}

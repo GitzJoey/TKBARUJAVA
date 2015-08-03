@@ -8,14 +8,11 @@
 		<c:choose>
 			<c:when test="${ fn:length(f.subFunctions) gt 0 }">
 				<li>
-					<c:choose>
-						<c:when test="${ f.urlLink != '#' }">
-							<a href="${ pageContext.request.contextPath }${ f.urlLink }"><i class="${ f.menuIcon }"></i><c:out value="${ f.menuName }"/></a>
-						</c:when>
-						<c:otherwise>
-							<a href="${ f.urlLink }"><i class="${ f.menuIcon }"></i><c:out value="${ f.menuName }"/></a>
-						</c:otherwise>
-					</c:choose>
+					<a href="${ f.urlLink }">
+						<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
+						<span class="sidebar-nav-item"><c:out value="${ f.menuName }"/></span>
+						<span class="fa arrow"></span>
+					</a>
 					<c:set var="functionList" value="${ f.subFunctions }" scope="request"/>
 					<c:set var="parentScope" value="${ f.functionId }" scope="request"/>
 					<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
@@ -25,10 +22,16 @@
 				<li>
 					<c:choose>
 						<c:when test="${ f.urlLink != '#' }">
-							<a href="${ pageContext.request.contextPath }${ f.urlLink }"><i class="${ f.menuIcon }"></i><c:out value="${ f.menuName }"/></a>
+							<a href="${ pageContext.request.contextPath }${ f.urlLink }">
+								<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
+								<span class="sidebar-nav-item"><c:out value="${ f.menuName }"/></span>
+							</a>
 						</c:when>
 						<c:otherwise>
-							<a href="${ f.urlLink }"><i class="${ f.menuIcon }"></i><c:out value="${ f.menuName }"/></a>
+							<a href="${ f.urlLink }">
+								<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
+								<span class="sidebar-nav-item"><c:out value="${ f.menuName }"/></span>
+							</a>
 						</c:otherwise>
 					</c:choose>
 				</li>
