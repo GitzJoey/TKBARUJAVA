@@ -3,11 +3,13 @@ package com.tkbaru.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.tkbaru.common.Converter;
 import com.tkbaru.dao.FunctionDAO;
 import com.tkbaru.model.Function;
 
+@Service
 public class FunctionServiceImpl implements FunctionService {
 
 	@Autowired

@@ -193,6 +193,24 @@
 						
 				}				
 			});			
+
+	        $.listen('parsley:field:validate', function () {
+	        	validateFront();
+	        });
+	        
+	        var validateFront = function () {
+				if (true === $('#supplierForm').parsley().isValid("tab1", false)) {
+	              	$('#suppDataTabError').addClass('hidden');
+	            } else {
+	            	$('#suppDataTabError').removeClass('hidden');
+	            }
+
+				if (true === $('#customerForm').parsley().isValid("tab2", false)) {
+	              	$('#picTabError').addClass('hidden');
+	            } else {
+	            	$('#picTabError').removeClass('hidden');
+	            }
+			};
 		});
 	</script>	
 </head>
@@ -327,8 +345,8 @@
 								<form:form id="supplierForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save" data-parsley-validate="parsley">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
-											<li role="presentation" class="<c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>"><a href="#suppDataTab" aria-controls="suppDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Supplier Data&nbsp;</a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>"><a href="#suppDataTab" aria-controls="suppDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Supplier Data&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
 											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
 											<li role="presentation" class="<c:if test="${ activeTab == 'prodTab' }"><c:out value="active"/></c:if>"><a href="#prodTab" aria-controls="prodTab" role="tab" data-toggle="tab"><span class="fa fa-cubes fa-fw"></span>&nbsp;Product List</a></li>
 											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
@@ -341,19 +359,19 @@
 													<label for="inputSupplierName" class="col-sm-2 control-label">Supplier Name</label>
 													<div class="col-sm-3">
 														<form:hidden path="supplierId"/>
-														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputSupplierAddress" class="col-sm-2 control-label">Address</label>
 													<div class="col-sm-3">
-														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
 													<label for="inputCity" class="col-sm-2 control-label">City</label>
 													<div class="col-sm-5">											
-														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
@@ -398,112 +416,122 @@
 														</div>
 													</div>
 													<div class="panel-body">
-														<div id="accordion_picList" class="panel-group" >															
-															<c:forEach items="${ supplierForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
-																<c:if test="${ editPersonIdx == picListLoopIdx.index }">
-																	
-																</c:if>														
-																<div class="panel panel-default">
-															        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
-															        	<h4 class="panel-title"><c:out value="${ supplierForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].lastName }"/></h4>
-															        </div>
-															        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
-															            <div class="panel-body">
-																			<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
-																			<div class="row">
-																				<label for="firstName" class="col-sm-2 control-label">Name</label>
-																				<div class="col-sm-4">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName" data-parsley-required="true" data-parsley-trigger="keyup"/>
-																				</div>
-																				<div class="col-sm-4">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName" data-parsley-required="true" data-parsley-trigger="keyup"/>
-																				</div>
-																			</div>
-																			<br/>
-																			<div class="row">
-																				<label for="addressLine1" class="col-sm-2 control-label">Address</label>
-																				<div class="col-sm-8">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1" data-parsley-required="true" data-parsley-trigger="keyup"/>
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
-																				</div>														
-																			</div>
-																			<br/>
-																			<div class="row">
-																				<label for="emailAddr" class="col-sm-2 control-label">Email</label>
-																				<div class="col-sm-5">
-																					<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr"/>
-																				</div>
-																			</div>
-																			<br/>
-																			<div class="row">
-																				<label for="phoneListPanel" class="col-sm-2 control-label">Phone List</label>														
-																				<div class="col-sm-10 pull-right">
-																					<div id="phoneListPanel" class="panel panel-default">
-																						<div class="panel-heading no-padding">
-																							<div class="btn-toolbar">
-																								<button type="submit" id="phoneButton_minusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
-																								<button type="submit" id="phoneButton_plusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
-																							</div>																																																															
+														<c:choose>
+															<c:when test="${ empty supplierForm.picList }">
+																No Data.																
+															</c:when>
+															<c:otherwise>
+																<div id="accordion_picList" class="panel-group" >															
+																	<c:forEach items="${ supplierForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
+																		<div class="panel panel-default">
+																	        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
+																	        	<h4 class="panel-title">PIC&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].lastName }"/></h4>
+																	        </div>
+																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
+																	            <div class="panel-body">
+																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
+																					<div class="row">
+																						<div class="form-group">
+																							<label for="firstName" class="col-sm-2 control-label">Name</label>
+																							<div class="col-sm-4">
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab2"/>
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab2"/>
+																							</div>
 																						</div>
-																						<table id="phoneListTable" class="table table-bordered table-hover">
-																							<thead>
-																								<tr>
-																									<th width="5%">&nbsp;</th>
-																									<th width="15%">Provider</th>
-																									<th width="15%">Number</th>
-																									<th width="15%">Status</th>
-																									<th width="25%">Remarks</th>
-																								</tr>
-																							</thead>
-																							<tbody>
-																								<c:forEach items="${ picListLoop.phoneList }" varStatus="phoneListLoopIdx">
-																									<tr>
-																										<td align="center">
-																											<input id="cbx_phoneList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ supplierForm.picList[picListLoopIdx.index].phoneList[phoneListLoopIdx.index].phoneListId }"/>" type="checkbox" value="<c:out value="${ phoneListLoopIdx.index }"/>"/>
-																											<form:hidden path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneListId"/>
-																										</td>
-																										<td>
-																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
-																												<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																											</form:select>																						
-																										</td>
-																										<td>
-																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber" data-parsley-required="true" data-parsley-trigger="keyup"/>
-																										</td>
-																										<td>
-																											<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
-																												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																											</form:select>																						
-																										</td>
-																										<td>
-																											<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumRemarks"/>
-																										</td>																					
-																									</tr>
-																								</c:forEach>
-																							</tbody>
-																						</table>
 																					</div>
-																				</div>
-																			</div>
-															            </div>
-																        <ul class="list-group">	
-																        	<li class="list-group-item">
-																				<div class="checkbox">
-																					<input id="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
-																					<label for="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>">Delete</label>
-																				</div>																        	
-																			</li>
-																		</ul>
-														        		<div class="panel-footer">
-													        				<div class="btn-toolbar">
-															        			<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
-													        				</div>
-														        		</div>																        															            
-															        </div>
-															    </div>
-														    </c:forEach>
-														</div>
+																					<br/>
+																					<div class="row">
+																						<div class="form-group">
+																							<label for="addressLine1" class="col-sm-2 control-label">Address</label>
+																							<div class="col-sm-8">
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1" data-parsley-required="true" data-parsley-trigger="keyup"/>
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
+																							</div>
+																						</div>									
+																					</div>
+																					<br/>
+																					<div class="row">
+																						<div class="form-group">
+																							<label for="emailAddr" class="col-sm-2 control-label">Email</label>
+																							<div class="col-sm-5">
+																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr"/>
+																							</div>																						
+																						</div>
+																					</div>
+																					<br/>
+																					<div class="row">
+																						<div class="form-group">
+																							<label for="phoneListPanel" class="col-sm-2 control-label">Phone List</label>														
+																							<div class="col-sm-10 pull-right">
+																								<div id="phoneListPanel" class="panel panel-default">
+																									<div class="panel-heading no-padding">
+																										<div class="btn-toolbar">
+																											<button type="submit" id="phoneButton_minusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
+																											<button type="submit" id="phoneButton_plusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
+																										</div>																																																															
+																									</div>
+																									<table id="phoneListTable" class="table table-bordered table-hover">
+																										<thead>
+																											<tr>
+																												<th width="5%">&nbsp;</th>
+																												<th width="15%">Provider</th>
+																												<th width="15%">Number</th>
+																												<th width="15%">Status</th>
+																												<th width="25%">Remarks</th>
+																											</tr>
+																										</thead>
+																										<tbody>
+																											<c:forEach items="${ picListLoop.phoneList }" varStatus="phoneListLoopIdx">
+																												<tr>
+																													<td align="center">
+																														<input id="cbx_phoneList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ supplierForm.picList[picListLoopIdx.index].phoneList[phoneListLoopIdx.index].phoneListId }"/>" type="checkbox" value="<c:out value="${ phoneListLoopIdx.index }"/>"/>
+																														<form:hidden path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneListId"/>
+																													</td>
+																													<td>
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
+																															<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																														</form:select>																						
+																													</td>
+																													<td>
+																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber" data-parsley-required="true" data-parsley-trigger="keyup"/>
+																													</td>
+																													<td>
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
+																															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																														</form:select>																						
+																													</td>
+																													<td>
+																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumRemarks"/>
+																													</td>																					
+																												</tr>
+																											</c:forEach>
+																										</tbody>
+																									</table>
+																								</div>
+																							</div>
+																						</div>
+																					</div>
+																	            </div>
+																		        <ul class="list-group">	
+																		        	<li class="list-group-item">
+																						<div class="checkbox">
+																							<input id="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
+																							<label for="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>">Delete</label>
+																						</div>																        	
+																					</li>
+																				</ul>
+																        		<div class="panel-footer">
+															        				<div class="btn-toolbar">
+																	        			<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+															        				</div>
+																        		</div>																        															            
+																	        </div>
+																	    </div>
+																    </c:forEach>
+																</div>													
+															</c:otherwise>
+														</c:choose>
 													</div>
 												</div>											
 											</div>

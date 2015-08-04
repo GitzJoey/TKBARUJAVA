@@ -135,7 +135,7 @@
 															<select id="selectRight" multiple class="form-control" size="5">
 																<c:forEach items="${ i.functionList }" var="f">
 																	<option>
-																		<c:out value="${ f.module }"/>&nbsp;-&nbsp;<c:out value="${ f.menuName }"/>
+																		<c:out value="${ f.functionCode }"/>&nbsp;-&nbsp;<c:out value="${ f.menuName }"/>&nbsp;(<c:out value="${ f.urlLink }"/>)
 																	</option>
 																</c:forEach>																
         													</select>
@@ -193,7 +193,7 @@
 													<td width="45%">														
 														<select id="selectLeft" multiple class="form-control" size="15">
 															<c:forEach items="${ functionListLeft }" var="fl">
-																<option value="${ fl.functionId }"><c:out value="${ fl.module }" /> - <c:out value="${ fl.menuName }" /></option> 	
+																<option value="${ fl.functionId }"><c:out value="${ fl.functionCode }" /> - <c:out value="${ fl.menuName }" /></option> 	
 															</c:forEach>
 														</select>
 													</td>
@@ -212,7 +212,7 @@
 															<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 																<select id="selectRight" multiple class="form-control" size="15">
 																	<c:forEach items="${ functionListRight }" var="fr">
-																		<option value="${ fr.functionId }"><c:out value="${ fr.module }" /> - <c:out value="${ fr.menuName }" /></option> 	
+																		<option value="${ fr.functionId }"><c:out value="${ fr.functionCode }" /> - <c:out value="${ fr.menuName }" /></option> 	
 																	</c:forEach>
 																</select>
 															</c:when>

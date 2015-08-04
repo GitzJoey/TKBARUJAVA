@@ -143,6 +143,10 @@
     </beans:bean>
                   
     <!-- declare spring DAO -->
+    <beans:bean id="SetupDAO" class="com.tkbaru.dao.SetupDAOImpl">
+    	<beans:property name="dataSource" ref="dataSource" />
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
@@ -210,7 +214,6 @@
     <beans:bean id="StocksOutDAO" class="com.tkbaru.dao.StocksOutDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-   
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -242,7 +245,7 @@
 	<beans:bean id="SmsService" class="com.tkbaru.service.SmsServiceImpl"></beans:bean>
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
 	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
-	
+	<beans:bean id="SetupService" class="com.tkbaru.service.SetupServiceImpl"></beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />
