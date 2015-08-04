@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -87,7 +88,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -102,13 +103,13 @@
 											<th width="15%">Function Code</th>
 											<th width="25%">Menu Name</th>
 											<th width="25%">Url</th>
-											<th width="5%">Parent Function Id</th>
-											<th width="5%">Order</th>											
+											<th width="5%">Order</th>
+											<th width="5%">Parent Function Id</th>					
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty functionList}">
-											<c:forEach var="i" varStatus="status" items="${ functionList }">
+										<c:if test="${ not empty fList }">
+											<c:forEach var="i" varStatus="status" items="${ fList }">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.functionId }"/>" type="checkbox" value="<c:out value="${ i.functionId }"/>"/></td>
 													<td><c:out value="${ i.functionCode }"></c:out></td>

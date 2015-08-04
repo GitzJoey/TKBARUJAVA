@@ -26,10 +26,6 @@ public class DashboardController {
 		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
 		model.addAttribute("loginContext", loginContextSession);
-
-		for (Function f:loginContextSession.getUserLogin().getRoleEntity().getFunctionList()) {
-			logger.info(f.toString());
-		}
 		
 		return "dashboard";
 	}

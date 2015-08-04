@@ -36,7 +36,7 @@ public class FunctionController {
 
 		List<Function> fList = functionManager.getAllFunctions();
 		
-		model.addAttribute("functionList", fList);
+		model.addAttribute("fList", fList);
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);

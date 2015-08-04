@@ -50,7 +50,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
+			if (row.get("parent_function_id") != null)  
+				res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
 
 			result.add(res);
 		}
@@ -184,7 +185,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
+			if (row.get("parent_function_id") != null)
+				res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
 
 			result.add(res);
 		}
@@ -220,7 +222,8 @@ public class FunctionDAOImpl implements FunctionDAO {
 			res.setMenuIcon(String.valueOf(row.get("menu_icon")));
 			res.setUrlLink(String.valueOf(row.get("url")));
 			res.setOrderNum(Integer.valueOf(String.valueOf(row.get("order_num"))));
-			res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
+			if (row.get("parent_function_id") != null)
+				res.setParentFunctionId(Integer.valueOf(String.valueOf(row.get("parent_function_id"))));
 
 			result.add(res);
 		}
