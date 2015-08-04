@@ -41,7 +41,7 @@
 				</div>
 				
 				<div class="navbar-default sidebar" role="navigation">
-					<div class="sidebar-nav navbar-collapse override-navbar-collapse">
+					<div class="sidebar-nav navbar-collapse in override-navbar-collapse">
 						<ul id="menu" class="nav metismenu">
 							<li class="active">
 								<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>

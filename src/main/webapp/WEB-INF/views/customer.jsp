@@ -588,7 +588,7 @@
 												</c:forEach>												
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>" id="settingsTab">
-												...
+												&nbsp;
 											</div>
 										</div>
 									</div>

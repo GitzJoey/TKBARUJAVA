@@ -192,7 +192,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display">
+										<table id="inflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
 													<th width="36%">Product Name</th>
@@ -275,7 +275,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="outflowTable" class="table table-bordered table-hover display">
+										<table id="outflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
 													<th width="36%">Product Name</th>
