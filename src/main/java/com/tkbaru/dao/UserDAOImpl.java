@@ -220,4 +220,18 @@ public class UserDAOImpl implements UserDAO {
 		
 		return result;
 	}
+
+	@Override
+	@SuppressWarnings("deprecation")
+	public boolean checkUserTableHasData() {
+		logger.info("[checkUserTableHasData] " + "");
+
+		String sqlquery = 
+				"SELECT COUNT(*) AS size FROM tb_user";
+
+		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
+		int size = jdbcTemplate.queryForInt(sqlquery);
+		
+		return size > 0 ? true : false;
+	}
 }

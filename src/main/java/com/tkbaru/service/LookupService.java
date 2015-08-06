@@ -15,4 +15,5 @@ public interface LookupService {
 	public void addLookup(Lookup lookup);
 	public void editLookup(Lookup lookup);
 	public void deleteLookup(int selectedId);	
+	public void generateDefaultLookup();
 }

@@ -10,4 +10,5 @@ public interface RoleService {
 	public void addRole(Role role);
 	public void editRole(Role role);
 	public void deleteRole(int selectedId);
+	public void generateDefaultRoles();
 }

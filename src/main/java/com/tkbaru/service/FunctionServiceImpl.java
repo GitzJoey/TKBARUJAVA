@@ -1,5 +1,6 @@
 package com.tkbaru.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,12 @@ public class FunctionServiceImpl implements FunctionService {
 	public List<Function> getChildFunctions(int selectedId) {
 		List<Function> lfs = functionDAO.getChildFunctions(selectedId);
 		return lfs;
+	}
+
+	@Override
+	public void generateDefaultFunctions() {
+		
+		functionDAO.generateDefaultFunctions();
 	}
 
 }

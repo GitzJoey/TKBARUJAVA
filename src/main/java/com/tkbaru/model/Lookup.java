@@ -22,6 +22,22 @@ public class Lookup implements Serializable {
 		
 	}
 
+	public Lookup(String lookupCategory,
+					String lookupKey,
+					int orderNum,
+					String localeMessageCodes,
+					String lookupValue,
+					String lookupMaintainability) {
+		this.lookupCategory = lookupCategory;
+		this.lookupKey = lookupKey;
+		this.orderNum = orderNum;
+		this.localeMessageCodes = localeMessageCodes;
+		this.lookupValue = lookupValue;
+		this.lookupMaintainability = lookupMaintainability;
+		this.createdBy = 0;
+		this.createdDate = new Date();		
+	}
+	
 	@Id
 	@Column(name="lookup_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

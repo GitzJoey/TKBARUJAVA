@@ -56,4 +56,10 @@ public class CustomerServiceImpl implements CustomerService {
 		return customerDAO.searchCustomer(searchQuery);
 	}
 
+	@Override
+	public void generateDefaultCustomer() {
+		
+		
+	}
+
 }

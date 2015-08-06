@@ -66,4 +66,13 @@ public class LoginServiceImpl implements LoginService {
 		return setupManager.checkDBConnection();
 	}
 
+	@Override
+	public boolean checkInitData() {
+		boolean isValid = false;
+		
+		isValid = setupManager.generateInitData();
+		
+		return isValid;
+	}
+
 }

@@ -21,6 +21,22 @@ public class Function {
 	public Function() {
 		
 	}
+
+	public Function(String functionCode,
+					String menuName,
+					String menuIcon,
+					String urlLink,
+					int orderNum,
+					Integer parentFunctionId) {
+		this.functionCode = functionCode;
+		this.menuName = menuName;
+		this.menuIcon = menuIcon;
+		this.urlLink = urlLink;
+		this.orderNum = orderNum;
+		this.parentFunctionId = parentFunctionId;
+		this.createdBy = 0;
+		this.createdDate = new Date();
+	}
 	
 	@Id
 	@GeneratedValue

@@ -12,4 +12,6 @@ public interface UserService {
 	public void addNewUser(User usr);
 	public void editUser(User usr);
 	public void deleteUser(int selectedId);
+	public boolean checkUserTableHasData();
+	public void generateDefaultUser();
 }

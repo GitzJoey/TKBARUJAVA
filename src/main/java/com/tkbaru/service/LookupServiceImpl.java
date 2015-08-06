@@ -96,4 +96,10 @@ public class LookupServiceImpl implements LookupService {
 		return lookupDAO.getLookupByKey(lookupKey, defaultLanguageCode);
 	}
 
+	@Override
+	public void generateDefaultLookup() {
+		
+		
+	}
+
 }

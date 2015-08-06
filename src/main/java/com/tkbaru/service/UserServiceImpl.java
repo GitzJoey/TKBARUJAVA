@@ -153,4 +153,16 @@ public class UserServiceImpl implements UserService {
 		return userList;
 	}
 
+	@Override
+	public void generateDefaultUser() {
+
+		
+	}
+
+	@Override
+	public boolean checkUserTableHasData() {
+		
+		return userDAO.checkUserTableHasData();
+	}
+
 }

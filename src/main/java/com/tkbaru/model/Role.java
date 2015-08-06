@@ -25,6 +25,13 @@ public class Role {
 	public Role() {
 		
 	}
+
+	public Role(String roleName) {
+		this.roleName = roleName;
+		this.roleStatus = "L001_A";
+		this.createdBy = 0;
+		this.createdDate = new Date();
+	}
 	
 	@Id
 	@GeneratedValue
