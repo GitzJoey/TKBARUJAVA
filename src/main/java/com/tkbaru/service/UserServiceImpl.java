@@ -1,6 +1,7 @@
 package com.tkbaru.service;
 
 import java.io.File;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.tkbaru.common.Converter;
 import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.UserDAO;
+import com.tkbaru.model.Person;
 import com.tkbaru.model.User;
 
 @Service
@@ -154,11 +156,31 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
+	@Transactional
 	public void generateDefaultUser() {
-
+		User u1 = new User();
+		u1.setUserName("admin");
+		u1.setUserPassword("$10$4F8PMlu5IHEkScgtkvzg3eLez5FlaZ3Pvo9T0tSlbJfM6X1K2gdc.");
+	
+		Person p = new Person();
+		p.setFirstName("Admin");
+		p.setLastName("Admin");
+		p.setAddressLine1("");
+		p.setAddressLine2("");
+		p.setAddressLine3("");
+		p.setCreatedBy(0);
+		p.setCreatedDate(new Date());
 		
+		u1.setRoleId(roleManager.getRoleByName("ADMIN").getRoleId());
+		u1.setPersonId(personManager.addPerson(p));
+		u1.setStoreId(storeManager.getDefaultStore().getStoreId());
+		
+		u1.setCreatedBy(0);
+		u1.setCreatedDate(new Date());
+		
+		addNewUser(u1);
 	}
-
+	
 	@Override
 	public boolean checkUserTableHasData() {
 		

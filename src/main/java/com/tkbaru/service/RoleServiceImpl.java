@@ -80,4 +80,16 @@ public class RoleServiceImpl implements RoleService {
 		addRole(r1);
 		addRole(r2);
 	}
+
+	@Override
+	public Role getRoleByName(String roleName) {
+		List<Role> allRole = getAllRole();
+		
+		for (Role r : allRole) {
+			if (r.getRoleName().equalsIgnoreCase(roleName))
+				return r;
+		}
+		
+		return null;
+	}
 }

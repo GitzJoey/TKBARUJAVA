@@ -17,14 +17,12 @@ public class LookupServiceImpl implements LookupService {
 	@Autowired
 	LookupDAO lookupDAO;
 	
-	private String defaultLanguageCode = "L010_EN";
-	
 	@Override
 	@Transactional
 	public List<Lookup> getLookupByCategory(String categoryName) {
 		List<Lookup> result = new ArrayList<Lookup>();
 		
-		result = lookupDAO.getLookupByCategory(categoryName, defaultLanguageCode);
+		result = lookupDAO.getLookupByCategory(categoryName);
 		
 		return result;
 	}
@@ -77,7 +75,7 @@ public class LookupServiceImpl implements LookupService {
 
 		String inClause = Converter.convertToINClause(categoryNames);
 		
-		return lookupDAO.getLookupByCategories(inClause.toUpperCase(), defaultLanguageCode);
+		return lookupDAO.getLookupByCategories(inClause.toUpperCase());
 	}
 
 	@Override
@@ -86,20 +84,26 @@ public class LookupServiceImpl implements LookupService {
 
 		String inClause = Converter.convertToINClause(lookupKeys);
 		
-		return lookupDAO.getLookupByLookupKeys(inClause.toUpperCase(), defaultLanguageCode);
+		return lookupDAO.getLookupByLookupKeys(inClause.toUpperCase());
 	}
 
 	@Override
 	@Transactional
 	public Lookup getLookupByKey(String lookupKey) {
 		
-		return lookupDAO.getLookupByKey(lookupKey, defaultLanguageCode);
+		return lookupDAO.getLookupByKey(lookupKey);
 	}
 
 	@Override
+	@Transactional
 	public void generateDefaultLookup() {
+		List<Lookup> ls = new ArrayList<Lookup>();
 		
+		ls.add(new Lookup());
 		
+		for (Lookup l:ls) {
+			addLookup(l);
+		}
 	}
 
 }

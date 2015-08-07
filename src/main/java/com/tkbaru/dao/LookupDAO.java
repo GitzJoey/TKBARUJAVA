@@ -11,9 +11,9 @@ public interface LookupDAO {
 	public void editLookup(Lookup lookup);
 	public void deleteLookup(int selectedId);
 
-	public List<Lookup> getLookupByCategory(String categoryCode, String languageCode);
-	public List<Lookup> getLookupByCategories(String categoryCodes, String languageCode);
-	public Lookup getLookupByKey(String lookupKey, String languageCode);
-	public List<Lookup> getLookupByLookupKeys(String lookupKeys, String languageCode);
+	public List<Lookup> getLookupByCategory(String categoryCode);
+	public List<Lookup> getLookupByCategories(String categoryCodes);
+	public Lookup getLookupByKey(String lookupKey);
+	public List<Lookup> getLookupByLookupKeys(String lookupKeys);
 	public List<Lookup> getAllCategory();
 }

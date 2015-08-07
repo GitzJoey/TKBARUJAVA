@@ -27,6 +27,9 @@ public class SetupServiceImpl implements SetupService {
 	CustomerService customerManager;
 	
 	@Autowired
+	StoreService storeManager;
+	
+	@Autowired
 	LookupService lookupManager;
 	
 	@Override
@@ -38,6 +41,11 @@ public class SetupServiceImpl implements SetupService {
 	private List<String> checkInitDataValidity() {
 		List<String> isNotValid = new ArrayList<String>();
 
+		//Check Store
+		if (storeManager.getAllStore().size() == 0) {
+			isNotValid.add("Store");
+		}
+		
 		//Check Functions
 		if (functionManager.getAllFunctions().size() == 0) {
 			isNotValid.add("Functions");
@@ -75,6 +83,8 @@ public class SetupServiceImpl implements SetupService {
 		for (String s: errorModule) {
 			if (s.equalsIgnoreCase("Lookup")) {
 				lookupManager.generateDefaultLookup();
+			} else if(s.equalsIgnoreCase("Store")) {
+				storeManager.generateDefaultStore();
 			} else if (s.equalsIgnoreCase("Functions")) {
 				functionManager.generateDefaultFunctions();
 			} else if (s.equalsIgnoreCase("Role")) {

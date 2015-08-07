@@ -25,7 +25,7 @@ public class LookupDAOImpl implements LookupDAO {
     }
 	
 	@Override
-	public List<Lookup> getLookupByCategory(String categoryCode, String languageCode) {
+	public List<Lookup> getLookupByCategory(String categoryCode) {
 		logger.info("[getLookupByCategory] " + "categoryCode: " + categoryCode);
 		
 		Session session = this.sessionFactory.getCurrentSession();
@@ -122,7 +122,7 @@ public class LookupDAOImpl implements LookupDAO {
 	}
 
 	@Override
-	public List<Lookup> getLookupByCategories(String categoryCodes, String languageCode) {
+	public List<Lookup> getLookupByCategories(String categoryCodes) {
 		logger.info("[getLookupByCategories] " + "categoryCodes: " + categoryCodes);
 		
 		Session session = this.sessionFactory.getCurrentSession();
@@ -135,7 +135,7 @@ public class LookupDAOImpl implements LookupDAO {
 	}
 
 	@Override
-	public List<Lookup> getLookupByLookupKeys(String lookupKeys, String languageCode) {
+	public List<Lookup> getLookupByLookupKeys(String lookupKeys) {
 		logger.info("[getLookupByLookupKeys] " + "lookupKeys: " + lookupKeys);
 		
 		Session session = this.sessionFactory.getCurrentSession();
@@ -148,7 +148,7 @@ public class LookupDAOImpl implements LookupDAO {
 	}
 
 	@Override
-	public Lookup getLookupByKey(String lookupKey, String languageCode) {
+	public Lookup getLookupByKey(String lookupKey) {
 		logger.info("[getLookupByLookupKey] " + "lookupKey: " + lookupKey);
 		
 		Session session = this.sessionFactory.getCurrentSession();

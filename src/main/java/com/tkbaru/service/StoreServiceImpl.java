@@ -1,5 +1,6 @@
 package com.tkbaru.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,5 +95,31 @@ public class StoreServiceImpl implements StoreService {
 		}
 		
 		storeDAO.batchEditStore(all);
+	}
+
+	@Override
+	@Transactional
+	public void generateDefaultStore() {
+		Store s1 = new Store();
+		Store s2 = new Store();
+		
+		s1.setStoreName("Toko Baru");
+		s1.setIsDefault("L003_YES");
+		s1.setStoreStatus("L001_A");
+		s1.setNpwpNumber("0000-0000-0000-0000");
+		s1.setStoreAddress1("Wangon");
+		s1.setCreatedBy(0);
+		s1.setCreatedDate(new Date());
+
+		s2.setStoreName("Toko Baru-");
+		s2.setIsDefault("L003_YES");
+		s2.setStoreStatus("L001_A");
+		s2.setNpwpNumber("0000-0000-0000-0000");
+		s2.setStoreAddress1("Wangon");
+		s2.setCreatedBy(0);
+		s2.setCreatedDate(new Date());
+
+		addStore(s1);
+		addStore(s2);
 	}
 }

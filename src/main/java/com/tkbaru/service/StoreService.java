@@ -12,4 +12,5 @@ public interface StoreService {
 	public void deleteStore(int selectedId);
 
 	public Store getDefaultStore();
+	public void generateDefaultStore();
 }
