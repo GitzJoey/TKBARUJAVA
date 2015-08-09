@@ -11,7 +11,7 @@
 				<li>
 					<a href="${ f.urlLink }">
 						<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
-						<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="f.menuName"></spring:message></span>
+						<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="${ f.menuName }"></spring:message></span>
 						<span class="fa arrow"></span>
 					</a>
 					<c:set var="functionList" value="${ f.subFunctions }" scope="request"/>
@@ -25,13 +25,13 @@
 						<c:when test="${ f.urlLink != '#' }">
 							<a href="${ pageContext.request.contextPath }${ f.urlLink }">
 								<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
-								<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="f.menuName"></spring:message></span>
+								<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="${ f.menuName }"></spring:message></span>
 							</a>
 						</c:when>
 						<c:otherwise>
 							<a href="${ f.urlLink }">
 								<span class="sidebar-nav-item-icon ${ f.menuIcon }"></span>
-								<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="f.menuName"></spring:message></span>
+								<span class="sidebar-nav-item"><spring:message code="${ f.functionCode }" text="${ f.menuName }"></spring:message></span>
 							</a>
 						</c:otherwise>
 					</c:choose>

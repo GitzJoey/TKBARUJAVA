@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 		<nav class="navbar navbar-default navbar-fixed-top navbar-inverse" role="navigation">
   			<div class="container-fluid">
@@ -18,7 +19,7 @@
 	  				<div class="form-group">
 	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search"/>
 	  				</div>
-	  				<a id="searchTopMenu" type="button" class="btn btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;Search</a>
+	  				<a id="searchTopMenu" type="button" class="btn btn-default" href="javascript: searchTopMenu();"><span class="fa fa-search fa-fw"></span>&nbsp;<spring:message code="common.search_button" text="Search"/></a>
 				</form>
 				<ul class="nav navbar-nav pull-right hidden-xs hidden-sm">
 					<li class="dropdown">

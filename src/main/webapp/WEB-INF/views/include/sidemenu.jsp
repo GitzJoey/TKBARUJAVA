@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 
 				<div class="panel panel-default">
 					<div id="userprofile">
@@ -32,9 +33,9 @@
 						<div class="btn-toolbar">
 							<form action="${ pageContext.request.contextPath }/logout" method="post">
 								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-  								<button type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"><span class="fa fa-child">&nbsp;Logout</span></button>
+  								<button type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"><span class="fa fa-child">&nbsp;<spring:message code="common.logout_button" text="Logout"/></span></button>
 							</form>
-							<a href="${ pageContext.request.contextPath }/admin/user/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;Profile</span></a>
+							<a href="${ pageContext.request.contextPath }/admin/user/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;<spring:message code="common.profile_button" text="Profile"/></span></a>
 						</div>					
 					</div>
 				</div>
