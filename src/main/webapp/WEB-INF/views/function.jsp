@@ -101,11 +101,11 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="15%">Function Code</th>
-											<th width="25%">Menu Name</th>
-											<th width="25%">Url</th>
-											<th width="5%">Order</th>
-											<th width="5%">Parent Function Id</th>					
+											<th width="15%"><spring:message code="function_jsp.table.header.function_code" text="Function Code"/></th>
+											<th width="25%"><spring:message code="function_jsp.table.header.menu_name" text="Menu Name"/></th>
+											<th width="25%"><spring:message code="function_jsp.table.header.url" text="Url Link"/></th>
+											<th width="5%"><spring:message code="function_jsp.table.header.order" text="Order"/></th>
+											<th width="5%"><spring:message code="function_jsp.table.header.parent_function_id" text="Parent Function Id"/></th>					
 										</tr>
 									</thead>
 									<tbody>

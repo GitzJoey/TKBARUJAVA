@@ -228,7 +228,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -241,7 +241,7 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="95%">Customer Details</th>
+												<th width="95%"><spring:message code="customer_jsp.table.header.customer_details" text="Customer Details"/></th>
 											</tr>
 										</thead>
 										<tbody>

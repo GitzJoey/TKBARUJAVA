@@ -1361,11 +1361,17 @@
 					</div>
 				</div>
             	<div class="row">
-	                <div class="col-lg-12">
+	                <div class="col-lg-12 col-md-12">
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading">
-	                            Line Chart Example
+	                        <div class="panel-body">
+	                            <div class="flot-chart">
+	                                <div class="flot-chart-content" id="flot-bar-chart"></div>
+	                            </div>
 	                        </div>
+	                    </div>
+	                </div>
+	                <div class="col-lg-6 col-md-6">
+	                    <div class="panel panel-default">
 	                        <div class="panel-body">
 	                            <div class="flot-chart">
 	                                <div class="flot-chart-content" id="flot-line-chart"></div>
@@ -1373,12 +1379,8 @@
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="col-lg-6">
+	                <div class="col-lg-6 col-md-6">
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading">
-	                            Pie Chart Example
-	                        </div>
-	                        <!-- /.panel-heading -->
 	                        <div class="panel-body">
 	                            <div class="flot-chart">
 	                                <div class="flot-chart-content" id="flot-pie-chart"></div>
@@ -1412,103 +1414,7 @@
 	                        </div>
 	                    </div>
 	                </div>
-	                <div class="col-lg-6">
-	                    <div class="panel panel-default">
-	                        <div class="panel-heading">
-	                            Bar Chart Example
-	                        </div>
-	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
-	                            <div class="flot-chart">
-	                                <div class="flot-chart-content" id="flot-bar-chart"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-lg-12">
-	                    <div class="panel panel-default">
-	                        <div class="panel-heading">
-	                            Flot Charts Usage
-	                        </div>
-	                        <!-- /.panel-heading -->
-	                        <div class="panel-body">
-	                            <p>Flot is a pure JavaScript plotting library for jQuery, with a focus on simple usage, attractive looks, and interactive features. In SB Admin, we are using the most recent version of Flot along with a few plugins to enhance the user experience. The Flot plugins being used are the tooltip plugin for hoverable tooltips, and the resize plugin for fully responsive charts. The documentation for Flot Charts is available on their website, <a target="_blank" href="http://www.flotcharts.org/">http://www.flotcharts.org/</a>.</p>
-	                            <a target="_blank" class="btn btn-default btn-lg btn-block" href="http://www.flotcharts.org/">View Flot Charts Documentation</a>
-	                        </div>
-	                    </div>
-	                </div>
             	</div>
-				<div class="row">
-					<div class="col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<div class="demo-container">
-									<div id="placeholder" class="demo-placeholder"></div>
-								</div>							
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-9">
-						<div id="line-chart" class="ct-chart"></div>
-					</div>
-					<div class="col-md-3">
-						<div id="pie-chart" class="ct-chart"></div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-8">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<div class="panel-title">
-									<spring:message code="dashboard_test"/>
-								</div>
-							</div>
-							<div class="panel-body">
-								<c:out value="${cookie.tkbaruLocaleCookie.value}"/>aaa<br/>
-								<c:out value="${pageContext.request.requestURI }"/><br/>
-								<c:out value="${requestScope['javax.servlet.forward.request_uri']}"/><br/>
-								<spring:message code="${ test }" text="notfound"/><br/>
-								<br/>
-								<br/>
-								<br/>
-								&nbsp;
-							</div>
-						</div>
-					</div>
-					<div class="col-md-4">
-						<div class="panel panel-default">
-							<ul class="list-group">
-								<li class="list-group-item">
-									<input type='text' class="form-control" id='datetimepicker4'/>
-								</li>
-								<li class="list-group-item">&nbsp;</li>
-								<li class="list-group-item">&nbsp;</li>
-								<li class="list-group-item">&nbsp;</li>
-								<li class="list-group-item">&nbsp;</li>
-								<li class="list-group-item">&nbsp;</li>
-								<li class="list-group-item">&nbsp;</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-3">
-						<div id="chart-1" class="ct-chart"></div>
-					</div>
-					<div class="col-md-3">
-						<div id="chart-2" class="ct-chart"></div>
-					</div>
-					<div class="col-md-3">
-						<div id="chart-3" class="ct-chart"></div>
-					</div>
-					<div class="col-md-3">
-						<div id="chart-4" class="ct-chart"></div>
-					</div>
-				</div>
 			</div>
 		</div>
 

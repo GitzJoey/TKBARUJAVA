@@ -255,7 +255,7 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="95%">Supplier Details</th>
+												<th width="95%"><spring:message code="supplier_jsp.table.header.supplier_details" text="Supplier Details"/></th>
 											</tr>
 										</thead>
 										<tbody>

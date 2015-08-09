@@ -97,13 +97,13 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="10%">Truck Type</th>
-											<th width="10%">Weight Type</th>
-											<th width="10%">Plate Number</th>
-											<th width="10%">KIR Date</th>
-											<th width="15%">Driver</th>
-											<th width="15%">Status</th>
-											<th width="30%">Remarks</th>
+											<th width="10%"><spring:message code="truck_jsp.table.header.truck_type" text="Truck Type"/></th>
+											<th width="10%"><spring:message code="truck_jsp.table.header.weight_type" text="Weight Type"/></th>
+											<th width="10%"><spring:message code="truck_jsp.table.header.plate_number" text="Plate Number"/></th>
+											<th width="10%"><spring:message code="truck_jsp.table.header.kir_date" text="KIR Date"/></th>
+											<th width="15%"><spring:message code="truck_jsp.table.header.driver" text="Driver"/></th>
+											<th width="15%"><spring:message code="truck_jsp.table.header.status" text="Status"/></th>
+											<th width="30%"><spring:message code="truck_jsp.table.header.remarks" text="Remarks"/></th>
 										</tr>
 									</thead>
 									<tbody>

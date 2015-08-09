@@ -80,9 +80,9 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="30%">Warehouse Name</th>
-											<th width="60%">Location</th>
-											<th width="5%">Status</th>												
+											<th width="30%"><spring:message code="warehouse_jsp.table.header.warehouse_name" text="Warehouse Name"/></th>
+											<th width="60%"><spring:message code="warehouse_jsp.table.header.location" text="Location"/></th>
+											<th width="5%"><spring:message code="warehouse_jsp.table.header.status" text="Status"/></th>												
 										</tr>
 									</thead>
 									<tbody>

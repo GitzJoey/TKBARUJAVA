@@ -113,7 +113,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -125,15 +125,15 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="10%">Type</th>
-											<th width="10%">Code</th>
-											<th width="25%">Name</th>
-											<th width="40%">Description</th>
-											<th width="10%">Status</th>
+											<th width="10%"><spring:message code="product_jsp.table.header.type" text="Type"/></th>
+											<th width="10%"><spring:message code="product_jsp.table.header.code" text="Code"/></th>
+											<th width="25%"><spring:message code="product_jsp.table.header.name" text="Name"/></th>
+											<th width="40%"><spring:message code="product_jsp.table.header.description" text="Description"/></th>
+											<th width="10%"><spring:message code="product_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty productList}">
+										<c:if test="${ not empty productList }">
 											<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>

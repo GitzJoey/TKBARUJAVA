@@ -119,13 +119,13 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%">Category</th>
-											<th width="15%">Key</th>
-											<th width="25%">Locale Message Codes</th>
-											<th width="20%">Value</th>
-											<th width="5%">Order</th>
-											<th width="5%">Status</th>
-											<th width="5%">Maintainable</th>
+											<th width="20%"><spring:message code="lookup_jsp.table.header.category" text="Category"/></th>
+											<th width="15%"><spring:message code="lookup_jsp.table.header.key" text="Key"/></th>
+											<th width="25%"><spring:message code="lookup_jsp.table.header.locale_message_codes" text="Locale Message Codes"/></th>
+											<th width="20%"><spring:message code="lookup_jsp.table.header.value" text="Value"/></th>
+											<th width="5%"><spring:message code="lookup_jsp.table.header.order" text="Order"/></th>
+											<th width="5%"><spring:message code="lookup_jsp.table.header.status" text="Status"/></th>
+											<th width="5%"><spring:message code="lookup_jsp.table.header.maintainable" text="Maintainable"/></th>
 										</tr>
 									</thead>
 									<tbody>

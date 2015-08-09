@@ -99,7 +99,10 @@ public class LoginController {
 		}
 		
 		if (!localeCookieFound) {
-			response.addCookie(new Cookie(localeResolver.getCookieName(), locale.getLanguage()));
+			Cookie newC = new Cookie(localeResolver.getCookieName(), locale.getLanguage());
+			newC.setMaxAge(1);
+			newC.setPath("/");
+			response.addCookie(newC);
 		}
 		
 		model.addAttribute("hideLogin", false);

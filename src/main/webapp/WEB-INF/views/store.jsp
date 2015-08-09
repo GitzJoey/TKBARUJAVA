@@ -91,10 +91,10 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="15%">Store Name</th>
-											<th width="70%">Details</th>
-											<th width="5%">Default</th>
-											<th width="5%">Status</th>												
+											<th width="15%"><spring:message code="store_jsp.table.header.store_name" text="Store Name"/></th>
+											<th width="70%"><spring:message code="store_jsp.table.header.details" text="Details"/></th>
+											<th width="5%"><spring:message code="store_jsp.table.header.default" text="Default"/></th>
+											<th width="5%"><spring:message code="store_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>

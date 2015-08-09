@@ -6,7 +6,6 @@
 	<div class="col-md-12">
 		<p class="footer">
 			Copyright © 2015. All Rights Reserved. Proudly Powered by Brain and Coffee<br/>
-			Locale : <c:out value="${ cookie.tkbaruLocaleCookie.value }"/><br/>
 		</p>	
 	</div>
 </div>

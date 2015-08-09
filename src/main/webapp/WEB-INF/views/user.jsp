@@ -102,7 +102,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -114,14 +114,14 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="15%">User Name</th>
-											<th width="75%">Details</th>
-											<th width="5%">Status</th>
+											<th width="15%"><spring:message code="user_jsp.table.header.user_name" text="User Name"/></th>
+											<th width="75%"><spring:message code="user_jsp.table.header.details" text="Details"/></th>
+											<th width="5%"><spring:message code="user_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty userList}">
-											<c:forEach var="i" varStatus="status" items="${userList}">
+										<c:if test="${ not empty userList }">
+											<c:forEach var="i" varStatus="status" items="${ userList }">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.userId }"/>" type="checkbox" value="<c:out value="${ i.userId }"/>"/></td>
 													<td><c:out value="${ i.userName }"></c:out></td>
@@ -140,7 +140,7 @@
 															<c:out value="${ ph.providerLookup.lookupValue }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
 														</c:forEach>
 													</td>
-													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
+													<td><spring:message code="${ i.statusLookup.i18nLookupValue }" text="${ i.statusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
