@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,8 +25,12 @@ public class PriceLevel{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_level_id")
     private int priceLevelId ;
-    @Column(name="level_name", length=255)
-    private String levelName    ;
+    @Column(name="level_name", length=100)
+    private String priceLevelName;
+    @Column(name="level_description", length=255)
+    private String priceLevelDescription;
+    @Column(name="status", length=15)
+    private String priceLevelStatus;    
     @Column(name="addition")
     private BigDecimal addition;
     @Column(name="subtraction")
@@ -40,74 +46,104 @@ public class PriceLevel{
     @Column(name="updated_date")
     private Date updatedDate;
 
-    public void setPriceLevelId( int priceLevelId ) {
-        this.priceLevelId = priceLevelId ;
-    }
-    public int getPriceLevelId() {
-        return this.priceLevelId;
-    }  
-    public void setLevelName( String levelName ) {
-        this.levelName = levelName;
-    }
-    public String getLevelName() {
-        return this.levelName;
-    }
-    public void setAddition( BigDecimal addition ) {
-        this.addition = addition;
-    }
-    public BigDecimal getAddition() {
-        return this.addition;
-    }
-    public void setSubtraction( BigDecimal subtraction ) {
-        this.subtraction = subtraction;
-    }
-    public BigDecimal getSubtraction() {
-        return this.subtraction;
-    }
-    public void setCreatedBy( Integer createdBy ) {
-        this.createdBy = createdBy;
-    }
-    public Integer getCreatedBy() {
-        return this.createdBy;
-    }
-    public void setCreatedDate( Date createdDate ) {
-        this.createdDate = createdDate;
-    }
-    public Date getCreatedDate() {
-        return this.createdDate;
-    }
-    public void setUpdatedBy( Integer updatedBy ) {
-        this.updatedBy = updatedBy;
-    }
-    public Integer getUpdatedBy() {
-        return this.updatedBy;
-    }
-    public void setUpdatedDate( Date updatedDate ) {
-        this.updatedDate = updatedDate;
-    }
-    public Date getUpdatedDate() {
-        return this.updatedDate;
-    }
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
 
-    public String toString() { 
-        StringBuffer sb = new StringBuffer(); 
-        sb.append("["); 
-        sb.append(priceLevelId);
-        sb.append("]:"); 
-        sb.append(levelName);
-        sb.append("|");
-        sb.append(addition);
-        sb.append("|");
-        sb.append(subtraction);
-        sb.append("|");
-        sb.append(createdBy);
-        sb.append("|");
-        sb.append(createdDate);
-        sb.append("|");
-        sb.append(updatedBy);
-        sb.append("|");
-        sb.append(updatedDate);
-        return sb.toString(); 
-    } 
+	public int getPriceLevelId() {
+		return priceLevelId;
+	}
+
+	public void setPriceLevelId(int priceLevelId) {
+		this.priceLevelId = priceLevelId;
+	}
+
+	public String getPriceLevelName() {
+		return priceLevelName;
+	}
+
+	public void setPriceLevelName(String priceLevelName) {
+		this.priceLevelName = priceLevelName;
+	}
+
+	public String getPriceLevelDescription() {
+		return priceLevelDescription;
+	}
+
+	public void setPriceLevelDescription(String priceLevelDescription) {
+		this.priceLevelDescription = priceLevelDescription;
+	}
+
+	public String getPriceLevelStatus() {
+		return priceLevelStatus;
+	}
+
+	public void setPriceLevelStatus(String priceLevelStatus) {
+		this.priceLevelStatus = priceLevelStatus;
+	}
+
+	public BigDecimal getAddition() {
+		return addition;
+	}
+
+	public void setAddition(BigDecimal addition) {
+		this.addition = addition;
+	}
+
+	public BigDecimal getSubtraction() {
+		return subtraction;
+	}
+
+	public void setSubtraction(BigDecimal subtraction) {
+		this.subtraction = subtraction;
+	}
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public Integer getUpdatedBy() {
+		return updatedBy;
+	}
+
+	public void setUpdatedBy(Integer updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
+	@Override
+	public String toString() {
+		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelName=" + priceLevelName
+				+ ", priceLevelDescription=" + priceLevelDescription + ", priceLevelStatus=" + priceLevelStatus
+				+ ", addition=" + addition + ", subtraction=" + subtraction + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + "]";
+	}
 
 }

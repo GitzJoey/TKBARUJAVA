@@ -57,7 +57,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(cust);
         
-        logger.info("Customer added successfully, Customer Details = " + cust.toString());		
+        logger.info("Customer added successfully, Customer Details = " + cust.toString());
 	}
 
 	@Override
@@ -67,7 +67,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(cust);
 	    
-	    logger.info("Customer updated successfully, Customer Details = " + cust.toString());			
+	    logger.info("Customer updated successfully, Customer Details = " + cust.toString());		
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             session.delete(customer);
         }
         
-        logger.info("Customer deleted successfully, Customer details = " + customer.toString());	
+        logger.info("Customer deleted successfully, Customer details = " + customer.toString());
 	}
 
 	@Override

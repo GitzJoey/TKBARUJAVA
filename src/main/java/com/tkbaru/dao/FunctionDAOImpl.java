@@ -259,7 +259,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 
 				/*Price*/
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
-				"VALUES ('F_PRICE', 'Today Price','fa  fa-barcode fa-fw', '#', 300100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));",
+				"VALUES ('F_PRICE', 'Price','fa  fa-barcode fa-fw', '#', 300100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));",
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
 				"SELECT 'F_PRICE_TODAYPRICE', 'Today Price', 'fa fa-barcode fa-fw', '/price/todayprice', 300200, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_PRICE';",
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +

@@ -109,11 +109,11 @@ strong.title {
 }
 
 .sidebar-nav ul a {
-	padding: 10px 20px;
+	padding: 8px 18px;
 	color: #23527C;
 	border-top: 1px solid rgba(0, 0, 0, 0.3);
-	box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset;
-	text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
+	/*box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset;*/
+	/*text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);*/
 }
 
 .sidebar-nav ul a:hover, .sidebar-nav ul a:focus, .sidebar-nav ul a:active {
@@ -122,12 +122,12 @@ strong.title {
 }
 
 .sidebar-nav ul ul a {
-	padding: 10px 20px;
+	padding: 8px 18px;
 	background-color: rgba(244, 244, 244, 1);
 }
 
 .sidebar-nav ul ul ul a {
-	padding: 10px 20px;
+	padding: 8px 18px;
 	background-color: rgba(255, 255, 255, 1);
 }
 

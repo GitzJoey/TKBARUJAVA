@@ -8,11 +8,13 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +38,8 @@ public class LoginController {
 	
 	@Autowired
 	CookieLocaleResolver localeResolver;
+	
+	SessionRegistry sessionRegistry;
 	
 	@RequestMapping(value = "/login.html", method = RequestMethod.GET)
 	public String loadLoginPage(Locale locale, 
@@ -120,5 +124,24 @@ public class LoginController {
 		model.addAttribute("loginContext", loginContextSession);
 		
 		return "redirect:/dashboard";
+	}
+	
+	@RequestMapping(value = "/reset.html", method = RequestMethod.GET)
+	public String resetLogin(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
+		logger.info("[resetLogin] " + "");
+
+		String messageText = "";
+		
+		HttpSession session = request.getSession(false);
+		
+		if (session != null)
+			session.invalidate();
+
+		model.addAttribute("hideLogin", false);
+		model.addAttribute("collapseFlag", "collapse");
+		model.addAttribute("messageText", messageText);
+		
+		return "login";
+		
 	}
 }

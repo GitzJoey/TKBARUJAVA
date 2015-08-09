@@ -55,9 +55,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id);	
+						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id);
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id);	
+						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id);
 					}						
 				}				
 			});

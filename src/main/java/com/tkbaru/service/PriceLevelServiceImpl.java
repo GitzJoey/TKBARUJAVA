@@ -14,27 +14,26 @@ public class PriceLevelServiceImpl implements PriceLevelService {
 
 	@Autowired
 	PriceLevelDAO priceLevelDAO;
-
 	
 	@Override
 	@Transactional
 	public List<PriceLevel> getAllPriceLevel() {
 		
-		return priceLevelDAO.loadAll();
+		return priceLevelDAO.loadAllPriceLevel();
 	}
 
 	@Override
 	@Transactional
 	public PriceLevel getPriceLevelById(int selectedId) {
 		
-		return priceLevelDAO.load(selectedId);
+		return priceLevelDAO.loadPriceLevelById(selectedId);
 	}
 
 	@Override
 	@Transactional
 	public void addPriceLevel(PriceLevel priceLevel) {
-		priceLevelDAO.addPriceLevel(priceLevel);
 		
+		priceLevelDAO.addPriceLevel(priceLevel);
 	}
 
 	@Override

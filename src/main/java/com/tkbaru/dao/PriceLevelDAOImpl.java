@@ -1,6 +1,5 @@
 package com.tkbaru.dao;
 
-
 import java.util.List;
 
 import org.hibernate.Session;
@@ -23,8 +22,8 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
     }
     
 	@Override
-	public PriceLevel load(Integer priceLevelId) {
-		logger.info("[getPriceLevelById] " + "");
+	public PriceLevel loadPriceLevelById(Integer priceLevelId) {
+		logger.info("[loadPriceLevelById] " + "");
         
 		Session session = this.sessionFactory.getCurrentSession();
 		PriceLevel priceLevel = null;
@@ -40,15 +39,13 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
         return priceLevel;	
 	}
 	@Override
-	public List<PriceLevel> loadAll() {
-		logger.info("[getAllPriceLevel] " + "");
+	public List<PriceLevel> loadAllPriceLevel() {
+		logger.info("[loadAllPriceLevel] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<PriceLevel> priceLevelList = session.createQuery("FROM PriceLevel").list();
 	
-		for(PriceLevel priceLevel:priceLevelList) {
-			logger.info("PriceLevel : " + priceLevel.toString());
-		}
+		logger.info("PriceLevel Size: " + priceLevelList.size());
 		
 		return priceLevelList;
 	}
@@ -58,7 +55,9 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 		
         Session session = this.sessionFactory.getCurrentSession();
 
-        session.persist(priceLevel);		
+        session.persist(priceLevel);
+        
+        logger.info("Price Level added successfully, Price Level Details = " + priceLevel.toString());
 	}
 
 	@Override
@@ -67,7 +66,9 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 	    
-		session.update(priceLevel);		
+		session.update(priceLevel);
+		
+	    logger.info("Price Level updated successfully, Price Level Details = " + priceLevel.toString());
 	}
 	
 	@Override
@@ -81,6 +82,8 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
         if(null != priceLevel){
             session.delete(priceLevel);
         }
+        
+        logger.info("Price Level deleted successfully, Price Level details = " + priceLevel.toString());
 	}
 
 }
