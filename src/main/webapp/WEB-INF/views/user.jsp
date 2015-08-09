@@ -317,8 +317,8 @@
 									</div>
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
-											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>											
+											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>											
 										</div>
 									</div>
 								</form:form>

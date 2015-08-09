@@ -507,8 +507,8 @@
 												<div class="col-md-7 col-offset-md-5">
 													<div class="btn-toolbar">
 														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
-															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right">Cancel</button>
-															<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }">Submit</button>
+															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
+															<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }"><spring:message code="common.submit_button" text="Submit"/></button>
 														</c:if>
 														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus =='L016_WD' }">
 															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right">Close</button>

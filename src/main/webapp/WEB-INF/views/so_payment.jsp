@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -551,8 +552,8 @@
 											</div>
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
-													<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-													<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+													<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
+													<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 												</div>
 											</div>
 										</div>
