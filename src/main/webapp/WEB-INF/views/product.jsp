@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -137,7 +137,7 @@
 											<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-													<td><fmt:message key="${ i.productTypeLookup.i18nLookupValue }"/></td>
+													<td><spring:message code="${ i.productTypeLookup.i18nLookupValue }" text="${ i.productType }"/></td>
 													<td><c:out value="${ i.shortCode }"></c:out></td>
 													<td><c:out value="${ i.productName }"></c:out></td>
 													<td><c:out value="${ i.productDesc }"></c:out></td>
