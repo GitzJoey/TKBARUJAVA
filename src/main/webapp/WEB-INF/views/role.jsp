@@ -120,8 +120,8 @@
 										<thead>
 											<tr>
 												<th width="5%">&nbsp;</th>
-												<th width="15%">Role Name</th>
-												<th width="80%">Function List</th>
+												<th width="15%"><spring:message code="role_jsp.table.header.role_name" text="Role Name"/></th>
+												<th width="80%"><spring:message code="role_jsp.table.header.function_list" text="Function List"/></th>
 											</tr>
 										</thead>
 										<tbody>
@@ -134,7 +134,7 @@
 															<select id="selectRight" multiple class="form-control" size="5">
 																<c:forEach items="${ i.functionList }" var="f">
 																	<option>
-																		<c:out value="${ f.functionCode }"/>&nbsp;-&nbsp;<c:out value="${ f.menuName }"/>&nbsp;(<c:out value="${ f.urlLink }"/>)
+																		<c:out value="${ f.functionCode }"/>&nbsp;-&nbsp;<spring:message code="${ f.functionCode }" text="${ f.menuName }"/>&nbsp;(<c:out value="${ f.urlLink }"/>)
 																	</option>
 																</c:forEach>																
         													</select>
