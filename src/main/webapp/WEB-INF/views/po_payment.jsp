@@ -101,7 +101,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-truck fa-fw"></span>&nbsp;PO Payment
+					<span class="fa fa-truck fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.title" text="Purchase Order Payment"/>
 				</h1>
 				
 				<c:choose>

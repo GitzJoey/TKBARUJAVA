@@ -101,7 +101,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Payment Sales List
+									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_payment_jsp.title" text="Payment Sales Order"/>
 								</h1>
 							</div>						
 							<div class="panel-body">

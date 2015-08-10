@@ -64,7 +64,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-wrench fa-fw"></span>&nbsp;Warehouse 
+					<span class="fa fa-wrench fa-fw"></span>&nbsp;<spring:message code="warehouse_jsp.title" text="Warehouse"/>
 				</h1>
 
 				<c:choose>

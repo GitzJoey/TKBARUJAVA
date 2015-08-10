@@ -238,7 +238,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-building-o fa-fw"></span>&nbsp;Supplier
+					<span class="fa fa-building-o fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.title" text="Supplier"/>
 				</h1>
 
 				<c:choose>

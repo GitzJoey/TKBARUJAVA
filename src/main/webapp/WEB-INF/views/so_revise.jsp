@@ -82,7 +82,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;Sales Order
+					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;<spring:message code="so_revise_jsp.title" text="Revise Sales Order"/>
 				</h1>
 
 				<c:choose>

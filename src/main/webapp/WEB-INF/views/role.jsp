@@ -103,7 +103,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-tree fa-fw"></span>&nbsp;Role 
+					<span class="fa fa-tree fa-fw"></span>&nbsp;<spring:message code="role_jsp.title" text="Role"/>
 				</h1>
 
 				<c:choose>

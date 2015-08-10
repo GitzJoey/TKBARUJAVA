@@ -104,7 +104,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order Revise
+					<span class="fa fa-truck fa-fw"></span>&nbsp;<spring:message code="po_revise_jsp.title" text="Revise Purchase Order"/>
 				</h1>
 
 				<c:choose>

@@ -109,7 +109,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cubes fa-fw"></span>&nbsp;Product 
+					<span class="fa fa-cubes fa-fw"></span>&nbsp;<spring:message code="product_jsp.title" text="Product"/>
 				</h1>
 
 				<c:choose>

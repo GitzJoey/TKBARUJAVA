@@ -75,7 +75,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-umbrella fa-fw"></span>&nbsp;Store 
+					<span class="fa fa-umbrella fa-fw"></span>&nbsp;<spring:message code="store_jsp.title" text="Store"/>
 				</h1>
 
 				<c:choose>

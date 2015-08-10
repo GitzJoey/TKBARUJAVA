@@ -81,11 +81,11 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;Truck 
+					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;<spring:message code="truck_jsp.title" text="Truck"/>
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">

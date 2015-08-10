@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -165,7 +166,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-wrench fa-fw"></span>&nbsp;Warehouse
+					<span class="fa fa-wrench fa-fw"></span>&nbsp;<spring:message code="warehouse_db_jsp.title" text="Warehouse"/>
 				</h1>
 				
 				<c:choose>
@@ -195,13 +196,13 @@
 										<table id="inflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
-													<th width="36%">Product Name</th>
-													<th width="11%" class="center-align">Bruto</th>
-													<th width="2%">Po Code</th>
-													<th width="11%" class="center-align">Netto</th>
-													<th width="11%" class="center-align">Tare</th>
-													<th width="13%" class="center-align">Shipping Date</th>
-													<th width="13%" class="center-align">Receipt Date</th>
+													<th width="36%"><spring:message code="warehouse_db_jsp.table.inflow.header.product_name" text="Product Name"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.bruto" text="Bruto"/></th>
+													<th width="2%"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.netto" text="Netto"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.tare" text="Tare"/></th>
+													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.shipping_date" text="Shipping Date"/></th>
+													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.receipt_date" text="Receipt Date"/></th>
 													<th width="3%">&nbsp;</th>
 												</tr>
 											</thead>
@@ -278,13 +279,13 @@
 										<table id="outflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
-													<th width="36%">Product Name</th>
-													<th width="11%" class="center-align">Bruto</th>
-													<th width="2%">Po Code</th>
-													<th width="11%" class="center-align">Netto</th>
-													<th width="11%" class="center-align">Tare</th>
-													<th width="13%" class="center-align">Shipping Date</th>
-													<th width="13%" class="center-align">Deliver Date</th>
+													<th width="36%"><spring:message code="warehouse_db_jsp.table.outflow.header.product_name" text="Product Name"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.bruto" text="Bruto"/></th>
+													<th width="2%"><spring:message code="warehouse_db_jsp.table.outflow.header.sales_code" text="Sales Code"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.netto" text="Netto"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.tare" text="Tare"/></th>
+													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.shipping_date" text="Shipping Date"/></th>
+													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.deliver_date" text="Deliver Date"/></th>
 													<th width="3%">&nbsp;</th>
 												</tr>
 											</thead>

@@ -98,7 +98,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-user fa-fw"></span>&nbsp;User 
+					<span class="fa fa-user fa-fw"></span>&nbsp;<spring:message code="user_jsp.title" text="User"/>
 				</h1>
 
 				<c:choose>

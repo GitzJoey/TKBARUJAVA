@@ -224,7 +224,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-smile-o fa-fw"></span>&nbsp;Customer 
+					<span class="fa fa-smile-o fa-fw"></span>&nbsp;<spring:message code="customer_jsp.title" text="Customer"/>
 				</h1>
 
 				<c:choose>

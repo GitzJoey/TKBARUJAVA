@@ -85,7 +85,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-minus-square fa-fw"></span>&nbsp;Function
+					<span class="fa fa-minus-square fa-fw"></span>&nbsp;<spring:message code="function_jsp.title" text="Function"/>
 				</h1>
 
 				<c:choose>
