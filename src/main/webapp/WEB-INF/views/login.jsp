@@ -50,7 +50,7 @@
 		                                <div class="form-group">
 		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
 		                                </div>
-		                                <button type="submit" class="btn btn-default">Submit</button>
+		                                <button type="submit" class="btn btn-default"><spring:message code="common.login_button" text="Login"/></button>
 		                            </fieldset>
 		                        </form>
 		                    </div>

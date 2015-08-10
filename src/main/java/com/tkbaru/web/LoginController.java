@@ -93,7 +93,7 @@ public class LoginController {
 					logger.info("[loadLoginPage] " + "tkbaruLocaleCookie Value: " + c.getValue());
 				}
 				if (metisMenuCookies.contains(c.getName())) {
-					logger.info("[loadLoginPage] " + "metisMenuState: " + c.getName() + ", Value: " + c.getValue());
+					//logger.info("[loadLoginPage] " + "metisMenuState: " + c.getName() + ", Value: " + c.getValue());
 				}
 			}
 		}

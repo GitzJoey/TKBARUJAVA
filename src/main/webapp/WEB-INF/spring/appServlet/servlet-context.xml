@@ -44,6 +44,7 @@
         <beans:property name="defaultLocale" value="in" />
         <beans:property name="cookieName" value="tkbaruLocaleCookie"></beans:property>
         <beans:property name="cookieMaxAge" value="3600"></beans:property>
+        <beans:property name="cookiePath" value="/"></beans:property>
     </beans:bean>
  
     <interceptors>
