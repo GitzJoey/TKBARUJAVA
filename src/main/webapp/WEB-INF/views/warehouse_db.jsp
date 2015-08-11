@@ -192,7 +192,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display responsive">														
+										<table id="inflowTable" class="table table-bordered table-hover display responsive" style="width: 100%; border-collapse: separate;">														
 											<thead>
 												<tr>
 													<th colspan="6"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>

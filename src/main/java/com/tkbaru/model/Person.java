@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +24,9 @@ import org.springframework.web.multipart.MultipartFile;
 @Entity
 @Table(name="tb_person")
 @SuppressWarnings("unchecked")
-public class Person {
+public class Person implements Serializable {
+	private static final long serialVersionUID = -5271572856767963562L;
+
 	public Person() {
 		
 	}
