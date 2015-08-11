@@ -200,7 +200,7 @@
 													<th width="2%" class="never"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.shipping_date" text="Shipping Date"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.receipt_date" text="Receipt Date"/></th>
-													<th width="3%">&nbsp;</th>
+													<th width="3%" class="all">&nbsp;</th>
 												</tr>
 											</thead>
 											<tbody >											
@@ -229,7 +229,7 @@
 														    		<td class="never"><c:out value="${ po.poCode }"/></td>
 															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 															    	<td></td>
-															    	<td class="center-align">
+															    	<td class="center-align all">
 															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
 																    </td>
 														    	</tr>
@@ -243,7 +243,7 @@
 													    		<td class="never"><c:out value="${ po.poCode }"/></td>
 														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 														    	<td></td>
-														    	<td class="center-align">
+														    	<td class="center-align all">
 														    		<button type="button" class="btn btn-xs btn-primary" id="receiptButton_0" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
 															    </td>
 													    	</tr>
