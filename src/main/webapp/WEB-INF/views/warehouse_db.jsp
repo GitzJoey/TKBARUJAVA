@@ -44,8 +44,7 @@
 		        "searching": 	false,
 		        "columnDefs": [
 		            { "visible": false, "targets": 2 }
-		        ],
-		       
+		        ],		       
 		        "displayLength": 25,
 		        "drawCallback": function ( settings ) {
 		            var api = this.api();
@@ -55,7 +54,7 @@
 		            api.column(2, {page:'current'}).data().each(function (group, i) {
 		                if (last !== group) {
 		                    $(rows).eq(i).before(
-		                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
+		                        '<tr class="group"><td colspan="5">' + group + '</td></tr>'
 		                    );		 
 		                    last = group;
 		                }
@@ -198,9 +197,7 @@
 												<tr>
 													<th width="36%"><spring:message code="warehouse_db_jsp.table.inflow.header.product_name" text="Product Name"/></th>
 													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.bruto" text="Bruto"/></th>
-													<th width="2%"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.netto" text="Netto"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.tare" text="Tare"/></th>
+													<th width="2%" class="never"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.shipping_date" text="Shipping Date"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.receipt_date" text="Receipt Date"/></th>
 													<th width="3%">&nbsp;</th>
@@ -217,9 +214,7 @@
 															    <tr>
 																    <td class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td><c:out value="${ po.poCode }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare }"/></td>
+														    		<td class="never"><c:out value="${ po.poCode }"/></td>
 															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"/></td>
 															    	<td></td>
@@ -231,9 +226,7 @@
 														    	<tr id="${ po.poCode }">
 														    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
 														    		<td><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td><c:out value="${ po.poCode }"/></td>
-															    	<td></td>
-															    	<td></td>
+														    		<td class="never"><c:out value="${ po.poCode }"/></td>
 															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 															    	<td></td>
 															    	<td class="center-align">
@@ -247,9 +240,7 @@
 													    	<tr id="${ po.poCode }">
 													    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
 													    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
-													    		<td><c:out value="${ po.poCode }"/></td>
-														    	<td></td>
-														    	<td></td>
+													    		<td class="never"><c:out value="${ po.poCode }"/></td>
 														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 														    	<td></td>
 														    	<td class="center-align">
