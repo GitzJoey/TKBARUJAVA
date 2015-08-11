@@ -192,8 +192,11 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display responsive">
+										<table id="inflowTable" class="table table-bordered table-hover display responsive">														
 											<thead>
+												<tr>
+													<th colspan="6"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
+												</tr>
 												<tr>
 													<th width="36%"><spring:message code="warehouse_db_jsp.table.inflow.header.product_name" text="Product Name"/></th>
 													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.bruto" text="Bruto"/></th>
