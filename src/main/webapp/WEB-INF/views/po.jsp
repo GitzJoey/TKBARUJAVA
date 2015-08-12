@@ -127,7 +127,7 @@
 						<h1 class="panel-title">
 							<c:choose>
 								<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-									<span class="fa fa-truck fa-fw fa-2x"></span>&nbsp;New Purchase Order
+									<span class="fa fa-truck fa-fw fa-2x"></span>&nbsp;<spring:message code="po_jsp.subtitle" text="New Purchase Order"/>
 								</c:when>
 							</c:choose>
 						</h1>
@@ -138,7 +138,7 @@
 								<c:forEach items="${ loginContext.poList }" var="poForm" varStatus="poIdx">
 									<li role="presentation" class="" id="${ poIdx.index }">
 										<a href="#tab${poIdx.index+1}" aria-controls="tab${poIdx.index+1}" role="tab" data-toggle="tab"><span class="fa fa-asterisk fa-fw"></span>
-											&nbsp;New PO ${ poIdx.index + 1 }
+											&nbsp;<spring:message code="po_jsp.new_po" text="New PO"/>&nbsp;${ poIdx.index + 1 }
 										</a>
 									</li>
 								</c:forEach>
@@ -158,15 +158,14 @@
 														<div class="row">
 															<div class="col-md-7">
 																<div class="form-group">
-																	<label for="poCode" class="col-sm-2 control-label">PO
-																		Code</label>
+																	<label for="poCode" class="col-sm-2 control-label"><spring:message code="po_jsp.po_code" text="PO Code"/></label>
 																	<div class="col-sm-5">
 																		<form:input type="text" class="form-control poCode" id="poCode${ poIdx.index }" path="poList[${ poIdx.index }].poCode" placeholder="Enter PO Code" readonly="true"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
-																	<label for="inputPOType${ poIdx.index }" class="col-sm-2 control-label">PO Type</label>
-																	<div class="col-sm-8">																	   
+																	<label for="inputPOType${ poIdx.index }" class="col-sm-2 control-label"><spring:message code="po_jsp.po_type" text="PO Type"/></label>
+																	<div class="col-sm-8">
 																	 	<c:choose>
 																	    	<c:when test="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }">
 																	        	<form:hidden path="poList[${ poIdx.index }].poType"/>
@@ -174,15 +173,15 @@
 																	    	</c:when>
 																	    	<c:otherwise>
 																				<form:select class="form-control" id="inputPOType${ poIdx.index }" path="poList[${ poIdx.index }].poType" disabled="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
-																					<option value="">Please Select</option>
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ poTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue" />
 																				</form:select>
 																				</c:otherwise>
-																		</c:choose>																
+																		</c:choose>
 																	</div>
 																</div>
 																<div class="form-group">
-																	<label for="inputSupplierId${ poIdx.index }" class="col-sm-2 control-label">Supplier</label>
+																	<label for="inputSupplierId${ poIdx.index }" class="col-sm-2 control-label"><spring:message code="po_jsp.supplier" text="Supplier"/></label>
 																	<div class="col-sm-9">
 																	<c:choose>
 																	    <c:when test="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }">
@@ -191,7 +190,7 @@
 																	    </c:when>
 																	    <c:otherwise>
 																			<form:select class="form-control supplierId" id="inputSupplierId${ poIdx.index }" path="poList[${ poIdx.index }].supplierId" disabled="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
-																				<option value="">Please Select</option>
+																				<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																				<form:options items="${ supplierSelectionDDL }" itemValue="supplierId" itemLabel="supplierName" />
 																			</form:select>
 																		</c:otherwise>
@@ -206,13 +205,13 @@
 															</div>
 															<div class="col-md-5">
 																<div class="form-group">
-																	<label for="poCreatedDate" class="col-sm-3 control-label">PO Date</label>
+																	<label for="poCreatedDate" class="col-sm-3 control-label"><spring:message code="po_jsp.po_date" text="PO Date"/></label>
 																	<div class="col-sm-9">
 																		<form:input type="text" class="form-control poCreatedDate" id="poCreatedDate${ poIdx.index }" path="poList[${ poIdx.index }].poCreatedDate" placeholder="Enter PO Date" readonly="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
-																	<label for="inputPOStatus${ poIdx.index }" class="col-sm-3 control-label">Status</label>
+																	<label for="inputPOStatus${ poIdx.index }" class="col-sm-3 control-label"><spring:message code="po_jsp.po_status" text="Status"/></label>
 																	<div class="col-sm-9">
 																		<form:hidden path="poList[${ poIdx.index }].poStatus" />
 																		<label id="inputPOStatus${ poIdx.index }" class="control-label">
@@ -226,13 +225,13 @@
 														<div class="row">
 															<div class="col-md-7">
 																<div class="form-group">
-																	<label for="shippingDate${ poIdx.index }" class="col-sm-2 control-label">Shipping Date</label>
+																	<label for="shippingDate${ poIdx.index }" class="col-sm-2 control-label"><spring:message code="po_jsp.shipping_date" text="Shipping Date"/></label>
 																	<div class="col-sm-5">
 																		<form:input type="text" class="form-control shippingDate" id="shippingDate${ poIdx.index }" path="poList[${ poIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }"></form:input>
 																	</div>
 																</div>
 																<div class="form-group">
-																	<label for="inputWarehouseId${ poIdx.index }" class="col-sm-2 control-label">Warehouse</label>
+																	<label for="inputWarehouseId${ poIdx.index }" class="col-sm-2 control-label"><spring:message code="po_jsp.warehouse" text="Warehouse"/></label>
 																	<div class="col-sm-8">
 																		<c:choose>
 																		    <c:when test="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }">
@@ -241,7 +240,7 @@
 																		    </c:when>
 																		    <c:otherwise>
 																				<form:select class="form-control warehouseId" id="inputWarehouseId${ poIdx.index }" path="poList[${ poIdx.index }].warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
-																					<option value="">Please Select</option>
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
 																				</form:select>
 																			</c:otherwise>
@@ -264,14 +263,14 @@
 											<div class="col-md-12">
 												<div class="panel panel-default">
 													<div class="panel-heading">
-														<h1 class="panel-title">Transactions</h1>
+														<h1 class="panel-title"><spring:message code="po_jsp.transactions" text="Transactions"/></h1>
 													</div>
 													<div class="panel-body">
 														<div class="row">
 															<div class="col-md-11" id="product-select${ poIdx.index }">
 																<div class="form-group" style="padding-left: 2%">
 																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
-																		<option value="">Please Select</option>
+																		<option value=""><spring:message code="common_please_select" text="Please Select"/></option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
@@ -292,12 +291,12 @@
 																<table id="itemsListTable" class="table table-bordered table-hover">
 																	<thead>
 																		<tr>
-																			<th width="30%">Product Name</th>
-																			<th width="15%">Quantity</th>
-																			<th width="15%" class="text-right">Unit</th>
-																			<th width="15%" class="text-right">Price/Base Unit</th>
+																			<th width="30%"><spring:message code="po_jsp.table.item.header.product_name" text="Product Name"/></th>
+																			<th width="15%"><spring:message code="po_jsp.table.item.header.quantity" text="Quantity"/></th>
+																			<th width="15%" class="text-right"><spring:message code="po_jsp.table.item.header.unit" text="Unit"/></th>
+																			<th width="15%" class="text-right"><spring:message code="po_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
 																			<th width="5%">&nbsp;</th>
-																			<th width="20%" class="text-right">Total Price</th>
+																			<th width="20%" class="text-right"><spring:message code="po_jsp.table.item.header.total_price" text="Total Price"/></th>
 																		</tr>
 																	</thead>
 																	<tbody>
@@ -335,7 +334,7 @@
 																											<c:otherwise>
 																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
 																											</c:otherwise>
-																										</c:choose>																										
+																										</c:choose>
 																									</form:option>
 																								</c:forEach>
 																							</form:select>
@@ -371,7 +370,7 @@
 																<table id="itemsTotalListTable" class="table table-bordered">
 																	<tbody>
 																		<tr>
-																			<td width="80%" class="text-right">Total</td>
+																			<td width="80%" class="text-right"><spring:message code="po_jsp.total" text="Total"/></td>
 																			<td width="20%" class="text-right">
 																				<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
 																			</td>
@@ -388,7 +387,7 @@
 											<div class="col-md-12">
 												<div class="panel panel-default">
 													<div class="panel-heading">
-														<h1 class="panel-title">Remarks</h1>
+														<h1 class="panel-title"><spring:message code="po_jsp.remarks" text="Remarks"/></h1>
 													</div>
 													<div class="panel-body">
 														<div class="row">
@@ -412,7 +411,7 @@
 														<button id="submitButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 													</c:if>
 													<c:if test="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }">
-														<button id="cancelButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right">Close</button>
+														<button id="cancelButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="po_jsp.close_button" text="Close"/></button>
 													</c:if>
 												</div>
 											</div>

@@ -113,7 +113,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-smile-o fa-fw fa-2x"></span>PO Revise List
+									<span class="fa fa-smile-o fa-fw fa-2x"></span><spring:message code="po_revise_jsp.po_revise_list" text="PO Revise List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -121,13 +121,13 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%">PO Code</th>
-											<th width="20%">PO Date</th>
-											<th width="20%">Supplier</th>
+											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_code" text="PO Code"/></th>
+											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_date" text="PO Date"/></th>
+											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.supplier" text="Supplier"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty reviseList}">
+										<c:if test="${ not empty reviseList }">
 											<c:forEach items="${ reviseList }" var="i" varStatus="status">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
@@ -139,17 +139,17 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Revise</a>
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="po_revise_jsp.revise_button" text="Revise"/></a>
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
 									<c:choose>
-										<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Revise PO
+										<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="po_revise_jsp.subtitle" text="Revise PO"/>
 										</c:when>
 									</c:choose>
 								</h1>
@@ -169,20 +169,20 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputPOCode" class="col-sm-2 control-label">PO Code</label>
+																		<label for="inputPOCode" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.po_code" text="PO Code"/></label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control" readonly="true" id="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputPOType" class="col-sm-2 control-label">PO Type</label>
+																		<label for="inputPOType" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.po_type" text="PO Type"/></label>
 																		<div class="col-sm-8">
 																			<form:hidden path="poType"></form:hidden>
 																			<form:input type="text" class="form-control" readonly="true" id="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSupplierId" class="col-sm-2 control-label">Supplier</label>
+																		<label for="inputSupplierId" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.supplier" text="Supplier"/></label>
 																		<div class="col-sm-9">
 																			<form:hidden path="supplierId" />
 																			<form:input id="inputSupplierId" type="text" class="form-control" path="supplierLookup.supplierName" readonly="true" />
@@ -196,13 +196,13 @@
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-																		<label for="inputPoDate" class="col-sm-3 control-label">PO Date</label>
+																		<label for="inputPoDate" class="col-sm-3 control-label"><spring:message code="po_revise_jsp.po_date" text="PO Date"/></label>
 																		<div class="col-sm-9">
 																			<form:input type="text" class="form-control" readonly="true" id="poCreatedDate" path="poCreatedDate" placeholder="Enter PO Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputPOStatus" class="col-sm-3 control-label">Status</label>
+																		<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_revise_jsp.po_status" text="Status"/></label>
 																		<div class="col-sm-9">
 																			<form:hidden path="poStatus"></form:hidden>
 																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
@@ -214,13 +214,13 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.shipping_date" text="Shipping Date"/></label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control" readonly="true" id="shippingDate" path="shippingDate" placeholder="Enter Shipping Date"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+																		<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.warehouse" text="Warehouse"/></label>
 																		<div class="col-sm-8">
 																			<form:hidden path="warehouseId" />
 																			<form:input type="text" class="form-control" path="warehouseLookup.warehouseName" readonly="true" />
@@ -241,14 +241,14 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">Transactions</h1>
+															<h1 class="panel-title"><spring:message code="po_revise_jsp.transactions" text="Transactions"/></h1>
 														</div>
 														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-11">
 																	<div class="form-group" style="padding-left: 2%">
 																	<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
-																		<option value="">Please Select</option>
+																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																			<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>
@@ -267,12 +267,12 @@
 																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="30%">Product Name</th>
-																				<th width="15%">Quantity</th>
-																				<th width="15%" class="text-right">Unit</th>
-																				<th width="15%" class="text-right">Price/Base Unit</th>
+																				<th width="30%"><spring:message code="po_revise_jsp.table.item.header.product_name" text="Product Name"/></th>
+																				<th width="15%"><spring:message code="po_revise_jsp.table.item.header.quantity" text="Quantity"/></th>
+																				<th width="15%" class="text-right"><spring:message code="po_revise_jsp.table.item.header.unit" text="Unit"/></th>
+																				<th width="15%" class="text-right"><spring:message code="po_revise_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
 																				<th width="5%">&nbsp;</th>
-																				<th width="20%">Total Price</th>
+																				<th width="20%"><spring:message code="po_revise_jsp.table.item.header.total_price" text="Total Price"/></th>
 																			</tr>
 																		</thead>
 																		<tbody>
@@ -333,7 +333,7 @@
 																		class="table table-bordered table-hover display responsive">
 																		<tbody>
 																			<tr>
-																				<td width="80%" class="text-right">Total</td>
+																				<td width="80%" class="text-right"><spring:message code="po_revise_jsp.total" text="Total"/></td>
 																				<td width="20%" class="text-right">
 																					<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
 																				</td>
@@ -348,7 +348,7 @@
 														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
-																	<h1 class="panel-title">Remarks</h1>																	
+																	<h1 class="panel-title"><spring:message code="po_revise_jsp.remarks" text="Remarks"/></h1>																	
 																</div>
 																<div class="panel-body">
 																	<div class="row">
