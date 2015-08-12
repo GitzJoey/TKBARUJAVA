@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -12,7 +13,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_store")
-public class Store {
+public class Store implements Serializable {
+	private static final long serialVersionUID = 7580463652597779013L;
+
 	public Store() {
 		
 	}
