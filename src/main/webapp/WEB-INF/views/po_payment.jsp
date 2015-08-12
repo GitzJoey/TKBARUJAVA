@@ -109,8 +109,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-calculator fa-fw fa-2x"></span>&nbsp;PO
-									Payment
+									<span class="fa fa-calculator fa-fw fa-2x"></span>&nbsp;<spring:message code="po_payment_jsp.subtitle" text="PO Payment"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -118,12 +117,12 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="5%">PO Code</th>
-											<th width="15%">Supplier Name</th>
-											<th width="10%">Date</th>
-											<th width="10%" class="text-right">Total</th>
-											<th width="10%" class="text-right">Paid</th>
-											<th width="10%" class="text-right">Outstanding</th>
+											<th width="5%"><spring:message code="po_payment_jsp.table.payment.header.po_code" text="PO Code"/></th>
+											<th width="15%"><spring:message code="po_payment_jsp.table.payment.header.supplier_name" text="Supplier Name"/></th>
+											<th width="10%"><spring:message code="po_payment_jsp.table.payment.header.date" text="Date"/></th>
+											<th width="10%" class="text-right"><spring:message code="po_payment_jsp.table.payment.header.total" text="Total"/></th>
+											<th width="10%" class="text-right"><spring:message code="po_payment_jsp.table.payment.header.paid" text="Paid"/></th>
+											<th width="10%" class="text-right"><spring:message code="po_payment_jsp.table.payment.header.outstanding" text="Outstanding"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -160,10 +159,10 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-dollar fa-fw"></span>&nbsp;Cash Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-bank fa-fw"></span>&nbsp;Transfer Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-book fa-fw"></span>&nbsp;Giro Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-calendar fa-fw"></span>&nbsp;Term Payment</a>&nbsp;&nbsp;&nbsp;
+								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-bank fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-book fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-calendar fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.term_button" text="Term Payment"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
 					</c:when>
@@ -171,7 +170,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;New Payment
+									<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="po_payment_jsp.subtitle" text="New Payment"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -190,20 +189,20 @@
 																<div class="row">
 																	<div class="col-md-7">
 																		<div class="form-group">
-																			<label for="inputPOCode" class="col-sm-2 control-label">PO Code</label>
+																			<label for="inputPOCode" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.po_code" text="PO Code"/></label>
 																			<div class="col-sm-5">
 																				<form:input type="text" class="form-control" readonly="true" id="inputPOCode" name="inputPOCode" path="poCode" placeholder="Enter PO Code"></form:input>
 																			</div>
 																		</div>
 																		<div class="form-group">
-																			<label for="inputPOType" class="col-sm-2 control-label">PO Type</label>
+																			<label for="inputPOType" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.po_type" text="PO Type"/></label>
 																			<div class="col-sm-8">
 																				<form:hidden path="poType"></form:hidden>
 																				<form:input type="text" class="form-control" readonly="true" id="inputPOType" name="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																			</div>
 																		</div>
 																		<div class="form-group">
-																			<label for="inputSupplierId" class="col-sm-2 control-label">Supplier</label>
+																			<label for="inputSupplierId" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.supplier" text="Supplier"/></label>
 																			<div class="col-sm-9">
 																				<form:hidden path="supplierId" />
 																				<form:input id="inputSupplierId" type="text" class="form-control" path="supplierLookup.supplierName" readonly="true" />
@@ -217,13 +216,13 @@
 																	</div>
 																	<div class="col-md-5">
 																		<div class="form-group">
-																			<label for="inputPoDate" class="col-sm-3 control-label">PO Date</label>
+																			<label for="inputPoDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.po_date" text="PO Date"/></label>
 																			<div class="col-sm-9">
 																				<form:input type="text" class="form-control" readonly="true" id="poCreatedDate" path="poCreatedDate"></form:input>
 																			</div>
 																		</div>
 																		<div class="form-group">
-																			<label for="inputPOStatus" class="col-sm-3 control-label">Status</label>
+																			<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.po_status" text="Status"/></label>
 																			<div class="col-sm-9">
 																				<form:hidden path="poStatus"/>
 																				<label id="inputPOStatus" class="control-label"><c:out value="${ poForm.statusLookup.lookupValue }"></c:out></label>
@@ -235,13 +234,13 @@
 																<div class="row">
 																	<div class="col-md-7">
 																		<div class="form-group">
-																			<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+																			<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.shipping_date" text="Shipping Date"/></label>
 																			<div class="col-sm-5">
 																				<form:input type="text" class="form-control" readonly="true" id="shippingDate" path="shippingDate"></form:input>
 																			</div>
 																		</div>
 																		<div class="form-group">
-																			<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+																			<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.warehouse" text="Warehouse"/></label>
 																			<div class="col-sm-8">
 																				<form:hidden path="warehouseId" />
 																				<form:input type="text" class="form-control" path="warehouseLookup.warehouseName" readonly="true" />
@@ -262,7 +261,7 @@
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">Transactions</h1>
+																<h1 class="panel-title"><spring:message code="po_payment_jsp.transactions" text="Transactions"/></h1>
 															</div>
 															<div class="panel-body">
 																<br />
@@ -271,11 +270,11 @@
 																		<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																			<thead>
 																				<tr>
-																					<th width="30%">Product Name</th>
-																					<th width="30%">Quantity</th>
-																					<th width="15%" class="text-right">Price/Base Unit</th>
+																					<th width="30%"><spring:message code="po_payment_jsp.table.item.header.product_name" text="Product Name"/></th>
+																					<th width="30%"><spring:message code="po_payment_jsp.table.item.header.quantity" text="Quantity"/></th>
+																					<th width="15%" class="text-right"><spring:message code="po_payment_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
 																					<th width="5%">&nbsp;</th>
-																					<th width="20%" class="text-right">Total Price</th>
+																					<th width="20%" class="text-right"><spring:message code="po_payment_jsp.table.item.header.total_price" text="Total Price"/></th>
 																				</tr>
 																			</thead>
 																			<tbody>
@@ -314,7 +313,7 @@
 																		<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
 																			<tbody>
 																				<tr>
-																					<td width="80%" class="text-right">Total</td>
+																					<td width="80%" class="text-right"><spring:message code="po_payment_jsp.total" text="Total"/></td>
 																					<td width="20%" class="text-right"><fmt:formatNumber type="number" pattern="##,###.00" value="${ total }" /></td>
 																				</tr>
 																			</tbody>
@@ -329,7 +328,7 @@
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">Remarks</h1>
+																<h1 class="panel-title"><spring:message code="po_payment_jsp.remarks" text="Remarks"/></h1>
 															</div>
 															<div class="panel-body">
 																<div class="row">
