@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -17,7 +18,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_function")
-public class Function {
+public class Function implements Serializable {
+	private static final long serialVersionUID = 1106158575923022422L;
+
 	public Function() {
 		
 	}

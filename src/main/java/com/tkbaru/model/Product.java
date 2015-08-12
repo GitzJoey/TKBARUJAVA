@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -19,7 +20,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="tb_product")
-public class Product {
+public class Product implements Serializable {
+	private static final long serialVersionUID = 218642170890404843L;
+
 	public Product() {
 		
 	}

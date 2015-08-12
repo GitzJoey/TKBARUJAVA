@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -13,7 +14,9 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="tb_bankacc")
-public class BankAccount {
+public class BankAccount implements Serializable {
+	private static final long serialVersionUID = 8501092301204625557L;
+
 	public BankAccount() {
 		
 	}

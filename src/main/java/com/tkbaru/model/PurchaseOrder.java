@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,8 +23,13 @@ import org.apache.commons.collections.list.LazyList;
 @Entity
 @Table(name="tb_po")
 @SuppressWarnings("unchecked")
-public class PurchaseOrder {
-
+public class PurchaseOrder implements Serializable {
+	private static final long serialVersionUID = -7671564519078235157L;
+	
+	public PurchaseOrder() {
+		
+	}
+	
 	@Id
 	@Column(name="po_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -25,7 +26,9 @@ import org.hibernate.validator.constraints.NotEmpty;
 @Entity
 @Table(name="tb_so")
 @SuppressWarnings("unchecked")
-public class SalesOrder {
+public class SalesOrder implements Serializable {
+	private static final long serialVersionUID = -906634449231153892L;
+
 	public SalesOrder() {
 		
 	}

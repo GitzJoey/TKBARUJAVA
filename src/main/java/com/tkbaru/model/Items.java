@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -22,7 +23,9 @@ import org.apache.commons.collections.list.LazyList;
 @Entity
 @Table(name="tb_items")
 @SuppressWarnings("unchecked")
-public class Items {
+public class Items implements Serializable {
+	private static final long serialVersionUID = -2414813447524893528L;
+
 	public Items() {
 		
 	}
