@@ -148,6 +148,16 @@
 	    			$('#soForm').submit();
     			}
     		});    		
+
+			window.ParsleyValidator.addValidator('validquantity', function (value, index) {
+				var salesIdx = index.split('_')[0];
+				var itemsIdx = index.split('_')[1];
+				var stock = $('#items_' + salesIdx + '_' + itemsIdx + '_Product_Stocks_prodQuantity').val();
+				
+				return true;
+			}, 32)
+			.addMessage('en', 'validquantity', '')
+			.addMessage('id', 'validquantity', '');
 		});
 	</script>
 </head>
@@ -413,17 +423,18 @@
 																					<c:forEach items="${ soForm.itemsList }" var="iL" varStatus="iLIdx">
 																						<tr>
 																							<td style="vertical-align: middle;">
-																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
-																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
-																								<form:hidden path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_itemsId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_productId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseValue" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseQty" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productLookup.stocksList[0].prodQuantity" />
 																								<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
 																							</td>
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="change" data-parsley-validquantity="${ soIdx.index }_${ iLIdx.index }"></form:input>
 																									</div>
 																								</div>
 																							</td>

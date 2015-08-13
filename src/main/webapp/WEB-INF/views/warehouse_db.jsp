@@ -169,17 +169,16 @@
 				</h1>
 				
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Warehouse Dashboard
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_db_jsp.subtitle" text="Warehouse Dashboard"/>
 								</h1>
 							</div>
-							<div class="panel-body">	
-									
+							<div class="panel-body">
 								<select class="form-control" id="warehouseSelect">
-									<option value="">Please Select</option>
+									<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 									<c:forEach items="${ warehouseSelectionDDL }" var="w">
 										<option value="${ w.warehouseId }" <c:if test="${ w.warehouseId == warehouseDashboard.selectedWarehouse }"><c:out value='selected="selected"'/></c:if>><c:out value="${ w.warehouseName }"/></option>
 									</c:forEach>
@@ -188,7 +187,7 @@
 								<div id="inflowPanel" class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
-											<span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span>Inflow
+											<span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.inflow" text="Inflow"/>
 										</h1>
 									</div>
 									<div class="panel-body">
@@ -266,7 +265,7 @@
 								<div id="outflowPanel" class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
-											<span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span>Outflow
+											<span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.outflow" text="Outflow"/>
 										</h1>
 									</div>
 									<div class="panel-body">
@@ -348,7 +347,7 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -390,13 +389,13 @@
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Net</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>												
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true"/>										
+											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true"/>
 										</div>
 									</div>
 									<div class="form-group">
@@ -409,7 +408,7 @@
 									<div class="form-group">
 										<label for="inputReceiptDate" class="col-sm-2 control-label">Receipt Date</label>
 										<div class="col-sm-5">
-											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>												
+											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">
@@ -422,7 +421,7 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT_OUT'}">						
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT_OUT' }">	
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">

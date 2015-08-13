@@ -316,7 +316,7 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">History Payment</h1>
+															<h1 class="panel-title"><spring:message code="so_payment_jsp.payment_history" text="Payment History"/></h1>
 														</div>
 														<div class="panel-body">
 															
@@ -326,11 +326,11 @@
 																		class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="10%">Payment Type</th>
-																				<th width="15%">Payment Date</th>
-																				<th width="25%">Bank</th>
-																				<th width="15%">Effective Date</th>
-																				<th width="20%">Total Amount</th>
+																				<th width="10%"><spring:message code="so_payment_jsp.table.payment.detail.header.payment_type" text="Payment Type"/></th>
+																				<th width="15%"><spring:message code="so_payment_jsp.table.payment.detail.header.payment_date" text="Payment Date"/></th>
+																				<th width="25%"><spring:message code="so_payment_jsp.table.payment.detail.header.bank" text="Bank"/></th>
+																				<th width="15%"><spring:message code="so_payment_jsp.table.payment.detail.header.effective_date" text="Effective Date"/></th>
+																				<th width="20%"><spring:message code="so_payment_jsp.table.payment.detail.header.total_amount" text="Total Amount"/></th>
 																				<th width="15%">&nbsp;</th>
 																				
 																			</tr>
@@ -352,27 +352,27 @@
 																					</td>
 																					<td>
 																					<div class="input-group">
-																					<c:if test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
-																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
-																							<c:set var="test" value="0" />
-																							<c:if test="${bankL.lookupKey == paymentSalesForm.paymentList[iLIdx.index].bankCode}">
-																								<c:set var="test" value="1" />
-																							</c:if>
-																							<c:choose>
-																								<c:when test="${test == 1}">
-																									<form:hidden path="paymentList[${ iLIdx.index }].bankCode"/>
-																									<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
-																									<br>
-																								</c:when>
-																								<c:otherwise>
-																								<c:if test="${ empty paymentSalesForm.paymentList[ iLIdx.index ].bankCode }">
-																									<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
-																									<br>
+																						<c:if test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
+																							<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
+																								<c:set var="test" value="0" />
+																								<c:if test="${bankL.lookupKey == paymentSalesForm.paymentList[iLIdx.index].bankCode}">
+																									<c:set var="test" value="1" />
 																								</c:if>
-																								</c:otherwise>
-																							</c:choose>
-																						</c:forEach>
-																					</c:if>
+																								<c:choose>
+																									<c:when test="${test == 1}">
+																										<form:hidden path="paymentList[${ iLIdx.index }].bankCode"/>
+																										<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<br>
+																									</c:when>
+																									<c:otherwise>
+																									<c:if test="${ empty paymentSalesForm.paymentList[ iLIdx.index ].bankCode }">
+																										<form:checkbox id="cbxBank_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<br>
+																									</c:if>
+																									</c:otherwise>
+																								</c:choose>
+																							</c:forEach>
+																						</c:if>
 																					</div>
 																					</td>
 																					<td>
@@ -382,9 +382,9 @@
 																					</td>
 																					<td>
 																						<div class="form-group">
-																						<div class="col-sm-12">
-																							<form:input type="text" class="form-control text-right totalAmount" id="totalAmount_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount" readonly="true"></form:input>
-																						</div>
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right totalAmount" id="totalAmount_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].totalAmount" readonly="true"></form:input>
+																							</div>
 																						</div>
 																					</td>
 																					<td>
@@ -446,13 +446,31 @@
 														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
-																	<h1 class="panel-title">Form Payment</h1>
+																	<h1 class="panel-title">
+																		<c:choose>
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' }">
+																				Transfer Payment
+																			</c:when>
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
+																				Giro Payment
+																			</c:when>
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TERM' }">
+																				Term Payment
+																			</c:when>
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
+																				Cash Payment
+																			</c:when>
+																			<c:otherwise>
+																				Payment
+																			</c:otherwise>
+																		</c:choose>
+																	</h1>
 																</div>
 																<div class="panel-body">
 																	<div class="row">
 																		<div class="col-md-7">
 																			<div class="form-group">
-																				<label for="inputPaymentDate" class="col-sm-2 control-label">Payment Type</label>
+																				<label for="inputPaymentDate" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.payment_type" text="Payment Type"/></label>
 																				<div class="col-sm-5">
 																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
@@ -460,7 +478,7 @@
 																			</div>
 																			<c:if test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' || paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO'}">
 																				<div class="form-group">
-																					<label for="inputBank" class="col-sm-2 control-label">Bank</label>
+																					<label for="inputBank" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.bank" text="Bank"/></label>
 																					<div class="col-sm-8">
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
@@ -487,7 +505,7 @@
 																				</div>
 																			</c:if>
 																			<div class="form-group">
-																				<label for="inputEffectiveDate" class="col-sm-2 control-label">Effective Date</label>
+																				<label for="inputEffectiveDate" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.effective_date" text="Effective Date"/></label>
 																				<div class="col-sm-9">
 																					<form:input id="inputEffectiveDate" type="text" class="form-control datepicker" path="paymentList[${ lastIdx }].effectiveDate" data-parsley-required="true" data-parsley-trigger="change"  />
 																				</div>
@@ -495,23 +513,28 @@
 																		</div>
 																		<div class="col-md-5">
 																			<div class="form-group">
-																				<label for="inputPaymentDate" class="col-sm-3 control-label">Payment Date</label>
+																				<label for="inputPaymentDate" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.payment_date" text="Payment Date"/></label>
 																				<div class="col-sm-9">
 																					<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																				</div>
 																			</div>
 																			<div class="form-group">
-																				<label for="inputTotalAmount" class="col-sm-3 control-label">Total Amount</label>
+																				<label for="inputTotalAmount" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.total_amount" text="Total Amount"/></label>
 																				<div class="col-sm-9">
 																					<form:input type="text" class="form-control" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
 																				</div>
 																			</div>
 																			<div class="form-group">
-																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label">Status</label>
+																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.linked" text="Linked"/></label>
 																				<div class="col-sm-9">
 																					<div class="checkbox">
 																						<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="linked" />
 																				    </div>
+																				</div>
+																			</div>
+																			<div class="form-group">
+																				<label for="status_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.status" text="Status"/></label>
+																				<div class="col-sm-9">
 																				    <c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
 																						<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
 																							<div class="checkbox">
