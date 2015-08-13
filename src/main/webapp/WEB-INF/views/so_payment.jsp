@@ -93,15 +93,15 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;Sales Order
+					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.title" text="Sales Order"/>
 				</h1>
 				
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_LIST'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_payment_jsp.title" text="Payment Sales Order"/>
+									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_payment_jsp.subtitle" text="Payment Sales Order"/>
 								</h1>
 							</div>						
 							<div class="panel-body">
@@ -109,13 +109,13 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%">Sales Code</th>
-											<th width="20%">Sales Date</th>
-											<th width="20%">Customer</th>
+											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.sales_code" text="Sales Code"/></th>
+											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.sales_date" text="Sales Date"/></th>
+											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.customer" text="Customer"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty paymentSalesList}">
+										<c:if test="${ not empty paymentSalesList }">
 											<c:forEach items="${ paymentSalesList }" var="i" varStatus="status">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
@@ -128,20 +128,20 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Cash Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Transfer Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Giro Payment</a>&nbsp;&nbsp;&nbsp;
-								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;Term Payment</a>&nbsp;&nbsp;&nbsp;							
+								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.term_button" text="Term Payment"/></a>&nbsp;&nbsp;&nbsp;							
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;Payment Sales List
+									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="" text="Payment Sales List"/>
 								</h1>
-							</div>								
+							</div>
 							<div class="panel-body">
 								<form:form id="paymentSalesForm" role="form" class="form-horizontal" modelAttribute="paymentSalesForm" action="${pageContext.request.contextPath}/sales/savepayment" data-parsley-validate="parsley">
 									<div class="row">
@@ -151,7 +151,7 @@
 													<div class="row">
 														<div class="col-md-7">
 															<div class="form-group">
-																<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
+																<label for="inputSalesCode" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.sales_code" text="Sales Code"/></label>
 																<div class="col-sm-5">
 																	<form:hidden path="salesId"/>
 																	<form:hidden path="createdBy"/>
@@ -160,14 +160,14 @@
 																</div>										
 															</div>
 															<div class="form-group">
-																<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
+																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.sales_type" text="Sales Type"/></label>
 																<div class="col-sm-8">
 																<form:hidden path="salesType"/>
 																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>
 																</div>										
 															</div>
 															<div class="form-group">
-																<label for="inputCustomerId" class="col-sm-2 control-label">Customer</label>
+																<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.customer" text="Customer"/></label>
 																<div class="col-sm-10">
 																	<form:hidden path="customerId"/>
 																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
@@ -185,20 +185,20 @@
 																<div class="form-group">
 																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																	<div class="col-sm-10">
-																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly">Customer Details&#13;&#10;Here</textarea>
+																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="so_payment_jsp.customer_details" text="Customer Details"/></textarea>
 																	</div>
 																</div>
-															</c:if>															
+															</c:if>
 														</div>					
 														<div class="col-md-5">
 															<div class="form-group">
-																<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
+																<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.sales_date" text="Sales Date"/></label>
 																<div class="col-sm-9">
 																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date" readonly="true"></form:input>
 																</div>										
 															</div>
 															<div class="form-group">
-																<label for="inputSalesStatus" class="col-sm-3 control-label">Status</label>
+																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
 																<form:hidden path="salesStatus"/>
 																	<label id="inputPOStatus" class="control-label"><c:out value="${ paymentSalesForm.statusLookup.lookupValue }"></c:out></label>
@@ -210,20 +210,20 @@
 													<div class="row">
 														<div class="col-md-7">
 															<div class="form-group">
-																<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+																<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.shipping_date" text="Shipping Date"/></label>
 																<div class="col-sm-5">
 																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
 																</div>										
 															</div>
 														</div>
-													</div>					
+													</div>
 												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">Transactions</h1>
+															<h1 class="panel-title"><spring:message code="so_payment_jsp.transactions" text="Transactions"/></h1>
 														</div>
 														<div class="panel-body">															
 															<br/>
@@ -232,11 +232,11 @@
 																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
 																		<thead>
 																			<tr>
-																				<th width="30%">Product Name</th>
-																				<th width="30%">Quantity</th>
-																				<th width="15%" class="text-right">Price/Base Unit</th>
+																				<th width="30%"><spring:message code="so_payment_jsp.table.item.header.product_name" text="Product Name"/></th>
+																				<th width="30%"><spring:message code="so_payment_jsp.table.item.header.quantity" text="Quantity"/></th>
+																				<th width="15%" class="text-right"><spring:message code="so_payment_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
 																				<th width="5%">&nbsp;</th>
-																				<th width="20%" class="text-right">Total Price</th>
+																				<th width="20%" class="text-right"><spring:message code="so_payment_jsp.table.item.header.total_price" text="Total Price"/></th>
 																			</tr>
 																		</thead>
 																		<tbody>
@@ -277,7 +277,7 @@
 																		<tbody>
 																			<tr>
 																				<td width="80%" class="text-right">
-																					Total
+																					<spring:message code="so_payment_jsp.total" text="Total"/>
 																				</td>
 																				<td width="20%" class="text-right">
 																					<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
@@ -295,7 +295,7 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">Remarks</h1>
+															<h1 class="panel-title"><spring:message code="so_payment_jsp.remarks" text="Remarks"/></h1>
 														</div>
 														<div class="panel-body">
 															<div class="row">

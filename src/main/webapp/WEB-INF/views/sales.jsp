@@ -175,7 +175,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;A<spring:message code="sales_jsp.title" text="Sales Order"/>
+					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;<spring:message code="sales_jsp.title" text="Sales Order"/>
 				</h1>
 				
 				<div class="panel panel-default">
@@ -183,7 +183,7 @@
 						<h1 class="panel-title">
 							<c:choose>
 								<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-									<span class="fa fa-cart-arrow-down fa-fw fa-2x"></span>&nbsp;New Sales Order
+									<span class="fa fa-cart-arrow-down fa-fw fa-2x"></span>&nbsp;<spring:message code="sales_jsp.subtitle" text="New Sales Order"/>
 								</c:when>
 							</c:choose>
 						</h1>
@@ -194,7 +194,7 @@
 								<ul id="list" class="nav nav-tabs" role="tablist">
 									<c:forEach items="${ loginContext.soList }" var="soForm" varStatus="soIdx">
 										<li role="presentation" class="" id="${ soIdx.index }"><a href="#soTab_${ soIdx.index }" aria-controls="soTab_${ soIdx.index }" role="tab" data-toggle="tab"><span class="fa fa-dollar fa-fw">
-											</span>&nbsp;New Sales</a>
+											</span>&nbsp;<spring:message code="sales_jsp.new_sales" text="New Sales"/>&nbsp;${ soIdx.index + 1 }</a>
 										</li>
 									</c:forEach>
 									<li>
@@ -213,17 +213,17 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputSalesCode" class="col-sm-2 control-label">Sales Code</label>
+																		<label for="inputSalesCode" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_code" text="Sales Code"/></label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control data-so" id="inputSalesCode_${ soIdx.index }" name="inputSalesCode_${ soIdx.index }" path="soList[${ soIdx.index }].salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
 																		</div>										
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSalesType" class="col-sm-2 control-label">Sales Type</label>
+																		<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_type" text="Sales Type"/></label>										
 																		<div class="col-sm-7">
 																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
 																		   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
-																					<option value="">Please Select</option>
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																				</form:select>
 																			</c:if>
@@ -234,10 +234,10 @@
 																		</div>
 																		<div class="col-sm-1">
 																			<button id="submitSalesType_${ soIdx.index }" type="button" class="btn btn-default pull-right"><span class="fa fa-repeat fa-fw"></span></button>
-																		</div>																		
+																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label">Customer</label>
+																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer" text="Customer"/></label>
 																		<div class="col-sm-10">
 																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerId"/>
 																			<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
@@ -250,31 +250,31 @@
 																				<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" placeholder="Enter Walk In Customer Detail"/>
 																			</div>
 																		</div>
-																	</c:if>							
+																	</c:if>					
 																	<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_S' && not empty loginContext.soList[soIdx.index].customerId && loginContext.soList[soIdx.index].customerId != 0 }">
 																		<div class="form-group">
 																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly">Customer Details&#13;&#10;Here</textarea>
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><spring:message code="sales_jsp.customer_details" text="Customer Details"/></textarea>
 																			</div>
 																		</div>
 																	</c:if>
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-																		<label for="inputSalesDate" class="col-sm-3 control-label">Sales Date</label>
+																		<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="sales_jsp.sales_date" text="Sales Date"/></label>
 																		<div class="col-sm-9">
 																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${ soIdx.index }" path="soList[${ soIdx.index }].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																		</div>										
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSalesStatus_${ soIdx.index }" class="col-sm-3 control-label">Status</label>
+																		<label for="inputSalesStatus_${ soIdx.index }" class="col-sm-3 control-label"><spring:message code="sales_jsp.status" text="Status"/></label>
 																		<div class="col-sm-9">
 																			<form:hidden path="soList[${ soIdx.index }].salesStatus" />
 																			<label id="inputSalesStatus_${ soIdx.index }" class="control-label">
 																				<c:out value="${ soForm.statusLookup.lookupValue }"></c:out>
 																			</label>
-																		</div>										
+																		</div>
 																	</div>
 																</div>
 															</div>									
@@ -284,7 +284,7 @@
 																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default">
 																			<div class="panel-heading">
 																	             <h4 class="panel-title">
-																	             	Search Customer
+																	             	<spring:message code="sales_jsp.search_customer" text="Search Customer"/>
 																	      		</h4>
 																	      	</div>
 																			<div class="panel-body">
@@ -299,7 +299,7 @@
 																										</div>
 																									</td>
 																									<td width="7%" align="right">
-																										<button id="searchButton_${ soIdx.index }" type="submit" class="btn btn-primary" >Search</button>
+																										<button id="searchButton_${ soIdx.index }" type="submit" class="btn btn-primary"><spring:message code="sales_jsp.search_button" text="Search"/></button>
 																									</td>
 																								</tr>
 																							</table>
@@ -307,11 +307,11 @@
 																						<table id="searchCustomerResultTable" class="table table-bordered table-hover display responsive">
 																							<thead>
 																								<tr>
-																									<th width="25%">Customer Name</th>
-																									<th width="25%">Address</th>
-																									<th width="20%">PIC</th>
-																									<th width="20%">Bank Account</th>
-																									<th width="5%">Status</th>
+																									<th width="25%"><spring:message code="sales_jsp.table.search.header.customer_name" text="Customer Name"/></th>
+																									<th width="25%"><spring:message code="sales_jsp.table.search.header.address" text="Address"/></th>
+																									<th width="20%"><spring:message code="sales_jsp.table.search.header.pic" text="PIC"/></th>
+																									<th width="20%"><spring:message code="sales_jsp.table.search.header.bank_account" text="Bank Account"/></th>
+																									<th width="5%"><spring:message code="sales_jsp.table.search.header.status" text="Status"/></th>
 																									<th width="5%">&nbsp;</th>
 																								</tr>
 																							</thead>
@@ -358,13 +358,13 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="sales_jsp.shipping_date" text="Shipping Date"/></label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
-																		</div>										
+																		</div>
 																	</div>
 																</div>
-															</div>					
+															</div>			
 														</div>
 													</div>
 													<div class="row">
@@ -372,7 +372,7 @@
 															<div class="panel panel-default">
 																<div class="panel-heading">
 																	<h1 class="panel-title">
-																		Transactions
+																		<spring:message code="sales_jsp.transactions" text="Transactions"/>
 																	</h1>
 																</div>
 																<div class="panel-body">
@@ -381,7 +381,7 @@
 																		<div class="col-md-11">
 																		<div class="form-group" style="padding-left: 2%">
 																			<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
-																				<option value="">Please Select</option>
+																				<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																				<c:forEach items="${ productSelectionDDL }" var="psddl">
 																					<option value="${ psddl.productId }">${ psddl.productName }</option>
 																				</c:forEach>
@@ -400,12 +400,12 @@
 																			<table id="itemsListTable_${ soIdx.index }" class="table table-bordered table-hover display responsive">
 																				<thead>
 																					<tr>
-																						<th width="30%">Product Name</th>
-																						<th width="15%">Quantity</th>
-																						<th width="15%" class="text-right">Unit</th>
-																						<th width="15%" class="text-right">Price/Base Unit</th>
+																						<th width="30%"><spring:message code="sales_jsp.table.item.header.product_name" text="Product Name"/></th>
+																						<th width="15%"><spring:message code="sales_jsp.table.item.header.quantity" text="Quantity"/></th>
+																						<th width="15%" class="text-right"><spring:message code="sales_jsp.table.item.header.unit" text="Unit"/></th>
+																						<th width="15%" class="text-right"><spring:message code="sales_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
 																						<th width="5%">&nbsp;</th>
-																						<th width="20%" class="text-right">Total Price</th>
+																						<th width="20%" class="text-right"><spring:message code="sales_jsp.table.item.header.total_price" text="Total Price"/></th>
 																					</tr>
 																				</thead>
 																				<tbody>
@@ -467,7 +467,7 @@
 																				<tbody>
 																					<tr>
 																						<td width="80%" class="text-right">
-																							Total
+																							<spring:message code="sales_jsp.total" text="Total"/>
 																						</td>
 																						<td width="20%" class="text-right">
 																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
@@ -487,7 +487,7 @@
 												<div class="col-md-12">
 													<div class="panel panel-default">
 														<div class="panel-heading">
-															<h1 class="panel-title">Remarks</h1>
+															<h1 class="panel-title"><spring:message code="sales_jsp.remarks" text="Remarks"/></h1>
 														</div>
 														<div class="panel-body">
 															<div class="row">

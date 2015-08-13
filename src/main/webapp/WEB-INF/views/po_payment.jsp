@@ -126,7 +126,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty poList}">
+										<c:if test="${ not empty poList }">
 											<c:forEach items="${ poList }" var="p" varStatus="pL">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ p.poId }"/>" type="checkbox" value="<c:out value="${ p.poId }"/>" /></td>
