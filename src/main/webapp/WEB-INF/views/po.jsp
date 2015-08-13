@@ -270,7 +270,7 @@
 															<div class="col-md-11" id="product-select${ poIdx.index }">
 																<div class="form-group" style="padding-left: 2%">
 																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
-																		<option value=""><spring:message code="common_please_select" text="Please Select"/></option>
+																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
 																		</c:forEach>

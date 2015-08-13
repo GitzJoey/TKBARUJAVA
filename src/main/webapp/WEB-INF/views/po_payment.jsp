@@ -348,7 +348,7 @@
 													<div class="col-md-12">
 														<div class="panel panel-default">
 															<div class="panel-heading">
-																<h1 class="panel-title">Payment History</h1>
+																<h1 class="panel-title"><spring:message code="po_payment_jsp.payment_history" text="Payment History"/></h1>
 															</div>
 															<div class="panel-body">									
 																<div class="row">
@@ -356,13 +356,13 @@
 																		<table id="paymentListTable" class="table table-bordered table-hover display responsive">
 																			<thead>
 																				<tr>
-																					<th width="10%">Payment Type</th>
-																					<th width="15%">Payment Date</th>
-																					<th width="15%">Bank</th>
-																					<th width="15%">Effective Date</th>
-																					<th width="10%">Linked</th>
-																					<th width="15%">Status</th>
-																					<th width="20%" class="text-right">Total Amount</th>
+																					<th width="10%"><spring:message code="po_payment_jsp.table.payment.detail.header.payment_type" text="Payment Type"/></th>
+																					<th width="15%"><spring:message code="po_payment_jsp.table.payment.detail.header.payment_date" text="Payment Date"/></th>
+																					<th width="15%"><spring:message code="po_payment_jsp.table.payment.detail.header.bank" text="Bank"/></th>
+																					<th width="15%"><spring:message code="po_payment_jsp.table.payment.detail.header.effective_date" text="Effective Date"/></th>
+																					<th width="10%"><spring:message code="po_payment_jsp.table.payment.detail.header.linked" text="Linked"/></th>
+																					<th width="15%"><spring:message code="po_payment_jsp.table.payment.detail.header.status" text="Status"/></th>
+																					<th width="20%" class="text-right"><spring:message code="po_payment_jsp.table.payment.detail.header.total_amount" text="Total Amount"/></th>
 																				</tr>
 																			</thead>
 																			<tbody>
@@ -473,11 +473,11 @@
 																		<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
 																			<tbody>
 																				<tr>
-																					<td width="80%" class="text-right">Total</td>
+																					<td width="80%" class="text-right"><spring:message code="po_payment_jsp.table.payment.detail.header.total_pay" text="Total"/></td>
 																					<td width="20%" class="text-right"><fmt:formatNumber type="number" pattern="##,###.00" value="${ totalPay }" /></td>
 																				</tr>
 																				<tr>
-																					<td width="80%" class="text-right">Total Outstanding</td>
+																					<td width="80%" class="text-right"><spring:message code="po_payment_jsp.table.payment.detail.header.total_outstanding" text="Total Outstanding"/></td>
 																					<td width="20%" class="text-right"><fmt:formatNumber type="number" pattern="##,###.00" value="${ total - totalPay }" /></td>
 																				</tr>
 																			</tbody>
@@ -518,7 +518,7 @@
 																	<div class="row">
 																		<div class="col-md-7">
 																			<div class="form-group">
-																				<label for="inputPaymentDate" class="col-sm-2 control-label">Payment Type</label>
+																				<label for="inputPaymentType" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.payment_type" text="Payment Type"/></label>
 																				<div class="col-sm-5">
 																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
@@ -526,7 +526,7 @@
 																			</div>
 																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO'}">
 																				<div class="form-group">
-																					<label for="inputBank" class="col-sm-2 control-label">Bank</label>
+																					<label for="inputBank" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.bank" text="Bank"/></label>
 																					<div class="col-sm-8">																			
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
@@ -553,7 +553,7 @@
 																				</div>
 																			</c:if>
 																			<div class="form-group">
-																				<label for="inputEffectiveDate" class="col-sm-2 control-label">Effective Date</label>
+																				<label for="inputEffectiveDate" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.effective_date" text="Effective Date"/></label>
 																				<div class="col-sm-9">
 																					<form:input id="inputEffectiveDate" type="text" class="form-control datepicker" path="paymentList[${ lastIdx }].effectiveDate" data-parsley-required="true" data-parsley-trigger="change"  />
 																				</div>
@@ -561,13 +561,13 @@
 																		</div>
 																		<div class="col-md-5">
 																			<div class="form-group">
-																				<label for="inputPaymentDate" class="col-sm-3 control-label">Payment Date</label>
+																				<label for="inputPaymentDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.payment_date" text="Payment Date"/></label>
 																				<div class="col-sm-9">
 																					<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 																				</div>
 																			</div>
 																			<div class="form-group">
-																				<label for="inputTotalAmount" class="col-sm-3 control-label">Total Amount</label>
+																				<label for="inputTotalAmount" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.total_amount" text="Total Amount"/></label>
 																				<div class="col-sm-9">
 																					<form:input type="text" class="form-control right-align" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
 																				</div>
@@ -579,7 +579,7 @@
 																		</div>
 																		<div class="col-md-5">
 																			<div class="form-group">
-																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label">Linked</label>
+																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.Linked" text="Linked"/></label>
 																				<div class="col-sm-9">
 																					<div class="checkbox">
 																						<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="" disabled="true"/>
@@ -593,7 +593,7 @@
 																		</div>
 																		<div class="col-md-5">
 																			<div class="form-group">
-																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label">Status</label>
+																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.status" text="Status"/></label>
 																				<div class="col-sm-9">
 																				    <c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
 																						<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
@@ -637,7 +637,7 @@
 														<c:when test="${ ViewMode == 'true' }">
 															<div class="col-md-6 col-offset-md-6">
 																<div class="btn-toolbar">
-																	<button id="cancelButton" type="button" class="btn btn-primary pull-right">Close</button>
+																	<button id="cancelButton" type="button" class="btn btn-primary pull-right"><spring:message code="po_payment_jsp.close_button" text="Close"/></button>
 																</div>
 															</div>
 														</c:when>
