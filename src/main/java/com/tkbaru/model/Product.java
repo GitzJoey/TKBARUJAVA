@@ -67,7 +67,10 @@ public class Product implements Serializable {
 
 	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
 	private List<Price> price;
-	
+
+	@OneToMany(mappedBy="productEntity")
+	private List<Stocks> stocksList;
+
 	public int getProductId() {
 		return productId;
 	}
@@ -172,22 +175,6 @@ public class Product implements Serializable {
 		this.productUnit = productUnit;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
-	}
-
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
-	}
-	
-	public Lookup getProductTypeLookup() {
-		return productTypeLookup;
-	}
-
-	public void setProductTypeLookup(Lookup productTypeLookup) {
-		this.productTypeLookup = productTypeLookup;
-	}
-
 	public List<Price> getPrice() {
 		return price;
 	}
@@ -195,17 +182,22 @@ public class Product implements Serializable {
 	public void setPrice(List<Price> price) {
 		this.price = price;
 	}
-	
-	@Override
-	public String toString() {
-		return "Product [productId=" + productId + ", productType="
-				+ productType + ", shortCode=" + shortCode + ", productName="
-				+ productName + ", productDesc=" + productDesc
-				+ ", imageBinary=" + imageBinary + ", imagePath=" + imagePath
-				+ ", productStatus=" + productStatus + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + ", productUnit="
-				+ productUnit + "]";
+
+	public List<Stocks> getStocksList() {
+		return stocksList;
 	}
 
+	public void setStocksList(List<Stocks> stocksList) {
+		this.stocksList = stocksList;
+	}
+
+	@Override
+	public String toString() {
+		return "Product [productId=" + productId + ", productType=" + productType + ", shortCode=" + shortCode
+				+ ", productName=" + productName + ", productDesc=" + productDesc + ", imageBinary=" + imageBinary
+				+ ", imagePath=" + imagePath + ", productStatus=" + productStatus + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", price=" + price + "]";
+	}
+	
 }

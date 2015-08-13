@@ -51,6 +51,10 @@ public class Stocks {
 	@JoinColumn(name="warehouse_id", unique=true, insertable=false, updatable=false)
 	private Warehouse warehouseLookup;
 
+	@ManyToOne
+	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
+	private Product productEntity;
+
 	public int getStocksId() {
 		return stocksId;
 	}
@@ -131,29 +135,12 @@ public class Stocks {
 		this.poLookup = poLookup;
 	}
 
-	public Product getProductLookup() {
-		return productLookup;
-	}
-
-	public void setProductLookup(Product productLookup) {
-		this.productLookup = productLookup;
-	}
-
-	public Warehouse getWarehouseLookup() {
-		return warehouseLookup;
-	}
-
-	public void setWarehouseLookup(Warehouse warehouseLookup) {
-		this.warehouseLookup = warehouseLookup;
-	}
-
 	@Override
 	public String toString() {
-		return "Stocks [stocksId=" + stocksId + ", poId=" + poId
-				+ ", productId=" + productId + ", warehouseId=" + warehouseId
-				+ ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "Stocks [stocksId=" + stocksId + ", poId=" + poId + ", productId=" + productId + ", warehouseId="
+				+ warehouseId + ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", poLookup=" + poLookup
+				+ "]";
 	}
-
+	
 }
