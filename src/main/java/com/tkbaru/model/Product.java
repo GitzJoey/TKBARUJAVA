@@ -65,9 +65,6 @@ public class Product implements Serializable {
 	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup productTypeLookup;
 
-	@OneToMany(mappedBy="product", cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-	private List<Price> price;
-
 	@OneToMany(mappedBy="productEntity")
 	private List<Stocks> stocksList;
 
@@ -175,12 +172,20 @@ public class Product implements Serializable {
 		this.productUnit = productUnit;
 	}
 
-	public List<Price> getPrice() {
-		return price;
+	public Lookup getStatusLookup() {
+		return statusLookup;
 	}
 
-	public void setPrice(List<Price> price) {
-		this.price = price;
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
+	public Lookup getProductTypeLookup() {
+		return productTypeLookup;
+	}
+
+	public void setProductTypeLookup(Lookup productTypeLookup) {
+		this.productTypeLookup = productTypeLookup;
 	}
 
 	public List<Stocks> getStocksList() {
@@ -197,7 +202,7 @@ public class Product implements Serializable {
 				+ ", productName=" + productName + ", productDesc=" + productDesc + ", imageBinary=" + imageBinary
 				+ ", imagePath=" + imagePath + ", productStatus=" + productStatus + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", price=" + price + "]";
+				+ ", productUnit=" + productUnit + "]";
 	}
 	
 }

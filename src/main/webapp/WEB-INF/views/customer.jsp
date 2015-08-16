@@ -180,7 +180,7 @@
 				}				
 			});						
 
-	        $.listen('parsley:field:validate', function () {
+	        $.listen('parsley:field:validate', function() {
 	        	validateFront();
 	        });
 	        

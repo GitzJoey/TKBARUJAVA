@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -54,6 +56,9 @@ public class Stocks {
 	@ManyToOne
 	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
 	private Product productEntity;
+
+	@OneToMany(mappedBy="stocksEntity")
+	private List<Price> priceList;
 
 	public int getStocksId() {
 		return stocksId;
@@ -135,12 +140,45 @@ public class Stocks {
 		this.poLookup = poLookup;
 	}
 
+	public Product getProductLookup() {
+		return productLookup;
+	}
+
+	public void setProductLookup(Product productLookup) {
+		this.productLookup = productLookup;
+	}
+
+	public Warehouse getWarehouseLookup() {
+		return warehouseLookup;
+	}
+
+	public void setWarehouseLookup(Warehouse warehouseLookup) {
+		this.warehouseLookup = warehouseLookup;
+	}
+
+	public Product getProductEntity() {
+		return productEntity;
+	}
+
+	public void setProductEntity(Product productEntity) {
+		this.productEntity = productEntity;
+	}
+
+	public List<Price> getPriceList() {
+		return priceList;
+	}
+
+	public void setPriceList(List<Price> priceList) {
+		this.priceList = priceList;
+	}
+
 	@Override
 	public String toString() {
 		return "Stocks [stocksId=" + stocksId + ", poId=" + poId + ", productId=" + productId + ", warehouseId="
 				+ warehouseId + ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy + ", createdDate="
 				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", poLookup=" + poLookup
-				+ "]";
+				+ ", productLookup=" + productLookup + ", warehouseLookup=" + warehouseLookup + ", productEntity="
+				+ productEntity + ", priceList=" + priceList + "]";
 	}
 	
 }

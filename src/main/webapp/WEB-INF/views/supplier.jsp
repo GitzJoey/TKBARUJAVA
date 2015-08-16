@@ -194,7 +194,7 @@
 				}				
 			});			
 
-	        $.listen('parsley:field:validate', function () {
+	        $.listen('parsley:field:validate', function() {
 	        	validateFront();
 	        });
 	        
@@ -242,7 +242,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -424,10 +424,10 @@
 																<div id="accordion_picList" class="panel-group" >															
 																	<c:forEach items="${ supplierForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
 																		<div class="panel panel-default">
-																	        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
+																	        <div class="panel-heading accordion-toggle <c:if test="${ editPersonIdx != picListLoopIdx.index }"><c:out value="collapsed"/></c:if>" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
 																	        	<h4 class="panel-title">PIC&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].lastName }"/></h4>
 																	        </div>
-																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
+																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse <c:if test="${ editPersonIdx != picListLoopIdx.index }"><c:out value="collapse"/></c:if>">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
 																					<div class="row">
@@ -638,7 +638,7 @@
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'prodTab' }"><c:out value="active"/></c:if>" id="prodTab">
 												<br/>
-												<input id="selectedPrdList" name="selectedPrdList" type="hidden" value="${ selectedPrdList }"/>
+												<input type="hidden" id="selectedPrdList" name="selectedPrdList" value="${ selectedPrdList }"/>
 												<div class="table-responsive">
 													<table class="table table-bordered table-hover">
 														<thead>
@@ -657,7 +657,20 @@
 																<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 																	<tr>
 																		<td align="center">
-																			<input id="prdList_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>" checked/>
+																			<c:set var="selected" value="false"/>
+																			<c:forEach items="${ supplierForm.prodList }" var="sP">
+																				<c:if test="${ sP.productId == i.productId }">
+																					<c:set var="selected" value="true"/>
+																				</c:if>
+																			</c:forEach>
+																			<c:choose>
+																				<c:when test="${ selected == 'true' }">
+																					<input id="prdList_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>" checked/>
+																				</c:when>
+																				<c:otherwise>
+																					<input id="prdList_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/>
+																				</c:otherwise>
+																			</c:choose>
 																		</td>
 																		<td><c:out value="${ i.productTypeLookup.lookupValue }"></c:out></td>
 																		<td><c:out value="${ i.shortCode }"></c:out></td>

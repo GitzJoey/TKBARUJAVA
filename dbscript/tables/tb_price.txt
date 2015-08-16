@@ -2,11 +2,11 @@ DROP TABLE IF EXISTS `tb_price`;
 
 CREATE TABLE `tb_price` (
   `price_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
-  `product_id` 		int(11) 		DEFAULT NULL,
+  `stocks_id` 		int(11) 		DEFAULT NULL,
+  `price_level_id` 	int(11) 		DEFAULT NULL,  
   `price` 			decimal(10,2) 	DEFAULT NULL,
-  `price_level_id` 	int(11) 		DEFAULT NULL,
-  `effective_date` 	datetime 		DEFAULT NULL,
-  `is_active` 		varchar(5) 		DEFAULT NULL,
+  `input_date` 		datetime 		DEFAULT NULL,
+  `status` 			varchar(15) 	DEFAULT NULL,
   `created_by` 		int(11) 		DEFAULT '0',
   `created_date` 	datetime 		DEFAULT NULL,
   `updated_by` 		int(11) 		DEFAULT '0',

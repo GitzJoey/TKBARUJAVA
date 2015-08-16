@@ -1,5 +1,6 @@
 package com.tkbaru.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +14,23 @@ import com.tkbaru.model.Price;
 public class PriceServiceImpl implements PriceService {
 	@Autowired
 	PriceDAO priceDAO;
+
+	@Override
+	@Transactional
+	public boolean checkExistPriceForDate(Date inputDate) {
+		boolean exist = false;
+		
+		List<Price> p = priceDAO.getAllPriceForDate(inputDate);
+		
+		if (p.size() > 0) exist = true; 
+		
+		return exist;
+	}
+
+	@Override
+	public void addPrice(Price price) {
+		
+		
+	}
 	
 }

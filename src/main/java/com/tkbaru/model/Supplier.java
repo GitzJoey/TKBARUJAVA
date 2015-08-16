@@ -20,6 +20,8 @@ import javax.persistence.Table;
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 
+import com.tkbaru.common.Converter;
+
 @Entity
 @Table(name="tb_supplier")
 @SuppressWarnings("unchecked")
@@ -49,7 +51,7 @@ public class Supplier implements Serializable {
 	@Column(name="status")
 	private String supplierStatus;
 	@Column(name="npwp_num")
-	private Integer npwpNum;
+	private String npwpNum;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -59,6 +61,16 @@ public class Supplier implements Serializable {
 	@Column(name="updated_date")
 	private Date updatedDate;
 
+	public String getProductIdList() {
+		List<Integer> ids = new ArrayList<Integer>();
+		
+		for (Product p : this.prodList) {
+			ids.add(p.getProductId());
+		}
+		
+		return Converter.convertToCommaSeparated(ids);
+	}
+	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_supplier_bankacc", 
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
@@ -145,11 +157,11 @@ public class Supplier implements Serializable {
 		this.supplierStatus = supplierStatus;
 	}
 
-	public Integer getNpwpNum() {
+	public String getNpwpNum() {
 		return npwpNum;
 	}
 
-	public void setNpwpNum(Integer npwpNum) {
+	public void setNpwpNum(String npwpNum) {
 		this.npwpNum = npwpNum;
 	}
 

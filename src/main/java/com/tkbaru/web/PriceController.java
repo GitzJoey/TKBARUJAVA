@@ -22,10 +22,12 @@ import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
 import com.tkbaru.model.Product;
+import com.tkbaru.model.Stocks;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PriceLevelService;
 import com.tkbaru.service.PriceService;
 import com.tkbaru.service.ProductService;
+import com.tkbaru.service.StocksService;
 
 @Controller
 @RequestMapping("/price")
@@ -34,6 +36,9 @@ public class PriceController {
 	
 	@Autowired
 	LoginContext loginContextSession;
+	
+	@Autowired
+	StocksService stocksManager;
 	
 	@Autowired
 	ProductService productManager;
@@ -59,9 +64,17 @@ public class PriceController {
 	public String todayPricePageLoad(Locale locale, Model model) {
 		logger.info("[todayPricePageLoad] " + "");
 		
-		List<Product> productList = productManager.getAllProduct();
+		Date todayDate = new Date();
 		
-		model.addAttribute("productList", productList);
+		boolean priceInputed = priceManager.checkExistPriceForDate(todayDate);		
+		
+		if (priceInputed) {
+			
+		}
+		
+		List<Stocks> stocksList = stocksManager.getAllStocks();
+		
+		model.addAttribute("stocksList", stocksList);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
