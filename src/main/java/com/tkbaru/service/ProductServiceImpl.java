@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.tkbaru.common.Converter;
 import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.ProductDAO;
 import com.tkbaru.model.Product;
@@ -72,11 +73,11 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	@Override
-	public List<Product> getProductByIds(String selectedIds) {
-		
+	@Transactional
+	public List<Product> getProductByIds(String selectedIds) {		
 		if (selectedIds.length() == 0) return new ArrayList<Product>();
 		
-		return productDAO.getProductByIds(selectedIds);
+		return productDAO.getProductByIds(Converter.convertToINClause(selectedIds));
 	}
 
 	@Override

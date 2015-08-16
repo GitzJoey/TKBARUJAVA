@@ -160,7 +160,8 @@ public class SupplierController {
 		model.addAttribute("supplierForm", supp);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-
+		model.addAttribute("productList", productManager.getAllProduct());
+		
 		if (bankAccButtonMode.toUpperCase().equals("ADDBANK")) {
 			model.addAttribute("activeTab", "bankAccTab");
 			model.addAttribute("editBankIdx", supp.getBankAccList().size() - 1);
@@ -204,6 +205,7 @@ public class SupplierController {
 		model.addAttribute("supplierForm", supp);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
+		model.addAttribute("productList", productManager.getAllProduct());
 		
 		model.addAttribute("activeTab", "bankAccTab");
 		
@@ -248,7 +250,8 @@ public class SupplierController {
 		model.addAttribute("supplierForm", supp);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-
+		model.addAttribute("productList", productManager.getAllProduct());
+		
 		model.addAttribute("activeTab", "picTab");
 		
 		if (personButtonMode.toUpperCase().equals("ADDPERSON")) {
@@ -321,14 +324,14 @@ public class SupplierController {
 			}			
 		} else {
 			List<PhoneList> newList = new ArrayList<PhoneList>();
-			
+
 			for (Person p:supp.getPicList()) {
 				if (p.getPersonId() != personId) continue;
 				for (int x = 0; x < p.getPhoneList().size(); x++) {
 					if (x == phoneListIndex) continue;
 					newList.add(p.getPhoneList().get(x));
 				}
-				p.setPhoneList(newList);	
+				p.setPhoneList(newList);
 			}
 		}
 		
@@ -342,7 +345,7 @@ public class SupplierController {
 			model.addAttribute("editPersonIdx", personIndex);
 			model.addAttribute("personButtonMode", "addperson");				
 		} else if (phoneMode.toUpperCase().equals("DELETEPHONE")) {
-			
+
 		} else {
 			
 		}

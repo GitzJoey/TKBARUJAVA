@@ -83,7 +83,7 @@ public class Supplier implements Serializable {
 				inverseJoinColumns={@JoinColumn(name="person_id", referencedColumnName="person_id")})
 	private List<Person> picList = LazyList.decorate(new ArrayList<Person>(), FactoryUtils.instantiateFactory(Person.class));
 
-	@ManyToMany(cascade=CascadeType.ALL)
+	@ManyToMany
 	@JoinTable(name="tb_supplier_prod",
 				joinColumns={@JoinColumn(name="supplier_id", referencedColumnName="supplier_id")},
 				inverseJoinColumns={@JoinColumn(name="product_id", referencedColumnName="product_id")})

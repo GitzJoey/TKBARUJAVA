@@ -71,7 +71,7 @@
 			//Person
 			$('input[id^="cbx_picList_"]').click(function() {
 				var selected = $(this);	
-				
+
 				$('input[id^="cbx_picList_"]').each(function(index, item) {
 					if ($(item).attr("id") != $(selected).attr("id")) { 
 						if ($(item).prop("checked")) {
@@ -81,31 +81,33 @@
 				});
 			});
 			
-			$('#addPerson, #editPerson, #deletePerson').click(function() {				
+			$('#addPerson, #deletePerson').click(function() {				
 				var hasSelected = false;
 				var button = $(this).attr('id');
 
 				if (button == 'addPerson') {
+					$('#supplierForm').parsley().destroy();
 					$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/addperson/0");
 				} else {
 					$('input[id^="cbx_picList_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
 							hasSelected = true;
 							personId = $(item).attr('id').split('_')[2];
-						}					
+						}
 					});
 					
 					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false;}
 					else {
-						if (button == 'editPerson') {
-							$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/editperson/" + personId);
-						} else {
+						if (button == 'deletePerson') {
+							$('#supplierForm').parsley().destroy();
 							$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/deleteperson/" + personId);
-						}						
+						} else {
+							return false;
+						}
 					}
-				}				
+				}
 			});
-					
+
 			$('#savePerson, #discardPerson').click(function() {
 				var button = $(this).attr('id');
 				var personButtonMode = $('#personButtonMode').val();
@@ -169,6 +171,7 @@
 					}					
 				});
 				
+				console.log(spl);
 				$('#selectedPrdList').val(spl);
 			})
 

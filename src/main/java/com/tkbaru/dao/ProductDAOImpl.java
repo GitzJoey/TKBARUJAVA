@@ -86,7 +86,7 @@ public class ProductDAOImpl implements ProductDAO {
 		logger.info("[getProductByIds] " + "selectedIdINClause: " + selectedIdINClause);
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<Product> productList = session.createQuery("FROM Product").list();
+		List<Product> productList = session.createQuery("FROM Product WHERE productId IN " + selectedIdINClause).list();
 	
 		logger.info("Product Count : " + productList.size());
 		
