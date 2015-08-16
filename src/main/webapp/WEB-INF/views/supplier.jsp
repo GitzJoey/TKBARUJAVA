@@ -171,7 +171,6 @@
 					}					
 				});
 				
-				console.log(spl);
 				$('#selectedPrdList').val(spl);
 			})
 
