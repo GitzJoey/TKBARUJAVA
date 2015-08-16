@@ -205,7 +205,7 @@
 	            	$('#suppDataTabError').removeClass('hidden');
 	            }
 
-				if (true === $('#customerForm').parsley().isValid("tab2", false)) {
+				if (true === $('#supplierForm').parsley().isValid("tab2", false)) {
 	              	$('#picTabError').addClass('hidden');
 	            } else {
 	            	$('#picTabError').removeClass('hidden');
