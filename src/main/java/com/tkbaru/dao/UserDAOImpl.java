@@ -222,7 +222,6 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean checkUserTableHasData() {
 		logger.info("[checkUserTableHasData] " + "");
 
@@ -230,7 +229,7 @@ public class UserDAOImpl implements UserDAO {
 				"SELECT COUNT(*) AS size FROM tb_user";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		int size = jdbcTemplate.queryForInt(sqlquery);
+		int size = jdbcTemplate.queryForObject(sqlquery, int.class);
 		
 		return size > 0 ? true : false;
 	}

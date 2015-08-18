@@ -22,7 +22,6 @@ public class SetupDAOImpl implements SetupDAO {
     }
 	
 	@Override
-	@SuppressWarnings("deprecation")
 	public boolean checkDBConnection() {
 	    String CHECK_SQL_QUERY = "SELECT 1";
 	    
@@ -30,7 +29,7 @@ public class SetupDAOImpl implements SetupDAO {
 	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 	    
 	    try {
-	        jdbcTemplate.queryForInt(CHECK_SQL_QUERY);
+	        Integer i = jdbcTemplate.queryForObject(CHECK_SQL_QUERY, Integer.class);
 	        isConnected = true;
 	    } catch (Exception err) {
 	        logger.info("[checkDBConnection] Connection failed. Reason: " + err.getMessage());
