@@ -229,7 +229,7 @@ public class UserDAOImpl implements UserDAO {
 				"SELECT COUNT(*) AS size FROM tb_user";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-		int size = jdbcTemplate.queryForObject(sqlquery, int.class);
+		Integer size = jdbcTemplate.queryForObject(sqlquery, Integer.class);
 		
 		return size > 0 ? true : false;
 	}

@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -42,9 +43,17 @@ public class Price {
     @Column(name="updated_date")
     private Date updatedDate;
 
+    @OneToOne
+    @JoinColumn(name="price_level_id", insertable=false, updatable=false)
+    private PriceLevel priceLevelEntity;
+    
     @ManyToOne
     @JoinColumn(name="stocks_id", nullable=false, insertable=false, updatable=false)
     private Stocks stocksEntity;
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup statusLookup;
 
 	public Integer getPriceId() {
 		return priceId;
