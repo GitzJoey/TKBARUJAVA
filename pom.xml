@@ -336,4 +336,8 @@
 			<url>http://smslib.org/maven2/v3/</url>
 		</repository>
 	</repositories>
+	<description>Toko Baru Wangon</description>
+	<organization>
+		<name>Toko Baru Group</name>
+	</organization>
 </project>
