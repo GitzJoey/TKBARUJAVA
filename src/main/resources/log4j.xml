@@ -9,6 +9,27 @@
 			<param name="ConversionPattern" value="%-5p: %c - %m%n" />
 		</layout>
 	</appender>
+
+	<appender name="file" class="org.apache.log4j.RollingFileAppender">
+		<param name="append" value="false" />
+		<param name="maxFileSize" value="500MB" />
+		<param name="maxBackupIndex" value="15" />
+		<param name="file" value="${catalina.base}/logs/tkbaru.log" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n" />
+		</layout>
+	</appender>	
+
+    <appender name="daily_file" class="org.apache.log4j.DailyRollingFileAppender">
+       <param name="File" value="${catalina.base}/logs/tkbaru.log" />
+       <param name="DatePattern" value="'.'yyyy-MM-dd" />
+       <!-- Per Month Setting 
+       <param name="DatePattern" value="'.'yyyy-MM" />
+        -->
+       <layout class="org.apache.log4j.PatternLayout">
+          <param name="ConversionPattern" value="[%p] %d %c %M - %m%n"/>          
+       </layout>
+    </appender>
 	
 	<!-- Application Loggers -->
 	<logger name="com.tkbaru.web">
@@ -48,6 +69,7 @@
 	<root>
 		<priority value="warn" />
 		<appender-ref ref="console" />
+		<appender-ref ref="daily_file" />
 	</root>
 	
 </log4j:configuration>
