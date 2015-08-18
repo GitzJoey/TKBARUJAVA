@@ -14,6 +14,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -48,10 +50,12 @@ public class Product implements Serializable {
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
 	private int updatedBy;
 	@Column(name="updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
 	@OneToMany(mappedBy="productEntity", cascade=CascadeType.ALL, fetch=FetchType.EAGER)

@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_payment")
@@ -28,12 +30,14 @@ public class Payment implements Serializable {
 	@Column(name = "payment_type")
 	private String paymentType;
 	@Column(name = "payment_date")
+	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 	@Column(name = "total_amount")
 	private long totalAmount;
 	@Column(name = "bank_code")
 	private String bankCode;
 	@Column(name = "effective_date")
+	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
 	@Column(name = "is_linked")
 	private boolean isLinked;
@@ -42,10 +46,12 @@ public class Payment implements Serializable {
 	@Column(name = "created_by")
 	private int createdBy;
 	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name = "updated_by")
 	private int updatedBy;
 	@Column(name = "updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
 	@ManyToOne

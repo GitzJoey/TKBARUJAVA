@@ -41,10 +41,12 @@ public class Truck {
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
 	private int updatedBy;
 	@Column(name="updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
 	@ManyToOne

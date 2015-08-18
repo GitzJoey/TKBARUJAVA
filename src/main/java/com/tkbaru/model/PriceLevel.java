@@ -37,13 +37,13 @@ public class PriceLevel{
     private BigDecimal subtraction;
     @Column(name="created_by")
     private Integer createdBy;
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="created_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Column(name="updated_by")
     private Integer updatedBy;
-    @Temporal(TemporalType.TIMESTAMP)
     @Column(name="updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
 	@ManyToOne

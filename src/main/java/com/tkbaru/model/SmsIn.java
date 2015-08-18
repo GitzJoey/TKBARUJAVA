@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_sms_in")
@@ -24,6 +26,7 @@ public class SmsIn {
 	@Column(name = "message")
 	private String message;
 	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
 	public int getSmsInId() {

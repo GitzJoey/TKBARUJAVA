@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "tb_deliver")
@@ -21,6 +23,7 @@ public class Deliver {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int deliverId;
 	@Column(name = "deliver_date")
+	@Temporal(TemporalType.DATE)
 	private Date deliverDate;
 	@Column(name = "net")
 	private int net;
@@ -29,10 +32,12 @@ public class Deliver {
 	@Column(name = "created_by")
 	private int createdBy;
 	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name = "updated_by")
 	private int updatedBy;
 	@Column(name = "updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
 	public int getDeliverId() {

@@ -25,8 +25,8 @@ public class SmsOut {
 	private String recipient;
 	@Column(name = "message")
 	private String message;
-	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
 	public int getSmsOutId() {

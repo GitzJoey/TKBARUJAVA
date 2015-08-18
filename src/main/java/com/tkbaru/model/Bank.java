@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -32,6 +34,7 @@ public class Bank {
 	@Column(name="currency_code")
 	private String currencyCode;
 	@Column(name="trx_date")
+	@Temporal(TemporalType.DATE)
 	private Date transactionDate;
 	@Column(name="trx_desc")
 	private String transactionDesc;
@@ -58,10 +61,12 @@ public class Bank {
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
 	private int updatedBy;
 	@Column(name="updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
 	@Transient

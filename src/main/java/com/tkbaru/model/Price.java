@@ -12,6 +12,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="tb_price")
@@ -31,16 +33,19 @@ public class Price {
     @Column(name="price")
     private BigDecimal price;
     @Column(name="input_date")
+    @Temporal(TemporalType.DATE)
     private Date inputDate;
     @Column(name="status")
     private String priceStatus;
     @Column(name="created_by")
     private int createdBy;
     @Column(name="created_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate;
     @Column(name="updated_by")
     private int updatedBy;
     @Column(name="updated_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date updatedDate;
 
     @OneToOne

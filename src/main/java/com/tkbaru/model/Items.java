@@ -16,6 +16,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
@@ -42,20 +44,22 @@ public class Items implements Serializable {
 	private String unitCode;
 	@Column(name="price")
 	private long prodPrice;
-	@Column(name="created_by")
-	private int createdBy;
-	@Column(name="created_date")
-	private Date createdDate;
-	@Column(name="updated_by")
-	private int updatedBy;
-	@Column(name="updated_date")
-	private Date updatedDate;
 	@Column(name="base_unit_code")
 	private String baseUnitCode;
 	@Column(name="to_base_value")
 	private Long toBaseValue;
 	@Column(name="to_base_qty")
 	private Long toBaseQty;
+	@Column(name="created_by")
+	private int createdBy;
+	@Column(name="created_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createdDate;
+	@Column(name="updated_by")
+	private int updatedBy;
+	@Column(name="updated_date")
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date updatedDate;
 
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName="product_id", unique=true, insertable=false, updatable=false)
@@ -121,6 +125,30 @@ public class Items implements Serializable {
 		this.prodPrice = prodPrice;
 	}
 
+	public String getBaseUnitCode() {
+		return baseUnitCode;
+	}
+
+	public void setBaseUnitCode(String baseUnitCode) {
+		this.baseUnitCode = baseUnitCode;
+	}
+
+	public Long getToBaseValue() {
+		return toBaseValue;
+	}
+
+	public void setToBaseValue(Long toBaseValue) {
+		this.toBaseValue = toBaseValue;
+	}
+
+	public Long getToBaseQty() {
+		return toBaseQty;
+	}
+
+	public void setToBaseQty(Long toBaseQty) {
+		this.toBaseQty = toBaseQty;
+	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -151,30 +179,6 @@ public class Items implements Serializable {
 
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
-	}
-
-	public String getBaseUnitCode() {
-		return baseUnitCode;
-	}
-
-	public void setBaseUnitCode(String baseUnitCode) {
-		this.baseUnitCode = baseUnitCode;
-	}
-
-	public Long getToBaseValue() {
-		return toBaseValue;
-	}
-
-	public void setToBaseValue(Long toBaseValue) {
-		this.toBaseValue = toBaseValue;
-	}
-
-	public Long getToBaseQty() {
-		return toBaseQty;
-	}
-
-	public void setToBaseQty(Long toBaseQty) {
-		this.toBaseQty = toBaseQty;
 	}
 
 	public Product getProductLookup() {
@@ -220,9 +224,10 @@ public class Items implements Serializable {
 	@Override
 	public String toString() {
 		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", prodQuantity=" + prodQuantity
-				+ ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", baseUnitCode="
-				+ baseUnitCode + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + "]";
+				+ ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", baseUnitCode=" + baseUnitCode
+				+ ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
 	}
-
+	
 }
