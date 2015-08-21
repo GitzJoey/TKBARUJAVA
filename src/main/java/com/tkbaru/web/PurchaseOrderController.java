@@ -593,14 +593,12 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/retrieve/supplier", method = RequestMethod.GET)
-	public @ResponseBody String poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
+	public @ResponseBody Supplier poRetrieveSupplier(@RequestParam("supplierId") String supplierId) {
 		logger.info("[poRetrieveSupplier] " + "supplierId: " + supplierId);
 
 		Supplier supp = supplierManager.getSupplierById(Integer.parseInt(supplierId));
 
-		String htmlTag = "" + "<strong>" + supp.getSupplierName() + "</strong>" + "";
-
-		return htmlTag;
+		return supp;
 	}
 
 	@RequestMapping(value = "/addpayment/{paymentType}", method = RequestMethod.POST)

@@ -69,7 +69,18 @@
 					data : 'supplierId=' + encodeURIComponent($('select[id="inputSupplierId' + tabIdx + '"]').val()),
 					type : "GET",
 					success : function(response) {
-						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip({ title : response });
+						var obj = JSON.parse(response);
+						
+						var htmlTag = '<strong>' + obj.supplierName + '</strong>';
+						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip({ title : htmlTag });
+						
+						var prodList = '';
+						for (var i=0; i<obj.prodList.length; i++) {
+							prodList = obj.prodList[i].productId + ',';
+							alert(prodList);
+						}
+						
+						$('#supplierProduct' + tabIdx + '').val(prodList.subString(0, prodList.length - 1));
 					},
 					error : function(xhr, status, error) {
 						alert(xhr.responseText);
@@ -90,6 +101,14 @@
 			activetab = $(".nav-tabs li.active").attr("id");
 			$('#addTab').attr("href", ctxpath + "/po/addpoform");
 		});		
+
+		window.ParsleyValidator.addValidator('validprod', function (value, requirement) {
+			if (requirement == false) return true;
+			
+
+		}, 32)
+		.addMessage('en', 'validprod', 'Selected Product is not valid with selected Supplier')
+		.addMessage('id', 'validprod', 'Produk tidak sesuai dengan Supplier terpilih');
 	});
 </script>
 </head>
@@ -200,6 +219,7 @@
 																		<button id="supplierTooltip${ poIdx.index }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
 																			<span class="fa fa-external-link fa-fw"></span>
 																		</button>
+																		<input type="hidden" id="supplierProduct${ poIdx.index }" value=""/>
 																	</div>
 																</div>
 															</div>
