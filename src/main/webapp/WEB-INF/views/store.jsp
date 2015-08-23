@@ -135,10 +135,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Store
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="store_jsp.add_store" text="Add Store"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Store
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="store_jsp.edit_store" text="Edit Store"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -147,13 +147,13 @@
 								<form:form id="storeForm" role="form" class="form-horizontal" modelAttribute="storeForm" action="${pageContext.request.contextPath}/admin/store/save" data-parsley-validate="parsley"> 
 									<form:hidden path="storeId"/>									
 									<div class="form-group">
-										<label for="inputStoreName" class="col-sm-2 control-label">Store Name</label>
+										<label for="inputStoreName" class="col-sm-2 control-label"><spring:message code="store_jsp.store_name" text="Store Name"/></label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputStoreName" name="inputStoreName" path="storeName" placeholder="Store Name" data-parsley-required="true" data-parsley-length="[6, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>										
 									</div>
 									<div class="form-group">
-										<label for="inputAddress1" class="col-sm-2 control-label">Address</label>
+										<label for="inputAddress1" class="col-sm-2 control-label"><spring:message code="store_jsp.store_address" text="Address"/></label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputAddress1" name="inputAddress1" path="storeAddress1"></form:input>
 											<form:input type="text" class="form-control" id="inputAddress2" name="inputAddress2" path="storeAddress2"></form:input>
@@ -161,28 +161,32 @@
 										</div>										
 									</div>
 									<div class="form-group">
-										<label for="inputIsDefault" class="col-sm-2 control-label">Is Default Store</label>
+										<label for="inputIsDefault" class="col-sm-2 control-label"><spring:message code="store_jsp.is_default" text="Is Default Store"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="isDefault" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ ynDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>											
-										</div>										
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ ynDDL }" var="j">
+													<form:option value="${ j.lookupKey }"><spring:message code="${ j.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
+											</form:select>
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputNpwpNumber" class="col-sm-2 control-label">NPWP Number</label>
+										<label for="inputNpwpNumber" class="col-sm-2 control-label"><spring:message code="store_jsp.npwp" text="NPWP Number"/></label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputNpwpNumber" name="inputNpwpNumber" path="npwpNumber" placeholder="NPWP Number"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputStoreStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputStoreStatus" class="col-sm-2 control-label"><spring:message code="store_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="storeStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ statusDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>											
-										</div>										
+										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
@@ -193,13 +197,13 @@
 								</form:form>
 							</div>
 						</div>
-					</c:when>					
+					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
 		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
 	
-	</div>	
+	</div>
 </body>
 </html>

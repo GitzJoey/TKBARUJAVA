@@ -68,11 +68,11 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-wrench fa-fw fa-2x"></span>Warehouse List
+									<span class="fa fa-wrench fa-fw fa-2x"></span><spring:message code="warehouse_jsp.warehouse_list" text="Warehouse List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -116,40 +116,40 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Warehouse
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_jsp.add_warehouse" text="Add Warehouse"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Warehouse
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_jsp.edit_warehouse" text="Edit Warehouse"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
 								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/warehouse/save" data-parsley-validate="parsley"> 
-									<form:hidden path="warehouseId"/>									
+									<form:hidden path="warehouseId"/>
 									<div class="form-group">
-										<label for="inputWarehouseName" class="col-sm-2 control-label">Warehouse Name</label>
+										<label for="inputWarehouseName" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.warehouse_name" text="Warehouse Name"/></label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputWarehouseName" name="inputWarehouseName" path="warehouseName" placeholder="Warehouse Name" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputWarehouseLocation" class="col-sm-2 control-label">Location</label>
+										<label for="inputWarehouseLocation" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.location" text="Location"/></label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputWarehouseLocation" name="inputWarehouseLocation" path="warehouseLocation" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>										
 									</div>
 									<div class="form-group">
-										<label for="inputWarehouseRemarks" class="col-sm-2 control-label">Remarks</label>
+										<label for="inputWarehouseRemarks" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.remarks" text="Remarks"/></label>
 										<div class="col-sm-6">
 											<form:input type="text" class="form-control" id="inputWarehouseRemarks" name="inputWarehouseRemarks" path="warehouseRemarks"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputWarehouseStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputWarehouseStatus" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="warehouseStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>											
 										</div>										
