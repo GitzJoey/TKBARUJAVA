@@ -159,10 +159,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Product
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="product_jsp.add_product" text="Add Product"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Product
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="product_jsp.edit_product" text="Edit Product"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -171,28 +171,28 @@
 								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
 									<form:hidden path="productId"/>									
 									<div class="form-group">
-										<label for="inputProductType" class="col-sm-2 control-label">Product Type</label>
+										<label for="inputProductType" class="col-sm-2 control-label"><spring:message code="product_jsp.producttype" text="Product Type"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productType" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Select Product Type</option>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<form:options items="${ productTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>															
 										</div>										
 									</div>
 									<div class="form-group">
-										<label for="inputShortCode" class="col-sm-2 control-label">Short Code</label>
+										<label for="inputShortCode" class="col-sm-2 control-label"><spring:message code="product_jsp.shortcode" text="Short Code"/></label>
 										<div class="col-sm-2">
 											<form:input type="text" class="form-control" id="inputShortCode" name="inputShortCode" path="shortCode" placeholder="Short Code" data-parsley-required="true" data-parsley-length="[1, 10]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputProductName" class="col-sm-2 control-label">Product Name</label>
+										<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="product_jsp.productname" text="Product Name"/></label>
 										<div class="col-sm-4">
 											<form:input type="text" class="form-control" id="inputProductName" name="inputProductName" path="productName" placeholder="Enter Product Name" data-parsley-required="true" data-parsley-length="[3, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputImage" class="col-sm-2 control-label">Image</label>
+										<label for="inputImage" class="col-sm-2 control-label"><spring:message code="product_jsp.image" text="Image"/></label>
 										<div class="col-sm-6">
 											<c:if test="${PAGEMODE == 'PAGEMODE_EDIT'}">
 												<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/product/${productForm.imagePath}"/>
@@ -202,32 +202,32 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputProductDesc" class="col-sm-2 control-label">Description</label>
+										<label for="inputProductDesc" class="col-sm-2 control-label"><spring:message code="product_jsp.description" text="Description"/></label>
 										<div class="col-sm-6">
 											<form:input type="text" class="form-control" id="inputProductDesc" name="inputProductDesc" path="productDesc" placeholder="Enter Description"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="product_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="productStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 											</form:select>
 										</div>
-									</div>									
+									</div>
 									<div class="form-group">
-										<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
+										<label for="inputUnit" class="col-sm-2 control-label"><spring:message code="product_jsp.unit" text="Unit"/></label>
 										<div class="col-sm-10">
-											<div class="panel panel-default">
+											<div class="panel panel-default">	
 												<table class="table table-bordered table-hover">
 													<thead>
 														<tr>
 															<th width="5%">&nbsp;</th>
-															<th width="20%">Conversion Unit</th>
-															<th width="10%" style="text-align: center;">Base Unit</th>
-															<th width="15%">Conversion Value</th>
-															<th width="35%">Remarks</th>
+															<th width="20%"><spring:message code="product_jsp.unit.conversion_unit" text="Conversion Unit"/></th>
+															<th width="10%" style="text-align: center;"><spring:message code="product_jsp.unit.base_unit" text="Base Unit"/></th>
+															<th width="15%"><spring:message code="product_jsp.unit.conversion_value" text="Conversion Value"/></th>
+															<th width="35%"><spring:message code="product_jsp.unit.remarks" text="Remarks"/></th>
 														</tr>
 													</thead>
 													<tbody>

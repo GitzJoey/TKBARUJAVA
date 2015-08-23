@@ -279,7 +279,7 @@
 																				</tr>
 																				<tr>
 																					<td width="35%">
-																						<strong>Supplier Details</strong><br/>
+																						<strong><spring:message code="supplier_jsp.table.list.header.supplier_detail" text="Supplier Details"/></strong><br/>
 																						<c:out value="${ i.supplierAddress }"></c:out><br/>
 																						<c:out value="${ i.supplierCity }"></c:out><br/>															
 																						<c:out value="${ i.supplierPhone }"></c:out><br/>
@@ -287,25 +287,25 @@
 																						<c:out value="${ i.supplierRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">
-																						<strong>Person In Charge</strong>
+																						<strong><spring:message code="supplier_jsp.table.list.header.person_in_charge" text="Person In Charge"/></strong>
 																						<br/>
 																						<c:forEach items="${ i.picList }" var="iPIC">
 																							<c:out value="${ iPIC.firstName }"/><br/>
 																						</c:forEach>
 																						<br/>
-																						<strong>Bank Account</strong>
+																						<strong><spring:message code="supplier_jsp.table.list.header.bank_account" text="Bank Account"/></strong>
 																						<br/>
 																						<c:forEach items="${ i.bankAccList }" var="iBA">
 																							<c:out value="${ iBA.shortName }"/><br/>
 																						</c:forEach>
 																						<br/>
-																						<strong>Product List</strong>
+																						<strong><spring:message code="supplier_jsp.table.list.header.product_list" text="Product List"/></strong>
 																						<br/>
 																						<c:forEach items="${ i.prodList }" var="iProd">
 																							<c:out value="${ iProd.productName }"/><br/>
 																						</c:forEach>
 																						<br/>
-																						<strong>Settings</strong>
+																						<strong><spring:message code="supplier_jsp.table.list.header.settings" text="Settings"/></strong>
 																						<br/>
 																						<br/>
 																						<br/>
@@ -335,10 +335,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Supplier
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="supplier_jsp.add_supplier" text="Add Supplier"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Supplier
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="supplier_jsp.edit_supplier" text="Edit Supplier"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -347,63 +347,64 @@
 								<form:form id="supplierForm" role="form" class="form-horizontal" modelAttribute="supplierForm" action="${pageContext.request.contextPath}/supplier/save" data-parsley-validate="parsley">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
-											<li role="presentation" class="<c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>"><a href="#suppDataTab" aria-controls="suppDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Supplier Data&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'prodTab' }"><c:out value="active"/></c:if>"><a href="#prodTab" aria-controls="prodTab" role="tab" data-toggle="tab"><span class="fa fa-cubes fa-fw"></span>&nbsp;Product List</a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>"><a href="#suppDataTab" aria-controls="suppDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.tab.supplier_data" text="Supplier Data"/>&nbsp;<span id="suppDataTabError" class="parsley-asterisk hidden">*</span></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.tab.person_in_charge" text="Person In Charge"/>&nbsp;<span id="picTabError" class="parsley-asterisk hidden">*</span></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.tab.bank_account" text="Bank Account"/></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'prodTab' }"><c:out value="active"/></c:if>"><a href="#prodTab" aria-controls="prodTab" role="tab" data-toggle="tab"><span class="fa fa-cubes fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.tab.product_list" text="Product List"/></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.tab.settings" text="Settings"/></a></li>
 										</ul>
 
 										<div class="tab-content">
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'suppDataTab' }"><c:out value="active"/></c:if>" id="suppDataTab">
 												<br/>
 												<div class="form-group">
-													<label for="inputSupplierName" class="col-sm-2 control-label">Supplier Name</label>
+													<label for="inputSupplierName" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_name" text="Supplier Name"/></label>
 													<div class="col-sm-3">
 														<form:hidden path="supplierId"/>
 														<form:input type="text" class="form-control" id="inputSupplierName" name="inputSupplierName" path="supplierName" placeholder="Enter Supplier Name" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputSupplierAddress" class="col-sm-2 control-label">Address</label>
+													<label for="inputSupplierAddress" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_address" text="Address"/></label>
 													<div class="col-sm-3">
 														<form:input type="text" class="form-control" id="inputSupplierAddress" name="inputSupplierAddress" path="supplierAddress" placeholder="Enter Supplier Address" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCity" class="col-sm-2 control-label">City</label>
+													<label for="inputCity" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_city" text="City"/></label>
 													<div class="col-sm-5">											
 														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputPhoneNumber" class="col-sm-2 control-label">Phone Number</label>
+													<label for="inputPhoneNumber" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_phone_num" text="Phone Number"/></label>
 													<div class="col-sm-4">
 														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="supplierPhone"  placeholder="Enter Supplier Phone Number" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
 												</div>                     
 												<div class="form-group">
-													<label for="inputFax" class="col-sm-2 control-label">Fax</label>
+													<label for="inputFax" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_fax" text="Fax"/></label>
 													<div class="col-sm-4">
 														<form:input type="text" class="form-control" id="inputFax" name="inputFax" path="supplierFax" placeholder="Fax"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputNpwpNum" class="col-sm-2 control-label">NPWP</label>
+													<label for="inputNpwpNum" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_npwp" text="NPWP"/></label>
 													<div class="col-sm-6">
 														<form:input type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" path="npwpNum"  placeholder="Enter Supplier NPWP"></form:input>
 													</div>
 												</div>        
 												<div class="form-group">
-													<label for="inputSupplierRemarks" class="col-sm-2 control-label">Remarks</label>
+													<label for="inputSupplierRemarks" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_remarks" text="Remarks"/></label>
 													<div class="col-sm-10">
 														<form:input type="text" class="form-control" id="inputSupplierRemarks" path="supplierRemarks" name="inputSupplierRemarks" placeholder="Remarks"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+													<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_status" text="Status"/></label>
 													<div class="col-sm-2">
-														<form:select class="form-control" path="supplierStatus">
+														<form:select class="form-control" path="supplierStatus" data-parsley-required="true">
+															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 														</form:select>
 													</div>
@@ -420,21 +421,21 @@
 													<div class="panel-body">
 														<c:choose>
 															<c:when test="${ empty supplierForm.picList }">
-																No Data.																
+																<spring:message code="supplier_jsp.no_data" text="No Data."/>
 															</c:when>
 															<c:otherwise>
 																<div id="accordion_picList" class="panel-group" >															
 																	<c:forEach items="${ supplierForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
 																		<div class="panel panel-default">
 																	        <div class="panel-heading accordion-toggle <c:if test="${ editPersonIdx != picListLoopIdx.index }"><c:out value="collapsed"/></c:if>" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
-																	        	<h4 class="panel-title">PIC&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].lastName }"/></h4>
+																	        	<h4 class="panel-title"><spring:message code="supplier_jsp.pic_num" text="PIC"/>&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ supplierForm.picList[picListLoopIdx.index].lastName }"/></h4>
 																	        </div>
 																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse <c:if test="${ editPersonIdx != picListLoopIdx.index }"><c:out value="collapse"/></c:if>">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="firstName" class="col-sm-2 control-label">Name</label>
+																							<label for="firstName" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_name" text="Name"/></label>
 																							<div class="col-sm-4">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab2"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab2"/>
@@ -444,7 +445,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="addressLine1" class="col-sm-2 control-label">Address</label>
+																							<label for="addressLine1" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_address" text="Address"/></label>
 																							<div class="col-sm-8">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
@@ -455,7 +456,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="emailAddr" class="col-sm-2 control-label">Email</label>
+																							<label for="emailAddr" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_email" text="Email"/></label>
 																							<div class="col-sm-5">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr"/>
 																							</div>																						
@@ -464,7 +465,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="phoneListPanel" class="col-sm-2 control-label">Phone List</label>														
+																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_phonelist" text="Phone List"/></label>														
 																							<div class="col-sm-10 pull-right">
 																								<div id="phoneListPanel" class="panel panel-default">
 																									<div class="panel-heading no-padding">
@@ -477,10 +478,10 @@
 																										<thead>
 																											<tr>
 																												<th width="5%">&nbsp;</th>
-																												<th width="15%">Provider</th>
-																												<th width="15%">Number</th>
-																												<th width="15%">Status</th>
-																												<th width="25%">Remarks</th>
+																												<th width="15%"><spring:message code="supplier_jsp.supplier_pic_phonelist.provider" text="Provider"/></th>
+																												<th width="15%"><spring:message code="supplier_jsp.supplier_pic_phonelist.number" text="Number"/></th>
+																												<th width="15%"><spring:message code="supplier_jsp.supplier_pic_phonelist.status" text="Status"/></th>
+																												<th width="25%"><spring:message code="supplier_jsp.supplier_pic_phonelist.remarks" text="Remarks"/></th>
 																											</tr>
 																										</thead>
 																										<tbody>
@@ -519,23 +520,23 @@
 																		        	<li class="list-group-item">
 																						<div class="checkbox">
 																							<input id="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
-																							<label for="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>">Delete</label>
-																						</div>																        	
+																							<label for="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>"><spring:message code="supplier_jsp.supplier_pic_delete_check" text="Delete"/></label>
+																						</div>
 																					</li>
 																				</ul>
 																        		<div class="panel-footer">
 															        				<div class="btn-toolbar">
-																	        			<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+																	        			<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="supplier_jsp.supplier_pic_delete_button" text="Delete"/></button>
 															        				</div>
-																        		</div>																        															            
+																        		</div>
 																	        </div>
 																	    </div>
 																    </c:forEach>
-																</div>													
+																</div>
 															</c:otherwise>
 														</c:choose>
 													</div>
-												</div>											
+												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>" id="bankAccTab">
 												<br/>
@@ -552,10 +553,10 @@
 															<thead>
 																<tr>
 																	<th>&nbsp;</th>
-																	<th>&nbsp;Bank Name</th>
-																	<th>&nbsp;Account</th>
-																	<th>&nbsp;Remarks</th>
-																	<th>&nbsp;Status</th>
+																	<th>&nbsp;<spring:message code="supplier_jsp.tab.bank.table.header.bank_name" text="Bank Name"/></th>
+																	<th>&nbsp;<spring:message code="supplier_jsp.tab.bank.table.header.account" text="Account"/></th>
+																	<th>&nbsp;<spring:message code="supplier_jsp.tab.bank.table.header.remarks" text="Remarks"/></th>
+																	<th>&nbsp;<spring:message code="supplier_jsp.tab.bank.table.header.status" text="Status"/></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -578,7 +579,7 @@
 															</tbody>
 														</table>
 													</div>
-												</c:if>												
+												</c:if>		
 												<c:forEach items="${ supplierForm.bankAccList }" varStatus="baIdx">
 													<c:set var="collapseFlag" value="collapse"/>
 													<c:if test="${ editBankIdx == baIdx.index }">
@@ -599,22 +600,22 @@
 														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
 														<br/>
 														<div class="row">
-															<label for="shortName" class="col-sm-2 control-label">Short Name</label>
+															<label for="shortName" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_short_name" text="Short Name"/></label>
 															<div class="col-sm-2"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].shortName"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankName" class="col-sm-2 control-label">Bank Name</label>
+															<label for="bankName" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_bank_name" text="Bank Name"/></label>
 															<div class="col-sm-4"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankName"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="accountNumber" class="col-sm-2 control-label">Account</label>
+															<label for="accountNumber" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_account" text="Account"/></label>
 															<div class="col-sm-5"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].accNum"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankStatus" class="col-sm-2 control-label">Status</label>
+															<label for="bankStatus" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_status" text="Status"/></label>
 															<div class="col-sm-3">
 																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
 																	<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
@@ -623,15 +624,15 @@
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankAccRemarks" class="col-sm-2 control-label">Remarks</label>
+															<label for="bankAccRemarks" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_remarks" text="Remarks"/></label>
 															<div class="col-sm-6"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankRemarks"/></div>
 														</div>
 														<br/>
 														<div class="row">
 															<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
-															<div class="col-sm-5">																 
-																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary">Save</button>
-																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary">Discard</button>
+															<div class="col-sm-5">
+																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="supplier_jsp.supplier_bankacc_save_button" text="Save"/></button>
+																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="supplier_jsp.supplier_bankacc_discard_button" text="Discard"/></button>
 															</div>
 														</div>
 														<br/>
@@ -646,12 +647,12 @@
 														<thead>
 															<tr>
 																<th width="5%">&nbsp;</th>
-																<th width="10%">Type</th>
-																<th width="10%">Code</th>
-																<th width="20%">Name</th>
-																<th width="10%">Base Unit</th>
-																<th width="30%">Description</th>
-																<th width="10%">Status</th>
+																<th width="10%"><spring:message code="supplier_jsp.prodlist.table.type" text="Type"/></th>
+																<th width="10%"><spring:message code="supplier_jsp.prodlist.table.code" text="Code"/></th>
+																<th width="20%"><spring:message code="supplier_jsp.prodlist.table.name" text="Name"/></th>
+																<th width="10%"><spring:message code="supplier_jsp.prodlist.table.base_unit" text="Base Unit"/></th>
+																<th width="30%"><spring:message code="supplier_jsp.prodlist.table.description" text="Description"/></th>
+																<th width="10%"><spring:message code="supplier_jsp.prodlist.table.status" text="Status"/></th>
 															</tr>
 														</thead>
 														<tbody>
@@ -691,7 +692,7 @@
 															</c:if>
 															<c:if test="${ empty productList }">
 																<tr>
-																	<td colspan="8">Data not found</td>
+																	<td colspan="8"><spring:message code="supplier_jsp.data_not_found" text="Data not found"/></td>
 																</tr>
 															</c:if>
 														</tbody>
@@ -712,9 +713,9 @@
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
-				</c:choose> 				
+				</c:choose>
 			</div>
 		</div>		
 		
