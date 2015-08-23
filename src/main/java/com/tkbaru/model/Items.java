@@ -22,9 +22,15 @@ import javax.persistence.TemporalType;
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="tb_items")
 @SuppressWarnings("unchecked")
+@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Items implements Serializable {
 	private static final long serialVersionUID = -2414813447524893528L;
 

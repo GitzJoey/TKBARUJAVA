@@ -265,7 +265,7 @@
 																		<div class="form-group">
 																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><spring:message code="sales_jsp.customer_details" text="Customer Details"/></textarea>
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><c:out value="${ loginContext.soList[soIdx.index].customerLookup }"/></textarea>
 																			</div>
 																		</div>
 																	</c:if>

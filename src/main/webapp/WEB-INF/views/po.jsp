@@ -69,18 +69,17 @@
 					data : 'supplierId=' + encodeURIComponent($('select[id="inputSupplierId' + tabIdx + '"]').val()),
 					type : "GET",
 					success : function(response) {
-						var obj = JSON.parse(response);
+						var obj = JSON.parse(JSON.stringify(response, null, 4));
 						
 						var htmlTag = '<strong>' + obj.supplierName + '</strong>';
-						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip({ title : htmlTag });
+						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip('hide').attr('data-original-title', htmlTag).tooltip('fixTitle');
 						
 						var prodList = '';
 						for (var i=0; i<obj.prodList.length; i++) {
 							prodList = obj.prodList[i].productId + ',';
-							alert(prodList);
 						}
 						
-						$('#supplierProduct' + tabIdx + '').val(prodList.subString(0, prodList.length - 1));
+						$('#supplierProduct' + tabIdx + '').val(prodList.substring(0, prodList.length - 1));
 					},
 					error : function(xhr, status, error) {
 						alert(xhr.responseText);
@@ -102,10 +101,21 @@
 			$('#addTab').attr("href", ctxpath + "/po/addpoform");
 		});		
 
-		window.ParsleyValidator.addValidator('validprod', function (value, requirement) {
-			if (requirement == false) return true;
+		window.ParsleyValidator.addValidator('validprod', function (value, idx) {			
+			var pL = $('#supplierProduct' + idx + '').val();
 			
-
+			if (pL.length == 0) return true;
+			
+			var exist = false;			
+			var pLL = pL.split(',');
+			
+			for(var i=0; i<pLL.length; i++) {
+				if (pLL[i] == value) {
+					exist = true;
+				}
+			}
+			
+			return exist;
 		}, 32)
 		.addMessage('en', 'validprod', 'Selected Product is not valid with selected Supplier')
 		.addMessage('id', 'validprod', 'Produk tidak sesuai dengan Supplier terpilih');
@@ -289,7 +299,7 @@
 														<div class="row">
 															<div class="col-md-11" id="product-select${ poIdx.index }">
 																<div class="form-group" style="padding-left: 2%">
-																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
+																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }" data-parsley-validprod="${ poIdx.index }">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>
