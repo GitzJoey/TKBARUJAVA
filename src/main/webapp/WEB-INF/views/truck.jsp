@@ -89,7 +89,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-truck fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;Truck List
+									<span class="fa fa-truck fa-flip-horizontal fa-fw fa-2x"></span>&nbsp;<spring:message code="truck_jsp.truck_list" text="Truck List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -117,7 +117,7 @@
 													<td><c:out value="${ i.kirDate }"></c:out></td>
 													<td><c:out value="${ i.driver }"></c:out></td>
 													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
-													<td><c:out value="${ i.remarks }"></c:out></td>														
+													<td><c:out value="${ i.remarks }"></c:out></td>						
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -135,67 +135,73 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Truck
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="truck_jsp.add_truck" text="Add Truck"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Truck
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="truck_jsp.edit_truck" text="Edit Truck"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
 								<form:form id="truckForm" role="form" class="form-horizontal" modelAttribute="truckForm" action="${pageContext.request.contextPath}/truck/save" data-parsley-validate="parsley">
-									<form:hidden path="truckId" />									
+									<form:hidden path="truckId" />
 									<div class="form-group">
-										<label for="inputTruckType" class="col-sm-2 control-label">Truck Type</label>
+										<label for="inputTruckType" class="col-sm-2 control-label"><spring:message code="truck_jsp.truck_type" text="Truck Type"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="truckType" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Select Truck Type</option>
-												<form:options items="${ truckTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ truckTypeDDL }" var="j">
+													<form:option value="${ j.lookupKey }"><spring:message code="${ j.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>															
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputWeightType" class="col-sm-2 control-label">Weight Type</label>
+										<label for="inputWeightType" class="col-sm-2 control-label"><spring:message code="truck_jsp.weight_type" text="Weight Type"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="weightType" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Select Weight Type</option>
-												<form:options items="${ weightTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>															
-										</div>										
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ weightTypeDDL }" var="k">
+													<form:option value="${ k.lookupKey }"><spring:message code="${ k.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
+											</form:select>
+										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPlateNumber" class="col-sm-2 control-label">Plate Number</label>
+										<label for="inputPlateNumber" class="col-sm-2 control-label"><spring:message code="truck_jsp.plate_number" text="Plate Number"/></label>
 										<div class="col-sm-4">
 											<form:input type="text" class="form-control" id="inputPlateNumber" path="plateNumber" placeholder="Enter Plate Number" data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputKirDate" class="col-sm-2 control-label">KIR Date</label>
+										<label for="inputKirDate" class="col-sm-2 control-label"><spring:message code="truck_jsp.kir_date" text="KIR Date"/></label>
 										<div class="col-sm-4">
 											<form:input type="text" class="form-control" id="inputKirDate" path="kirDate" placeholder="Enter KIR Date" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>									
 									<div class="form-group">
-										<label for="inputDriver" class="col-sm-2 control-label">Driver</label>
+										<label for="inputDriver" class="col-sm-2 control-label"><spring:message code="truck_jsp.driver" text="Driver"/></label>
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="driver" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
-											</form:select>	
+											</form:select>
 										</div>
 									</div>                  									
 									<div class="form-group">
-										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="truck_jsp.status" text="Status"/></label>
 										<div class="col-sm-2">											
 											<form:select class="form-control" path="truckStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ statusDDL }" var="l">
+													<form:option value="${ l.lookupKey }"><spring:message code="${ l.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>	
 										</div>
 									</div>                  									
 									<div class="form-group">
-										<label for="inputRemarks" class="col-sm-2 control-label">Remarks</label>
+										<label for="inputRemarks" class="col-sm-2 control-label"><spring:message code="truck_jsp.remarks" text="Remarks"/></label>
 										<div class="col-sm-6">
 											<form:input type="text" class="form-control" id="inputRemarks" path="remarks" placeholder="Enter Remarks"></form:input>
 										</div>
