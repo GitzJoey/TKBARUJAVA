@@ -1,7 +1,9 @@
 package com.tkbaru.web;
 
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
+import com.tkbaru.model.PriceLevel;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.Stocks;
 import com.tkbaru.service.LookupService;
@@ -60,6 +63,26 @@ public class PriceController {
 		binder.registerCustomEditor(Date.class, orderDateEditor);
 	}
 
+	private List<Price> generatePriceList(Date forDate) {
+		List<Price> pList = new ArrayList<Price>();
+		
+		List<PriceLevel> priceLevelList = priceLevelManager.getAllPriceLevel(); 
+		
+		for(PriceLevel pl:priceLevelList) {
+			Price p = new Price();
+			p.setPriceId(0);
+			p.setPriceLevelId(pl.getPriceLevelId());
+			p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(pl.getPriceLevelId()));
+			p.setPriceStatus("L001_A");
+			p.setInputDate(forDate);
+			p.setPrice(new BigDecimal(0));
+			
+			pList.add(p);
+		}
+		
+		return pList;
+	}
+	
 	@RequestMapping(value="/todayprice", method = RequestMethod.GET)
 	public String todayPricePageLoad(Locale locale, Model model) {
 		logger.info("[todayPricePageLoad] " + "");
@@ -73,6 +96,12 @@ public class PriceController {
 		}
 		
 		List<Stocks> stocksList = stocksManager.getAllStocks();
+		
+		for(Stocks s:stocksList) {
+			if (s.getPriceList().size() == 0) {
+				s.setPriceList(generatePriceList(todayDate));
+			}
+		}
 		
 		model.addAttribute("stocksList", stocksList);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);

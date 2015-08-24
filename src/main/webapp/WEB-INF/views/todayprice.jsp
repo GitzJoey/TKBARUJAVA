@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html>
@@ -44,6 +46,8 @@
 							$('#todayPriceForm').attr('action',ctxpath + "/price/removeprice/" + id);
 						}
 			});
+
+			$('#selectedInputDate').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
 			$('[id^="effectiveDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 			$('[id^="effectiveDate"]').on('dp.change dp.show',function(e) {
@@ -82,44 +86,71 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
-							<span class="fa fa-barcode fa-fw fa-2x"></span>Today Price
+							<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;Today Price
 						</h1>
 					</div>
 					
 					<c:choose>
-						<c:when test="${PAGEMODE == 'PAGEMODE_LIST'}">
-							<div class="panel-body">				
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="20%">Product</th>
-												<th width="20%">Price</th>
-												
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty productList}">
-												<c:forEach items="${ productList }" var="p" varStatus="status">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ p.productId }"/>" type="checkbox" value="<c:out value="${ p.productId }"/>" /></td>
-														<td><c:out value="${ p.productName }"></c:out></td>
-														<td>
-															<c:if test="${not empty p.price }">
-																<c:forEach var="price" items="${ p.price }">
-																	<c:out value="${ price.levelId }"></c:out> <c:out value="${ price.price }"></c:out>
-																</c:forEach>
-															</c:if>
-														</td>
-														
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
+						<c:when test="${ PAGEMODE == 'PAGEMODE_LIST' }">
+							<div class="panel-body">								
+								<div id="stockaccordion" class="panel-group">
+									<c:forEach items="${ stocksList }" var="s" varStatus="sIdx">
+										<div class="panel panel-default">
+								            <div class="panel-heading" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
+	                							<h4 class="panel-title">
+	                    							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">${ s.productLookup.productName }</a>
+								                </h4>
+							            	</div>
+						            		<div class="panel-body" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
+						            			<blockquote>
+						            				<p><strong><c:out value="${ s.productLookup.productName }"></c:out></strong></p>
+						            			</blockquote>
+						            		</div>
+							            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse">
+							                    <table class="table">
+							                    	<thead>
+							                    		<tr>
+							                    			<th colspan="10">
+							                    				Price History
+							                    			</th>
+							                    		</tr>
+							                    		<tr>
+							                    			<th width="10%">
+							                    				Input Date
+							                    			</th>
+							                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																<th>
+																	<c:out value="${ p.priceLevelEntity.priceLevelName }"/>
+																</th>							                    			
+							                    			</c:forEach>
+							                    		</tr>
+							                    	</thead>
+							                    	<tbody>
+								                    	<tr>
+								                    		<td>
+								                    			<fmt:formatDate pattern="dd-MM-yyyy" value="${ s.priceList[0].inputDate }" />
+								                    		</td>
+							                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																<td>
+																	<fmt:formatNumber type="number" pattern="##,###.00" value="${ p.price }"></fmt:formatNumber>
+																</td>
+							                    			</c:forEach>
+								                    	</tr>
+							                    	</tbody>
+							                    </table>
+							            	</div>
+										</div>
+									</c:forEach>
 								</div>
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Update Price</a>							
+								<br/>
+								<div class="row">
+									<div class="col-md-4">
+										<input type="text" id="selectedInputDate" class="form-control input-sm"/>
+									</div>
+									<div class="col-md-8">
+										<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Update Price</a>
+									</div>
+								</div>
 							</div>
 						</c:when>
 						<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">						

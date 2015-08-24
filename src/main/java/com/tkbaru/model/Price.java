@@ -140,6 +140,14 @@ public class Price {
 		this.updatedDate = updatedDate;
 	}
 
+	public PriceLevel getPriceLevelEntity() {
+		return priceLevelEntity;
+	}
+
+	public void setPriceLevelEntity(PriceLevel priceLevelEntity) {
+		this.priceLevelEntity = priceLevelEntity;
+	}
+
 	public Stocks getStocksEntity() {
 		return stocksEntity;
 	}
@@ -148,12 +156,19 @@ public class Price {
 		this.stocksEntity = stocksEntity;
 	}
 
+	public Lookup getStatusLookup() {
+		return statusLookup;
+	}
+
+	public void setStatusLookup(Lookup statusLookup) {
+		this.statusLookup = statusLookup;
+	}
+
 	@Override
 	public String toString() {
-		return "Price [priceId=" + priceId + ", priceLevelId=" + priceLevelId + ", stocksId=" + stocksId + ", price=" + price
-				+ ", inputDate=" + inputDate + ", priceStatus=" + priceStatus + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", stocksEntity=" + stocksEntity + "]";
+		return "Price [priceId=" + priceId + ", stocksId=" + stocksId + ", priceLevelId=" + priceLevelId + ", price="
+				+ price + ", inputDate=" + inputDate + ", priceStatus=" + priceStatus + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
-        
+
 }
