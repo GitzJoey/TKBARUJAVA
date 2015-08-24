@@ -28,6 +28,7 @@
 				<beans:value>/WEB-INF/spring/i18n/po</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/so</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/function</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/price</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/pricelevel</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/role</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/store</beans:value>
