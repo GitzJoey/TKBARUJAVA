@@ -92,7 +92,15 @@
 					
 					<c:choose>
 						<c:when test="${ PAGEMODE == 'PAGEMODE_LIST' }">
-							<div class="panel-body">								
+							<div class="panel-body">
+								<div class="row">
+									<div class="col-md-2">
+										<label for="inputInputedDate" class="col-sm-2 control-label">Date</label>
+										<div class="col-sm-5">
+											<label for="inputInputedDate" class="col-sm-2 control-label"><fmt:formatDate pattern="dd-MM-yyyy" value="${ cal.time }" /></label>
+										</div>										
+									</div>
+								</div>
 								<div id="stockaccordion" class="panel-group">
 									<c:forEach items="${ stocksList }" var="s" varStatus="sIdx">
 										<div class="panel panel-default">

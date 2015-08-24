@@ -5,11 +5,11 @@ CREATE TABLE `tb_price_level` (
   `level_name` 			varchar(100) 	DEFAULT NULL,
   `level_description` 	varchar(255) 	DEFAULT NULL,
   `status` 				varchar(15) 	DEFAULT NULL,
-  `addition` 		decimal(10,2) 	DEFAULT NULL,
-  `subtraction` 	decimal(10,2) 	DEFAULT NULL,
-  `created_by` 		int(11) 		DEFAULT '0',
-  `created_date` 	datetime 		DEFAULT NULL,
-  `updated_by` 		int(11) 		DEFAULT '0',
-  `updated_date` 	datetime 		DEFAULT NULL,
+  `addition` 			decimal(10,2) 	DEFAULT NULL,
+  `subtraction` 		decimal(10,2) 	DEFAULT NULL,
+  `created_by` 			int(11) 		DEFAULT '0',
+  `created_date` 		datetime 		DEFAULT NULL,
+  `updated_by` 			int(11) 		DEFAULT '0',
+  `updated_date` 		datetime 		DEFAULT NULL,
   PRIMARY KEY (`price_level_id`)
 );
