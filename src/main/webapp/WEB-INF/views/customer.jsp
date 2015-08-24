@@ -232,7 +232,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-smile-o fa-fw fa-2x"></span>Customer List
+									<span class="fa fa-smile-o fa-fw fa-2x"></span><spring:message code="customer_jsp.customer_list" text="Customer List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -263,7 +263,7 @@
 																				</tr>
 																				<tr>
 																					<td width="35%">
-																						<strong>Customer Details</strong><br/>
+																						<strong><spring:message code="customer_jsp.table.list.header.customer_detail" text="Customer Details"/></strong><br/>
 																						<c:out value="${ i.customerAddress }"></c:out><br/>
 																						<c:out value="${ i.customerCity }"></c:out><br/>															
 																						<c:out value="${ i.customerPhone }"></c:out><br/>
@@ -271,19 +271,19 @@
 																						<c:out value="${ i.customerRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">
-																						<strong>Person In Charge</strong>
+																						<strong><spring:message code="customer_jsp.table.list.header.person_in_charge" text="Person In Charge"/></strong>
 																						<br/>
 																						<c:forEach items="${ i.picList }" var="iPIC">
 																							<c:out value="${ iPIC.firstName }"/><br/>
 																						</c:forEach>
 																						<br/>
-																						<strong>Bank Account</strong>
+																						<strong><spring:message code="customer_jsp.table.list.header.bank_account" text="Bank Account"/></strong>
 																						<br/>
 																						<c:forEach items="${ i.bankAccList }" var="iBA">
 																							<c:out value="${ iBA.shortName }"/><br/>
 																						</c:forEach>
 																						<br/>
-																						<strong>Settings</strong>
+																						<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong>
 																						<br/>
 																						<br/>
 																						<br/>
@@ -313,10 +313,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Customer
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="customer_jsp.add_customer" text="Add Customer"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Customer
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="customer_jsp.edit_customer" text="Edit Customer"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -325,56 +325,59 @@
 								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save" data-parsley-validate="parsley">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
-											<li role="presentation" class="<c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;Customer Data<span id="custDataTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;Person In Charge<span id="picTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;Bank Account</a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;Settings</a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.customer_data" text="Customer Data"/><span id="custDataTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.person_in_charge" text="Person In Charge"/><span id="picTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.bank_account" text="Bank Account"/></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.settings" text="Settings"/></a></li>
 										</ul>
 
 										<div class="tab-content">
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>" id="custDataTab">
 												<br/>
 												<div class="form-group">
-													<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
+													<label for="inputCustomerName" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_name" text="Customer Name"/></label>
 													<div class="col-sm-3">
 														<form:hidden path="customerId" />
 														<form:input path="customerName" type="text" class="form-control" id="inputCustomerName" name="inputCustomerName" placeholder="Enter Customer Name" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCustomerAddress" class="col-sm-2 control-label">Address</label>
+													<label for="inputCustomerAddress" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_address" text="Address"/></label>
 													<div class="col-sm-8">
 														<form:input path="customerAddress" type="text" class="form-control" id="inputCustomerAddress" name="inputCustomerAddress" placeholder="Enter Address" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCustomerCity" class="col-sm-2 control-label">City</label>
+													<label for="inputCustomerCity" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_city" text="City"/></label>
 													<div class="col-sm-4">
 														<form:input path="customerCity" type="text" class="form-control" id="inputCustomerCity" name="inputCustomerCity" placeholder="Enter City" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCustomerPhone" class="col-sm-2 control-label">Phone</label>
+													<label for="inputCustomerPhone" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_phone" text="Phone"/></label>
 													<div class="col-sm-4">
 														<form:input path="customerPhone" type="text" class="form-control" id="inputCustomerPhone" name="inputCustomerPhone" placeholder="Enter Phone" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCustomerNpwpNum" class="col-sm-2 control-label">NPWP Number</label>
+													<label for="inputCustomerNpwpNum" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_npwp" text="NPWP Number"/></label>
 													<div class="col-sm-4">
 														<form:input path="npwpNum" type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" placeholder="Enter NPWP Number"></form:input>
 													</div>
 												</div>        
 												<div class="form-group">
-													<label for="inputCustomerStatus" class="col-sm-2 control-label">Status</label>
-													<div class="col-sm-2">
+													<label for="inputCustomerStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_status" text="Status"/></label>
+													<div class="col-sm-2">														
 														<form:select class="form-control" path="customerStatus">
-															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+															<option value=""><spring:message code="common.please_select"></spring:message></option>
+															<c:forEach items="${ statusDDL }" var="i">
+																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+															</c:forEach>															
 														</form:select>
 													</div>
 												</div>
 												<div class="form-group">
-													<label for="inputCustomerRemarks" class="col-sm-2 control-label">Remarks</label>
+													<label for="inputCustomerRemarks" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_remarks" text="Remarks"/></label>
 													<div class="col-sm-8">
 														<form:input path="customerRemarks" type="text" class="form-control" id="inputCustomerRemarks" name="inputCustomerRemarks" placeholder="Remarks"></form:input>
 													</div>
@@ -385,27 +388,27 @@
 												<div id="personListPanel" class="panel panel-default">
 													<div class="panel-heading">
 														<div class="btn-toolbar">															
-															<button type="submit" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
+															<button type="submit" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="customer_jsp.add_person" text="Add"/></button>
 														</div>
 													</div>
 													<div class="panel-body">
 														<c:choose>
 															<c:when test="${ empty customerForm.picList }">
-																<p>No Data.</p>
+																<p><spring:message code="customer_jsp.pic.no_data" text="No Data."/></p>
 															</c:when>
 															<c:otherwise>
 																<div id="accordion_picList" class="panel-group" >															
 																	<c:forEach items="${ customerForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
 																		<div class="panel panel-default">
 																	        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
-																	             <h4 class="panel-title">PIC&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>														
+																	             <h4 class="panel-title"><spring:message code="customer_jsp.pic_num" text="PIC"/>&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>														
 																	        </div>
 																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
 																					<div class="row">																				
 																						<div class="form-group">
-																							<label for="firstName" class="col-sm-2 control-label">Name</label>
+																							<label for="firstName" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.name" text="Name"/></label>
 																							<div class="col-sm-4">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].firstName" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab2"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].lastName" data-parsley-required="true" data-parsley-trigger="keyup"  data-parsley-group="tab2"/>
@@ -415,7 +418,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="addressLine1" class="col-sm-2 control-label">Address</label>
+																							<label for="addressLine1" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.address" text="Address"/></label>
 																							<div class="col-sm-7">																						
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
@@ -426,7 +429,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="emailAddr" class="col-sm-2 control-label">Email</label>																				
+																							<label for="emailAddr" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.email" text="Email"/></label>																				
 																							<div class="col-sm-5">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr" />
 																							</div>
@@ -435,7 +438,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="phoneListPanel" class="col-sm-2 control-label">Phone List</label>														
+																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.phone_list" text="Phone List"/></label>														
 																							<div class="col-sm-10 pull-right">
 																								<div id="phoneListPanel" class="panel panel-default">
 																									<div class="panel-heading no-padding">
@@ -448,10 +451,10 @@
 																										<thead>
 																											<tr>
 																												<th width="5%">&nbsp;</th>
-																												<th width="15%">Provider</th>
-																												<th width="15%">Number</th>
-																												<th width="15%">Status</th>
-																												<th width="25%">Remarks</th>
+																												<th width="15%"><spring:message code="customer_jsp.pic.table.header.provider" text="Provider"/></th>
+																												<th width="15%"><spring:message code="customer_jsp.pic.table.header.number" text="Number"/></th>
+																												<th width="15%"><spring:message code="customer_jsp.pic.table.header.status" text="Status"/></th>
+																												<th width="25%"><spring:message code="customer_jsp.pic.table.header.remarks" text="Remarks"/></th>
 																											</tr>
 																										</thead>
 																										<tbody>
@@ -490,13 +493,13 @@
 																		        	<li class="list-group-item">
 																		        		<div class="checkbox">
 																		        			<input id="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
-																		        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>">Delete</label> 
+																		        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>"><spring:message code="customer_jsp.pic.delete_check" text="Delete"/></label> 
 																		        		</div>
 																		        	</li>
 																		        </ul>															            
 																		        <div class="panel-footer">
 																		        	<div class="btn-toolbar">
-																		        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>
+																		        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="customer_jsp.pic.delete_button" text="Delete"/></button>
 																		        	</div>
 																		        </div>
 																	        </div>
@@ -514,19 +517,19 @@
 													<div id="bankAccListPanel" class="panel panel-default">
 														<div class="panel-heading">
 															<div class="btn-toolbar">
-																<button type="submit" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;Delete</button>&nbsp;&nbsp;&nbsp;
-																<button type="submit" id="editBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</button>&nbsp;&nbsp;&nbsp;
-																<button type="submit" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
+																<button type="submit" id="deleteBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></button>&nbsp;&nbsp;&nbsp;
+																<button type="submit" id="editBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></button>&nbsp;&nbsp;&nbsp;
+																<button type="submit" id="addBankAcc" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></button>
 															</div>
 														</div>
 														<table id="bankAccListTable" class="table table-bordered table-hover">
 															<thead>
 																<tr>
 																	<th>&nbsp;</th>
-																	<th>&nbsp;Bank Name</th>
-																	<th>&nbsp;Account</th>
-																	<th>&nbsp;Remarks</th>
-																	<th>&nbsp;Status</th>
+																	<th>&nbsp;<spring:message code="customer_jsp.bank_account.table.header.bank_name" text="Bank Name"/></th>
+																	<th>&nbsp;<spring:message code="customer_jsp.bank_account.table.header.account" text="Account"/></th>
+																	<th>&nbsp;<spring:message code="customer_jsp.bank_account.table.header.remarks" text="Remarks"/></th>
+																	<th>&nbsp;<spring:message code="customer_jsp.bank_account.table.header.status" text="Status"/></th>
 																</tr>
 															</thead>
 															<tbody>
@@ -570,39 +573,42 @@
 														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
 														<br/>
 														<div class="row">
-															<label for="shortName" class="col-sm-2 control-label">Short Name</label>
+															<label for="shortName" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.short_name" text="Short Name"/></label>
 															<div class="col-sm-2"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].shortName" data-parsley-required="true" data-parsley-trigger="keyup"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankName" class="col-sm-2 control-label">Bank Name</label>
+															<label for="bankName" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.bank_name" text="Bank Name"/></label>
 															<div class="col-sm-4"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankName" data-parsley-required="true" data-parsley-trigger="keyup"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="accountNumber" class="col-sm-2 control-label">Account</label>
+															<label for="accountNumber" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.account" text="Account"/></label>
 															<div class="col-sm-5"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].accNum" data-parsley-required="true" data-parsley-trigger="keyup"/></div>
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankStatus" class="col-sm-2 control-label">Status</label>
+															<label for="bankStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.status" text="Status"/></label>
 															<div class="col-sm-3">
 																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
-																	<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																	<option value=""><spring:message code="common.please_select"></spring:message></option>
+																	<c:forEach items="${ statusDDL }" var="j">
+																		<form:option value="${ j.lookupKey }"><spring:message code="${ j.i18nLookupValue }"></spring:message></form:option>
+																	</c:forEach>																	
 																</form:select>
 															</div>																																	
 														</div>
 														<br/>
 														<div class="row">
-															<label for="bankAccRemarks" class="col-sm-2 control-label">Remarks</label>
+															<label for="bankAccRemarks" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.remarks" text="Remarks"/></label>
 															<div class="col-sm-6"><form:input type="text" class="form-control" path="bankAccList[${ baIdx.index }].bankRemarks"/></div>
 														</div>
 														<br/>
 														<div class="row">
 															<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
 															<div class="col-sm-5">																 
-																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary">Save</button>
-																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary">Discard</button>
+																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="customer_jsp.bank_account.save_button" text="Save"/></button>
+																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="customer_jsp.bank_account.discard_button" text="Discard"/></button>
 															</div>
 														</div>
 														<br/>
