@@ -30,6 +30,8 @@ public class Price {
     private int stocksId;
     @Column(name="price_level_id")
     private Integer priceLevelId;
+    @Column(name="market_price")
+    private BigDecimal marketPrice;
     @Column(name="price")
     private BigDecimal price;
     @Column(name="input_date")

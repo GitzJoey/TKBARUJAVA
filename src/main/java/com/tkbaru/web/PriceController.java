@@ -2,6 +2,7 @@ package com.tkbaru.web;
 
 import java.math.BigDecimal;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,8 +26,8 @@ import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
 import com.tkbaru.model.PriceLevel;
-import com.tkbaru.model.Product;
 import com.tkbaru.model.Stocks;
+import com.tkbaru.model.TodayPrice;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PriceLevelService;
 import com.tkbaru.service.PriceService;
@@ -104,6 +106,7 @@ public class PriceController {
 		}
 		
 		model.addAttribute("stocksList", stocksList);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -111,14 +114,23 @@ public class PriceController {
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 	
-	@RequestMapping(value="/updateprice/{productId}", method = RequestMethod.GET)
-	public String updatePrice(Locale locale, Model model ,@PathVariable int productId) {
-		logger.info("[updatePrice] " + "");
+	@RequestMapping(value="/updateprice/{inputDate}", method = RequestMethod.GET)
+	public String updatePrice(Locale locale, Model model , @PathVariable String inputDate) throws ParseException {
+		logger.info("[updatePrice] " + "inputDate: " + inputDate);
+				
+		List<Stocks> stocksList = stocksManager.getAllStocks();
 		
-		Product product = productManager.getProductById(productId);
+		Date d = new SimpleDateFormat("dd-MM-yyyy").parse(inputDate);
 		
-		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
-		model.addAttribute("todayPriceForm", product);
+		for(Stocks s:stocksList) {
+			if (s.getPriceList().size() == 0) {
+				s.setPriceList(generatePriceList(d));
+			}
+		}
+		
+		model.addAttribute("inputDate", inputDate);
+		model.addAttribute("todayPriceForm", new TodayPrice(stocksList));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -126,4 +138,14 @@ public class PriceController {
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 
+	@RequestMapping(value="/saveprice", method = RequestMethod.GET)
+	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") List<Price> priceList) {
+		logger.info("[savePrice] " + "");
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return Constants.JSPPAGE_TODAYPRICE;
+	}
 }

@@ -10,7 +10,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#cancelButton').click(function() {				
+			$('#cancelButton').click(function() {
 				window.location.href(ctxpath + "/product");
 			});
 			

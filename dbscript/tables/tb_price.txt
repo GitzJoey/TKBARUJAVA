@@ -3,7 +3,8 @@ DROP TABLE IF EXISTS `tb_price`;
 CREATE TABLE `tb_price` (
   `price_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
   `stocks_id` 		int(11) 		DEFAULT NULL,
-  `price_level_id` 	int(11) 		DEFAULT NULL,  
+  `price_level_id` 	int(11) 		DEFAULT NULL,
+  `market_price` 	decimal(10,2) 	DEFAULT NULL,
   `price` 			decimal(10,2) 	DEFAULT NULL,
   `input_date` 		datetime 		DEFAULT NULL,
   `status` 			varchar(15) 	DEFAULT NULL,
