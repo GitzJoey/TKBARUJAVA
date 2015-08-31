@@ -24,7 +24,7 @@
 				}
 			});
 			
-			$('input[id^="marketPrice_"]').change(function() {
+			$('input[id^="marketPrice_"]').keypress(function() {
 				var stockIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[0]; 
 				var priceIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[1];
 				var inputMarketPrice = $(this).val();
@@ -32,11 +32,27 @@
 				$('#marketPriceHidden_' + stockIdx + '_' + priceIdx + ' input').each(function(idx, itm) {
 					$(this).val(inputMarketPrice);
 				});
+				
+				calculatePrice(stockIdx, inputMarketPrice);
 			});
 			
 			$('#selectedInputDate').datetimepicker({ format:'d-m-Y H:i' });
+			
+			function calculatePrice(sIdx, marketPrice) {
+				var inptL = $('#priceList_' + sIdx + ' input[type="text"]').size();
+				var result = 0;
+				
+				for(var i=0; i<inptL; i++) {
+					if ($('#priceLevelType_' + sIdx + '_' + i).val() == 'L022_INC') {
+						result = parseInt(marketPrice) + parseInt($('#priceLevelInc_' + sIdx + '_' + i).val());
+					} else {
+						result = 1234;
+					}
+					$('input[name="stocksList[' + sIdx + '].priceList[' + i + '].price"]').val(result);
+				}
+			}
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -72,7 +88,7 @@
 								<h1 class="panel-title">
 									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;Today Price
 								</h1>
-							</div>					
+							</div>
 							<div class="panel-body">
 								<div class="row">
 									<div class="col-md-2">
@@ -181,26 +197,28 @@
 																<label for="price" class="col-md-2 control-label">Price</label>
 																<div class="col-md-10">
 																	<div class="form-inline">
-																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
-																			<div class="form-group">
-																				<label for="sr-only"></label>																
-																				<div class="col-md-10">
-																					<c:choose>
-																						<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelType == 'L022_INC' }">
-																							<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
-																						</c:when>
-																						<c:otherwise>
-																							<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
-																						</c:otherwise>
-																					</c:choose>																
-																					<form:input id="stocksList[${ sIdx.index }].priceList[${ pIdx.index }]" class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true"/>
-																					<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
-																					<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelType"/>
-																					<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
-																					<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
+																		<div id="priceList_${ sIdx.index }">
+																			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																				<div class="form-group">
+																					<label for="sr-only"></label>										
+																					<div class="col-md-10">
+																						<c:choose>
+																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelType == 'L022_INC' }">
+																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
+																							</c:when>
+																							<c:otherwise>
+																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
+																							</c:otherwise>
+																						</c:choose>
+																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true"/>
+																						<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
+																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelType"/>
+																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
+																						<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
+																					</div>
 																				</div>
-																			</div>
-																		</c:forEach>
+																			</c:forEach>
+																		</div>
 																	</div>
 																</div>
 															</div>
