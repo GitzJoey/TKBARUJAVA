@@ -57,6 +57,7 @@ public class PriceLeveLController {
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("priceLevelDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRICE_LEVEL_TYPE));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -74,6 +75,7 @@ public class PriceLeveLController {
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
+		model.addAttribute("priceLevelDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRICE_LEVEL_TYPE));
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

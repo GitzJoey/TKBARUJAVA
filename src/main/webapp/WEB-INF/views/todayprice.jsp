@@ -20,16 +20,21 @@
 					jsAlert("Please select the date.");
 					return false;
 				} else {
-					$('#updatePrice').attr("href", ctxpath + "/price/updateprice/" + $('#selectedInputDate').val());
+					$('#updatePrice').attr("href", ctxpath + "/price/updateprice/" + $('#selectedInputDate').val().replace(' ', '_'));
 				}
 			});
 			
-			$('#selectedInputDate').datetimepicker({ format:'d-m-Y', timepicker:false });
-			
-			$('[id^="effectiveDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
-			$('[id^="effectiveDate"]').on('dp.change dp.show',function(e) {
-				$(this).parsley().validate();
+			$('input[id^="marketPrice_"]').change(function() {
+				var stockIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[0]; 
+				var priceIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[1];
+				var inputMarketPrice = $(this).val();
+				
+				$('#marketPriceHidden_' + stockIdx + '_' + priceIdx + ' input').each(function(idx, itm) {
+					$(this).val(inputMarketPrice);
+				});
 			});
+			
+			$('#selectedInputDate').datetimepicker({ format:'d-m-Y H:i' });
 		});
 	</script>	
 </head>
@@ -160,15 +165,52 @@
 								            	</div>
 								            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse in">
 					                    			<div class="panel-body">
-						                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+														<div class="form-horizontal">
 															<div class="form-group">
-																<label for="stocksList[${ sIdx.index }].priceList[${ pIdx.index }]" class="col-md-2 control-label"><c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></label>
-																<div class="col-md-5">
-																	<form:input id="stocksList[${ sIdx.index }].priceList[${ pIdx.index }]" class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" data-parsley-required="true"/>
+																<label for="marketPrice" class="col-md-2 control-label">Market Price</label>
+																<div class="col-md-3">
+																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control" data-parsley-required="true"/>
+																	<div id="marketPriceHidden_${ sIdx.index }_${ sIdx.index }">
+																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																			<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].marketPrice"/>
+																		</c:forEach>
+																	</div>
 																</div>
 															</div>
-						                    			</c:forEach>
-					                    			</div>
+															<div class="form-group">
+																<label for="price" class="col-md-2 control-label">Price</label>
+																<div class="col-md-10">
+																	<div class="form-inline">
+																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																			<div class="form-group">
+																				<label for="sr-only"></label>																
+																				<div class="col-md-10">
+																					<c:choose>
+																						<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelType == 'L022_INC' }">
+																							<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
+																						</c:when>
+																						<c:otherwise>
+																							<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
+																						</c:otherwise>
+																					</c:choose>																
+																					<form:input id="stocksList[${ sIdx.index }].priceList[${ pIdx.index }]" class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true"/>
+																					<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
+																					<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelType"/>
+																					<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
+																					<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
+																				</div>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</div>
+															</div>
+														</div>
+						                    		</div>
+													<div class="panel-footer">
+														<div class="btn-toolbar">
+														<button type="button" class="btn btn-xs btn-primary">Partial Update</button>
+														</div>
+													</div>			
 								            	</div>
 											</div>
 										</c:forEach>

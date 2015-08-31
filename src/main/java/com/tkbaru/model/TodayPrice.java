@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.util.Date;
 import java.util.List;
 
 public class TodayPrice {
@@ -7,11 +8,19 @@ public class TodayPrice {
 		
 	}
 	
-	public TodayPrice(List<Stocks> stocksList) {
+	public TodayPrice(Date inputDate, List<Stocks> stocksList) {
 		this.stocksList = stocksList;
 	}
 	
+	private Date inputDate;
 	private List<Stocks> stocksList;
+	public Date getInputDate() {
+		return inputDate;
+	}
+
+	public void setInputDate(Date inputDate) {
+		this.inputDate = inputDate;
+	}
 
 	public List<Stocks> getStocksList() {
 		return stocksList;
@@ -23,7 +32,7 @@ public class TodayPrice {
 
 	@Override
 	public String toString() {
-		return "TodayPrice [stocksList=" + stocksList + "]";
+		return "TodayPrice [inputDate=" + inputDate + ", stocksList=" + stocksList + "]";
 	}
-		
+	
 }

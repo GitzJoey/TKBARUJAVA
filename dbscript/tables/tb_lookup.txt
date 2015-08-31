@@ -283,6 +283,16 @@ VALUES ('PAYMENT_STATUS_GIRO', 'L021_FR',
 		'PAYMENT_STATUS_GIRO.L021_FR', 'Failed & Returned',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*Price Level Type L022 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRICE_LEVEL_TYPE', 'L022_PCT',
+		'PRICE_LEVEL_TYPE.L022_PCT', 'Percentage',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRICE_LEVEL_TYPE', 'L022_INC',
+		'PRICE_LEVEL_TYPE.L022_INC', 'Increment',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',

@@ -86,6 +86,14 @@ public class Price {
 		this.priceLevelId = priceLevelId;
 	}
 
+	public BigDecimal getMarketPrice() {
+		return marketPrice;
+	}
+
+	public void setMarketPrice(BigDecimal marketPrice) {
+		this.marketPrice = marketPrice;
+	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}
@@ -168,9 +176,10 @@ public class Price {
 
 	@Override
 	public String toString() {
-		return "Price [priceId=" + priceId + ", stocksId=" + stocksId + ", priceLevelId=" + priceLevelId + ", price="
-				+ price + ", inputDate=" + inputDate + ", priceStatus=" + priceStatus + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + "]";
+		return "Price [priceId=" + priceId + ", stocksId=" + stocksId + ", priceLevelId=" + priceLevelId
+				+ ", marketPrice=" + marketPrice + ", price=" + price + ", inputDate=" + inputDate + ", priceStatus="
+				+ priceStatus + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + "]";
 	}
-
+	
 }

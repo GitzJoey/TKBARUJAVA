@@ -194,7 +194,7 @@
 									<div class="form-group">
 										<label for="inputImage" class="col-sm-2 control-label"><spring:message code="product_jsp.image" text="Image"/></label>
 										<div class="col-sm-6">
-											<c:if test="${PAGEMODE == 'PAGEMODE_EDIT'}">
+											<c:if test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 												<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/product/${productForm.imagePath}"/>
 												<form:input type="hidden" path="imagePath"></form:input>
 											</c:if>

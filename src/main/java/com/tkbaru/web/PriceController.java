@@ -69,6 +69,8 @@ public class PriceController {
 		List<Price> pList = new ArrayList<Price>();
 		
 		List<PriceLevel> priceLevelList = priceLevelManager.getAllPriceLevel(); 
+
+		if (priceLevelList.size() == 0) return null;
 		
 		for(PriceLevel pl:priceLevelList) {
 			Price p = new Price();
@@ -77,6 +79,7 @@ public class PriceController {
 			p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(pl.getPriceLevelId()));
 			p.setPriceStatus("L001_A");
 			p.setInputDate(forDate);
+			p.setMarketPrice(new BigDecimal(0));
 			p.setPrice(new BigDecimal(0));
 			
 			pList.add(p);
@@ -113,14 +116,25 @@ public class PriceController {
 		
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
-	
-	@RequestMapping(value="/updateprice/{inputDate}", method = RequestMethod.GET)
-	public String updatePrice(Locale locale, Model model , @PathVariable String inputDate) throws ParseException {
-		logger.info("[updatePrice] " + "inputDate: " + inputDate);
-				
-		List<Stocks> stocksList = stocksManager.getAllStocks();
+
+	@RequestMapping(value="/price/for/{inputDate}", method = RequestMethod.GET)
+	public String priceForDate(Locale locale, Model model, @PathVariable String inputDate) {
+		logger.info("[priceForDate] " + "inputDate: " + inputDate);
+
+		Date d = new Date();
+		try {
+			d = new SimpleDateFormat("dd-MM-yyyy").parse(inputDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
-		Date d = new SimpleDateFormat("dd-MM-yyyy").parse(inputDate);
+		boolean priceInputed = priceManager.checkExistPriceForDate(d);		
+		
+		if (priceInputed) {
+			
+		}
+		
+		List<Stocks> stocksList = stocksManager.getAllStocks();
 		
 		for(Stocks s:stocksList) {
 			if (s.getPriceList().size() == 0) {
@@ -128,8 +142,30 @@ public class PriceController {
 			}
 		}
 		
-		model.addAttribute("inputDate", inputDate);
-		model.addAttribute("todayPriceForm", new TodayPrice(stocksList));
+		model.addAttribute("stocksList", stocksList);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		return Constants.JSPPAGE_TODAYPRICE;
+	}
+
+	@RequestMapping(value="/updateprice/{inputDate}", method = RequestMethod.GET)
+	public String updatePrice(Locale locale, Model model , @PathVariable String inputDate) throws ParseException {
+		logger.info("[updatePrice] " + "inputDate: " + inputDate);
+		
+		List<Stocks> stocksList = stocksManager.getAllStocks();
+		
+		Date d = new SimpleDateFormat("dd-MM-yyyy_HH:mm").parse(inputDate);
+		
+		for(Stocks s:stocksList) {
+			if (s.getPriceList().size() == 0) {
+				s.setPriceList(generatePriceList(d));
+			}
+		}
+		
+		model.addAttribute("todayPriceForm", new TodayPrice(d, stocksList));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);

@@ -35,6 +35,16 @@
 				}
 			});
 			
+			$('select[id="priceLevelSelect"]').change(function() {
+				if ($(this).val() == 'L022_INC') {
+					$('#inputIncrementValue').prop('readonly', false);
+					$('#inputPercentageValue').val('0').prop('readonly', true);
+				} else {
+					$('#inputIncrementValue').val('0').prop('readonly', true);
+					$('#inputPercentageValue').prop('readonly', false);
+				}
+			});
+			
 			$('#priceLevelTableList').dataTable();
 		});
 	</script>	
@@ -120,6 +130,17 @@
 							<div class="panel-body">
 								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="priceLevelForm" action="${pageContext.request.contextPath}/price/savepricelevel" data-parsley-validate="parsley">
 									<div class="form-group">
+										<label for="inputPriceLevelType" class="col-sm-2 control-label">Price Level Type</label>
+										<div class="col-sm-5">
+											<form:select id="priceLevelSelect" class="form-control" path="priceLevelType" data-parsley-required="true" data-parsley-trigger="change">
+												<option value=""><spring:message code="common.please_select"></spring:message></option>
+												<c:forEach items="${ priceLevelDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputPriceLevelName" class="col-sm-2 control-label">Price Level Name</label>
 										<div class="col-sm-5">
 											<form:hidden path="priceLevelId"/>
@@ -136,23 +157,23 @@
 										<label for="inputPriceLevelStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="priceLevelStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value=""><spring:message code="common.please_select"></spring:message></option>
+												<option value=""><spring:message code="common.please_select" text="Please Select"></spring:message></option>
 												<c:forEach items="${ statusDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
 											</form:select>
 										</div>
-									</div>									
+									</div>
 									<div class="form-group">
-										<label for="inputAddition" class="col-sm-2 control-label">Addition</label>
+										<label for="inputIncrementValue" class="col-sm-2 control-label">Increment Value</label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputAddition" name="inputAddition" path="addition" placeholder="Enter Addition"></form:input>
+											<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
 										</div>	
 									</div>
 									<div class="form-group">
-										<label for="inputSubtraction" class="col-sm-2 control-label">Subtraction</label>
+										<label for="inputPercentageValue" class="col-sm-2 control-label">Percentage Value</label>
 										<div class="col-sm-5">																	
-											<form:input type="text" class="form-control" id="inputSubtraction" name="inputSubtraction" path="subtraction" placeholder="Enter Substraction"></form:input>
+											<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value"></form:input>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">

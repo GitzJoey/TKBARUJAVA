@@ -25,16 +25,18 @@ public class PriceLevel{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_level_id")
     private int priceLevelId ;
+    @Column(name="level_type")
+    private String priceLevelType;
     @Column(name="level_name", length=100)
     private String priceLevelName;
     @Column(name="level_description", length=255)
     private String priceLevelDescription;
     @Column(name="status", length=15)
     private String priceLevelStatus;    
-    @Column(name="addition")
-    private BigDecimal addition;
-    @Column(name="subtraction")
-    private BigDecimal subtraction;
+    @Column(name="increment_value")
+    private BigDecimal incrementValue;
+    @Column(name="percentage_value")
+    private BigDecimal percentageValue;
     @Column(name="created_by")
     private Integer createdBy;
     @Column(name="created_date")
@@ -50,12 +52,24 @@ public class PriceLevel{
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
 
+	@ManyToOne
+	@JoinColumn(name="level_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup levelTypeLookup;
+
 	public int getPriceLevelId() {
 		return priceLevelId;
 	}
 
 	public void setPriceLevelId(int priceLevelId) {
 		this.priceLevelId = priceLevelId;
+	}
+
+	public String getPriceLevelType() {
+		return priceLevelType;
+	}
+
+	public void setPriceLevelType(String priceLevelType) {
+		this.priceLevelType = priceLevelType;
 	}
 
 	public String getPriceLevelName() {
@@ -82,20 +96,20 @@ public class PriceLevel{
 		this.priceLevelStatus = priceLevelStatus;
 	}
 
-	public BigDecimal getAddition() {
-		return addition;
+	public BigDecimal getIncrementValue() {
+		return incrementValue;
 	}
 
-	public void setAddition(BigDecimal addition) {
-		this.addition = addition;
+	public void setIncrementValue(BigDecimal incrementValue) {
+		this.incrementValue = incrementValue;
 	}
 
-	public BigDecimal getSubtraction() {
-		return subtraction;
+	public BigDecimal getPercentageValue() {
+		return percentageValue;
 	}
 
-	public void setSubtraction(BigDecimal subtraction) {
-		this.subtraction = subtraction;
+	public void setPercentageValue(BigDecimal percentageValue) {
+		this.percentageValue = percentageValue;
 	}
 
 	public Integer getCreatedBy() {
@@ -138,12 +152,21 @@ public class PriceLevel{
 		this.statusLookup = statusLookup;
 	}
 
-	@Override
-	public String toString() {
-		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelName=" + priceLevelName
-				+ ", priceLevelDescription=" + priceLevelDescription + ", priceLevelStatus=" + priceLevelStatus
-				+ ", addition=" + addition + ", subtraction=" + subtraction + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + "]";
+	public Lookup getLevelTypeLookup() {
+		return levelTypeLookup;
 	}
 
+	public void setLevelTypeLookup(Lookup levelTypeLookup) {
+		this.levelTypeLookup = levelTypeLookup;
+	}
+
+	@Override
+	public String toString() {
+		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelType=" + priceLevelType + ", priceLevelName="
+				+ priceLevelName + ", priceLevelDescription=" + priceLevelDescription + ", priceLevelStatus="
+				+ priceLevelStatus + ", incrementValue=" + incrementValue + ", percentageValue=" + percentageValue
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + "]";
+	}
+	
 }
