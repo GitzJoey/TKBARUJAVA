@@ -14,6 +14,7 @@ public class TodayPrice {
 	
 	private Date inputDate;
 	private List<Stocks> stocksList;
+	private int selectedStockId;
 	public Date getInputDate() {
 		return inputDate;
 	}
@@ -30,9 +31,18 @@ public class TodayPrice {
 		this.stocksList = stocksList;
 	}
 
+	public int getSelectedStockId() {
+		return selectedStockId;
+	}
+
+	public void setSelectedStockId(int selectedStockId) {
+		this.selectedStockId = selectedStockId;
+	}
+
 	@Override
 	public String toString() {
-		return "TodayPrice [inputDate=" + inputDate + ", stocksList=" + stocksList + "]";
+		return "TodayPrice [inputDate=" + inputDate + ", stocksList=" + stocksList + ", selectedStockId="
+				+ selectedStockId + "]";
 	}
 	
 }

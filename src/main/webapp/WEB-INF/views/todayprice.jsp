@@ -51,6 +51,23 @@
 					$('input[name="stocksList[' + sIdx + '].priceList[' + i + '].price"]').val(result);
 				}
 			}
+
+			window.ParsleyValidator.addValidator('mindate', function(value, requirement) {
+				var timestamp = Date.parse(value);
+		        var minTs = Date.parse(requirement);
+
+		        return isNaN(timestamp) ? false : timestamp > minTs;    
+		    }, 32)
+		    .addMessage('en', 'mindate', 'This date should be greater than %s')
+		    .addMessage('in', 'mindate', 'Tanggal harus lebih dari %s');
+			
+			$('button[id^=partialButton_]').click(function() {
+				var stockId = $(this).val();
+				if ($('#todayPriceForm').parsley().isValid('s' + stockId)) {
+					$('#todayPriceForm').parsley().destroy();
+					$('#todayPriceForm').attr('action', ctxpath + "/updateprice/partial/" + stockId);	
+				}
+			});
 		});
 	</script>
 </head>
@@ -153,7 +170,7 @@
 								<br/>
 								<div class="row">
 									<div class="col-md-4">
-										<input type="text" id="selectedInputDate" class="form-control input-sm" data-parsley-required="true"/>
+										<input type="text" id="selectedInputDate" class="form-control input-sm" data-parsley-required="true" data-parsley-mindate="true"/>
 									</div>
 									<div class="col-md-8">
 										<a id="updatePrice" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Update Price</a>
@@ -185,7 +202,7 @@
 															<div class="form-group">
 																<label for="marketPrice" class="col-md-2 control-label">Market Price</label>
 																<div class="col-md-3">
-																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control" data-parsley-required="true"/>
+																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control text-right" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
 																	<div id="marketPriceHidden_${ sIdx.index }_${ sIdx.index }">
 																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
 																			<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].marketPrice"/>
@@ -200,7 +217,7 @@
 																		<div id="priceList_${ sIdx.index }">
 																			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
 																				<div class="form-group">
-																					<label for="sr-only"></label>										
+																					<label for="sr-only"></label>
 																					<div class="col-md-10">
 																						<c:choose>
 																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelType == 'L022_INC' }">
@@ -210,7 +227,7 @@
 																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
 																							</c:otherwise>
 																						</c:choose>
-																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true"/>
+																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
 																						<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
 																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelType"/>
 																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
@@ -226,7 +243,7 @@
 						                    		</div>
 													<div class="panel-footer">
 														<div class="btn-toolbar">
-														<button type="button" class="btn btn-xs btn-primary">Partial Update</button>
+														<button id="partialButton_${ sIdx.index }" type="submit" class="btn btn-xs btn-primary" value="${ sIdx.index }">Partial Update</button>
 														</div>
 													</div>			
 								            	</div>
