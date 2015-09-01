@@ -79,11 +79,11 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE'}">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_PAGELOAD' || PAGEMODE == 'PAGEMODE_LIST' || PAGEMODE == 'PAGEMODE_DELETE' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-umbrella fa-fw fa-2x"></span>Store List
+									<span class="fa fa-umbrella fa-fw fa-2x"></span><spring:message code="store_jsp.store_list" text="Store List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -98,7 +98,7 @@
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty storeList}">
+										<c:if test="${ not empty storeList }">
 											<c:forEach items="${ storeList }" var="i" varStatus="storeIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.storeId }"/>" type="checkbox" value="<c:out value="${ i.storeId }"/>"/></td>
@@ -113,10 +113,10 @@
 														<br/>
 													</td>
 													<td>
-														<c:out value="${ i.isDefaultLookup.lookupValue }"/><br/>
+														<spring:message code="${ i.isDefaultLookup.localeMessageCodes }" text="${ i.isDefaultLookup.lookupValue }"/><br/>
 													</td>
 													<td>
-														<c:out value="${ i.storeStatusLookup.lookupValue }"/><br/>
+														<spring:message code="${ i.storeStatusLookup.localeMessageCodes }" text="${ i.storeStatusLookup.lookupValue }"/><br/>
 													</td>
 												</tr>
 											</c:forEach>
@@ -127,7 +127,7 @@
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
-						</div>						
+						</div>
 					</c:when>
 					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
@@ -150,7 +150,7 @@
 										<label for="inputStoreName" class="col-sm-2 control-label"><spring:message code="store_jsp.store_name" text="Store Name"/></label>
 										<div class="col-sm-3">
 											<form:input type="text" class="form-control" id="inputStoreName" name="inputStoreName" path="storeName" placeholder="Store Name" data-parsley-required="true" data-parsley-length="[6, 30]" data-parsley-trigger="keyup"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputAddress1" class="col-sm-2 control-label"><spring:message code="store_jsp.store_address" text="Address"/></label>
@@ -158,7 +158,7 @@
 											<form:input type="text" class="form-control" id="inputAddress1" name="inputAddress1" path="storeAddress1"></form:input>
 											<form:input type="text" class="form-control" id="inputAddress2" name="inputAddress2" path="storeAddress2"></form:input>
 											<form:input type="text" class="form-control" id="inputAddress3" name="inputAddress3" path="storeAddress3"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputIsDefault" class="col-sm-2 control-label"><spring:message code="store_jsp.is_default" text="Is Default Store"/></label>

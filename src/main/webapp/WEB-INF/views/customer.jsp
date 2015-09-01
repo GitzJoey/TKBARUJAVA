@@ -364,7 +364,7 @@
 													<div class="col-sm-4">
 														<form:input path="npwpNum" type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" placeholder="Enter NPWP Number"></form:input>
 													</div>
-												</div>        
+												</div>
 												<div class="form-group">
 													<label for="inputCustomerStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_status" text="Status"/></label>
 													<div class="col-sm-2">														
@@ -372,7 +372,7 @@
 															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<c:forEach items="${ statusDDL }" var="i">
 																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
-															</c:forEach>															
+															</c:forEach>
 														</form:select>
 													</div>
 												</div>
@@ -406,7 +406,7 @@
 																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
-																					<div class="row">																				
+																					<div class="row">																	
 																						<div class="form-group">
 																							<label for="firstName" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.name" text="Name"/></label>
 																							<div class="col-sm-4">
@@ -445,7 +445,7 @@
 																										<div class="btn-toolbar">
 																											<button type="submit" id="phoneButton_minusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
 																											<button type="submit" id="phoneButton_plusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
-																										</div>																																																															
+																										</div>																																																									
 																									</div>
 																									<table id="phoneListTable" class="table table-bordered table-hover">
 																										<thead>
@@ -496,7 +496,7 @@
 																		        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>"><spring:message code="customer_jsp.pic.delete_check" text="Delete"/></label> 
 																		        		</div>
 																		        	</li>
-																		        </ul>															            
+																		        </ul>				            
 																		        <div class="panel-footer">
 																		        	<div class="btn-toolbar">
 																		        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="customer_jsp.pic.delete_button" text="Delete"/></button>
@@ -505,7 +505,7 @@
 																	        </div>
 																	    </div>
 																    </c:forEach>
-																</div>															
+																</div>										
 															</c:otherwise>
 														</c:choose>
 													</div>
@@ -552,7 +552,7 @@
 															</tbody>
 														</table>
 													</div>
-												</c:if>												
+												</c:if>										
 												<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
 													<c:set var="collapseFlag" value="collapse"/>
 													<c:if test="${ editBankIdx == baIdx.index }">
@@ -568,7 +568,7 @@
 															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"/>"/>
 															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
-													</c:if>													
+													</c:if>							
 													<div id="bankAccListInputPanel_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" class="panel panel-default <c:out value="${ collapseFlag }"/>">
 														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
 														<br/>
@@ -594,9 +594,9 @@
 																	<option value=""><spring:message code="common.please_select"></spring:message></option>
 																	<c:forEach items="${ statusDDL }" var="j">
 																		<form:option value="${ j.lookupKey }"><spring:message code="${ j.i18nLookupValue }"></spring:message></form:option>
-																	</c:forEach>																	
+																	</c:forEach>
 																</form:select>
-															</div>																																	
+															</div>
 														</div>
 														<br/>
 														<div class="row">
@@ -613,10 +613,23 @@
 														</div>
 														<br/>
 													</div>
-												</c:forEach>												
+												</c:forEach>	
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>" id="settingsTab">
-												&nbsp;
+												<br/>
+												<div class="form-horizontal">
+													<div class="form-group">
+														<label for="priceLevelSelect" class="col-md-2 control-label"><spring:message code="customer_jsp.setting.price_level" text="Price Level"/></label>
+														<div class="col-md-4">
+															<form:select class="form-control" path="priceLevelId">
+																<option value=""><spring:message code="common.please_select"></spring:message></option>
+																<c:forEach items="${ priceLevelDDL }" var="k">
+																	<form:option value="${ k.priceLevelId }"><c:out value="${ k.priceLevelName }"/>&nbsp;-&nbsp;<c:out value="${ k.priceLevelDescription }"/></form:option>
+																</c:forEach>
+															</form:select>
+														</div>
+													</div>
+												</div>						
 											</div>
 										</div>
 									</div>

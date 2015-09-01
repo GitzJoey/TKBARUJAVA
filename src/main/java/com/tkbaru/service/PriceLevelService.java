@@ -10,5 +10,5 @@ public interface PriceLevelService {
 	public void addPriceLevel(PriceLevel product);
 	public void editPriceLevel(PriceLevel product);
 	public void deletePriceLevel(int selectedId);
-
+	public void generateDefaultPriceLevel();
 }

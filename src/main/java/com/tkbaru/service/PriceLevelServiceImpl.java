@@ -50,4 +50,10 @@ public class PriceLevelServiceImpl implements PriceLevelService {
 		priceLevelDAO.deletePriceLevel(selectedId);		
 	}
 
+	@Override
+	public void generateDefaultPriceLevel() {
+		
+		
+	}
+
 }

@@ -23,6 +23,7 @@ import com.tkbaru.model.Person;
 import com.tkbaru.model.PhoneList;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
+import com.tkbaru.service.PriceLevelService;
 
 @Controller
 @RequestMapping("/customer")
@@ -34,6 +35,9 @@ public class CustomerController {
 	
 	@Autowired
 	LookupService lookupManager;
+	
+	@Autowired
+	PriceLevelService priceLevelManager;
 	
 	@Autowired
 	private LoginContext loginContextSession;
@@ -57,7 +61,8 @@ public class CustomerController {
 		
 		model.addAttribute("customerForm", new Customer());
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
+		
 		model.addAttribute("activeTab", "custDataTab");
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -78,6 +83,7 @@ public class CustomerController {
 		model.addAttribute("customerForm", selectedCustomer);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		
 		model.addAttribute("activeTab", "custDataTab");
 		
@@ -151,7 +157,8 @@ public class CustomerController {
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
+		
 		if (bankAccButtonMode.toUpperCase().equals("ADDBANK")) {
 			model.addAttribute("activeTab", "bankAccTab");
 			model.addAttribute("editBankIdx", cust.getBankAccList().size() - 1);
@@ -195,6 +202,7 @@ public class CustomerController {
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		
 		model.addAttribute("activeTab", "bankAccTab");
 		
@@ -239,7 +247,8 @@ public class CustomerController {
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
+		
 		model.addAttribute("activeTab", "picTab");
 		
 		if (personButtonMode.toUpperCase().equals("ADDPERSON")) {
@@ -283,6 +292,7 @@ public class CustomerController {
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
 		
 		model.addAttribute("activeTab", "picTab");
 		
@@ -326,7 +336,8 @@ public class CustomerController {
 		model.addAttribute("customerForm", cust);
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-
+		model.addAttribute("priceLevelDDL", priceLevelManager.getAllPriceLevel());
+		
 		model.addAttribute("activeTab", "picTab");
 		
 		if (phoneMode.toUpperCase().equals("ADDPHONE")) {

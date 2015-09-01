@@ -32,6 +32,9 @@ public class SetupServiceImpl implements SetupService {
 	@Autowired
 	LookupService lookupManager;
 	
+	@Autowired
+	PriceLevelService priceLevelManager;
+	
 	@Override
 	public boolean checkDBConnection() {
 		
@@ -60,7 +63,12 @@ public class SetupServiceImpl implements SetupService {
 		if (!userManager.checkUserTableHasData()) {
 			isNotValid.add("User");
 		}
-		
+
+		//Check Default Price Level
+		if (priceLevelManager.getAllPriceLevel().size() == 0) {
+			isNotValid.add("PriceLevel");
+		}
+
 		//Check Default Customer
 		if (customerManager.getAllCustomer().size() == 0) {
 			isNotValid.add("Customer");
@@ -91,6 +99,8 @@ public class SetupServiceImpl implements SetupService {
 				roleManager.generateDefaultRoles();
 			} else if (s.equalsIgnoreCase("User")) {
 				userManager.generateDefaultUser();
+			} else if (s.equalsIgnoreCase("PriceLevel")) {
+				priceLevelManager.generateDefaultPriceLevel();
 			} else if (s.equalsIgnoreCase("Customer")) {
 				customerManager.generateDefaultCustomer();
 			} else if (s.equalsIgnoreCase("Lookup")) {

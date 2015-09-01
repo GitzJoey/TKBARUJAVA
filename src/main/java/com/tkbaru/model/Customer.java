@@ -15,6 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -50,6 +51,8 @@ public class Customer implements Serializable {
 	private String customerRemarks;
 	@Column(name="npwp_num")
 	private Integer npwpNum;
+	@Column(name="price_level_id")
+	private int priceLevelId;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -77,6 +80,10 @@ public class Customer implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup statusLookup;
 
+	@OneToOne
+	@JoinColumn(name="price_level_id", insertable=false, updatable=false)
+	private PriceLevel priceLevelEntity;
+	
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -141,6 +148,14 @@ public class Customer implements Serializable {
 		this.npwpNum = npwpNum;
 	}
 
+	public int getPriceLevelId() {
+		return priceLevelId;
+	}
+
+	public void setPriceLevelId(int priceLevelId) {
+		this.priceLevelId = priceLevelId;
+	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -199,14 +214,12 @@ public class Customer implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Customer [customerId=" + customerId + ", customerName="
-				+ customerName + ", customerAddress=" + customerAddress
-				+ ", customerCity=" + customerCity + ", customerPhone="
-				+ customerPhone + ", customerStatus=" + customerStatus
-				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", bankAccList=" + bankAccList + ", picList=" + picList + "]";
+		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
+				+ customerAddress + ", customerCity=" + customerCity + ", customerPhone=" + customerPhone
+				+ ", customerStatus=" + customerStatus + ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum
+				+ ", priceLevelId=" + priceLevelId + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList
+				+ ", picList=" + picList + "]";
 	}
-
+	
 }

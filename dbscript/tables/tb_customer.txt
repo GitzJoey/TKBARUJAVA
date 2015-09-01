@@ -7,6 +7,7 @@ CREATE TABLE `tb_customer` (
   `city` 			varchar(45) DEFAULT NULL,
   `phone` 			varchar(45) DEFAULT NULL,
   `npwp_num` 		int(11) 	DEFAULT NULL,
+  `price_level_id`	int(11) 	DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,
   `remarks` 		varchar(45) DEFAULT NULL,
   `created_by` 		int(11) 	DEFAULT '0',
@@ -18,10 +19,10 @@ CREATE TABLE `tb_customer` (
 
 COMMIT;
 
-INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, status, remarks, created_by, created_date)
-VALUES ('Walk In Customer', '', '', '', 0, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, price_level_id, status, remarks, created_by, created_date)
+VALUES ('Walk In Customer', '', '', '', 0, 1, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
 
-INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, status, remarks, created_by, created_date)
-VALUES ('Test Customer', '', '', '', 0, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, price_level_id, status, remarks, created_by, created_date)
+VALUES ('Test Customer', '', '', '', 0, 1, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
 
 COMMIT;
