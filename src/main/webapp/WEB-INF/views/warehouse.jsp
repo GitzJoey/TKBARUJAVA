@@ -33,7 +33,7 @@
 			});
 
 			$('#cancelButton').click(function() {
-				window.location.href(ctxpath + "/warehouse");
+				window.location.href = ctxpath + "/warehouse";
 			});
 			
 			$('#whListTable').dataTable();

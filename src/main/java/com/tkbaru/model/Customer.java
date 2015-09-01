@@ -22,6 +22,8 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="tb_customer")
@@ -82,6 +84,7 @@ public class Customer implements Serializable {
 
 	@OneToOne
 	@JoinColumn(name="price_level_id", insertable=false, updatable=false)
+	@NotFound(action=NotFoundAction.IGNORE)
 	private PriceLevel priceLevelEntity;
 	
 	public int getCustomerId() {

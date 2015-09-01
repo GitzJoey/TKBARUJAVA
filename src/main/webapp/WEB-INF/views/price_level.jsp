@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {				
-				window.location.href(ctxpath + "/price/pricelevel");
+				window.location.href = ctxpath + "/price/pricelevel";
 			});
 			
 			$('#editTableSelection, #deleteTableSelection').click(function() {

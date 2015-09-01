@@ -51,7 +51,7 @@
 			});
 			
 		    $('#cancelButton').click(function() {
-		    	window.location.href(ctxpath + "/sales/revise");
+		    	window.location.href = ctxpath + "/sales/revise";
 			});
 		    
 			$('#reviseTableList').DataTable();

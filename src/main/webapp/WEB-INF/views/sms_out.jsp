@@ -12,7 +12,7 @@
 				var ctxpath = "${ pageContext.request.contextPath }";
 
 				$('#cancelButton').click(function() {
-					window.location.href(ctxpath + "/truck");
+					window.location.href = ctxpath + "/truck";
 				});
 
 				$('input[type="checkbox"][id^="cbx_"]').click(

@@ -8,9 +8,11 @@
 <head>
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<script>
-		$(document).ready(function() {			
+		$(document).ready(function() {
+			var ctxpath = "${ pageContext.request.contextPath }";
+
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/function");
+				window.location.href = ctxpath  + "/admin/function";
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {

@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {
-				window.location.href(ctxpath + "/product");
+				window.location.href = ctxpath + "/product";
 			});
 			
 			$('#submitButton').click(function() {

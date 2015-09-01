@@ -16,7 +16,7 @@ function jsAlert(message) {
 
 function searchTopMenu() {
 	var ctxpath = window.location.pathname.substring(0, window.location.pathname.indexOf("/",2));
-	window.location.href(ctxpath + "/search/query/" + document.getElementById("searchTopMenuQuery").value);
+	window.location.href = ctxpath + "/search/query/" + document.getElementById("searchTopMenuQuery").value;
 }
 
 function getCookie(cname) {

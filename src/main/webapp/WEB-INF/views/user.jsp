@@ -12,7 +12,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {				
-				window.location.href(ctxpath + "/admin/user");
+				window.location.href = ctxpath + "/admin/user";
 			});
 			
 			$('button[type="submit"]').click(function(item) {

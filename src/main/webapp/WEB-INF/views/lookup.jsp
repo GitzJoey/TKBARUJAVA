@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 						
 			$('#cancelButton').click(function() {				
-				window.location.href("${ pageContext.request.contextPath }/admin/lookup");
+				window.location.href = ctxpath + "/admin/lookup";
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {

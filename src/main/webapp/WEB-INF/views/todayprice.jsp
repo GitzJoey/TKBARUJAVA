@@ -12,7 +12,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 
 			$('#cancelButton').click(function() {
-				window.location.href(ctxpath + "/price/todayprice");
+				window.location.href = ctxpath + "/price/todayprice";
 			});
 
 			$('#updatePrice').click(function() {

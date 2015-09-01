@@ -62,7 +62,7 @@
 			});
 			
 		    $('#cancelButton').click(function() {
-		    	window.location.href(ctxpath + "/sales/revise");
+		    	window.location.href = ctxpath + "/sales/revise";
 			});
 		
 		    $('#paymentListTable').dataTable();

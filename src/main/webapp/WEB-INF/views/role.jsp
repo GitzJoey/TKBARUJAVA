@@ -22,7 +22,7 @@
 					});
 					$('#selectedFunc').val(sf);
 				} else {
-					window.location.href(ctxpath + "/admin/role");	
+					window.location.href = ctxpath + "/admin/role";	
 				}
 			});
 						

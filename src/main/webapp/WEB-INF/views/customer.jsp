@@ -144,7 +144,7 @@
 			});
 			
 			$('#cancelButton').click(function() {				
-				window.location.href(ctxpath + "/customer");
+				window.location.href = ctxpath + "/customer";
 			});
 					
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
