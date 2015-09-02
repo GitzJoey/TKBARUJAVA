@@ -399,6 +399,12 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputBags" class="col-sm-2 control-label">Bags</label>
+										<div class="col-sm-2">
+											<form:input class="form-control" path="receipt.bags" data-parsley-min="0" data-parsley-required="true"/>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 										<div class="col-sm-5">
 											<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedPoObject.shippingDate }" var="formattedShippingDate"/>
