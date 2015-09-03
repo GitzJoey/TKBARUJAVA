@@ -62,6 +62,7 @@ public class StoreServiceImpl implements StoreService {
 	}
 
 	@Override
+	@Transactional
 	public Store getDefaultStore() {
 		
 		return storeDAO.getDefaultStore();

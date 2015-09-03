@@ -7,6 +7,6 @@
 <title>Toko Baru</title>
 </head>
 <body>
-	<c:redirect url="/dologin.html"/> 
+	<c:redirect url="/static/index.html"/> 
 </body>
 </html>
