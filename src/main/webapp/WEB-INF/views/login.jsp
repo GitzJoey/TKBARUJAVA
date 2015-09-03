@@ -38,7 +38,7 @@
 		            <div class="col-md-4 col-md-offset-4">
 		                <div class="login-panel panel panel-default">
 		                    <div class="panel-heading">
-		                        <h3 class="panel-title">Sign In</h3>
+		                        <h3 class="panel-title"><spring:message code="login_jsp.login_title" text="Sign In"/></h3>
 		                    </div>
 		                    <div class="panel-body">
 		                        <form id="loginForm" role="form" action="<c:url value="/login"/>" method="post" data-parsley-validate>

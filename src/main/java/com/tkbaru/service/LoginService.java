@@ -7,4 +7,5 @@ public interface LoginService {
 	public boolean checkInitData();
 	public boolean successLogin(String userName, String userPswd);
 	public User createUserContext(String userName);
+	public User changePassword(int userId, String newPassword);
 }

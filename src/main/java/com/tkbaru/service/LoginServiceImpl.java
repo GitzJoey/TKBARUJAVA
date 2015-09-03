@@ -75,4 +75,17 @@ public class LoginServiceImpl implements LoginService {
 		return isValid;
 	}
 
+	@Override
+	public User changePassword(int userId, String newPassword) {
+		User u = userManager.getUserById(userId);
+		
+		String encPassword = newPassword;
+		
+		u.setUserPassword(encPassword);
+		
+		userManager.editUser(u);
+		
+		return createUserContext(u.getUserName());
+	}
+
 }

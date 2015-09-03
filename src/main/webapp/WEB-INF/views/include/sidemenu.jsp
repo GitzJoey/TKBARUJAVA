@@ -39,17 +39,18 @@
 						</div>					
 					</div>
 				</div>
-				
-				<div class="navbar-default sidebar" role="navigation">
-					<div class="sidebar-nav navbar-collapse in override-navbar-collapse">
-						<ul id="menu" class="nav metismenu">
-							<li class="active">
-								<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
-								<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
-								<c:remove var="functionList" scope="request"/>
-							</li>
-						</ul>						
+
+				<c:if test="${ empty param.hideMenu }">				
+					<div class="navbar-default sidebar" role="navigation">
+						<div class="sidebar-nav navbar-collapse in override-navbar-collapse">
+							<ul id="menu" class="nav metismenu">
+								<li class="active">
+									<c:set var="functionList" value="${ loginContext.userLogin.roleEntity.allRootFunctions }" scope="request"/>
+									<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
+									<c:remove var="functionList" scope="request"/>
+								</li>
+							</ul>						
+						</div>
 					</div>
-				</div>
-				
+				</c:if>
 				<br/>

@@ -8,7 +8,6 @@ import java.util.Locale;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -126,22 +126,37 @@ public class LoginController {
 		return "redirect:/dashboard";
 	}
 	
-	@RequestMapping(value = "/reset.html", method = RequestMethod.GET)
-	public String resetLogin(Locale locale, Model model, HttpServletRequest request, HttpServletResponse response) {
-		logger.info("[resetLogin] " + "");
+	@RequestMapping(value = "/changepass.html", method = RequestMethod.GET)
+	public String changePassword(Locale locale, Model model) {
+		logger.info("[changePassword] " + "");
 
 		String messageText = "";
-		
-		HttpSession session = request.getSession(false);
-		
-		if (session != null)
-			session.invalidate();
 
-		model.addAttribute("hideLogin", false);
+		model.addAttribute("userForm", loginContextSession.getUserLogin());
+		model.addAttribute("loginContext", loginContextSession);
+
 		model.addAttribute("collapseFlag", "collapse");
 		model.addAttribute("messageText", messageText);
 		
-		return "login";
+		return "change_pass";
 		
 	}
+
+	@RequestMapping(value = "/change_pass/save", method = RequestMethod.POST)
+	public String savePassword(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
+		logger.info("[savePassword] " + "");
+
+		loginContextSession.setUserLogin(loginManager.changePassword(usr.getUserId(), usr.getUserPassword()));
+		
+		String messageText = "";
+
+		model.addAttribute("loginContext", loginContextSession);
+
+		model.addAttribute("collapseFlag", "collapse");
+		model.addAttribute("messageText", messageText);
+		
+		return "change_pass";
+		
+	}
+
 }
