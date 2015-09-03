@@ -73,7 +73,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-dollar fa-fw"></span>&nbsp;Price Level
+					<span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="price_level_jsp.title" text="Price Level"/>					
 				</h1>
 
 				<c:choose>
@@ -81,7 +81,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-table fa-fw fa-2x"></span>Price Level List
+									<span class="fa fa-table fa-fw fa-2x"></span><spring:message code="price_level_jsp.price_level_list" text="Price Level List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -89,13 +89,13 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="15%">Price Level</th>
-											<th width="25%">Description</th>
-											<th width="10%">Status</th>
+											<th width="15%"><spring:message code="price_level_jsp.table.header.price_level" text="Price Level"/></th>
+											<th width="25%"><spring:message code="price_level_jsp.table.header.description" text="Description"/></th>
+											<th width="10%"><spring:message code="price_level_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>
-										<c:if test="${not empty priceLevelList}">
+										<c:if test="${ not empty priceLevelList }">
 											<c:forEach items="${ priceLevelList }" var="p" varStatus="pIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ p.priceLevelId }"/>" type="checkbox" value="<c:out value="${ p.priceLevelId }"/>" /></td>
@@ -119,18 +119,18 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;Add Price Level
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="price_level_jsp.add_price_level" text="Add Price Level"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;Edit Price Level
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="price_level_jsp.edit_price_level" text="Edit Price Level"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
-							</div>								
+							</div>
 							<div class="panel-body">
-								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="priceLevelForm" action="${pageContext.request.contextPath}/price/savepricelevel" data-parsley-validate="parsley">
+								<form:form id="priceLevelForm" role="form" class="form-horizontal" modelAttribute="priceLevelForm" action="${pageContext.request.contextPath}/price/savepricelevel" data-parsley-validate="parsley">
 									<div class="form-group">
-										<label for="inputPriceLevelType" class="col-sm-2 control-label">Price Level Type</label>
+										<label for="inputPriceLevelType" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_type" text="Price Level Type"/></label>
 										<div class="col-sm-5">
 											<form:select id="priceLevelSelect" class="form-control" path="priceLevelType" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select"></spring:message></option>
@@ -141,20 +141,20 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPriceLevelName" class="col-sm-2 control-label">Price Level Name</label>
+										<label for="inputPriceLevelName" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_name" text="Price Level Name"/></label>
 										<div class="col-sm-5">
 											<form:hidden path="priceLevelId"/>
 											<form:input type="text" class="form-control" id="inputPriceLevelName" name="inputPriceLevelName" path="priceLevelName" placeholder="Enter Price Level Name" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPriceLevelDescription" class="col-sm-2 control-label">Description</label>
+										<label for="inputPriceLevelDescription" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_description" text="Description"/></label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputPriceLevelDescription" name="inputPriceLevelDescription" path="priceLevelDescription" placeholder="Enter Price Level Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPriceLevelStatus" class="col-sm-2 control-label">Status</label>
+										<label for="inputPriceLevelStatus" class="col-sm-2 control-label"><spring:message code="price_level_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="priceLevelStatus" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"></spring:message></option>
@@ -165,13 +165,13 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputIncrementValue" class="col-sm-2 control-label">Increment Value</label>
+										<label for="inputIncrementValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.increment_value" text="Increment Value"/></label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
 										</div>	
 									</div>
 									<div class="form-group">
-										<label for="inputPercentageValue" class="col-sm-2 control-label">Percentage Value</label>
+										<label for="inputPercentageValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.percentage_value" text="Percentage Value"/></label>
 										<div class="col-sm-5">																	
 											<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value"></form:input>
 										</div>
