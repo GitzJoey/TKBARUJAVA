@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="tb_warehouse")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Warehouse implements Serializable {
 	private static final long serialVersionUID = 1398316374262489320L;
 
