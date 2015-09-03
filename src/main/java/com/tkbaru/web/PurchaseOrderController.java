@@ -597,8 +597,18 @@ public class PurchaseOrderController {
 		logger.info("[poRetrieveSupplier] " + "supplierId: " + supplierId);
 
 		Supplier supp = supplierManager.getSupplierById(Integer.parseInt(supplierId));
+		
+		Supplier jsonSupp = new Supplier();
+		jsonSupp.setSupplierName(supp.getSupplierName());
+		
+		List<Product> pL = new ArrayList<Product>();
+		for (Product p: supp.getProdList()) {
+			pL.add(new Product(p.getProductId()));
+		}
 
-		return supp;
+		jsonSupp.setProdList(pL);
+		
+		return jsonSupp;
 	}
 
 	@RequestMapping(value = "/addpayment/{paymentType}", method = RequestMethod.POST)

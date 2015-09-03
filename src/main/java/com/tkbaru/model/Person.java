@@ -23,15 +23,9 @@ import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-
 @Entity
 @Table(name="tb_person")
 @SuppressWarnings("unchecked")
-@JsonIdentityInfo(generator=ObjectIdGenerators.IntSequenceGenerator.class, property="@id")
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Person implements Serializable {
 	private static final long serialVersionUID = -5271572856767963562L;
 
