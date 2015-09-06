@@ -11,7 +11,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 
-			$('#outflowTable').dataTable({
+			$('#outflowTable').DataTable({
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,
@@ -37,7 +37,7 @@
 		        }
 			});
 			
-			var table = $('#inflowTable').dataTable({
+			var table = $('#inflowTable').DataTable({
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,

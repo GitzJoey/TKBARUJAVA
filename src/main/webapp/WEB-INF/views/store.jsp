@@ -47,7 +47,7 @@
 				}				
 			});
 
-			$('#storeList').dataTable();					
+			$('#storeList').DataTable();					
 		});
 	</script>	
 </head>

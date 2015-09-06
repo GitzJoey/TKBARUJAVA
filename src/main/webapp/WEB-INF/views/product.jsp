@@ -81,7 +81,7 @@
 				}
 			});
 			
-			$('#productListTable').dataTable();
+			$('#productListTable').DataTable();
 		});
 	</script>	
 </head>

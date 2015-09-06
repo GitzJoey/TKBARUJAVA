@@ -24,7 +24,7 @@
 				$(this).parsley().validate();
 			});
 			
-			var searchTable = $('#searchCustomerResultTable').dataTable({
+			var searchTable = $('#searchCustomerResultTable').DataTable({
 								"paging":   	false,
 						        "ordering": 	false,
 						        "info":     	false,

@@ -18,8 +18,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.service.FunctionService;
+import com.tkbaru.service.LookupService;
+import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.ReportService;
+import com.tkbaru.service.RoleService;
+import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.StocksService;
+import com.tkbaru.service.StoreService;
+import com.tkbaru.service.UserService;
 
 @Controller
 @RequestMapping("/report")
@@ -33,6 +40,27 @@ public class ReportController {
 	StocksService stocksManager;
 	
 	@Autowired
+	UserService userManager;
+
+	@Autowired
+	StoreService storeManager;
+	
+	@Autowired
+	FunctionService functionManager;
+	
+	@Autowired
+	RoleService roleManager;
+
+	@Autowired
+	LookupService lookupManager;
+	
+	@Autowired
+	PurchaseOrderService poManager;
+	
+	@Autowired
+	SalesOrderService salesManager;
+	
+	@Autowired
 	private LoginContext loginContextSession;
 
 	@RequestMapping(value="/id/{reportid}", method = RequestMethod.GET)
@@ -43,8 +71,19 @@ public class ReportController {
 		model.addAttribute("reportId", reportId);
 
 		switch (reportId.toUpperCase()) {
+			case "RPTTRX":
+				model.addAttribute("poList", poManager.getAllPurchaseOrder());
+				model.addAttribute("soList", null);
+				break;
 			case "RPTMNTR":
 				model.addAttribute("stocksList", stocksManager.getAllStocks());
+				break;
+			case "RPTADMIN":
+				model.addAttribute("userList", null);
+				model.addAttribute("storeList", null);
+				model.addAttribute("roleList", null);
+				model.addAttribute("functionList", null);
+				model.addAttribute("lookupList", null);
 				break;
 			default:
 				break;

@@ -36,7 +36,7 @@
 				window.location.href = ctxpath + "/warehouse";
 			});
 			
-			$('#whListTable').dataTable();
+			$('#whListTable').DataTable();
 		});
 	</script>	
 </head>

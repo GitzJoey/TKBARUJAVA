@@ -65,7 +65,7 @@
 		    	window.location.href = ctxpath + "/sales/revise";
 			});
 		
-		    $('#paymentListTable').dataTable();
+		    $('#paymentListTable').DataTable();
 		});
 	</script>	
 </head>

@@ -11,7 +11,7 @@
 	$(document).ready(function() {
 		var ctxpath = "${ pageContext.request.contextPath }";
 
-		$('#smsList').dataTable();
+		$('#smsList').DataTable();
 	});
 </script>
 </head>

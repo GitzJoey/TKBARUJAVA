@@ -53,7 +53,7 @@
 				$(this).parsley().validate();
 			});
 			
-			$('#truckListTable').dataTable();			
+			$('#truckListTable').DataTable();			
 		});
 	</script>	
 </head>

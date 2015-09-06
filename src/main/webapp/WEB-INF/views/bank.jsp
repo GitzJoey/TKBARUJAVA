@@ -10,7 +10,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			var cTable = 
-				$('#consolidateTable').dataTable({
+				$('#consolidateTable').DataTable({
 					"paging":   	false,
 			        "ordering": 	false,
 			        "info":     	false

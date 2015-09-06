@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,42 +10,13 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			var dt = $('#stockListTable').DataTable();
-			
-			var detailRows = [];
-			 
-		    $('#stockListTable tbody').on('click', 'tr td.detail-control', function() {
-		        var tr = $(this).closest('tr');
-		        var row = dt.row(tr);
-		        var idx = $.inArray(tr.attr('id'), detailRows);
-		 
-		        if (row.child.isShown()) {
-		            tr.removeClass('details');
-		            row.child.hide();
-		 
-		            detailRows.splice(idx, 1);
-		        }
-		        else {
-		            tr.addClass('details');
-		            row.child(format(row.data())).show();
-		 
-		            if (idx === -1) {
-		                detailRows.push(tr.attr('id'));
-		            }
-		        }
-		    });
-		    
-		    dt.on('draw', function() {
-		        $.each(detailRows, function(i, id) {
-		            $('#' + id + ' td.detail-control').trigger('click');
-		        });
-		    });
-		    
-		    function format(d) {
-		        return '<p>' + 'Details' + '</p>';
-		    }
+		    $('#poListTable').DataTable();
+		    $('#soListTable').DataTable();
+			$('#stockListTable').DataTable();
+		    $('#customerListTable, #supplierListTable, #productListTable, #truckListTable').DataTable();
+		    $('#userListTable, #storeListTable, #roleListTable, #functionListTable, #lookupListTable').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -107,10 +80,66 @@
 											</ul>
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="poTab">
-													Purchase Order
+													<br/>
+													<table id="poListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
+														<thead>
+															<tr>
+																<th>PO Date</th>
+																<th>PO Code</th>
+																<th>Supplier</th>
+																<th>Total Amount</th>
+																<th>Status</th>
+																<th class="none">Items</th>
+															</tr>
+														</thead>
+														<tbody>
+															<c:if test="${ not empty poList }">
+																<c:forEach items="${ poList }" var="p" varStatus="pIdx">
+																	<tr>
+																		<td>
+																			<fmt:formatDate pattern="dd-MM-yyyy" value="${ p.poCreatedDate }" />
+																		</td>
+																		<td>
+																			<c:out value="${ p.poCode }"/>
+																		</td>
+																		<td>
+																			<c:out value="${ p.supplierLookup.supplierName }"/>
+																		</td>
+																		<td>
+																			<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="0" />
+																			<c:forEach items="${ p.itemsList }" var="i">
+																				<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="${ poTotal + ( i.prodPrice * i.toBaseQty ) }" />	
+																			</c:forEach>
+																			<fmt:formatNumber type="number" pattern="##,###.00" value="${ poTotal }"></fmt:formatNumber>
+																		</td>
+																		<td>
+																			<spring:message code="${ p.statusLookup.i18nLookupValue }" text="${ p.poStatus }"/>
+																		</td>
+																		<td class="none">
+																			<c:forEach items="${ p.itemsList }" var="i">
+																				<c:out value="${ i.productLookup.productName }"/>
+																			</c:forEach>
+																		</td>
+																	</tr>
+																</c:forEach>
+															</c:if>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="soTab">
-													Sales Order
+													<br/>
+													<table id="soListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
+														<thead>
+															<tr>
+																<th>Sales Code</th>
+																<th>Sales Date</th>
+																<th>Customer</th>
+																<th>Total Amount</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>
@@ -127,25 +156,21 @@
 												</div>
 												<div role="tabpanel" class="tab-pane" id="stockTab">
 													<br/>
-													<table id="stockListTable" class="table table-bordered table-hover display">
+													<table id="stockListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
 														<thead>
 															<tr>
-																<th width="50%">Product Name</th>
-																<th width="20%">Inflow</th>
-																<th width="20%">Outflow</th>
-																<th width="10%">Detail</th>
+																<th class="all">Product Name</th>
+																<th>Inflow</th>
+																<th>Outflow</th>
 															</tr>
 														</thead>
 														<tbody>
 															<c:if test="${ not empty stocksList }">
 																<c:forEach items="${ stocksList }" var="s">
 																	<tr>
-																		<td><c:out value="${ s.productLookup.productName }"/></td>
-																		<td></td>
-																		<td></td>
-																		<td class="center-align detail-control">
-																			<span class="fa fa-plus fa-fw cursor-pointer"></span>
-																		</td>
+																		<td class="all"><c:out value="${ s.productLookup.productName }"/></td>
+																		<td>111</td>
+																		<td class="none">222</td>
 																	</tr>
 																</c:forEach>
 															</c:if>
@@ -165,16 +190,64 @@
 											</ul>
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="customerTab">
-													customer
+													<br/>
+													<table id="customerListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="supplierTab">
-													supplier
+													<br/>
+													<table id="supplierListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="productTab">
-													product
+													<br/>
+													<table id="productListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>										
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="truckTab">
-													truck
+													<br/>
+													<table id="truckListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th></th>
+																<th></th>
+																<th></th>
+																<th></th>
+															</tr>
+														</thead>
+														<tbody>														
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>						
@@ -190,19 +263,79 @@
 											</ul>
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="userTab">
-													user
+													<br/>
+													<table id="userListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="storeTab">
-													store
+													<br/>
+													<table id="storeListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="roleTab">
-													role
+													<br/>
+													<table id="roleListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="functionTab">
-													function
+													<br/>
+													<table id="functionListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 												<div role="tabpanel" class="tab-pane" id="lookupTab">
-													lookup
+													<br/>
+													<table id="lookupListTable" class="table table-bordered table-hover display responsive">
+														<thead>
+															<tr>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+																<th>&nbsp;</th>
+															</tr>
+														</thead>
+														<tbody>
+														</tbody>
+													</table>
 												</div>
 											</div>
 										</div>														

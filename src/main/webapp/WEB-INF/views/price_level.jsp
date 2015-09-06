@@ -45,7 +45,7 @@
 				}
 			});
 			
-			$('#priceLevelTableList').dataTable();
+			$('#priceLevelTableList').DataTable();
 		});
 	</script>	
 </head>

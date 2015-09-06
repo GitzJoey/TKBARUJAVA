@@ -147,7 +147,7 @@ $.fn.dataTableExt.oPagination.input = {
 				{
 					iNewStart = 0;
 				}
-				if (iNewStart > oSettings.fnRecordsDisplay())
+				if (iNewStart >= oSettings.fnRecordsDisplay())
 				{
 					iNewStart = (Math.ceil((oSettings.fnRecordsDisplay() - 1) / oSettings._iDisplayLength) - 1) * oSettings._iDisplayLength;
 				}
@@ -207,6 +207,8 @@ $.fn.dataTableExt.oPagination.input = {
 		}
 		else
 		{
+			$(an).show();
+
 			/* Loop over each instance of the pager */
 			for (var i = 0, iLen = an.length ; i < iLen ; i++)
 			{
