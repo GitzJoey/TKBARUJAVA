@@ -246,6 +246,8 @@ public class CustomerController {
 		if (personButtonMode.toUpperCase().equals("ADDPERSON")) {
 			model.addAttribute("editPersonIdx", cust.getPicList().size() - 1);
 			model.addAttribute("personButtonMode", "addperson");				
+		} else if  (personButtonMode.toUpperCase().equals("ADDPERSON")) {
+			model.addAttribute("editPersonIdx", personIdx);
 		} else if (personButtonMode.toUpperCase().equals("EDITBANK")) {
 			model.addAttribute("personButtonMode", "editperson");
 		} else {
@@ -334,9 +336,9 @@ public class CustomerController {
 		
 		if (phoneMode.toUpperCase().equals("ADDPHONE")) {
 			model.addAttribute("editPersonIdx", personIndex);
-			model.addAttribute("personButtonMode", "addperson");				
+			model.addAttribute("personButtonMode", "addperson");			
 		} else if (phoneMode.toUpperCase().equals("DELETEPHONE")) {
-			
+			model.addAttribute("editPersonIdx", personIndex);			
 		} else {
 			
 		}

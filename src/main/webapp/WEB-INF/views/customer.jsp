@@ -205,7 +205,7 @@
 	            }
 	        };
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -410,7 +410,7 @@
 																	        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
 																	             <h4 class="panel-title"><spring:message code="customer_jsp.pic_num" text="PIC"/>&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>														
 																	        </div>
-																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse">
+																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse <c:if test="${ editPersonIdx == picListLoopIdx.index }"><c:out value="in"/></c:if>">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
 																					<div class="row">																	
