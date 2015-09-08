@@ -14,6 +14,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/jquery.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/dataTables.bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">

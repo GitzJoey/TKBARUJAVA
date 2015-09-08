@@ -81,7 +81,7 @@
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="poTab">
 													<br/>
-													<table id="poListTable" class="table table-bordered table-hover display responsive nowrap" style="width: 100%; border-collapse: separate;">
+													<table id="poListTable" class="table table-bordered table-hover dt-responsive display nowrap" style="width: 100%; border-collapse: separate;">
 														<thead>
 															<tr>
 																<th>PO Date</th>
