@@ -196,7 +196,13 @@
 	            } else {
 	            	$('#picTabError').removeClass('hidden');
 	            }
-			};
+
+				if (true === $('#customerForm').parsley().isValid("tab4", false)) {
+	              	$('#settingsTabError').addClass('hidden');
+	            } else {
+	            	$('#settingsTabError').removeClass('hidden');
+	            }
+	        };
 		});
 	</script>	
 </head>
@@ -328,7 +334,7 @@
 											<li role="presentation" class="<c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.customer_data" text="Customer Data"/><span id="custDataTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
 											<li role="presentation" class="<c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>"><a href="#picTab" aria-controls="picTab" role="tab" data-toggle="tab"><span class="fa fa-key fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.person_in_charge" text="Person In Charge"/><span id="picTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
 											<li role="presentation" class="<c:if test="${ activeTab == 'bankAccTab' }"><c:out value="active"/></c:if>"><a href="#bankAccTab" aria-controls="bankAccTab" role="tab" data-toggle="tab"><span class="fa  fa-bank fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.bank_account" text="Bank Account"/></a></li>
-											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.settings" text="Settings"/></a></li>
+											<li role="presentation" class="<c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>"><a href="#settingsTab" aria-controls="settingsTab" role="tab" data-toggle="tab"><span class="fa  fa-cogs fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.settings" text="Settings"/><span id="settingsTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>
 										</ul>
 
 										<div class="tab-content">
@@ -368,7 +374,7 @@
 												<div class="form-group">
 													<label for="inputCustomerStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_status" text="Status"/></label>
 													<div class="col-sm-2">														
-														<form:select class="form-control" path="customerStatus">
+														<form:select class="form-control" path="customerStatus" data-parsley-required="true" data-parsley-trigger="change">
 															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<c:forEach items="${ statusDDL }" var="i">
 																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -613,7 +619,7 @@
 														</div>
 														<br/>
 													</div>
-												</c:forEach>	
+												</c:forEach>
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>" id="settingsTab">
 												<br/>
@@ -621,7 +627,7 @@
 													<div class="form-group">
 														<label for="priceLevelSelect" class="col-md-2 control-label"><spring:message code="customer_jsp.setting.price_level" text="Price Level"/></label>
 														<div class="col-md-4">
-															<form:select class="form-control" path="priceLevelId">
+															<form:select class="form-control" path="priceLevelId" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab4">
 																<option value=""><spring:message code="common.please_select"></spring:message></option>
 																<c:forEach items="${ priceLevelDDL }" var="k">
 																	<form:option value="${ k.priceLevelId }"><c:out value="${ k.priceLevelName }"/>&nbsp;-&nbsp;<c:out value="${ k.priceLevelDescription }"/></form:option>

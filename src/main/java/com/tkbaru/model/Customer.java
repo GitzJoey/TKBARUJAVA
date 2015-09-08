@@ -52,7 +52,7 @@ public class Customer implements Serializable {
 	@Column(name="remarks")
 	private String customerRemarks;
 	@Column(name="npwp_num")
-	private Integer npwpNum;
+	private String npwpNum;
 	@Column(name="price_level_id")
 	private int priceLevelId;
 	@Column(name="created_by")
@@ -143,11 +143,11 @@ public class Customer implements Serializable {
 		this.customerRemarks = customerRemarks;
 	}
 
-	public Integer getNpwpNum() {
+	public String getNpwpNum() {
 		return npwpNum;
 	}
 
-	public void setNpwpNum(Integer npwpNum) {
+	public void setNpwpNum(String npwpNum) {
 		this.npwpNum = npwpNum;
 	}
 

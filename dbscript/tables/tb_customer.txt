@@ -6,7 +6,7 @@ CREATE TABLE `tb_customer` (
   `address` 		varchar(45) DEFAULT NULL,
   `city` 			varchar(45) DEFAULT NULL,
   `phone` 			varchar(45) DEFAULT NULL,
-  `npwp_num` 		int(11) 	DEFAULT NULL,
+  `npwp_num` 		varchar(45)	DEFAULT NULL,
   `price_level_id`	int(11) 	DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,
   `remarks` 		varchar(45) DEFAULT NULL,
