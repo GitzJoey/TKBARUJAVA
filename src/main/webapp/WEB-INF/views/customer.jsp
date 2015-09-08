@@ -81,9 +81,10 @@
 				});
 			});
 			
-			$('#addPerson, #editPerson, #deletePerson').click(function() {				
+			$('#addPerson, #deletePerson').click(function() {				
 				var hasSelected = false;
-				var button = $(this).attr('id');				
+				var button = $(this).attr('id');
+				var personIdx = '';
 				
 				if (button == 'addPerson') {
 					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/addperson/0");
@@ -91,19 +92,19 @@
 					$('input[id^="cbx_picList_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
 							hasSelected = true;
-							personId = $(item).attr('id').split('_')[2];
+							personIdx = $(item).val();
 						}					
 					});
 					
 					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false; }
 					else {
-						if (button == 'editPerson') {
-							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/editperson/" + personId);
+						if (button == 'deletePerson') {
+							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/deleteperson/" + personIdx);
 						} else {
-							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/deleteperson/" + personId);
+							
 						}						
 					}
-				}				
+				}
 			});
 					
 			$('#savePerson, #discardPerson').click(function() {

@@ -213,32 +213,24 @@ public class CustomerController {
 		return Constants.JSPPAGE_CUSTOMER;
 	}
 	
-	@RequestMapping(value="/edit/{customerId}/person/{personButtonMode}/{personId}", method = RequestMethod.POST)
+	@RequestMapping(value="/edit/{customerId}/person/{personButtonMode}/{personIdx}", method = RequestMethod.POST)
 	public String personCRUD(Locale locale, Model model, 
 								@ModelAttribute("customerForm") Customer cust, 
 								@PathVariable Integer customerId,
 								@PathVariable String personButtonMode,
-								@PathVariable Integer personId) {
-		logger.info("[personCRUD] " + "customerId: " + customerId + ", personButtonMode:" + personButtonMode + ", personId: " + personId);
+								@PathVariable Integer personIdx) {
+		logger.info("[personCRUD] " + "customerId: " + customerId + ", personButtonMode:" + personButtonMode + ", personIdx: " + personIdx);
 
 		if (personButtonMode.toUpperCase().equals("ADDPERSON")) {
 			cust.getPicList().add(new Person());	
 		} else if (personButtonMode.toUpperCase().equals("EDITPERSON")) {
-			int index = -1;
 			
-			for (int x = 0; x < cust.getPicList().size(); x++) {			
-				if (cust.getPicList().get(x).getPersonId() == personId) { index = x; }			
-			}
-			
-			if (index != -1) {
-				model.addAttribute("editPersonIdx", index);
-			}			
 		} else {
 			List<Person> newList = new ArrayList<Person>();
 
-			for (Person p:cust.getPicList()) {
-				if (p.getPersonId() == personId) continue;
-				newList.add(p);
+			for (int x=0; x<cust.getPicList().size(); x++) {
+				if (x == personIdx) continue;
+				newList.add(cust.getPicList().get(x));
 			}
 
 			cust.setPicList(newList);			
