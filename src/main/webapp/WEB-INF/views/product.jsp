@@ -121,7 +121,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<table id="productListTable" class="table table-bordered table-hover display responsive">
+								<table id="productListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>

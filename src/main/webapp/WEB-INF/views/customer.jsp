@@ -147,7 +147,12 @@
 			$('#cancelButton').click(function() {				
 				window.location.href = ctxpath + "/customer";
 			});
-					
+			
+			$('#customerListTable').DataTable({
+		        "ordering": 	false,
+		        "info":     	false
+			});
+			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
 				var selected = $(this);
 				
@@ -243,71 +248,69 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="table-responsive">
-									<table class="table table-bordered table-hover">
-										<thead>
-											<tr>
-												<th width="5%">&nbsp;</th>
-												<th width="95%"><spring:message code="customer_jsp.table.header.customer_details" text="Customer Details"/></th>
-											</tr>
-										</thead>
-										<tbody>
-											<c:if test="${not empty customerList}">
-												<c:forEach items="${ customerList }" var="i" varStatus="status">
-													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.customerId }"/>"/></td>
-														<td>
-															<table class="table borderless">
-																<tbody>
-																	<tr>
-																		<td>
-																			<table class="table borderless nopaddingrow">
-																				<tr>
-																					<td colspan="2">
-																						<strong class="title"><c:out value="${ i.customerName }"></c:out></strong>
-																						<hr>
-																					</td>
-																				</tr>
-																				<tr>
-																					<td width="35%">
-																						<strong><spring:message code="customer_jsp.table.list.header.customer_detail" text="Customer Details"/></strong><br/>
-																						<c:out value="${ i.customerAddress }"></c:out><br/>
-																						<c:out value="${ i.customerCity }"></c:out><br/>															
-																						<c:out value="${ i.customerPhone }"></c:out><br/>
-																						<c:out value="${ i.npwpNum }"></c:out><br/>
-																						<c:out value="${ i.customerRemarks }"></c:out><br/>
-																					</td>
-																					<td width="65%">
-																						<strong><spring:message code="customer_jsp.table.list.header.person_in_charge" text="Person In Charge"/></strong>
-																						<br/>
-																						<c:forEach items="${ i.picList }" var="iPIC">
-																							<c:out value="${ iPIC.firstName }"/><br/>
-																						</c:forEach>
-																						<br/>
-																						<strong><spring:message code="customer_jsp.table.list.header.bank_account" text="Bank Account"/></strong>
-																						<br/>
-																						<c:forEach items="${ i.bankAccList }" var="iBA">
-																							<c:out value="${ iBA.shortName }"/><br/>
-																						</c:forEach>
-																						<br/>
-																						<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong>
-																						<br/>
-																						<br/>
-																						<br/>
-																					</td>
-																				</tr>
-																			</table>
-																		</td>
-																	</tr>
-																</tbody>
-															</table>															
-														</td>
-													</tr>
-												</c:forEach>
-											</c:if>
-										</tbody>
-									</table>
-								</div>
+								<table id="customerListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="95%"><spring:message code="customer_jsp.table.header.customer_details" text="Customer Details"/></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${not empty customerList}">
+											<c:forEach items="${ customerList }" var="i" varStatus="status">
+												<tr>
+													<td align="center"><input id="cbx_<c:out value="${ i.customerId }"/>" type="checkbox" value="<c:out value="${ i.customerId }"/>"/></td>
+													<td>
+														<table class="table borderless">
+															<tbody>
+																<tr>
+																	<td>
+																		<table class="table borderless nopaddingrow">
+																			<tr>
+																				<td colspan="2">
+																					<strong class="title"><c:out value="${ i.customerName }"></c:out></strong>
+																					<hr>
+																				</td>
+																			</tr>
+																			<tr>
+																				<td width="35%">
+																					<strong><spring:message code="customer_jsp.table.list.header.customer_detail" text="Customer Details"/></strong><br/>
+																					<c:out value="${ i.customerAddress }"></c:out><br/>
+																					<c:out value="${ i.customerCity }"></c:out><br/>	
+																					<c:out value="${ i.customerPhone }"></c:out><br/>
+																					<c:out value="${ i.npwpNum }"></c:out><br/>
+																					<c:out value="${ i.customerRemarks }"></c:out><br/>
+																				</td>
+																				<td width="65%">
+																					<strong><spring:message code="customer_jsp.table.list.header.person_in_charge" text="Person In Charge"/></strong>
+																					<br/>
+																					<c:forEach items="${ i.picList }" var="iPIC">
+																						<c:out value="${ iPIC.firstName }"/><br/>
+																					</c:forEach>
+																					<br/>
+																					<strong><spring:message code="customer_jsp.table.list.header.bank_account" text="Bank Account"/></strong>
+																					<br/>
+																					<c:forEach items="${ i.bankAccList }" var="iBA">
+																						<c:out value="${ iBA.shortName }"/><br/>
+																					</c:forEach>
+																					<br/>
+																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong>
+																					<br/>
+																					<br/>
+																					<br/>
+																				</td>
+																			</tr>
+																		</table>
+																	</td>
+																</tr>
+															</tbody>
+														</table>															
+													</td>
+												</tr>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/customer/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
