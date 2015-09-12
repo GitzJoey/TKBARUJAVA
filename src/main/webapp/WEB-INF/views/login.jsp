@@ -59,21 +59,6 @@
 		        </div>
 			</c:otherwise>
 		</c:choose>
-    </div>
-
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
-    <jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
-    
+    </div>    
 </body>
 </html>
