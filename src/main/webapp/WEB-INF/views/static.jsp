@@ -85,12 +85,18 @@
 				<div class="page-header">
 				  <h1>Contacts</h1>
 				</div>
-				<h4 class="pull-right"><strong>Telkomsel:</strong> +62 812-1234-1234</h4>
-				<h4 class="pull-right"><strong>Mentari:</strong> +62 812-1234-1234</h4>
-				<h4 class="pull-right"><strong>XL:</strong> +62 812-1234-1234</h4>
-				<br/>
-				<div>
-					<img src="${pageContext.request.contextPath}/resources/images/maps.png" class="img-responsive" alt="Maps">
+				<div class="row">
+					<div class="col-md-12">
+						<img class="img-responsive img-thumbnail" alt="Maps" src="${pageContext.request.contextPath}/resources/images/dummy-maps.png"/>
+					</div>
+					<div class="col-md-12">
+						<br/>
+					</div>
+					<div class="col-md-12">
+						<h4 class="pull-right"><strong>Telkomsel:</strong> +62 812-1234-1234</h4>
+						<h4 class="pull-right"><strong>Mentari:</strong> +62 812-1234-1234</h4>
+						<h4 class="pull-right"><strong>XL:</strong> +62 812-1234-1234</h4>
+					</div>
 				</div>
 			</div>
 		</div>
