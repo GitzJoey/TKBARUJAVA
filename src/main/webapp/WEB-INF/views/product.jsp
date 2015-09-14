@@ -60,7 +60,10 @@
 
 			$('input[type="checkbox"][id^="cbxisbase_"]').click(function() {
 				var selected = $(this);
-
+				var idx = $(this).attr('id').split('_')[1];
+				
+				$('#conversionValue_' + idx).val('1');
+				
 				$('input[type="checkbox"][id^="cbxisbase_"]').each(function(index, item) {
 					if ($(item).attr("id") != $(selected).attr("id")) { 
 						if ($(item).prop("checked")) {
@@ -99,7 +102,7 @@
 				if (button == "plusUnit") {
 					$('#productForm').attr('action', ctxpath + "/product/addunit/0");
 				} else {
-					$('input[type="checkbox"][id^="cbx_unit_"]').each(function(index, item) {
+					$('input[type="checkbox"][id^="cbxunit_"]').each(function(index, item) {
 						if ($(item).prop('checked')) {
 							id = $(item).attr("value");
 						}
@@ -277,7 +280,7 @@
 																	<form:checkbox id="cbxisbase_${ prodUnitIdx.index }" path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
 																</td>
 																<td>
-																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value" readonly=""></form:input>
+																	<form:input id="conversionValue_${ prodUnitIdx.index }" type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input>
 																</td>
 																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input></td>
 															</tr>
