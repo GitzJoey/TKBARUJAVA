@@ -276,8 +276,8 @@
 																				<td width="35%">
 																					<strong><spring:message code="customer_jsp.table.list.header.customer_detail" text="Customer Details"/></strong><br/>
 																					<c:out value="${ i.customerAddress }"></c:out><br/>
-																					<c:out value="${ i.customerCity }"></c:out><br/>	
-																					<c:out value="${ i.customerPhone }"></c:out><br/>
+																					<c:out value="${ i.customerCity }"></c:out><br/>
+																					<c:out value="${ i.customerPhone }"></c:out><br/><br/>
 																					<c:out value="${ i.npwpNum }"></c:out><br/>
 																					<c:out value="${ i.customerRemarks }"></c:out><br/>
 																				</td>
@@ -285,17 +285,20 @@
 																					<strong><spring:message code="customer_jsp.table.list.header.person_in_charge" text="Person In Charge"/></strong>
 																					<br/>
 																					<c:forEach items="${ i.picList }" var="iPIC">
-																						<c:out value="${ iPIC.firstName }"/><br/>
+																						<c:out value="${ iPIC.firstName }"/>&nbsp;<c:out value="${ iPIC.firstName }"/><br/>
+																						<c:forEach items="${ iPIC.phoneList }" var="phL" varStatus="phLIdx">
+																							<c:out value="${ phL.providerName }"/>&nbsp;-&nbsp;<c:out value="${ iPIC.phoneNumber }"/><br/>
+																						</c:forEach>
 																					</c:forEach>
 																					<br/>
 																					<strong><spring:message code="customer_jsp.table.list.header.bank_account" text="Bank Account"/></strong>
 																					<br/>
 																					<c:forEach items="${ i.bankAccList }" var="iBA">
-																						<c:out value="${ iBA.shortName }"/><br/>
+																						<c:out value="${ iBA.shortName }"/>&nbsp;-&nbsp;<c:out value="${ iBA.accNum }"/><br/>
 																					</c:forEach>
 																					<br/>
-																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong>
-																					<br/>
+																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong><br/>
+																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;																					
 																					<br/>
 																					<br/>
 																				</td>

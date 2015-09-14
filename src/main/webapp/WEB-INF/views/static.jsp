@@ -82,20 +82,22 @@
 				<br/>
 			</div>
 			<div class="col-md-4">
-				<div class="page-header">
-				  <h1>Contacts</h1>
-				</div>
 				<div class="row">
-					<div class="col-md-12">
-						<img class="img-responsive img-thumbnail" alt="Maps" src="${pageContext.request.contextPath}/resources/images/dummy-maps.png"/>
-					</div>
-					<div class="col-md-12">
-						<br/>
+					<div class="page-header">
+					  <h1>Contacts</h1>
 					</div>
 					<div class="col-md-12">
 						<h4 class="pull-right"><strong>Telkomsel:</strong> +62 812-1234-1234</h4>
 						<h4 class="pull-right"><strong>Mentari:</strong> +62 812-1234-1234</h4>
 						<h4 class="pull-right"><strong>XL:</strong> +62 812-1234-1234</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="page-header">
+					  <h1>Maps</h1>
+					</div>
+					<div class="col-md-12">
+						<img class="img-responsive img-thumbnail" alt="Maps" src="${pageContext.request.contextPath}/resources/images/dummy-maps.png"/>
 					</div>
 				</div>
 			</div>

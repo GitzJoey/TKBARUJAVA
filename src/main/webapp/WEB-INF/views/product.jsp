@@ -30,7 +30,10 @@
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
 				var selected = $(this);
-				
+
+				if ($(selected).attr("id").split('_')[1] == 'isBase') {
+					
+				}
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).attr("id") != $(selected).attr("id")) { 
 						if ($(item).prop("checked")) {
@@ -39,7 +42,34 @@
 					}
 				});
 			});
-			
+
+			$('input[type="checkbox"][id^="cbxunit_"]').click(function() {
+				var selected = $(this);
+
+				if ($(selected).attr("id").split('_')[1] == 'isBase') {
+					
+				}
+				$('input[type="checkbox"][id^="cbxunit_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			});
+
+			$('input[type="checkbox"][id^="cbxisbase_"]').click(function() {
+				var selected = $(this);
+
+				$('input[type="checkbox"][id^="cbxisbase_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			});
+
 			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
@@ -235,7 +265,7 @@
 															<tr>
 																<td align="center">
 																	<form:hidden path="productUnit[${ prodUnitIdx.index }].productUnitId"/>
-																	<input id="cbx_unit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/>
+																	<input id="cbxunit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/>
 																</td>
 																<td>
 																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode">
@@ -244,7 +274,7 @@
 																	</form:select>
 																</td>
 																<td class="center-align">
-																	<form:checkbox path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
+																	<form:checkbox id="cbxisbase_${ prodUnitIdx.index }" path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
 																</td>
 																<td>
 																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value" readonly=""></form:input>

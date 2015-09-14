@@ -22,12 +22,16 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.annotations.Filter;
+import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
+@FilterDef(name="ExcludeWalkInCustomer")
+@Filter(name="ExcludeWalkInCustomer", condition="customer_id > 1")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
 
@@ -86,7 +90,7 @@ public class Customer implements Serializable {
 	@JoinColumn(name="price_level_id", insertable=false, updatable=false)
 	@NotFound(action=NotFoundAction.IGNORE)
 	private PriceLevel priceLevelEntity;
-	
+
 	public int getCustomerId() {
 		return customerId;
 	}
@@ -215,6 +219,14 @@ public class Customer implements Serializable {
 		this.statusLookup = statusLookup;
 	}
 
+	public PriceLevel getPriceLevelEntity() {
+		return priceLevelEntity;
+	}
+
+	public void setPriceLevelEntity(PriceLevel priceLevelEntity) {
+		this.priceLevelEntity = priceLevelEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
@@ -224,5 +236,5 @@ public class Customer implements Serializable {
 				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList
 				+ ", picList=" + picList + "]";
 	}
-	
+
 }

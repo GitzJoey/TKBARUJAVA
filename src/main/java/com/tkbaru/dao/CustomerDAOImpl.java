@@ -24,10 +24,11 @@ public class CustomerDAOImpl implements CustomerDAO {
 	public List<Customer> getAllCustomer() {
 		logger.info("[getAllCustomer] " + "");
 		
-		Session session = this.sessionFactory.getCurrentSession();
+		Session session = this.sessionFactory.getCurrentSession();		
+		session.enableFilter("ExcludeWalkInCustomer");
 		List<Customer> customerList = session.createQuery("FROM Customer").list();
 	
-		logger.info("Customer Count: " + customerList.size());
+		logger.info("Customer (With Filter) Count: " + customerList.size());
 
 		return customerList;
 	}
