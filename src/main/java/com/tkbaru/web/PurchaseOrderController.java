@@ -296,6 +296,7 @@ public class PurchaseOrderController {
 		logger.info("[addPoForm] ");
 
 		PurchaseOrder newPo = new PurchaseOrder();
+		newPo.setPoCode(poManager.generatePOCode());
 		newPo.setPoStatus("L013_D");
 		newPo.setPoCreatedDate(new Date());
 		newPo.setShippingDate(new Date());
