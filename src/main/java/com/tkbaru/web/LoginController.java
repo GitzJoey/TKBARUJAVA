@@ -44,7 +44,7 @@ public class LoginController {
 								@RequestParam(value="e", required=false) String errParam, 
 								HttpServletRequest request,
 								HttpServletResponse response) {
-		logger.info("[loadLoginPage] " + "locale.getLanguage(): " + locale.getLanguage());
+		logger.info("[loadLoginPage] " + "IP Address: " + request.getRemoteAddr() + "(" + request.getHeader("X-FORWARDED-FOR") + ") locale.getLanguage(): " + locale.getLanguage());
 
 		String messageText = "";
 		

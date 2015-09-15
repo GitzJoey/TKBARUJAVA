@@ -41,7 +41,7 @@
 		                        <h3 class="panel-title"><spring:message code="login_jsp.login_title" text="Sign In"/></h3>
 		                    </div>
 		                    <div class="panel-body">
-		                        <form id="loginForm" role="form" action="<c:url value="/login"/>" method="post" data-parsley-validate>
+		                        <form id="loginForm" role="form" action="<c:url value="/login"/>" method="post" data-parsley-validate="parsley">
 		                            <fieldset>
 										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 		                                <div class="form-group">
