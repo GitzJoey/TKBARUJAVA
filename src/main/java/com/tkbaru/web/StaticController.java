@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.common.Constants;
+import com.tkbaru.service.LoginService;
 import com.tkbaru.service.StoreService;
 
 @Controller
@@ -20,6 +21,9 @@ public class StaticController {
 
 	@Autowired
 	StoreService storeManager;
+	
+	@Autowired
+	LoginService loginManager;
 	
 	@RequestMapping(method = RequestMethod.GET)
 	public String staticPageLoad(Locale locale, Model model) {
@@ -31,6 +35,11 @@ public class StaticController {
 	public String staticIndex(Locale locale, Model model) {
 		logger.info("[staticIndex] : " + "");
 
+		boolean dbReady = loginManager.checkDB();
+		if (!dbReady) {
+			return Constants.JSPPAGE_STATIC;
+		}
+		
 		model.addAttribute("storeData", storeManager.getDefaultStore());
 		
 		return Constants.JSPPAGE_STATIC;

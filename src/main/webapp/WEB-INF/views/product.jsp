@@ -16,7 +16,7 @@
 			
 			$('#submitButton').click(function() {
 				var baseUnitExist = false;
-				$('input[type="checkbox"][id^="productUnit"]').each(function(index, item) {
+				$('input[type="checkbox"][id^="cbxisbase_"]').each(function(index, item) {
 					if ($(this).is(":checked")) {
 						baseUnitExist = true;
 					}
@@ -174,7 +174,7 @@
 													<td><c:out value="${ i.shortCode }"></c:out></td>
 													<td><c:out value="${ i.productName }"></c:out></td>
 													<td><c:out value="${ i.productDesc }"></c:out></td>
-													<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
+													<td><spring:message code="${ i.statusLookup.i18nLookupValue }" text="${ i.statusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -252,7 +252,7 @@
 									<div class="form-group">
 										<label for="inputUnit" class="col-sm-2 control-label"><spring:message code="product_jsp.unit" text="Unit"/></label>
 										<div class="col-sm-10">
-											<div class="panel panel-default">	
+											<div class="panel panel-default">
 												<table class="table table-bordered table-hover">
 													<thead>
 														<tr>
@@ -271,18 +271,22 @@
 																	<input id="cbxunit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/>
 																</td>
 																<td>
-																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode">
-																		<option>Select Unit</option>
-																		<form:options items="${ unitDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change">
+																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																		<c:forEach items="${ unitDDL }" var="i">
+																			<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+																		</c:forEach>
 																	</form:select>
 																</td>
 																<td class="center-align">
 																	<form:checkbox id="cbxisbase_${ prodUnitIdx.index }" path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
 																</td>
 																<td>
-																	<form:input id="conversionValue_${ prodUnitIdx.index }" type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value"></form:input>
+																	<form:input id="conversionValue_${ prodUnitIdx.index }" type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value" data-parsley-required="true"></form:input>
 																</td>
-																<td><form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input></td>
+																<td>
+																	<form:input type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].unitRemarks" placeholder="Enter Remarks"></form:input>
+																</td>
 															</tr>
 														</c:forEach>
 													</tbody>
