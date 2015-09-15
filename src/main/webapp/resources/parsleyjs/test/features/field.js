@@ -11,8 +11,6 @@ define(function () {
         $('body').append('<input type="text" id="element" data-parsley-required />');
         var parsleyField = $('#element').parsley();
         expect(parsleyField.constraints.length).to.be(1);
-        expect(parsleyField.constraints[0].__class__).to.be('Required');
-        expect(parsleyField.constraints[0].__parentClass__).to.be('Assert');
         expect(parsleyField.constraints[0].name).to.be('required');
         expect(parsleyField.constraints[0].isDomConstraint).to.be(true);
       });
@@ -20,8 +18,6 @@ define(function () {
         $('body').append('<input type="email" id="element" />');
         var parsleyField = $('#element').parsley();
         expect(parsleyField.constraints.length).to.be(1);
-        expect(parsleyField.constraints[0].__class__).to.be('Email');
-        expect(parsleyField.constraints[0].__parentClass__).to.be('Assert');
         expect(parsleyField.constraints[0].name).to.be('type');
         expect(parsleyField.constraints[0].isDomConstraint).to.be(true);
       });
@@ -40,8 +36,6 @@ define(function () {
         var parsleyField = $('#element').parsley()
           .addConstraint('required', true);
         expect(parsleyField.constraints.length).to.be(1);
-        expect(parsleyField.constraints[0].__class__).to.be('Required');
-        expect(parsleyField.constraints[0].__parentClass__).to.be('Assert');
         expect(parsleyField.constraints[0].name).to.be('required');
         expect(parsleyField.constraints[0].requirements).to.be(true);
         expect(parsleyField.constraints[0].priority).to.be(512);
@@ -137,7 +131,7 @@ define(function () {
       });
       it('should valid most complex Callback() validator', function () {
         $('body').append('<input type="text" id="element" value="" />');
-        window.ParsleyValidator.addValidator('ismultiple', function (value, multiple) {
+        window.Parsley.addValidator('ismultiple', function (value, multiple) {
           if (!isNaN(parseFloat(value)) && isFinite(value))
             return !(Number(value) % multiple);
 
@@ -155,14 +149,14 @@ define(function () {
         expect(parsleyField.isValid()).to.be(false);
         $('#element').val('9');
         expect(parsleyField.isValid()).to.be(true);
-        window.ParsleyValidator.removeValidator('ismultiple');
+        window.Parsley.removeValidator('ismultiple');
       });
       it('should properly compute constraints on each validation', function () {
         $('body').append('<input type="email" data-parsley-required id="element" />');
-        window.ParsleyValidator.addValidator('foobazer', function (value) {
+        window.Parsley.addValidator('foobazer', function (value) {
           return 'foobar' === value;
         }, 2);
-        window.ParsleyValidator.addValidator('ismultiple', function (value, multiple) {
+        window.Parsley.addValidator('ismultiple', function (value, multiple) {
           if (!isNaN(parseFloat(value)) && isFinite(value))
             return !(Number(value) % multiple);
 
@@ -181,8 +175,8 @@ define(function () {
           .removeConstraint('ismultiple')
           .refreshConstraints();
         expect(parsleyField.constraints.length).to.be(2);
-        window.ParsleyValidator.removeValidator('foobazer');
-        window.ParsleyValidator.removeValidator('ismultiple');
+        window.Parsley.removeValidator('foobazer');
+        window.Parsley.removeValidator('ismultiple');
       });
       it('should handle constraints priorities on validation', function () {
         $('body').append('<input type="email" pattern="[A-F][0-9]{5}" required id="element" />');
@@ -273,11 +267,25 @@ define(function () {
         expect($('<input type="email" value="">').parsley().isValid(true)).to.be(false);
         expect($('<input type="email" value="foo">').parsley().isValid(true, "")).to.be(false);
       });
+      it('should have a whitespace="squish" option', function () {
+        $('body').append('<input type="text" id="element" value=" foo    bar " />');
+        expect($('#element').parsley().getValue()).to.be(' foo    bar ');
+        $('#element').attr('data-parsley-whitespace', 'squish').parsley().actualizeOptions();
+        expect($('#element').parsley().getValue()).to.be('foo bar');
+      });
+      it('should have a whitespace="trim" option', function () {
+        $('body').append('<input type="text" id="element" value=" foo " />');
+        expect($('#element').parsley().getValue()).to.be(' foo ');
+        $('#element').attr('data-parsley-whitespace', 'trim').parsley().actualizeOptions();
+        expect($('#element').parsley().getValue()).to.be('foo');
+      });
       it('should have a trim-value option', function () {
         $('body').append('<input type="text" id="element" value=" foo " />');
         expect($('#element').parsley().getValue()).to.be(' foo ');
         $('#element').attr('data-parsley-trim-value', true).parsley().actualizeOptions();
-        expect($('#element').parsley().getValue()).to.be('foo');
+        expectWarning(function() {
+          expect($('#element').parsley().getValue()).to.be('foo');
+        });
       });
       it('should inherit options from the form, even if the form is bound after', function () {
         $('body').append('<form id="element" data-parsley-required>' +

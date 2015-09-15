@@ -81,7 +81,7 @@ define('parsley/utils', function () {
     },
 
     warn: function() {
-      if (window.console && window.console.warn)
+      if (window.console && 'function' === typeof window.console.warn)
         window.console.warn.apply(window.console, arguments);
     },
 
@@ -94,6 +94,10 @@ define('parsley/utils', function () {
 
     _resetWarnings: function() {
       pastWarnings = {};
+    },
+
+    trimString: function(string) {
+      return string.replace(/^\s+|\s+$/g, '');
     },
 
     // Object.create polyfill, see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create#Polyfill
