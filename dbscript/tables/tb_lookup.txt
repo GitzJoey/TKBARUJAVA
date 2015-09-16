@@ -72,6 +72,10 @@ INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, statu
 VALUES ('PRODUCT_TYPE', 'L004_KDLI',
 		'PRODUCT_TYPE.L004_KDLI', 'Kedelai Import',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('PRODUCT_TYPE', 'L004_KTN',
+		'PRODUCT_TYPE.L004_KTN', 'Beras Ketan',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Unit - L005*/
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
@@ -89,6 +93,10 @@ VALUES ('UNIT', 'L005_TN',
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('UNIT', 'L005_KN',
 		'UNIT.L005_KN', 'Kuintal',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('UNIT', 'L005_ZK',
+		'UNIT.L005_ZK', 'Zak',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*Phone Provider - L006*/
