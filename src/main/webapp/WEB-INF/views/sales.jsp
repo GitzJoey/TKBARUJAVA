@@ -275,19 +275,19 @@
 																		<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="sales_jsp.sales_date" text="Sales Date"/></label>
 																		<div class="col-sm-9">
 																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${ soIdx.index }" path="soList[${ soIdx.index }].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
-																		</div>										
+																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label for="inputSalesStatus_${ soIdx.index }" class="col-sm-3 control-label"><spring:message code="sales_jsp.status" text="Status"/></label>
 																		<div class="col-sm-9">
 																			<form:hidden path="soList[${ soIdx.index }].salesStatus" />
 																			<label id="inputSalesStatus_${ soIdx.index }" class="control-label">
-																				<c:out value="${ soForm.statusLookup.lookupValue }"></c:out>
+																				<spring:message code="${ soForm.statusLookup.i18nLookupValue }" text="${ soForm.statusLookup.lookupValue }"></spring:message>
 																			</label>
 																		</div>
 																	</div>
 																</div>
-															</div>									
+															</div>					
 															<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_S' && loginContext.soList[soIdx.index].customerId == 0 }">
 																<div class="row">
 																	<div class="col-md-12">
@@ -360,7 +360,7 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>			
+																		</div>	
 																	</div>
 																</div>
 															</c:if>

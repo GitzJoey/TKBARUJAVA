@@ -245,7 +245,7 @@
 																	<div class="col-sm-9">
 																		<form:hidden path="poList[${ poIdx.index }].poStatus" />
 																		<label id="inputPOStatus${ poIdx.index }" class="control-label">
-																			<c:out value="${ poForm.statusLookup.lookupValue }"></c:out>
+																			<spring:message code="${ poForm.statusLookup.i18nLookupValue }" text="${ poForm.statusLookup.lookupValue }"></spring:message>
 																		</label>
 																	</div>
 																</div>

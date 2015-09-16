@@ -98,6 +98,15 @@
 						<img class="img-responsive img-thumbnail" alt="Maps" src="${pageContext.request.contextPath}/resources/images/dummy-maps.png"/>
 					</div>
 				</div>
+				<div class="row">
+					<div class="page-header">
+					  <h1>You</h1>
+					</div>
+					<p class="pull-right">
+						IP Address:
+						<c:out value="${ pageContext.request.remoteAddr }"/><br/>
+					</p>
+				</div>
 			</div>
 		</div>
 
