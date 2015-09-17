@@ -1,5 +1,6 @@
 package com.tkbaru.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.tkbaru.model.PurchaseOrder;
@@ -14,6 +15,7 @@ public interface PurchaseOrderDAO {
 	public void deletePurchaseOrder(int selectedId);
 	public void savePayment(PurchaseOrder po);
 	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status);
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByShippingDate(int warehouseId, Date startDate, Date endDate);
 
 	public boolean isExistingPOCode(String poCode);
 }

@@ -1,7 +1,12 @@
 package com.tkbaru.dao;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -120,7 +125,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[getPurchaseOrderByWarehouseId] " + "warehouseId: "+ warehouseId + ", poStatus: " + status);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where warehouseId = :warehouseId and poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder WHERE warehouseId = :warehouseId AND poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
 		
 		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
 
@@ -137,5 +142,29 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("poCode " + poCode + " is exists: " + exist);
 
 		return exist;
+	}
+
+	@Override
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByShippingDate(int warehouseId, Date startDate, Date endDate) {
+		logger.info("[getPurchaseOrderByWarehouseIdByShippingDate] " + "warehouseId: "+ warehouseId + ", startDate: " + startDate + ", endDate: " + endDate);
+
+		Map<String, Object> parameterNameAndValues = new HashMap<String, Object>();
+		parameterNameAndValues.put("warehouseId", warehouseId);
+		parameterNameAndValues.put("startDate", startDate);
+		parameterNameAndValues.put("endDate", endDate);
+		
+		Session session = this.sessionFactory.getCurrentSession();
+	
+		Query q = session.createQuery("FROM PurchaseOrder WHERE warehouseId = :warehouseId AND shippingDate BETWEEN :startDate AND :endDate ");
+
+		for (Entry<String, Object> e : parameterNameAndValues.entrySet()) {
+		    q.setParameter(e.getKey(), e.getValue());
+		}
+
+		List<PurchaseOrder> purchaseOrderList = q.list();
+		
+		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
+
+		return purchaseOrderList;
 	}
 }

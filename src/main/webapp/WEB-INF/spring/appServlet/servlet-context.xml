@@ -35,6 +35,7 @@
 				<beans:value>/WEB-INF/spring/i18n/truck</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/user</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/warehouse</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/warehousedashboard</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/product</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/login</beans:value>
         	</beans:list>

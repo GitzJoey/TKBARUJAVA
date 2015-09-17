@@ -1,6 +1,7 @@
 package com.tkbaru.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
@@ -52,12 +53,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Override
 	@Transactional
 	public void editPurchaseOrder(PurchaseOrder purchaseOrder) {
+		
 		purchaseOrderDAO.editPurchaseOrder(purchaseOrder);
 	}
 
 	@Override
 	@Transactional
 	public void deletePurchaseOrder(int selectedId) {
+		
 		purchaseOrderDAO.deletePurchaseOrder(selectedId);
 	}
 
@@ -73,12 +76,14 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 	@Override
 	@Transactional
 	public List<PurchaseOrder> getPurchaseOrderByStatus(String status) {
+		
 		return purchaseOrderDAO.getPurchaseOrderByStatus(status);
 	}
 
 	@Override
 	@Transactional
 	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByStatus(int warehouseId, String status) {
+		
 		return purchaseOrderDAO.getPurchaseOrderByWarehouseIdByStatus(warehouseId, status);
 	}
 
@@ -95,6 +100,13 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		} while (purchaseOrderDAO.isExistingPOCode(generatedPOCode));
 			
 		return generatedPOCode;
+	}
+
+	@Override
+	@Transactional
+	public List<PurchaseOrder> getPurchaseOrderByWarehouseIdByShippingDate(int warehouseId, Date startDate, Date endDate) {
+		
+		return purchaseOrderDAO.getPurchaseOrderByWarehouseIdByShippingDate(warehouseId, startDate, endDate);
 	}
 
 }

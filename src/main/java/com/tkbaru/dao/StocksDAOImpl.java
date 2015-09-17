@@ -34,7 +34,7 @@ public class StocksDAOImpl implements StocksDAO {
 
 	@Override
 	public void addStocks(Stocks stocks) {
-		logger.info("[addStocks" + "");
+		logger.info("[addStocks] " + "");
 		
 		 Session session = this.sessionFactory.getCurrentSession();
 		

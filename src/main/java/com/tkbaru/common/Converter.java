@@ -93,4 +93,13 @@ public class Converter {
 	
 		return result;
 	}
+	
+    public static Date addDays(Date date, int days)
+    {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        //minus number would decrement the days
+        cal.add(Calendar.DATE, days); 
+        return cal.getTime();
+    }
 }

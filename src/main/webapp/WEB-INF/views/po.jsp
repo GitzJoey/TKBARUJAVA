@@ -76,7 +76,7 @@
 						
 						var prodList = '';
 						for (var i=0; i<obj.prodList.length; i++) {
-							prodList = obj.prodList[i].productId + ',';
+							prodList += obj.prodList[i].productId + ',';
 						}
 						
 						$('#supplierProduct' + tabIdx + '').val(prodList.substring(0, prodList.length - 1));

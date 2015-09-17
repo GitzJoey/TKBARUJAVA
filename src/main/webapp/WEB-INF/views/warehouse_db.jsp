@@ -74,7 +74,7 @@
 			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
 				if(warehouseSelect != '') {
-					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect;
+					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect;
 				}
 			});
 			
@@ -86,7 +86,7 @@
 				var warehouseSelect = $("#warehouseSelect").val();
 				var result = true;
 				if (result) {
-					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid + "/" + itemId;
+					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect + "/loadreceipt/" + poid + "/" + itemId;
 				}
 			});
 
@@ -98,7 +98,7 @@
 				var warehouseSelect = $("#warehouseSelect").val();
 				var result = confirm("Yakin isi data sales " + trid + " ?");
 				if (result) {
-					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loaddeliver/" + poid + "/" + itemId;
+					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect + "/loaddeliver/" + poid + "/" + itemId;
 				}
 			});
 			
@@ -208,48 +208,22 @@
 											<tbody >											
 												<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
 													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
-														
-														<c:if test="${ not empty iL.receiptList }">
-															<c:set var="totalReceipt" value="${ iL.receiptList.size() }"></c:set>
-															<c:set var="totalReceipt" value="${ 0 }"></c:set>
-														 	<c:forEach items="${ iL.receiptList }" var="receipt" varStatus="receiptIdx">
-															    <tr>
-																    <td class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td class="never"><c:out value="${ po.poCode }"/></td>
-															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].receiptDate }"/></td>
-															    	<td></td>
-														    	</tr>
-														    	<c:set var="totalReceipt" value="${ totalReceipt + (warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].net + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare) }"></c:set>
-													    	</c:forEach>
-												    	
-													    	<c:if test="${ totalReceipt <  warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
-														    	<tr id="${ po.poCode }">
-														    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td class="never"><c:out value="${ po.poCode }"/></td>
-															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-															    	<td></td>
-															    	<td class="center-align all">
-															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
-																    </td>
-														    	</tr>
-												    		</c:if>
-											    		</c:if>
-											    	
-												    	<c:if test="${ empty iL.receiptList }">
-													    	<tr id="${ po.poCode }">
-													    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-													    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
-													    		<td class="never"><c:out value="${ po.poCode }"/></td>
-														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-														    	<td></td>
-														    	<td class="center-align all">
+												    	<tr id="${ po.poCode }">
+												    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+												    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
+												    		<td class="never"><c:out value="${ po.poCode }"/>&nbsp;-&nbsp;<c:out value="${ po.supplierLookup.supplierName }"/></td>
+													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
+													    	<td class="center-align">
+													    		<c:if test="${ not empty iL.receiptList }">
+													    			<fmt:formatDate pattern="dd MMM yyyy HH:mm" value="${ iL.receiptList[0].receiptDate }"/>
+													    		</c:if>
+													    	</td>
+													    	<td class="center-align all">
+														    	<c:if test="${ empty iL.receiptList }">
 														    		<button type="button" class="btn btn-xs btn-primary" id="receiptButton_0" value="${ po.poId }"><span class="fa fa-edit fa-fw"></span></button>
-															    </td>
-													    	</tr>
-												    	</c:if>
+														    	</c:if>
+														    </td>
+												    	</tr>
 													</c:forEach>
 												</c:forEach>
 											</tbody>
@@ -378,20 +352,47 @@
 									</div>
 									<div class="form-group">
 										<label for="inputBruto" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.bruto" text="Bruto"/></label>
-										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.bruto" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"></form:input>
+										<div class="col-sm-3">
+											<div class="input-group">
+												<form:input class="form-control" path="receipt.bruto" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"></form:input>
+												<span class="input-group-addon">
+													<c:forEach items="${ selectedPoObject.itemsList }" var="i">
+														<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
+															<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
+														</c:if>
+													</c:forEach>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.net" text="Net"/></label>
-										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
+										<div class="col-sm-3">
+											<div class="input-group">
+												<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>										
+												<span class="input-group-addon">
+													<c:forEach items="${ selectedPoObject.itemsList }" var="i">
+														<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
+															<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
+														</c:if>
+													</c:forEach>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputNet" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.tare" text="Tare"/></label>
-										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
+										<div class="col-sm-3">
+											<div class="input-group">
+												<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
+												<span class="input-group-addon">
+													<c:forEach items="${ selectedPoObject.itemsList }" var="i">
+														<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
+															<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
+														</c:if>
+													</c:forEach>
+												</span>
+											</div>
 										</div>
 									</div>
 									<div class="form-group">
