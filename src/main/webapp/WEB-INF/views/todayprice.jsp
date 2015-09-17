@@ -52,7 +52,7 @@
 				}
 			}
 
-			window.ParsleyValidator.addValidator('mindate', function(value, requirement) {
+			window.Parsley.addValidator('mindate', function(value, requirement) {
 				var timestamp = Date.parse(value);
 		        var minTs = Date.parse(requirement);
 

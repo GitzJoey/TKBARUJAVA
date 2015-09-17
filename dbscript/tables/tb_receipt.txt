@@ -1,14 +1,14 @@
 ﻿DROP TABLE IF EXISTS `tb_receipt`;
 
 CREATE TABLE `tb_receipt` (
-  `receipt_id` 		int(11) NOT NULL AUTO_INCREMENT,
-  `receipt_date` 	datetime DEFAULT NULL,
-  `net` int(11) 	DEFAULT '0',
-  `tare` int(11) 	DEFAULT '0',
-  `bags` int(11) 	DEFAULT '0',
-  `created_by` 		int(11) DEFAULT '0',
-  `created_date` 	datetime DEFAULT NULL,
-  `updated_by` 		int(11) DEFAULT '0',
-  `updated_date` 	datetime DEFAULT NULL,
+  `receipt_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `receipt_date` 	datetime 	DEFAULT NULL,
+  `bruto` 			int(11) 	DEFAULT '0',
+  `net` 			int(11) 	DEFAULT '0',
+  `tare` 			int(11) 	DEFAULT '0',
+  `created_by` 		int(11) 	DEFAULT '0',
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT '0',
+  `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`receipt_id`)
 );

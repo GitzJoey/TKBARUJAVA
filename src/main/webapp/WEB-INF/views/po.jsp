@@ -101,7 +101,7 @@
 			$('#addTab').attr("href", ctxpath + "/po/addpoform");
 		});		
 
-		window.ParsleyValidator.addValidator('validprod', function (value, idx) {			
+		window.Parsley.addValidator('validprod', function (value, idx) {			
 			var pL = $('#supplierProduct' + idx + '').val();
 			
 			if (pL.length == 0) return true;

@@ -24,12 +24,12 @@ public class Receipt {
 	private int receiptId;
 	@Column(name="receipt_date")
 	private Date receiptDate;
+	@Column(name="bruto")
+	private int bruto;
 	@Column(name="net")
 	private int net;
 	@Column(name="tare")
 	private int tare;
-	@Column(name="bags")
-	private int bags;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -65,11 +65,11 @@ public class Receipt {
 	public void setTare(int tare) {
 		this.tare = tare;
 	}
-	public int getBags() {
-		return bags;
+	public int getBruto() {
+		return bruto;
 	}
-	public void setBags(int bags) {
-		this.bags = bags;
+	public void setBruto(int bruto) {
+		this.bruto = bruto;
 	}
 	public int getCreatedBy() {
 		return createdBy;
@@ -95,12 +95,11 @@ public class Receipt {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	
 	@Override
 	public String toString() {
-		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", net=" + net + ", tare=" + tare
-				+ ", bags=" + bags + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", bruto=" + bruto + ", net=" + net
+				+ ", tare=" + tare + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
-
+	
 }

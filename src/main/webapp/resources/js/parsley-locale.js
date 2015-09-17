@@ -10,4 +10,4 @@ function getLocaleCookie() {
     return "";
 }
 
-window.ParsleyValidator.setLocale(getLocaleCookie() == "in" ? "id" : "en");
+window.Parsley.setLocale(getLocaleCookie() == "in" ? "id" : "en");

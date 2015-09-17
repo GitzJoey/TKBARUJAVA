@@ -149,7 +149,7 @@
     			}
     		});    		
 
-			window.ParsleyValidator.addValidator('validquantity', function (value, index) {
+			window.Parsley.addValidator('validquantity', function (value, index) {
 				var salesIdx = index.split('_')[0];
 				var itemsIdx = index.split('_')[1];
 				var stock = $('#items_' + salesIdx + '_' + itemsIdx + '_Product_Stocks_prodQuantity').val();

@@ -84,7 +84,7 @@
 				
 				var poid = $(this).val();
 				var warehouseSelect = $("#warehouseSelect").val();
-				var result = confirm("Yakin isi data po " + trid + " ?");
+				var result = true;
 				if (result) {
 					window.location = ctxpath + "/warehouse/dashboard/" + warehouseSelect + "/loadreceipt/" + poid + "/" + itemId;
 				}
@@ -118,10 +118,10 @@
 				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
 			});
 			
-			window.ParsleyValidator.addValidator('equalwithbruto', function (value, requirement) {
+			window.Parsley.addValidator('equalwithbruto', function (value, requirement) {
 				if (requirement == false) return true;
 				
-				if (Number($('#inputBruto').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val()))) {
+				if (Number($('input[name="receipt.bruto"]').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val()))) {
 					return true;
 				} else if (Number($('#inputBrutoDeliver').val()) == (Number($('input[name="deliver.net"]').val()) + Number($('input[name="deliver.tare"]').val()))) {
 					return true;
@@ -132,7 +132,7 @@
 			.addMessage('en', 'equalwithbruto', 'Netto and Tare value not equal with Bruto')
 			.addMessage('id', 'equalwithbruto', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
 
-			$('#warehouseDashboardForm').parsley();
+			$('#warehouseDashboardForm').parsley();			
 		});
 	</script>	
 	<style type="text/css">
@@ -351,13 +351,13 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit PO Detail
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_db_jsp.inflow.submit_po_detail" text="Submit PO Detail"></spring:message>
 								</h1>
 							</div>
 							<div class="panel-body">
 								<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
 									<div class="form-group">
-										<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+										<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.warehouse" text="Warehouse"></spring:message></label>
 										<div class="col-sm-5">
 											<form:select class="form-control" disabled="true" path="selectedWarehouse">
 												<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
@@ -365,62 +365,52 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPoCode" class="col-sm-2 control-label">PO Code</label>
+										<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.po_code" text="PO Code"/></label>
 										<div class="col-sm-3">
 											<input class="form-control" value="${ selectedPoObject.poCode }" readonly="readonly"/>											
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+										<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.product" text="Product"/></label>
 										<div class="col-sm-8">
 											<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
 										</div>
-									</div>									
+									</div>
 									<div class="form-group">
-										<label for="inputBruto" class="col-sm-2 control-label">Bruto</label>
+										<label for="inputBruto" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.bruto" text="Bruto"/></label>
 										<div class="col-sm-2">
-											<c:forEach items="${ selectedPoObject.itemsList }" var="iL">
-												<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-													<input id="inputBruto" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
-												</c:if>
-											</c:forEach>
+											<form:input class="form-control" path="receipt.bruto" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputNet" class="col-sm-2 control-label">Net</label>
+										<label for="inputNet" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.net" text="Net"/></label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true"/>
+											<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputNet" class="col-sm-2 control-label">Tare</label>
+										<label for="inputNet" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.tare" text="Tare"/></label>
 										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true"/>
+											<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputBags" class="col-sm-2 control-label">Bags</label>
-										<div class="col-sm-2">
-											<form:input class="form-control" path="receipt.bags" data-parsley-min="0" data-parsley-required="true"/>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+										<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.shipping_date" text="Shipping Date"/></label>
 										<div class="col-sm-5">
 											<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedPoObject.shippingDate }" var="formattedShippingDate"/>
 											<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputReceiptDate" class="col-sm-2 control-label">Receipt Date</label>
+										<label for="inputReceiptDate" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.receipt_date" text="Receipt Date"/></label>
 										<div class="col-sm-5">
 											<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
-											<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
-											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+											<button id="cancelButton" type="button" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 										</div>
 									</div>
 								</form:form>
