@@ -289,8 +289,9 @@
 																						</td>
 																						<td>
 																							<label>
-																								Bruto : <c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/>&nbsp;(<c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/>)<br/>
-																								Netto : <c:out value="${ poForm.itemsList[ iLIdx.index ].receiptList[0].net }"></c:out>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/>
+																								Bruto: <c:out value="${ poForm.itemsList[ iLIdx.index ].receiptList[0].bruto }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/>&nbsp;(<c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/>)<br/>
+																								Netto: <c:out value="${ poForm.itemsList[ iLIdx.index ].receiptList[0].net }"></c:out>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/><br/>
+																								Tare: <c:out value="${ poForm.itemsList[ iLIdx.index ].receiptList[0].tare }"></c:out>
 																							</label>
 																						</td>
 																						<td class="text-right">
@@ -497,19 +498,19 @@
 																	<h1 class="panel-title">
 																		<c:choose>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' }">
-																				Transfer Payment
+																				<spring:message code="po_payment_jsp.transfer_payment" text="Transfer Payment"/>
 																			</c:when>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
-																				Giro Payment
+																				<spring:message code="po_payment_jsp.giro_payment" text="Giro Payment"/>
 																			</c:when>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TERM' }">
-																				Term Payment
+																				<spring:message code="po_payment_jsp.term_payment" text="Term Payment"/>
 																			</c:when>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
-																				Cash Payment
+																				<spring:message code="po_payment_jsp.cash_payment" text="Cash Payment"/>
 																			</c:when>
 																			<c:otherwise>
-																				Payment
+																				<spring:message code="po_payment_jsp.payment" text="Payment"/>
 																			</c:otherwise>
 																		</c:choose>
 																	</h1>
