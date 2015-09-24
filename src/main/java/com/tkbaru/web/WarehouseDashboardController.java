@@ -109,8 +109,10 @@ public class WarehouseDashboardController {
 		warehouseDashboard.setSalesOrderList(soList);
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
+		model.addAttribute("startDate", startDate);
+		model.addAttribute("endDate", endDate);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

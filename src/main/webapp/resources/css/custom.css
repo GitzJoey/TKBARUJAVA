@@ -164,3 +164,7 @@ strong.title {
 .parsley-asterisk .hidden {
 	display: none;
 }
+
+tr.group, tr.group:hover {
+	background-color: #ddd !important;
+}

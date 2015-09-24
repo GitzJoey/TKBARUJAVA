@@ -15,26 +15,7 @@
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,
-		        "searching": 	false,
-		        "columnDefs": [
-		            { "visible": false, "targets": 2 }
-		        ],
-		       
-		        "displayLength": 25,
-		        "drawCallback": function ( settings ) {
-		            var api = this.api();
-		            var rows = api.rows( {page:'current'} ).nodes();
-		            var last=null;
-		 
-		            api.column(2, {page:'current'}).data().each(function (group, i) {
-		                if (last !== group) {
-		                    $(rows).eq(i).before(
-		                        '<tr class="group"><td colspan="7">' + group + '</td></tr>'
-		                    );		 
-		                    last = group;
-		                }
-		            });
-		        }
+		        "searching": 	false
 			});
 			
 			var table = $('#inflowTable').DataTable({
@@ -62,15 +43,6 @@
 		        }
 		    });
 			
-			$('#hideInflow, #hideOutflow').click(function() {
-				var button = $(this).attr('id');
-				if (button == 'hideInflow') {
-					
-				} else {
-					
-				}
-			});
-
 			$('#warehouseSelect').on('change', function(e) {
 				var warehouseSelect = $("#warehouseSelect").val();
 				if(warehouseSelect != '') {
@@ -96,7 +68,7 @@
 				
 				var poid = $(this).val();
 				var warehouseSelect = $("#warehouseSelect").val();
-				var result = confirm("Yakin isi data sales " + trid + " ?");
+				var result = true;
 				if (result) {
 					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect + "/loaddeliver/" + poid + "/" + itemId;
 				}
@@ -115,7 +87,7 @@
 			});
 			
 			$('#cancelButton').click(function() {				
-				window.location = ctxpath + "/warehouse/dashboard/" + $('#selectedWarehouse').val();
+				window.location = ctxpath + "/warehouse/dashboard/id/" + $('#selectedWarehouse').val();
 			});
 			
 			window.Parsley.addValidator('equalwithbruto', function (value, requirement) {
@@ -135,11 +107,6 @@
 			$('#warehouseDashboardForm').parsley();			
 		});
 	</script>	
-	<style type="text/css">
-		tr.group, tr.group:hover {
-    		background-color: #ddd !important;
-		}
-	</style>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -187,7 +154,7 @@
 								<div id="inflowPanel" class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
-											<span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.inflow" text="Inflow"/>
+											<span class="fa fa-mail-forward fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.inflow" text="Inflow"/><c:if test="${ not empty startDate }">&nbsp;[&nbsp;<fmt:formatDate pattern="dd MMM" value="${ startDate }" />&nbsp;-&nbsp;<fmt:formatDate pattern="dd MMM" value="${ endDate }" />&nbsp;]</c:if>
 										</h1>
 									</div>
 									<div class="panel-body">
@@ -228,95 +195,44 @@
 												</c:forEach>
 											</tbody>
 										</table>
-									</div>
-									<ul class="list-group">       
-										<li class="list-group-item">
-											<button type="button" id="hideInflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-										</li>
-									</ul>
+									</div>									
 								</div>
+								<br/>
 								<br/>
 								<div id="outflowPanel" class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
-											<span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.outflow" text="Outflow"/>
+											<span class="fa fa-mail-reply fa-rotate-90 fa-fw"></span><spring:message code="warehouse_db_jsp.outflow" text="Outflow"/><c:if test="${ not empty startDate }">&nbsp;[&nbsp;<fmt:formatDate pattern="dd MMM" value="${ startDate }" />&nbsp;-&nbsp;<fmt:formatDate pattern="dd MMM" value="${ endDate }" />&nbsp;]</c:if>
 										</h1>
 									</div>
 									<div class="panel-body">
 										<table id="outflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
-													<th width="36%"><spring:message code="warehouse_db_jsp.table.outflow.header.product_name" text="Product Name"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.bruto" text="Bruto"/></th>
-													<th width="2%"><spring:message code="warehouse_db_jsp.table.outflow.header.sales_code" text="Sales Code"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.netto" text="Netto"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.tare" text="Tare"/></th>
-													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.shipping_date" text="Shipping Date"/></th>
-													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.deliver_date" text="Deliver Date"/></th>
-													<th width="3%">&nbsp;</th>
+													<th><spring:message code="warehouse_db_jsp.table.outflow.header.customer_name" text="Customer Name"/></th>
+													<th><spring:message code="warehouse_db_jsp.table.outflow.header.sales_code" text="Sales Code"/></th>
+													<th class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.shipping_date" text="Shipping Date"/></th>
+													<th class="center-align"><spring:message code="warehouse_db_jsp.table.outflow.header.deliver_date" text="Deliver Date"/></th>
+													<th></th>
 												</tr>
 											</thead>
-											<tbody >											
-												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="po" varStatus="poIdx">
-													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
-														
-														<c:if test="${ not empty iL.receiptList }">
-															<c:set var="totalReceipt" value="${ iL.deliverList.size() }"></c:set>
-															<c:set var="totalReceipt" value="${ 0 }"></c:set>
-														 	<c:forEach items="${ iL.deliverList }" var="receipt" varStatus="receiptIdx">
-															    <tr>
-																    <td class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td><c:out value="${ po.salesCode }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].net }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].tare }"/></td>
-															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-															    	<td><c:out value="${ warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].deliverDate }"/></td>
-															    	<td></td>
-														    	</tr>
-														    	<c:set var="totalReceipt" value="${ totalReceipt + (warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].deliverList[receiptIdx.index].net + warehouseDashboard.purchaseOrderList[poIdx.index].itemsList[iLIdx.index].receiptList[receiptIdx.index].tare) }"></c:set>
-													    	</c:forEach>
-												    	
-													    	<c:if test="${ totalReceipt <  warehouseDashboard.salesOrderList[poIdx.index].itemsList[iLIdx.index].toBaseQty }">											    	
-														    	<tr id="${ po.poCode }">
-														    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-														    		<td><c:out value="${ iL.toBaseQty }"/></td>
-														    		<td><c:out value="${ po.poCode }"/></td>
-															    	<td></td>
-															    	<td></td>
-															    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-															    	<td></td>
-															    	<td class="center-align">
-															    		<button type="button" id="receiptButton_${ iLIdx.index }_${ totalReceipt }" class="btn btn-primary" value="${ po.salesId }"><span class="fa fa-edit fa-fw"></span></button>
-																    </td>
-														    	</tr>
-												    		</c:if>
-											    		</c:if>
-											    	
-												    	<c:if test="${ empty iL.deliverList }">
-													    	<tr id="${ po.salesCode }">
-													    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
-													    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
-													    		<td><c:out value="${ po.salesCode }"/></td>
-														    	<td></td>
-														    	<td></td>
-														    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
-														    	<td></td>
-														    	<td class="center-align">
-														    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_0" value="${ po.salesId }"><span class="fa fa-edit fa-fw"></span></button>
-															    </td>
-													    	</tr>
-												    	</c:if>
+											<tbody>
+												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="so" varStatus="soIdx">
+													<c:forEach items="${ so.itemsList }" var="iL" varStatus="iLIdx">
+												    	<tr id="${ so.salesCode }">
+												    		<td id="${ iL.itemsId }"><c:out value="${ so.customerLookup.customerName }"/></td>
+												    		<td><c:out value="${ so.salesCode }"/></td>
+													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ so.shippingDate }"/></td>
+													    	<td></td>
+													    	<td class="center-align">
+													    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_0" value="${ so.salesId }"><span class="fa fa-edit fa-fw"></span></button>
+														    </td>
+												    	</tr>
 													</c:forEach>
 												</c:forEach>
 											</tbody>
 										</table>
 									</div>
-									<ul class="list-group">
-										<li class="list-group-item">
-											<button type="button" id="hideOutflow" class="btn btn-xs btn-default"><span class="fa fa-arrows-v fa-fw"></span></button>
-										</li>
-									</ul>
 								</div>
 							</div>
 						</div>

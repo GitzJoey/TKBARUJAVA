@@ -295,7 +295,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerList",customerList);
-		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
+		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);

@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS `tb_deliver`;
+
 CREATE TABLE `tb_deliver` (
   `deliver_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
   `deliver_date` 	datetime 	DEFAULT NULL,
