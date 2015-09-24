@@ -1,12 +1,13 @@
 CREATE TABLE `tb_deliver` (
-  `deliver_id` int(11) NOT NULL AUTO_INCREMENT,
-  `deliver_date` datetime DEFAULT NULL,
-  `items_id` int(11) DEFAULT NULL,
-  `net` int(11) DEFAULT NULL,
-  `tare` int(11) DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `deliver_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `deliver_date` 	datetime 	DEFAULT NULL,
+  `items_id` 		int(11) 	DEFAULT NULL,
+  `bruto` 			int(11) 	DEFAULT '0',
+  `net` 			int(11) 	DEFAULT '0',
+  `tare` 			int(11) 	DEFAULT '0',
+  `created_by` 		int(11) 	DEFAULT NULL,
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT NULL,
+  `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`deliver_id`)
 );

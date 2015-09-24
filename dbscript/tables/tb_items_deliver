@@ -1,4 +1,0 @@
-CREATE TABLE `tb_items_deliver` (
-  `items_id` int(11) DEFAULT NULL,
-  `deliver_id` int(11) DEFAULT NULL
-);

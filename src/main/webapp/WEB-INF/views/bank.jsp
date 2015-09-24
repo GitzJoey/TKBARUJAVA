@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
@@ -71,13 +72,14 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-12">
-										<div class="form-group">
-											<label for="inputTransactionDate" class="col-sm-2 control-label">Transaction Date</label>
-											<div class="col-sm-10">
-												<input type="text" class="form-control" id="inputStartDate" name="inputStartDate"/><!-- &nbsp;-&nbsp;<input type="text" class="form-control" id="inputEndDate" name="inputEndDate"/> -->
-											</div>
+								<div class="form-inline">
+									<div class="form-group">
+										<label for="inputTransactionDate" class="col-md-12">Transaction Date</label>
+										<div class="col-md-4">
+											<input type="text" class="form-control" id="inputStartDate" name="inputStartDate"/>
+										</div>
+										<div class="col-md-4">
+											<input type="text" class="form-control" id="inputEndDate" name="inputEndDate"/>
 										</div>
 									</div>
 								</div>

@@ -159,7 +159,7 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
-
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -176,7 +176,6 @@ public class SalesOrderController {
 		model.addAttribute("customerList", custList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("searchQuery", searchQuery);
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);

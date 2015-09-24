@@ -25,6 +25,8 @@ public class Deliver {
 	@Column(name = "deliver_date")
 	@Temporal(TemporalType.DATE)
 	private Date deliverDate;
+	@Column(name = "bruto")
+	private int bruto;
 	@Column(name = "net")
 	private int net;
 	@Column(name = "tare")
@@ -43,74 +45,62 @@ public class Deliver {
 	public int getDeliverId() {
 		return deliverId;
 	}
-
 	public void setDeliverId(int deliverId) {
 		this.deliverId = deliverId;
 	}
-
 	public Date getDeliverDate() {
 		return deliverDate;
 	}
-
 	public void setDeliverDate(Date deliverDate) {
 		this.deliverDate = deliverDate;
 	}
-
+	public int getBruto() {
+		return bruto;
+	}
+	public void setBruto(int bruto) {
+		this.bruto = bruto;
+	}
 	public int getNet() {
 		return net;
 	}
-
 	public void setNet(int net) {
 		this.net = net;
 	}
-
 	public int getTare() {
 		return tare;
 	}
-
 	public void setTare(int tare) {
 		this.tare = tare;
 	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
-
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 	public int getUpdatedBy() {
 		return updatedBy;
 	}
-
 	public void setUpdatedBy(int updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
-
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
 	@Override
 	public String toString() {
-		return "Deliver [deliverId=" + deliverId + ", deliverDate=" + deliverDate
-				+ ", net=" + net + ", tare=" + tare
-				+ ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
+		return "Deliver [deliverId=" + deliverId + ", deliverDate=" + deliverDate + ", bruto=" + bruto + ", net=" + net
+				+ ", tare=" + tare + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
-
+	
 }
