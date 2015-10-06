@@ -12,10 +12,7 @@
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/jquery.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/media/css/dataTables.bootstrap.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/responsive.dataTables.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/css/responsive.bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
@@ -29,9 +26,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot/jquery.flot.resize.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot/jquery.flot.time.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/media/js/jquery.dataTables.min.js"></script>	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/media/js/dataTables.bootstrap.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>

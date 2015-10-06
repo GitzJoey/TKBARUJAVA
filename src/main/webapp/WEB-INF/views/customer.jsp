@@ -287,7 +287,7 @@
 																					<c:forEach items="${ i.picList }" var="iPIC">
 																						<c:out value="${ iPIC.firstName }"/>&nbsp;<c:out value="${ iPIC.firstName }"/><br/>
 																						<c:forEach items="${ iPIC.phoneList }" var="phL" varStatus="phLIdx">
-																							<c:out value="${ phL.providerName }"/>&nbsp;-&nbsp;<c:out value="${ iPIC.phoneNumber }"/><br/>
+																							<c:out value="${ phL.providerName }"/>&nbsp;-&nbsp;<c:out value="${ phL.phoneNumber }"/><br/>
 																						</c:forEach>
 																					</c:forEach>
 																					<br/>
