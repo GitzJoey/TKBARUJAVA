@@ -281,8 +281,8 @@ public class WarehouseDashboardController {
 			model.addAttribute("selectedItemsObject", selectedItemsObject);
 
 			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-
-			model.addAttribute(Constants.PAGEMODE, "PAGEMODE_EDIT_OUT");
+			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+			model.addAttribute("flow", "Outflow");
 			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		}
 
