@@ -15,25 +15,7 @@
 				"paging":   	false,
 		        "ordering": 	false,
 		        "info":     	false,
-		        "searching": 	false,
-		        "columnDefs": [
-		   		            { "visible": false, "targets": 1 }
-		   		        ],		       
-		        "displayLength": 25,
-		        "drawCallback": function ( settings ) {
-		            var api = this.api();
-		            var rows = api.rows( {page:'current'} ).nodes();
-		            var last=null;
-		 
-		            api.column(1, {page:'current'}).data().each(function (group, i) {
-		                if (last !== group) {
-		                    $(rows).eq(i).before(
-		                        '<tr class="group"><td colspan="5">' + group + '</td></tr>'
-		                    );		 
-		                    last = group;
-		                }
-		            });
-		        }
+		        "searching": 	false
 			});
 			
 			var table = $('#inflowTable').DataTable({
@@ -81,14 +63,12 @@
 			});
 
 			$('[id^="deliverButton_"]').click(function(event) {
-				var itemId = $(this).closest('tr').find('td:eq(0)').attr('id');
-				var trid = $(this).closest('tr').attr('id');
+				var salesId = $(this).attr('id').replace('deliverButton_', '');
 				
-				var poid = $(this).val();
 				var warehouseSelect = $("#warehouseSelect").val();
 				var result = true;
 				if (result) {
-					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect + "/loaddeliver/" + poid + "/" + itemId;
+					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect + "/loaddeliver/" + salesId;
 				}
 			});
 			
@@ -122,7 +102,11 @@
 			.addMessage('en', 'equalwithbruto', 'Netto and Tare value not equal with Bruto')
 			.addMessage('id', 'equalwithbruto', 'Nilai bersih dan Tara tidak sama dengan Nilai Kotor');
 
-			$('#warehouseDashboardForm').parsley();			
+			$('#warehouseDashboardForm').parsley();
+			
+			$('#inputDeliverDate').parsley().on('field:success', function() {
+				$('#deliverDateHidden input[type="hidden"]').val($('#inputDeliverDate').val());
+			});
 		});
 	</script>	
 </head>
@@ -236,17 +220,15 @@
 											</thead>
 											<tbody>
 												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="so" varStatus="soIdx">
-													<c:forEach items="${ so.itemsList }" var="iL" varStatus="iLIdx">
-												    	<tr id="${ so.salesCode }">
-												    		<td id="${ iL.itemsId }"><c:out value="${ so.customerLookup.customerName }"/></td>
-												    		<td><c:out value="${ so.salesCode }"/></td>
-													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ so.shippingDate }"/></td>
-													    	<td></td>
-													    	<td class="center-align">
-													    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_0" value="${ so.salesId }"><span class="fa fa-edit fa-fw"></span></button>
-														    </td>
-												    	</tr>
-													</c:forEach>
+											    	<tr>
+											    		<td><c:out value="${ so.customerLookup.customerName }"/></td>
+											    		<td><c:out value="${ so.salesCode }"/></td>
+												    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ so.shippingDate }"/></td>
+												    	<td></td>
+												    	<td class="center-align">
+												    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_${ so.salesId }" value="${ so.salesId }"><span class="fa fa-edit fa-fw"></span></button>
+													    </td>
+											    	</tr>
 												</c:forEach>
 											</tbody>
 										</table>
@@ -258,6 +240,84 @@
 					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<c:choose>
 							<c:when test="${ flow == 'Outflow' }">
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h1 class="panel-title">
+											<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit Sales Order Detail
+										</h1>
+									</div>
+									<div class="panel-body">
+										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedWarehouse }" data-parsley-validate="parsley">
+											<div class="form-group">
+												<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+												<div class="col-sm-5">
+													<form:select class="form-control" disabled="true" path="selectedWarehouse">
+														<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
+													</form:select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputPoCode" class="col-sm-2 control-label">Sales Code</label>
+												<div class="col-sm-3">
+													<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+												<div class="col-sm-10">
+													 <div class="table-responsive">
+ 															<table class="table">
+ 																<thead>
+ 																	<tr>
+ 																		<th>Product</th>
+ 																		<th>Quantity</th>
+ 																		<th>Bruto</th>
+ 																	</tr>
+ 																</thead>
+ 																<tbody>
+ 																	<c:forEach items="${ selectedSoObject.itemsList }" var="iL" varStatus="itIdx">
+	 																	<tr>
+	 																		<td><form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].itemsId"/>
+	 																			<c:out value="${ iL.productLookup.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
+	 																		</td>
+	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
+	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
+	 																	</tr>
+ 																	</c:forEach>
+ 																</tbody>
+														</table>
+													</div>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
+												<div class="col-sm-5">
+													<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedSoObject.shippingDate }" var="formattedShippingDate"/>
+													<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>			
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputDeliverDate" class="col-sm-2 control-label">Deliver Date</label>
+												<div class="col-sm-5">
+													<div id="deliverDateHidden">
+														<c:forEach items="${ selectedSoObject.itemsList }" var="iL" varStatus="itIdx">
+															<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].deliverDate"/>
+														</c:forEach>
+													</div>
+													<input id="inputDeliverDate" class="form-control" data-parsley-required="true" data-parsley-trigger="change"/>												
+												</div>
+											</div>
+											<div class="col-md-7 col-offset-md-5">
+												<div class="btn-toolbar">
+													<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
+													<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
+												</div>
+											</div>
+										</form:form>
+									</div>
+								</div>
+							</c:when>
+							<c:otherwise>
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
@@ -348,80 +408,6 @@
 												<div class="btn-toolbar">
 													<button id="cancelButton" type="button" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
 													<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
-												</div>
-											</div>
-										</form:form>
-									</div>
-								</div>
-							</c:when>
-							<c:otherwise>
-								<div class="panel panel-default">
-									<div class="panel-heading">
-										<h1 class="panel-title">
-											<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit Sales Order Detail
-										</h1>
-									</div>
-									<div class="panel-body">
-										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedItems }/${ warehouseDashboard.selectedWarehouse }" data-parsley-validate="parsley">
-											<div class="form-group">
-												<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
-												<div class="col-sm-5">
-													<form:select class="form-control" disabled="true" path="selectedWarehouse">
-														<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
-													</form:select>
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputPoCode" class="col-sm-2 control-label">Sales Code</label>
-												<div class="col-sm-3">
-													<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputProductName" class="col-sm-2 control-label">Product</label>
-												<div class="col-sm-8">
-													<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
-												</div>
-											</div>									
-											<div class="form-group">
-												<label for="inputBrutoDeliver" class="col-sm-2 control-label">Bruto</label>
-												<div class="col-sm-2">
-													<c:forEach items="${ selectedSoObject.itemsList }" var="iL">
-														<c:if test="${ iL.itemsId == selectedItemsObject.itemsId }">
-															<input id="inputBrutoDeliver" class="form-control" value="${ iL.toBaseQty }" readonly="readonly"/>
-														</c:if>
-													</c:forEach>
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputNet" class="col-sm-2 control-label">Net</label>
-												<div class="col-sm-2">
-													<form:input class="form-control" path="deliver.net" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>														
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputNet" class="col-sm-2 control-label">Tare</label>
-												<div class="col-sm-2">
-													<form:input class="form-control" path="deliver.tare" data-parsley-min="1" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-equalwithbruto="true"/>										
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
-												<div class="col-sm-5">
-													<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedSoObject.shippingDate }" var="formattedShippingDate"/>
-													<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>			
-												</div>
-											</div>
-											<div class="form-group">
-												<label for="inputDeliverDate" class="col-sm-2 control-label">Deliver Date</label>
-												<div class="col-sm-5">
-													<form:input id="inputDeliverDate" class="form-control" path="deliver.deliverDate" data-parsley-required="true" data-parsley-trigger="change"/>												
-												</div>
-											</div>
-											<div class="col-md-7 col-offset-md-5">
-												<div class="btn-toolbar">
-													<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
-													<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 												</div>
 											</div>
 										</form:form>

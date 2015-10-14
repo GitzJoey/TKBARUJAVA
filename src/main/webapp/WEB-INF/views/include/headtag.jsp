@@ -6,13 +6,13 @@
     <meta name="description" content="Toko, Baru, Wangon">
     <meta name="author" content="GitzJoey">
 	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/theme-yeti/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css">
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/theme-yeti/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	

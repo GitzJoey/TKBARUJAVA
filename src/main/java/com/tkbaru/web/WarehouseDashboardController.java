@@ -220,129 +220,72 @@ public class WarehouseDashboardController {
 		return result;
 	}
 
-	@RequestMapping(value = "/id/{warehouseId}/loaddeliver/{salesId}/{itemId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/id/{warehouseId}/loaddeliver/{salesId}", method = RequestMethod.GET)
 	public String loadDeliver(Locale locale, 
 								Model model,
-								@PathVariable int warehouseId, @PathVariable int salesId,
-								@PathVariable int itemId) {
-		logger.info("[loadReceipt] : " + "selectedWarehouse: " + warehouseId + ", salesId: " + salesId);
+								@PathVariable int warehouseId, @PathVariable int salesId) {
+		logger.info("[loadDeliver] : " + "selectedWarehouse: " + warehouseId + ", salesId: " + salesId);
 
-		List<SalesOrder> salesList = salesManager.getSalesOrderByStatus("L016_WD");
-		SalesOrder selectedSoObject = null;
-		Items selectedItemsObject = null;
+		List<SalesOrder> soList = new ArrayList<SalesOrder>();
+		SalesOrder selectedSoObject = salesManager.getSalesOrderById(salesId); 
 
-		for (SalesOrder so : salesList) {
-			if (so.getSalesId() == salesId) {
-				selectedSoObject = so;
-			}
-			so.getItemsList().size();
-			for (Items item : so.getItemsList()) {
-				if (item.getItemsId() == itemId) {
-					selectedItemsObject = item;
-				}
-				item.getReceiptList().size();
-			}
+		for (Items i:selectedSoObject.getItemsList()) {
+			List<Deliver> d = new ArrayList<Deliver>();
+			d.add(new Deliver());
+			i.setDeliverList(d);
 		}
-
-		long currentStock = 0;
-
-		try {
-			currentStock = stocksManager.findStockByProductIdAndByWarehouseId(selectedItemsObject.getProductId(), warehouseId);
-		} catch (Exception e) {
-			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-
-			model.addAttribute("errorMessageText", "Invalid Warehouse");
-			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
-			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
-
-			return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
-		}
-
-		if (currentStock == 0) {
-			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-
-			model.addAttribute("errorMessageText", "Invalid Stock");
-			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
-			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
-
-			return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
-		} else {
-			WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
-			warehouseDashboard.setSelectedWarehouse(warehouseId);
-			warehouseDashboard.setSelectedSales(salesId);
-			warehouseDashboard.setSelectedItems(itemId);
-			warehouseDashboard.setSalesOrderList(salesList);
-
-			model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
-			model.addAttribute("warehouseDashboard", warehouseDashboard);
-			model.addAttribute("selectedSoObject", selectedSoObject);
-			model.addAttribute("selectedItemsObject", selectedItemsObject);
-
-			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
-			model.addAttribute("flow", "Outflow");
-			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		}
+		
+		soList.add(selectedSoObject);
+		
+		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
+		warehouseDashboard.setSelectedWarehouse(warehouseId);
+		warehouseDashboard.setSelectedSales(salesId);
+		warehouseDashboard.setSalesOrderList(soList);
+		
+		model.addAttribute("warehouseDashboard", warehouseDashboard);
+		model.addAttribute("selectedSoObject", selectedSoObject);
+		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		model.addAttribute("flow", "Outflow");
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 
-	@RequestMapping(value = "/savedeliver/{salesId}/{itemId}/{warehouseId}", method = RequestMethod.POST)
-	public String saveDashboardDeliver(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int salesId, @PathVariable int itemId, @PathVariable int warehouseId) {
-		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId + ", itemId: " + itemId);
+	@RequestMapping(value = "/savedeliver/{salesId}/{warehouseId}", method = RequestMethod.POST)
+	public String saveDashboardDeliver(Locale locale, 
+										Model model, 
+										@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, 
+										RedirectAttributes redirectAttributes, 
+										@PathVariable int salesId, 
+										@PathVariable int warehouseId) {
+		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId + ", warehouseId: " + warehouseId);
 
 		SalesOrder sales = salesManager.getSalesOrderById(salesId);
 
 		List<Items> itemsList = sales.getItemsList();
 		List<StocksOut> stocksList = new ArrayList<StocksOut>();
 		for (Items items : itemsList) {
-			if (items.getItemsId() == itemId) {
-				List<Deliver> deliverList = items.getDeliverList();
-
-				if (warehouseDashboard.getDeliver().getDeliverId() == 0) {
-					warehouseDashboard.getDeliver().setCreatedBy(loginContextSession.getUserLogin().getUserId());
-					warehouseDashboard.getDeliver().setCreatedDate(new Date());
+			for (Items itemX : warehouseDashboard.getSalesOrderList().get(0).getItemsList()) {
+				if (itemX.getItemsId() == items.getItemsId()) {
+					items.setDeliverList(itemX.getDeliverList());
 
 					StocksOut stocksOut = new StocksOut();
 					stocksOut.setSalesId(salesId);
 					stocksOut.setProductId(items.getProductId());
 					stocksOut.setWarehouseId(warehouseId);
-					stocksOut.setProdQuantity(warehouseDashboard.getDeliver().getNet());
+					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocksOut.setCreatedDate(new Date());
 					stocksList.add(stocksOut);
 				}
-				deliverList.add(warehouseDashboard.getDeliver());
 			}
 		}
+		
+		sales.setSalesStatus("L016_WP");
 
-		Boolean isAllArrived = false;
-		for (Items item : sales.getItemsList()) {
-
-			long arrivalQuantity = 0;
-
-			for (Deliver deliver : item.getDeliverList()) {
-				arrivalQuantity += (deliver.getNet() + deliver.getTare());
-			}
-
-			if (item.getToBaseQty() == arrivalQuantity) {
-				isAllArrived = true;
-			} else {
-				isAllArrived = false;
-			}
-		}
-
-		if (isAllArrived) {
-			sales.setSalesStatus("L016_WP");
-		}
-
-		try {
-			salesManager.editSalesOrder(sales);
-		} catch (Exception e) {
-
-		}
+		salesManager.editSalesOrder(sales);
 
 		for (StocksOut stocks : stocksList) {
 			stocksOutManager.addOrCreateStocksOut(stocks);
