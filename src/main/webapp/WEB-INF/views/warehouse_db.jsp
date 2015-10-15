@@ -90,7 +90,10 @@
 			
 			window.Parsley.addValidator('equalwithbruto', function (value, requirement) {
 				if (requirement == false) return true;
-				
+				console.log(Number($('input[name="receipt.bruto"]').val()));
+				console.log(Number($('input[name="receipt.net"]').val()));
+				console.log(Number($('input[name="receipt.tare"]').val()));
+				console.log(Number($('input[name="receipt.bruto"]').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val())));
 				if (Number($('input[name="receipt.bruto"]').val()) == (Number($('input[name="receipt.net"]').val()) + Number($('input[name="receipt.tare"]').val()))) {
 					return true;
 				} else if (Number($('#inputBrutoDeliver').val()) == (Number($('input[name="deliver.net"]').val()) + Number($('input[name="deliver.tare"]').val()))) {

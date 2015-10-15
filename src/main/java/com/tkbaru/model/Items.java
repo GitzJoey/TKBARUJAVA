@@ -21,6 +21,8 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="tb_items")
@@ -38,6 +40,8 @@ public class Items implements Serializable {
 	private int itemsId;
 	@Column(name="product_id")
 	private int productId;
+	@Column(name="stocks_id")
+	private int stocksId;
 	@Column(name="quantity")
 	private long prodQuantity;
 	@Column(name="unit_code")
@@ -64,6 +68,11 @@ public class Items implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="product_id", referencedColumnName="product_id", unique=true, insertable=false, updatable=false)
 	private Product productLookup;
+
+	@ManyToOne
+	@JoinColumn(name="stocks_id", referencedColumnName="stocks_id", unique=true, insertable=false, updatable=false)
+	@NotFound(action=NotFoundAction.IGNORE)
+	private Stocks stocksLookup;
 
 	@ManyToOne
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
@@ -99,6 +108,14 @@ public class Items implements Serializable {
 
 	public void setProductId(int productId) {
 		this.productId = productId;
+	}
+
+	public int getStocksId() {
+		return stocksId;
+	}
+
+	public void setStocksId(int stocksId) {
+		this.stocksId = stocksId;
 	}
 
 	public long getProdQuantity() {
@@ -189,6 +206,14 @@ public class Items implements Serializable {
 		this.productLookup = productLookup;
 	}
 
+	public Stocks getStocksLookup() {
+		return stocksLookup;
+	}
+
+	public void setStocksLookup(Stocks stocksLookup) {
+		this.stocksLookup = stocksLookup;
+	}
+
 	public Lookup getUnitCodeLookup() {
 		return unitCodeLookup;
 	}
@@ -223,11 +248,11 @@ public class Items implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", prodQuantity=" + prodQuantity
-				+ ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", baseUnitCode=" + baseUnitCode
-				+ ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
+		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", stocksId=" + stocksId + ", prodQuantity="
+				+ prodQuantity + ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", baseUnitCode="
+				+ baseUnitCode + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
 	}
-	
+
 }

@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `tb_items`;
 CREATE TABLE `tb_items` (
   `items_id` 		int(11) NOT NULL AUTO_INCREMENT,
   `product_id` 		int(11) DEFAULT NULL,
+  `stocks_id` 		int(11) DEFAULT NULL,
   `quantity` 		int(11) DEFAULT NULL,
   `unit_code` 		varchar(45) DEFAULT NULL,
   `base_unit_code` 	varchar(45) DEFAULT NULL,

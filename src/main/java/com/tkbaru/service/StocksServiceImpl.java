@@ -52,10 +52,16 @@ public class StocksServiceImpl implements StocksService {
 
 	@Override
 	@Transactional
-	public long findStockByProductIdAndByWarehouseId(int productId,
-			int warehouseId) {
+	public long findStockByProductIdAndByWarehouseId(int productId, int warehouseId) {
 		
 		return stocksDAO.findStockByProductIdAndByWarehouseId(productId, warehouseId);
+	}
+
+	@Override
+	@Transactional
+	public Stocks getStocksById(int selectedId) {
+		
+		return stocksDAO.getStocksById(selectedId);
 	}
 
 }

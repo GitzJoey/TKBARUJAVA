@@ -216,8 +216,8 @@
 																<div class="form-group" style="padding-left: 2%">
 																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																		<c:forEach items="${ productSelectionDDL }" var="psddl">
-																			<option value="${ psddl.productId }">${ psddl.productName }</option>
+																		<c:forEach items="${ stocksListDDL }" var="sddl">
+																			<option value="${ sddl.stocksId }">${ sddl.productLookup.productName }</option>
 																		</c:forEach>
 																	</select>
 																	</div>

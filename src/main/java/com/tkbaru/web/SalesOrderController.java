@@ -29,6 +29,7 @@ import com.tkbaru.model.Payment;
 import com.tkbaru.model.Product;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.Stocks;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
@@ -157,9 +158,12 @@ public class SalesOrderController {
 		}
 
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
-		
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
+		if (soTypeValue.equals("L015_WIN")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		} else {
+			
+		}
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -205,7 +209,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -243,7 +247,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -252,19 +256,29 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}	
 	
-	@RequestMapping(value = "/additems/{soTypeValue}/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poAddItems(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue,@PathVariable int customerId,@PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[soAddItems] " + "productId: " + productId);
+	@RequestMapping(value = "/additems/{soTypeValue}/{customerId}/{tabId}/{stocksId}", method = RequestMethod.POST)
+	public String soAddItems(Locale locale, 
+								Model model, 
+								@ModelAttribute("loginContext") LoginContext loginContext, 
+								@PathVariable String soTypeValue,
+								@PathVariable int customerId,
+								@PathVariable int tabId, 
+								@PathVariable int stocksId) {
+		logger.info("[soAddItems] " + "soTypeValue: " +  soTypeValue + ", customerId: " + customerId + ", tabId: " + tabId + ", stocksId: " + stocksId);
+		
+		Stocks s = stocksManager.getStocksById(stocksId);
 		
 		Items item = new Items();
-		item.setProductId(productId);
-		Product product = productManager.getProductById(productId);
+		item.setStocksId(stocksId);
+		item.setStocksLookup(s);
+		item.setProductId(s.getProductLookup().getProductId());
+		Product product = productManager.getProductById(s.getProductLookup().getProductId());
 		item.setProductLookup(product);
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
-		for(ProductUnit productUnit : product.getProductUnit()){
-			if(productUnit.isBaseUnit()){
+		for (ProductUnit productUnit:product.getProductUnit()) {
+			if (productUnit.isBaseUnit()) {
 				item.setBaseUnitCode(productUnit.getUnitCode());
 			}
 		}
@@ -278,7 +292,7 @@ public class SalesOrderController {
 
 		loginContextSession.setSoList(loginContext.getSoList());
 		
-		for (SalesOrder soVar : loginContextSession.getSoList()) {
+		for (SalesOrder soVar:loginContextSession.getSoList()) {
 			soVar.setCustomerLookup(customerManager.getCustomerById(customerId));
 			soVar.setStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatus()));
 			soVar.setSoTypeLookup(lookupManager.getLookupByKey(soVar.getSalesType()));
@@ -295,7 +309,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerList",customerList);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -306,7 +320,13 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/removeitems/{soTypeValue}/{customerId}/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable String soTypeValue, @PathVariable int customerId, @PathVariable int tabId, @PathVariable int productId) {
+	public String poRemoveItemsMulti(Locale locale, 
+										Model model, @ModelAttribute("loginContext") 
+										LoginContext loginContext, 
+										@PathVariable String soTypeValue, 
+										@PathVariable int customerId, 
+										@PathVariable int tabId, 
+										@PathVariable int productId) {
 		logger.info("[poRemoveItemsMulti] " + "varId: " + productId);
 
 		List<Items> iLNew = new ArrayList<Items>();
@@ -331,7 +351,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerList", customerList);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -364,7 +384,7 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
 		model.addAttribute("activeTab", tabId);
 		
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -445,7 +465,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerList",customerList);
-		model.addAttribute("productSelectionDDL",productManager.getAllProduct());
+		model.addAttribute("stocksListDDL",productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -480,7 +500,7 @@ public class SalesOrderController {
 		so.setSoTypeLookup(lookupManager.getLookupByKey(so.getSalesType()));
 		
 		model.addAttribute("reviseSalesForm", so);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -510,7 +530,7 @@ public class SalesOrderController {
 		reviseSalesForm.setStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatus()));
 		reviseSalesForm.setSoTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesType()));
 
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		
@@ -543,7 +563,7 @@ public class SalesOrderController {
 		}
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -595,7 +615,6 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -622,7 +641,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -649,7 +668,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -676,7 +695,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
@@ -863,7 +882,7 @@ public class SalesOrderController {
 		loginContextSession.getSoList().add(newSales);
 		
 		model.addAttribute("customerList", custList);
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 	
@@ -899,7 +918,6 @@ public class SalesOrderController {
 		
 		loginContextSession.getSoList().add(newSales);
 	
-		model.addAttribute("productSelectionDDL", productManager.getProductHasInStock());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 	
