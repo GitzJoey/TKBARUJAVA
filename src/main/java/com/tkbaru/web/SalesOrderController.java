@@ -326,13 +326,13 @@ public class SalesOrderController {
 										@PathVariable String soTypeValue, 
 										@PathVariable int customerId, 
 										@PathVariable int tabId, 
-										@PathVariable int productId) {
-		logger.info("[poRemoveItemsMulti] " + "varId: " + productId);
+										@PathVariable int itemIdx) {
+		logger.info("[poRemoveItemsMulti] " + "itemIdx: " + itemIdx);
 
 		List<Items> iLNew = new ArrayList<Items>();
 
 		for (int x = 0; x < loginContext.getSoList().get(tabId).getItemsList().size(); x++) {
-			if (x == productId) continue;
+			if (x == itemIdx) continue;
 			iLNew.add(loginContext.getSoList().get(tabId).getItemsList().get(x));
 		}
 
@@ -341,6 +341,8 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
+			Stocks stock = stocksManager.getStocksById(items.getStocksId());
+			items.setStocksLookup(stock);
 		}
 		
 		Customer customer = customerManager.getCustomerById(customerId);
@@ -360,7 +362,6 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SALESORDER;
 	}
-
 	
 	@RequestMapping(value = "/removeitems/{tabId}/{productId}", method = RequestMethod.POST)
 	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable int productId) {
@@ -430,10 +431,12 @@ public class SalesOrderController {
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
 			items.setProductLookup(prod);
+			Stocks s = stocksManager.getStocksById(items.getStocksId());
+			items.setStocksLookup(s);
 			for (ProductUnit productUnit : prod.getProductUnit()) {
 				if(productUnit.getUnitCode().equals(items.getUnitCode())){
 					items.setToBaseValue(productUnit.getConversionValue());
-					items.setToBaseQty(items.getProdQuantity()*productUnit.getConversionValue());
+					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());
 				}
 			}
 			itemList.add(items);

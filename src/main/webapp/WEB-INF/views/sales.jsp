@@ -425,6 +425,7 @@
 																							<td style="vertical-align: middle;">
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_itemsId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_productId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productId"/>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_stocksId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].stocksId"/>
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseValue" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseQty" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
