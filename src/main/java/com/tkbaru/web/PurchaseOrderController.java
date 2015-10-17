@@ -475,25 +475,29 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_REVISE;
 	}
 
-	@RequestMapping(value = "/save/{varId}", method = RequestMethod.POST)
-	public String poSave(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable String varId) {
-		logger.info("[poSave] " + "varId: " + varId);
+	@RequestMapping(value = "/save/{tabId}", method = RequestMethod.POST)
+	public String poSave(Locale locale, 
+							Model model, 
+							@ModelAttribute("loginContext") LoginContext loginContext, 
+							RedirectAttributes redirectAttributes, 
+							@PathVariable String tabId) {
+		logger.info("[poSave] " + "tabId: " + tabId);
 
 		loginContextSession.setPoList(loginContext.getPoList());
 		
-		PurchaseOrder po = loginContext.getPoList().get(Integer.parseInt(varId));
+		PurchaseOrder po = loginContext.getPoList().get(Integer.parseInt(tabId));
 		po.setPoStatus("L013_WA");
 		po.setStatusLookup(lookupManager.getLookupByKey("L013_WA"));
 		
 		List<Items> itemList = new ArrayList<Items>();
-		for (Items items : loginContext.getPoList().get(Integer.parseInt(varId)).getItemsList()) {
+		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
 			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);			
+			items.setProductLookup(prod);
 			
 			for (ProductUnit productUnit : prod.getProductUnit()) {
 				if (productUnit.getUnitCode().equals(items.getUnitCode())) {				
 					items.setToBaseValue(productUnit.getConversionValue());
-					items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+					items.setToBaseQty(productUnit.getConversionValue() * items.getProdQuantity());
 				}
 			}
 			
@@ -522,7 +526,7 @@ public class PurchaseOrderController {
 		}
 
 		loginContextSession.setPoList(loginContext.getPoList());
-		loginContextSession.getPoList().get(Integer.parseInt(varId)).setItemsList(itemList);
+		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(itemList);
 
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());

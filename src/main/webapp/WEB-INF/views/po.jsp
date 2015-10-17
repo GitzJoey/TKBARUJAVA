@@ -352,7 +352,10 @@
 																				</td>
 																				<td style="vertical-align: middle;">
 																					<div class="form-group no-margin">
-																						<div class="col-md-12">											
+																						<div class="col-md-12">
+																							<c:if test="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }">
+																								<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																							</c:if>																							
 																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus == 'L013_WA' }" data-parsley-group="poTab${ poIdx.index }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
