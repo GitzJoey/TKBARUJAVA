@@ -266,7 +266,8 @@ public class WarehouseDashboardController {
 		SalesOrder sales = salesManager.getSalesOrderById(salesId);
 
 		List<Items> itemsList = sales.getItemsList();
-		List<StocksOut> stocksList = new ArrayList<StocksOut>();
+		List<Stocks> stocksList = new ArrayList<Stocks>();
+		List<StocksOut> stocksOutList = new ArrayList<StocksOut>();
 		for (Items items : itemsList) {
 			for (Items itemX : warehouseDashboard.getSalesOrderList().get(0).getItemsList()) {
 				if (itemX.getItemsId() == items.getItemsId()) {
@@ -279,7 +280,12 @@ public class WarehouseDashboardController {
 					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocksOut.setCreatedDate(new Date());
-					stocksList.add(stocksOut);
+					stocksOutList.add(stocksOut);
+					
+					
+					Stocks s = items.getStocksLookup();
+					s.setCurrentQuantity(s.getCurrentQuantity() - itemX.getDeliverList().get(0).getBruto());
+					stocksList.add(s);
 				}
 			}
 		}
@@ -288,10 +294,12 @@ public class WarehouseDashboardController {
 
 		salesManager.editSalesOrder(sales);
 
-		for (StocksOut stocks : stocksList) {
+		for (StocksOut stocks : stocksOutList) {
 			stocksOutManager.addOrCreateStocksOut(stocks);
 		}
 
+		stocksManager.updateStocks(stocksList);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

@@ -22,19 +22,19 @@ public class StocksOutDAOImpl implements StocksOutDAO {
     
 	@Override
 	public List<StocksOut> getAllStocksOut() {
-		logger.info("[getAllStocks]" + "");
+		logger.info("[getAllStocksOut] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		List<StocksOut> stocksList = session.createQuery("FROM StocksOut").list();
 	
-		logger.info("Stocks retrieved: " + stocksList.size());
+		logger.info("StocksOut retrieved: " + stocksList.size());
 		
 		return stocksList;
 	}
 
 	@Override
 	public void addStocksOut(StocksOut stocks) {
-		logger.info("[addStocks" + "");
+		logger.info("[addStocksOut] " + "");
 		
 		 Session session = this.sessionFactory.getCurrentSession();
 		
@@ -46,7 +46,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 
 	@Override
 	public void updateStocksOut(StocksOut stocks) {
-		logger.info("[updateStocks" + "");
+		logger.info("[updateStocksOut] " + "");
 		
 		 Session session = this.sessionFactory.getCurrentSession();
 		
@@ -73,7 +73,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 				"INNER JOIN s.poLookup " +
 				"WHERE s.poLookup.warehouseId = :whId").setInteger("whId", warehouseId).list();
 	
-		logger.info("Stocks in warehouseId " + warehouseId + ": " + stocksList.size());
+		logger.info("StocksOut in warehouseId " + warehouseId + ": " + stocksList.size());
 		
 		return stocksList;
 	}

@@ -64,4 +64,13 @@ public class StocksServiceImpl implements StocksService {
 		return stocksDAO.getStocksById(selectedId);
 	}
 
+	@Override
+	@Transactional
+	public void updateStocks(List<Stocks> stocks) {
+		
+		for (Stocks s:stocks) {
+			stocksDAO.updateStocks(s);
+		}		
+	}
+
 }

@@ -46,7 +46,7 @@ public class StocksDAOImpl implements StocksDAO {
 
 	@Override
 	public void updateStocks(Stocks stocks) {
-		logger.info("[updateStocks" + "");
+		logger.info("[updateStocks] " + "");
 		
 		 Session session = this.sessionFactory.getCurrentSession();
 		
@@ -58,6 +58,7 @@ public class StocksDAOImpl implements StocksDAO {
 
 	@Override
 	public long countStocksByProductId(int productId) {
+		logger.info("[countStocksByProductId] " + "productId: " + productId);
 		Session session = this.sessionFactory.getCurrentSession();
 		long qty =(long) session.createQuery("select SUM(s.prodQuantity) FROM Stocks s where s.productId= :productId").setInteger("productId", productId).uniqueResult();
 		return qty;
@@ -80,6 +81,8 @@ public class StocksDAOImpl implements StocksDAO {
 
 	@Override
 	public long findStockByProductIdAndByWarehouseId(int productId, int warehouseId) {
+		logger.info("[findStockByProductIdAndByWarehouseId] " + "productId: " +  productId + ", warehouseId: " + warehouseId);
+		
 		Session session = this.sessionFactory.getCurrentSession();
 		long qty =(long) session.createQuery("select SUM(s.prodQuantity) FROM Stocks s where s.productId= :productId and s.warehouseId = :warehouseId").setInteger("productId", productId).setInteger("warehouseId", warehouseId).uniqueResult();
 		return qty;

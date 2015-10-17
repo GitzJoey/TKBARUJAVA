@@ -290,7 +290,8 @@
  																<tbody>
  																	<c:forEach items="${ selectedSoObject.itemsList }" var="iL" varStatus="itIdx">
 	 																	<tr>
-	 																		<td><form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].itemsId"/>
+	 																		<td>
+	 																			<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].itemsId"/>
 	 																			<c:out value="${ iL.productLookup.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
