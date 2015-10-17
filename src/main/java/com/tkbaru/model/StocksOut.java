@@ -21,25 +21,27 @@ public class StocksOut {
 	}
 
 	@Id
-	@Column(name = "stocks_out_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="stocks_out_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int stocksOutId;
-	@Column(name = "so_id")
+	@Column(name="so_id")
 	private int salesId;
-	@Column(name = "product_id")
+	@Column(name="stocks_id")
+	private int stocksId;
+	@Column(name="product_id")
 	private int productId;
-	@Column(name = "warehouse_id")
+	@Column(name="warehouse_id")
 	private int warehouseId;
-	@Column(name = "quantity")
+	@Column(name="quantity")
 	private long prodQuantity;
-	@Column(name = "created_by")
+	@Column(name="created_by")
 	private int createdBy;
-	@Column(name = "created_date")
+	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
-	@Column(name = "updated_by")
+	@Column(name="updated_by")
 	private int updatedBy;
-	@Column(name = "updated_date")
+	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
@@ -55,14 +57,6 @@ public class StocksOut {
 	@JoinColumn(name = "warehouse_id", unique = true, insertable = false, updatable = false)
 	private Warehouse warehouseLookup;
 
-	public int getSalesId() {
-		return salesId;
-	}
-
-	public void setSalesId(int salesId) {
-		this.salesId = salesId;
-	}
-
 	public int getStocksOutId() {
 		return stocksOutId;
 	}
@@ -71,12 +65,20 @@ public class StocksOut {
 		this.stocksOutId = stocksOutId;
 	}
 
-	public Stocks getStocksLookup() {
-		return stocksLookup;
+	public int getSalesId() {
+		return salesId;
 	}
 
-	public void setStocksLookup(Stocks stocksLookup) {
-		this.stocksLookup = stocksLookup;
+	public void setSalesId(int salesId) {
+		this.salesId = salesId;
+	}
+
+	public int getStocksId() {
+		return stocksId;
+	}
+
+	public void setStocksId(int stocksId) {
+		this.stocksId = stocksId;
 	}
 
 	public int getProductId() {
@@ -135,6 +137,14 @@ public class StocksOut {
 		this.updatedDate = updatedDate;
 	}
 
+	public Stocks getStocksLookup() {
+		return stocksLookup;
+	}
+
+	public void setStocksLookup(Stocks stocksLookup) {
+		this.stocksLookup = stocksLookup;
+	}
+
 	public Product getProductLookup() {
 		return productLookup;
 	}
@@ -153,10 +163,9 @@ public class StocksOut {
 
 	@Override
 	public String toString() {
-		return "Stocks [stocksOutId=" + stocksOutId + ", productId="
-				+ productId + ", warehouseId=" + warehouseId
-				+ ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+		return "StocksOut [stocksOutId=" + stocksOutId + ", salesId=" + salesId + ", stocksId=" + stocksId
+				+ ", productId=" + productId + ", warehouseId=" + warehouseId + ", prodQuantity=" + prodQuantity
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + "]";
 	}
 

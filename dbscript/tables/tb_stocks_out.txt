@@ -3,6 +3,7 @@ DROP TABLE IF EXISTS `tb_stocks_out`;
 CREATE TABLE `tb_stocks_out` (
   `stocks_out_id` int(11) NOT NULL AUTO_INCREMENT,
   `so_id` int(11) DEFAULT NULL,
+  `stocks_id` int(11) DEFAULT NULL,
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `warehouse_id` int(11) DEFAULT NULL,

@@ -183,6 +183,7 @@ public class WarehouseDashboardController {
 					stocks.setProductId(items.getProductId());
 					stocks.setWarehouseId(po.getWarehouseId());
 					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocks.setCreatedDate(new Date());
 					stocksList.add(stocks);

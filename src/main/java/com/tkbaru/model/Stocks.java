@@ -34,6 +34,8 @@ public class Stocks {
 	private int warehouseId;
 	@Column(name="quantity")
 	private long prodQuantity;
+	@Column(name="current_quantity")
+	private long currentQuantity;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -102,6 +104,14 @@ public class Stocks {
 
 	public void setProdQuantity(long prodQuantity) {
 		this.prodQuantity = prodQuantity;
+	}
+
+	public long getCurrentQuantity() {
+		return currentQuantity;
+	}
+
+	public void setCurrentQuantity(long currentQuantity) {
+		this.currentQuantity = currentQuantity;
 	}
 
 	public int getCreatedBy() {
@@ -179,10 +189,9 @@ public class Stocks {
 	@Override
 	public String toString() {
 		return "Stocks [stocksId=" + stocksId + ", poId=" + poId + ", productId=" + productId + ", warehouseId="
-				+ warehouseId + ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy + ", createdDate="
-				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", poLookup=" + poLookup
-				+ ", productLookup=" + productLookup + ", warehouseLookup=" + warehouseLookup + ", productEntity="
-				+ productEntity + ", priceList=" + priceList + "]";
+				+ warehouseId + ", prodQuantity=" + prodQuantity + ", currentQuantity=" + currentQuantity
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", priceList=" + priceList + "]";
 	}
-	
+
 }

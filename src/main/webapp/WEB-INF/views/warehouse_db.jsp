@@ -266,6 +266,12 @@
 												</div>
 											</div>
 											<div class="form-group">
+												<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
+												<div class="col-sm-3">
+													<input class="form-control" value="${ selectedSoObject.customerLookup.customerName }" readonly="readonly"/>											
+												</div>
+											</div>											
+											<div class="form-group">
 												<label for="inputProductName" class="col-sm-2 control-label">Product</label>
 												<div class="col-sm-10">
 													 <div class="table-responsive">
@@ -274,6 +280,7 @@
  																	<tr>
  																		<th>Product</th>
  																		<th>Quantity</th>
+ 																		<th>Stocks</th>
  																		<th>Bruto</th>
  																	</tr>
  																</thead>
@@ -284,6 +291,7 @@
 	 																			<c:out value="${ iL.productLookup.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
+	 																		<td><c:out value="${ iL.stocksLookup.prodQuantity }"/></td>
 	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
 	 																	</tr>
  																	</c:forEach>
