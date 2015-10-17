@@ -442,6 +442,9 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-md-12">
+																										<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
+																											<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																										</c:if>
 																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
 																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">

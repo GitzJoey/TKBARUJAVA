@@ -209,7 +209,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);

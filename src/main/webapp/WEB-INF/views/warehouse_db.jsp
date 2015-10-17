@@ -107,9 +107,12 @@
 
 			$('#warehouseDashboardForm').parsley();
 			
-			$('#inputDeliverDate').parsley().on('field:success', function() {
-				$('#deliverDateHidden input[type="hidden"]').val($('#inputDeliverDate').val());
-			});
+			if($('#inputDeliverDate').size() > 0) {
+				$('#inputDeliverDate').parsley().on('field:success', function() {
+					console.log('ok');
+					$('#deliverDateHidden input[type="hidden"]').val($('#inputDeliverDate').val());
+				});				
+			}
 		});
 	</script>	
 </head>
