@@ -285,6 +285,8 @@ public class WarehouseDashboardController {
 					
 					Stocks s = items.getStocksLookup();
 					s.setCurrentQuantity(s.getCurrentQuantity() - itemX.getDeliverList().get(0).getBruto());
+					s.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+					s.setUpdatedDate(new Date());
 					stocksList.add(s);
 				}
 			}
