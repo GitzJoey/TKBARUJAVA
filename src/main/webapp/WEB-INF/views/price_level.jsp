@@ -167,13 +167,27 @@
 									<div class="form-group">
 										<label for="inputIncrementValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.increment_value" text="Increment Value"/></label>
 										<div class="col-sm-5">
-											<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
+											<c:choose>
+												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelType == 'L022_INC' }">
+													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
+												</c:when>
+												<c:otherwise>
+													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value" readonly="true"></form:input>	
+												</c:otherwise>
+											</c:choose>
 										</div>	
 									</div>
 									<div class="form-group">
 										<label for="inputPercentageValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.percentage_value" text="Percentage Value"/></label>
-										<div class="col-sm-5">																	
-											<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value"></form:input>
+										<div class="col-sm-5">
+											<c:choose>
+												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelType == 'L022_PCT' }">
+													<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value"></form:input>
+												</c:when>
+												<c:otherwise>
+													<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value" readonly="true"></form:input>
+												</c:otherwise>
+											</c:choose>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">

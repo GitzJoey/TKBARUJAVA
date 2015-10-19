@@ -15,6 +15,7 @@ public class TodayPrice {
 	private Date inputDate;
 	private List<Stocks> stocksList;
 	private int selectedStockId;
+	
 	public Date getInputDate() {
 		return inputDate;
 	}

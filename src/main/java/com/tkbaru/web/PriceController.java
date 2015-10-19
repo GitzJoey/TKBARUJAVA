@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
@@ -174,14 +175,14 @@ public class PriceController {
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 
-	@RequestMapping(value="/saveprice", method = RequestMethod.GET)
-	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") List<Price> priceList) {
+	@RequestMapping(value="/saveprice", method = RequestMethod.POST)
+	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") TodayPrice todayPrice, RedirectAttributes redirectAttributes) {
 		logger.info("[savePrice] " + "");
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return Constants.JSPPAGE_TODAYPRICE;
+		return "redirect:/price/todayprice";
 	}
 }

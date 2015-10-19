@@ -24,7 +24,7 @@
 				}
 			});
 			
-			$('input[id^="marketPrice_"]').keypress(function() {
+			$('input[id^="marketPrice_"]').on('input', function() {
 				var stockIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[0]; 
 				var priceIdx = $(this).attr('id').replace('marketPrice_', '').split('_')[1];
 				var inputMarketPrice = $(this).val();
@@ -33,7 +33,9 @@
 					$(this).val(inputMarketPrice);
 				});
 				
-				calculatePrice(stockIdx, inputMarketPrice);
+				if ($.isNumeric(inputMarketPrice)) {
+					calculatePrice(stockIdx, inputMarketPrice);	
+				}
 			});
 			
 			$('#selectedInputDate').datetimepicker({ format:'d-m-Y H:i' });
@@ -46,7 +48,9 @@
 					if ($('#priceLevelType_' + sIdx + '_' + i).val() == 'L022_INC') {
 						result = parseInt(marketPrice) + parseInt($('#priceLevelInc_' + sIdx + '_' + i).val());
 					} else {
-						result = 1234;
+						console.log();
+
+						result = parseInt(marketPrice) + (parseInt(marketPrice) * (parseInt($('#priceLevelPct_' + sIdx + '_' + i).val()) / 100));
 					}
 					$('input[name="stocksList[' + sIdx + '].priceList[' + i + '].price"]').val(result);
 				}
@@ -185,7 +189,7 @@
 								<h1 class="panel-title">
 									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;Update Price 
 								</h1>
-							</div>								
+							</div>
 							<div class="panel-body">
 								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="todayPriceForm" action="${pageContext.request.contextPath}/price/saveprice" data-parsley-validate="parsley">									
 									<div id="updateaccordion" class="panel-group">
