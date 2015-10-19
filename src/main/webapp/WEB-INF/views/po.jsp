@@ -82,7 +82,8 @@
 						$('#supplierProduct' + tabIdx + '').val(prodList.substring(0, prodList.length - 1));
 					},
 					error : function(xhr, status, error) {
-						alert(xhr.responseText);
+						$('#supplierProduct' + tabIdx + '').val('');
+						alert('Please check settings for this Supplier.');
 					}
 				});
 			}
@@ -104,7 +105,7 @@
 		window.Parsley.addValidator('validprod', function (value, idx) {			
 			var pL = $('#supplierProduct' + idx + '').val();
 			
-			if (pL.length == 0) return true;
+			if (pL.length == 0) return false;
 			
 			var exist = false;			
 			var pLL = pL.split(',');
