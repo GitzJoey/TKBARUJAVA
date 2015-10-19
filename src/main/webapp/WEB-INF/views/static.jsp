@@ -161,28 +161,20 @@
 					<div class="col-md-12">						
 						<form id="staticForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/sendform" data-parsley-validate="parsley">
 							<div class="form-group">
-								<label for="inputName" class="col-md-4 control-label pull-left"><spring:message code="static_jsp.name" text="Name"/></label>
-								<div class="col-md-12">
-									<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Enter Name" data-parsley-required="true"/>
-								</div>
+								<label for="inputName" class="control-label pull-left"><spring:message code="static_jsp.name" text="Name"/></label>
+								<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Enter Name" data-parsley-required="true"/>
 							</div>
 							<div class="form-group">
-								<label for="inputPhoneNum" class="col-md-4 control-label"><spring:message code="static_jsp.phone_num" text="Phone Number"/></label>
-								<div class="col-md-12">
-									<input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Enter Phone Number" data-parsley-required="true"/>
-								</div>
+								<label for="inputPhoneNum" class="control-label"><spring:message code="static_jsp.phone_num" text="Phone Number"/></label>
+								<input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Enter Phone Number" data-parsley-required="true"/>
 							</div>
 							<div class="form-group">
 								<label for="inputEmail" class="col-md-4 control-label"><spring:message code="static_jsp.email" text="Email"/></label>
-								<div class="col-md-12">
-									<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Enter Email" data-parsley-required="true"/>
-								</div>
+								<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Enter Email" data-parsley-required="true"/>
 							</div>
 							<div class="form-group">
 								<label for="inputMessage" class="col-md-4 control-label"><spring:message code="static_jsp.message" text="Message"/></label>
-								<div class="col-md-12">
-									<textarea id="inputMessage" class="form-control" rows="5"></textarea>
-								</div>
+								<textarea id="inputMessage" class="form-control" rows="5"></textarea>
 							</div>
 							<div class="col-md-12">
 								<div class="btn-toolbar">
