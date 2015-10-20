@@ -167,6 +167,31 @@
 			.addMessage('en', 'validquantity', '')
 			.addMessage('id', 'validquantity', '');
 		});
+		
+		function stringToDate(_date,_format,_delimiter) {
+			var formatLowerCase=_format.toLowerCase();
+			var formatItems=formatLowerCase.split(_delimiter);
+			var dateItems=_date.split(_delimiter);
+			var monthIndex=formatItems.indexOf("mm");
+			var dayIndex=formatItems.indexOf("dd");
+			var yearIndex=formatItems.indexOf("yyyy");
+			var month=parseInt(dateItems[monthIndex]);
+			month-=1;
+			var formatedDate = new Date(dateItems[yearIndex],month,dateItems[dayIndex]);
+			return formatedDate;
+		}
+
+		window.Parsley.addValidator('nobackdate', function (value, todayDate) {
+			var tDate = stringToDate(todayDate, 'yyyy-mm-dd', '-');
+			var iDate = stringToDate(value, 'dd-mm-yyy', '-');
+			if (iDate < tDate) {
+				return true;
+			} else {
+				return false;
+			}
+		}, 32)
+		.addMessage('en', 'nobackdate', 'Backdated is not allowed.')
+		.addMessage('id', 'nobackdate', 'Tidak diperkenankan mengisi tanggal kemarin.');		
 	</script>
 </head>
 <body>
@@ -378,7 +403,9 @@
 																	<div class="form-group">
 																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="sales_jsp.shipping_date" text="Shipping Date"/></label>
 																		<div class="col-sm-5">
-																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />																			
+																			<fmt:formatDate value="${ todayDate }" var="formattedTodayDate" type="date" pattern="dd-MM-yyyy" />
+																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change"></form:input>
 																		</div>
 																	</div>
 																</div>
