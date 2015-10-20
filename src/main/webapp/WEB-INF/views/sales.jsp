@@ -54,6 +54,14 @@
 				}
 			});
 			
+			$('[id^="inputCustomerSearchQuery_"]').keypress(function(e) {
+				if(e.which == 13) {
+					e.preventDefault();
+			        var id = $(this).attr('id').split('_')[1];
+			        $('#searchButton_' + id).click();
+			    }
+			});
+			
 			$('[id^="submitButton"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
 				var salesType = $('[id^="selectSoType_"]').val();
