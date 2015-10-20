@@ -100,9 +100,11 @@ public class LoginController {
 		
 		if (!localeCookieFound) {
 			Cookie newC = new Cookie(localeResolver.getCookieName(), locale.getLanguage());
-			newC.setMaxAge(1);
 			newC.setPath("/");
+			newC.setMaxAge(60 * 60 * 24); //24h
+			newC.setSecure(false);
 			response.addCookie(newC);
+			logger.info("[loadLoginPage] " + " Creating tkbaruLocaleCookie");
 		}
 		
 		model.addAttribute("hideLogin", false);
