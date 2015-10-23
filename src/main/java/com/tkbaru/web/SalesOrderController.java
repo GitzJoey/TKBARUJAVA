@@ -622,7 +622,6 @@ public class SalesOrderController {
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -649,7 +648,6 @@ public class SalesOrderController {
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -676,7 +674,6 @@ public class SalesOrderController {
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -686,33 +683,6 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_PAYMENT;
 	}
 	
-	@RequestMapping(value="/termpayment/{selectedId}", method = RequestMethod.GET)
-	public String termPaymentSelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[termPaymentSelectedSales] " + "selectedId: " + selectedId);
-		
-		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
-		Payment payment = new Payment();
-		payment.setPaymentType("L017_TERM");
-		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TERM"));
-		
-		so.getPaymentList().add(payment);
-		
-		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
-		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
-		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
-		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
-		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
-		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
-		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SO_PAYMENT;
-	}
-
 	@RequestMapping(value="/payment/addpayment/{selectedSO}", method = RequestMethod.GET)
 	public String salesAddPayment(Locale locale, Model model, @PathVariable Integer selectedSO) {
 		logger.info("[salesAddPayment] " + "selectedSO: " + selectedSO);
@@ -762,7 +732,6 @@ public class SalesOrderController {
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -832,9 +801,6 @@ public class SalesOrderController {
 				if (payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				if (payment.getPaymentType().equals("L017_TERM") && payment.getPaymentStatus().equals("L019_C")) {
-					totalPayment += payment.getTotalAmount(); 
-				}
 			}
 		}
 		
@@ -846,7 +812,6 @@ public class SalesOrderController {
 		
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
 		model.addAttribute("transferStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TRANSFER));
-		model.addAttribute("termStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_TERM));
 		model.addAttribute("giroStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_GIRO));
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_LIST);

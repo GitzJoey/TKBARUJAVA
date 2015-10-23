@@ -11,7 +11,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 
-			$('#cashPayButton,#transferPayButton,#termPayButton,#giroPayButton').click(function() {
+			$('#cashPayButton, #transferPayButton, #giroPayButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 
@@ -29,8 +29,6 @@
 						$('#cashPayButton').attr("href", ctxpath + "/sales/cashpayment/" + id);
 					} else if (button == 'transferPayButton') {
 						$('#transferPayButton').attr("href", ctxpath + "/sales/transferpayment/" + id);
-					} else if (button == 'termPayButton') {
-						$('#termPayButton').attr("href", ctxpath + "/sales/termpayment/" + id);
 					} else if (button == 'giroPayButton') {
 						$('#giroPayButton').attr("href", ctxpath + "/sales/giropayment/" + id);
 					}				
@@ -131,7 +129,6 @@
 								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
-								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.term_button" text="Term Payment"/></a>&nbsp;&nbsp;&nbsp;							
 							</div>
 						</div>
 					</c:when>
@@ -423,9 +420,6 @@
 																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
 																				Giro Payment
 																			</c:when>
-																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TERM' }">
-																				Term Payment
-																			</c:when>
 																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
 																				Cash Payment
 																			</c:when>
@@ -511,13 +505,6 @@
 																							</div>
 																						</c:forEach>
 																					</c:if> 
-																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TERM' }">
-																						<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																							<div class="checkbox">
-																								<form:checkbox id="cbx_term_${statusIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
-																							</div>
-																						</c:forEach>
-																					</c:if>
 																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
 																						<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
 																							<div class="checkbox">

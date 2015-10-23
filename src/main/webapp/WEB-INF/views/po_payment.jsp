@@ -21,7 +21,7 @@
 				$(this).parsley().validate();
 			});
 
-			$('#cashPayButton, #transferPayButton, #termPayButton, #giroPayButton').click(function() {
+			$('#cashPayButton, #transferPayButton, #giroPayButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 
@@ -39,32 +39,11 @@
 						$('#cashPayButton').attr("href", ctxpath + "/po/payment/cash/"+ id);
 					} else if (button == 'transferPayButton') {
 						$('#transferPayButton').attr("href", ctxpath + "/po/payment/transfer/"+ id);
-					} else if (button == 'termPayButton') {
-						$('#termPayButton').attr("href", ctxpath+ "/po/payment/term/"+ id);
 					} else if (button == 'giroPayButton') {
 						$('#giroPayButton').attr("href", ctxpath+ "/po/payment/giro/"+ id);
 					} else {
 						return false;
 					}
-				}
-			});
-
-			$('#addPayButton, #removePayButton').click(function() {
-				var id = "";
-				var button = $(this).attr('id');
-
-				if (button == 'addPayButton') {
-					$("#paymentSelect").parsley().validate();
-					
-					if (false == $('#paymentSelect').parsley().isValid()) {						
-						return false;					
-		            } else {
-						id = $("#paymentSelect").val();
-						$('#poForm').attr('action',ctxpath + "/po/addpayment/"+ id);
-		            }
-				} else {
-					id = $(this).val();
-					$('#poForm').attr('action',ctxpath + "/po/removepayment/"+ id);
 				}
 			});
 
@@ -172,7 +151,6 @@
 								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-bank fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-book fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
-								<a id="termPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-calendar fa-fw"></span>&nbsp;<spring:message code="po_payment_jsp.term_button" text="Term Payment"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
 					</c:when>
@@ -443,13 +421,6 @@
 																										</div>
 																									</c:forEach>
 																								</c:if> 
-																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TERM' }">
-																									<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																										<div class="checkbox">
-																											<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" disabled="true"/>
-																										</div>
-																									</c:forEach>
-																								</c:if>
 																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TRANSFER' }">
 																									<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
 																										<div class="checkbox">
@@ -512,9 +483,6 @@
 																			</c:when>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
 																				<spring:message code="po_payment_jsp.giro_payment" text="Giro Payment"/>
-																			</c:when>
-																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TERM' }">
-																				<spring:message code="po_payment_jsp.term_payment" text="Term Payment"/>
 																			</c:when>
 																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
 																				<spring:message code="po_payment_jsp.cash_payment" text="Cash Payment"/>

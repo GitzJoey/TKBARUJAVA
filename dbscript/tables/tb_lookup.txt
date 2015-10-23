@@ -239,10 +239,6 @@ VALUES ('PAYMENT_TYPE', 'L017_CASH',
 		'PAYMENT_TYPE.L017_CASH', 'Cash',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_TYPE', 'L017_TERM',
-		'PAYMENT_TYPE.L017_TERM', 'Term',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PAYMENT_TYPE', 'L017_TRANSFER',
 		'PAYMENT_TYPE.L017_TRANSFER', 'Transfer',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
@@ -257,48 +253,38 @@ VALUES ('PAYMENT_STATUS_CASH', 'L018_C',
 		'PAYMENT_STATUS_CASH.L018_C', 'Closed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
-/*Payment Status Term L019 */
+/*Payment Status Transfer L019 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_TERM', 'L019_WEF',
-		'PAYMENT_STATUS_TERM.L019_WEF', 'Waiting Effective Date',
+VALUES ('PAYMENT_STATUS_TRANSFER', 'L019_A',
+		'PAYMENT_STATUS_TRANSFER.L019_A', 'Transfer A',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_TERM', 'L019_C',
-		'PAYMENT_STATUS_TERM.L019_C', 'Closed',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-        
-/*Payment Status Transfer L020 */
-INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_TRANSFER', 'L020_A',
-		'PAYMENT_STATUS_TRANSFER.L020_A', 'Transfer A',
-        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
-INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_TRANSFER', 'L020_B',
-		'PAYMENT_STATUS_TRANSFER.L020_B', 'Transfer B',
+VALUES ('PAYMENT_STATUS_TRANSFER', 'L019_B',
+		'PAYMENT_STATUS_TRANSFER.L019_B', 'Transfer B',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
-/*Payment Status Giro L021 */
+/*Payment Status Giro L020 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_GIRO', 'L021_WE',
-		'PAYMENT_STATUS_GIRO.L021_WE', 'Waiting Effective Date',
+VALUES ('PAYMENT_STATUS_GIRO', 'L020_WE',
+		'PAYMENT_STATUS_GIRO.L020_WE', 'Waiting Effective Date',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_GIRO', 'L021_F',
-		'PAYMENT_STATUS_GIRO.L021_F', 'Failed',
+VALUES ('PAYMENT_STATUS_GIRO', 'L020_F',
+		'PAYMENT_STATUS_GIRO.L020_F', 'Failed',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PAYMENT_STATUS_GIRO', 'L021_FR',
-		'PAYMENT_STATUS_GIRO.L021_FR', 'Failed & Returned',
+VALUES ('PAYMENT_STATUS_GIRO', 'L020_FR',
+		'PAYMENT_STATUS_GIRO.L020_FR', 'Failed & Returned',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
-/*Price Level Type L022 */
+/*Price Level Type L021 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PRICE_LEVEL_TYPE', 'L022_PCT',
-		'PRICE_LEVEL_TYPE.L022_PCT', 'Percentage',
+VALUES ('PRICE_LEVEL_TYPE', 'L021PCT',
+		'PRICE_LEVEL_TYPE.L021_PCT', 'Percentage',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PRICE_LEVEL_TYPE', 'L022_INC',
-		'PRICE_LEVEL_TYPE.L022_INC', 'Increment',
+VALUES ('PRICE_LEVEL_TYPE', 'L021_INC',
+		'PRICE_LEVEL_TYPE.L021_INC', 'Increment',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*
