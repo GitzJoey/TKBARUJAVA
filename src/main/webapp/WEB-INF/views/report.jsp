@@ -63,6 +63,9 @@
 										<c:when test="${ reportId == 'rptadmin' }">
 											<span class="glyphicon glyphicon-cog"></span>&nbsp;Admin Data
 										</c:when>
+										<c:when test="${ reportId == 'rpttax' }">
+											<span class="fa fa-institution fa-fw"></span>&nbsp;Tax Reports
+										</c:when>
 										<c:otherwise>
 											<span class=""></span>&nbsp;
 										</c:otherwise>
@@ -179,7 +182,19 @@
 												</div>
 											</div>
 										</div>
-									</c:when>									
+									</c:when>
+									<c:when test="${ reportId == 'rpttax' }">
+										<div class="row">
+											<div class="col-md-12">
+											</div>
+										</div>
+										<div class="row">
+											<div class="col-md-12">
+												<button type="button" class="btn">Download Faktur Pembelian</button>
+												<button type="button" class="btn">Download Faktur Penjualan</button>											
+											</div>
+										</div>
+									</c:when>
 									<c:when test="${ reportId == 'rptmaster' }">
 										<div role="tabpanel">
 											<ul class="nav nav-tabs" role="tablist">

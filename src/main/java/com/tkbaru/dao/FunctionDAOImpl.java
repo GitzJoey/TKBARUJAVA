@@ -287,7 +287,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
 				"SELECT 'F_RPT_RPTMNTR', 'Monitoring', 'fa fa-eye fa-fw', '/report/id/rptmntr', 600300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';",
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
-				"SELECT 'F_RPT_RPT3', 'Report 3', 'fa fa-plus fa-fw', '/report/id/rpt3', 600300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';",
+				"SELECT 'F_RPT_RPTTAX', 'Tax Reports', 'fa fa-institution fa-fw', '/report/id/rpttax', 600400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';",
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
 				"SELECT 'F_RPT_RPTMASTER', 'Master Data', 'fa fa-file-text-o fa-fw', '/report/id/rptmaster', 698100, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';",
 				"INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date) " +
