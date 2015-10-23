@@ -564,7 +564,12 @@
 																			<div class="form-group">
 																				<label for="inputTotalAmount" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.total_amount" text="Total Amount"/></label>
 																				<div class="col-sm-9">
-																					<form:input type="text" class="form-control right-align" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
+																					<div class="input-group">
+																						<span class="input-group-addon">
+																							Rp
+																						</span>
+																						<form:input type="text" class="form-control right-align" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
+																					</div>
 																				</div>
 																			</div>
 																		</div>

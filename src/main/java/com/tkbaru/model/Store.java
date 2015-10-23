@@ -52,7 +52,7 @@ public class Store implements Serializable {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="is_default", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup storeStatusLookup;
 	
 	@ManyToOne

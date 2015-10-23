@@ -182,12 +182,13 @@
 		}
 
 		window.Parsley.addValidator('nobackdate', function (value, todayDate) {
-			var tDate = stringToDate(todayDate, 'yyyy-mm-dd', '-');
-			var iDate = stringToDate(value, 'dd-mm-yyy', '-');
-			if (iDate < tDate) {
+			var tDate = stringToDate(todayDate, 'dd-mm-yyyy', '-');
+			var iDate = stringToDate(value, 'dd-mm-yyyy', '-');
+
+			if (iDate - tDate >= 0) {
 				return true;
 			} else {
-				return false;
+				return false
 			}
 		}, 32)
 		.addMessage('en', 'nobackdate', 'Backdated is not allowed.')
@@ -470,7 +471,7 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="change" data-parsley-validquantity="${ soIdx.index }_${ iLIdx.index }"></form:input>
+																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="change" data-parsley-validquantity="${ soIdx.index }_${ iLIdx.index }" onfocus="this.select()"></form:input>
 																									</div>
 																								</div>
 																							</td>
@@ -492,7 +493,7 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																										<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="keyup" onfocus="this.select()"></form:input>
 																									</div>
 																								</div>
 																							</td>
