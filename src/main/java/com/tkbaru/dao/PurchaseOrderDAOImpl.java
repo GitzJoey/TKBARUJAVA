@@ -167,4 +167,19 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 		return purchaseOrderList;
 	}
+
+	@Override
+	public List<PurchaseOrder> getAllUnfinishedPurchaseOrder() {
+		logger.info("[getAllUnfinishedPurchaseOrder] " + "");
+
+		Session session = this.sessionFactory.getCurrentSession();
+	
+		Query q = session.createQuery("FROM PurchaseOrder WHERE poStatus <> 'L013_C'");
+
+		List<PurchaseOrder> purchaseOrderList = q.list();
+		
+		logger.info("Unfinished PurchaseOrder Count: " + purchaseOrderList.size());
+
+		return purchaseOrderList;
+	}
 }

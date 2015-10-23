@@ -124,6 +124,7 @@
 											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_code" text="PO Code"/></th>
 											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_date" text="PO Date"/></th>
 											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.supplier" text="Supplier"/></th>
+											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -134,6 +135,7 @@
 													<td><c:out value="${ i.poCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
 													<td><c:out value="${ i.supplierLookup.supplierName }"></c:out></td>
+													<td><spring:message code="${ i.statusLookup.i18nLookupValue }" text="${ i.statusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -282,7 +284,8 @@
 																					<td style="vertical-align: middle;">
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
 																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
-																						<c:out value="${iL.productLookup.productName }"></c:out></td>
+																						<c:out value="${iL.productLookup.productName }"></c:out>
+																					</td>
 																					<td class="center-align">
 																						<div class="form-group no-margin">
 																							<div class="col-sm-12">

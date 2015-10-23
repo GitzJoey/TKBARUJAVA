@@ -109,4 +109,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return purchaseOrderDAO.getPurchaseOrderByWarehouseIdByShippingDate(warehouseId, startDate, endDate);
 	}
 
+	@Override
+	@Transactional
+	public List<PurchaseOrder> getAllUnfinishedPurchaseOrder() {
+		
+		return purchaseOrderDAO.getAllUnfinishedPurchaseOrder();
+	}
+
 }

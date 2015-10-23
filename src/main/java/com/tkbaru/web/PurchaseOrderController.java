@@ -431,7 +431,7 @@ public class PurchaseOrderController {
 	public String poRevise(Locale locale, Model model) {
 		logger.info("[poRevise] " + "");
 		
-		model.addAttribute("reviseList",poManager.getPurchaseOrderByStatus("L013_WA"));
+		model.addAttribute("reviseList", poManager.getAllUnfinishedPurchaseOrder());
 		
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
