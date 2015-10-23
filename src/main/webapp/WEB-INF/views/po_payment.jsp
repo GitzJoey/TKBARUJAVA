@@ -72,6 +72,16 @@
 			$("#supplierTooltip").tooltip({ title : supplier });
 			
 			$('#poPaymentListTable').DataTable();
+			
+			$('input[id^="cbxBank_"]').click(function() {
+				var id = $(this).attr('id');
+				
+				$('input[id^="cbxBank_"]').each(function(index, item) {
+					if ($(this).attr('id') != id) { 
+						$(this).prop('checked', false);	
+					}
+				});
+			});
 		});
 	</script>
 </head>
@@ -519,16 +529,22 @@
 																	<div class="row">
 																		<div class="col-md-7">
 																			<div class="form-group">
-																				<label for="inputPaymentType" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.payment_type" text="Payment Type"/></label>
+																				<label for="inputPaymentType" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.payment_type" text="Payment Type"/></label>
 																				<div class="col-sm-5">
 																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
 																				</div>
 																			</div>
+																		</div>
+																		<div class="col-md-5">																		
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-7">
 																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO'}">
 																				<div class="form-group">
-																					<label for="inputBank" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.bank" text="Bank"/></label>
-																					<div class="col-sm-8">																			
+																					<label for="inputBank" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.bank" text="Bank"/></label>
+																					<div class="col-sm-8">		
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
 																							<c:if test="${ bankL.lookupKey == poForm.paymentList[ lastIdx ].bankCode }">
@@ -553,20 +569,30 @@
 																					</div>
 																				</div>
 																			</c:if>
+																		</div>
+																		<div class="col-md-5">
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-7">
 																			<div class="form-group">
-																				<label for="inputEffectiveDate" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.effective_date" text="Effective Date"/></label>
-																				<div class="col-sm-9">
+																				<label for="inputPaymentDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.payment_date" text="Payment Date"/></label>
+																				<div class="col-sm-5">
+																					<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="col-md-5">																		
+																			<div class="form-group">
+																				<label for="inputEffectiveDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.effective_date" text="Effective Date"/></label>
+																				<div class="col-sm-7">
 																					<form:input id="inputEffectiveDate" type="text" class="form-control datepicker" path="paymentList[${ lastIdx }].effectiveDate" data-parsley-required="true" data-parsley-trigger="change"  />
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-5">
-																			<div class="form-group">
-																				<label for="inputPaymentDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.payment_date" text="Payment Date"/></label>
-																				<div class="col-sm-9">
-																					<form:input type="text" class="form-control datepicker" id="inputPaymentDate" path="paymentList[${ lastIdx }].paymentDate" data-parsley-required="true" data-parsley-trigger="change"></form:input>
-																				</div>
-																			</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-7">
 																			<div class="form-group">
 																				<label for="inputTotalAmount" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.total_amount" text="Total Amount"/></label>
 																				<div class="col-sm-9">
@@ -574,58 +600,7 @@
 																				</div>
 																			</div>
 																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-md-7">
-																		</div>
 																		<div class="col-md-5">
-																			<div class="form-group">
-																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.Linked" text="Linked"/></label>
-																				<div class="col-sm-9">
-																					<div class="checkbox">
-																						<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="" disabled="true"/>
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="row">
-																		<div class="col-md-7">
-																		</div>
-																		<div class="col-md-5">
-																			<div class="form-group">
-																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.status" text="Status"/></label>
-																				<div class="col-sm-9">
-																				    <c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
-																						<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
-																							<div class="checkbox">
-																								<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" />																																														
-																							</div>
-																						</c:forEach>
-																					</c:if> 
-																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TERM' }">
-																						<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																							<div class="checkbox">
-																								<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" />
-																							</div>
-																						</c:forEach>
-																					</c:if>
-																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
-																						<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
-																							<div class="checkbox">
-																								<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
-																							</div>
-																						</c:forEach>
-																					</c:if>
-																					<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO' }">
-																						<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
-																							<div class="checkbox">
-																								<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
-																							</div>
-																						</c:forEach>
-																					</c:if> 
-																				</div>
-																			</div>
 																		</div>
 																	</div>
 																</div>

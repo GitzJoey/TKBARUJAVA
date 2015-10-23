@@ -387,39 +387,8 @@
 																							</div>
 																						</div>
 																					</td>
-																					<td>
-																						<form:checkbox id="linked_${ iLIdx.index }" path="paymentList[${ iLIdx.index }].linked" label="linked" />
-																					    <br>
-																					    <form:hidden path="paymentList[${ iLIdx.index }].paymentStatus"/>
-																					    <c:if test="${ paymentSalesForm.paymentList[ iLIdx.index ].paymentType == 'L017_CASH'}">
-																							<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
-																								<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" disabled="true"/>
-																								<br>
-																							</c:forEach>
-																						</c:if> 
-																						<c:if test="${ iL.paymentType == 'L017_TERM' }">
-																							<c:forEach items="${ termStatusDDL }" var="statusL" varStatus="statusIdx">
-																								<form:checkbox id="cbx_term_${ statusIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ statusL.lookupKey }" label="${ statusL.lookupValue }" disabled="true" />
-																								<br>
-																							</c:forEach>
-																						</c:if>
-																						<c:if test="${ iL.paymentType == 'L017_TRANSFER' }">
-																							<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
-																								<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true" />
-																								<br>
-																							</c:forEach>
-																						</c:if>
-																						<c:if test="${ iL.paymentType == 'L017_GIRO' }">
-																							<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
-																								<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ iLIdx.index }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true" />
-																								<br>
-																							</c:forEach>
-																						</c:if> 
-																					</td>
-																					
 																				</tr>
-																				<c:set var="totalPay"
-																					value="${ totalPay + iL.totalAmount }" />
+																				<c:set var="totalPay" value="${ totalPay + iL.totalAmount }" />
 																				</c:if>
 																			</c:forEach>
 																		</tbody>
