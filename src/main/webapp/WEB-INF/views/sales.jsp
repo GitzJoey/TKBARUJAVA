@@ -122,11 +122,11 @@
                     if(false == $('[id^="productSelect_"]').parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/" + custId + "/" + activetab + "/" + productSelect);
+                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/" + custId + "/" + activetab + "/" + productSelect + "#trx_" + activetab);
                     }		
 				} else {
 					id = $(this).val();
-					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/" + custId + "/" + activetab + "/" + id);
+					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/" + custId + "/" + activetab + "/" + id + "trx_" + activetab);
 				}
 			});
 		    
@@ -416,7 +416,7 @@
 														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
-																	<h1 class="panel-title">
+																	<h1 class="panel-title" id="trx_${ soIdx.index }">
 																		<spring:message code="sales_jsp.transactions" text="Transactions"/>
 																	</h1>
 																</div>
