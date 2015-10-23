@@ -213,7 +213,7 @@
 																			<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.po_status" text="Status"/></label>
 																			<div class="col-sm-9">
 																				<form:hidden path="poStatus"/>
-																				<label id="inputPOStatus" class="control-label"><c:out value="${ poForm.statusLookup.lookupValue }"></c:out></label>
+																				<label id="inputPOStatus" class="control-label"><spring:message code="${ poForm.statusLookup.i18nLookupValue }" text="${ poForm.statusLookup.lookupValue }"></spring:message></label>
 																			</div>
 																		</div>
 																	</div>

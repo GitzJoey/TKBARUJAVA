@@ -239,6 +239,24 @@
 													</div>
 												</div>
 											</div>
+											<c:choose>
+												<c:when test="${ reviseForm.poStatus == 'L013_WP' }">
+													<c:set var="disabledProdSelect" value="disabled"/>
+													<c:set var="disabledAddProdButton" value="disabled"/>
+													<c:set var="readonlyInputQuantity" value="true"/>
+													<c:set var="disabledUnitSelect" value="true"/>
+													<c:set var="readonlyInputPrice" value="true"/>
+													<c:set var="disabledRemoveProdButton" value="disabled"/>
+												</c:when>
+												<c:otherwise>
+													<c:set var="disabledProdSelect" value=""/>
+													<c:set var="disabledAddProdButton" value=""/>
+													<c:set var="readonlyInputQuantity" value=""/>
+													<c:set var="disabledUnitSelect" value=""/>
+													<c:set var="readonlyInputPrice" value=""/>
+													<c:set var="disabledRemoveProdButton" value=""/>
+												</c:otherwise>
+											</c:choose>
 											<div class="row">
 												<div class="col-md-12">
 													<div class="panel panel-default">
@@ -249,16 +267,16 @@
 															<div class="row">
 																<div class="col-md-11">
 																	<div class="form-group" style="padding-left: 2%">
-																	<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
-																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																			<c:forEach items="${ productSelectionDDL }" var="psddl">
-																			<option value="${ psddl.productId }">${ psddl.productName }</option>
-																		</c:forEach>
-																	</select>
+																		<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledProdSelect }">
+																			<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																				<c:forEach items="${ productSelectionDDL }" var="psddl">
+																				<option value="${ psddl.productId }">${ psddl.productName }</option>
+																			</c:forEach>
+																		</select>
 																	</div>
 																</div>
 																<div class="col-md-1">
-																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right">
+																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right" ${ disabledAddProdButton }>
 																		<span class="fa fa-plus"></span>
 																	</button>
 																</div>
@@ -289,31 +307,34 @@
 																					<td class="center-align">
 																						<div class="form-group no-margin">
 																							<div class="col-sm-12">
-																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsQuantity${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup" readonly="${ readonlyInputQuantity }"></form:input>
 																							</div>
 																						</div>
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
 																							<div class="col-md-12">																							
-																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatus =='L013_WA' }">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledUnitSelect }">
 																									<option value=""><spring:message code="common.please_select"></spring:message></option>
 																									<c:forEach items="${ reviseForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																									</c:forEach>
 																								</form:select>
+																								<c:if test="${ disabledUnitSelect }">
+																									<form:hidden path="itemsList[${ iLIdx.index }].unitCode"/>
+																								</c:if>
 																							</div>
 																						</div>
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
 																							<div class="col-sm-12">
-																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup" readonly="${ readonlyInputPrice }"></form:input>
 																							</div>
 																						</div>
 																					</td>																					
 																					<td style="vertical-align: middle;">
-																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }">
+																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }" ${ disabledRemoveProdButton }>
 																							<span class="fa fa-minus"></span>
 																						</button>
 																					</td>
