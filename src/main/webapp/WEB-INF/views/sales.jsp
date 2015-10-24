@@ -422,24 +422,21 @@
 																	</h1>
 																</div>
 																<div class="panel-body">
-																<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
-																	<div class="row">
-																		<div class="col-md-11">
-																		<div class="form-group" style="padding-left: 2%">
-																			<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
-																				<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																				<c:forEach items="${ stocksListDDL }" var="sddl">
-																					<option value="${ sddl.stocksId }">${ sddl.productLookup.productName }</option>
-																				</c:forEach>
-																			</select>
+																	<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
+																		<div class="row">
+																			<div class="col-md-11">
+																				<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																					<c:forEach items="${ stocksListDDL }" var="sddl">
+																						<option value="${ sddl.stocksId }">${ sddl.productLookup.productName }</option>
+																					</c:forEach>
+																				</select>
+																			</div>
+																			<div class="col-md-1">
+																				<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
 																			</div>
 																		</div>
-																		<div class="col-md-1">
-																			<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
-																		</div>
-																	</div>
-																	</c:if>
-																	
+																	</c:if>																	
 																	<br/>
 																	<div class="row">
 																		<div class="col-md-12">

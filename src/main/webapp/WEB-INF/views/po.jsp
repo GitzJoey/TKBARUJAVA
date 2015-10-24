@@ -361,14 +361,7 @@
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																									<form:option value="${ prdUnit.unitCode }">
-																										<c:choose>
-																											<c:when test="${ prdUnit.baseUnit }">
-																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>*
-																											</c:when>
-																											<c:otherwise>
-																												<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
-																											</c:otherwise>
-																										</c:choose>
+																										<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
 																									</form:option>
 																								</c:forEach>
 																							</form:select>
