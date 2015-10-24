@@ -309,11 +309,11 @@
 																</div>
 															</div>
 															<div class="col-md-1">
-															<c:if test="${ loginContext.poList[poIdx.index].poStatus == 'L013_D' }">
-																<button id="addProdButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right" >
-																	<span class="fa fa-plus"></span>
-																</button>
-															</c:if>
+																<c:if test="${ loginContext.poList[poIdx.index].poStatus == 'L013_D' }">
+																	<button id="addProdButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right" >
+																		<span class="fa fa-plus"></span>
+																	</button>
+																</c:if>
 															</div>
 														</div>
 														<br />
