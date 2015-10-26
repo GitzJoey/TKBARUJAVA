@@ -161,7 +161,8 @@
 				var salesIdx = index.split('_')[0];
 				var itemsIdx = index.split('_')[1];
 				var stock = $('#items_' + salesIdx + '_' + itemsIdx + '_Product_Stocks_prodQuantity').val();
-				
+				console.log(stock);
+				console.log(value);
 				return true;
 			}, 32)
 			.addMessage('en', 'validquantity', '')
@@ -523,7 +524,7 @@
 																					</tr>
 																				</tbody>
 																			</table>
-																		</div>														
+																		</div>
 																	</div>
 																</div>
 															</div>

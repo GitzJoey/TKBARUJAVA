@@ -568,7 +568,7 @@
 																						<span class="input-group-addon">
 																							Rp
 																						</span>
-																						<form:input type="text" class="form-control right-align" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup"></form:input>
+																						<form:input type="text" class="form-control right-align" id="inputTotalAmount" path="paymentList[${ lastIdx }].totalAmount" data-parsley-min="1" data-parsley-trigger="keyup" onfocus="this.select()"></form:input>
 																					</div>
 																				</div>
 																			</div>
