@@ -148,9 +148,9 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 
-	@RequestMapping(value="/search/cust/{searchQuery}", method = RequestMethod.POST)
-	public String salesSearchCustomer(Locale locale, Model model, @PathVariable String searchQuery) {
-		logger.info("[salesSearchCustomer] " + "searchQuery: " + searchQuery);
+	@RequestMapping(value="/t/{tabId}/search/cust/{searchQuery}", method = RequestMethod.POST)
+	public String salesSearchCustomer(Locale locale, Model model, @PathVariable int tabId, @PathVariable String searchQuery) {
+		logger.info("[salesSearchCustomer] " + "tabId: " + tabId + ", searchQuery: " + searchQuery);
 		
 		List<Customer> custList = customerManager.searchCustomer(searchQuery);
 		
@@ -159,6 +159,7 @@ public class SalesOrderController {
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("searchQuery", searchQuery);
 		
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -184,6 +185,7 @@ public class SalesOrderController {
 			loginContextSession.getSoList().addAll(salesOrderList);
 		}
 		
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
@@ -230,7 +232,7 @@ public class SalesOrderController {
 		loginContextSession.setSoList(loginContext.getSoList());
 		
 		for (SalesOrder soVar:loginContextSession.getSoList()) {
-			if (!soVar.getSalesType().equals("L015_WIN")) {
+			if (soVar.getSalesType().equals("L015_S")) {
 				soVar.setCustomerLookup(customerManager.getCustomerById(soVar.getCustomerId()));
 			}
 			
@@ -323,7 +325,7 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value = "/cancel/{tabId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/t/{tabId}/cancel", method = RequestMethod.POST)
 	public String soCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[soCancel] " + "tabId: " + tabId);
 

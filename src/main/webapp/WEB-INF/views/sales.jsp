@@ -45,7 +45,7 @@
 					if(false == $('#inputCustomerSearchQuery_' + activetab).parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/search/cust/" + $('#inputCustomerSearchQuery_' + activetab).val());
+                    	$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/search/cust/" + $('#inputCustomerSearchQuery_' + activetab).val());
                     }
 				} else if (button == 'newTab') {
 					$('#soForm').attr('action', ctxpath + "/sales/addnewtab/");
@@ -67,9 +67,9 @@
 
 				$('#soForm').parsley({
 				    excluded: '[id^="inputCustomerSearchQuery_"], [id^="productSelect_"]'
-				}).validate();
+				}).validate('tab_' + activetab, false);
 				
-				if (false == $('#soForm').parsley().isValid()) {	
+				if (false == $('#soForm').parsley().isValid('tab_' + activetab, false)) {
 					return false;
                 } else {
 					$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/save");
@@ -117,13 +117,15 @@
                     }		
 				} else {
 					id = $(this).val();
+					$('#soForm').parsley().destroy();
 					$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/removeitems/" + id + "#trx_" + activetab);
 				}
 			});
 		    
 		    $('[id^="cancelButton_"]').click(function() {
-				activetab = $(".nav-tabs li.active").attr("id");
-				$('#soForm').attr("action", ctxpath + "/sales/cancel/" + activetab);
+		    	var activetab = $(".nav-tabs li.active").attr("id");
+		    	$('#soForm').parsley().destroy();
+				$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/cancel");	
 			});
 
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
@@ -258,14 +260,14 @@
 																		<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_type" text="Sales Type"/></label>										
 																		<div class="col-sm-7">
 																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus == 'L016_D' }">
-																		   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change">
+																		   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesType" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																				</form:select>
 																			</c:if>
 																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
 																				<form:hidden path="soList[${ soIdx.index }].salesType"/>
-																				<form:input type="text" class="form-control" id="inputSalesType_${ soIdx.index }" name="inputSalesType_${ soIdx.index }" path="soList[${ soIdx.index }].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																				<form:input type="text" class="form-control" id="inputSalesType_${ soIdx.index }" name="inputSalesType_${ soIdx.index }" path="soList[${ soIdx.index }].soTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab_${ soIdx.index }"></form:input>
 																		   </c:if>
 																		</div>
 																		<div class="col-sm-1">
@@ -307,7 +309,7 @@
 																	<div class="form-group">
 																		<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="sales_jsp.sales_date" text="Sales Date"/></label>
 																		<div class="col-sm-9">
-																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${ soIdx.index }" path="soList[${ soIdx.index }].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change"></form:input>
+																			<form:input type="text" class="form-control data-so" id="inputSalesDate_${ soIdx.index }" path="soList[${ soIdx.index }].salesCreatedDate" placeholder="Enter Sales Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
@@ -405,11 +407,11 @@
 																		<div class="col-sm-5">
 																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />																			
 																			<fmt:formatDate value="${ todayDate }" var="formattedTodayDate" type="date" pattern="dd-MM-yyyy" />
-																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change"></form:input>
+																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }"></form:input>
 																		</div>
 																	</div>
 																</div>
-															</div>			
+															</div>
 														</div>
 													</div>
 													<div class="row">
@@ -467,7 +469,7 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="change" data-parsley-validquantity="${ soIdx.index }_${ iLIdx.index }" onfocus="this.select()"></form:input>
+																										<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="change" data-parsley-validquantity="${ soIdx.index }_${ iLIdx.index }" onfocus="this.select()" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']"></form:input>
 																									</div>
 																								</div>
 																							</td>
@@ -477,7 +479,7 @@
 																										<c:if test="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
 																											<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
 																										</c:if>
-																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }">
+																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
 																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
 																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
@@ -489,7 +491,7 @@
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
 																									<div class="col-sm-12">
-																										<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="keyup" onfocus="this.select()"></form:input>
+																										<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" readonly="${ loginContext.soList[ soIdx.index ].salesStatus != 'L016_D' }" data-parsley-type="number" data-parsley-min="1" data-parsley-trigger="keyup" onfocus="this.select()" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']"></form:input>
 																									</div>
 																								</div>
 																							</td>
