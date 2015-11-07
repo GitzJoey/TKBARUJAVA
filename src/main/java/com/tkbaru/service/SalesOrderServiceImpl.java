@@ -51,22 +51,22 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	@Override
 	@Transactional
 	public void addSalesOrder(SalesOrder so) {
-		salesOrderDAO.addSalesOrder(so);
 		
+		salesOrderDAO.addSalesOrder(so);		
 	}
 
 	@Override
 	@Transactional
 	public void editSalesOrder(SalesOrder so) {
-		salesOrderDAO.editSalesOrder(so);
 		
+		salesOrderDAO.editSalesOrder(so);		
 	}
 
 	@Override
 	@Transactional
 	public void deleteSalesOrder(int selectedId) {
-		salesOrderDAO.deleteSalesOrder(selectedId);
 		
+		salesOrderDAO.deleteSalesOrder(selectedId);
 	}
 
 	@Override

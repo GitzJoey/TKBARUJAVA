@@ -52,8 +52,6 @@ public class SalesOrder implements Serializable {
 	private Date salesCreatedDate;
 	@Column(name="shipping_date")
 	private Date shippingDate;
-	@Column(name="customer_id")
-	private int customerId;
 	@Column(name="walk_in_cust_det")
 	private String walkInCustDetail;
 	@Column(name="status")
@@ -84,7 +82,7 @@ public class SalesOrder implements Serializable {
 	private List<Payment> paymentList = LazyList.decorate(new ArrayList<Payment>(), FactoryUtils.instantiateFactory(Payment.class));
 
 	@ManyToOne
-	@JoinColumn(name="customer_id", referencedColumnName="customer_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="customer_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private Customer customerLookup;
 
@@ -130,12 +128,6 @@ public class SalesOrder implements Serializable {
 	}
 	public void setShippingDate(Date shippingDate) {
 		this.shippingDate = shippingDate;
-	}
-	public int getCustomerId() {
-		return customerId;
-	}
-	public void setCustomerId(int customerId) {
-		this.customerId = customerId;
 	}
 	public String getWalkInCustDetail() {
 		return walkInCustDetail;
@@ -228,7 +220,7 @@ public class SalesOrder implements Serializable {
 		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode
 				+ ", salesType=" + salesType + ", salesCreatedDate="
 				+ salesCreatedDate + ", shippingDate=" + shippingDate
-				+ ", customerId=" + customerId + ", walkInCustDetail="
+				+ ", walkInCustDetail="
 				+ walkInCustDetail + ", salesStatus=" + salesStatus
 				+ ", salesRemarks=" + salesRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy

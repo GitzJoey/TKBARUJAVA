@@ -277,7 +277,7 @@
 																	<div class="form-group">
 																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer" text="Customer"/></label>
 																		<div class="col-sm-10">
-																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerId"/>
+																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerLookup.customerId"/>
 																			<c:choose>
 																				<c:when test="${ loginContext.soList[soIdx.index].salesType == 'L015_WIN' }">
 																					<input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" placeholder="Walk In Customer" disabled="disabled"/>
