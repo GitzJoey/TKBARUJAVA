@@ -25,9 +25,9 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		logger.info("[getAwaitingPaymentSales] " + "selectedCustomerId: " + selectedCustomerId);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status and customerId = :customerId ").setString("status", "L016_WP").setInteger("customerId", selectedCustomerId).list();
+		List<SalesOrder> soList = session.createQuery("FROM SalesOrder s WHERE s.salesStatusLookup.lookupKey = :status AND s.customerEntity.customerId = :customerId ").setString("status", "L016_WP").setInteger("customerId", selectedCustomerId).list();
 		
-		logger.info("SalesOrder Count: " + soList.size());
+		logger.info("[getAwaitingPaymentSales] SalesOrder Count: " + soList.size());
 		
 		return soList;
 	}
@@ -37,7 +37,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		logger.info("[getSalesOrderByStatus] " + "status: " + statusCode);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<SalesOrder> soList = session.createQuery("FROM SalesOrder where salesStatus = :status ").setString("status", statusCode).list();
+		List<SalesOrder> soList = session.createQuery("FROM SalesOrder s WHERE s.salesStatusLookup = :status ").setString("status", statusCode).list();
 	
 		logger.info("SalesOrder Count: " + soList.size());
 		

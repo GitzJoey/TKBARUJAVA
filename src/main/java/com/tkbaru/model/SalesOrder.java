@@ -19,13 +19,11 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name="tb_so")
@@ -42,20 +40,14 @@ public class SalesOrder implements Serializable {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int salesId;
 	
-	@NotNull(message="harus diisi")
-	@NotEmpty(message="harus diisi")
 	@Column(name="so_code")
 	private String salesCode;
-	@Column(name="so_type")
-	private String salesType;
 	@Column(name="so_created")
 	private Date salesCreatedDate;
 	@Column(name="shipping_date")
 	private Date shippingDate;
 	@Column(name="walk_in_cust_det")
 	private String walkInCustDetail;
-	@Column(name="status")
-	private String salesStatus;
 	@Column(name="remarks")
 	private String salesRemarks;
 	@Column(name="created_by")
@@ -84,15 +76,15 @@ public class SalesOrder implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="customer_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	private Customer customerLookup;
+	private Customer customerEntity;
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup salesStatusLookup;
 	
 	@ManyToOne
-	@JoinColumn(name="so_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup soTypeLookup;
+	@JoinColumn(name="so_type", referencedColumnName="lookup_key")
+	private Lookup salesTypeLookup;
 
 	@Transient
 	private String customerSearchQuery;
@@ -111,12 +103,6 @@ public class SalesOrder implements Serializable {
 	public void setSalesCode(String salesCode) {
 		this.salesCode = salesCode;
 	}
-	public String getSalesType() {
-		return salesType;
-	}
-	public void setSalesType(String salesType) {
-		this.salesType = salesType;
-	}
 	public Date getSalesCreatedDate() {
 		return salesCreatedDate;
 	}
@@ -134,12 +120,6 @@ public class SalesOrder implements Serializable {
 	}
 	public void setWalkInCustDetail(String walkInCustDetail) {
 		this.walkInCustDetail = walkInCustDetail;
-	}
-	public String getSalesStatus() {
-		return salesStatus;
-	}
-	public void setSalesStatus(String salesStatus) {
-		this.salesStatus = salesStatus;
 	}
 	public String getSalesRemarks() {
 		return salesRemarks;
@@ -183,25 +163,24 @@ public class SalesOrder implements Serializable {
 	public void setPaymentList(List<Payment> paymentList) {
 		this.paymentList = paymentList;
 	}
-	public Customer getCustomerLookup() {
-		return customerLookup;
+	public Customer getCustomerEntity() {
+		return customerEntity;
 	}
-	public void setCustomerLookup(Customer customerLookup) {
-		this.customerLookup = customerLookup;
+	public void setCustomerEntity(Customer customerEntity) {
+		this.customerEntity = customerEntity;
 	}
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getSalesStatusLookup() {
+		return salesStatusLookup;
 	}
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setSalesStatusLookup(Lookup salesStatusLookup) {
+		this.salesStatusLookup = salesStatusLookup;
 	}
-	public Lookup getSoTypeLookup() {
-		return soTypeLookup;
+	public Lookup getSalesTypeLookup() {
+		return salesTypeLookup;
 	}
-	public void setSoTypeLookup(Lookup soTypeLookup) {
-		this.soTypeLookup = soTypeLookup;
+	public void setSalesTypeLookup(Lookup salesTypeLookup) {
+		this.salesTypeLookup = salesTypeLookup;
 	}
-
 	public String getCustomerSearchQuery() {
 		return customerSearchQuery;
 	}
@@ -214,20 +193,15 @@ public class SalesOrder implements Serializable {
 	public void setCustomerSearchResults(List<Customer> customerSearchResults) {
 		this.customerSearchResults = customerSearchResults;
 	}
-
 	@Override
 	public String toString() {
-		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode
-				+ ", salesType=" + salesType + ", salesCreatedDate="
-				+ salesCreatedDate + ", shippingDate=" + shippingDate
-				+ ", walkInCustDetail="
-				+ walkInCustDetail + ", salesStatus=" + salesStatus
-				+ ", salesRemarks=" + salesRemarks + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", itemsList=" + itemsList
-				+ ", paymentList=" + paymentList + ", customerSearchQuery="
-				+ customerSearchQuery + ", customerSearchResults="
-				+ customerSearchResults + "]";
+		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode + ", salesCreatedDate=" + salesCreatedDate
+				+ ", shippingDate=" + shippingDate + ", walkInCustDetail=" + walkInCustDetail + ", salesRemarks="
+				+ salesRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
+				+ paymentList + ", customerEntity=" + customerEntity + ", salesStatusLookup=" + salesStatusLookup
+				+ ", salesTypeLookup=" + salesTypeLookup + ", customerSearchQuery=" + customerSearchQuery
+				+ ", customerSearchResults=" + customerSearchResults + "]";
 	}
-	
+
 }

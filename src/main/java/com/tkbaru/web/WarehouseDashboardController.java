@@ -292,7 +292,7 @@ public class WarehouseDashboardController {
 			}
 		}
 		
-		sales.setSalesStatus("L016_WP");
+		sales.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WP"));
 
 		salesManager.editSalesOrder(sales);
 
