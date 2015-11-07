@@ -23,6 +23,8 @@ import javax.validation.constraints.NotNull;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
@@ -83,6 +85,7 @@ public class SalesOrder implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="customer_id", referencedColumnName="customer_id", unique=true, insertable=false, updatable=false)
+	@NotFound(action=NotFoundAction.IGNORE)
 	private Customer customerLookup;
 
 	@ManyToOne

@@ -64,31 +64,21 @@
 			
 			$('[id^="submitButton"]').click(function() {
 				activetab = $(".nav-tabs li.active").attr("id");
-				var salesType = $('[id^="selectSoType_"]').val();
-				
-				if(salesType=='L015_S'){
 
-				if ($('#inputCustomerId_'+activetab).val() == "") {
-					jsAlert("Please select customer");
-					return false;
-				}
-				
-				}
 				$('#soForm').parsley({
 				    excluded: '[id^="inputCustomerSearchQuery_"], [id^="productSelect_"]'
 				}).validate();
 				
-				
 				if (false == $('#soForm').parsley().isValid()) {	
 					return false;
                 } else {
-					$('#soForm').attr('action', ctxpath + "/sales/save/" + salesType + "/${ customerId }/" + $(this).val());
+					$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/save");
                 }
 			});
 
 			$('[id^="selectCust"]').click(function() {
 				var activetab = $(".nav-tabs li.active").attr("id");
-				$('#soForm').attr('action', ctxpath + "/sales/select/cust/" + $(this).val() + "/" + activetab);
+				$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/select/cust/" + $(this).val());
 			});
 
 		    $('#searchCustomerResultTable tbody').on('click', 'td:not(".actionCell")', function() {
@@ -118,15 +108,16 @@
 				if (button == 'addProdButton') {
 					productSelect = $("#productSelect_"+ activetab).val();
 					
-					$('[id^="productSelect_"]').parsley().validate();
-                    if(false == $('[id^="productSelect_"]').parsley().isValid()) {
+					$('#productSelect_' +  activetab).parsley().validate();
+					
+					if(false == $('#productSelect_' + activetab).parsley().isValid()) {
 						return false;
                     } else {
-                    	$('#soForm').attr('action', ctxpath + "/sales/additems/" + salesType + "/" + custId + "/" + activetab + "/" + productSelect + "#trx_" + activetab);
+                    	$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab  + "/additems/" + productSelect + "#trx_" + activetab);
                     }		
 				} else {
 					id = $(this).val();
-					$('#soForm').attr('action', ctxpath + "/sales/removeitems/" + salesType + "/" + custId + "/" + activetab + "/" + id + "trx_" + activetab);
+					$('#soForm').attr('action', ctxpath + "/sales/t/" + activetab + "/removeitems/" + id + "#trx_" + activetab);
 				}
 			});
 		    
@@ -142,7 +133,7 @@
     			var salesType = $('[id="selectSoType_' + activetab + '"]').val();
     			
     			if (salesType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/select/type/" + salesType + "/" + activetab);
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + salesType);
 	    			$('#soForm').submit();
     			}
     		});
@@ -152,7 +143,7 @@
     			var salesType = $('[id="selectSoType_' + activetab + '"]').val();    			
 
     			if (salesType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/select/type/" + salesType + "/" + activetab);
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + salesType);
 	    			$('#soForm').submit();
     			}
     		});    		
@@ -285,7 +276,14 @@
 																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer" text="Customer"/></label>
 																		<div class="col-sm-10">
 																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerId"/>
-																			<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																			<c:choose>
+																				<c:when test="${ loginContext.soList[soIdx.index].salesType == 'L015_WIN' }">
+																					<input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" placeholder="Walk In Customer" disabled="disabled"/>
+																				</c:when>
+																				<c:otherwise>
+																					<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerLookup.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																				</c:otherwise>
+																			</c:choose>
 																		</div>
 																	</div>
 																	<c:if test="${ loginContext.soList[soIdx.index].salesType == 'L015_WIN' }">
