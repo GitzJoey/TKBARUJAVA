@@ -184,7 +184,7 @@ public class SalesOrderController {
 		logger.info("[soAddItems] " + "tabId: " + tabId + ", stocksId: " + stocksId);
 		
 		Stocks s = stocksManager.getStocksById(stocksId);
-		
+
 		Items item = new Items();
 		item.setStocksId(stocksId);
 		item.setStocksLookup(s);
@@ -200,29 +200,8 @@ public class SalesOrderController {
 			}
 		}
 
-		loginContext.getSoList().get(tabId).getItemsList().add(item);
+		loginContextSession.getSoList().get(tabId).getItemsList().add(item);
 
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-		}
-
-		loginContextSession.setSoList(loginContext.getSoList());
-		
-		for (SalesOrder soVar:loginContextSession.getSoList()) {
-			if (soVar.getSalesTypeLookup().equals("L015_S")) {
-				soVar.setCustomerEntity(customerManager.getCustomerById(soVar.getCustomerEntity().getCustomerId()));
-			}
-			
-			soVar.setSalesStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatusLookup().getLookupKey()));
-			soVar.setSalesTypeLookup(lookupManager.getLookupByKey(soVar.getSalesTypeLookup().getLookupKey()));
-			
-			for (Items items : soVar.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-			}
-		}
-				
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -243,22 +222,13 @@ public class SalesOrderController {
 		logger.info("[soRemoveItems] " + "itemIdx: " + itemIdx);
 
 		List<Items> iLNew = new ArrayList<Items>();
-
-		for (int x = 0; x < loginContext.getSoList().get(tabId).getItemsList().size(); x++) {
+		
+		for (int x = 0; x < loginContextSession.getSoList().get(tabId).getItemsList().size(); x++) {
 			if (x == itemIdx) continue;
-			iLNew.add(loginContext.getSoList().get(tabId).getItemsList().get(x));
-		}
-
-		loginContext.getSoList().get(tabId).setItemsList(iLNew);
+			iLNew.add(loginContextSession.getSoList().get(tabId).getItemsList().get(x));
+		}		
 		
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-			Stocks stock = stocksManager.getStocksById(items.getStocksId());
-			items.setStocksLookup(stock);
-		}
-		
-		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
+		loginContextSession.getSoList().get(tabId).setItemsList(iLNew);
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
@@ -270,39 +240,7 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SALESORDER;
 	}
-	
-	@RequestMapping(value = "/removeitems/{tabId}/{productId}", method = RequestMethod.POST)
-	public String poRemoveItemsMulti(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable int productId) {
-		logger.info("[poRemoveItemsMulti] " + "varId: " + productId);
-
-		List<Items> iLNew = new ArrayList<Items>();
-
-		for (int x = 0; x < loginContext.getSoList().get(tabId).getItemsList().size(); x++) {
-			if (x == productId)
-				continue;
-			iLNew.add(loginContext.getSoList().get(tabId).getItemsList().get(x));
-		}
-
-		loginContext.getSoList().get(tabId).setItemsList(iLNew);
 		
-		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-		}
-		
-		loginContextSession.getSoList().get(tabId).setItemsList(loginContext.getSoList().get(tabId).getItemsList());
-		model.addAttribute("activeTab", tabId);
-		
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
-		return Constants.JSPPAGE_SALESORDER;
-	}
-	
 	@RequestMapping(value = "/t/{tabId}/cancel", method = RequestMethod.POST)
 	public String soCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[soCancel] " + "tabId: " + tabId);
@@ -331,11 +269,6 @@ public class SalesOrderController {
 		
 		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
-		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WD"));
-		
-		if (so.getSalesTypeLookup().equals("L015_S")) {
-			so.setCustomerEntity(customerManager.getCustomerById(so.getCustomerEntity().getCustomerId()));
-		}
 		
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
@@ -352,26 +285,16 @@ public class SalesOrderController {
 			itemList.add(items);
 		}
 
-		so.setCustomerEntity(customerManager.getCustomerById(2));
-		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WD"));
-		
 		if (so.getSalesId() == 0) {
+			so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setCreatedDate(new Date());
 			salesOrderManager.addSalesOrder(so);
 		} else {
+			so.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			so.setUpdatedDate(new Date());
 			salesOrderManager.editSalesOrder(so);
 		}
 		
-		for (SalesOrder soVar : loginContext.getSoList()) {
-			//soVar.setCustomerLookup(customerManager.getCustomerById(soVar.getCustomerLookup().getCustomerId()));
-			soVar.setSalesStatusLookup(lookupManager.getLookupByKey(soVar.getSalesStatusLookup().getLookupKey()));
-			soVar.setSalesTypeLookup(lookupManager.getLookupByKey(soVar.getSalesTypeLookup().getLookupKey()));
-			for (Items items : soVar.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-			}
-		}
-					
 		loginContextSession.setSoList(loginContext.getSoList());
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
 		
