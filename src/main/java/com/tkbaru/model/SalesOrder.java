@@ -38,8 +38,7 @@ public class SalesOrder implements Serializable {
 	@Id
 	@Column(name="so_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int salesId;
-	
+	private int salesId;	
 	@Column(name="so_code")
 	private String salesCode;
 	@Column(name="so_created")

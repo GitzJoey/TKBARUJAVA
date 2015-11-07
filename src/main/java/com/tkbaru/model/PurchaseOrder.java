@@ -43,14 +43,6 @@ public class PurchaseOrder implements Serializable {
 	private Date poCreatedDate;
 	@Column(name="shipping_date")
 	private Date shippingDate;
-	@Column(name="supplier_id")
-	private int supplierId;
-	@Column(name="warehouse_id")
-	private int warehouseId;
-	@Column(name="po_type")
-	private String poType;
-	@Column(name="status")
-	private String poStatus;
 	@Column(name="remarks")
 	private String poRemarks;	
 	@Column(name="created_by")
@@ -77,19 +69,19 @@ public class PurchaseOrder implements Serializable {
 	private List<Payment> paymentList = LazyList.decorate(new ArrayList<Payment>(), FactoryUtils.instantiateFactory(Payment.class));
 
 	@ManyToOne
-	@JoinColumn(name="supplier_id", referencedColumnName="supplier_id", unique=true, insertable=false, updatable=false)
-	private Supplier supplierLookup;
+	@JoinColumn(name="supplier_id")
+	private Supplier supplierEntity;
 
 	@ManyToOne
-	@JoinColumn(name="warehouse_id", referencedColumnName="warehouse_id", unique=true, insertable=false, updatable=false)
-	private Warehouse warehouseLookup;
+	@JoinColumn(name="warehouse_id")
+	private Warehouse warehouseEntity;
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup poStatusLookup;
 	
 	@ManyToOne
-	@JoinColumn(name="po_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="po_type", referencedColumnName="lookup_key")
 	private Lookup poTypeLookup;
 
 	public int getPoId() {
@@ -122,38 +114,6 @@ public class PurchaseOrder implements Serializable {
 
 	public void setShippingDate(Date shippingDate) {
 		this.shippingDate = shippingDate;
-	}
-
-	public int getSupplierId() {
-		return supplierId;
-	}
-
-	public void setSupplierId(int supplierId) {
-		this.supplierId = supplierId;
-	}
-
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
-	}
-
-	public String getPoType() {
-		return poType;
-	}
-
-	public void setPoType(String poType) {
-		this.poType = poType;
-	}
-
-	public String getPoStatus() {
-		return poStatus;
-	}
-
-	public void setPoStatus(String poStatus) {
-		this.poStatus = poStatus;
 	}
 
 	public String getPoRemarks() {
@@ -212,28 +172,28 @@ public class PurchaseOrder implements Serializable {
 		this.paymentList = paymentList;
 	}
 
-	public Supplier getSupplierLookup() {
-		return supplierLookup;
+	public Supplier getSupplierEntity() {
+		return supplierEntity;
 	}
 
-	public void setSupplierLookup(Supplier supplierLookup) {
-		this.supplierLookup = supplierLookup;
+	public void setSupplierEntity(Supplier supplierEntity) {
+		this.supplierEntity = supplierEntity;
 	}
 
-	public Warehouse getWarehouseLookup() {
-		return warehouseLookup;
+	public Warehouse getWarehouseEntity() {
+		return warehouseEntity;
 	}
 
-	public void setWarehouseLookup(Warehouse warehouseLookup) {
-		this.warehouseLookup = warehouseLookup;
+	public void setWarehouseEntity(Warehouse warehouseEntity) {
+		this.warehouseEntity = warehouseEntity;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getPoStatusLookup() {
+		return poStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setPoStatusLookup(Lookup poStatusLookup) {
+		this.poStatusLookup = poStatusLookup;
 	}
 
 	public Lookup getPoTypeLookup() {
@@ -246,15 +206,12 @@ public class PurchaseOrder implements Serializable {
 
 	@Override
 	public String toString() {
-		return "PurchaseOrder [poId=" + poId + ", poCode=" + poCode
-				+ ", poCreatedDate=" + poCreatedDate + ", shippingDate="
-				+ shippingDate + ", supplierId=" + supplierId
-				+ ", warehouseId=" + warehouseId + ", poType=" + poType
-				+ ", poStatus=" + poStatus + ", poRemarks=" + poRemarks
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", itemsList=" + itemsList + ", paymentList=" + paymentList
-				+ "]";
+		return "PurchaseOrder [poId=" + poId + ", poCode=" + poCode + ", poCreatedDate=" + poCreatedDate
+				+ ", shippingDate=" + shippingDate + ", poRemarks=" + poRemarks + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", itemsList=" + itemsList + ", paymentList=" + paymentList + ", supplierEntity=" + supplierEntity
+				+ ", warehouseEntity=" + warehouseEntity + ", poStatusLookup=" + poStatusLookup + ", poTypeLookup="
+				+ poTypeLookup + "]";
 	}
 
 }

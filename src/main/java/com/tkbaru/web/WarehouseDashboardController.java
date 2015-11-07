@@ -181,7 +181,7 @@ public class WarehouseDashboardController {
 					Stocks stocks = new Stocks();
 					stocks.setPoId(poId);
 					stocks.setProductId(items.getProductId());
-					stocks.setWarehouseId(po.getWarehouseId());
+					stocks.setWarehouseId(po.getWarehouseEntity().getWarehouseId());
 					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -194,7 +194,7 @@ public class WarehouseDashboardController {
 
 		boolean isAllArrived = checkAllArrived(po.getItemsList());
 		
-		if (isAllArrived) po.setPoStatus("L013_WP");
+		if (isAllArrived) po.setPoStatusLookup(lookupManager.getLookupByKey("L013_WP"));
 		
 		poManager.editPurchaseOrder(po);
 
@@ -206,7 +206,7 @@ public class WarehouseDashboardController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/warehouse/dashboard/id/" + po.getWarehouseId();
+		return "redirect:/warehouse/dashboard/id/" + po.getWarehouseEntity().getWarehouseId();
 	}
 
 	private boolean checkAllArrived(List<Items> items) {
