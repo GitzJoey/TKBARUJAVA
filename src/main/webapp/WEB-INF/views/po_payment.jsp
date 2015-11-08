@@ -122,7 +122,7 @@
 													<td>
 														<a href="${ pageContext.request.contextPath }/po/payment/view/${ p.poId }"><c:out value="${ p.poCode }"/></a>
 													</td>
-													<td><c:out value="${ p.supplierLookup.supplierName }"></c:out></td>
+													<td><c:out value="${ p.supplierEntity.supplierName }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ p.poCreatedDate }" /></td>
 													<td class="text-right">
 														<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="0" />
@@ -185,15 +185,15 @@
 																		<div class="form-group">
 																			<label for="inputPOType" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.po_type" text="PO Type"/></label>
 																			<div class="col-sm-8">
-																				<form:hidden path="poType"></form:hidden>
+																				<form:hidden path="poTypeLookup.lookupKey"></form:hidden>
 																				<form:input type="text" class="form-control" readonly="true" id="inputPOType" name="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																			</div>
 																		</div>
 																		<div class="form-group">
 																			<label for="inputSupplierId" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.supplier" text="Supplier"/></label>
 																			<div class="col-sm-9">
-																				<form:hidden path="supplierId" />
-																				<form:input id="inputSupplierId" type="text" class="form-control" path="supplierLookup.supplierName" readonly="true" />
+																				<form:hidden path="supplierEntity.supplierId" />
+																				<form:input id="inputSupplierId" type="text" class="form-control" path="supplierEntity.supplierName" readonly="true" />
 																			</div>
 																			<div class="col-sm-1">
 																				<button id="supplierTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
@@ -212,8 +212,8 @@
 																		<div class="form-group">
 																			<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.po_status" text="Status"/></label>
 																			<div class="col-sm-9">
-																				<form:hidden path="poStatus"/>
-																				<label id="inputPOStatus" class="control-label"><spring:message code="${ poForm.statusLookup.i18nLookupValue }" text="${ poForm.statusLookup.lookupValue }"></spring:message></label>
+																				<form:hidden path="poStatusLookup.lookupKey"/>
+																				<label id="inputPOStatus" class="control-label"><spring:message code="${ poForm.poStatusLookup.i18nLookupValue }" text="${ poForm.poStatusLookup.lookupValue }"></spring:message></label>
 																			</div>
 																		</div>
 																	</div>
@@ -230,8 +230,8 @@
 																		<div class="form-group">
 																			<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.warehouse" text="Warehouse"/></label>
 																			<div class="col-sm-8">
-																				<form:hidden path="warehouseId" />
-																				<form:input type="text" class="form-control" path="warehouseLookup.warehouseName" readonly="true" />
+																				<form:hidden path="warehouseEntity.warehouseId" />
+																				<form:input type="text" class="form-control" path="warehouseEntity.warehouseName" readonly="true" />
 																			</div>
 																		</div>
 																	</div>

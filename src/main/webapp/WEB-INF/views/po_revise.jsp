@@ -15,7 +15,7 @@
 				window.location = (ctxpath + "/po/revise");
 			});
 
-			$('#editTableSelection, #deleteTableSelection').click(function() {
+			$('#editTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 
@@ -29,18 +29,15 @@
 					jsAlert("Please select at least 1 po");
 					return false;
 				} else {
-					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
-					} else {
-						$('#deleteTableSelection').attr("href",ctxpath + "/po/delete/" + id);
-					}
+					$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
 				}
 			});
 
 			$('#addProdButton, #removeProdButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
-
+				var poId = $('#inputHiddenPoId').val();
+				
 				if (button == 'addProdButton') {
 					$("#productSelect").parsley().validate();
 					
@@ -48,15 +45,17 @@
 						return false;					
 		            } else {
 						id = $('#productSelect').val();
-						$('#reviseForm').attr('action', ctxpath + "/po/additems/" + id);
+						$('#reviseForm').attr('action', ctxpath + "/po/revise/" + poId + "/additems/" + id);
 		            }
 				} else {
 					id = $(this).val();
-					$('#reviseForm').attr('action', ctxpath + "/po/removeitems/" + id);
+					$('#reviseForm').attr('action', ctxpath + "/po/revise/" + poId + "/removeitems/" + id);
 				}
 			});
 		
 			$('#submitButton').click(function() {
+				var poId = $('#inputHiddenPoId').val();
+
 				$('#reviseForm').parsley({
 				    excluded: '[id^="productSelect"]'
 				}).validate();
@@ -67,7 +66,7 @@
 	            	jsAlert('At least 1 transaction item needed');
 	            	return false;
 	            } else {
-					$('#reviseForm').attr('action', ctxpath + "/po/saverevise");
+					$('#reviseForm').attr('action', ctxpath + "/po/revise/" + poId + "/save");
 	            }
 			});
 
@@ -180,7 +179,7 @@
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active">
 											<br />
-											<form:hidden path="poId" />
+											<form:hidden id="inputHiddenPoId" path="poId" />
 											<form:hidden path="createdBy" />
 											<form:hidden path="createdDate" />
 											<div class="row">
@@ -225,7 +224,7 @@
 																	<div class="form-group">
 																		<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_revise_jsp.po_status" text="Status"/></label>
 																		<div class="col-sm-9">
-																			<form:hidden path="poStatusLookup.lookupValue"></form:hidden>
+																			<form:hidden path="poStatusLookup.lookupKey"></form:hidden>
 																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.poStatusLookup.lookupValue }"></c:out></label>
 																		</div>
 																	</div>

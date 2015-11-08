@@ -110,7 +110,7 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><c:out value="${ i.salesCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
-													<td><c:out value="${ i.customerLookup.customerName }"></c:out></td>
+													<td><c:out value="${ i.customerEntity.customerName }"></c:out></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -147,18 +147,18 @@
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.sales_type" text="Sales Type"/></label>
 																<div class="col-sm-8">																
-																 <form:hidden path="salesType"/>
-																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>	
+																 <form:hidden path="salesTypeLookup.lookupKey"/>
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>	
 																</div>										
 															</div>
 															<div class="form-group">
 																<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.customer" text="Customer"/></label>
 																<div class="col-sm-10">
-																	<form:hidden path="customerId"/>
-																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
-																</div>						
+																	<form:hidden path="customerEntity.customerId"/>
+																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																</div>
 															</div>
-															<c:if test="${ reviseSalesForm.salesType == 'L015_WIN' }">
+															<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_WIN' }">
 																<div class="form-group">
 																	<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																	<div class="col-sm-10">
@@ -166,7 +166,7 @@
 																	</div>
 																</div>
 															</c:if>
-															<c:if test="${ reviseSalesForm.salesType == 'L015_S' }">
+															<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
 																<div class="form-group">
 																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																	<div class="col-sm-10">
@@ -185,8 +185,8 @@
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_revise_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
-																    <form:hidden path="salesStatus"/>
-																	<label id="inputPOStatus" class="control-label"><c:out value="${ reviseSalesForm.statusLookup.lookupValue }"></c:out></label>
+																    <form:hidden path="salesStatusLookup.lookupKey"/>
+																	<label id="inputPOStatus" class="control-label"><c:out value="${ reviseSalesForm.salesStatusLookup.lookupValue }"></c:out></label>
 																</div>										
 															</div>
 														</div>

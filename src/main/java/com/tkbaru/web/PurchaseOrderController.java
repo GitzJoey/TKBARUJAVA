@@ -275,7 +275,7 @@ public class PurchaseOrderController {
 
 	@RequestMapping(value = "/revise/{selectedId}", method = RequestMethod.GET)
 	public String reviseForm(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[reviseForm] " + "");
+		logger.info("[reviseForm] " + "selectedId: " + selectedId);
 
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
 
@@ -293,14 +293,14 @@ public class PurchaseOrderController {
 	}
 
 
-	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
-	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm, @PathVariable String varId) {
-		logger.info("[reviseAddItems] " + "varId: " + varId);
+	@RequestMapping(value = "/revise/{poId}/additems/{productId}", method = RequestMethod.POST)
+	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm, @PathVariable int poId, @PathVariable int productId) {
+		logger.info("[reviseAddItems] " + "poId: " + poId + ", productId: " + productId);
 		
 		Items i = new Items();
-		i.setProductId(Integer.parseInt(varId));
+		i.setProductId(productId);
 		
-		Product product = productManager.getProductById(Integer.parseInt(varId));
+		Product product = productManager.getProductById(productId);
 		i.setProductLookup(product);
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -331,14 +331,14 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_REVISE;
 	}
 
-	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
-	public String poRemoveItems(Locale locale, Model model,@ModelAttribute("reviseForm") PurchaseOrder reviseForm, @PathVariable String varId) {
-		logger.info("[poRemoveItems] " + "varId: " + varId);
+	@RequestMapping(value = "/revise/{poId}/removeitems/{pIdx}", method = RequestMethod.POST)
+	public String poReviseRemoveItems(Locale locale, Model model,@ModelAttribute("reviseForm") PurchaseOrder reviseForm, @PathVariable int poId, @PathVariable int pIdx) {
+		logger.info("[poReviseRemoveItems] " + "poId: " + poId + ", pIdx: " + pIdx);
 		
 		List<Items> iLNew = new ArrayList<Items>();
 
 		for (int x = 0; x < reviseForm.getItemsList().size(); x++) {
-			if (x == Integer.parseInt(varId))
+			if (x == pIdx)
 				continue;
 			iLNew.add(reviseForm.getItemsList().get(x));
 		}
@@ -512,9 +512,9 @@ public class PurchaseOrderController {
 	}
 
 
-	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
-	public String reviseSave(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm, RedirectAttributes redirectAttributes) {
-		logger.info("[reviseSave] " + "");
+	@RequestMapping(value = "/revise/{poId}/save", method = RequestMethod.POST)
+	public String reviseSave(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm, RedirectAttributes redirectAttributes, @PathVariable Integer poId) {
+		logger.info("[reviseSave] " + "poId: " + poId);
 
 		reviseForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseForm.setUpdatedDate(new Date());
@@ -541,7 +541,7 @@ public class PurchaseOrderController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:revise";
+		return "redirect:/po/revise";
 	}
 
 	@RequestMapping(value = "/retrieve/supplier", method = RequestMethod.GET)
