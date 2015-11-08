@@ -32,21 +32,36 @@
 				}
 			});		
 			
+			$('#submitButton').click(function() {
+				var salesId = $('#inputHiddenSalesId').val();
+
+				$('#reviseSalesForm').parsley({
+				    excluded: '[id^="productSelect"]'
+				}).validate();
+
+				if(false == $('#reviseSalesForm').parsley().isValid()) {
+					return false;
+	            } else {
+					$('#reviseSalesForm').attr('action', ctxpath + "/sales/revise/" + salesId + "/save");
+	            }
+			});
+
 			$('#addProdButton, #removeProdButton').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
-	
+				var salesId = $('#inputHiddenSalesId').val();
+				
 				if (button == 'addProdButton') {
 					id = $('#productSelect').val();
 					$('#productSelect').parsley().validate();
 					if(false == $('#productSelect').parsley().isValid()) {
 						return false;
 					} else {
-						$('#reviseSalesForm').attr('action',ctxpath + "/sales/additems/" + id);
+						$('#reviseSalesForm').attr('action',ctxpath + "/sales/revise/" + salesId + "/additems/" + id);
 					}
 				} else {
 					id = $(this).val();
-					$('#reviseSalesForm').attr('action',ctxpath + "/sales/removeitems/" + id);
+					$('#reviseSalesForm').attr('action',ctxpath + "/sales/revise/" + salesId + "/removeitems/" + id);
 				}
 			});
 			
@@ -138,7 +153,7 @@
 															<div class="form-group">
 																<label for="inputSalesCode" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.sales_code" text="Sales Code"/></label>
 																<div class="col-sm-5">
-																	<form:hidden path="salesId"/>
+																	<form:hidden id="inputHiddenSalesId" path="salesId"/>
 																	<form:hidden path="createdBy"/>
 																	<form:hidden path="createdDate"/>
 																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>

@@ -332,13 +332,13 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_REVISE;
 	}
 	
-	@RequestMapping(value = "/additems/{varId}", method = RequestMethod.POST)
-	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int varId) {
-		logger.info("[reviseAddItems] " + "varId: " + varId);
+	@RequestMapping(value = "/revise/{salesId}/additems/{productId}", method = RequestMethod.POST)
+	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int productId) {
+		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", productId: " + productId);
 		
 		Items i = new Items();
-		i.setProductId(varId);
-		Product product = productManager.getProductById(varId);
+		i.setProductId(productId);
+		Product product = productManager.getProductById(productId);
 		i.setProductLookup(product);
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -364,9 +364,9 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_REVISE;
 	}
 	
-	@RequestMapping(value = "/removeitems/{varId}", method = RequestMethod.POST)
-	public String soRemoveItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable String varId) {
-		logger.info("[soRemoveItems] " + "varId: " + varId);
+	@RequestMapping(value = "/revise/{salesId}/removeitems/{iIdx}", method = RequestMethod.POST)
+	public String soRemoveItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int iIdx) {
+		logger.info("[soRemoveItems] " + "salesId: " + salesId + ", iIdx: " + iIdx);
 		
 		reviseSalesForm.setSalesStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatusLookup().getLookupKey()));
 		reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
@@ -374,8 +374,7 @@ public class SalesOrderController {
 		
 		List<Items> iLNew = new ArrayList<Items>();
 		for (int x = 0; x < reviseSalesForm.getItemsList().size(); x++) {
-			if (x == Integer.parseInt(varId))
-				continue;
+			if (x == iIdx) continue;
 			iLNew.add(reviseSalesForm.getItemsList().get(x));
 		}
 
@@ -394,9 +393,9 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_REVISE;
 	}
 	
-	@RequestMapping(value = "/saverevise", method = RequestMethod.POST)
-	public String reviseSave(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, RedirectAttributes redirectAttributes) {
-		logger.info("[reviseSave] " + "");
+	@RequestMapping(value = "/revise/{salesId}/save", method = RequestMethod.POST)
+	public String reviseSave(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, RedirectAttributes redirectAttributes, @PathVariable int salesId) {
+		logger.info("[reviseSave] " + "salesId: " + salesId);
 
 		reviseSalesForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.setUpdatedDate(new Date());
@@ -408,7 +407,7 @@ public class SalesOrderController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_EDIT);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
-		return "redirect:revise";
+		return "redirect:/sales/revise";
 	}
 
 	@RequestMapping(value="/payment", method = RequestMethod.GET)

@@ -183,7 +183,7 @@
 												    	<tr id="${ po.poCode }">
 												    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
 												    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
-												    		<td class="never"><c:out value="${ po.poCode }"/>&nbsp;-&nbsp;<c:out value="${ po.supplierLookup.supplierName }"/></td>
+												    		<td class="never"><c:out value="${ po.poCode }"/>&nbsp;-&nbsp;<c:out value="${ po.supplierEntity.supplierName }"/></td>
 													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 													    	<td class="center-align">
 													    		<c:if test="${ not empty iL.receiptList }">
@@ -224,7 +224,7 @@
 											<tbody>
 												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="so" varStatus="soIdx">
 											    	<tr>
-											    		<td><c:out value="${ so.customerLookup.customerName }"/></td>
+											    		<td><c:out value="${ so.customerEntity.customerName }"/></td>
 											    		<td><c:out value="${ so.salesCode }"/></td>
 												    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ so.shippingDate }"/></td>
 												    	<td></td>
@@ -268,7 +268,7 @@
 											<div class="form-group">
 												<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
 												<div class="col-sm-3">
-													<input class="form-control" value="${ selectedSoObject.customerLookup.customerName }" readonly="readonly"/>											
+													<input class="form-control" value="${ selectedSoObject.customerEntity.customerName }" readonly="readonly"/>											
 												</div>
 											</div>											
 											<div class="form-group">
