@@ -75,6 +75,25 @@
 			$("#supplierTooltip").tooltip({ title : supplier });
 			
 			$('#reviseTableList').DataTable();
+
+			window.Parsley.addValidator('checkprod', function (val, value) {
+				var supplierId = $('#inputHiddenSupplierId').val();
+				var productId = $("#productSelect").val();
+				var ret = false;
+
+				var response = $.ajax({
+					url : ctxpath+ "/po/check/supplier/prod",
+					data : {supplierId: supplierId, productId: productId},
+					type : "GET",
+					async: false					
+				}).responseText;
+				
+				if (response == "true") { ret = true; } else { ret = false; }
+
+				return ret;
+			}, 32)
+			.addMessage('en', 'checkprod', 'Selected Product is not valid with selected Supplier')
+			.addMessage('id', 'checkprod', 'Produk tidak sesuai dengan Supplier terpilih');
 		});
 	</script>
 </head>
@@ -134,8 +153,8 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
 													<td><c:out value="${ i.poCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
-													<td><c:out value="${ i.supplierLookup.supplierName }"></c:out></td>
-													<td><spring:message code="${ i.statusLookup.i18nLookupValue }" text="${ i.statusLookup.lookupValue }"/></td>
+													<td><c:out value="${ i.supplierEntity.supplierName }"></c:out></td>
+													<td><spring:message code="${ i.poStatusLookup.i18nLookupValue }" text="${ i.poStatusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -179,15 +198,15 @@
 																	<div class="form-group">
 																		<label for="inputPOType" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.po_type" text="PO Type"/></label>
 																		<div class="col-sm-8">
-																			<form:hidden path="poType"></form:hidden>
+																			<form:hidden path="poTypeLookup.lookupKey"></form:hidden>
 																			<form:input type="text" class="form-control" readonly="true" id="inputPOType" path="poTypeLookup.lookupValue"></form:input>
 																		</div>
 																	</div>
 																	<div class="form-group">
 																		<label for="inputSupplierId" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.supplier" text="Supplier"/></label>
 																		<div class="col-sm-9">
-																			<form:hidden path="supplierId" />
-																			<form:input id="inputSupplierId" type="text" class="form-control" path="supplierLookup.supplierName" readonly="true" />
+																			<form:hidden id="inputHiddenSupplierId" path="supplierEntity.supplierId" />
+																			<form:input id="inputSupplierId" type="text" class="form-control" path="supplierEntity.supplierName" readonly="true" />
 																		</div>
 																		<div class="col-sm-1">
 																			<button id="supplierTooltip" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
@@ -206,8 +225,8 @@
 																	<div class="form-group">
 																		<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_revise_jsp.po_status" text="Status"/></label>
 																		<div class="col-sm-9">
-																			<form:hidden path="poStatus"></form:hidden>
-																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.statusLookup.lookupValue }"></c:out></label>
+																			<form:hidden path="poStatusLookup.lookupValue"></form:hidden>
+																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.poStatusLookup.lookupValue }"></c:out></label>
 																		</div>
 																	</div>
 																</div>
@@ -224,8 +243,8 @@
 																	<div class="form-group">
 																		<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.warehouse" text="Warehouse"/></label>
 																		<div class="col-sm-8">
-																			<form:hidden path="warehouseId" />
-																			<form:input type="text" class="form-control" path="warehouseLookup.warehouseName" readonly="true" />
+																			<form:hidden path="warehouseEntity.warehouseId" />
+																			<form:input type="text" class="form-control" path="warehouseEntity.warehouseName" readonly="true" />
 																		</div>
 																	</div>
 																</div>
@@ -240,7 +259,7 @@
 												</div>
 											</div>
 											<c:choose>
-												<c:when test="${ reviseForm.poStatus == 'L013_WP' }">
+												<c:when test="${ reviseForm.poStatusLookup.lookupKey == 'L013_WP' }">
 													<c:set var="disabledProdSelect" value="disabled"/>
 													<c:set var="disabledAddProdButton" value="disabled"/>
 													<c:set var="readonlyInputQuantity" value="true"/>
@@ -267,12 +286,24 @@
 															<div class="row">
 																<div class="col-md-11">
 																	<div class="form-group" style="padding-left: 2%">
-																		<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledProdSelect }">
-																			<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																				<c:forEach items="${ productSelectionDDL }" var="psddl">
-																				<option value="${ psddl.productId }">${ psddl.productName }</option>
-																			</c:forEach>
-																		</select>
+																		<c:choose>
+																			<c:when test="${ disabledProdSelect == 'disabled' }">
+																				<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledProdSelect }">
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																						<c:forEach items="${ productSelectionDDL }" var="psddl">
+																						<option value="${ psddl.productId }">${ psddl.productName }</option>
+																					</c:forEach>
+																				</select>
+																			</c:when>
+																			<c:otherwise>
+																				<select id="productSelect" name="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change" data-parsley-checkprod>
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																						<c:forEach items="${ productSelectionDDL }" var="psddl">
+																						<option value="${ psddl.productId }">${ psddl.productName }</option>
+																					</c:forEach>
+																				</select>																			
+																			</c:otherwise>
+																		</c:choose>
 																	</div>
 																</div>
 																<div class="col-md-1">
@@ -313,7 +344,7 @@
 																					</td>
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
-																							<div class="col-md-12">																							
+																							<div class="col-md-12">
 																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledUnitSelect }">
 																									<option value=""><spring:message code="common.please_select"></spring:message></option>
 																									<c:forEach items="${ reviseForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
@@ -332,7 +363,7 @@
 																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup" readonly="${ readonlyInputPrice }"></form:input>
 																							</div>
 																						</div>
-																					</td>																					
+																					</td>												
 																					<td style="vertical-align: middle;">
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }" ${ disabledRemoveProdButton }>
 																							<span class="fa fa-minus"></span>
@@ -406,7 +437,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
 	</div>
 </body>

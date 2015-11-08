@@ -113,7 +113,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[getPurchaseOrderByStatus] " + "status: " + status);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder where poStatus = :status ").setString("status", status).list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder po WHERE po.poStatusLookup.lookupKey = :status ").setString("status", status).list();
 		
 		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
 
@@ -125,7 +125,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		logger.info("[getPurchaseOrderByWarehouseId] " + "warehouseId: "+ warehouseId + ", poStatus: " + status);
 
 		Session session = this.sessionFactory.getCurrentSession();
-		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder WHERE warehouseId = :warehouseId AND poStatus = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
+		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder po WHERE po.warehouseEntity.warehouseId = :warehouseId AND po.poStatusLookup.lookupKey = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
 		
 		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
 
@@ -155,7 +155,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 	
-		Query q = session.createQuery("FROM PurchaseOrder WHERE warehouseId = :warehouseId AND shippingDate BETWEEN :startDate AND :endDate ");
+		Query q = session.createQuery("FROM PurchaseOrder po WHERE po.warehouseEntity.warehouseId = :warehouseId AND po.shippingDate BETWEEN :startDate AND :endDate ");
 
 		for (Entry<String, Object> e : parameterNameAndValues.entrySet()) {
 		    q.setParameter(e.getKey(), e.getValue());
@@ -174,7 +174,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 		Session session = this.sessionFactory.getCurrentSession();
 	
-		Query q = session.createQuery("FROM PurchaseOrder WHERE poStatus <> 'L013_C'");
+		Query q = session.createQuery("FROM PurchaseOrder po WHERE po.poStatusLookup.lookupKey <> 'L013_C'");
 
 		List<PurchaseOrder> purchaseOrderList = q.list();
 		

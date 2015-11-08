@@ -29,7 +29,7 @@
 		$('button[id^="addProdButton"]').click(function() {
 			activetab = $(".nav-tabs li.active").attr("id");
 			productSelect = $("#productSelect" + activetab).val();
-						
+			
 			$('#poForm').parsley().validate('poTab' + activetab);
 			
 			if (false == $('#poForm').parsley().isValid('poTab' + activetab)) {		
@@ -73,17 +73,9 @@
 						var obj = JSON.parse(JSON.stringify(response, null, 4));
 						
 						var htmlTag = '<strong>' + obj.supplierName + '</strong>';
-						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip('hide').attr('data-original-title', htmlTag).tooltip('fixTitle');
-						
-						var prodList = '';
-						for (var i=0; i<obj.prodList.length; i++) {
-							prodList += obj.prodList[i].productId + ',';
-						}
-						
-						$('#supplierProduct' + tabIdx + '').val(prodList.substring(0, prodList.length - 1));
+						$('button[id="supplierTooltip' + tabIdx +'"]').tooltip('hide').attr('data-original-title', htmlTag).tooltip('fixTitle');						
 					},
 					error : function(xhr, status, error) {
-						$('#supplierProduct' + tabIdx + '').val('');
 						alert('Please check settings for this Supplier.');
 					}
 				});
@@ -101,26 +93,26 @@
 			
 			activetab = $(".nav-tabs li.active").attr("id");
 			$('#addTab').attr("href", ctxpath + "/po/addpoform");
-		});		
+		});
 
-		window.Parsley.addValidator('validprod', function (value, idx) {			
-			var pL = $('#supplierProduct' + idx + '').val();
+		window.Parsley.addValidator('checkprod', function (val, value) {
+			var supplierId = $('#inputSupplierId' + value).val();
+			var productId = $("#productSelect" + value).val();
+			var ret = false;
 			
-			if (pL.length == 0) return false;
+			var response = $.ajax({
+				url : ctxpath+ "/po/check/supplier/prod",
+				data : {supplierId: supplierId, productId: productId},
+				type : "GET",
+				async: false					
+			}).responseText;
 			
-			var exist = false;
-			var pLL = pL.split(',');
+			if (response == "true") { ret = true; } else { ret = false; }
 			
-			for(var i=0; i<pLL.length; i++) {
-				if (pLL[i] == value) {
-					exist = true;
-				}
-			}
-			
-			return exist;
+			return ret;
 		}, 32)
-		.addMessage('en', 'validprod', 'Selected Product is not valid with selected Supplier')
-		.addMessage('id', 'validprod', 'Produk tidak sesuai dengan Supplier terpilih');
+		.addMessage('en', 'checkprod', 'Selected Product is not valid with selected Supplier')
+		.addMessage('id', 'checkprod', 'Produk tidak sesuai dengan Supplier terpilih');
 	});
 </script>
 </head>
@@ -231,7 +223,6 @@
 																		<button id="supplierTooltip${ poIdx.index }" type="button" class="btn btn-default" data-toggle="tooltip" data-trigger="hover" data-html="true" data-placement="right" data-title="">
 																			<span class="fa fa-external-link fa-fw"></span>
 																		</button>
-																		<input type="hidden" id="supplierProduct${ poIdx.index }" value=""/>
 																	</div>
 																</div>
 															</div>
@@ -301,7 +292,7 @@
 														<div class="row">
 															<div class="col-md-11" id="product-select${ poIdx.index }">
 																<div class="form-group" style="padding-left: 2%">
-																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }" data-parsley-validprod="${ poIdx.index }">
+																	<select id="productSelect${ poIdx.index }" class="form-control productSelect" data-parsley-required="true" data-parsley-trigger="change" data-parsley-checkprod="${ poIdx.index }" data-parsley-group="poTab${ poIdx.index }">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																		<c:forEach items="${ productSelectionDDL }" var="psddl">
 																			<option value="${ psddl.productId }">${ psddl.productName }</option>

@@ -140,7 +140,9 @@ public class PurchaseOrderController {
 		
 		loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList().add(item);
 		
-		for(PurchaseOrder po : loginContext.getPoList()){	
+		for(PurchaseOrder po : loginContext.getPoList()) {
+			po.setSupplierEntity(supplierManager.getSupplierById(po.getSupplierEntity().getSupplierId()));
+			po.getSupplierEntity().getProdList().size();
 			for(Items items : po.getItemsList()){
 				Product prod = productManager.getProductById(items.getProductId());
 				items.setProductLookup(prod);
@@ -149,7 +151,6 @@ public class PurchaseOrderController {
 
 		loginContextSession.setPoList(loginContext.getPoList());
 
-		model.addAttribute("supplierProduct", "");
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
@@ -262,7 +263,7 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/t/{tabId}/cancel", method = RequestMethod.POST)
-	public String poCancel(Locale locale, Model model, RedirectAttributes redirectAttributes, @PathVariable String tabId) {
+	public String poCancel(Locale locale, Model model, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[poCancel] " + "tabId: " + tabId);
 
 		loginContextSession.getPoList().remove(tabId);
@@ -560,6 +561,25 @@ public class PurchaseOrderController {
 		jsonSupp.setProdList(pL);
 		
 		return jsonSupp;
+	}
+
+	@RequestMapping(value = "/check/supplier/prod", method = RequestMethod.GET, produces="text/plain")
+	public @ResponseBody String poCheckSupplierProd(@RequestParam("supplierId") int supplierId, @RequestParam("productId") int productId) {
+		logger.info("[poCheckSupplierProd] " + "supplierId: " + supplierId + ", productId: " + productId);
+
+		Supplier supp = supplierManager.getSupplierById(supplierId);
+
+		String found = "false";
+		
+		for (Product p:supp.getProdList()) {
+			if (p.getProductId() == productId) {
+				found = "true";
+			}
+		}
+		
+		logger.info("[poCheckSupplierProd] " + "Result: " + found);
+		
+		return found;
 	}
 
 	@RequestMapping(value = "/addpayment/{paymentType}", method = RequestMethod.POST)

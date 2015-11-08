@@ -242,22 +242,11 @@ public class SalesOrderController {
 	}
 		
 	@RequestMapping(value = "/t/{tabId}/cancel", method = RequestMethod.POST)
-	public String soCancel(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
+	public String soCancel(Locale locale, Model model, @PathVariable int tabId) {
 		logger.info("[soCancel] " + "tabId: " + tabId);
 
-		if (!loginContext.getSoList().isEmpty()) {
-			SalesOrder so = loginContext.getSoList().get(tabId);
-			
-			loginContext.getSoList().remove(so);
-			List<SalesOrder> soList = new ArrayList<SalesOrder>();
-			for (SalesOrder sos : loginContext.getSoList()) {
-				sos.setSalesStatusLookup(lookupManager.getLookupByKey(sos.getSalesStatusLookup().getLookupKey()));
-				soList.add(sos);
-			}
-
-			loginContextSession.setSoList(soList);
-		}
-
+		loginContextSession.getSoList().remove(tabId);
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 
 		return Constants.JSPPAGE_DASHBOARD;
