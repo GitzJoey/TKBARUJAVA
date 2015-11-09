@@ -104,8 +104,7 @@ public class PurchaseOrderController {
 		
 		for(PurchaseOrder po : loginContextSession.getPoList()){
 			for (Items items : po.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
+				items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			}
 		}
 
@@ -126,15 +125,13 @@ public class PurchaseOrderController {
 		logger.info("[poAddItems] " + "tabId: " + tabId + ", productId: " + productId);
 
 		Items item = new Items();
-		item.setProductId(Integer.parseInt(productId));
-		Product product = productManager.getProductById(Integer.parseInt(productId));
-		item.setProductLookup(product);
+		item.setProductEntity(productManager.getProductById(Integer.parseInt(productId)));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
-		for(ProductUnit productUnit :product.getProductUnit()){
+		for(ProductUnit productUnit:item.getProductEntity().getProductUnit()){
 			if(productUnit.isBaseUnit() == true){
-				item.setBaseUnitCode(productUnit.getUnitCode());
+				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCode()));
 			}
 		}
 		
@@ -144,8 +141,7 @@ public class PurchaseOrderController {
 			po.setSupplierEntity(supplierManager.getSupplierById(po.getSupplierEntity().getSupplierId()));
 			po.getSupplierEntity().getProdList().size();
 			for(Items items : po.getItemsList()){
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
+				items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			}
 		}
 
@@ -178,8 +174,7 @@ public class PurchaseOrderController {
 		loginContext.getPoList().get(Integer.parseInt(tabId)).setItemsList(iLNew);
 
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
+			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 		}
 		
 		loginContextSession.getPoList().get(Integer.parseInt(tabId)).setItemsList(loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList());
@@ -211,11 +206,10 @@ public class PurchaseOrderController {
 		
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getPoList().get(Integer.parseInt(tabId)).getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
+			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			
-			for (ProductUnit productUnit : prod.getProductUnit()) {
-				if (productUnit.getUnitCode().equals(items.getUnitCode())) {				
+			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
+				if (productUnit.getUnitCode().equals(items.getUnitCodeLookup().getLookupKey())) {				
 					items.setToBaseValue(productUnit.getConversionValue());
 					items.setToBaseQty(productUnit.getConversionValue() * items.getProdQuantity());
 				}
@@ -239,10 +233,9 @@ public class PurchaseOrderController {
 			poVar.setWarehouseEntity(warehouseManager.getWarehouseById(poVar.getWarehouseEntity().getWarehouseId()));
 			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoTypeLookup().getLookupKey()));
 			for (Items items : poVar.getItemsList()) {
-				Product prod = productManager.getProductById(items.getProductId());
-				items.setProductLookup(prod);
-				items.setBaseUnitCodeLookup(lookupManager.getLookupByKey(items.getBaseUnitCode()));
-				items.setUnitCodeLookup(lookupManager.getLookupByKey(items.getUnitCode()));
+				items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
+				items.setBaseUnitCodeLookup(lookupManager.getLookupByKey(items.getBaseUnitCodeLookup().getLookupKey()));
+				items.setUnitCodeLookup(lookupManager.getLookupByKey(items.getUnitCodeLookup().getLookupKey()));
 			}
 		}
 
@@ -298,24 +291,21 @@ public class PurchaseOrderController {
 		logger.info("[reviseAddItems] " + "poId: " + poId + ", productId: " + productId);
 		
 		Items i = new Items();
-		i.setProductId(productId);
-		
-		Product product = productManager.getProductById(productId);
-		i.setProductLookup(product);
+		i.setProductEntity(productManager.getProductById(productId));
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
-		for(ProductUnit productUnit : product.getProductUnit()){
+		for(ProductUnit productUnit : i.getProductEntity().getProductUnit()){
 			if(productUnit.isBaseUnit()){
-				i.setBaseUnitCode(productUnit.getUnitCode());
+				i.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCode()));
 			}
 		}
 		
 		reviseForm.getItemsList().add(i);
 		
 		for (Items item : reviseForm.getItemsList()){
-			item.setProductLookup(productManager.getProductById(item.getProductId()));
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
 		}
 
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
@@ -346,8 +336,8 @@ public class PurchaseOrderController {
 		reviseForm.setItemsList(iLNew);
 		
 		for(Items item : reviseForm.getItemsList()){
-			item.setProductLookup(productManager.getProductById(item.getProductId()));
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getBaseUnitCodeLookup().getLookupKey()));
 		}
 		
 		model.addAttribute("reviseForm", reviseForm);
@@ -521,13 +511,11 @@ public class PurchaseOrderController {
 		
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : reviseForm.getItemsList()) {
-			Product prod = productManager.getProductById(items.getProductId());
-			items.setProductLookup(prod);
-			for(ProductUnit productUnit : prod.getProductUnit()){
-				if(productUnit.getUnitCode().equals(items.getUnitCode())){
-				
-				items.setToBaseValue(productUnit.getConversionValue());
-				items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
+			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
+			for(ProductUnit productUnit : items.getProductEntity().getProductUnit()){
+				if(productUnit.getUnitCode().equals(items.getUnitCodeLookup().getLookupKey())){				
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
 				}
 			}
 			itemList.add(items);
@@ -587,7 +575,7 @@ public class PurchaseOrderController {
 		logger.info("[poAddPayments] ");
 		
 		for(Items item : poForm.getItemsList()){
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCode()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
 		}
 
 		Payment i = new Payment();

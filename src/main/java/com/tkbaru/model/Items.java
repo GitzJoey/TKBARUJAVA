@@ -38,18 +38,10 @@ public class Items implements Serializable {
 	@Column(name="items_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int itemsId;
-	@Column(name="product_id")
-	private int productId;
-	@Column(name="stocks_id")
-	private int stocksId;
 	@Column(name="quantity")
 	private long prodQuantity;
-	@Column(name="unit_code")
-	private String unitCode;
 	@Column(name="price")
 	private long prodPrice;
-	@Column(name="base_unit_code")
-	private String baseUnitCode;
 	@Column(name="to_base_value")
 	private Long toBaseValue;
 	@Column(name="to_base_qty")
@@ -66,20 +58,20 @@ public class Items implements Serializable {
 	private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name="product_id", referencedColumnName="product_id", unique=true, insertable=false, updatable=false)
-	private Product productLookup;
+	@JoinColumn(name="product_id")
+	private Product productEntity;
 
 	@ManyToOne
-	@JoinColumn(name="stocks_id", referencedColumnName="stocks_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="stocks_id")
 	@NotFound(action=NotFoundAction.IGNORE)
-	private Stocks stocksLookup;
+	private Stocks stocksEntity;
 
 	@ManyToOne
-	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="unit_code", referencedColumnName="lookup_key")
 	private Lookup unitCodeLookup;
 
 	@ManyToOne
-	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key")
 	private Lookup baseUnitCodeLookup;	
 	
 	@ManyToMany(cascade=CascadeType.ALL)
@@ -102,22 +94,6 @@ public class Items implements Serializable {
 		this.itemsId = itemsId;
 	}
 
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	public int getStocksId() {
-		return stocksId;
-	}
-
-	public void setStocksId(int stocksId) {
-		this.stocksId = stocksId;
-	}
-
 	public long getProdQuantity() {
 		return prodQuantity;
 	}
@@ -126,28 +102,12 @@ public class Items implements Serializable {
 		this.prodQuantity = prodQuantity;
 	}
 
-	public String getUnitCode() {
-		return unitCode;
-	}
-
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
-	}
-
 	public long getProdPrice() {
 		return prodPrice;
 	}
 
 	public void setProdPrice(long prodPrice) {
 		this.prodPrice = prodPrice;
-	}
-
-	public String getBaseUnitCode() {
-		return baseUnitCode;
-	}
-
-	public void setBaseUnitCode(String baseUnitCode) {
-		this.baseUnitCode = baseUnitCode;
 	}
 
 	public Long getToBaseValue() {
@@ -198,20 +158,20 @@ public class Items implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public Product getProductLookup() {
-		return productLookup;
+	public Product getProductEntity() {
+		return productEntity;
 	}
 
-	public void setProductLookup(Product productLookup) {
-		this.productLookup = productLookup;
+	public void setProductEntity(Product productEntity) {
+		this.productEntity = productEntity;
 	}
 
-	public Stocks getStocksLookup() {
-		return stocksLookup;
+	public Stocks getStocksEntity() {
+		return stocksEntity;
 	}
 
-	public void setStocksLookup(Stocks stocksLookup) {
-		this.stocksLookup = stocksLookup;
+	public void setStocksEntity(Stocks stocksEntity) {
+		this.stocksEntity = stocksEntity;
 	}
 
 	public Lookup getUnitCodeLookup() {
@@ -248,11 +208,12 @@ public class Items implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Items [itemsId=" + itemsId + ", productId=" + productId + ", stocksId=" + stocksId + ", prodQuantity="
-				+ prodQuantity + ", unitCode=" + unitCode + ", prodPrice=" + prodPrice + ", baseUnitCode="
-				+ baseUnitCode + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
+		return "Items [itemsId=" + itemsId + ", prodQuantity=" + prodQuantity + ", prodPrice=" + prodPrice
+				+ ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", productEntity=" + productEntity + ", stocksEntity=" + stocksEntity + ", unitCodeLookup="
+				+ unitCodeLookup + ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", receiptList=" + receiptList
+				+ ", deliverList=" + deliverList + "]";
 	}
 
 }

@@ -180,7 +180,7 @@ public class WarehouseDashboardController {
 
 					Stocks stocks = new Stocks();
 					stocks.setPoId(poId);
-					stocks.setProductId(items.getProductId());
+					stocks.setProductId(items.getProductEntity().getProductId());
 					stocks.setWarehouseId(po.getWarehouseEntity().getWarehouseId());
 					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
@@ -275,7 +275,7 @@ public class WarehouseDashboardController {
 
 					StocksOut stocksOut = new StocksOut();
 					stocksOut.setSalesId(salesId);
-					stocksOut.setProductId(items.getProductId());
+					stocksOut.setProductId(items.getProductEntity().getProductId());
 					stocksOut.setWarehouseId(warehouseId);
 					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -283,7 +283,7 @@ public class WarehouseDashboardController {
 					stocksOutList.add(stocksOut);
 					
 					
-					Stocks s = items.getStocksLookup();
+					Stocks s = items.getStocksEntity();
 					s.setCurrentQuantity(s.getCurrentQuantity() - itemX.getDeliverList().get(0).getBruto());
 					s.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 					s.setUpdatedDate(new Date());
