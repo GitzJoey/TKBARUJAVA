@@ -186,7 +186,7 @@ public class SalesOrderController {
 
 		Items item = new Items();		
 		item.setStocksEntity(s);
-		item.setProductEntity(productManager.getProductById(s.getProductLookup().getProductId()));
+		item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		

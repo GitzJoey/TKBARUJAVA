@@ -26,12 +26,6 @@ public class Stocks {
 	@Column(name="stocks_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int stocksId;
-	@Column(name="po_id")
-	private int poId;
-	@Column(name="product_id")
-	private int productId;
-	@Column(name="warehouse_id")
-	private int warehouseId;
 	@Column(name="quantity")
 	private long prodQuantity;
 	@Column(name="current_quantity")
@@ -48,20 +42,16 @@ public class Stocks {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="po_id", unique=true, insertable=false, updatable=false)
-	private PurchaseOrder poLookup;
+	@JoinColumn(name="po_id")
+	private PurchaseOrder purchaseOrderEntity;
 
 	@ManyToOne
-	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
-	private Product productLookup;
-
-	@ManyToOne
-	@JoinColumn(name="warehouse_id", unique=true, insertable=false, updatable=false)
-	private Warehouse warehouseLookup;
-
-	@ManyToOne
-	@JoinColumn(name="product_id", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="product_id")
 	private Product productEntity;
+
+	@ManyToOne
+	@JoinColumn(name="warehouse_id")
+	private Warehouse warehouseEntity;
 
 	@OneToMany(mappedBy="stocksEntity")
 	private List<Price> priceList;
@@ -72,30 +62,6 @@ public class Stocks {
 
 	public void setStocksId(int stocksId) {
 		this.stocksId = stocksId;
-	}
-
-	public int getPoId() {
-		return poId;
-	}
-
-	public void setPoId(int poId) {
-		this.poId = poId;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
 	}
 
 	public long getProdQuantity() {
@@ -146,28 +112,12 @@ public class Stocks {
 		this.updatedDate = updatedDate;
 	}
 
-	public PurchaseOrder getPoLookup() {
-		return poLookup;
+	public PurchaseOrder getPurchaseOrderEntity() {
+		return purchaseOrderEntity;
 	}
 
-	public void setPoLookup(PurchaseOrder poLookup) {
-		this.poLookup = poLookup;
-	}
-
-	public Product getProductLookup() {
-		return productLookup;
-	}
-
-	public void setProductLookup(Product productLookup) {
-		this.productLookup = productLookup;
-	}
-
-	public Warehouse getWarehouseLookup() {
-		return warehouseLookup;
-	}
-
-	public void setWarehouseLookup(Warehouse warehouseLookup) {
-		this.warehouseLookup = warehouseLookup;
+	public void setPurchaseOrderEntity(PurchaseOrder purchaseOrderEntity) {
+		this.purchaseOrderEntity = purchaseOrderEntity;
 	}
 
 	public Product getProductEntity() {
@@ -176,6 +126,14 @@ public class Stocks {
 
 	public void setProductEntity(Product productEntity) {
 		this.productEntity = productEntity;
+	}
+
+	public Warehouse getWarehouseEntity() {
+		return warehouseEntity;
+	}
+
+	public void setWarehouseEntity(Warehouse warehouseEntity) {
+		this.warehouseEntity = warehouseEntity;
 	}
 
 	public List<Price> getPriceList() {
@@ -188,10 +146,11 @@ public class Stocks {
 
 	@Override
 	public String toString() {
-		return "Stocks [stocksId=" + stocksId + ", poId=" + poId + ", productId=" + productId + ", warehouseId="
-				+ warehouseId + ", prodQuantity=" + prodQuantity + ", currentQuantity=" + currentQuantity
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", priceList=" + priceList + "]";
+		return "Stocks [stocksId=" + stocksId + ", prodQuantity=" + prodQuantity + ", currentQuantity="
+				+ currentQuantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", purchaseOrderEntity=" + purchaseOrderEntity
+				+ ", productEntity=" + productEntity + ", warehouseEntity=" + warehouseEntity + ", priceList="
+				+ priceList + "]";
 	}
-
+	
 }
