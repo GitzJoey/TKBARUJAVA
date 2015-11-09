@@ -94,7 +94,7 @@ public class StoreDAOImpl implements StoreDAO {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		
-		Query q = session.createQuery("FROM Store S WHERE S.isDefault = :isdef");
+		Query q = session.createQuery("FROM Store s WHERE s.isDefaultLookup.lookupKey = :isdef");
 		q.setParameter("isdef", "L003_YES");
 		
 		Store s = (Store)q.uniqueResult();

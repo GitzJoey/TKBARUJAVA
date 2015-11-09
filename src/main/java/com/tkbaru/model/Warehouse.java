@@ -33,8 +33,6 @@ public class Warehouse implements Serializable {
 	private String warehouseLocation;
 	@Column(name="remarks")
 	private String warehouseRemarks;
-	@Column(name="status")
-	private String warehouseStatus;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -82,14 +80,6 @@ public class Warehouse implements Serializable {
 		this.warehouseRemarks = warehouseRemarks;
 	}
 
-	public String getWarehouseStatus() {
-		return warehouseStatus;
-	}
-
-	public void setWarehouseStatus(String warehouseStatus) {
-		this.warehouseStatus = warehouseStatus;
-	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -133,9 +123,9 @@ public class Warehouse implements Serializable {
 	@Override
 	public String toString() {
 		return "Warehouse [warehouseId=" + warehouseId + ", warehouseName=" + warehouseName + ", warehouseLocation="
-				+ warehouseLocation + ", warehouseRemarks=" + warehouseRemarks + ", warehouseStatus=" + warehouseStatus
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", warehouseStatusLookup=" + warehouseStatusLookup + "]";
+				+ warehouseLocation + ", warehouseRemarks=" + warehouseRemarks + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", warehouseStatusLookup=" + warehouseStatusLookup + "]";
 	}
 
 }

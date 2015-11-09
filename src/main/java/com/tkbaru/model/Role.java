@@ -33,7 +33,6 @@ public class Role implements Serializable {
 
 	public Role(String roleName) {
 		this.roleName = roleName;
-		this.roleStatus = "L001_A";
 		this.createdBy = 0;
 		this.createdDate = new Date();
 	}
@@ -44,8 +43,6 @@ public class Role implements Serializable {
 	private int roleId;
 	@Column(name="name")
 	private String roleName;
-	@Column(name="status")
-	private String roleStatus;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -105,14 +102,6 @@ public class Role implements Serializable {
 		this.roleName = roleName;
 	}
 
-	public String getRoleStatus() {
-		return roleStatus;
-	}
-
-	public void setRoleStatus(String roleStatus) {
-		this.roleStatus = roleStatus;
-	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -163,9 +152,9 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", roleStatus=" + roleStatus + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
-				+ updatedDate + ", functionList=" + functionList + ", roleStatusLookup=" + roleStatusLookup + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", functionList="
+				+ functionList + ", roleStatusLookup=" + roleStatusLookup + "]";
 	}
 
 }

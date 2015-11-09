@@ -169,13 +169,10 @@ public class Lookup implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Lookup [lookupId=" + lookupId + ", lookupCategory="
-				+ lookupCategory + ", lookupKey=" + lookupKey + ", orderNum="
-				+ orderNum + ", lookupStatus=" + lookupStatus
-				+ ", lookupValue=" + lookupValue + ", localeMessageCodes="
-				+ localeMessageCodes + ", lookupMaintainability="
-				+ lookupMaintainability + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "Lookup [lookupId=" + lookupId + ", lookupCategory=" + lookupCategory + ", lookupKey=" + lookupKey
+				+ ", orderNum=" + orderNum + ", lookupStatus=" + lookupStatus + ", localeMessageCodes="
+				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaintainability="
+				+ lookupMaintainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
 }

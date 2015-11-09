@@ -134,7 +134,7 @@ public class ProductUnit {
 		return "ProductUnit [productUnitId=" + productUnitId + ", baseUnit=" + baseUnit + ", conversionValue="
 				+ conversionValue + ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy + ", createdDate="
 				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", productEntity="
-				+ productEntity + ", unitCodeLookup=" + unitCodeLookup + "]";
+				+ "productEntity" + ", unitCodeLookup=" + unitCodeLookup + "]";
 	}
 
 }

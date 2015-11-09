@@ -170,11 +170,11 @@
 											<c:forEach items="${ productList }" var="i" varStatus="productIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.productId }"/>" type="checkbox" value="<c:out value="${ i.productId }"/>"/></td>
-													<td><spring:message code="${ i.productTypeLookup.i18nLookupValue }" text="${ i.productType }"/></td>
+													<td><spring:message code="${ i.productTypeLookup.i18nLookupValue }" text="${ i.productTypeLookup.lookupValue }"/></td>
 													<td><c:out value="${ i.shortCode }"></c:out></td>
 													<td><c:out value="${ i.productName }"></c:out></td>
 													<td><c:out value="${ i.productDesc }"></c:out></td>
-													<td><spring:message code="${ i.statusLookup.i18nLookupValue }" text="${ i.statusLookup.lookupValue }"/></td>
+													<td><spring:message code="${ i.productStatusLookup.i18nLookupValue }" text="${ i.productStatusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -206,11 +206,13 @@
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label"><spring:message code="product_jsp.producttype" text="Product Type"/></label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="productType" data-parsley-required="true" data-parsley-trigger="change">
+											<form:select class="form-control" path="productTypeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-												<form:options items="${ productTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>															
-										</div>										
+												<c:forEach items="${ productTypeDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
+												</c:forEach>										
+											</form:select>
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputShortCode" class="col-sm-2 control-label"><spring:message code="product_jsp.shortcode" text="Short Code"/></label>
@@ -243,9 +245,11 @@
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="product_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="productStatus" data-parsley-required="true" data-parsley-trigger="change">
+											<form:select class="form-control" path="productStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+												<c:forEach items="${ statusDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
+												</c:forEach>										
 											</form:select>
 										</div>
 									</div>
@@ -271,7 +275,7 @@
 																	<input id="cbxunit_<c:out value="${ productForm.productUnit[prodUnitIdx.index].productUnitId }"/>" type="checkbox" value="<c:out value="${ prodUnitIdx.index }"/>"/>
 																</td>
 																<td>
-																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change">
+																	<form:select class="form-control" path="productUnit[${ prodUnitIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																		<c:forEach items="${ unitDDL }" var="i">
 																			<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -309,7 +313,7 @@
 								</form:form>
 							</div>
 						</div>
-					</c:when>					
+					</c:when>
 				</c:choose>
 			</div>
 		</div>

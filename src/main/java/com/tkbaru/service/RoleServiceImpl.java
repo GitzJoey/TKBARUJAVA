@@ -63,7 +63,6 @@ public class RoleServiceImpl implements RoleService {
 		
 		//Create Admin Role
 		Role r1 = new Role("ADMIN");
-		r1.setRoleStatus("L001_A");
 		r1.setFunctionList(allF);
 		
 		List<Function> partF = new ArrayList<Function>();
@@ -74,7 +73,6 @@ public class RoleServiceImpl implements RoleService {
 		
 		//Create Non Admin Role
 		Role r2 = new Role("NONADMIN");
-		r2.setRoleStatus("L001_A");
 		r2.setFunctionList(partF);
 
 		addRole(r1);

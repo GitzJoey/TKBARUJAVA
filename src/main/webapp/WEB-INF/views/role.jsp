@@ -178,9 +178,11 @@
 									<div class="form-group">
 										<label for="inputRoleStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="roleStatus" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
+											<form:select class="form-control" path="roleStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ statusDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>											
 										</div>										
 									</div>									

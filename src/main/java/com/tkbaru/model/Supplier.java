@@ -50,8 +50,6 @@ public class Supplier implements Serializable {
 	private String supplierPhone;
 	@Column(name="fax")
 	private String supplierFax;
-	@Column(name="status")
-	private String supplierStatus;
 	@Column(name="npwp_num")
 	private String npwpNum;
 	@Column(name="created_by")
@@ -153,14 +151,6 @@ public class Supplier implements Serializable {
 		this.supplierFax = supplierFax;
 	}
 
-	public String getSupplierStatus() {
-		return supplierStatus;
-	}
-
-	public void setSupplierStatus(String supplierStatus) {
-		this.supplierStatus = supplierStatus;
-	}
-
 	public String getNpwpNum() {
 		return npwpNum;
 	}
@@ -237,11 +227,10 @@ public class Supplier implements Serializable {
 	public String toString() {
 		return "Supplier [supplierId=" + supplierId + ", supplierName=" + supplierName + ", supplierAddress="
 				+ supplierAddress + ", supplierCity=" + supplierCity + ", supplierRemarks=" + supplierRemarks
-				+ ", supplierPhone=" + supplierPhone + ", supplierFax=" + supplierFax + ", supplierStatus="
-				+ supplierStatus + ", npwpNum=" + npwpNum + ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList
-				+ ", picList=" + picList + ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup
-				+ "]";
+				+ ", supplierPhone=" + supplierPhone + ", supplierFax=" + supplierFax + ", npwpNum=" + npwpNum
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList + ", picList=" + picList
+				+ ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup + "]";
 	}
 
 }

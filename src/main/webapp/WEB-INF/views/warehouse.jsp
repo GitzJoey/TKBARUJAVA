@@ -97,7 +97,7 @@
 														<c:out value="${ i.warehouseRemarks }"></c:out>
 													</td>
 													<td>
-														<c:out value="${ i.statusLookup.lookupValue }"/><br/>
+														<spring:message code="${ i.warehouseStatusLookup.localeMessageCodes }" text="${ i.warehouseStatusLookup.lookupValue }"/><br/>
 													</td>
 												</tr>
 											</c:forEach>
@@ -148,11 +148,13 @@
 									<div class="form-group">
 										<label for="inputWarehouseStatus" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="warehouseStatus" data-parsley-required="true" data-parsley-trigger="change">
+											<form:select class="form-control" path="warehouseStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-												<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-											</form:select>											
-										</div>										
+												<c:forEach items="${ statusDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
+												</c:forEach>
+											</form:select>
+										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
