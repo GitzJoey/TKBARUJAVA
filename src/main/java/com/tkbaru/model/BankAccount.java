@@ -35,8 +35,6 @@ public class BankAccount implements Serializable {
 	private int accNum;
 	@Column(name="remarks")
 	private String bankRemarks;
-	@Column(name="status")
-	private String bankStatus;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -49,8 +47,8 @@ public class BankAccount implements Serializable {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup bankAccStatusLookup;
 
 	public int getBankAccId() {
 		return bankAccId;
@@ -92,14 +90,6 @@ public class BankAccount implements Serializable {
 		this.bankRemarks = bankRemarks;
 	}
 
-	public String getBankStatus() {
-		return bankStatus;
-	}
-
-	public void setBankStatus(String bankStatus) {
-		this.bankStatus = bankStatus;
-	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -132,22 +122,20 @@ public class BankAccount implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getBankAccStatusLookup() {
+		return bankAccStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setBankAccStatusLookup(Lookup bankAccStatusLookup) {
+		this.bankAccStatusLookup = bankAccStatusLookup;
 	}
 
 	@Override
 	public String toString() {
-		return "BankAccount [bankAccId=" + bankAccId + ", shortName="
-				+ shortName + ", bankName=" + bankName + ", accNum=" + accNum
-				+ ", bankRemarks=" + bankRemarks + ", bankStatus=" + bankStatus
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ "]";
+		return "BankAccount [bankAccId=" + bankAccId + ", shortName=" + shortName + ", bankName=" + bankName
+				+ ", accNum=" + accNum + ", bankRemarks=" + bankRemarks + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccStatusLookup="
+				+ bankAccStatusLookup + "]";
 	}
 
 }

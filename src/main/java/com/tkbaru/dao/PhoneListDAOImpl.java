@@ -35,7 +35,6 @@ public class PhoneListDAOImpl implements PhoneListDAO {
 			PhoneList res = new PhoneList();
 			
 			res.setPhoneListId(Integer.valueOf(String.valueOf(row.get("phonelist_id"))));
-			res.setProviderName(String.valueOf(row.get("provider")));
 			res.setPhoneNumber(String.valueOf(row.get("number")));
 			
 			result.add(res);

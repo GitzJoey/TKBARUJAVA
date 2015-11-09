@@ -27,22 +27,16 @@ public class Payment implements Serializable {
 	@Column(name = "payment_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int paymentId;
-	@Column(name = "payment_type")
-	private String paymentType;
 	@Column(name = "payment_date")
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 	@Column(name = "total_amount")
 	private long totalAmount;
-	@Column(name = "bank_code")
-	private String bankCode;
 	@Column(name = "effective_date")
 	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
 	@Column(name = "is_linked")
 	private boolean isLinked;
-	@Column(name = "status")
-	private String paymentStatus;
 	@Column(name = "created_by")
 	private int createdBy;
 	@Column(name = "created_date")
@@ -55,15 +49,15 @@ public class Payment implements Serializable {
 	private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "payment_type", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
+	@JoinColumn(name = "payment_type", referencedColumnName = "lookup_key")
 	private Lookup paymentTypeLookup;
 
 	@ManyToOne
-	@JoinColumn(name = "status", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
+	@JoinColumn(name = "status", referencedColumnName = "lookup_key")
 	private Lookup paymentStatusLookup;
 
 	@ManyToOne
-	@JoinColumn(name = "bank_code", referencedColumnName = "lookup_key", unique = true, insertable = false, updatable = false)
+	@JoinColumn(name = "bank_code", referencedColumnName = "lookup_key")
 	private Lookup bankCodeLookup;
 
 	public int getPaymentId() {
@@ -72,14 +66,6 @@ public class Payment implements Serializable {
 
 	public void setPaymentId(int paymentId) {
 		this.paymentId = paymentId;
-	}
-
-	public String getPaymentType() {
-		return paymentType;
-	}
-
-	public void setPaymentType(String paymentType) {
-		this.paymentType = paymentType;
 	}
 
 	public Date getPaymentDate() {
@@ -98,14 +84,6 @@ public class Payment implements Serializable {
 		this.totalAmount = totalAmount;
 	}
 
-	public String getBankCode() {
-		return bankCode;
-	}
-
-	public void setBankCode(String bankCode) {
-		this.bankCode = bankCode;
-	}
-
 	public Date getEffectiveDate() {
 		return effectiveDate;
 	}
@@ -120,14 +98,6 @@ public class Payment implements Serializable {
 
 	public void setLinked(boolean isLinked) {
 		this.isLinked = isLinked;
-	}
-
-	public String getPaymentStatus() {
-		return paymentStatus;
-	}
-
-	public void setPaymentStatus(String paymentStatus) {
-		this.paymentStatus = paymentStatus;
 	}
 
 	public int getCreatedBy() {
@@ -188,13 +158,11 @@ public class Payment implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", paymentType="
-				+ paymentType + ", paymentDate=" + paymentDate
-				+ ", totalAmount=" + totalAmount + ", bankCode=" + bankCode
-				+ ", effectiveDate=" + effectiveDate + ", isLinked=" + isLinked
-				+ ", paymentStatus=" + paymentStatus + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + "]";
+		return "Payment [paymentId=" + paymentId + ", paymentDate=" + paymentDate + ", totalAmount=" + totalAmount
+				+ ", effectiveDate=" + effectiveDate + ", isLinked=" + isLinked + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", paymentTypeLookup=" + paymentTypeLookup + ", paymentStatusLookup=" + paymentStatusLookup
+				+ ", bankCodeLookup=" + bankCodeLookup + "]";
 	}
 
 }

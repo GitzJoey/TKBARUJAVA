@@ -131,7 +131,7 @@ public class PurchaseOrderController {
 		
 		for(ProductUnit productUnit:item.getProductEntity().getProductUnit()){
 			if(productUnit.isBaseUnit() == true){
-				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCode()));
+				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}
 		
@@ -209,7 +209,7 @@ public class PurchaseOrderController {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			
 			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
-				if (productUnit.getUnitCode().equals(items.getUnitCodeLookup().getLookupKey())) {				
+				if (productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())) {				
 					items.setToBaseValue(productUnit.getConversionValue());
 					items.setToBaseQty(productUnit.getConversionValue() * items.getProdQuantity());
 				}
@@ -297,7 +297,7 @@ public class PurchaseOrderController {
 		
 		for(ProductUnit productUnit : i.getProductEntity().getProductUnit()){
 			if(productUnit.isBaseUnit()){
-				i.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCode()));
+				i.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}
 		
@@ -412,7 +412,6 @@ public class PurchaseOrderController {
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_CASH");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_CASH"));
 		
 		po.getPaymentList().add(payment);
@@ -438,7 +437,6 @@ public class PurchaseOrderController {
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_TRANSFER");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TRANSFER"));
 		
 		po.getPaymentList().add(payment);
@@ -464,7 +462,6 @@ public class PurchaseOrderController {
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(selectedPo);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_GIRO");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_GIRO"));
 		
 		po.getPaymentList().add(payment);
@@ -513,7 +510,7 @@ public class PurchaseOrderController {
 		for (Items items : reviseForm.getItemsList()) {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			for(ProductUnit productUnit : items.getProductEntity().getProductUnit()){
-				if(productUnit.getUnitCode().equals(items.getUnitCodeLookup().getLookupKey())){				
+				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){				
 					items.setToBaseValue(productUnit.getConversionValue());
 					items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
 				}
@@ -579,14 +576,13 @@ public class PurchaseOrderController {
 		}
 
 		Payment i = new Payment();
-		i.setPaymentType(paymentType);
 		i.setPaymentTypeLookup(lookupManager.getLookupByKey(paymentType));
 		poForm.getPaymentList().add(i);
 		
 		for(Payment payment : poForm.getPaymentList()){
-			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentType()));
-			if(payment.getBankCode()!=null){
-				payment.setBankCodeLookup(lookupManager.getLookupByKey(payment.getBankCode()));
+			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentTypeLookup().getLookupKey()));
+			if(payment.getBankCodeLookup() != null){
+				payment.setBankCodeLookup(lookupManager.getLookupByKey(payment.getBankCodeLookup().getLookupKey()));
 			}
 		}
 		
@@ -622,7 +618,7 @@ public class PurchaseOrderController {
 		poForm.setPaymentList(payLNew);
 		
 		for(Payment payment : poForm.getPaymentList()){
-			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentType()));
+			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentTypeLookup().getLookupKey()));
 		}
 		
 		model.addAttribute("poForm", poForm);
@@ -653,14 +649,14 @@ public class PurchaseOrderController {
 		long totalPayment = 0;
 		
 		for(Payment payment : poForm.getPaymentList()) {
-			if(payment.getPaymentStatus() != null) {
-				if(payment.getPaymentType().equals("L017_CASH") && payment.getPaymentStatus().equals("L018_C")) {
+			if(payment.getPaymentStatusLookup() != null) {
+				if(payment.getPaymentTypeLookup().getLookupKey().equals("L017_CASH") && payment.getPaymentStatusLookup().getLookupKey().equals("L018_C")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				if(payment.getPaymentType().equals("L017_GIRO") && payment.getPaymentStatus().equals("L021_FR")) {
+				if(payment.getPaymentTypeLookup().getLookupKey().equals("L017_GIRO") && payment.getPaymentStatusLookup().getLookupKey().equals("L021_FR")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				if(payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")) {
+				if(payment.getPaymentTypeLookup().getLookupKey().equals("L017_TRANSFER") && payment.getPaymentStatusLookup().getLookupKey().equals("L020_B")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
 			}	

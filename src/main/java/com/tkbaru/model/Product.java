@@ -37,8 +37,6 @@ public class Product implements Serializable {
 	@GeneratedValue
 	@Column(name="product_id")
 	private int productId;
-	@Column(name="product_type")
-	private String productType;
 	@Column(name="short_code")
 	private String shortCode;
 	@Column(name="product_name")
@@ -49,8 +47,6 @@ public class Product implements Serializable {
 	private MultipartFile imageBinary;
 	@Column(name="image_path")
 	private String imagePath;
-	@Column(name="status")
-	private String productStatus;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -66,11 +62,11 @@ public class Product implements Serializable {
 	private List<ProductUnit> productUnit;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup productStatusLookup;
 	
 	@ManyToOne
-	@JoinColumn(name="product_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="product_type", referencedColumnName="lookup_key")
 	private Lookup productTypeLookup;
 
 	@OneToMany(mappedBy="productEntity")
@@ -82,14 +78,6 @@ public class Product implements Serializable {
 
 	public void setProductId(int productId) {
 		this.productId = productId;
-	}
-
-	public String getProductType() {
-		return productType;
-	}
-
-	public void setProductType(String productType) {
-		this.productType = productType;
 	}
 
 	public String getShortCode() {
@@ -132,14 +120,6 @@ public class Product implements Serializable {
 		this.imagePath = imagePath;
 	}
 
-	public String getProductStatus() {
-		return productStatus;
-	}
-
-	public void setProductStatus(String productStatus) {
-		this.productStatus = productStatus;
-	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -180,12 +160,12 @@ public class Product implements Serializable {
 		this.productUnit = productUnit;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getProductStatusLookup() {
+		return productStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setProductStatusLookup(Lookup productStatusLookup) {
+		this.productStatusLookup = productStatusLookup;
 	}
 
 	public Lookup getProductTypeLookup() {
@@ -206,11 +186,11 @@ public class Product implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Product [productId=" + productId + ", productType=" + productType + ", shortCode=" + shortCode
-				+ ", productName=" + productName + ", productDesc=" + productDesc + ", imageBinary=" + imageBinary
-				+ ", imagePath=" + imagePath + ", productStatus=" + productStatus + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", productUnit=" + productUnit + "]";
+		return "Product [productId=" + productId + ", shortCode=" + shortCode + ", productName=" + productName
+				+ ", productDesc=" + productDesc + ", imageBinary=" + imageBinary + ", imagePath=" + imagePath
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", productUnit=" + productUnit + ", productStatusLookup="
+				+ productStatusLookup + ", productTypeLookup=" + productTypeLookup + ", stocksList=" + stocksList + "]";
 	}
-	
+
 }

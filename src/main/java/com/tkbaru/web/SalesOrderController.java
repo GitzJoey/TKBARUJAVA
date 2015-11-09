@@ -26,7 +26,6 @@ import com.tkbaru.model.Customer;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
-import com.tkbaru.model.Product;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.model.Stocks;
@@ -192,7 +191,7 @@ public class SalesOrderController {
 		
 		for (ProductUnit productUnit:item.getProductEntity().getProductUnit()) {
 			if (productUnit.isBaseUnit()) {
-				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCode()));
+				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}
 
@@ -260,7 +259,7 @@ public class SalesOrderController {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
 			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
-				if(productUnit.getUnitCode().equals(items.getUnitCodeLookup().getLookupKey())){
+				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){
 					items.setToBaseValue(productUnit.getConversionValue());
 					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());
 				}
@@ -423,7 +422,6 @@ public class SalesOrderController {
 	
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_GIRO");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_GIRO"));
 		
 		so.getPaymentList().add(payment);
@@ -448,7 +446,6 @@ public class SalesOrderController {
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_CASH");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_CASH"));
 		
 		so.getPaymentList().add(payment);
@@ -474,7 +471,6 @@ public class SalesOrderController {
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		Payment payment = new Payment();
-		payment.setPaymentType("L017_TRANSFER");
 		payment.setPaymentTypeLookup(lookupManager.getLookupByKey("L017_TRANSFER"));
 		
 		so.getPaymentList().add(payment);
@@ -524,14 +520,13 @@ public class SalesOrderController {
 		}
 
 		Payment i = new Payment();
-		i.setPaymentType(paymentType);
 		i.setPaymentTypeLookup(lookupManager.getLookupByKey(paymentType));
 		paymentSalesForm.getPaymentList().add(i);
 		
 		for (Payment payment : paymentSalesForm.getPaymentList()) {
-			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentType()));
-			if (payment.getBankCode() != null) {
-				payment.setBankCodeLookup(lookupManager.getLookupByKey(payment.getBankCode()));
+			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentTypeLookup().getLookupKey()));
+			if (payment.getBankCodeLookup() != null) {
+				payment.setBankCodeLookup(lookupManager.getLookupByKey(payment.getBankCodeLookup().getLookupKey()));
 			}
 		}
 		
@@ -573,7 +568,7 @@ public class SalesOrderController {
 
 		paymentSalesForm.setPaymentList(payLNew);
 		for (Payment payment : paymentSalesForm.getPaymentList()) {
-			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentType()));
+			payment.setPaymentTypeLookup(lookupManager.getLookupByKey(payment.getPaymentTypeLookup().getLookupKey()));
 		}
 		
 		model.addAttribute("paymentSalesForm", paymentSalesForm);
@@ -602,14 +597,14 @@ public class SalesOrderController {
 		
 		long totalPayment = 0;
 		for (Payment payment : paymentSalesForm.getPaymentList()) {
-			if (payment.getPaymentStatus() != null) {
-				if (payment.getPaymentType().equals("L017_CASH") && payment.getPaymentStatus().equals("L018_C")) {
+			if (payment.getPaymentStatusLookup() != null) {
+				if (payment.getPaymentTypeLookup().getLookupKey().equals("L017_CASH") && payment.getPaymentStatusLookup().getLookupKey().equals("L018_C")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				if (payment.getPaymentType().equals("L017_GIRO") && payment.getPaymentStatus().equals("L021_FR")) {
+				if (payment.getPaymentTypeLookup().getLookupKey().equals("L017_GIRO") && payment.getPaymentStatusLookup().getLookupKey().equals("L021_FR")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
-				if (payment.getPaymentType().equals("L017_TRANSFER") && payment.getPaymentStatus().equals("L020_B")) {
+				if (payment.getPaymentTypeLookup().getLookupKey().equals("L017_TRANSFER") && payment.getPaymentStatusLookup().getLookupKey().equals("L020_B")) {
 					totalPayment += payment.getTotalAmount(); 
 				}
 			}

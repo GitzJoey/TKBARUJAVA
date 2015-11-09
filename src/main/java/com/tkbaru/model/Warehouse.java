@@ -47,77 +47,95 @@ public class Warehouse implements Serializable {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup warehouseStatusLookup;
 
 	public int getWarehouseId() {
 		return warehouseId;
 	}
+
 	public void setWarehouseId(int warehouseId) {
 		this.warehouseId = warehouseId;
 	}
+
 	public String getWarehouseName() {
 		return warehouseName;
 	}
+
 	public void setWarehouseName(String warehouseName) {
 		this.warehouseName = warehouseName;
 	}
+
 	public String getWarehouseLocation() {
 		return warehouseLocation;
 	}
+
 	public void setWarehouseLocation(String warehouseLocation) {
 		this.warehouseLocation = warehouseLocation;
 	}
+
 	public String getWarehouseRemarks() {
 		return warehouseRemarks;
 	}
+
 	public void setWarehouseRemarks(String warehouseRemarks) {
 		this.warehouseRemarks = warehouseRemarks;
 	}
+
 	public String getWarehouseStatus() {
 		return warehouseStatus;
 	}
+
 	public void setWarehouseStatus(String warehouseStatus) {
 		this.warehouseStatus = warehouseStatus;
 	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public int getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(int updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public Lookup getStatusLookup() {
-		return statusLookup;
+
+	public Lookup getWarehouseStatusLookup() {
+		return warehouseStatusLookup;
 	}
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+
+	public void setWarehouseStatusLookup(Lookup warehouseStatusLookup) {
+		this.warehouseStatusLookup = warehouseStatusLookup;
 	}
+
 	@Override
 	public String toString() {
-		return "Warehouse [warehouseId=" + warehouseId + ", warehouseName="
-				+ warehouseName + ", warehouseLocation=" + warehouseLocation
-				+ ", warehouseRemarks=" + warehouseRemarks
-				+ ", warehouseStatus=" + warehouseStatus + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + "]";
+		return "Warehouse [warehouseId=" + warehouseId + ", warehouseName=" + warehouseName + ", warehouseLocation="
+				+ warehouseLocation + ", warehouseRemarks=" + warehouseRemarks + ", warehouseStatus=" + warehouseStatus
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", warehouseStatusLookup=" + warehouseStatusLookup + "]";
 	}
 
 }

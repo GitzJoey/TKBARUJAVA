@@ -1,6 +1,5 @@
 package com.tkbaru.service;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,14 +58,6 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public void generateDefaultCustomer() {
-		Customer c = new Customer();
-		
-		c.setCustomerName("Walk In Customer");
-		c.setCustomerAddress("");
-		c.setCustomerCity("");
-		c.setCustomerStatus("L001_A");
-		c.setCreatedBy(0);
-		c.setCreatedDate(new Date());
 		
 	}
 

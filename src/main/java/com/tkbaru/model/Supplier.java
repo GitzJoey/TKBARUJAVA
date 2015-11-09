@@ -94,8 +94,8 @@ public class Supplier implements Serializable {
 	private List<Product> prodList = LazyList.decorate(new ArrayList<Product>(), FactoryUtils.instantiateFactory(Product.class));
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup supplierStatusLookup;
 
 	public int getSupplierId() {
 		return supplierId;
@@ -225,26 +225,23 @@ public class Supplier implements Serializable {
 		this.prodList = prodList;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getSupplierStatusLookup() {
+		return supplierStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setSupplierStatusLookup(Lookup supplierStatusLookup) {
+		this.supplierStatusLookup = supplierStatusLookup;
 	}
 
 	@Override
 	public String toString() {
-		return "Supplier [supplierId=" + supplierId + ", supplierName="
-				+ supplierName + ", supplierAddress=" + supplierAddress
-				+ ", supplierCity=" + supplierCity + ", supplierRemarks="
-				+ supplierRemarks + ", supplierPhone=" + supplierPhone
-				+ ", supplierFax=" + supplierFax + ", supplierStatus="
-				+ supplierStatus + ", npwpNum=" + npwpNum + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + ", bankAccList="
-				+ bankAccList + ", picList=" + picList + ", prodList="
-				+ prodList + "]";
+		return "Supplier [supplierId=" + supplierId + ", supplierName=" + supplierName + ", supplierAddress="
+				+ supplierAddress + ", supplierCity=" + supplierCity + ", supplierRemarks=" + supplierRemarks
+				+ ", supplierPhone=" + supplierPhone + ", supplierFax=" + supplierFax + ", supplierStatus="
+				+ supplierStatus + ", npwpNum=" + npwpNum + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList
+				+ ", picList=" + picList + ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup
+				+ "]";
 	}
 
 }

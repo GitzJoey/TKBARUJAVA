@@ -34,12 +34,8 @@ public class Store implements Serializable {
 	private String storeAddress2;
 	@Column(name="address_3")
 	private String storeAddress3;
-	@Column(name="is_default")
-	private String isDefault;
 	@Column(name="npwp_number")
 	private String npwpNumber;
-	@Column(name="status")
-	private String storeStatus;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -52,11 +48,11 @@ public class Store implements Serializable {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup storeStatusLookup;
 	
 	@ManyToOne
-	@JoinColumn(name="is_default", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="is_default", referencedColumnName="lookup_key")
 	private Lookup isDefaultLookup;
 
 	public int getStoreId() {
@@ -99,28 +95,12 @@ public class Store implements Serializable {
 		this.storeAddress3 = storeAddress3;
 	}
 
-	public String getIsDefault() {
-		return isDefault;
-	}
-
-	public void setIsDefault(String isDefault) {
-		this.isDefault = isDefault;
-	}
-
 	public String getNpwpNumber() {
 		return npwpNumber;
 	}
 
 	public void setNpwpNumber(String npwpNumber) {
 		this.npwpNumber = npwpNumber;
-	}
-
-	public String getStoreStatus() {
-		return storeStatus;
-	}
-
-	public void setStoreStatus(String storeStatus) {
-		this.storeStatus = storeStatus;
 	}
 
 	public int getCreatedBy() {
@@ -173,13 +153,11 @@ public class Store implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Store [storeId=" + storeId + ", storeName=" + storeName
-				+ ", storeAddress1=" + storeAddress1 + ", storeAddress2="
-				+ storeAddress2 + ", storeAddress3=" + storeAddress3
-				+ ", isDefault=" + isDefault + ", npwpNumber=" + npwpNumber
-				+ ", storeStatus=" + storeStatus + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "Store [storeId=" + storeId + ", storeName=" + storeName + ", storeAddress1=" + storeAddress1
+				+ ", storeAddress2=" + storeAddress2 + ", storeAddress3=" + storeAddress3 + ", npwpNumber=" + npwpNumber
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", storeStatusLookup=" + storeStatusLookup + ", isDefaultLookup="
+				+ isDefaultLookup + "]";
 	}
 
 }

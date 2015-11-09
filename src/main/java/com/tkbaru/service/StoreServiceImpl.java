@@ -14,6 +14,9 @@ import com.tkbaru.model.Store;
 public class StoreServiceImpl implements StoreService {
 
 	@Autowired
+	LookupService lookupManager;
+	
+	@Autowired
 	StoreDAO storeDAO;
 	
 	@Override
@@ -34,7 +37,7 @@ public class StoreServiceImpl implements StoreService {
 	@Transactional
 	public void addStore(Store store) {
 		
-		if (store.getIsDefault().equals("L003_YES") && getDefaultStore() != null) {
+		if (store.getIsDefaultLookup().getLookupKey().equals("L003_YES") && getDefaultStore() != null) {
 			setAllStoreIsDefaultNo();
 		}
 		
@@ -45,7 +48,7 @@ public class StoreServiceImpl implements StoreService {
 	@Transactional
 	public void editStore(Store store) {
 
-		if (store.getIsDefault().equals("L003_YES") 
+		if (store.getIsDefaultLookup().getLookupKey().equals("L003_YES") 
 				&& getDefaultStore() != null
 				&& store.getStoreId() != getDefaultStore().getStoreId()) {
 			setAllStoreIsDefaultNo(store);
@@ -72,7 +75,7 @@ public class StoreServiceImpl implements StoreService {
 		List<Store> all = getAllStore();
 		
 		for (Store s:all) {
-			s.setIsDefault("L003_NO");
+			s.setIsDefaultLookup(lookupManager.getLookupByKey("L003_NO"));
 		}
 		
 		storeDAO.batchEditStore(all);
@@ -87,11 +90,11 @@ public class StoreServiceImpl implements StoreService {
 				s.setStoreAddress1(except.getStoreAddress1());
 				s.setStoreAddress2(except.getStoreAddress2());
 				s.setStoreAddress3(except.getStoreAddress3());
-				s.setIsDefault(except.getIsDefault());
+				s.setIsDefaultLookup(except.getIsDefaultLookup());
 				s.setNpwpNumber(except.getNpwpNumber());
-				s.setStoreStatus(except.getStoreStatus());
+				s.setStoreStatusLookup(except.getStoreStatusLookup());
 			} else {
-				s.setIsDefault("L003_NO");
+				s.setIsDefaultLookup(lookupManager.getLookupByKey("L003_NO"));
 			}
 		}
 		
@@ -105,16 +108,16 @@ public class StoreServiceImpl implements StoreService {
 		Store s2 = new Store();
 		
 		s1.setStoreName("Toko Baru");
-		s1.setIsDefault("L003_YES");
-		s1.setStoreStatus("L001_A");
+		s1.setIsDefaultLookup(lookupManager.getLookupByKey("L003_YES"));
+		s1.setStoreStatusLookup(lookupManager.getLookupByKey("L001_A"));
 		s1.setNpwpNumber("0000-0000-0000-0000");
 		s1.setStoreAddress1("Wangon");
 		s1.setCreatedBy(0);
 		s1.setCreatedDate(new Date());
 
 		s2.setStoreName("Toko Baru-");
-		s2.setIsDefault("L003_YES");
-		s2.setStoreStatus("L001_A");
+		s2.setIsDefaultLookup(lookupManager.getLookupByKey("L003_YES"));
+		s2.setStoreStatusLookup(lookupManager.getLookupByKey("L001_A"));
 		s2.setNpwpNumber("0000-0000-0000-0000");
 		s2.setStoreAddress1("Wangon");
 		s2.setCreatedBy(0);

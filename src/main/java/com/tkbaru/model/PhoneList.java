@@ -27,12 +27,8 @@ public class PhoneList implements Serializable{
 	@Column(name="phonelist_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
 	private int phoneListId;
-	@Column(name="provider")
-	private String providerName;
 	@Column(name="number")
 	private String phoneNumber;
-	@Column(name="status")
-	private String phoneStatus;
 	@Column(name="remarks")
 	private String phoneNumRemarks;
 	@Column(name="created_by")
@@ -47,11 +43,11 @@ public class PhoneList implements Serializable{
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup phoneStatusLookup;
 
 	@ManyToOne
-	@JoinColumn(name="provider", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="provider", referencedColumnName="lookup_key")
 	private Lookup providerLookup;
 
 	public int getPhoneListId() {
@@ -62,28 +58,12 @@ public class PhoneList implements Serializable{
 		this.phoneListId = phoneListId;
 	}
 
-	public String getProviderName() {
-		return providerName;
-	}
-
-	public void setProviderName(String providerName) {
-		this.providerName = providerName;
-	}
-
 	public String getPhoneNumber() {
 		return phoneNumber;
 	}
 
 	public void setPhoneNumber(String phoneNumber) {
 		this.phoneNumber = phoneNumber;
-	}
-
-	public String getPhoneStatus() {
-		return phoneStatus;
-	}
-
-	public void setPhoneStatus(String phoneStatus) {
-		this.phoneStatus = phoneStatus;
 	}
 
 	public String getPhoneNumRemarks() {
@@ -126,14 +106,14 @@ public class PhoneList implements Serializable{
 		this.updatedDate = updatedDate;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getPhoneStatusLookup() {
+		return phoneStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setPhoneStatusLookup(Lookup phoneStatusLookup) {
+		this.phoneStatusLookup = phoneStatusLookup;
 	}
-	
+
 	public Lookup getProviderLookup() {
 		return providerLookup;
 	}
@@ -144,12 +124,10 @@ public class PhoneList implements Serializable{
 
 	@Override
 	public String toString() {
-		return "PhoneList [phoneListId=" + phoneListId + ", providerName="
-				+ providerName + ", phoneNumber=" + phoneNumber
-				+ ", phoneStatus=" + phoneStatus + ", phoneNumRemarks="
-				+ phoneNumRemarks + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "PhoneList [phoneListId=" + phoneListId + ", phoneNumber=" + phoneNumber + ", phoneNumRemarks="
+				+ phoneNumRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", phoneStatusLookup=" + phoneStatusLookup
+				+ ", providerLookup=" + providerLookup + "]";
 	}
-	
+
 }

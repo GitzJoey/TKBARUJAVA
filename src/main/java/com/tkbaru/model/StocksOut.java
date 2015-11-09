@@ -24,14 +24,6 @@ public class StocksOut {
 	@Column(name="stocks_out_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int stocksOutId;
-	@Column(name="so_id")
-	private int salesId;
-	@Column(name="stocks_id")
-	private int stocksId;
-	@Column(name="product_id")
-	private int productId;
-	@Column(name="warehouse_id")
-	private int warehouseId;
 	@Column(name="quantity")
 	private long prodQuantity;
 	@Column(name="created_by")
@@ -46,16 +38,20 @@ public class StocksOut {
 	private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "stocks_id", unique = true, insertable = false, updatable = false)
-	private Stocks stocksLookup;
+	@JoinColumn(name="so_id")
+	private SalesOrder salesOrderEntity;
 
 	@ManyToOne
-	@JoinColumn(name = "product_id", unique = true, insertable = false, updatable = false)
-	private Product productLookup;
+	@JoinColumn(name="stocks_id")
+	private Stocks stocksEntity;
 
 	@ManyToOne
-	@JoinColumn(name = "warehouse_id", unique = true, insertable = false, updatable = false)
-	private Warehouse warehouseLookup;
+	@JoinColumn(name="product_id")
+	private Product productEntity;
+
+	@ManyToOne
+	@JoinColumn(name="warehouse_id")
+	private Warehouse warehouseEntity;
 
 	public int getStocksOutId() {
 		return stocksOutId;
@@ -63,38 +59,6 @@ public class StocksOut {
 
 	public void setStocksOutId(int stocksOutId) {
 		this.stocksOutId = stocksOutId;
-	}
-
-	public int getSalesId() {
-		return salesId;
-	}
-
-	public void setSalesId(int salesId) {
-		this.salesId = salesId;
-	}
-
-	public int getStocksId() {
-		return stocksId;
-	}
-
-	public void setStocksId(int stocksId) {
-		this.stocksId = stocksId;
-	}
-
-	public int getProductId() {
-		return productId;
-	}
-
-	public void setProductId(int productId) {
-		this.productId = productId;
-	}
-
-	public int getWarehouseId() {
-		return warehouseId;
-	}
-
-	public void setWarehouseId(int warehouseId) {
-		this.warehouseId = warehouseId;
 	}
 
 	public long getProdQuantity() {
@@ -137,36 +101,44 @@ public class StocksOut {
 		this.updatedDate = updatedDate;
 	}
 
-	public Stocks getStocksLookup() {
-		return stocksLookup;
+	public SalesOrder getSalesOrderEntity() {
+		return salesOrderEntity;
 	}
 
-	public void setStocksLookup(Stocks stocksLookup) {
-		this.stocksLookup = stocksLookup;
+	public void setSalesOrderEntity(SalesOrder salesOrderEntity) {
+		this.salesOrderEntity = salesOrderEntity;
 	}
 
-	public Product getProductLookup() {
-		return productLookup;
+	public Stocks getStocksEntity() {
+		return stocksEntity;
 	}
 
-	public void setProductLookup(Product productLookup) {
-		this.productLookup = productLookup;
+	public void setStocksEntity(Stocks stocksEntity) {
+		this.stocksEntity = stocksEntity;
 	}
 
-	public Warehouse getWarehouseLookup() {
-		return warehouseLookup;
+	public Product getProductEntity() {
+		return productEntity;
 	}
 
-	public void setWarehouseLookup(Warehouse warehouseLookup) {
-		this.warehouseLookup = warehouseLookup;
+	public void setProductEntity(Product productEntity) {
+		this.productEntity = productEntity;
+	}
+
+	public Warehouse getWarehouseEntity() {
+		return warehouseEntity;
+	}
+
+	public void setWarehouseEntity(Warehouse warehouseEntity) {
+		this.warehouseEntity = warehouseEntity;
 	}
 
 	@Override
 	public String toString() {
-		return "StocksOut [stocksOutId=" + stocksOutId + ", salesId=" + salesId + ", stocksId=" + stocksId
-				+ ", productId=" + productId + ", warehouseId=" + warehouseId + ", prodQuantity=" + prodQuantity
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "StocksOut [stocksOutId=" + stocksOutId + ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", salesOrderEntity=" + salesOrderEntity + ", stocksEntity=" + stocksEntity + ", productEntity="
+				+ productEntity + ", warehouseEntity=" + warehouseEntity + "]";
 	}
 
 }

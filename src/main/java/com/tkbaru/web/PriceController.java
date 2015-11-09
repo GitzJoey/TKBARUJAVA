@@ -76,9 +76,8 @@ public class PriceController {
 		for(PriceLevel pl:priceLevelList) {
 			Price p = new Price();
 			p.setPriceId(0);
-			p.setPriceLevelId(pl.getPriceLevelId());
 			p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(pl.getPriceLevelId()));
-			p.setPriceStatus("L001_A");
+			p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
 			p.setInputDate(forDate);
 			p.setMarketPrice(new BigDecimal(0));
 			p.setPrice(new BigDecimal(0));

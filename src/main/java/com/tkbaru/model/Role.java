@@ -86,8 +86,8 @@ public class Role implements Serializable {
 	List<Function> functionList = LazyList.decorate(new ArrayList<Function>(), FactoryUtils.instantiateFactory(Function.class));
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup roleStatusLookup;
 
 	public int getRoleId() {
 		return roleId;
@@ -153,21 +153,19 @@ public class Role implements Serializable {
 		this.functionList = functionList;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getRoleStatusLookup() {
+		return roleStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setRoleStatusLookup(Lookup roleStatusLookup) {
+		this.roleStatusLookup = roleStatusLookup;
 	}
 
 	@Override
 	public String toString() {
-		return "Role [roleId=" + roleId + ", roleName=" + roleName
-				+ ", roleStatus=" + roleStatus + ", createdBy=" + createdBy
-				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", functionList="
-				+ functionList + "]";
+		return "Role [roleId=" + roleId + ", roleName=" + roleName + ", roleStatus=" + roleStatus + ", createdBy="
+				+ createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate="
+				+ updatedDate + ", functionList=" + functionList + ", roleStatusLookup=" + roleStatusLookup + "]";
 	}
-	
+
 }

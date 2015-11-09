@@ -23,10 +23,6 @@ public class Truck {
 	@GeneratedValue
 	@Column(name="truck_id")
 	private int truckId;
-	@Column(name="truck_type")
-	private String truckType;
-	@Column(name="weight_type")	
-	private String weightType;
 	@Column(name="plate_number")
 	private String plateNumber;
 	@Column(name="kir_date")
@@ -34,8 +30,6 @@ public class Truck {
 	private Date kirDate;
 	@Column(name="driver")
 	private int driver;
-	@Column(name="status")
-	private String truckStatus;
 	@Column(name="remarks")
 	private String remarks;
 	@Column(name="created_by")
@@ -50,15 +44,15 @@ public class Truck {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup truckStatusLookup;
 
 	@ManyToOne
-	@JoinColumn(name="truck_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="truck_type", referencedColumnName="lookup_key")
 	private Lookup truckTypeLookup;
 
 	@ManyToOne
-	@JoinColumn(name="weight_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="weight_type", referencedColumnName="lookup_key")
 	private Lookup weightTypeLookup;
 
 	public int getTruckId() {
@@ -67,22 +61,6 @@ public class Truck {
 
 	public void setTruckId(int truckId) {
 		this.truckId = truckId;
-	}
-
-	public String getTruckType() {
-		return truckType;
-	}
-
-	public void setTruckType(String truckType) {
-		this.truckType = truckType;
-	}
-
-	public String getWeightType() {
-		return weightType;
-	}
-
-	public void setWeightType(String weightType) {
-		this.weightType = weightType;
 	}
 
 	public String getPlateNumber() {
@@ -107,14 +85,6 @@ public class Truck {
 
 	public void setDriver(int driver) {
 		this.driver = driver;
-	}
-
-	public String getTruckStatus() {
-		return truckStatus;
-	}
-
-	public void setTruckStatus(String truckStatus) {
-		this.truckStatus = truckStatus;
 	}
 
 	public String getRemarks() {
@@ -157,12 +127,12 @@ public class Truck {
 		this.updatedDate = updatedDate;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getTruckStatusLookup() {
+		return truckStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setTruckStatusLookup(Lookup truckStatusLookup) {
+		this.truckStatusLookup = truckStatusLookup;
 	}
 
 	public Lookup getTruckTypeLookup() {
@@ -183,35 +153,11 @@ public class Truck {
 
 	@Override
 	public String toString() {
-		return "Truck [truckId=" + truckId + ", truckType=" + truckType
-				+ ", weightType=" + weightType + ", plateNumber=" + plateNumber
-				+ ", kirDate=" + kirDate + ", driver=" + driver
-				+ ", truckStatus=" + truckStatus + ", remarks=" + remarks
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+		return "Truck [truckId=" + truckId + ", plateNumber=" + plateNumber + ", kirDate=" + kirDate + ", driver="
+				+ driver + ", remarks=" + remarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", truckStatusLookup="
+				+ truckStatusLookup + ", truckTypeLookup=" + truckTypeLookup + ", weightTypeLookup=" + weightTypeLookup
 				+ "]";
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + truckId;
-		return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Truck other = (Truck) obj;
-		if (truckId != other.truckId)
-			return false;
-		return true;
-	}
-		
 }

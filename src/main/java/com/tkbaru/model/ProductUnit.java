@@ -24,8 +24,6 @@ public class ProductUnit {
 	@Column(name="prod_unit_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int productUnitId;
-	@Column(name="unit_code")
-	private String unitCode;
 	@Column(name="is_base", columnDefinition="TINYINT", length=1)
 	private boolean baseUnit;
 	@Column(name="conversion_val")
@@ -48,7 +46,7 @@ public class ProductUnit {
 	private Product productEntity;
 	
 	@ManyToOne
-	@JoinColumn(name="unit_code", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="unit_code", referencedColumnName="lookup_key")
 	private Lookup unitCodeLookup;
 
 	public int getProductUnitId() {
@@ -57,14 +55,6 @@ public class ProductUnit {
 
 	public void setProductUnitId(int productUnitId) {
 		this.productUnitId = productUnitId;
-	}
-
-	public String getUnitCode() {
-		return unitCode;
-	}
-
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
 	}
 
 	public boolean isBaseUnit() {
@@ -130,7 +120,7 @@ public class ProductUnit {
 	public void setProductEntity(Product productEntity) {
 		this.productEntity = productEntity;
 	}
-	
+
 	public Lookup getUnitCodeLookup() {
 		return unitCodeLookup;
 	}
@@ -138,14 +128,13 @@ public class ProductUnit {
 	public void setUnitCodeLookup(Lookup unitCodeLookup) {
 		this.unitCodeLookup = unitCodeLookup;
 	}
-	
+
 	@Override
 	public String toString() {
-		return "ProductUnit [productUnitId=" + productUnitId + ", unitCode="
-				+ unitCode + ", baseUnit=" + baseUnit + ", conversionValue="
-				+ conversionValue + ", unitRemarks=" + unitRemarks
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + "]";
+		return "ProductUnit [productUnitId=" + productUnitId + ", baseUnit=" + baseUnit + ", conversionValue="
+				+ conversionValue + ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy + ", createdDate="
+				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", productEntity="
+				+ productEntity + ", unitCodeLookup=" + unitCodeLookup + "]";
 	}
 
 }

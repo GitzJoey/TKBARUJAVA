@@ -26,10 +26,6 @@ public class Price {
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_id", nullable=false)
     private Integer priceId;
-    @Column(name="stocks_id")
-    private int stocksId;
-    @Column(name="price_level_id")
-    private Integer priceLevelId;
     @Column(name="market_price")
     private BigDecimal marketPrice;
     @Column(name="price")
@@ -37,8 +33,6 @@ public class Price {
     @Column(name="input_date")
     @Temporal(TemporalType.DATE)
     private Date inputDate;
-    @Column(name="status")
-    private String priceStatus;
     @Column(name="created_by")
     private int createdBy;
     @Column(name="created_date")
@@ -51,16 +45,16 @@ public class Price {
     private Date updatedDate;
 
     @OneToOne
-    @JoinColumn(name="price_level_id", insertable=false, updatable=false)
+    @JoinColumn(name="price_level_id")
     private PriceLevel priceLevelEntity;
     
     @ManyToOne
-    @JoinColumn(name="stocks_id", nullable=false, insertable=false, updatable=false)
+    @JoinColumn(name="stocks_id")
     private Stocks stocksEntity;
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup priceStatusLookup;
 
 	public Integer getPriceId() {
 		return priceId;
@@ -68,22 +62,6 @@ public class Price {
 
 	public void setPriceId(Integer priceId) {
 		this.priceId = priceId;
-	}
-
-	public int getStocksId() {
-		return stocksId;
-	}
-
-	public void setStocksId(int stocksId) {
-		this.stocksId = stocksId;
-	}
-
-	public Integer getPriceLevelId() {
-		return priceLevelId;
-	}
-
-	public void setPriceLevelId(Integer priceLevelId) {
-		this.priceLevelId = priceLevelId;
 	}
 
 	public BigDecimal getMarketPrice() {
@@ -108,14 +86,6 @@ public class Price {
 
 	public void setInputDate(Date inputDate) {
 		this.inputDate = inputDate;
-	}
-
-	public String getPriceStatus() {
-		return priceStatus;
-	}
-
-	public void setPriceStatus(String priceStatus) {
-		this.priceStatus = priceStatus;
 	}
 
 	public int getCreatedBy() {
@@ -166,20 +136,20 @@ public class Price {
 		this.stocksEntity = stocksEntity;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getPriceStatusLookup() {
+		return priceStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setPriceStatusLookup(Lookup priceStatusLookup) {
+		this.priceStatusLookup = priceStatusLookup;
 	}
 
 	@Override
 	public String toString() {
-		return "Price [priceId=" + priceId + ", stocksId=" + stocksId + ", priceLevelId=" + priceLevelId
-				+ ", marketPrice=" + marketPrice + ", price=" + price + ", inputDate=" + inputDate + ", priceStatus="
-				+ priceStatus + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "Price [priceId=" + priceId + ", marketPrice=" + marketPrice + ", price=" + price + ", inputDate="
+				+ inputDate + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", priceLevelEntity=" + priceLevelEntity + ", stocksEntity="
+				+ stocksEntity + ", priceStatusLookup=" + priceStatusLookup + "]";
 	}
-	
+
 }

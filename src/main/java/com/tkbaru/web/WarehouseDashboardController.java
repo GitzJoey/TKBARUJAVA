@@ -274,9 +274,9 @@ public class WarehouseDashboardController {
 					items.setDeliverList(itemX.getDeliverList());
 
 					StocksOut stocksOut = new StocksOut();
-					stocksOut.setSalesId(salesId);
-					stocksOut.setProductId(items.getProductEntity().getProductId());
-					stocksOut.setWarehouseId(warehouseId);
+					stocksOut.setSalesOrderEntity(sales);
+					stocksOut.setProductEntity(items.getProductEntity());
+					stocksOut.setWarehouseEntity(warehouseManager.getWarehouseById(warehouseId));
 					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocksOut.setCreatedDate(new Date());

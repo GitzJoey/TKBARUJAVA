@@ -25,14 +25,10 @@ public class PriceLevel{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_level_id")
     private int priceLevelId ;
-    @Column(name="level_type")
-    private String priceLevelType;
     @Column(name="level_name", length=100)
     private String priceLevelName;
     @Column(name="level_description", length=255)
     private String priceLevelDescription;
-    @Column(name="status", length=15)
-    private String priceLevelStatus;    
     @Column(name="increment_value")
     private BigDecimal incrementValue;
     @Column(name="percentage_value")
@@ -49,12 +45,12 @@ public class PriceLevel{
     private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup priceLevelStatusLookup;
 
 	@ManyToOne
-	@JoinColumn(name="level_type", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup levelTypeLookup;
+	@JoinColumn(name="level_type", referencedColumnName="lookup_key")
+	private Lookup priceLevelTypeLookup;
 
 	public int getPriceLevelId() {
 		return priceLevelId;
@@ -62,14 +58,6 @@ public class PriceLevel{
 
 	public void setPriceLevelId(int priceLevelId) {
 		this.priceLevelId = priceLevelId;
-	}
-
-	public String getPriceLevelType() {
-		return priceLevelType;
-	}
-
-	public void setPriceLevelType(String priceLevelType) {
-		this.priceLevelType = priceLevelType;
 	}
 
 	public String getPriceLevelName() {
@@ -86,14 +74,6 @@ public class PriceLevel{
 
 	public void setPriceLevelDescription(String priceLevelDescription) {
 		this.priceLevelDescription = priceLevelDescription;
-	}
-
-	public String getPriceLevelStatus() {
-		return priceLevelStatus;
-	}
-
-	public void setPriceLevelStatus(String priceLevelStatus) {
-		this.priceLevelStatus = priceLevelStatus;
 	}
 
 	public BigDecimal getIncrementValue() {
@@ -144,29 +124,29 @@ public class PriceLevel{
 		this.updatedDate = updatedDate;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getPriceLevelStatusLookup() {
+		return priceLevelStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setPriceLevelStatusLookup(Lookup priceLevelStatusLookup) {
+		this.priceLevelStatusLookup = priceLevelStatusLookup;
 	}
 
-	public Lookup getLevelTypeLookup() {
-		return levelTypeLookup;
+	public Lookup getPriceLevelTypeLookup() {
+		return priceLevelTypeLookup;
 	}
 
-	public void setLevelTypeLookup(Lookup levelTypeLookup) {
-		this.levelTypeLookup = levelTypeLookup;
+	public void setPriceLevelTypeLookup(Lookup priceLevelTypeLookup) {
+		this.priceLevelTypeLookup = priceLevelTypeLookup;
 	}
 
 	@Override
 	public String toString() {
-		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelType=" + priceLevelType + ", priceLevelName="
-				+ priceLevelName + ", priceLevelDescription=" + priceLevelDescription + ", priceLevelStatus="
-				+ priceLevelStatus + ", incrementValue=" + incrementValue + ", percentageValue=" + percentageValue
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + "]";
+		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelName=" + priceLevelName
+				+ ", priceLevelDescription=" + priceLevelDescription + ", incrementValue=" + incrementValue
+				+ ", percentageValue=" + percentageValue + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", priceLevelStatusLookup="
+				+ priceLevelStatusLookup + ", priceLevelTypeLookup=" + priceLevelTypeLookup + "]";
 	}
-	
+
 }

@@ -31,7 +31,7 @@ import org.hibernate.annotations.NotFoundAction;
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
 @FilterDef(name="ExcludeWalkInCustomer")
-@Filter(name="ExcludeWalkInCustomer", condition="customer_id > 1")
+@Filter(name="ExcludeWalkInCustomer", condition="customer_id = 0")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
 
@@ -51,8 +51,6 @@ public class Customer implements Serializable {
 	private String customerCity;
 	@Column(name="phone")
 	private String customerPhone;
-	@Column(name="status")
-	private String customerStatus;
 	@Column(name="remarks")
 	private String customerRemarks;
 	@Column(name="npwp_num")
@@ -83,8 +81,8 @@ public class Customer implements Serializable {
 	private List<Person> picList = LazyList.decorate(new ArrayList<Person>(), FactoryUtils.instantiateFactory(Person.class));
 
 	@ManyToOne
-	@JoinColumn(name="status", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup statusLookup;
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
+	private Lookup customerStatusLookup;
 
 	@OneToOne
 	@JoinColumn(name="price_level_id", insertable=false, updatable=false)
@@ -129,14 +127,6 @@ public class Customer implements Serializable {
 
 	public void setCustomerPhone(String customerPhone) {
 		this.customerPhone = customerPhone;
-	}
-
-	public String getCustomerStatus() {
-		return customerStatus;
-	}
-
-	public void setCustomerStatus(String customerStatus) {
-		this.customerStatus = customerStatus;
 	}
 
 	public String getCustomerRemarks() {
@@ -211,12 +201,12 @@ public class Customer implements Serializable {
 		this.picList = picList;
 	}
 
-	public Lookup getStatusLookup() {
-		return statusLookup;
+	public Lookup getCustomerStatusLookup() {
+		return customerStatusLookup;
 	}
 
-	public void setStatusLookup(Lookup statusLookup) {
-		this.statusLookup = statusLookup;
+	public void setCustomerStatusLookup(Lookup customerStatusLookup) {
+		this.customerStatusLookup = customerStatusLookup;
 	}
 
 	public PriceLevel getPriceLevelEntity() {
@@ -231,10 +221,10 @@ public class Customer implements Serializable {
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
 				+ customerAddress + ", customerCity=" + customerCity + ", customerPhone=" + customerPhone
-				+ ", customerStatus=" + customerStatus + ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum
-				+ ", priceLevelId=" + priceLevelId + ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList
-				+ ", picList=" + picList + "]";
+				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum + ", priceLevelId=" + priceLevelId
+				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
+				+ ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList + ", picList=" + picList
+				+ ", customerStatusLookup=" + customerStatusLookup + ", priceLevelEntity=" + priceLevelEntity + "]";
 	}
 
 }
