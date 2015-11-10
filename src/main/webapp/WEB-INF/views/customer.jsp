@@ -61,7 +61,7 @@
 					$('input[name="bankAccList[' + index + '].shortName"]').val($('#fromDB_shortName').val());
 					$('input[name="bankAccList[' + index + '].bankName"]').val($('#fromDB_bankName').val());
 					$('input[name="bankAccList[' + index + '].accNum"]').val($('#fromDB_accNum').val());
-					$('input[name="bankAccList[' + index + '].bankStatus"]').val($('#fromDB_bankStatus').val());
+					$('input[name="bankAccList[' + index + '].bankAccStatusLookup.lookupKey"]').val($('#fromDB_bankStatus').val());
 					$('input[name="bankAccList[' + index + '].bankRemarks"]').val($('#fromDB_bankRemarks').val());					
 					
 					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/discard");
@@ -287,7 +287,7 @@
 																					<c:forEach items="${ i.picList }" var="iPIC">
 																						<c:out value="${ iPIC.firstName }"/>&nbsp;<c:out value="${ iPIC.firstName }"/><br/>
 																						<c:forEach items="${ iPIC.phoneList }" var="phL" varStatus="phLIdx">
-																							<c:out value="${ phL.providerName }"/>&nbsp;-&nbsp;<c:out value="${ phL.phoneNumber }"/><br/>
+																							<c:out value="${ phL.providerLookup.lookupValue }"/>&nbsp;-&nbsp;<c:out value="${ phL.phoneNumber }"/><br/>
 																						</c:forEach>
 																					</c:forEach>
 																					<br/>
@@ -298,7 +298,7 @@
 																					</c:forEach>
 																					<br/>
 																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong><br/>
-																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;																					
+																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;																				
 																					<br/>
 																					<br/>
 																				</td>
@@ -381,7 +381,7 @@
 												<div class="form-group">
 													<label for="inputCustomerStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_status" text="Status"/></label>
 													<div class="col-sm-2">														
-														<form:select class="form-control" path="customerStatus" data-parsley-required="true" data-parsley-trigger="change">
+														<form:select class="form-control" path="customerStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<c:forEach items="${ statusDDL }" var="i">
 																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -478,7 +478,7 @@
 																														<form:hidden path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneListId"/>
 																													</td>
 																													<td>
-																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerLookup.lookupKey">
 																															<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																														</form:select>			
 																													</td>
@@ -486,7 +486,7 @@
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber"/>
 																													</td>
 																													<td>
-																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatusLookup.lookupKey">
 																															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																														</form:select>
 																													</td>
@@ -559,7 +559,7 @@
 																		</td>
 																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"/></td>
 																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/></td>
-																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"/></td>
+																		<td><c:out value="${ customerForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/></td>
 																	</tr>
 																</c:forEach>
 															</tbody>
@@ -578,7 +578,7 @@
 															<input id="fromDB_shortName" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].shortName }"/>"/>
 															<input id="fromDB_bankName" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankName }"/>"/>
 															<input id="fromDB_accNum" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].accNum }"/>"/>
-															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankStatus }"/>"/>
+															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/>"/>
 															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
 													</c:if>							
@@ -603,7 +603,7 @@
 														<div class="row">
 															<label for="bankStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.bank_account.status" text="Status"/></label>
 															<div class="col-sm-3">
-																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
+																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankAccStatusLookup.lookupKey">
 																	<option value=""><spring:message code="common.please_select"></spring:message></option>
 																	<c:forEach items="${ statusDDL }" var="j">
 																		<form:option value="${ j.lookupKey }"><spring:message code="${ j.i18nLookupValue }"></spring:message></form:option>

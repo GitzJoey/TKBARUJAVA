@@ -31,7 +31,7 @@ import org.hibernate.annotations.NotFoundAction;
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
 @FilterDef(name="ExcludeWalkInCustomer")
-@Filter(name="ExcludeWalkInCustomer", condition="customer_id = 0")
+@Filter(name="ExcludeWalkInCustomer", condition="customer_id > 0")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
 
