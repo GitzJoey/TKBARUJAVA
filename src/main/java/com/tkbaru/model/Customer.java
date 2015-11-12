@@ -1,3 +1,4 @@
+
 package com.tkbaru.model;
 
 import java.io.Serializable;
@@ -26,12 +27,13 @@ import org.hibernate.annotations.Filter;
 import org.hibernate.annotations.FilterDef;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
+import org.hibernate.annotations.ParamDef;
 
 @Entity
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
-@FilterDef(name="ExcludeWalkInCustomer")
-@Filter(name="ExcludeWalkInCustomer", condition="customer_id > 0")
+@FilterDef(name="UserStore", parameters=@ParamDef(name="userStoreParam", type="integer"))
+@Filter(name="UserStore", condition="store_id = :userStoreParam")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
 
@@ -55,8 +57,6 @@ public class Customer implements Serializable {
 	private String customerRemarks;
 	@Column(name="npwp_num")
 	private String npwpNum;
-	@Column(name="price_level_id")
-	private int priceLevelId;
 	@Column(name="created_by")
 	private int createdBy;
 	@Column(name="created_date")
@@ -84,8 +84,12 @@ public class Customer implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup customerStatusLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store customerStoreEntity;
+	
 	@OneToOne
-	@JoinColumn(name="price_level_id", insertable=false, updatable=false)
+	@JoinColumn(name="price_level_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private PriceLevel priceLevelEntity;
 
@@ -145,14 +149,6 @@ public class Customer implements Serializable {
 		this.npwpNum = npwpNum;
 	}
 
-	public int getPriceLevelId() {
-		return priceLevelId;
-	}
-
-	public void setPriceLevelId(int priceLevelId) {
-		this.priceLevelId = priceLevelId;
-	}
-
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -209,6 +205,14 @@ public class Customer implements Serializable {
 		this.customerStatusLookup = customerStatusLookup;
 	}
 
+	public Store getCustomerStoreEntity() {
+		return customerStoreEntity;
+	}
+
+	public void setCustomerStoreEntity(Store customerStoreEntity) {
+		this.customerStoreEntity = customerStoreEntity;
+	}
+
 	public PriceLevel getPriceLevelEntity() {
 		return priceLevelEntity;
 	}
@@ -221,10 +225,11 @@ public class Customer implements Serializable {
 	public String toString() {
 		return "Customer [customerId=" + customerId + ", customerName=" + customerName + ", customerAddress="
 				+ customerAddress + ", customerCity=" + customerCity + ", customerPhone=" + customerPhone
-				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum + ", priceLevelId=" + priceLevelId
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList + ", picList=" + picList
-				+ ", customerStatusLookup=" + customerStatusLookup + ", priceLevelEntity=" + priceLevelEntity + "]";
+				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", bankAccList=" + bankAccList + ", picList=" + picList + ", customerStatusLookup="
+				+ customerStatusLookup + ", customerStoreEntity=" + customerStoreEntity + ", priceLevelEntity="
+				+ priceLevelEntity + "]";
 	}
 
 }

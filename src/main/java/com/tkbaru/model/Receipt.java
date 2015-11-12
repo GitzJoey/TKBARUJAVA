@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -41,65 +43,95 @@ public class Receipt {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store receiptStoreEntity;
+
 	public int getReceiptId() {
 		return receiptId;
 	}
+
 	public void setReceiptId(int receiptId) {
 		this.receiptId = receiptId;
 	}
+
 	public Date getReceiptDate() {
 		return receiptDate;
 	}
+
 	public void setReceiptDate(Date receiptDate) {
 		this.receiptDate = receiptDate;
 	}
-	public int getNet() {
-		return net;
-	}
-	public void setNet(int net) {
-		this.net = net;
-	}
-	public int getTare() {
-		return tare;
-	}
-	public void setTare(int tare) {
-		this.tare = tare;
-	}
+
 	public int getBruto() {
 		return bruto;
 	}
+
 	public void setBruto(int bruto) {
 		this.bruto = bruto;
 	}
+
+	public int getNet() {
+		return net;
+	}
+
+	public void setNet(int net) {
+		this.net = net;
+	}
+
+	public int getTare() {
+		return tare;
+	}
+
+	public void setTare(int tare) {
+		this.tare = tare;
+	}
+
 	public int getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(int createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public int getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(int updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
+	public Store getReceiptStoreEntity() {
+		return receiptStoreEntity;
+	}
+
+	public void setReceiptStoreEntity(Store receiptStoreEntity) {
+		this.receiptStoreEntity = receiptStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", bruto=" + bruto + ", net=" + net
 				+ ", tare=" + tare + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + "]";
+				+ updatedBy + ", updatedDate=" + updatedDate + ", receiptStoreEntity=" + receiptStoreEntity + "]";
 	}
-	
+
 }

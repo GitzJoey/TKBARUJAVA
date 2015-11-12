@@ -49,6 +49,10 @@ public class PriceLevel{
 	private Lookup priceLevelStatusLookup;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store priceLevelStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="level_type", referencedColumnName="lookup_key")
 	private Lookup priceLevelTypeLookup;
 
@@ -132,6 +136,14 @@ public class PriceLevel{
 		this.priceLevelStatusLookup = priceLevelStatusLookup;
 	}
 
+	public Store getPriceLevelStoreEntity() {
+		return priceLevelStoreEntity;
+	}
+
+	public void setPriceLevelStoreEntity(Store priceLevelStoreEntity) {
+		this.priceLevelStoreEntity = priceLevelStoreEntity;
+	}
+
 	public Lookup getPriceLevelTypeLookup() {
 		return priceLevelTypeLookup;
 	}
@@ -146,7 +158,8 @@ public class PriceLevel{
 				+ ", priceLevelDescription=" + priceLevelDescription + ", incrementValue=" + incrementValue
 				+ ", percentageValue=" + percentageValue + ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", priceLevelStatusLookup="
-				+ priceLevelStatusLookup + ", priceLevelTypeLookup=" + priceLevelTypeLookup + "]";
+				+ priceLevelStatusLookup + ", priceLevelStoreEntity=" + priceLevelStoreEntity
+				+ ", priceLevelTypeLookup=" + priceLevelTypeLookup + "]";
 	}
 
 }

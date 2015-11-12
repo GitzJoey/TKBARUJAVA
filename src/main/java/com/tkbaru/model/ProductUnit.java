@@ -49,6 +49,10 @@ public class ProductUnit {
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key")
 	private Lookup unitCodeLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store productUnitStoreEntity;
+
 	public int getProductUnitId() {
 		return productUnitId;
 	}
@@ -129,12 +133,21 @@ public class ProductUnit {
 		this.unitCodeLookup = unitCodeLookup;
 	}
 
+	public Store getProductUnitStoreEntity() {
+		return productUnitStoreEntity;
+	}
+
+	public void setProductUnitStoreEntity(Store productUnitStoreEntity) {
+		this.productUnitStoreEntity = productUnitStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "ProductUnit [productUnitId=" + productUnitId + ", baseUnit=" + baseUnit + ", conversionValue="
 				+ conversionValue + ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy + ", createdDate="
 				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", productEntity="
-				+ "productEntity" + ", unitCodeLookup=" + unitCodeLookup + "]";
+				+ productEntity + ", unitCodeLookup=" + unitCodeLookup + ", productUnitStoreEntity="
+				+ productUnitStoreEntity + "]";
 	}
 
 }

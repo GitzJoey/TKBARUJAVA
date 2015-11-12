@@ -53,6 +53,10 @@ public class Price {
     private Stocks stocksEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store priceStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup priceStatusLookup;
 
@@ -136,6 +140,14 @@ public class Price {
 		this.stocksEntity = stocksEntity;
 	}
 
+	public Store getPriceStoreEntity() {
+		return priceStoreEntity;
+	}
+
+	public void setPriceStoreEntity(Store priceStoreEntity) {
+		this.priceStoreEntity = priceStoreEntity;
+	}
+
 	public Lookup getPriceStatusLookup() {
 		return priceStatusLookup;
 	}
@@ -149,7 +161,8 @@ public class Price {
 		return "Price [priceId=" + priceId + ", marketPrice=" + marketPrice + ", price=" + price + ", inputDate="
 				+ inputDate + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", priceLevelEntity=" + priceLevelEntity + ", stocksEntity="
-				+ stocksEntity + ", priceStatusLookup=" + priceStatusLookup + "]";
+				+ stocksEntity + ", priceStoreEntity=" + priceStoreEntity + ", priceStatusLookup=" + priceStatusLookup
+				+ "]";
 	}
 
 }

@@ -46,6 +46,10 @@ public class Stocks {
 	private PurchaseOrder purchaseOrderEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store stocksStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="product_id")
 	private Product productEntity;
 
@@ -120,6 +124,14 @@ public class Stocks {
 		this.purchaseOrderEntity = purchaseOrderEntity;
 	}
 
+	public Store getStocksStoreEntity() {
+		return stocksStoreEntity;
+	}
+
+	public void setStocksStoreEntity(Store stocksStoreEntity) {
+		this.stocksStoreEntity = stocksStoreEntity;
+	}
+
 	public Product getProductEntity() {
 		return productEntity;
 	}
@@ -149,8 +161,8 @@ public class Stocks {
 		return "Stocks [stocksId=" + stocksId + ", prodQuantity=" + prodQuantity + ", currentQuantity="
 				+ currentQuantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", purchaseOrderEntity=" + purchaseOrderEntity
-				+ ", productEntity=" + productEntity + ", warehouseEntity=" + warehouseEntity + ", priceList="
-				+ priceList + "]";
+				+ ", stocksStoreEntity=" + stocksStoreEntity + ", productEntity=" + productEntity + ", warehouseEntity="
+				+ warehouseEntity + ", priceList=" + priceList + "]";
 	}
-	
+
 }

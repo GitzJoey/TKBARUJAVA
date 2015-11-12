@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `tb_truck`;
 
 CREATE TABLE `tb_truck` (
   `truck_id` 		int(11) 		NOT NULL AUTO_INCREMENT,
+  `store_id` 		int(11) 		DEFAULT '0',
   `truck_type` 		varchar(45) 	DEFAULT NULL,
   `weight_type` 	varchar(45) 	DEFAULT NULL,
   `plate_number` 	varchar(145) 	DEFAULT NULL,

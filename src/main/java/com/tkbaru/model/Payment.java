@@ -15,49 +15,53 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table(name = "tb_payment")
+@Table(name="tb_payment")
 public class Payment implements Serializable {
-	private static final long serialVersionUID = -3391425491677198471L;
+	private static final long serialVersionUID=-3391425491677198471L;
 
 	public Payment() {
 
 	}
 
 	@Id
-	@Column(name = "payment_id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name="payment_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int paymentId;
-	@Column(name = "payment_date")
+	@Column(name="payment_date")
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
-	@Column(name = "total_amount")
+	@Column(name="total_amount")
 	private long totalAmount;
-	@Column(name = "effective_date")
+	@Column(name="effective_date")
 	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
-	@Column(name = "is_linked")
+	@Column(name="is_linked")
 	private boolean isLinked;
-	@Column(name = "created_by")
+	@Column(name="created_by")
 	private int createdBy;
-	@Column(name = "created_date")
+	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
-	@Column(name = "updated_by")
+	@Column(name="updated_by")
 	private int updatedBy;
-	@Column(name = "updated_date")
+	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name = "payment_type", referencedColumnName = "lookup_key")
+	@JoinColumn(name="payment_type", referencedColumnName="lookup_key")
 	private Lookup paymentTypeLookup;
 
 	@ManyToOne
-	@JoinColumn(name = "status", referencedColumnName = "lookup_key")
+	@JoinColumn(name="store_id")
+	private Store paymentStoreEntity;
+
+	@ManyToOne
+	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup paymentStatusLookup;
 
 	@ManyToOne
-	@JoinColumn(name = "bank_code", referencedColumnName = "lookup_key")
+	@JoinColumn(name="bank_code", referencedColumnName="lookup_key")
 	private Lookup bankCodeLookup;
 
 	public int getPaymentId() {
@@ -140,6 +144,14 @@ public class Payment implements Serializable {
 		this.paymentTypeLookup = paymentTypeLookup;
 	}
 
+	public Store getPaymentStoreEntity() {
+		return paymentStoreEntity;
+	}
+
+	public void setPaymentStoreEntity(Store paymentStoreEntity) {
+		this.paymentStoreEntity = paymentStoreEntity;
+	}
+
 	public Lookup getPaymentStatusLookup() {
 		return paymentStatusLookup;
 	}
@@ -161,8 +173,8 @@ public class Payment implements Serializable {
 		return "Payment [paymentId=" + paymentId + ", paymentDate=" + paymentDate + ", totalAmount=" + totalAmount
 				+ ", effectiveDate=" + effectiveDate + ", isLinked=" + isLinked + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", paymentTypeLookup=" + paymentTypeLookup + ", paymentStatusLookup=" + paymentStatusLookup
-				+ ", bankCodeLookup=" + bankCodeLookup + "]";
+				+ ", paymentTypeLookup=" + paymentTypeLookup + ", paymentStoreEntity=" + paymentStoreEntity
+				+ ", paymentStatusLookup=" + paymentStatusLookup + ", bankCodeLookup=" + bankCodeLookup + "]";
 	}
 
 }

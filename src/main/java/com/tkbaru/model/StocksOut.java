@@ -42,6 +42,10 @@ public class StocksOut {
 	private SalesOrder salesOrderEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store salesStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="stocks_id")
 	private Stocks stocksEntity;
 
@@ -109,6 +113,14 @@ public class StocksOut {
 		this.salesOrderEntity = salesOrderEntity;
 	}
 
+	public Store getSalesStoreEntity() {
+		return salesStoreEntity;
+	}
+
+	public void setSalesStoreEntity(Store salesStoreEntity) {
+		this.salesStoreEntity = salesStoreEntity;
+	}
+
 	public Stocks getStocksEntity() {
 		return stocksEntity;
 	}
@@ -137,8 +149,9 @@ public class StocksOut {
 	public String toString() {
 		return "StocksOut [stocksOutId=" + stocksOutId + ", prodQuantity=" + prodQuantity + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", salesOrderEntity=" + salesOrderEntity + ", stocksEntity=" + stocksEntity + ", productEntity="
-				+ productEntity + ", warehouseEntity=" + warehouseEntity + "]";
+				+ ", salesOrderEntity=" + salesOrderEntity + ", salesStoreEntity=" + salesStoreEntity
+				+ ", stocksEntity=" + stocksEntity + ", productEntity=" + productEntity + ", warehouseEntity="
+				+ warehouseEntity + "]";
 	}
 
 }

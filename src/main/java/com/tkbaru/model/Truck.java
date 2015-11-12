@@ -55,6 +55,10 @@ public class Truck {
 	@JoinColumn(name="weight_type", referencedColumnName="lookup_key")
 	private Lookup weightTypeLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store truckStoreEntity;
+
 	public int getTruckId() {
 		return truckId;
 	}
@@ -151,13 +155,21 @@ public class Truck {
 		this.weightTypeLookup = weightTypeLookup;
 	}
 
+	public Store getTruckStoreEntity() {
+		return truckStoreEntity;
+	}
+
+	public void setTruckStoreEntity(Store truckStoreEntity) {
+		this.truckStoreEntity = truckStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Truck [truckId=" + truckId + ", plateNumber=" + plateNumber + ", kirDate=" + kirDate + ", driver="
 				+ driver + ", remarks=" + remarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", truckStatusLookup="
 				+ truckStatusLookup + ", truckTypeLookup=" + truckTypeLookup + ", weightTypeLookup=" + weightTypeLookup
-				+ "]";
+				+ ", truckStoreEntity=" + truckStoreEntity + "]";
 	}
 
 }

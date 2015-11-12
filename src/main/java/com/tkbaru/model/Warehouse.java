@@ -48,6 +48,10 @@ public class Warehouse implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup warehouseStatusLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store warehouseStoreEntity;
+
 	public int getWarehouseId() {
 		return warehouseId;
 	}
@@ -120,12 +124,21 @@ public class Warehouse implements Serializable {
 		this.warehouseStatusLookup = warehouseStatusLookup;
 	}
 
+	public Store getWarehouseStoreEntity() {
+		return warehouseStoreEntity;
+	}
+
+	public void setWarehouseStoreEntity(Store warehouseStoreEntity) {
+		this.warehouseStoreEntity = warehouseStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Warehouse [warehouseId=" + warehouseId + ", warehouseName=" + warehouseName + ", warehouseLocation="
 				+ warehouseLocation + ", warehouseRemarks=" + warehouseRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", warehouseStatusLookup=" + warehouseStatusLookup + "]";
+				+ ", warehouseStatusLookup=" + warehouseStatusLookup + ", warehouseStoreEntity=" + warehouseStoreEntity
+				+ "]";
 	}
 
 }

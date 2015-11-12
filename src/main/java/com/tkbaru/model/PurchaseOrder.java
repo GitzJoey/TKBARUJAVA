@@ -73,6 +73,10 @@ public class PurchaseOrder implements Serializable {
 	private Supplier supplierEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Supplier supplierStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="warehouse_id")
 	private Warehouse warehouseEntity;
 
@@ -180,6 +184,14 @@ public class PurchaseOrder implements Serializable {
 		this.supplierEntity = supplierEntity;
 	}
 
+	public Supplier getSupplierStoreEntity() {
+		return supplierStoreEntity;
+	}
+
+	public void setSupplierStoreEntity(Supplier supplierStoreEntity) {
+		this.supplierStoreEntity = supplierStoreEntity;
+	}
+
 	public Warehouse getWarehouseEntity() {
 		return warehouseEntity;
 	}
@@ -210,8 +222,8 @@ public class PurchaseOrder implements Serializable {
 				+ ", shippingDate=" + shippingDate + ", poRemarks=" + poRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
 				+ ", itemsList=" + itemsList + ", paymentList=" + paymentList + ", supplierEntity=" + supplierEntity
-				+ ", warehouseEntity=" + warehouseEntity + ", poStatusLookup=" + poStatusLookup + ", poTypeLookup="
-				+ poTypeLookup + "]";
+				+ ", supplierStoreEntity=" + supplierStoreEntity + ", warehouseEntity=" + warehouseEntity
+				+ ", poStatusLookup=" + poStatusLookup + ", poTypeLookup=" + poTypeLookup + "]";
 	}
 
 }

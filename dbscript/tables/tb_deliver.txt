@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `tb_deliver`;
 
 CREATE TABLE `tb_deliver` (
   `deliver_id` 		int(11) 	NOT NULL AUTO_INCREMENT,
+  `store_id` 		int(11) 	DEFAULT '0',
   `deliver_date` 	datetime 	DEFAULT NULL,
   `items_id` 		int(11) 	DEFAULT NULL,
   `bruto` 			int(11) 	DEFAULT '0',

@@ -2,6 +2,7 @@ DROP TABLE IF EXISTS `tb_customer`;
 
 CREATE TABLE `tb_customer` (
   `customer_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `store_id` 		int(11) 	DEFAULT '0',
   `customer_name` 	varchar(45) DEFAULT NULL,
   `address` 		varchar(45) DEFAULT NULL,
   `city` 			varchar(45) DEFAULT NULL,

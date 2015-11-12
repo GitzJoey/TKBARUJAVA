@@ -2,6 +2,7 @@ package com.tkbaru.dao;
 
 import java.util.List;
 
+import org.hibernate.Filter;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -25,10 +26,15 @@ public class CustomerDAOImpl implements CustomerDAO {
 		logger.info("[getAllCustomer] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();		
-		session.enableFilter("ExcludeWalkInCustomer");
+		
+		Filter filter = session.enableFilter("UserStore");
+		filter.setParameter("userStoreParam", 1);
+		
+		session.disableFilter("UserStore");
+		
 		List<Customer> customerList = session.createQuery("FROM Customer").list();
-	
-		logger.info("Customer (With Filter) Count: " + customerList.size());
+
+		logger.info("Customer Count: " + customerList.size());
 
 		return customerList;
 	}

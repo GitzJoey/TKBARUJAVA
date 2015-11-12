@@ -72,6 +72,10 @@ public class Product implements Serializable {
 	@OneToMany(mappedBy="productEntity")
 	private List<Stocks> stocksList;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store productStoreEntity;
+
 	public int getProductId() {
 		return productId;
 	}
@@ -184,13 +188,22 @@ public class Product implements Serializable {
 		this.stocksList = stocksList;
 	}
 
+	public Store getProductStoreEntity() {
+		return productStoreEntity;
+	}
+
+	public void setProductStoreEntity(Store productStoreEntity) {
+		this.productStoreEntity = productStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productId=" + productId + ", shortCode=" + shortCode + ", productName=" + productName
 				+ ", productDesc=" + productDesc + ", imageBinary=" + imageBinary + ", imagePath=" + imagePath
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", productUnit=" + productUnit + ", productStatusLookup="
-				+ productStatusLookup + ", productTypeLookup=" + productTypeLookup + ", stocksList=" + stocksList + "]";
+				+ productStatusLookup + ", productTypeLookup=" + productTypeLookup + ", stocksList=" + stocksList
+				+ ", productStoreEntity=" + productStoreEntity + "]";
 	}
-
+	
 }

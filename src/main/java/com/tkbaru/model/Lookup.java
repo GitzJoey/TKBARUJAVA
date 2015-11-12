@@ -173,6 +173,8 @@ public class Lookup implements Serializable {
 				+ ", orderNum=" + orderNum + ", lookupStatus=" + lookupStatus + ", localeMessageCodes="
 				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaintainability="
 				+ lookupMaintainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + "]";
+				+ updatedBy + ", updatedDate=" + updatedDate + ", statusLookup=" + "statusLookup"
+				+ ", maintainabilityLookup=" + "maintainabilityLookup" + "]";
 	}
+
 }

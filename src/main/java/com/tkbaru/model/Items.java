@@ -62,6 +62,10 @@ public class Items implements Serializable {
 	private Product productEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store itemStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="stocks_id")
 	@NotFound(action=NotFoundAction.IGNORE)
 	private Stocks stocksEntity;
@@ -166,6 +170,14 @@ public class Items implements Serializable {
 		this.productEntity = productEntity;
 	}
 
+	public Store getItemStoreEntity() {
+		return itemStoreEntity;
+	}
+
+	public void setItemStoreEntity(Store itemStoreEntity) {
+		this.itemStoreEntity = itemStoreEntity;
+	}
+
 	public Stocks getStocksEntity() {
 		return stocksEntity;
 	}
@@ -206,14 +218,18 @@ public class Items implements Serializable {
 		this.deliverList = deliverList;
 	}
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public String toString() {
 		return "Items [itemsId=" + itemsId + ", prodQuantity=" + prodQuantity + ", prodPrice=" + prodPrice
 				+ ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", productEntity=" + productEntity + ", stocksEntity=" + stocksEntity + ", unitCodeLookup="
-				+ unitCodeLookup + ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", receiptList=" + receiptList
-				+ ", deliverList=" + deliverList + "]";
+				+ ", productEntity=" + productEntity + ", itemStoreEntity=" + itemStoreEntity + ", stocksEntity="
+				+ stocksEntity + ", unitCodeLookup=" + unitCodeLookup + ", baseUnitCodeLookup=" + baseUnitCodeLookup
+				+ ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
 	}
 
 }

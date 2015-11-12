@@ -78,6 +78,10 @@ public class SalesOrder implements Serializable {
 	private Customer customerEntity;
 
 	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Lookup salesStoreEntity;
+
+	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup salesStatusLookup;
 	
@@ -168,6 +172,12 @@ public class SalesOrder implements Serializable {
 	public void setCustomerEntity(Customer customerEntity) {
 		this.customerEntity = customerEntity;
 	}
+	public Lookup getSalesStoreEntity() {
+		return salesStoreEntity;
+	}
+	public void setSalesStoreEntity(Lookup salesStoreEntity) {
+		this.salesStoreEntity = salesStoreEntity;
+	}
 	public Lookup getSalesStatusLookup() {
 		return salesStatusLookup;
 	}
@@ -198,9 +208,10 @@ public class SalesOrder implements Serializable {
 				+ ", shippingDate=" + shippingDate + ", walkInCustDetail=" + walkInCustDetail + ", salesRemarks="
 				+ salesRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
-				+ paymentList + ", customerEntity=" + customerEntity + ", salesStatusLookup=" + salesStatusLookup
-				+ ", salesTypeLookup=" + salesTypeLookup + ", customerSearchQuery=" + customerSearchQuery
-				+ ", customerSearchResults=" + customerSearchResults + "]";
+				+ paymentList + ", customerEntity=" + customerEntity + ", salesStoreEntity=" + salesStoreEntity
+				+ ", salesStatusLookup=" + salesStatusLookup + ", salesTypeLookup=" + salesTypeLookup
+				+ ", customerSearchQuery=" + customerSearchQuery + ", customerSearchResults=" + customerSearchResults
+				+ "]";
 	}
 
 }

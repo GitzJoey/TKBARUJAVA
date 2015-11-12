@@ -1,15 +1,16 @@
 DROP TABLE IF EXISTS `tb_stocks_out`;
 
 CREATE TABLE `tb_stocks_out` (
-  `stocks_out_id` int(11) NOT NULL AUTO_INCREMENT,
-  `so_id` int(11) DEFAULT NULL,
-  `stocks_id` int(11) DEFAULT NULL,
-  `product_id` int(11) DEFAULT NULL,
-  `quantity` int(11) DEFAULT NULL,
-  `warehouse_id` int(11) DEFAULT NULL,
-  `created_date` datetime DEFAULT NULL,
-  `created_by` int(11) DEFAULT NULL,
-  `updated_by` int(11) DEFAULT NULL,
-  `updated_date` datetime DEFAULT NULL,
+  `stocks_out_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `store_id` 		int(11) 	DEFAULT '0',
+  `so_id` 			int(11) 	DEFAULT NULL,
+  `stocks_id` 		int(11) 	DEFAULT NULL,
+  `product_id` 		int(11) 	DEFAULT NULL,
+  `quantity` 		int(11) 	DEFAULT NULL,
+  `warehouse_id` 	int(11) 	DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT '0',
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT '0',
+  `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`stocks_out_id`)
 );

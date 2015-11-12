@@ -1,16 +1,17 @@
 DROP TABLE IF EXISTS `tb_product_unit`;
 
 CREATE TABLE `tb_product_unit` (
-  `prod_unit_id` int(11) NOT NULL AUTO_INCREMENT,
-  `product_id` int(11) NOT NULL,
-  `unit_code` varchar(45) DEFAULT NULL,
-  `is_base` tinyint(1) DEFAULT '0',
-  `conversion_val` int(11) DEFAULT NULL,
-  `remarks` varchar(45) DEFAULT NULL,
-  `created_by` int(11) DEFAULT '0',
-  `created_date` datetime DEFAULT NULL,
-  `updated_by` int(11) DEFAULT '0',
-  `updated_date` datetime DEFAULT NULL,
+  `prod_unit_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `product_id` 		int(11) 	NOT NULL,
+  `store_id` 		int(11) 	DEFAULT '0',
+  `unit_code` 		varchar(45) DEFAULT NULL,
+  `is_base` 		tinyint(1) 	DEFAULT '0',
+  `conversion_val` 	int(11) 	DEFAULT NULL,
+  `remarks` 		varchar(45) DEFAULT NULL,
+  `created_by` 		int(11) 	DEFAULT '0',
+  `created_date` 	datetime 	DEFAULT NULL,
+  `updated_by` 		int(11) 	DEFAULT '0',
+  `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`prod_unit_id`)
 );
 

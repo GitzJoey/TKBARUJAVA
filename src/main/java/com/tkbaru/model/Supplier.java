@@ -95,6 +95,10 @@ public class Supplier implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup supplierStatusLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store supplierStoreEntity;
+
 	public int getSupplierId() {
 		return supplierId;
 	}
@@ -223,6 +227,14 @@ public class Supplier implements Serializable {
 		this.supplierStatusLookup = supplierStatusLookup;
 	}
 
+	public Store getSupplierStoreEntity() {
+		return supplierStoreEntity;
+	}
+
+	public void setSupplierStoreEntity(Store supplierStoreEntity) {
+		this.supplierStoreEntity = supplierStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Supplier [supplierId=" + supplierId + ", supplierName=" + supplierName + ", supplierAddress="
@@ -230,7 +242,8 @@ public class Supplier implements Serializable {
 				+ ", supplierPhone=" + supplierPhone + ", supplierFax=" + supplierFax + ", npwpNum=" + npwpNum
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList + ", picList=" + picList
-				+ ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup + "]";
-	}
-
+				+ ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup + ", supplierStoreEntity="
+				+ supplierStoreEntity + "]";
+	} 
+	
 }

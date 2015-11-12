@@ -298,7 +298,7 @@
 																					</c:forEach>
 																					<br/>
 																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong><br/>
-																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;																				
+																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;<c:out value="${ i.priceLevelEntity.priceLevelName }"/>																				
 																					<br/>
 																					<br/>
 																				</td>
