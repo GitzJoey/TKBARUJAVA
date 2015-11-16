@@ -29,13 +29,13 @@ public class Lookup implements Serializable {
 					Integer orderNum,
 					String localeMessageCodes,
 					String lookupValue,
-					String lookupMaIntegerainability) {
+					String lookupMaintainability) {
 		this.lookupCategory = lookupCategory;
 		this.lookupKey = lookupKey;
 		this.orderNum = orderNum;
 		this.localeMessageCodes = localeMessageCodes;
 		this.lookupValue = lookupValue;
-		this.lookupMaIntegerainability = lookupMaIntegerainability;
+		this.lookupMaintainability = lookupMaintainability;
 		this.createdBy = 0;
 		this.createdDate = new Date();		
 	}
@@ -56,8 +56,8 @@ public class Lookup implements Serializable {
 	private String localeMessageCodes;
 	@Column(name="val")
 	private String lookupValue;
-	@Column(name="maIntegerainable")
-	private String lookupMaIntegerainability;
+	@Column(name="maintainable")
+	private String lookupMaintainability;
 	@Column(name="created_by")
 	private Integer createdBy;
 	@Column(name="created_date")
@@ -74,7 +74,7 @@ public class Lookup implements Serializable {
 	private Lookup statusLookup;
 
 	@ManyToOne
-	@JoinColumn(name="maIntegerainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	@JoinColumn(name="maintainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
 	private Lookup maIntegerainabilityLookup;
 
 	@Transient
@@ -124,11 +124,11 @@ public class Lookup implements Serializable {
 	public void setLookupStatus(String lookupStatus) {
 		this.lookupStatus = lookupStatus;
 	}
-	public String getLookupMaIntegerainability() {
-		return lookupMaIntegerainability;
+	public String getLookupMaintainability() {
+		return lookupMaintainability;
 	}
-	public void setLookupMaIntegerainability(String lookupMaIntegerainability) {
-		this.lookupMaIntegerainability = lookupMaIntegerainability;
+	public void setLookupMaintainability(String lookupMaintainability) {
+		this.lookupMaintainability = lookupMaintainability;
 	}
 	public Integer getCreatedBy() {
 		return createdBy;
@@ -171,8 +171,8 @@ public class Lookup implements Serializable {
 	public String toString() {
 		return "Lookup [lookupId=" + lookupId + ", lookupCategory=" + lookupCategory + ", lookupKey=" + lookupKey
 				+ ", orderNum=" + orderNum + ", lookupStatus=" + lookupStatus + ", localeMessageCodes="
-				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaIntegerainability="
-				+ lookupMaIntegerainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaintainability="
+				+ lookupMaintainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", statusLookup=" + "statusLookup"
 				+ ", maIntegerainabilityLookup=" + "maIntegerainabilityLookup" + "]";
 	}

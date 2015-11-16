@@ -32,7 +32,7 @@ import org.hibernate.annotations.ParamDef;
 @Entity
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
-@FilterDef(name="UserStore", parameters=@ParamDef(name="userStoreParam", type="Integereger"))
+@FilterDef(name="UserStore", parameters=@ParamDef(name="userStoreParam", type="integer"))
 @Filter(name="UserStore", condition="store_id = :userStoreParam")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
