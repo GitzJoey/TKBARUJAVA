@@ -40,16 +40,16 @@ public class Role implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="role_id")	
-	private int roleId;
+	private Integer roleId;
 	@Column(name="name")
 	private String roleName;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -86,11 +86,11 @@ public class Role implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup roleStatusLookup;
 
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
 
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 
@@ -102,11 +102,11 @@ public class Role implements Serializable {
 		this.roleName = roleName;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -118,11 +118,11 @@ public class Role implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

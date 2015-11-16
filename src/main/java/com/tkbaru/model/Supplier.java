@@ -37,7 +37,7 @@ public class Supplier implements Serializable {
 	@Id
 	@Column(name="supplier_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int supplierId;
+	private Integer supplierId;
 	@Column(name="supplier_name")
 	private String supplierName;
 	@Column(name="address")
@@ -53,12 +53,12 @@ public class Supplier implements Serializable {
 	@Column(name="npwp_num")
 	private String npwpNum;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -99,11 +99,11 @@ public class Supplier implements Serializable {
 	@JoinColumn(name="store_id")
 	private Store supplierStoreEntity;
 
-	public int getSupplierId() {
+	public Integer getSupplierId() {
 		return supplierId;
 	}
 
-	public void setSupplierId(int supplierId) {
+	public void setSupplierId(Integer supplierId) {
 		this.supplierId = supplierId;
 	}
 
@@ -163,11 +163,11 @@ public class Supplier implements Serializable {
 		this.npwpNum = npwpNum;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -179,11 +179,11 @@ public class Supplier implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

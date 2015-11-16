@@ -98,6 +98,7 @@ public class PurchaseOrderController {
 			po.setShippingDate(new Date());
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
+			po.setPoStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			
 			loginContextSession.getPoList().add(po);
 		}
@@ -221,10 +222,12 @@ public class PurchaseOrderController {
 		if (po.getPoId() == 0) {
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
+			po.setPoStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			poManager.addPurchaseOrder(po);
 		} else {
 			po.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
-			po.setUpdatedDate(new Date());			
+			po.setUpdatedDate(new Date());
+			po.setPoStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			poManager.editPurchaseOrder(po);
 		}
 		

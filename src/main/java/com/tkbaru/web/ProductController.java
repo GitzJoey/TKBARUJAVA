@@ -1,6 +1,7 @@
 package com.tkbaru.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,10 +107,16 @@ public class ProductController {
 			}			
 		}
 		
-		if (prod.getProductId() == 0) { 
+		if (prod.getProductId() == 0) {
+			prod.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			prod.setCreatedDate(new Date());
+			prod.setProductStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveProduct] " + "addProduct: " + prod.toString());
 			productManager.addProduct(prod); 
 		} else {
+			prod.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			prod.setUpdatedDate(new Date());
+			prod.setProductStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveProduct] " + "editProduct: " + prod.toString());
 			productManager.editProduct(prod); 
 		}

@@ -23,20 +23,20 @@ public class ProductUnit {
 	@Id
 	@Column(name="prod_unit_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int productUnitId;
+	private Integer productUnitId;
 	@Column(name="is_base", columnDefinition="TINYINT", length=1)
-	private boolean baseUnit;
+	private Boolean baseUnit;
 	@Column(name="conversion_val")
 	private Long conversionValue;
 	@Column(name="remarks")
 	private String unitRemarks;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -49,23 +49,19 @@ public class ProductUnit {
 	@JoinColumn(name="unit_code", referencedColumnName="lookup_key")
 	private Lookup unitCodeLookup;
 
-	@ManyToOne
-	@JoinColumn(name="store_id")
-	private Store productUnitStoreEntity;
-
-	public int getProductUnitId() {
+	public Integer getProductUnitId() {
 		return productUnitId;
 	}
 
-	public void setProductUnitId(int productUnitId) {
+	public void setProductUnitId(Integer productUnitId) {
 		this.productUnitId = productUnitId;
 	}
 
-	public boolean isBaseUnit() {
+	public Boolean isBaseUnit() {
 		return baseUnit;
 	}
 
-	public void setBaseUnit(boolean baseUnit) {
+	public void setBaseUnit(Boolean baseUnit) {
 		this.baseUnit = baseUnit;
 	}
 
@@ -85,11 +81,11 @@ public class ProductUnit {
 		this.unitRemarks = unitRemarks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -101,11 +97,11 @@ public class ProductUnit {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -133,21 +129,12 @@ public class ProductUnit {
 		this.unitCodeLookup = unitCodeLookup;
 	}
 
-	public Store getProductUnitStoreEntity() {
-		return productUnitStoreEntity;
-	}
-
-	public void setProductUnitStoreEntity(Store productUnitStoreEntity) {
-		this.productUnitStoreEntity = productUnitStoreEntity;
-	}
-
 	@Override
 	public String toString() {
 		return "ProductUnit [productUnitId=" + productUnitId + ", baseUnit=" + baseUnit + ", conversionValue="
 				+ conversionValue + ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy + ", createdDate="
 				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", productEntity="
-				+ productEntity + ", unitCodeLookup=" + unitCodeLookup + ", productUnitStoreEntity="
-				+ productUnitStoreEntity + "]";
+				+ "productEntity" + ", unitCodeLookup=" + unitCodeLookup + "]";
 	}
 
 }

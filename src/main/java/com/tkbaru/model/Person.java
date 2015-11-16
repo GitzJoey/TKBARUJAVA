@@ -36,7 +36,7 @@ public class Person implements Serializable {
 	@Id
 	@Column(name="person_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int personId;
+	private Integer personId;
 	@Column(name="first_name")
 	private String firstName;
 	@Column(name="last_name")
@@ -52,12 +52,12 @@ public class Person implements Serializable {
 	@Column(name="photo_path")
 	private String photoPath;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -73,11 +73,11 @@ public class Person implements Serializable {
 		return this.firstName + " " + this.lastName;
 	}
 	
-	public int getPersonId() {
+	public Integer getPersonId() {
 		return personId;
 	}
 
-	public void setPersonId(int personId) {
+	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
 
@@ -137,11 +137,11 @@ public class Person implements Serializable {
 		this.photoPath = photoPath;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -153,11 +153,11 @@ public class Person implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

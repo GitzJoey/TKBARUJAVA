@@ -1,6 +1,7 @@
 package com.tkbaru.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -110,9 +111,15 @@ public class CustomerController {
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust, RedirectAttributes redirectAttributes) {	
 
 		if (cust.getCustomerId() == 0) { 
+			cust.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			cust.setCreatedDate(new Date());
+			cust.setCustomerStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveCustomer] " + "addCustomer: " + cust.toString());
 			customerManager.addCustomer(cust);			
 		} else {
+			cust.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			cust.setUpdatedDate(new Date());
+			cust.setCustomerStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveCustomer] " + "editCustomer: " + cust.toString());
 			customerManager.editCustomer(cust); 			
 		}

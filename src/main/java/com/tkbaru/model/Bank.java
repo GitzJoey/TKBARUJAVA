@@ -24,7 +24,7 @@ public class Bank {
 	@Id
 	@Column(name="bank_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int bankId;
+	private Integer bankId;
 	@Column(name="bank_code")
 	private String bankCode;
 	@Column(name="acc_num")
@@ -41,30 +41,30 @@ public class Bank {
 	@Column(name="trx_branch")
 	private String transactionBranch;
 	@Column(name="trx_amt")
-	private long transactionAmount;
+	private Long transactionAmount;
 	@Column(name="trx_direction")
 	private String transactionDirection;
 	@Column(name="trx_balance")
-	private long transactionBalance;
+	private Long transactionBalance;
 	@Column(name="beginning_balance")
-	private long beginningBalance;
+	private Long beginningBalance;
 	@Column(name="credit_ttl_amt")
-	private long creditTotalAmount;
+	private Long creditTotalAmount;
 	@Column(name="debit_ttl_amt")
-	private long debitTotalAmount;
+	private Long debitTotalAmount;
 	@Column(name="ending_balance")
-	private long endingBalance;
+	private Long endingBalance;
 	@Column(name="upload_filename")
 	private String uploadFileName;
 	@Column(name="saved_filename")
 	private String savedFileName;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -72,11 +72,11 @@ public class Bank {
 	@Transient
 	private MultipartFile fileBinary;
 
-	public int getBankId() {
+	public Integer getBankId() {
 		return bankId;
 	}
 
-	public void setBankId(int bankId) {
+	public void setBankId(Integer bankId) {
 		this.bankId = bankId;
 	}
 
@@ -136,11 +136,11 @@ public class Bank {
 		this.transactionBranch = transactionBranch;
 	}
 
-	public long getTransactionAmount() {
+	public Long getTransactionAmount() {
 		return transactionAmount;
 	}
 
-	public void setTransactionAmount(long transactionAmount) {
+	public void setTransactionAmount(Long transactionAmount) {
 		this.transactionAmount = transactionAmount;
 	}
 
@@ -152,43 +152,43 @@ public class Bank {
 		this.transactionDirection = transactionDirection;
 	}
 
-	public long getTransactionBalance() {
+	public Long getTransactionBalance() {
 		return transactionBalance;
 	}
 
-	public void setTransactionBalance(long transactionBalance) {
+	public void setTransactionBalance(Long transactionBalance) {
 		this.transactionBalance = transactionBalance;
 	}
 
-	public long getBeginningBalance() {
+	public Long getBeginningBalance() {
 		return beginningBalance;
 	}
 
-	public void setBeginningBalance(long beginningBalance) {
+	public void setBeginningBalance(Long beginningBalance) {
 		this.beginningBalance = beginningBalance;
 	}
 
-	public long getCreditTotalAmount() {
+	public Long getCreditTotalAmount() {
 		return creditTotalAmount;
 	}
 
-	public void setCreditTotalAmount(long creditTotalAmount) {
+	public void setCreditTotalAmount(Long creditTotalAmount) {
 		this.creditTotalAmount = creditTotalAmount;
 	}
 
-	public long getDebitTotalAmount() {
+	public Long getDebitTotalAmount() {
 		return debitTotalAmount;
 	}
 
-	public void setDebitTotalAmount(long debitTotalAmount) {
+	public void setDebitTotalAmount(Long debitTotalAmount) {
 		this.debitTotalAmount = debitTotalAmount;
 	}
 
-	public long getEndingBalance() {
+	public Long getEndingBalance() {
 		return endingBalance;
 	}
 
-	public void setEndingBalance(long endingBalance) {
+	public void setEndingBalance(Long endingBalance) {
 		this.endingBalance = endingBalance;
 	}
 
@@ -208,11 +208,11 @@ public class Bank {
 		this.savedFileName = savedFileName;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -224,11 +224,11 @@ public class Bank {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -250,22 +250,15 @@ public class Bank {
 
 	@Override
 	public String toString() {
-		return "Bank [bankId=" + bankId + ", bankCode=" + bankCode
-				+ ", accNumber=" + accNumber + ", accHolderName="
-				+ accHolderName + ", currencyCode=" + currencyCode
-				+ ", transactionDate=" + transactionDate + ", transactionDesc="
-				+ transactionDesc + ", transactionBranch=" + transactionBranch
-				+ ", transactionAmount=" + transactionAmount
-				+ ", transactionDirection=" + transactionDirection
-				+ ", transactionBalance=" + transactionBalance
-				+ ", beginningBalance=" + beginningBalance
-				+ ", creditTotalAmount=" + creditTotalAmount
-				+ ", debitTotalAmount=" + debitTotalAmount + ", endingBalance="
-				+ endingBalance + ", uploadFileName=" + uploadFileName
-				+ ", savedFileName=" + savedFileName + ", createdBy="
-				+ createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + ", fileBinary="
-				+ fileBinary + "]";
+		return "Bank [bankId=" + bankId + ", bankCode=" + bankCode + ", accNumber=" + accNumber + ", accHolderName="
+				+ accHolderName + ", currencyCode=" + currencyCode + ", transactionDate=" + transactionDate
+				+ ", transactionDesc=" + transactionDesc + ", transactionBranch=" + transactionBranch
+				+ ", transactionAmount=" + transactionAmount + ", transactionDirection=" + transactionDirection
+				+ ", transactionBalance=" + transactionBalance + ", beginningBalance=" + beginningBalance
+				+ ", creditTotalAmount=" + creditTotalAmount + ", debitTotalAmount=" + debitTotalAmount
+				+ ", endingBalance=" + endingBalance + ", uploadFileName=" + uploadFileName + ", savedFileName="
+				+ savedFileName + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ updatedBy + ", updatedDate=" + updatedDate + ", fileBinary=" + fileBinary + "]";
 	}
 
 }

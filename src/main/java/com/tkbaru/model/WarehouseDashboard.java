@@ -8,28 +8,28 @@ public class WarehouseDashboard {
 
 	}
 
-	private int selectedWarehouse;
-	private int selectedPO;
-	private int selectedSales;
-	private int selectedItems;
+	private Integer selectedWarehouse;
+	private Integer selectedPO;
+	private Integer selectedSales;
+	private Integer selectedItems;
 	private Receipt receipt;
 	private Deliver deliver;
 	private List<PurchaseOrder> purchaseOrderList = new ArrayList<PurchaseOrder>();
 	private List<SalesOrder> salesOrderList = new ArrayList<SalesOrder>();
 
-	public int getSelectedWarehouse() {
+	public Integer getSelectedWarehouse() {
 		return selectedWarehouse;
 	}
 
-	public void setSelectedWarehouse(int selectedWarehouse) {
+	public void setSelectedWarehouse(Integer selectedWarehouse) {
 		this.selectedWarehouse = selectedWarehouse;
 	}
 
-	public int getSelectedPO() {
+	public Integer getSelectedPO() {
 		return selectedPO;
 	}
 
-	public void setSelectedPO(int selectedPO) {
+	public void setSelectedPO(Integer selectedPO) {
 		this.selectedPO = selectedPO;
 	}
 
@@ -41,11 +41,11 @@ public class WarehouseDashboard {
 		this.purchaseOrderList = purchaseOrderList;
 	}
 
-	public int getSelectedItems() {
+	public Integer getSelectedItems() {
 		return selectedItems;
 	}
 
-	public void setSelectedItems(int selectedItems) {
+	public void setSelectedItems(Integer selectedItems) {
 		this.selectedItems = selectedItems;
 	}
 
@@ -65,11 +65,11 @@ public class WarehouseDashboard {
 		this.salesOrderList = salesOrderList;
 	}
 
-	public int getSelectedSales() {
+	public Integer getSelectedSales() {
 		return selectedSales;
 	}
 
-	public void setSelectedSales(int selectedSales) {
+	public void setSelectedSales(Integer selectedSales) {
 		this.selectedSales = selectedSales;
 	}
 

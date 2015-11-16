@@ -7,8 +7,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -23,115 +21,84 @@ public class Receipt {
 	@Id
 	@Column(name="receipt_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int receiptId;
+	private Integer receiptId;
 	@Column(name="receipt_date")
 	private Date receiptDate;
 	@Column(name="bruto")
-	private int bruto;
+	private Long bruto;
 	@Column(name="net")
-	private int net;
+	private Long net;
 	@Column(name="tare")
-	private int tare;
+	private Long tare;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
-	
-	@ManyToOne
-	@JoinColumn(name="store_id")
-	private Store receiptStoreEntity;
-
-	public int getReceiptId() {
+	public Integer getReceiptId() {
 		return receiptId;
 	}
-
-	public void setReceiptId(int receiptId) {
+	public void setReceiptId(Integer receiptId) {
 		this.receiptId = receiptId;
 	}
-
 	public Date getReceiptDate() {
 		return receiptDate;
 	}
-
 	public void setReceiptDate(Date receiptDate) {
 		this.receiptDate = receiptDate;
 	}
-
-	public int getBruto() {
+	public Long getBruto() {
 		return bruto;
 	}
-
-	public void setBruto(int bruto) {
+	public void setBruto(Long bruto) {
 		this.bruto = bruto;
 	}
-
-	public int getNet() {
+	public Long getNet() {
 		return net;
 	}
-
-	public void setNet(int net) {
+	public void setNet(Long net) {
 		this.net = net;
 	}
-
-	public int getTare() {
+	public Long getTare() {
 		return tare;
 	}
-
-	public void setTare(int tare) {
+	public void setTare(Long tare) {
 		this.tare = tare;
 	}
-
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
-
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
-
 	public Date getCreatedDate() {
 		return createdDate;
 	}
-
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
-
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
-
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
-
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
-	public Store getReceiptStoreEntity() {
-		return receiptStoreEntity;
-	}
-
-	public void setReceiptStoreEntity(Store receiptStoreEntity) {
-		this.receiptStoreEntity = receiptStoreEntity;
-	}
-
 	@Override
 	public String toString() {
 		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", bruto=" + bruto + ", net=" + net
 				+ ", tare=" + tare + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + ", receiptStoreEntity=" + receiptStoreEntity + "]";
+				+ updatedBy + ", updatedDate=" + updatedDate + "]";
 	}
-
+	
 }

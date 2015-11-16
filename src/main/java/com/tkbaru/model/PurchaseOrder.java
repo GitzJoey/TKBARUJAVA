@@ -35,7 +35,7 @@ public class PurchaseOrder implements Serializable {
 	@Id
 	@Column(name="po_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int poId;
+	private Integer poId;
 	@Column(name="po_code")
 	private String poCode;
 	@Column(name="po_created")
@@ -46,12 +46,12 @@ public class PurchaseOrder implements Serializable {
 	@Column(name="remarks")
 	private String poRemarks;	
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -74,7 +74,7 @@ public class PurchaseOrder implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="store_id")
-	private Supplier supplierStoreEntity;
+	private Store poStoreEntity;
 
 	@ManyToOne
 	@JoinColumn(name="warehouse_id")
@@ -88,11 +88,11 @@ public class PurchaseOrder implements Serializable {
 	@JoinColumn(name="po_type", referencedColumnName="lookup_key")
 	private Lookup poTypeLookup;
 
-	public int getPoId() {
+	public Integer getPoId() {
 		return poId;
 	}
 
-	public void setPoId(int poId) {
+	public void setPoId(Integer poId) {
 		this.poId = poId;
 	}
 
@@ -128,11 +128,11 @@ public class PurchaseOrder implements Serializable {
 		this.poRemarks = poRemarks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -144,11 +144,11 @@ public class PurchaseOrder implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -184,12 +184,12 @@ public class PurchaseOrder implements Serializable {
 		this.supplierEntity = supplierEntity;
 	}
 
-	public Supplier getSupplierStoreEntity() {
-		return supplierStoreEntity;
+	public Store getPoStoreEntity() {
+		return poStoreEntity;
 	}
 
-	public void setSupplierStoreEntity(Supplier supplierStoreEntity) {
-		this.supplierStoreEntity = supplierStoreEntity;
+	public void setPoStoreEntity(Store poStoreEntity) {
+		this.poStoreEntity = poStoreEntity;
 	}
 
 	public Warehouse getWarehouseEntity() {
@@ -222,8 +222,8 @@ public class PurchaseOrder implements Serializable {
 				+ ", shippingDate=" + shippingDate + ", poRemarks=" + poRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
 				+ ", itemsList=" + itemsList + ", paymentList=" + paymentList + ", supplierEntity=" + supplierEntity
-				+ ", supplierStoreEntity=" + supplierStoreEntity + ", warehouseEntity=" + warehouseEntity
-				+ ", poStatusLookup=" + poStatusLookup + ", poTypeLookup=" + poTypeLookup + "]";
+				+ ", poStoreEntity=" + poStoreEntity + ", warehouseEntity=" + warehouseEntity + ", poStatusLookup="
+				+ poStatusLookup + ", poTypeLookup=" + poTypeLookup + "]";
 	}
 
 }

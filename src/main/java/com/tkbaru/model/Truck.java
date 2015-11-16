@@ -22,23 +22,23 @@ public class Truck {
 	@Id
 	@GeneratedValue
 	@Column(name="truck_id")
-	private int truckId;
+	private Integer truckId;
 	@Column(name="plate_number")
 	private String plateNumber;
 	@Column(name="kir_date")
 	@Temporal(TemporalType.DATE)
 	private Date kirDate;
 	@Column(name="driver")
-	private int driver;
+	private Integer driver;
 	@Column(name="remarks")
 	private String remarks;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -59,11 +59,11 @@ public class Truck {
 	@JoinColumn(name="store_id")
 	private Store truckStoreEntity;
 
-	public int getTruckId() {
+	public Integer getTruckId() {
 		return truckId;
 	}
 
-	public void setTruckId(int truckId) {
+	public void setTruckId(Integer truckId) {
 		this.truckId = truckId;
 	}
 
@@ -83,11 +83,11 @@ public class Truck {
 		this.kirDate = kirDate;
 	}
 
-	public int getDriver() {
+	public Integer getDriver() {
 		return driver;
 	}
 
-	public void setDriver(int driver) {
+	public void setDriver(Integer driver) {
 		this.driver = driver;
 	}
 
@@ -99,11 +99,11 @@ public class Truck {
 		this.remarks = remarks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -115,11 +115,11 @@ public class Truck {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

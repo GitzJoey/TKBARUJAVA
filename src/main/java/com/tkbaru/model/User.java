@@ -11,31 +11,31 @@ public class User implements Serializable {
 		roleEntity = new Role();
 	}
 	
-	private int userId;
+	private Integer userId;
 	private String userName;
 	private String userPassword;
 	private String userStatus;
 	
-	private int roleId;
+	private Integer roleId;
 	private Role roleEntity;
 	
-	private int personId;
+	private Integer personId;
 	private Person personEntity;
 
-	private int storeId;
+	private Integer storeId;
 	private Store storeEntity;
 
-	private int createdBy;
+	private Integer createdBy;
 	private Date createdDate;
-	private int updatedBy;
+	private Integer updatedBy;
 	private Date updatedDate;
 	
 	private Lookup statusLookup;
 	
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
 	public String getUserName() {
@@ -56,10 +56,10 @@ public class User implements Serializable {
 	public void setUserStatus(String userStatus) {
 		this.userStatus = userStatus;
 	}
-	public int getRoleId() {
+	public Integer getRoleId() {
 		return roleId;
 	}
-	public void setRoleId(int roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 	public Role getRoleEntity() {
@@ -68,10 +68,10 @@ public class User implements Serializable {
 	public void setRoleEntity(Role roleEntity) {
 		this.roleEntity = roleEntity;
 	}
-	public int getPersonId() {
+	public Integer getPersonId() {
 		return personId;
 	}
-	public void setPersonId(int personId) {
+	public void setPersonId(Integer personId) {
 		this.personId = personId;
 	}
 	public Person getPersonEntity() {
@@ -80,10 +80,10 @@ public class User implements Serializable {
 	public void setPersonEntity(Person personEntity) {
 		this.personEntity = personEntity;
 	}
-	public int getStoreId() {
+	public Integer getStoreId() {
 		return storeId;
 	}
-	public void setStoreId(int storeId) {
+	public void setStoreId(Integer storeId) {
 		this.storeId = storeId;
 	}
 	public Store getStoreEntity() {
@@ -92,10 +92,10 @@ public class User implements Serializable {
 	public void setStoreEntity(Store storeEntity) {
 		this.storeEntity = storeEntity;
 	}
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 	public Date getCreatedDate() {
@@ -104,10 +104,10 @@ public class User implements Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 	public Date getUpdatedDate() {

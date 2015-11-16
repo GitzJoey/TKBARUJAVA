@@ -25,7 +25,7 @@ public class Store implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="store_id")
-	private int storeId;
+	private Integer storeId;
 	@Column(name="store_name")
 	private String storeName;
 	@Column(name="address_1")
@@ -37,12 +37,12 @@ public class Store implements Serializable {
 	@Column(name="npwp_number")
 	private String npwpNumber;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -55,11 +55,11 @@ public class Store implements Serializable {
 	@JoinColumn(name="is_default", referencedColumnName="lookup_key")
 	private Lookup isDefaultLookup;
 
-	public int getStoreId() {
+	public Integer getStoreId() {
 		return storeId;
 	}
 
-	public void setStoreId(int storeId) {
+	public void setStoreId(Integer storeId) {
 		this.storeId = storeId;
 	}
 
@@ -103,11 +103,11 @@ public class Store implements Serializable {
 		this.npwpNumber = npwpNumber;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -119,11 +119,11 @@ public class Store implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

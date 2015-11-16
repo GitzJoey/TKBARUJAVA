@@ -32,7 +32,7 @@ import org.hibernate.annotations.ParamDef;
 @Entity
 @Table(name="tb_customer")
 @SuppressWarnings("unchecked")
-@FilterDef(name="UserStore", parameters=@ParamDef(name="userStoreParam", type="integer"))
+@FilterDef(name="UserStore", parameters=@ParamDef(name="userStoreParam", type="Integereger"))
 @Filter(name="UserStore", condition="store_id = :userStoreParam")
 public class Customer implements Serializable {
 	private static final long serialVersionUID = -6138044220608174337L;
@@ -44,7 +44,7 @@ public class Customer implements Serializable {
 	@Id
 	@Column(name="customer_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int customerId;
+	private Integer customerId;
 	@Column(name="customer_name")
 	private String customerName;
 	@Column(name="address")
@@ -58,12 +58,12 @@ public class Customer implements Serializable {
 	@Column(name="npwp_num")
 	private String npwpNum;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -93,11 +93,11 @@ public class Customer implements Serializable {
 	@NotFound(action=NotFoundAction.IGNORE)
 	private PriceLevel priceLevelEntity;
 
-	public int getCustomerId() {
+	public Integer getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(int customerId) {
+	public void setCustomerId(Integer customerId) {
 		this.customerId = customerId;
 	}
 
@@ -149,11 +149,11 @@ public class Customer implements Serializable {
 		this.npwpNum = npwpNum;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -165,11 +165,11 @@ public class Customer implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

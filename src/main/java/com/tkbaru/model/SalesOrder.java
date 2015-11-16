@@ -38,7 +38,7 @@ public class SalesOrder implements Serializable {
 	@Id
 	@Column(name="so_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int salesId;	
+	private Integer salesId;	
 	@Column(name="so_code")
 	private String salesCode;
 	@Column(name="so_created")
@@ -50,12 +50,12 @@ public class SalesOrder implements Serializable {
 	@Column(name="remarks")
 	private String salesRemarks;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -79,7 +79,7 @@ public class SalesOrder implements Serializable {
 
 	@ManyToOne
 	@JoinColumn(name="store_id")
-	private Lookup salesStoreEntity;
+	private Store salesStoreEntity;
 
 	@ManyToOne
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
@@ -94,10 +94,10 @@ public class SalesOrder implements Serializable {
 	@Transient
 	private List<Customer> customerSearchResults;
 
-	public int getSalesId() {
+	public Integer getSalesId() {
 		return salesId;
 	}
-	public void setSalesId(int salesId) {
+	public void setSalesId(Integer salesId) {
 		this.salesId = salesId;
 	}
 	public String getSalesCode() {
@@ -130,10 +130,10 @@ public class SalesOrder implements Serializable {
 	public void setSalesRemarks(String salesRemarks) {
 		this.salesRemarks = salesRemarks;
 	}
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 	public Date getCreatedDate() {
@@ -142,10 +142,10 @@ public class SalesOrder implements Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 	public Date getUpdatedDate() {
@@ -172,10 +172,10 @@ public class SalesOrder implements Serializable {
 	public void setCustomerEntity(Customer customerEntity) {
 		this.customerEntity = customerEntity;
 	}
-	public Lookup getSalesStoreEntity() {
+	public Store getSalesStoreEntity() {
 		return salesStoreEntity;
 	}
-	public void setSalesStoreEntity(Lookup salesStoreEntity) {
+	public void setSalesStoreEntity(Store salesStoreEntity) {
 		this.salesStoreEntity = salesStoreEntity;
 	}
 	public Lookup getSalesStatusLookup() {

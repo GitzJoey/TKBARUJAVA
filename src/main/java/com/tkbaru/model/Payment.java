@@ -26,24 +26,24 @@ public class Payment implements Serializable {
 	@Id
 	@Column(name="payment_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int paymentId;
+	private Integer paymentId;
 	@Column(name="payment_date")
 	@Temporal(TemporalType.DATE)
 	private Date paymentDate;
 	@Column(name="total_amount")
-	private long totalAmount;
+	private Long totalAmount;
 	@Column(name="effective_date")
 	@Temporal(TemporalType.DATE)
 	private Date effectiveDate;
 	@Column(name="is_linked")
-	private boolean isLinked;
+	private Boolean isLinked;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -64,11 +64,11 @@ public class Payment implements Serializable {
 	@JoinColumn(name="bank_code", referencedColumnName="lookup_key")
 	private Lookup bankCodeLookup;
 
-	public int getPaymentId() {
+	public Integer getPaymentId() {
 		return paymentId;
 	}
 
-	public void setPaymentId(int paymentId) {
+	public void setPaymentId(Integer paymentId) {
 		this.paymentId = paymentId;
 	}
 
@@ -80,11 +80,11 @@ public class Payment implements Serializable {
 		this.paymentDate = paymentDate;
 	}
 
-	public long getTotalAmount() {
+	public Long getTotalAmount() {
 		return totalAmount;
 	}
 
-	public void setTotalAmount(long totalAmount) {
+	public void setTotalAmount(Long totalAmount) {
 		this.totalAmount = totalAmount;
 	}
 
@@ -104,11 +104,11 @@ public class Payment implements Serializable {
 		this.isLinked = isLinked;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -120,11 +120,11 @@ public class Payment implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

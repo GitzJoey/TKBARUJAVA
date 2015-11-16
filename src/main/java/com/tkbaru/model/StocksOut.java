@@ -23,16 +23,16 @@ public class StocksOut {
 	@Id
 	@Column(name="stocks_out_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int stocksOutId;
+	private Integer stocksOutId;
 	@Column(name="quantity")
-	private long prodQuantity;
+	private Long prodQuantity;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -57,27 +57,27 @@ public class StocksOut {
 	@JoinColumn(name="warehouse_id")
 	private Warehouse warehouseEntity;
 
-	public int getStocksOutId() {
+	public Integer getStocksOutId() {
 		return stocksOutId;
 	}
 
-	public void setStocksOutId(int stocksOutId) {
+	public void setStocksOutId(Integer stocksOutId) {
 		this.stocksOutId = stocksOutId;
 	}
 
-	public long getProdQuantity() {
+	public Long getProdQuantity() {
 		return prodQuantity;
 	}
 
-	public void setProdQuantity(long prodQuantity) {
+	public void setProdQuantity(Long prodQuantity) {
 		this.prodQuantity = prodQuantity;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -89,11 +89,11 @@ public class StocksOut {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

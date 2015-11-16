@@ -24,7 +24,7 @@ public class PriceLevel{
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_level_id")
-    private int priceLevelId ;
+    private Integer priceLevelId ;
     @Column(name="level_name", length=100)
     private String priceLevelName;
     @Column(name="level_description", length=255)
@@ -56,11 +56,11 @@ public class PriceLevel{
 	@JoinColumn(name="level_type", referencedColumnName="lookup_key")
 	private Lookup priceLevelTypeLookup;
 
-	public int getPriceLevelId() {
+	public Integer getPriceLevelId() {
 		return priceLevelId;
 	}
 
-	public void setPriceLevelId(int priceLevelId) {
+	public void setPriceLevelId(Integer priceLevelId) {
 		this.priceLevelId = priceLevelId;
 	}
 

@@ -29,14 +29,14 @@ public class Product implements Serializable {
 		
 	}
 
-	public Product(int productId) {
+	public Product(Integer productId) {
 		this.productId = productId;
 	}
 	
 	@Id
 	@GeneratedValue
 	@Column(name="product_id")
-	private int productId;
+	private Integer productId;
 	@Column(name="short_code")
 	private String shortCode;
 	@Column(name="product_name")
@@ -48,12 +48,12 @@ public class Product implements Serializable {
 	@Column(name="image_path")
 	private String imagePath;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -76,11 +76,11 @@ public class Product implements Serializable {
 	@JoinColumn(name="store_id")
 	private Store productStoreEntity;
 
-	public int getProductId() {
+	public Integer getProductId() {
 		return productId;
 	}
 
-	public void setProductId(int productId) {
+	public void setProductId(Integer productId) {
 		this.productId = productId;
 	}
 
@@ -124,11 +124,11 @@ public class Product implements Serializable {
 		this.imagePath = imagePath;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -140,11 +140,11 @@ public class Product implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

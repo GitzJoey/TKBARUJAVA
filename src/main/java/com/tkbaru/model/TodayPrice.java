@@ -14,7 +14,7 @@ public class TodayPrice {
 	
 	private Date inputDate;
 	private List<Stocks> stocksList;
-	private int selectedStockId;
+	private Integer selectedStockId;
 	
 	public Date getInputDate() {
 		return inputDate;
@@ -32,11 +32,11 @@ public class TodayPrice {
 		this.stocksList = stocksList;
 	}
 
-	public int getSelectedStockId() {
+	public Integer getSelectedStockId() {
 		return selectedStockId;
 	}
 
-	public void setSelectedStockId(int selectedStockId) {
+	public void setSelectedStockId(Integer selectedStockId) {
 		this.selectedStockId = selectedStockId;
 	}
 

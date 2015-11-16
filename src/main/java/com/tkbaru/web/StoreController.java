@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -99,9 +100,13 @@ public class StoreController {
 	public String saveStore(Locale locale, Model model, @ModelAttribute("storeForm") Store store, RedirectAttributes redirectAttributes) {	
         		
 		if (store.getStoreId() == 0) {
+			store.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			store.setCreatedDate(new Date());
 			logger.info("[saveStore] " + "addStore: " + store.toString());
 			storeManager.addStore(store); 
 		} else { 
+			store.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			store.setUpdatedDate(new Date());
 			logger.info("[saveStore] " + "editStore: " + store.toString());
 			storeManager.editStore(store); 
 		}

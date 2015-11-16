@@ -1,6 +1,7 @@
 package com.tkbaru.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -129,9 +130,13 @@ public class UserController {
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr, RedirectAttributes redirectAttributes) {
 		
 		if (usr.getUserId() == 0) {
+			usr.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			usr.setCreatedDate(new Date());
 			logger.info("[userSave] " + "addNewUser: " + usr.toString());
 			userManager.addNewUser(usr);		
 		} else {
+			usr.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			usr.setUpdatedDate(new Date());
 			logger.info("[userSave] " + "editUser: " + usr.toString());
 			userManager.editUser(usr);
 		}

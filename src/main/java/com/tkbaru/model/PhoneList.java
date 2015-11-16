@@ -26,18 +26,18 @@ public class PhoneList implements Serializable{
 	@Id
 	@Column(name="phonelist_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)	
-	private int phoneListId;
+	private Integer phoneListId;
 	@Column(name="number")
 	private String phoneNumber;
 	@Column(name="remarks")
 	private String phoneNumRemarks;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -50,11 +50,11 @@ public class PhoneList implements Serializable{
 	@JoinColumn(name="provider", referencedColumnName="lookup_key")
 	private Lookup providerLookup;
 
-	public int getPhoneListId() {
+	public Integer getPhoneListId() {
 		return phoneListId;
 	}
 
-	public void setPhoneListId(int phoneListId) {
+	public void setPhoneListId(Integer phoneListId) {
 		this.phoneListId = phoneListId;
 	}
 
@@ -74,11 +74,11 @@ public class PhoneList implements Serializable{
 		this.phoneNumRemarks = phoneNumRemarks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -90,11 +90,11 @@ public class PhoneList implements Serializable{
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

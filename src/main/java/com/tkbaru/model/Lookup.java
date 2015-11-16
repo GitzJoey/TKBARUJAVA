@@ -26,16 +26,16 @@ public class Lookup implements Serializable {
 
 	public Lookup(String lookupCategory,
 					String lookupKey,
-					int orderNum,
+					Integer orderNum,
 					String localeMessageCodes,
 					String lookupValue,
-					String lookupMaintainability) {
+					String lookupMaIntegerainability) {
 		this.lookupCategory = lookupCategory;
 		this.lookupKey = lookupKey;
 		this.orderNum = orderNum;
 		this.localeMessageCodes = localeMessageCodes;
 		this.lookupValue = lookupValue;
-		this.lookupMaintainability = lookupMaintainability;
+		this.lookupMaIntegerainability = lookupMaIntegerainability;
 		this.createdBy = 0;
 		this.createdDate = new Date();		
 	}
@@ -43,28 +43,28 @@ public class Lookup implements Serializable {
 	@Id
 	@Column(name="lookup_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int lookupId;
+	private Integer lookupId;
 	@Column(name="category")
 	private String lookupCategory;
 	@Column(name="lookup_key")
 	private String lookupKey;
 	@Column(name="order_num")
-	private int orderNum;
+	private Integer orderNum;
 	@Column(name="status")
 	private String lookupStatus;
 	@Column(name="loc_msg_code")
 	private String localeMessageCodes;
 	@Column(name="val")
 	private String lookupValue;
-	@Column(name="maintainable")
-	private String lookupMaintainability;
+	@Column(name="maIntegerainable")
+	private String lookupMaIntegerainability;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -74,18 +74,18 @@ public class Lookup implements Serializable {
 	private Lookup statusLookup;
 
 	@ManyToOne
-	@JoinColumn(name="maintainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
-	private Lookup maintainabilityLookup;
+	@JoinColumn(name="maIntegerainable", referencedColumnName="lookup_key", unique=true, insertable=false, updatable=false)
+	private Lookup maIntegerainabilityLookup;
 
 	@Transient
 	public String getI18nLookupValue() {
 		return this.localeMessageCodes;
 	}
 	
-	public int getLookupId() {
+	public Integer getLookupId() {
 		return lookupId;
 	}
-	public void setLookupId(int lookupId) {
+	public void setLookupId(Integer lookupId) {
 		this.lookupId = lookupId;
 	}
 	public String getLookupCategory() {
@@ -100,10 +100,10 @@ public class Lookup implements Serializable {
 	public void setLookupKey(String lookupKey) {
 		this.lookupKey = lookupKey;
 	}
-	public int getOrderNum() {
+	public Integer getOrderNum() {
 		return orderNum;
 	}
-	public void setOrderNum(int orderNum) {
+	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
 	}	
 	public String getLookupValue() {
@@ -124,16 +124,16 @@ public class Lookup implements Serializable {
 	public void setLookupStatus(String lookupStatus) {
 		this.lookupStatus = lookupStatus;
 	}
-	public String getLookupMaintainability() {
-		return lookupMaintainability;
+	public String getLookupMaIntegerainability() {
+		return lookupMaIntegerainability;
 	}
-	public void setLookupMaintainability(String lookupMaintainability) {
-		this.lookupMaintainability = lookupMaintainability;
+	public void setLookupMaIntegerainability(String lookupMaIntegerainability) {
+		this.lookupMaIntegerainability = lookupMaIntegerainability;
 	}
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 	public Date getCreatedDate() {
@@ -142,10 +142,10 @@ public class Lookup implements Serializable {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 	public Date getUpdatedDate() {
@@ -160,21 +160,21 @@ public class Lookup implements Serializable {
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
 	}
-	public Lookup getMaintainabilityLookup() {
-		return maintainabilityLookup;
+	public Lookup getMaIntegerainabilityLookup() {
+		return maIntegerainabilityLookup;
 	}
-	public void setMaintainabilityLookup(Lookup maintainabilityLookup) {
-		this.maintainabilityLookup = maintainabilityLookup;
+	public void setMaIntegerainabilityLookup(Lookup maIntegerainabilityLookup) {
+		this.maIntegerainabilityLookup = maIntegerainabilityLookup;
 	}
 
 	@Override
 	public String toString() {
 		return "Lookup [lookupId=" + lookupId + ", lookupCategory=" + lookupCategory + ", lookupKey=" + lookupKey
 				+ ", orderNum=" + orderNum + ", lookupStatus=" + lookupStatus + ", localeMessageCodes="
-				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaintainability="
-				+ lookupMaintainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
+				+ localeMessageCodes + ", lookupValue=" + lookupValue + ", lookupMaIntegerainability="
+				+ lookupMaIntegerainability + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", statusLookup=" + "statusLookup"
-				+ ", maintainabilityLookup=" + "maintainabilityLookup" + "]";
+				+ ", maIntegerainabilityLookup=" + "maIntegerainabilityLookup" + "]";
 	}
 
 }

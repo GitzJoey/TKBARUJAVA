@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -90,9 +91,13 @@ public class FunctionController {
 	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func, RedirectAttributes redirectAttributes) {
 		
 		if (func.getFunctionId() == 0) {
+			func.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			func.setCreatedDate(new Date());
 			logger.info("[functionSave] " + "addFunction: " + func.toString());
 			functionManager.addFunction(func);
 		} else {
+			func.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			func.setUpdatedDate(new Date());
 			logger.info("[functionSave] " + "editFunction: " + func.toString());
 			functionManager.editFunction(func);
 		}

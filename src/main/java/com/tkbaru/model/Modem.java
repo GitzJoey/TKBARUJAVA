@@ -16,7 +16,7 @@ public class Modem {
 	@Id
 	@GeneratedValue
 	@Column(name = "modem_id")
-	private int modemId;
+	private Integer modemId;
 	@Column(name = "port")
 	private String port;
 	@Column(name = "manufacturer")
@@ -26,13 +26,13 @@ public class Modem {
 	@Column(name = "sms_center")
 	private String smsCenter;
 	@Column(name = "baud_rate")
-	private int baudRate;
+	private Integer baudRate;
 
-	public int getModemId() {
+	public Integer getModemId() {
 		return modemId;
 	}
 
-	public void setModemId(int modemId) {
+	public void setModemId(Integer modemId) {
 		this.modemId = modemId;
 	}
 
@@ -68,11 +68,11 @@ public class Modem {
 		this.smsCenter = smsCenter;
 	}
 
-	public int getBaudRate() {
+	public Integer getBaudRate() {
 		return baudRate;
 	}
 
-	public void setBaudRate(int baudRate) {
+	public void setBaudRate(Integer baudRate) {
 		this.baudRate = baudRate;
 	}
 

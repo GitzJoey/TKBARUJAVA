@@ -37,22 +37,22 @@ public class Items implements Serializable {
 	@Id
 	@Column(name="items_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int itemsId;
+	private Integer itemsId;
 	@Column(name="quantity")
-	private long prodQuantity;
+	private Long prodQuantity;
 	@Column(name="price")
-	private long prodPrice;
+	private Long prodPrice;
 	@Column(name="to_base_value")
 	private Long toBaseValue;
 	@Column(name="to_base_qty")
 	private Long toBaseQty;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -60,10 +60,6 @@ public class Items implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="product_id")
 	private Product productEntity;
-
-	@ManyToOne
-	@JoinColumn(name="store_id")
-	private Store itemStoreEntity;
 
 	@ManyToOne
 	@JoinColumn(name="stocks_id")
@@ -90,27 +86,27 @@ public class Items implements Serializable {
 				inverseJoinColumns={@JoinColumn(name="deliver_id", referencedColumnName="deliver_id")})
 	private List<Deliver> deliverList= LazyList.decorate(new ArrayList<Deliver>(), FactoryUtils.instantiateFactory(Deliver.class));
 
-	public int getItemsId() {
+	public Integer getItemsId() {
 		return itemsId;
 	}
 
-	public void setItemsId(int itemsId) {
+	public void setItemsId(Integer itemsId) {
 		this.itemsId = itemsId;
 	}
 
-	public long getProdQuantity() {
+	public Long getProdQuantity() {
 		return prodQuantity;
 	}
 
-	public void setProdQuantity(long prodQuantity) {
+	public void setProdQuantity(Long prodQuantity) {
 		this.prodQuantity = prodQuantity;
 	}
 
-	public long getProdPrice() {
+	public Long getProdPrice() {
 		return prodPrice;
 	}
 
-	public void setProdPrice(long prodPrice) {
+	public void setProdPrice(Long prodPrice) {
 		this.prodPrice = prodPrice;
 	}
 
@@ -130,11 +126,11 @@ public class Items implements Serializable {
 		this.toBaseQty = toBaseQty;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -146,11 +142,11 @@ public class Items implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 
@@ -168,14 +164,6 @@ public class Items implements Serializable {
 
 	public void setProductEntity(Product productEntity) {
 		this.productEntity = productEntity;
-	}
-
-	public Store getItemStoreEntity() {
-		return itemStoreEntity;
-	}
-
-	public void setItemStoreEntity(Store itemStoreEntity) {
-		this.itemStoreEntity = itemStoreEntity;
 	}
 
 	public Stocks getStocksEntity() {
@@ -218,18 +206,14 @@ public class Items implements Serializable {
 		this.deliverList = deliverList;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
 		return "Items [itemsId=" + itemsId + ", prodQuantity=" + prodQuantity + ", prodPrice=" + prodPrice
 				+ ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", productEntity=" + productEntity + ", itemStoreEntity=" + itemStoreEntity + ", stocksEntity="
-				+ stocksEntity + ", unitCodeLookup=" + unitCodeLookup + ", baseUnitCodeLookup=" + baseUnitCodeLookup
-				+ ", receiptList=" + receiptList + ", deliverList=" + deliverList + "]";
+				+ ", productEntity=" + productEntity + ", stocksEntity=" + stocksEntity + ", unitCodeLookup="
+				+ unitCodeLookup + ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", receiptList=" + receiptList
+				+ ", deliverList=" + deliverList + "]";
 	}
 
 }

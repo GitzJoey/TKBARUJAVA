@@ -31,7 +31,7 @@ public class Function implements Serializable {
 					String menuName,
 					String menuIcon,
 					String urlLink,
-					int orderNum,
+					Integer orderNum,
 					Integer parentFunctionId) {
 		this.functionCode = functionCode;
 		this.menuName = menuName;
@@ -46,7 +46,7 @@ public class Function implements Serializable {
 	@Id
 	@GeneratedValue
 	@Column(name="function_id")
-	private int functionId;
+	private Integer functionId;
 	@Column(name="function_code")
 	private String functionCode;
 	@Column(name="menu_name")
@@ -56,16 +56,16 @@ public class Function implements Serializable {
 	@Column(name="url")
 	private String urlLink;
 	@Column(name="order_num")
-	private int orderNum;
+	private Integer orderNum;
 	@Column(name="parent_function_id")
 	private Integer parentFunctionId;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -77,11 +77,11 @@ public class Function implements Serializable {
     @OneToMany(mappedBy="function", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
     private List<Function> subFunctions = new ArrayList<Function>();
 
-	public int getFunctionId() {
+	public Integer getFunctionId() {
 		return functionId;
 	}
 
-	public void setFunctionId(int functionId) {
+	public void setFunctionId(Integer functionId) {
 		this.functionId = functionId;
 	}
 
@@ -117,11 +117,11 @@ public class Function implements Serializable {
 		this.urlLink = urlLink;
 	}
 
-	public int getOrderNum() {
+	public Integer getOrderNum() {
 		return orderNum;
 	}
 
-	public void setOrderNum(int orderNum) {
+	public void setOrderNum(Integer orderNum) {
 		this.orderNum = orderNum;
 	}
 
@@ -133,11 +133,11 @@ public class Function implements Serializable {
 		this.parentFunctionId = parentFunctionId;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -149,11 +149,11 @@ public class Function implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

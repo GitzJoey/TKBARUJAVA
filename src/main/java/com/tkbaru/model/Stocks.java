@@ -25,18 +25,18 @@ public class Stocks {
 	@Id
 	@Column(name="stocks_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int stocksId;
+	private Integer stocksId;
 	@Column(name="quantity")
-	private long prodQuantity;
+	private Long prodQuantity;
 	@Column(name="current_quantity")
-	private long currentQuantity;
+	private Long currentQuantity;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -60,35 +60,35 @@ public class Stocks {
 	@OneToMany(mappedBy="stocksEntity")
 	private List<Price> priceList;
 
-	public int getStocksId() {
+	public Integer getStocksId() {
 		return stocksId;
 	}
 
-	public void setStocksId(int stocksId) {
+	public void setStocksId(Integer stocksId) {
 		this.stocksId = stocksId;
 	}
 
-	public long getProdQuantity() {
+	public Long getProdQuantity() {
 		return prodQuantity;
 	}
 
-	public void setProdQuantity(long prodQuantity) {
+	public void setProdQuantity(Long prodQuantity) {
 		this.prodQuantity = prodQuantity;
 	}
 
-	public long getCurrentQuantity() {
+	public Long getCurrentQuantity() {
 		return currentQuantity;
 	}
 
-	public void setCurrentQuantity(long currentQuantity) {
+	public void setCurrentQuantity(Long currentQuantity) {
 		this.currentQuantity = currentQuantity;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -100,11 +100,11 @@ public class Stocks {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

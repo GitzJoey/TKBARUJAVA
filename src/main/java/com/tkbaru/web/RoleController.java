@@ -1,6 +1,7 @@
 package com.tkbaru.web;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -116,9 +117,13 @@ public class RoleController {
 		role.setFunctionList(functionManager.getFunctionById(Converter.convertToIntegerList(request.getParameter("selectedFunc"))));
 		
 		if (role.getRoleId() == 0) {
+			role.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			role.setCreatedDate(new Date());
 			logger.info("[saveRole] " + "addRole: " + role.toString());
 			roleManager.addRole(role);			
 		} else {
+			role.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			role.setUpdatedDate(new Date());
 			logger.info("[saveRole] " + "editRole: " + role.toString());
 			roleManager.editRole(role);
 		}

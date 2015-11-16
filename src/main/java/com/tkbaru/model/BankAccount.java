@@ -26,22 +26,22 @@ public class BankAccount implements Serializable {
 	@Id
 	@Column(name="bankacc_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int bankAccId;
+	private Integer bankAccId;
 	@Column(name="short_name")
 	private String shortName;
 	@Column(name="bank_name")
 	private String bankName;
 	@Column(name="account")
-	private int accNum;
+	private Integer accNum;
 	@Column(name="remarks")
 	private String bankRemarks;
 	@Column(name="created_by")
-	private int createdBy;
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 	@Column(name="updated_by")
-	private int updatedBy;
+	private Integer updatedBy;
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
@@ -50,11 +50,11 @@ public class BankAccount implements Serializable {
 	@JoinColumn(name="status", referencedColumnName="lookup_key")
 	private Lookup bankAccStatusLookup;
 
-	public int getBankAccId() {
+	public Integer getBankAccId() {
 		return bankAccId;
 	}
 
-	public void setBankAccId(int bankAccId) {
+	public void setBankAccId(Integer bankAccId) {
 		this.bankAccId = bankAccId;
 	}
 
@@ -74,11 +74,11 @@ public class BankAccount implements Serializable {
 		this.bankName = bankName;
 	}
 
-	public int getAccNum() {
+	public Integer getAccNum() {
 		return accNum;
 	}
 
-	public void setAccNum(int accNum) {
+	public void setAccNum(Integer accNum) {
 		this.accNum = accNum;
 	}
 
@@ -90,11 +90,11 @@ public class BankAccount implements Serializable {
 		this.bankRemarks = bankRemarks;
 	}
 
-	public int getCreatedBy() {
+	public Integer getCreatedBy() {
 		return createdBy;
 	}
 
-	public void setCreatedBy(int createdBy) {
+	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -106,11 +106,11 @@ public class BankAccount implements Serializable {
 		this.createdDate = createdDate;
 	}
 
-	public int getUpdatedBy() {
+	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(int updatedBy) {
+	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
 

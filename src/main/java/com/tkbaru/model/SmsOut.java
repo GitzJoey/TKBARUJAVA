@@ -20,7 +20,7 @@ public class SmsOut {
 	@Id
 	@GeneratedValue
 	@Column(name = "sms_out_id")
-	private int smsOutId;
+	private Integer smsOutId;
 	@Column(name = "recipient")
 	private String recipient;
 	@Column(name = "message")
@@ -29,11 +29,11 @@ public class SmsOut {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
 
-	public int getSmsOutId() {
+	public Integer getSmsOutId() {
 		return smsOutId;
 	}
 
-	public void setSmsOutId(int smsOutId) {
+	public void setSmsOutId(Integer smsOutId) {
 		this.smsOutId = smsOutId;
 	}
 

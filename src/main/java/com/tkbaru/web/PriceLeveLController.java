@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -99,9 +100,15 @@ public class PriceLeveLController {
 	public String savePriceLevel(Locale locale, Model model, @ModelAttribute("priceLevelForm") PriceLevel priceLevelForm, RedirectAttributes redirectAttributes) {	
 		
 		if (priceLevelForm.getPriceLevelId() == 0) { 
+			priceLevelForm.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			priceLevelForm.setCreatedDate(new Date());
+			priceLevelForm.setPriceLevelStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[savePriceLevel] " + "addPriceLevel: " + priceLevelForm.toString());
 			priceLevelManager.addPriceLevel(priceLevelForm);
 		} else {
+			priceLevelForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			priceLevelForm.setUpdatedDate(new Date());
+			priceLevelForm.setPriceLevelStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[savePriceLevel] " + "editPriceLevel: " + priceLevelForm.toString());
 			priceLevelManager.editPriceLevel(priceLevelForm); 
 		}
