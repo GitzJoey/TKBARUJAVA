@@ -22,7 +22,7 @@ public class Warehouse implements Serializable {
 	public Warehouse() {
 		
 	}
-	
+
 	@Id
 	@Column(name="warehouse_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

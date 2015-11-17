@@ -190,7 +190,7 @@ public class SalesOrderController {
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
 		for (ProductUnit productUnit:item.getProductEntity().getProductUnit()) {
-			if (productUnit.isBaseUnit()) {
+			if (productUnit.getIsBaseUnit()) {
 				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}

@@ -19,13 +19,13 @@ public class ProductUnit {
 	public ProductUnit() {
 		
 	}
-	
+
 	@Id
-	@Column(name="prod_unit_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="prod_unit_id")	
 	private Integer productUnitId;
-	@Column(name="is_base", columnDefinition="TINYINT", length=1)
-	private Boolean baseUnit;
+	@Column(name="is_base")
+	private Boolean isBaseUnit;
 	@Column(name="conversion_val")
 	private Long conversionValue;
 	@Column(name="remarks")
@@ -57,12 +57,12 @@ public class ProductUnit {
 		this.productUnitId = productUnitId;
 	}
 
-	public Boolean isBaseUnit() {
-		return baseUnit;
+	public Boolean getIsBaseUnit() {
+		return isBaseUnit;
 	}
 
-	public void setBaseUnit(Boolean baseUnit) {
-		this.baseUnit = baseUnit;
+	public void setIsBaseUnit(Boolean isBaseUnit) {
+		this.isBaseUnit = isBaseUnit;
 	}
 
 	public Long getConversionValue() {
@@ -131,7 +131,7 @@ public class ProductUnit {
 
 	@Override
 	public String toString() {
-		return "ProductUnit [productUnitId=" + productUnitId + ", baseUnit=" + baseUnit + ", conversionValue="
+		return "ProductUnit [productUnitId=" + productUnitId + ", isBaseUnit=" + isBaseUnit + ", conversionValue="
 				+ conversionValue + ", unitRemarks=" + unitRemarks + ", createdBy=" + createdBy + ", createdDate="
 				+ createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", productEntity="
 				+ "productEntity" + ", unitCodeLookup=" + unitCodeLookup + "]";

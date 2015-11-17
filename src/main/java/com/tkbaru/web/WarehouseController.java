@@ -117,7 +117,7 @@ public class WarehouseController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {
 
-		if (warehouse.getWarehouseId() == 0) {
+		if (warehouse.getWarehouseId() == null) {
 			warehouse.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			warehouse.setCreatedDate(new Date());
 			warehouse.setWarehouseStoreEntity(loginContextSession.getUserLogin().getStoreEntity());

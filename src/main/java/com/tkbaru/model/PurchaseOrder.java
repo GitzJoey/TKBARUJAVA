@@ -29,7 +29,7 @@ public class PurchaseOrder implements Serializable {
 	private static final long serialVersionUID = -7671564519078235157L;
 	
 	public PurchaseOrder() {
-		
+
 	}
 	
 	@Id

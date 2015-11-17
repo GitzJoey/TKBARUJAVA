@@ -283,7 +283,7 @@
 																	</form:select>
 																</td>
 																<td class="center-align">
-																	<form:checkbox id="cbxisbase_${ prodUnitIdx.index }" path="productUnit[${ prodUnitIdx.index }].baseUnit"></form:checkbox>
+																	<form:checkbox id="cbxisbase_${ prodUnitIdx.index }" path="productUnit[${ prodUnitIdx.index }].isBaseUnit"></form:checkbox>
 																</td>
 																<td>
 																	<form:input id="conversionValue_${ prodUnitIdx.index }" type="text" class="form-control" path="productUnit[${ prodUnitIdx.index }].conversionValue" placeholder="Enter Value" data-parsley-required="true"></form:input>

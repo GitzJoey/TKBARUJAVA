@@ -131,7 +131,7 @@ public class PurchaseOrderController {
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
 		for(ProductUnit productUnit:item.getProductEntity().getProductUnit()){
-			if(productUnit.isBaseUnit() == true){
+			if(productUnit.getIsBaseUnit() == true){
 				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}
@@ -299,7 +299,7 @@ public class PurchaseOrderController {
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
 		for(ProductUnit productUnit : i.getProductEntity().getProductUnit()){
-			if(productUnit.isBaseUnit()){
+			if(productUnit.getIsBaseUnit()){
 				i.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
 			}
 		}

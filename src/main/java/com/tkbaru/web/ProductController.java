@@ -107,7 +107,7 @@ public class ProductController {
 			}			
 		}
 		
-		if (prod.getProductId() == 0) {
+		if (prod.getProductId() == null) {
 			prod.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			prod.setCreatedDate(new Date());
 			prod.setProductStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
@@ -146,7 +146,7 @@ public class ProductController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
+		if (prod.getProductId() == null) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
 		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
