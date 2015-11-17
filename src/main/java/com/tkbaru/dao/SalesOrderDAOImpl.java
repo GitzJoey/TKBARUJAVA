@@ -46,7 +46,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 
 	@Override
 	public SalesOrder getSalesOrderById(int selectedId) {
-		logger.info("[getSalesOrderById] " + "");
+		logger.info("[getSalesOrderById] " + "selectedId: " + selectedId);
 
 		Session session = this.sessionFactory.getCurrentSession();
 		SalesOrder so = null;
