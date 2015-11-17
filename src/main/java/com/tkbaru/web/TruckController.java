@@ -115,7 +115,7 @@ public class TruckController {
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveTruck(Locale locale, Model model, @ModelAttribute("truckForm") Truck truck, RedirectAttributes redirectAttributes) {	
 		
-		if (truck.getTruckId() == 0) { 
+		if (truck.getTruckId() == null) { 
 			truck.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			truck.setCreatedDate(new Date());
 			truck.setTruckStoreEntity(loginContextSession.getUserLogin().getStoreEntity());

@@ -206,6 +206,8 @@
 											<form:input type="text" class="form-control" id="inputRemarks" path="remarks" placeholder="Enter Remarks"></form:input>
 										</div>
 									</div>
+									<form:hidden path="createdBy"/>
+									<form:hidden path="createdDate"/>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
