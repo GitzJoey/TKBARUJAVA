@@ -24,6 +24,7 @@ import com.tkbaru.service.ProductService;
 import com.tkbaru.service.SupplierService;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -113,9 +114,15 @@ public class SupplierController {
 		supp.setProdList(productManager.getProductByIds(request.getParameter("selectedPrdList")));
 		
 		if (supp.getSupplierId() == 0) {
+			supp.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			supp.setCreatedDate(new Date());
+			supp.setSupplierStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[supplierSave] " + "addNewSupplier: " + supp.toString());			
-			supplierManager.addNewSupplier(supp);			
+			supplierManager.addNewSupplier(supp);
 		} else {
+			supp.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			supp.setUpdatedDate(new Date());
+			supp.setSupplierStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[supplierSave] " + "editSupplier: " + supp.toString());
 			supplierManager.editSupplier(supp);
 		}

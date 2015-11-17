@@ -116,9 +116,15 @@ public class TruckController {
 	public String saveTruck(Locale locale, Model model, @ModelAttribute("truckForm") Truck truck, RedirectAttributes redirectAttributes) {	
 		
 		if (truck.getTruckId() == 0) { 
+			truck.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			truck.setCreatedDate(new Date());
+			truck.setTruckStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveTruck] " + "addTruck: " + truck.toString());
 			truckManager.addTruck(truck); 
-		} else { 
+		} else {
+			truck.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			truck.setUpdatedDate(new Date());
+			truck.setTruckStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveTruck] " + "editTruck: " + truck.toString());
 			truckManager.editTruck(truck); 
 		}

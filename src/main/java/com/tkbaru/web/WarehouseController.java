@@ -118,9 +118,15 @@ public class WarehouseController {
 	public String saveWarehouse(Locale locale, Model model, @ModelAttribute("warehouseForm") Warehouse warehouse, RedirectAttributes redirectAttributes) {
 
 		if (warehouse.getWarehouseId() == 0) {
+			warehouse.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			warehouse.setCreatedDate(new Date());
+			warehouse.setWarehouseStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveWarehouse] " + "addWarehouse: " + warehouse.toString());
 			warehouseManager.addWarehouse(warehouse);
 		} else {
+			warehouse.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			warehouse.setUpdatedDate(new Date());
+			warehouse.setWarehouseStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			logger.info("[saveWarehouse] " + "editWarehouse: " + warehouse.toString());
 			warehouseManager.editWarehouse(warehouse);
 		}

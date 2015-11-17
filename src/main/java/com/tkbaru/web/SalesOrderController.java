@@ -270,10 +270,12 @@ public class SalesOrderController {
 		if (so.getSalesId() == 0) {
 			so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setCreatedDate(new Date());
+			so.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			salesOrderManager.addSalesOrder(so);
 		} else {
 			so.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setUpdatedDate(new Date());
+			so.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			salesOrderManager.editSalesOrder(so);
 		}
 		

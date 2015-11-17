@@ -328,12 +328,12 @@
 																			<tr>
 																				<td style="vertical-align: middle;">
 																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].itemsId" />
-																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].productId" />
-																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
+																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].productEntity.productId" />
+																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
 																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
 																					<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
 																					<label>
-																						<c:out value="${ iL.productLookup.productName }"></c:out>
+																						<c:out value="${ iL.productEntity.productName }"></c:out>
 																					</label>
 																				</td>
 																				<td class="center-align">
@@ -347,12 +347,12 @@
 																					<div class="form-group no-margin">
 																						<div class="col-md-12">
 																							<c:if test="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }">
-																								<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																								<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" />
 																							</c:if>																							
-																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-group="poTab${ poIdx.index }">
+																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-group="poTab${ poIdx.index }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
-																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																									<form:option value="${ prdUnit.unitCode }">
+																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
+																									<form:option value="${ prdUnit.unitCodeLookup.lookupKey }">
 																										<c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/>
 																									</form:option>
 																								</c:forEach>
