@@ -18,6 +18,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 import org.springframework.web.multipart.MultipartFile;
 
 @Entity
@@ -70,6 +72,7 @@ public class Product implements Serializable {
 	private Lookup productTypeLookup;
 
 	@OneToMany(mappedBy="productEntity")
+	@NotFound(action=NotFoundAction.IGNORE)
 	private List<Stocks> stocksList;
 
 	@ManyToOne

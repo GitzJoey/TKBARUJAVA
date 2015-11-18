@@ -634,7 +634,7 @@
 													<div class="form-group">
 														<label for="priceLevelSelect" class="col-md-2 control-label"><spring:message code="customer_jsp.setting.price_level" text="Price Level"/></label>
 														<div class="col-md-4">
-															<form:select class="form-control" path="priceLevelId" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab4">
+															<form:select class="form-control" path="priceLevelEntity.priceLevelId" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab4">
 																<option value=""><spring:message code="common.please_select"></spring:message></option>
 																<c:forEach items="${ priceLevelDDL }" var="k">
 																	<form:option value="${ k.priceLevelId }"><c:out value="${ k.priceLevelName }"/>&nbsp;-&nbsp;<c:out value="${ k.priceLevelDescription }"/></form:option>
@@ -642,7 +642,7 @@
 															</form:select>
 														</div>
 													</div>
-												</div>						
+												</div>
 											</div>
 										</div>
 									</div>

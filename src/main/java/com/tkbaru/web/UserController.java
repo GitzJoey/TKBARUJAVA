@@ -129,7 +129,7 @@ public class UserController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr, RedirectAttributes redirectAttributes) {
 		
-		if (usr.getUserId() == 0) {
+		if (usr.getUserId() == null) {
 			usr.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			usr.setCreatedDate(new Date());
 			logger.info("[userSave] " + "addNewUser: " + usr.toString());

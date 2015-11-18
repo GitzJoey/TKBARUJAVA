@@ -36,11 +36,7 @@ public class StoreServiceImpl implements StoreService {
 	@Override
 	@Transactional
 	public void addStore(Store store) {
-		
-		if (store.getIsDefaultLookup().getLookupKey().equals("L003_YES") && getDefaultStore() != null) {
-			setAllStoreIsDefaultNo();
-		}
-		
+
 		storeDAO.addStore(store);
 	}
 
@@ -48,13 +44,7 @@ public class StoreServiceImpl implements StoreService {
 	@Transactional
 	public void editStore(Store store) {
 
-		if (store.getIsDefaultLookup().getLookupKey().equals("L003_YES") 
-				&& getDefaultStore() != null
-				&& store.getStoreId() != getDefaultStore().getStoreId()) {
-			setAllStoreIsDefaultNo(store);
-		} else {
-			storeDAO.editStore(store);
-		}
+		storeDAO.editStore(store);
 	}
 
 	@Override
@@ -71,7 +61,9 @@ public class StoreServiceImpl implements StoreService {
 		return storeDAO.getDefaultStore();
 	}
 
-	private void setAllStoreIsDefaultNo() {
+	@Override
+	@Transactional
+	public void setAllStoreIsDefaultNo() {
 		List<Store> all = getAllStore();
 		
 		for (Store s:all) {
@@ -81,7 +73,9 @@ public class StoreServiceImpl implements StoreService {
 		storeDAO.batchEditStore(all);
 	}
 
-	private void setAllStoreIsDefaultNo(Store except) {
+	@Override
+	@Transactional
+	public void setAllStoreIsDefaultNo(Store except) {
 		List<Store> all = getAllStore();
 		
 		for (Store s:all) {

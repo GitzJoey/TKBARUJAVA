@@ -103,7 +103,7 @@ public class FunctionDAOImpl implements FunctionDAO {
 		logger.info("[addFunction] " + "");
 
 		String sql = "INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id) "
-				+ "VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
+				+ "VALUES (?, ?, ?, ?, ?, ?) ";
 
 		JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 

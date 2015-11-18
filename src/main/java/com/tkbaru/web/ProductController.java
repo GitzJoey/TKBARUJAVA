@@ -172,7 +172,7 @@ public class ProductController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		if (prod.getProductId() == 0) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
+		if (prod.getProductId() == null) { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD); }
 		else { model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT); }
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 

@@ -279,7 +279,7 @@ VALUES ('PAYMENT_STATUS_GIRO', 'L020_FR',
 
 /*Price Level Type L021 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('PRICE_LEVEL_TYPE', 'L021PCT',
+VALUES ('PRICE_LEVEL_TYPE', 'L021P_CT',
 		'PRICE_LEVEL_TYPE.L021_PCT', 'Percentage',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)

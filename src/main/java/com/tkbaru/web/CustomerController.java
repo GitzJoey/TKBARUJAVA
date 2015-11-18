@@ -110,7 +110,7 @@ public class CustomerController {
 	@RequestMapping(value="/save", method = RequestMethod.POST)
 	public String saveCustomer(Locale locale, Model model, @ModelAttribute("customerForm") Customer cust, RedirectAttributes redirectAttributes) {	
 
-		if (cust.getCustomerId() == 0) { 
+		if (cust.getCustomerId() == null) { 
 			cust.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			cust.setCreatedDate(new Date());
 			cust.setCustomerStoreEntity(loginContextSession.getUserLogin().getStoreEntity());

@@ -90,7 +90,7 @@ public class FunctionController {
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String functionSave(Locale locale, Model model, @ModelAttribute("fForm") Function func, RedirectAttributes redirectAttributes) {
 		
-		if (func.getFunctionId() == 0) {
+		if (func.getFunctionId() == null) {
 			func.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			func.setCreatedDate(new Date());
 			logger.info("[functionSave] " + "addFunction: " + func.toString());

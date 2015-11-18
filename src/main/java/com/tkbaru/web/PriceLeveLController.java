@@ -1,5 +1,7 @@
 package com.tkbaru.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -7,8 +9,11 @@ import java.util.Locale;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +40,14 @@ public class PriceLeveLController {
 	@Autowired
 	LookupService lookupManager;
 	
+	@InitBinder
+	public void bindingPreparation(WebDataBinder binder) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dateFormat.setLenient(true);
+		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+		binder.registerCustomEditor(Date.class, orderDateEditor);
+	}
+
 	@RequestMapping(value="/pricelevel", method = RequestMethod.GET)
 	public String priceLevelPageLoad(Locale locale, Model model) {
 		logger.info("[priceLevelPageLoad] " + "");
@@ -99,7 +112,7 @@ public class PriceLeveLController {
 	@RequestMapping(value="/savepricelevel", method = RequestMethod.POST)
 	public String savePriceLevel(Locale locale, Model model, @ModelAttribute("priceLevelForm") PriceLevel priceLevelForm, RedirectAttributes redirectAttributes) {	
 		
-		if (priceLevelForm.getPriceLevelId() == 0) { 
+		if (priceLevelForm.getPriceLevelId() == null) { 
 			priceLevelForm.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			priceLevelForm.setCreatedDate(new Date());
 			priceLevelForm.setPriceLevelStoreEntity(loginContextSession.getUserLogin().getStoreEntity());

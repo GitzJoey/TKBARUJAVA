@@ -101,7 +101,7 @@
 													<td align="center"><input id="cbx_<c:out value="${ p.priceLevelId }"/>" type="checkbox" value="<c:out value="${ p.priceLevelId }"/>" /></td>
 													<td><c:out value="${ p.priceLevelName }"></c:out></td>
 													<td><c:out value="${ p.priceLevelDescription }"></c:out></td>
-													<td><spring:message code="${ p.statusLookup.i18nLookupValue }" text="${ p.priceLevelStatus }"></spring:message></td>	
+													<td><spring:message code="${ p.priceLevelStatusLookup.i18nLookupValue }" text="${ p.priceLevelStatusLookup.lookupValue }"></spring:message></td>	
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -132,7 +132,7 @@
 									<div class="form-group">
 										<label for="inputPriceLevelType" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_type" text="Price Level Type"/></label>
 										<div class="col-sm-5">
-											<form:select id="priceLevelSelect" class="form-control" path="priceLevelType" data-parsley-required="true" data-parsley-trigger="change">
+											<form:select id="priceLevelSelect" class="form-control" path="priceLevelTypeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select"></spring:message></option>
 												<c:forEach items="${ priceLevelDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -156,7 +156,7 @@
 									<div class="form-group">
 										<label for="inputPriceLevelStatus" class="col-sm-2 control-label"><spring:message code="price_level_jsp.status" text="Status"/></label>
 										<div class="col-sm-3">
-											<form:select class="form-control" path="priceLevelStatus" data-parsley-required="true" data-parsley-trigger="change">
+											<form:select class="form-control" path="priceLevelStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"></spring:message></option>
 												<c:forEach items="${ statusDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -168,7 +168,7 @@
 										<label for="inputIncrementValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.increment_value" text="Increment Value"/></label>
 										<div class="col-sm-5">
 											<c:choose>
-												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelType == 'L021_INC' }">
+												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelTypeLookup.lookupKey == 'L021_INC' }">
 													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
 												</c:when>
 												<c:otherwise>
@@ -181,7 +181,7 @@
 										<label for="inputPercentageValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.percentage_value" text="Percentage Value"/></label>
 										<div class="col-sm-5">
 											<c:choose>
-												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelType == 'L021_PCT' }">
+												<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' && priceLevelForm.priceLevelTypeLookup.lookupKey == 'L021_PCT' }">
 													<form:input type="text" class="form-control" id="inputPercentageValue" name="inputPercentageValue" path="percentageValue" placeholder="Enter Percentage Value"></form:input>
 												</c:when>
 												<c:otherwise>
@@ -190,6 +190,8 @@
 											</c:choose>
 										</div>
 									</div>
+									<form:hidden path="createdBy"/>
+									<form:hidden path="createdDate"/>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>

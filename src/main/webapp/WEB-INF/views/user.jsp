@@ -289,7 +289,7 @@
 																	<form:hidden path="personEntity.phoneList[${phoneIdx.index}].phoneListId"/>																	
 																</td>
 																<td>
-																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerName">
+																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerLookup.lookupValue">
 																		<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>																	
 																	<br/>
@@ -298,7 +298,7 @@
 																	<form:input path="personEntity.phoneList[${phoneIdx.index}].phoneNumRemarks" type="text" class="form-control" id="inputPhoneNumRemarks" name="inputPhoneNumRemarks" placeholder="Remarks"></form:input>
 																</td>
 																<td>
-																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].phoneStatus">
+																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].phoneStatusLookup.lookupKey">
 																		<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																	</form:select>																																			
 																</td>

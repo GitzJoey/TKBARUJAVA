@@ -84,10 +84,11 @@
 			$('#addPerson, #deletePerson').click(function() {				
 				var hasSelected = false;
 				var button = $(this).attr('id');
-
+				var supplierId = $('#supplierId').val().length == 0 ? 0 : $('#supplierId').val();
+				
 				if (button == 'addPerson') {
 					$('#supplierForm').parsley().destroy();
-					$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/addperson/0");
+					$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + supplierId + "/person/addperson/0");
 				} else {
 					$('input[id^="cbx_picList_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
@@ -100,7 +101,7 @@
 					else {
 						if (button == 'deletePerson') {
 							$('#supplierForm').parsley().destroy();
-							$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/deleteperson/" + personId);
+							$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + supplierId + "/person/deleteperson/" + personId);
 						} else {
 							return false;
 						}
@@ -121,11 +122,12 @@
 
 			$('button[id^="phoneButton_"]').click(function() {
 				var button = $(this).attr('id').split('_')[1];
-				var prsnId = $(this).attr('id').split('_')[2];
+				var prsnId = $(this).attr('id').split('_')[2].length == 0 ? 0 : $(this).attr('id').split('_')[2];
 				var prsnIdx = $(this).attr('id').split('_')[3];
+				var suppId = $('#supplierId').val().length == 0 ? 0 : $('#supplierId').val();
 				
 				if (button == 'plusPhone') {
-					$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + 	"/person/" + prsnId + "/" + prsnIdx + "/addphone/0/0");
+					$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + suppId + "/person/" + prsnId + "/" + prsnIdx + "/addphone/0/0");
 				} else {
 					var hasSelected = false;
 					var phoneListId = "";
@@ -140,7 +142,7 @@
 
 					if (!hasSelected) { jsAlert('Please select at least 1 phone'); return false;}
 					else {
-						$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + $('#supplierId').val() + "/person/" + prsnId + "/" + prsnIdx + "/deletephone/" + phoneListId + "/" + phoneListIndex);	
+						$('#supplierForm').attr('action', ctxpath + "/supplier/edit/" + suppId + "/person/" + prsnId + "/" + prsnIdx + "/deletephone/" + phoneListId + "/" + phoneListIndex);	
 					}
 				}
 			});
@@ -403,12 +405,12 @@
 												<div class="form-group">
 													<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_status" text="Status"/></label>
 													<div class="col-sm-2">
-														<form:select class="form-control" path="supplierStatus" data-parsley-required="true">
+														<form:select class="form-control" path="supplierStatusLookup.lookupKey" data-parsley-required="true">
 															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 														</form:select>
 													</div>
-												</div>												
+												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'picTab' }"><c:out value="active"/></c:if>" id="picTab">
 												<br/>
@@ -492,7 +494,7 @@
 																														<form:hidden path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneListId"/>
 																													</td>
 																													<td>
-																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerName">
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerLookup.lookupValue">
 																															<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																														</form:select>																						
 																													</td>
@@ -500,7 +502,7 @@
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber" data-parsley-required="true" data-parsley-trigger="keyup"/>
 																													</td>
 																													<td>
-																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatus">
+																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatusLookup.lookupKey">
 																															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																														</form:select>																						
 																													</td>
@@ -573,7 +575,7 @@
 																		</td>
 																		<td><c:out value="${ supplierForm.bankAccList[baIdx.index].accNum }"/></td>
 																		<td><c:out value="${ supplierForm.bankAccList[baIdx.index].bankRemarks }"/></td>
-																		<td><c:out value="${ supplierForm.bankAccList[baIdx.index].bankStatus }"/></td>
+																		<td><spring:message code="${ supplierForm.bankAccList[baIdx.index].bankAccStatusLookup.i18nLookupValue }" text="${ supplierForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/></td>
 																	</tr>
 																</c:forEach>
 															</tbody>
@@ -592,7 +594,7 @@
 															<input id="fromDB_shortName" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].shortName }"/>"/>
 															<input id="fromDB_bankName" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankName }"/>"/>
 															<input id="fromDB_accNum" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].accNum }"/>"/>
-															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankStatus }"/>"/>
+															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/>"/>
 															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
 													</c:if>													
@@ -617,7 +619,7 @@
 														<div class="row">
 															<label for="bankStatus" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_bankacc_status" text="Status"/></label>
 															<div class="col-sm-3">
-																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankStatus">
+																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankAccStatusLookup.lookupKey">
 																	<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																</form:select>
 															</div>																																	
@@ -680,13 +682,13 @@
 																		<td><c:out value="${ i.productName }"></c:out></td>
 																		<td>
 																			<c:forEach items="${ i.productUnit }" var="pu">
-																				<c:if test="${ pu.baseUnit == 'true' }">
+																				<c:if test="${ pu.isBaseUnit == 'true' }">
 																					<c:out value="${ pu.unitCodeLookup.lookupValue }"></c:out>
 																				</c:if>	
 																			</c:forEach>
 																		</td>
 																		<td><c:out value="${ i.productDesc }"></c:out></td>
-																		<td><c:out value="${ i.statusLookup.lookupValue }"></c:out></td>
+																		<td><spring:message code="${ i.productStatusLookup.i18nLookupValue }" text="${ i.productStatusLookup.lookupValue }"></spring:message></td>
 																	</tr>
 																</c:forEach>
 															</c:if>

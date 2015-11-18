@@ -113,7 +113,7 @@ public class SupplierController {
 		
 		supp.setProdList(productManager.getProductByIds(request.getParameter("selectedPrdList")));
 		
-		if (supp.getSupplierId() == 0) {
+		if (supp.getSupplierId() == null) {
 			supp.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			supp.setCreatedDate(new Date());
 			supp.setSupplierStoreEntity(loginContextSession.getUserLogin().getStoreEntity());

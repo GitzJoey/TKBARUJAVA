@@ -116,7 +116,7 @@ public class RoleController {
 		
 		role.setFunctionList(functionManager.getFunctionById(Converter.convertToIntegerList(request.getParameter("selectedFunc"))));
 		
-		if (role.getRoleId() == 0) {
+		if (role.getRoleId() == null) {
 			role.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			role.setCreatedDate(new Date());
 			logger.info("[saveRole] " + "addRole: " + role.toString());

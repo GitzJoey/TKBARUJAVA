@@ -43,12 +43,14 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void addProduct(Product product) {
 		try {
-			String path = servletContext.getRealPath("/") +  "resources\\images\\product\\";
-			RandomProvider rndm = new RandomProvider();			
-			String fileName = Integer.toString(product.getProductId()) + "-" + product.getProductName() + "-" + rndm.generateRandomInString() + ".jpg"; 			
-			product.getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
-			
-			product.setImagePath(fileName);
+			if (product.getImageBinary() != null) {
+				String path = servletContext.getRealPath("/") +  "resources\\images\\product\\";
+				RandomProvider rndm = new RandomProvider();			
+				String fileName = product.getProductName() + "-" + rndm.generateRandomInString() + ".jpg"; 			
+				product.getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
+				
+				product.setImagePath(fileName);				
+			}
 			
 			productDAO.addProduct(product);
 		} catch (IllegalStateException e) {
