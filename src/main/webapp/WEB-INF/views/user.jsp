@@ -17,21 +17,22 @@
 			
 			$('button[type="submit"]').click(function(item) {
 				var button = $(this).attr('id'); 
+				var usrId = $('#userId').val().length == 0 ? 0 : $('#userId').val();
 				
 				if (button == "submitButton") { 
 					$('#userForm').attr('action', ctxpath + "/admin/user/save"); 
 				} else if (button == "addPhone") {
-					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/addphone"); 
+					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + usrId + "/addphone"); 
 				} else if (button == "deletePhone") {
 					var idx = -1;
 					$('input[type="checkbox"][id^="cbx_phoneListId_"]').each(function(index, item) {
-						if ($(item).prop('checked')) { idx = $(item).val(); }						
+						if ($(item).prop('checked')) { idx = $(item).val(); }			
 					});					
 					if (idx == -1) {
 						jsAlert("Please select at least 1 phone");
 						return false;
 					}
-					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + $('#userId').val() + "/removephone/" + idx);
+					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + usrId + "/removephone/" + idx);
 				} else {
 					return false;	
 				}
@@ -55,7 +56,7 @@
 				
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
-						id = $(item).attr("value");	
+						id = $(item).attr("value").length == 0 ? 0 : $(item).attr("value");	
 					}
 				});
 				if (id == "") {

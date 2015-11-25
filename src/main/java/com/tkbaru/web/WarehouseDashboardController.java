@@ -152,6 +152,7 @@ public class WarehouseDashboardController {
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 

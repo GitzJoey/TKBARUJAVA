@@ -219,7 +219,7 @@ public class PurchaseOrderController {
 			itemList.add(items);
 		}
 
-		if (po.getPoId() == 0) {
+		if (po.getPoId() == null) {
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
 			po.setPoStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
@@ -307,8 +307,12 @@ public class PurchaseOrderController {
 		reviseForm.getItemsList().add(i);
 		
 		for (Items item : reviseForm.getItemsList()){
-			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			if (item.getProductEntity().getProductId() != null) {
+				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			}
+			if (item.getUnitCodeLookup() != null) {
+				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}			
 		}
 
 		model.addAttribute("productSelectionDDL", productManager.getAllProduct());
@@ -338,9 +342,13 @@ public class PurchaseOrderController {
 
 		reviseForm.setItemsList(iLNew);
 		
-		for(Items item : reviseForm.getItemsList()){
-			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getBaseUnitCodeLookup().getLookupKey()));
+		for (Items item : reviseForm.getItemsList()) {
+			if (item.getProductEntity().getProductId() != null) {
+				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			}
+			if (item.getUnitCodeLookup() != null) {
+				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}
 		}
 		
 		model.addAttribute("reviseForm", reviseForm);

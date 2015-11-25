@@ -126,8 +126,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when
-						test="${ PAGEMODE == 'PAGEMODE_LIST' }">
+					<c:when test="${ PAGEMODE == 'PAGEMODE_LIST' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -331,8 +330,8 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
-																						<form:hidden path="itemsList[${ iLIdx.index }].productId" />
-																						<c:out value="${iL.productLookup.productName }"></c:out>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId" />
+																						<c:out value="${iL.productEntity.productName }"></c:out>
 																					</td>
 																					<td class="center-align">
 																						<div class="form-group no-margin">
@@ -344,14 +343,14 @@
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
 																							<div class="col-md-12">
-																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledUnitSelect }">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ disabledUnitSelect }">
 																									<option value=""><spring:message code="common.please_select"></spring:message></option>
-																									<c:forEach items="${ reviseForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									<c:forEach items="${ reviseForm.itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
+																										<form:option value="${ prdUnit.unitCodeLookup.lookupKey }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																									</c:forEach>
 																								</form:select>
 																								<c:if test="${ disabledUnitSelect }">
-																									<form:hidden path="itemsList[${ iLIdx.index }].unitCode"/>
+																									<form:hidden path="itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey"/>
 																								</c:if>
 																							</div>
 																						</div>
@@ -362,13 +361,14 @@
 																								<form:input type="text" class="form-control text-right no-margin" id="inputItemsProdPrice${ iLIdx.index }" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup" readonly="${ readonlyInputPrice }"></form:input>
 																							</div>
 																						</div>
-																					</td>												
+																					</td>
 																					<td style="vertical-align: middle;">
 																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }" ${ disabledRemoveProdButton }>
 																							<span class="fa fa-minus"></span>
 																						</button>
 																					</td>
 																					<td style="vertical-align: middle;" class="text-right">
+																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseQty"/>
 																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
 																					</td>
 																				</tr>

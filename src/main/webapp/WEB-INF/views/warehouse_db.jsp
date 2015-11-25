@@ -181,7 +181,7 @@
 												<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
 													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
 												    	<tr id="${ po.poCode }">
-												    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productLookup.productName }"/></td>
+												    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productEntity.productName }"/></td>
 												    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
 												    		<td class="never"><c:out value="${ po.poCode }"/>&nbsp;-&nbsp;<c:out value="${ po.supplierEntity.supplierName }"/></td>
 													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
@@ -289,7 +289,7 @@
 	 																	<tr>
 	 																		<td>
 	 																			<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].itemsId"/>
-	 																			<c:out value="${ iL.productLookup.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
+	 																			<c:out value="${ iL.productEntity.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
 	 																		<td><c:out value="${ iL.stocksLookup.prodQuantity }"/></td>
@@ -355,7 +355,20 @@
 											<div class="form-group">
 												<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.product" text="Product"/></label>
 												<div class="col-sm-8">
-													<input class="form-control" value="${ selectedItemsObject.productLookup.productName }" readonly="readonly"/>
+													<input class="form-control" value="${ selectedItemsObject.productEntity.productName }" readonly="readonly"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
+												<div class="col-sm-7">
+													<div class="input-group">
+														<form:select class="form-control" path="receipt.unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
+															<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+															<c:forEach items="${ unitDDL }" var="i">
+																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+															</c:forEach>
+														</form:select>
+													</div>
 												</div>
 											</div>
 											<div class="form-group">
