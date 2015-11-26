@@ -107,14 +107,11 @@ public class SalesOrderController {
 		
 		if (!loginContextSession.getSoList().isEmpty()) {
 			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSalesTypeLookup(lookupManager.getLookupByKey(soTypeValue));
-			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSalesTypeLookup(lookupManager.getLookupByKey(soTypeValue));
 			
 			if(soTypeValue.equals("L015_WIN")){
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).getCustomerEntity().setCustomerId(0);
 				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerEntity(null);
 			} else if (soTypeValue.equals("L015_S")) {
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).getCustomerEntity().setCustomerId(0);
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerEntity(null);				
+
 			} else {
 				
 			}
