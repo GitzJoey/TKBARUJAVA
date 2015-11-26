@@ -296,7 +296,7 @@
 																			</div>
 																		</div>
 																	</c:if>					
-																	<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && not empty loginContext.soList[soIdx.index].customerEntity && loginContext.soList[soIdx.index].customerEntity.customerId != 0 }">
+																	<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && not empty loginContext.soList[soIdx.index].customerEntity.customerId }">
 																		<div class="form-group">
 																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
@@ -323,7 +323,7 @@
 																	</div>
 																</div>
 															</div>
-															<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && loginContext.soList[soIdx.index].customerEntity.customerId == 0 }">
+															<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && empty loginContext.soList[soIdx.index].customerEntity.customerId }">
 																<div class="row">
 																	<div class="col-md-12">
 																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default">
@@ -382,7 +382,7 @@
 																												</c:forEach>																	
 																											</td>
 																											<td align="center">
-																												<c:out value="${ customerList[cIdx.index].statusLookup.lookupValue }"/>
+																												<spring:message code="${ customerList[cIdx.index].customerStatusLookup.i18nLookupValue }" text="${ customerList[cIdx.index].customerStatusLookup.lookupValue }"/>
 																											</td>
 																											<td align="center" style="vertical-align: middle;">
 																												<button id="selectCust" type="submit" class="btn btn-primary btn-xs" value="${ customerList[cIdx.index].customerId }"><span class="fa fa-check"></span></button>
