@@ -141,7 +141,7 @@
 								<h1 class="panel-title">
 									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_revise_jsp.subtitle" text="Revise Sales"/>
 								</h1>
-							</div>								
+							</div>
 							<div class="panel-body">
 								<form:form id="reviseSalesForm" role="form" class="form-horizontal" modelAttribute="reviseSalesForm" action="${pageContext.request.contextPath}/sales/saverevise">
 									<div class="row">
@@ -164,7 +164,7 @@
 																<div class="col-sm-8">																
 																 <form:hidden path="salesTypeLookup.lookupKey"/>
 																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>	
-																</div>										
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.customer" text="Customer"/></label>
