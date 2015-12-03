@@ -271,9 +271,9 @@
 																					<tr>
 																						<td style="vertical-align: middle;">
 																							<form:hidden path="itemsList[${ iLIdx.index }].itemsId"></form:hidden>
-																							<form:hidden path="itemsList[${ iLIdx.index }].productId"></form:hidden>
-																							<form:hidden path="itemsList[${ iLIdx.index }].productLookup.productName"></form:hidden>
-																							<c:out value="${ poForm.itemsList[ iLIdx.index ].productLookup.productName }"></c:out>
+																							<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"></form:hidden>
+																							<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productName"></form:hidden>
+																							<c:out value="${ poForm.itemsList[ iLIdx.index ].productEntity.productName }"></c:out>
 																						</td>
 																						<td>
 																							<label>
@@ -361,7 +361,7 @@
 																						<tr>
 																							<td style="vertical-align: middle;">
 																								<form:hidden path="paymentList[${ ilIdx.index }].paymentId" />
-																								<form:hidden path="paymentList[${ ilIdx.index }].paymentType" />
+																								<form:hidden path="paymentList[${ ilIdx.index }].paymentTypeLookup.lookupKey" />
 																								<label>
 																									<c:out value="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupValue }"></c:out>
 																								</label>
@@ -374,23 +374,23 @@
 																							</td>
 																							<td>
 																								<div class="input-group">
-																									<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ ilIdx.index ].paymentType == 'L017_GIRO'}">
+																									<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' || poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_GIRO'}">
 																										<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">																											
 																											<c:set var="test" value="0" />
-																											<c:if test="${ bankL.lookupKey == poForm.paymentList[ ilIdx.index ].bankCode }">
+																											<c:if test="${ bankL.lookupKey == poForm.paymentList[ ilIdx.index ].bankCodeLookup.lookupKey }">
 																												<c:set var="test" value="1" />
 																											</c:if>
 																											<c:choose>
 																												<c:when test="${test == 1}">
-																													<form:hidden path="paymentList[${ ilIdx.index }].bankCode"/>
+																													<form:hidden path="paymentList[${ ilIdx.index }].bankCodeLookup.lookupKey"/>
 																													<div class="checkbox">
-																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCodeLookup.lookupKey" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																													</div>
 																												</c:when>
 																												<c:otherwise>
-																												<c:if test="${ empty poForm.paymentList[ ilIdx.index ].bankCode }">
+																												<c:if test="${ empty poForm.paymentList[ ilIdx.index ].bankCodeLookup.lookupKey }">
 																													<div class="checkbox">
-																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																														<form:checkbox id="cbxBank_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].bankCodeLookup.lookupKey" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																													</div>
 																												</c:if>
 																												</c:otherwise>
@@ -407,31 +407,33 @@
 																								</label>
 																							</td>
 																							<td>
-																								<form:hidden path="paymentList[${ ilIdx.index }].linked"/>
-																								<div class="checkbox">
-																									<form:checkbox id="linked_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].linked" label="" disabled="true"/>
-																								</div>
+																								<c:if test="${ not empty paymentList[ilIdx.index].isLinked }">
+																									<form:hidden path="paymentList[${ ilIdx.index }].isLinked"/>
+																									<div class="checkbox">
+																										<form:checkbox id="linked_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].isLinked" label="" disabled="true"/>
+																									</div>																									
+																								</c:if>
 																							</td>
 																							<td>
-																							    <form:hidden path="paymentList[${ ilIdx.index }].paymentStatus"/>
-																							    <c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_CASH'}">
+																							    <form:hidden path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey"/>
+																							    <c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_CASH'}">
 																									<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">						
 																										<div class="checkbox">
-																											<form:checkbox id="cbx_cash_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" disabled="true"/>
+																											<form:checkbox id="cbx_cash_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey" value="${ cash.lookupKey }" label="${ cash.lookupValue }" disabled="true"/>
 																										</div>
 																									</c:forEach>
 																								</c:if> 
-																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_TRANSFER' }">
+																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' }">
 																									<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
 																										<div class="checkbox">
-																											<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true"/>
+																											<form:checkbox id="cbx_transfer_${ transferIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" disabled="true"/>
 																										</div>
 																									</c:forEach>
 																								</c:if>
-																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentType == 'L017_GIRO' }">
+																								<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_GIRO' }">
 																									<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
 																										<div class="checkbox">
-																											<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true"/>
+																											<form:checkbox id="cbx_giro_${ giroIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey" value="${ giro.lookupKey }" label="${ giro.lookupValue }" disabled="true"/>
 																										</div>
 																									</c:forEach>
 																								</c:if>
@@ -478,13 +480,13 @@
 																<div class="panel-heading">
 																	<h1 class="panel-title">
 																		<c:choose>
-																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' }">
+																			<c:when test="${ poForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_TRANSFER' }">
 																				<spring:message code="po_payment_jsp.transfer_payment" text="Transfer Payment"/>
 																			</c:when>
-																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
+																			<c:when test="${ poForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_GIRO' }">
 																				<spring:message code="po_payment_jsp.giro_payment" text="Giro Payment"/>
 																			</c:when>
-																			<c:when test="${ poForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
+																			<c:when test="${ poForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_CASH' }">
 																				<spring:message code="po_payment_jsp.cash_payment" text="Cash Payment"/>
 																			</c:when>
 																			<c:otherwise>
@@ -499,36 +501,36 @@
 																			<div class="form-group">
 																				<label for="inputPaymentType" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.payment_type" text="Payment Type"/></label>
 																				<div class="col-sm-5">
-																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
+																					<form:hidden path="paymentList[${ lastIdx }].paymentTypeLookup.lookupKey" ></form:hidden>
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-5">																		
+																		<div class="col-md-5">		
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="col-md-7">
-																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO'}">
+																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_GIRO'}">
 																				<div class="form-group">
 																					<label for="inputBank" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.bank" text="Bank"/></label>
 																					<div class="col-sm-8">		
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
-																							<c:if test="${ bankL.lookupKey == poForm.paymentList[ lastIdx ].bankCode }">
+																							<c:if test="${ bankL.lookupKey == poForm.paymentList[ lastIdx ].bankCodeLookup.lookupKey }">
 																								<c:set var="test" value="1" />
 																							</c:if>
 																							<c:choose>
 																								<c:when test="${ test == 1 }">
-																									<form:hidden path="paymentList[${ lastIdx }].bankCode"/>
+																									<form:hidden path="paymentList[${ lastIdx }].bankCodeLookup.lookupKey"/>
 																									<div class="checkbox">
-																										<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${ lastIdx }].bankCodeLookup.lookupKey" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																									</div>
 																								</c:when>
 																								<c:otherwise>
-																									<c:if test="${ empty poForm.paymentList[ lastIdx ].bankCode }">
+																									<c:if test="${ empty poForm.paymentList[ lastIdx ].bankCodeLookup.lookupKey }">
 																										<div class="checkbox">
-																											<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																											<form:checkbox id="cbxBank_${ bankL.lookupKey }_${ lastIdx }" path="paymentList[${ lastIdx }].bankCodeLookup.lookupKey" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																										</div>
 																									</c:if>
 																								</c:otherwise>
@@ -594,7 +596,7 @@
 															<div class="col-md-7 col-offset-md-5">
 																<div class="btn-toolbar">
 																	<button id="cancelButton" type="button" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
-																	<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>																
+																	<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>											
 																</div>
 															</div>
 														</c:otherwise>
@@ -611,7 +613,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
 	</div>
 </body>

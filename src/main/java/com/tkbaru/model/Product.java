@@ -205,7 +205,7 @@ public class Product implements Serializable {
 				+ ", productDesc=" + productDesc + ", imageBinary=" + imageBinary + ", imagePath=" + imagePath
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", productUnit=" + productUnit + ", productStatusLookup="
-				+ productStatusLookup + ", productTypeLookup=" + productTypeLookup + ", stocksList=" + stocksList
+				+ productStatusLookup + ", productTypeLookup=" + productTypeLookup + ", stocksList=" + "stocksList"
 				+ ", productStoreEntity=" + productStoreEntity + "]";
 	}
 	

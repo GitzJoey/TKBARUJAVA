@@ -26,6 +26,7 @@ import com.tkbaru.common.Converter;
 import com.tkbaru.model.Deliver;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Receipt;
 import com.tkbaru.model.SalesOrder;
@@ -174,11 +175,24 @@ public class WarehouseDashboardController {
 			if (items.getItemsId() == itemId) {
 				List<Receipt> receiptList = items.getReceiptList();
 
-				if (warehouseDashboard.getReceipt().getReceiptId() == 0) {
+				if (warehouseDashboard.getReceipt().getReceiptId() == null) {
 
 					warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					warehouseDashboard.getReceipt().setCreatedDate(new Date());
-
+					
+					String unit = warehouseDashboard.getReceipt().getUnitCodeLookup().getLookupKey();
+					
+					for (ProductUnit pu:items.getProductEntity().getProductUnit()) {
+						if (pu.getIsBaseUnit()) {
+							warehouseDashboard.getReceipt().setBaseUnitCodeLookup(pu.getUnitCodeLookup());
+						}
+						if (pu.getUnitCodeLookup().getLookupKey().equals(unit)) {
+							warehouseDashboard.getReceipt().setBaseBruto(warehouseDashboard.getReceipt().getBruto() * pu.getConversionValue());
+							warehouseDashboard.getReceipt().setBaseTare(warehouseDashboard.getReceipt().getTare() * pu.getConversionValue());
+							warehouseDashboard.getReceipt().setBaseNet(warehouseDashboard.getReceipt().getNet() * pu.getConversionValue());
+						}
+					}
+					
 					Stocks stocks = new Stocks();
 					stocks.setPurchaseOrderEntity(po);
 					stocks.setProductEntity(items.getProductEntity());

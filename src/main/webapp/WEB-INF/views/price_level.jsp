@@ -14,6 +14,18 @@
 				window.location.href = ctxpath + "/price/pricelevel";
 			});
 			
+			$('input[type="checkbox"][id^="cbx_"]').click(function() {
+				var selected = $(this);
+				
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			})
+
 			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
@@ -36,7 +48,7 @@
 			});
 			
 			$('select[id="priceLevelSelect"]').change(function() {
-				if ($(this).val() == 'L022_INC') {
+				if ($(this).val() == 'L021_INC') {
 					$('#inputIncrementValue').prop('readonly', false);
 					$('#inputPercentageValue').val('0').prop('readonly', true);
 				} else {
@@ -91,6 +103,8 @@
 											<th width="5%">&nbsp;</th>
 											<th width="15%"><spring:message code="price_level_jsp.table.header.price_level" text="Price Level"/></th>
 											<th width="25%"><spring:message code="price_level_jsp.table.header.description" text="Description"/></th>
+											<th width="25%"><spring:message code="price_level_jsp.table.header.level_type" text="Type"/></th>
+											<th width="25%"><spring:message code="price_level_jsp.table.header.level_value" text="Value"/></th>
 											<th width="10%"><spring:message code="price_level_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
@@ -101,6 +115,17 @@
 													<td align="center"><input id="cbx_<c:out value="${ p.priceLevelId }"/>" type="checkbox" value="<c:out value="${ p.priceLevelId }"/>" /></td>
 													<td><c:out value="${ p.priceLevelName }"></c:out></td>
 													<td><c:out value="${ p.priceLevelDescription }"></c:out></td>
+													<td><spring:message code="${ p.priceLevelTypeLookup.i18nLookupValue }" text="${ p.priceLevelTypeLookup.lookupValue }"></spring:message></td>
+													<td>
+														<c:choose>
+															<c:when test="${ p.priceLevelTypeLookup.lookupKey == 'L021_INC'}">
+																+<c:out value="${ p.incrementValue }"/>
+															</c:when>
+															<c:otherwise>
+																+<c:out value="${ p.percentageValue }"/>%
+															</c:otherwise>
+														</c:choose>
+													</td>
 													<td><spring:message code="${ p.priceLevelStatusLookup.i18nLookupValue }" text="${ p.priceLevelStatusLookup.lookupValue }"></spring:message></td>	
 												</tr>
 											</c:forEach>

@@ -49,7 +49,17 @@
 					window.location = ctxpath + "/warehouse/dashboard/id/" + warehouseSelect;
 				}
 			});
-			
+
+			$('#unitSelect').on('change', function(e) {
+				var unitValue = "";
+				if ($("#unitSelect").val() != "") {
+					unitValue = $("#unitSelect option:selected").text();
+				} else {
+					unitValue = "";
+				}
+				$('#brutoUnitText, #netUnitText, #tareUnitText').text(unitValue);
+			});
+
 			$('[id^="receiptButton_"]').click(function(event) {
 				var itemId = $(this).closest('tr').find('td:eq(0)').attr('id');
 				var trid = $(this).closest('tr').attr('id');
@@ -362,7 +372,7 @@
 												<label for="inputUnit" class="col-sm-2 control-label">Unit</label>
 												<div class="col-sm-7">
 													<div class="input-group">
-														<form:select class="form-control" path="receipt.unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
+														<form:select id="unitSelect" class="form-control" path="receipt.unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 															<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 															<c:forEach items="${ unitDDL }" var="i">
 																<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
@@ -376,13 +386,7 @@
 												<div class="col-sm-3">
 													<div class="input-group">
 														<form:input class="form-control" path="receipt.bruto" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"></form:input>
-														<span class="input-group-addon">
-															<c:forEach items="${ selectedPoObject.itemsList }" var="i">
-																<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
-																	<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
-																</c:if>
-															</c:forEach>
-														</span>
+														<span id="brutoUnitText" class="input-group-addon"></span>
 													</div>
 												</div>
 											</div>
@@ -391,13 +395,7 @@
 												<div class="col-sm-3">
 													<div class="input-group">
 														<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>										
-														<span class="input-group-addon">
-															<c:forEach items="${ selectedPoObject.itemsList }" var="i">
-																<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
-																	<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
-																</c:if>
-															</c:forEach>
-														</span>
+														<span id="netUnitText" class="input-group-addon"></span>
 													</div>
 												</div>
 											</div>
@@ -406,13 +404,7 @@
 												<div class="col-sm-3">
 													<div class="input-group">
 														<form:input class="form-control" path="receipt.tare" data-parsley-min="0" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
-														<span class="input-group-addon">
-															<c:forEach items="${ selectedPoObject.itemsList }" var="i">
-																<c:if test="${ i.itemsId == warehouseDashboard.selectedItems }">
-																	<spring:message code="${ i.baseUnitCodeLookup.i18nLookupValue }" text="${ i.baseUnitCodeLookup.lookupValue }"/>			
-																</c:if>
-															</c:forEach>
-														</span>
+														<span id="tareUnitText" class="input-group-addon"></span>
 													</div>
 												</div>
 											</div>

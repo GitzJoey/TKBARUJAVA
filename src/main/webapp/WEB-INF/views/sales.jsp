@@ -429,7 +429,7 @@
 																				<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<c:forEach items="${ stocksListDDL }" var="sddl">
-																						<option value="${ sddl.stocksId }">${ sddl.productLookup.productName }</option>
+																						<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
 																					</c:forEach>
 																				</select>
 																			</div>
@@ -463,8 +463,8 @@
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseValue" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseQty" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productLookup.stocksList[0].prodQuantity" />
-																								<c:out value="${ soForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.stocksList[0].prodQuantity" />
+																								<c:out value="${ soForm.itemsList[iLIdx.index].productEntity.productName }"></c:out>
 																							</td>
 																							<td style="vertical-align: middle;">
 																								<div class="form-group no-margin">
@@ -481,7 +481,7 @@
 																										</c:if>
 																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
-																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
+																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
 																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																											</c:forEach>
 																										</form:select>

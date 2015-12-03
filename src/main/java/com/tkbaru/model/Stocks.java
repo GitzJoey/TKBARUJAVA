@@ -161,7 +161,7 @@ public class Stocks {
 		return "Stocks [stocksId=" + stocksId + ", prodQuantity=" + prodQuantity + ", currentQuantity="
 				+ currentQuantity + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", purchaseOrderEntity=" + purchaseOrderEntity
-				+ ", stocksStoreEntity=" + stocksStoreEntity + ", productEntity=" + productEntity + ", warehouseEntity="
+				+ ", stocksStoreEntity=" + stocksStoreEntity + ", productEntity=" + "productEntity" + ", warehouseEntity="
 				+ warehouseEntity + ", priceList=" + priceList + "]";
 	}
 
