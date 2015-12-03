@@ -458,9 +458,9 @@
 																						<tr>
 																							<td style="vertical-align: middle;">
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_itemsId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_productId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productId"/>
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_stocksId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].stocksId"/>
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCode" />
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_productId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.productId"/>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_stocksId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
+																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseValue" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseQty" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.stocksList[0].prodQuantity" />
@@ -477,12 +477,12 @@
 																								<div class="form-group no-margin">
 																									<div class="col-md-12">
 																										<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }">
-																											<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" />
+																											<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_unitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" />
 																										</c:if>
-																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCode" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
+																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
 																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
-																												<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																												<form:option value="${ prdUnit.unitCodeLookup.lookupKey }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																											</c:forEach>
 																										</form:select>
 																									</div>

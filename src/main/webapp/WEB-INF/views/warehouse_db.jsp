@@ -180,7 +180,7 @@
 												</tr>
 												<tr>
 													<th width="36%"><spring:message code="warehouse_db_jsp.table.inflow.header.product_name" text="Product Name"/></th>
-													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.bruto" text="Bruto"/></th>
+													<th width="11%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.quantity" text="Quantity"/></th>
 													<th width="2%" class="never"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.shipping_date" text="Shipping Date"/></th>
 													<th width="13%" class="center-align"><spring:message code="warehouse_db_jsp.table.inflow.header.receipt_date" text="Receipt Date"/></th>
@@ -192,7 +192,7 @@
 													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
 												    	<tr id="${ po.poCode }">
 												    		<td id="${ iL.itemsId }" class="valign-middle"><c:out value="${ iL.productEntity.productName }"/></td>
-												    		<td class="right-align"><c:out value="${ iL.toBaseQty }"/>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
+												    		<td class="right-align"><fmt:formatNumber type="number" pattern="##,###" value="${ iL.toBaseQty }"></fmt:formatNumber>&nbsp;<c:out value="${ iL.baseUnitCodeLookup.lookupValue }"/></td>
 												    		<td class="never"><c:out value="${ po.poCode }"/>&nbsp;-&nbsp;<c:out value="${ po.supplierEntity.supplierName }"/></td>
 													    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ po.shippingDate }"/></td>
 													    	<td class="center-align">
