@@ -1,4 +1,4 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +15,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
+import com.tkbaru.dao.UserDAO;
 import com.tkbaru.model.User;
 
 @Repository

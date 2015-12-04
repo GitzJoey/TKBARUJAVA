@@ -143,75 +143,75 @@
     </beans:bean>
                   
     <!-- declare spring DAO -->
-    <beans:bean id="SetupDAO" class="com.tkbaru.dao.SetupDAOImpl">
+    <beans:bean id="SetupDAO" class="com.tkbaru.dao.impl.jdbc.SetupDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="UserDAO" class="com.tkbaru.dao.UserDAOImpl">
+    <beans:bean id="UserDAO" class="com.tkbaru.dao.impl.jdbc.UserDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
-    <beans:bean id="FunctionDAO" class="com.tkbaru.dao.FunctionDAOImpl">
+    <beans:bean id="FunctionDAO" class="com.tkbaru.dao.impl.jdbc.FunctionDAOImpl">
     	<beans:property name="dataSource" ref="dataSource" />
     </beans:bean>
-	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.PhoneListDAOImpl">
+	<beans:bean id="PhoneListDAO" class="com.tkbaru.dao.impl.jdbc.PhoneListDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
 	</beans:bean>
-	<beans:bean id="PersonDAO" class="com.tkbaru.dao.PersonDAOImpl">
+	<beans:bean id="PersonDAO" class="com.tkbaru.dao.impl.hibernate.PersonDAOImpl">
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-    <beans:bean id="RoleDAO" class="com.tkbaru.dao.RoleDAOImpl">
+    <beans:bean id="RoleDAO" class="com.tkbaru.dao.impl.hibernate.RoleDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="LookupDAO" class="com.tkbaru.dao.LookupDAOImpl">
+    <beans:bean id="LookupDAO" class="com.tkbaru.dao.impl.hibernate.LookupDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="SupplierDAO" class="com.tkbaru.dao.SupplierDAOImpl">
+    <beans:bean id="SupplierDAO" class="com.tkbaru.dao.impl.hibernate.SupplierDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="CustomerDAO" class="com.tkbaru.dao.CustomerDAOImpl">
+    <beans:bean id="CustomerDAO" class="com.tkbaru.dao.impl.hibernate.CustomerDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="ProductDAO" class="com.tkbaru.dao.ProductDAOImpl">
+    <beans:bean id="ProductDAO" class="com.tkbaru.dao.impl.hibernate.ProductDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="StoreDAO" class="com.tkbaru.dao.StoreDAOImpl">
+    <beans:bean id="StoreDAO" class="com.tkbaru.dao.impl.hibernate.StoreDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="StocksDAO" class="com.tkbaru.dao.StocksDAOImpl">
+    <beans:bean id="StocksDAO" class="com.tkbaru.dao.impl.hibernate.StocksDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="BankDAO" class="com.tkbaru.dao.BankDAOImpl">
+    <beans:bean id="BankDAO" class="com.tkbaru.dao.impl.hibernate.BankDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="WarehouseDAO" class="com.tkbaru.dao.WarehouseDAOImpl">
+    <beans:bean id="WarehouseDAO" class="com.tkbaru.dao.impl.hibernate.WarehouseDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="TruckDAO" class="com.tkbaru.dao.TruckDAOImpl">
+    <beans:bean id="TruckDAO" class="com.tkbaru.dao.impl.hibernate.TruckDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="PurchaseOrderDAO" class="com.tkbaru.dao.PurchaseOrderDAOImpl">
+    <beans:bean id="PurchaseOrderDAO" class="com.tkbaru.dao.impl.hibernate.PurchaseOrderDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="SalesOrderDAO" class="com.tkbaru.dao.SalesOrderDAOImpl">
+    <beans:bean id="SalesOrderDAO" class="com.tkbaru.dao.impl.hibernate.SalesOrderDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-     <beans:bean id="PriceDAO" class="com.tkbaru.dao.PriceDAOImpl">
+     <beans:bean id="PriceDAO" class="com.tkbaru.dao.impl.hibernate.PriceDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="PriceLevelDAO" class="com.tkbaru.dao.PriceLevelDAOImpl">
+    <beans:bean id="PriceLevelDAO" class="com.tkbaru.dao.impl.hibernate.PriceLevelDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-     <beans:bean id="SmsInDAO" class="com.tkbaru.dao.SmsInDAOImpl">
+     <beans:bean id="SmsInDAO" class="com.tkbaru.dao.impl.hibernate.SmsInDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-     <beans:bean id="SmsOutDAO" class="com.tkbaru.dao.SmsOutDAOImpl">
+     <beans:bean id="SmsOutDAO" class="com.tkbaru.dao.impl.hibernate.SmsOutDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-     <beans:bean id="ModemDAO" class="com.tkbaru.dao.ModemDAOImpl">
+     <beans:bean id="ModemDAO" class="com.tkbaru.dao.impl.hibernate.ModemDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
-    <beans:bean id="StocksOutDAO" class="com.tkbaru.dao.StocksOutDAOImpl">
+    <beans:bean id="StocksOutDAO" class="com.tkbaru.dao.impl.hibernate.StocksOutDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
     

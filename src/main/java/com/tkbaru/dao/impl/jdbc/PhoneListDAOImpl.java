@@ -1,4 +1,4 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.jdbc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +8,7 @@ import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import com.tkbaru.dao.PhoneListDAO;
 import com.tkbaru.model.PhoneList;
 
 public class PhoneListDAOImpl implements PhoneListDAO {

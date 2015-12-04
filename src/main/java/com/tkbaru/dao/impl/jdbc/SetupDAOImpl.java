@@ -1,4 +1,4 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.jdbc;
 
 import javax.sql.DataSource;
 
@@ -6,6 +6,8 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import com.tkbaru.dao.SetupDAO;
 
 public class SetupDAOImpl implements SetupDAO {
 	private static final Logger logger = LoggerFactory.getLogger(SetupDAOImpl.class);

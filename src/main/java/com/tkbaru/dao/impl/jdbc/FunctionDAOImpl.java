@@ -1,4 +1,4 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.jdbc;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
+import com.tkbaru.dao.FunctionDAO;
 import com.tkbaru.model.Function;
 
 public class FunctionDAOImpl implements FunctionDAO {

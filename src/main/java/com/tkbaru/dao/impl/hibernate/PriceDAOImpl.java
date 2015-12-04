@@ -1,4 +1,4 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.hibernate;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
+import com.tkbaru.dao.PriceDAO;
 import com.tkbaru.model.Price;
 
 @Repository

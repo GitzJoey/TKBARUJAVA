@@ -1,7 +1,8 @@
-package com.tkbaru.dao;
+package com.tkbaru.dao.impl.hibernate;
 
 import java.util.List;
 
+import com.tkbaru.dao.BankAccDAO;
 import com.tkbaru.model.BankAccount;
 
 public class BankAccDAOImpl implements BankAccDAO {
