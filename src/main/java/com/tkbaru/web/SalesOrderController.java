@@ -264,7 +264,7 @@ public class SalesOrderController {
 			itemList.add(items);
 		}
 
-		if (so.getSalesId() == 0) {
+		if (so.getSalesId() == null) {
 			so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setCreatedDate(new Date());
 			so.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
@@ -450,7 +450,7 @@ public class SalesOrderController {
 		so.getPaymentList().add(payment);
 		
 		model.addAttribute("paymentSalesForm", so);
-		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("paymentTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_TYPE));
 		model.addAttribute("bankDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_BANK));
 		model.addAttribute("cashStatusDDL",lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PAYMENT_STATUS_CASH));
