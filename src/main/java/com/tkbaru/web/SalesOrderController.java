@@ -250,6 +250,13 @@ public class SalesOrderController {
 		
 		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
+		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WD"));
+
+		if (so.getSalesTypeLookup().getLookupKey().equals("L015_WIN")) {
+			so.setCustomerEntity(null);
+		}
+		
+		so.setSalesTypeLookup(lookupManager.getLookupByKey(so.getSalesTypeLookup().getLookupKey()));
 		
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
@@ -280,7 +287,7 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("stocksListDDL",productManager.getAllProduct());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -653,7 +660,7 @@ public class SalesOrderController {
 		loginContextSession.getSoList().add(newSales);
 		
 		model.addAttribute("customerList", custList);
-		model.addAttribute("stocksListDDL", productManager.getProductHasInStock());
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 	

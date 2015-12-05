@@ -559,7 +559,7 @@
 															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
 															<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }"><spring:message code="common.submit_button" text="Submit"/></button>
 														</c:if>
-														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey =='L016_WD' }">
+														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_WD' }">
 															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right">Close</button>
 														</c:if>
 													</div>
