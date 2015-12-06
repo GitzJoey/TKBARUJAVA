@@ -14,7 +14,8 @@ See `index.html` and `doc/`
 
 ## Requirements
 
-jQuery >= 1.8
+[jQuery](https://jquery.com/) >= 1.8
+[es5-shim](https://github.com/es-shims/es5-shim) if you want need to support IE8
 
 ## Contributing
 
@@ -31,20 +32,23 @@ Some integrations are
 * [OSSCDN by MaxCDN](http://osscdn.com/#/parsleyjs)
 * [Drupal] (https://www.drupal.org/project/parsley)
 
-## Install dev environment
+## Install dev environment and running tests
 
+First time: install `npm` and:
+```
+npm install -g gulp
+```
+
+then
 ```
 npm install
-npm install -g grunt-cli
-npm install -g bower
-grunt configure
+gulp test
 ```
 
 ## Build `dist/`
 
 ```
-grunt build
-grunt build-all
+gulp build
 ```
 
 ## Generate annotated documentation
@@ -61,9 +65,9 @@ grunt build-annotated-source
 
 ## Run tests
 
-In the browser: open `test/index.html`
+In the browser: run a server with `gulp test-browser`, then open `test/runner.html`
 
-In the terminal: `npm test`
+In the terminal: `gulp test`
 
 ## License
 

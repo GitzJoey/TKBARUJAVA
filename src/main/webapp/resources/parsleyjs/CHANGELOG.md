@@ -1,5 +1,24 @@
 # Parsley 2.x changelog
 
+## 2.2.0-rc3
+
+- Merged both versions (remote and basic) of Parsley.
+  There is now a single version that is remote & promise aware.
+- Converted src/ and test/ to ECMAScript 6.
+  Requires es5-shim if you need compatibility with IE8.
+
+## 2.2.0-rc2
+
+- A custom validator may specify an error message by simply passing it as first argument
+  when rejecting the promise. (#560)
+- Submit buttons: data now included in the submitted form (#826) and
+  attribute 'formnovalidate' is supported (#972)
+- Remote: use HTTP status code for what is considered valid or not (#956)
+- Remote: allow RESTful urls where "{value}" is replaced by the value to validate
+- Remote: add field:ajaxoptions to allow customizing of the ajax parameters (#894)
+- pattern validator is now anchored, unless it looks like /pattern/flag (#861)
+- Parsley won't try to correct names with caps (#990)
+
 ## 2.2.0-rc1
 
 - Major validators refactor:
