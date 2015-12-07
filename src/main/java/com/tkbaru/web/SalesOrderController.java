@@ -268,6 +268,8 @@ public class SalesOrderController {
 					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());
 				}
 			}
+			items.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			items.setCreatedDate(new Date());
 			itemList.add(items);
 		}
 
@@ -317,9 +319,6 @@ public class SalesOrderController {
 		logger.info("[reviseSelectedSales] " + "selectedId: " + selectedId);
 		
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
-		so.setCustomerEntity(customerManager.getCustomerById(so.getCustomerEntity().getCustomerId()));
-		so.setSalesStatusLookup(lookupManager.getLookupByKey(so.getSalesStatusLookup().getLookupKey()));
-		so.setSalesTypeLookup(lookupManager.getLookupByKey(so.getSalesTypeLookup().getLookupKey()));
 		
 		model.addAttribute("reviseSalesForm", so);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
@@ -331,28 +330,35 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_REVISE;
 	}
 	
-	@RequestMapping(value = "/revise/{salesId}/additems/{productId}", method = RequestMethod.POST)
-	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int productId) {
-		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", productId: " + productId);
+	@RequestMapping(value = "/revise/{salesId}/additems/{stocksId}", method = RequestMethod.POST)
+	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int stocksId) {
+		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", stocksId: " + stocksId);
 		
 		Items i = new Items();
-		i.setProductEntity(productManager.getProductById(productId));
+		i.setProductEntity(stocksManager.getStocksById(stocksId).getProductEntity());
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.getItemsList().add(i);
 		
 		for (Items item : reviseSalesForm.getItemsList()) {
-			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
-			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			if (item.getProductEntity() != null && item.getProductEntity().getProductId() != null) {
+				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			}
+			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {
+				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}
 		}
 		
-		reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
+		if (reviseSalesForm.getCustomerEntity().getCustomerId() != null) {
+			reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
+
+		}
 		reviseSalesForm.setSalesStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatusLookup().getLookupKey()));
 		reviseSalesForm.setSalesTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesTypeLookup().getLookupKey()));
 
+		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -396,6 +402,20 @@ public class SalesOrderController {
 
 		reviseSalesForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.setUpdatedDate(new Date());
+
+		for (Items items : reviseSalesForm.getItemsList()) {
+			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
+			items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
+			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
+				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());
+				}
+			}
+			items.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			items.setUpdatedDate(new Date());
+		}
+
 		salesOrderManager.editSalesOrder(reviseSalesForm);
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);

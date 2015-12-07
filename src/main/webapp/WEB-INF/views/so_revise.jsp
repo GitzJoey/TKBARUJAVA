@@ -232,7 +232,7 @@
 																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																		<c:forEach items="${ stocksListDDL }" var="sddl">
-																			<option value="${ sddl.stocksId }">${ sddl.productLookup.productName }</option>
+																			<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
 																		</c:forEach>
 																	</select>
 																	</div>
@@ -261,8 +261,14 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
-																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
-																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>																																														
+																						<form:hidden path="itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
+																						<form:hidden path="itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseValue" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseQty" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdBy" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdDate" />
+																						<c:out value="${ reviseSalesForm.itemsList[iLIdx.index].productEntity.productName }"></c:out>
 																					</td>
 																					<td style="vertical-align:middle;">
 																						<div class="form-group no-margin">
@@ -274,10 +280,10 @@
 																					<td style="vertical-align: middle;">
 																						<div class="form-group no-margin">
 																							<div class="col-md-12">
-																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCode">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey">
 																									<option value=""><spring:message code="common.please_select"></spring:message></option>
-																									<c:forEach items="${ reviseSalesForm.itemsList[iLIdx.index].productLookup.productUnit }" var="prdUnit">
-																										<form:option value="${ prdUnit.unitCode }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									<c:forEach items="${ reviseSalesForm.itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
+																										<form:option value="${ prdUnit.unitCodeLookup.lookupKey }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
 																									</c:forEach>
 																								</form:select>
 																							</div>

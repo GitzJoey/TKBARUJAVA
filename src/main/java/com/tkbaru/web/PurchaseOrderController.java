@@ -215,7 +215,8 @@ public class PurchaseOrderController {
 					items.setToBaseQty(productUnit.getConversionValue() * items.getProdQuantity());
 				}
 			}
-			
+			items.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			items.setCreatedDate(new Date());
 			itemList.add(items);
 		}
 
@@ -526,6 +527,8 @@ public class PurchaseOrderController {
 					items.setToBaseQty(productUnit.getConversionValue()*items.getProdQuantity());
 				}
 			}
+			items.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			items.setUpdatedDate(new Date());
 			itemList.add(items);
 		}
 		

@@ -302,7 +302,7 @@
 	 																			<c:out value="${ iL.productEntity.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
-	 																		<td><c:out value="${ iL.stocksLookup.prodQuantity }"/></td>
+	 																		<td><c:out value="${ iL.stocksEntity.prodQuantity }"/></td>
 	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
 	 																	</tr>
  																	</c:forEach>
