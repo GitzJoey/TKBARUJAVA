@@ -125,7 +125,16 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><c:out value="${ i.salesCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
-													<td><c:out value="${ i.customerEntity.customerName }"></c:out></td>
+													<td>
+														<c:choose>
+															<c:when test="${ i.salesTypeLookup.lookupKey == 'L015_WIN' }">
+																<c:out value="${ i.walkInCustDetail }"></c:out>
+															</c:when>
+															<c:otherwise>
+																<c:out value="${ i.customerEntity.customerName }"></c:out>
+															</c:otherwise>
+														</c:choose>
+													</td>
 												</tr>
 											</c:forEach>
 										</c:if>

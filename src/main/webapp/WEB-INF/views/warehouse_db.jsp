@@ -234,7 +234,16 @@
 											<tbody>
 												<c:forEach items="${ warehouseDashboard.salesOrderList }" var="so" varStatus="soIdx">
 											    	<tr>
-											    		<td><c:out value="${ so.customerEntity.customerName }"/></td>
+											    		<td>
+											    			<c:choose>
+											    				<c:when test="${ so.salesTypeLookup.lookupKey == 'L015_WIN' }">
+											    					<c:out value="${ so.walkInCustDetail }"/>
+											    				</c:when>
+											    				<c:otherwise>
+											    					<c:out value="${ so.customerEntity.customerName }"/>	
+											    				</c:otherwise>
+											    			</c:choose>
+											    		</td>
 											    		<td><c:out value="${ so.salesCode }"/></td>
 												    	<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ so.shippingDate }"/></td>
 												    	<td></td>
@@ -291,7 +300,7 @@
  																		<th>Product</th>
  																		<th>Quantity</th>
  																		<th>Stocks</th>
- 																		<th>Bruto</th>
+ 																		<th width="25%">Bruto</th>
  																	</tr>
  																</thead>
  																<tbody>
@@ -302,7 +311,7 @@
 	 																			<c:out value="${ iL.productEntity.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
-	 																		<td><c:out value="${ iL.stocksEntity.prodQuantity }"/></td>
+	 																		<td><c:out value="${ iL.stocksEntity.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
 	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
 	 																	</tr>
  																	</c:forEach>

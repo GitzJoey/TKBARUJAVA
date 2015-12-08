@@ -201,6 +201,7 @@ public class WarehouseDashboardController {
 					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
 					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocks.setCreatedDate(new Date());
+					stocks.setStocksStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 					stocksList.add(stocks);
 				}
 				receiptList.add(warehouseDashboard.getReceipt());
@@ -270,13 +271,13 @@ public class WarehouseDashboardController {
 	}
 
 	@RequestMapping(value = "/savedeliver/{salesId}/{warehouseId}", method = RequestMethod.POST)
-	public String saveDashboardDeliver(Locale locale, 
+	public String saveDeliver(Locale locale, 
 										Model model, 
 										@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, 
 										RedirectAttributes redirectAttributes, 
 										@PathVariable int salesId, 
 										@PathVariable int warehouseId) {
-		logger.info("[saveDashboardDeliver] " + "salesId: " + salesId + ", warehouseId: " + warehouseId);
+		logger.info("[saveDeliver] " + "salesId: " + salesId + ", warehouseId: " + warehouseId);
 
 		SalesOrder sales = salesManager.getSalesOrderById(salesId);
 
@@ -295,6 +296,7 @@ public class WarehouseDashboardController {
 					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
 					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					stocksOut.setCreatedDate(new Date());
+					stocksOut.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 					stocksOutList.add(stocksOut);
 					
 					

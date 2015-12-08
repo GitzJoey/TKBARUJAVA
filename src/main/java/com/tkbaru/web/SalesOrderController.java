@@ -192,7 +192,9 @@ public class SalesOrderController {
 			}
 		}
 
-		loginContextSession.getSoList().get(tabId).getItemsList().add(item);
+		loginContext.getSoList().get(tabId).getItemsList().add(item);
+		
+		loginContextSession.setSoList(loginContext.getSoList());
 
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
@@ -416,6 +418,10 @@ public class SalesOrderController {
 			items.setUpdatedDate(new Date());
 		}
 
+		if (reviseSalesForm.getCustomerEntity().getCustomerId() == null) {
+			reviseSalesForm.setCustomerEntity(null);
+		}
+		
 		salesOrderManager.editSalesOrder(reviseSalesForm);
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
