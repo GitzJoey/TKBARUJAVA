@@ -262,9 +262,11 @@ public class WarehouseDashboardController {
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute("selectedSoObject", selectedSoObject);
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("flow", "Outflow");
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
-		model.addAttribute("flow", "Outflow");
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;

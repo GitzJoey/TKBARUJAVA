@@ -287,7 +287,14 @@
 											<div class="form-group">
 												<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
 												<div class="col-sm-3">
-													<input class="form-control" value="${ selectedSoObject.customerEntity.customerName }" readonly="readonly"/>											
+													<c:choose>
+														<c:when test="${ selectedSoObject.salesTypeLookup.lookupKey == 'L015_WIN' }">
+															<input class="form-control" value="${ selectedSoObject.walkInCustDetail }" readonly="readonly"/>
+														</c:when>
+														<c:otherwise>
+															<input class="form-control" value="${ selectedSoObject.customerEntity.customerName }" readonly="readonly"/>	
+														</c:otherwise>
+													</c:choose>
 												</div>
 											</div>											
 											<div class="form-group">
@@ -300,7 +307,8 @@
  																		<th>Product</th>
  																		<th>Quantity</th>
  																		<th>Stocks</th>
- 																		<th width="25%">Bruto</th>
+ 																		<th width="15%">Bruto</th>
+ 																		<th width="20%">Unit</th>
  																	</tr>
  																</thead>
  																<tbody>
@@ -313,6 +321,14 @@
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
 	 																		<td><c:out value="${ iL.stocksEntity.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
 	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
+	 																		<td>
+	 																			<form:select class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].unitCodeLookup.lookupKey">
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																					<c:forEach items="${ unitDDL }" var="i">
+																						<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+																					</c:forEach>
+	 																			</form:select>
+	 																		</td>
 	 																	</tr>
  																	</c:forEach>
  																</tbody>
