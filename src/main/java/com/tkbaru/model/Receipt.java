@@ -57,6 +57,10 @@ public class Receipt {
 	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key")
 	private Lookup baseUnitCodeLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store receiptStoreEntity;
+
 	public Integer getReceiptId() {
 		return receiptId;
 	}
@@ -169,13 +173,21 @@ public class Receipt {
 		this.baseUnitCodeLookup = baseUnitCodeLookup;
 	}
 
+	public Store getReceiptStoreEntity() {
+		return receiptStoreEntity;
+	}
+
+	public void setReceiptStoreEntity(Store receiptStoreEntity) {
+		this.receiptStoreEntity = receiptStoreEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", bruto=" + bruto + ", baseBruto="
 				+ baseBruto + ", net=" + net + ", baseNet=" + baseNet + ", tare=" + tare + ", baseTare=" + baseTare
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup + ", baseUnitCodeLookup="
-				+ baseUnitCodeLookup + "]";
+				+ ", updatedDate=" + updatedDate + ", unitCodeLookup=" + "unitCodeLookup" + ", baseUnitCodeLookup="
+				+ "baseUnitCodeLookup" + ", receiptStoreEntity=" + "receiptStoreEntity" + "]";
 	}
 
 }

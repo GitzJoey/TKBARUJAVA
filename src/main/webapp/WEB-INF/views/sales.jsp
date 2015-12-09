@@ -283,7 +283,7 @@
 																					<input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" placeholder="Walk In Customer" disabled="disabled"/>
 																				</c:when>
 																				<c:otherwise>
-																					<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerEntity.customerName" placeholder="Search Customer" disabled="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																					<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerEntity.customerName" placeholder="Search Customer" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 																				</c:otherwise>
 																			</c:choose>
 																		</div>

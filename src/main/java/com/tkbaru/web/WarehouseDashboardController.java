@@ -179,14 +179,13 @@ public class WarehouseDashboardController {
 
 					warehouseDashboard.getReceipt().setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					warehouseDashboard.getReceipt().setCreatedDate(new Date());
-					
-					String unit = warehouseDashboard.getReceipt().getUnitCodeLookup().getLookupKey();
+					warehouseDashboard.getReceipt().setReceiptStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 					
 					for (ProductUnit pu:items.getProductEntity().getProductUnit()) {
 						if (pu.getIsBaseUnit()) {
 							warehouseDashboard.getReceipt().setBaseUnitCodeLookup(pu.getUnitCodeLookup());
 						}
-						if (pu.getUnitCodeLookup().getLookupKey().equals(unit)) {
+						if (pu.getUnitCodeLookup().getLookupKey().equals(warehouseDashboard.getReceipt().getUnitCodeLookup().getLookupKey())) {
 							warehouseDashboard.getReceipt().setBaseBruto(warehouseDashboard.getReceipt().getBruto() * pu.getConversionValue());
 							warehouseDashboard.getReceipt().setBaseTare(warehouseDashboard.getReceipt().getTare() * pu.getConversionValue());
 							warehouseDashboard.getReceipt().setBaseNet(warehouseDashboard.getReceipt().getNet() * pu.getConversionValue());
@@ -247,9 +246,13 @@ public class WarehouseDashboardController {
 		SalesOrder selectedSoObject = salesManager.getSalesOrderById(salesId); 
 
 		for (Items i:selectedSoObject.getItemsList()) {
-			List<Deliver> d = new ArrayList<Deliver>();
-			d.add(new Deliver());
-			i.setDeliverList(d);
+			List<Deliver> dl = new ArrayList<Deliver>();
+			Deliver d = new Deliver();
+			d.setDeliverStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+			d.setDeliverItemsEntity(i);
+			
+			dl.add(d);
+			i.setDeliverList(dl);
 		}
 		
 		soList.add(selectedSoObject);
@@ -289,8 +292,19 @@ public class WarehouseDashboardController {
 		for (Items items : itemsList) {
 			for (Items itemX : warehouseDashboard.getSalesOrderList().get(0).getItemsList()) {
 				if (itemX.getItemsId() == items.getItemsId()) {
+					
+					for(ProductUnit pu:items.getProductEntity().getProductUnit()) {
+						if (pu.getIsBaseUnit()) {
+							itemX.getDeliverList().get(0).setBaseUnitCodeLookup(pu.getUnitCodeLookup());
+						}
+						if (pu.getUnitCodeLookup().getLookupKey().equals(itemX.getDeliverList().get(0).getUnitCodeLookup().getLookupKey())) {
+							itemX.getDeliverList().get(0).setBaseBruto(itemX.getDeliverList().get(0).getBruto() * pu.getConversionValue());							
+						}
+					}
+					itemX.getDeliverList().get(0).setCreatedBy(loginContextSession.getUserLogin().getUserId());
+					itemX.getDeliverList().get(0).setCreatedDate(new Date());					
 					items.setDeliverList(itemX.getDeliverList());
-
+					
 					StocksOut stocksOut = new StocksOut();
 					stocksOut.setSalesOrderEntity(sales);
 					stocksOut.setProductEntity(items.getProductEntity());

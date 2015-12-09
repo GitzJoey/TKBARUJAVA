@@ -58,6 +58,14 @@ public class Deliver {
 	@JoinColumn(name="base_unit_code", referencedColumnName="lookup_key")
 	private Lookup baseUnitCodeLookup;
 
+	@ManyToOne
+	@JoinColumn(name="store_id")
+	private Store deliverStoreEntity;
+	
+	@ManyToOne
+	@JoinColumn(name="items_id")
+	private Items deliverItemsEntity;
+
 	public Integer getDeliverId() {
 		return deliverId;
 	}
@@ -170,13 +178,30 @@ public class Deliver {
 		this.baseUnitCodeLookup = baseUnitCodeLookup;
 	}
 
+	public Store getDeliverStoreEntity() {
+		return deliverStoreEntity;
+	}
+
+	public void setDeliverStoreEntity(Store deliverStoreEntity) {
+		this.deliverStoreEntity = deliverStoreEntity;
+	}
+
+	public Items getDeliverItemsEntity() {
+		return deliverItemsEntity;
+	}
+
+	public void setDeliverItemsEntity(Items deliverItemsEntity) {
+		this.deliverItemsEntity = deliverItemsEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Deliver [deliverId=" + deliverId + ", deliverDate=" + deliverDate + ", bruto=" + bruto + ", baseBruto="
 				+ baseBruto + ", net=" + net + ", baseNet=" + baseNet + ", tare=" + tare + ", baseTare=" + baseTare
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup + ", baseUnitCodeLookup="
-				+ baseUnitCodeLookup + "]";
+				+ baseUnitCodeLookup + ", deliverStoreEntity=" + "deliverStoreEntity" + ", deliverItemsEntity="
+				+ "deliverItemsEntity" + "]";
 	}
 
 }

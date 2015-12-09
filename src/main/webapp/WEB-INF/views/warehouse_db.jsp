@@ -265,13 +265,13 @@
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
-											<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;Submit Sales Order Detail
+											<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_db_jsp.outflow.submit_so_detail" text="Submit Sales Order Detail"/>
 										</h1>
 									</div>
 									<div class="panel-body">
 										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedWarehouse }" data-parsley-validate="parsley">
 											<div class="form-group">
-												<label for="inputWarehouseId" class="col-sm-2 control-label">Warehouse</label>
+												<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.warehouse" text="Warehouse"/></label>
 												<div class="col-sm-5">
 													<form:select class="form-control" disabled="true" path="selectedWarehouse">
 														<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName"/>
@@ -279,13 +279,13 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="inputPoCode" class="col-sm-2 control-label">Sales Code</label>
+												<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.sales_code" text="Sales Code"/></label>
 												<div class="col-sm-3">
 													<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="inputCustomerName" class="col-sm-2 control-label">Customer Name</label>
+												<label for="inputCustomerName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.customer_name" text="Customer Name"/></label>
 												<div class="col-sm-3">
 													<c:choose>
 														<c:when test="${ selectedSoObject.salesTypeLookup.lookupKey == 'L015_WIN' }">
@@ -298,17 +298,17 @@
 												</div>
 											</div>											
 											<div class="form-group">
-												<label for="inputProductName" class="col-sm-2 control-label">Product</label>
+												<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.product" text="Product"/></label>
 												<div class="col-sm-10">
 													 <div class="table-responsive">
  															<table class="table">
  																<thead>
  																	<tr>
- 																		<th>Product</th>
- 																		<th>Quantity</th>
- 																		<th>Stocks</th>
- 																		<th width="15%">Bruto</th>
- 																		<th width="20%">Unit</th>
+ 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.product" text="Product"/></th>
+ 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.quantity" text="Quantity"/></th>
+ 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.stocks" text="Stocks"/></th>
+ 																		<th width="15%"><spring:message code="warehouse_db_jsp.outflow.table.header.bruto" text="Bruto"/></th>
+ 																		<th width="20%"><spring:message code="warehouse_db_jsp.outflow.table.header.unit" text="Unit"/></th>
  																	</tr>
  																</thead>
  																<tbody>
@@ -316,6 +316,8 @@
 	 																	<tr>
 	 																		<td>
 	 																			<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].itemsId"/>
+	 																			<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].deliverItemsEntity.itemsId"/>
+	 																			<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].deliverStoreEntity.storeId"/>
 	 																			<c:out value="${ iL.productEntity.productName }"/><c:out value="${ warehouseDashboardForm.salesOrderList[0].itemsList.size() }"/>
 	 																		</td>
 	 																		<td><c:out value="${ iL.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/></td>
