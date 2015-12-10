@@ -34,5 +34,14 @@ public class PriceDAOImpl implements PriceDAO {
 		
 		return priceList;
 	}
+	
+	@Override
+	public void addPrice(Price price) {		
+		logger.info("[addPrice] " + "");
+		
+        Session session = this.sessionFactory.getCurrentSession();
+        
+        session.persist(price);        
+	}
     
 }

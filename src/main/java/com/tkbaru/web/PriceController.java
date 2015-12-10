@@ -123,7 +123,7 @@ public class PriceController {
 
 		Date d = new Date();
 		try {
-			d = new SimpleDateFormat("dd-MM-yyyy").parse(inputDate);
+			d = new SimpleDateFormat("dd-MM-yyyy_hh:mm").parse(inputDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -131,7 +131,13 @@ public class PriceController {
 		boolean priceInputed = priceManager.checkExistPriceForDate(d);		
 		
 		if (priceInputed) {
+			model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+			model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 			
+			model.addAttribute("errorMessageText", "Price already inputted.");
+			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
+			
+			return Constants.JSPPAGE_TODAYPRICE;			
 		}
 		
 		List<Stocks> stocksList = stocksManager.getAllStocks();
@@ -178,6 +184,17 @@ public class PriceController {
 	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") TodayPrice todayPrice, RedirectAttributes redirectAttributes) {
 		logger.info("[savePrice] " + "");
 
+		for (Stocks s:todayPrice.getStocksList()) {
+			for (Price p:s.getPriceList()) {
+				p.setPriceStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+				p.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+				p.setCreatedDate(new Date());
+				p.setStocksEntity(s);
+				p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
+			}
+			priceManager.addMultiplePrice(s.getPriceList());
+		}
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

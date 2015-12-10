@@ -124,7 +124,7 @@
 										<div class="panel panel-default">
 								            <div class="panel-heading" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
 		               							<h4 class="panel-title">
-		                   							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">${ s.productLookup.productName }</a>
+		                   							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">${ s.productEntity.productName }</a>
 								                </h4>
 							            	</div>
 						            		<div class="panel-body" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
@@ -197,7 +197,7 @@
 											<div class="panel panel-default">
 									            <div class="panel-heading" data-toggle="collapse" data-parent="#updateaccordion" data-target="#collapse_${ sIdx.index }">
 			               							<h4 class="panel-title">
-			                   							<a data-toggle="collapse" data-parent="#updateaccordion" href="#collapse_${ sIdx.index }">${ s.productLookup.productName }</a>
+			                   							<a data-toggle="collapse" data-parent="#updateaccordion" href="#collapse_${ sIdx.index }">${ s.productEntity.productName }</a>
 									                </h4>
 								            	</div>
 								            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse in">
@@ -224,16 +224,16 @@
 																					<label for="sr-only"></label>
 																					<div class="col-md-10">
 																						<c:choose>
-																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelType == 'L022_INC' }">
-																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
+																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupKey == 'L022_INC' }">
+																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
 																							</c:when>
 																							<c:otherwise>
-																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.levelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
+																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
 																							</c:otherwise>
 																						</c:choose>
 																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
 																						<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
-																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelType"/>
+																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelTypeLookup.lookupKey"/>
 																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
 																						<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
 																					</div>

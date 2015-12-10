@@ -28,9 +28,18 @@ public class PriceServiceImpl implements PriceService {
 	}
 
 	@Override
+	@Transactional
 	public void addPrice(Price price) {
 		
-		
+		priceDAO.addPrice(price);
+	}
+
+	@Override
+	@Transactional
+	public void addMultiplePrice(List<Price> priceList) {
+		for (Price p:priceList) {
+			priceDAO.addPrice(p);
+		}
 	}
 	
 }
