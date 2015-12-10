@@ -236,6 +236,8 @@
 																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelTypeLookup.lookupKey"/>
 																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
 																						<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
+																						<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelId"/>
+																						<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].inputDate"/>
 																					</div>
 																				</div>
 																			</c:forEach>

@@ -75,7 +75,6 @@ public class PriceController {
 		
 		for(PriceLevel pl:priceLevelList) {
 			Price p = new Price();
-			p.setPriceId(0);
 			p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(pl.getPriceLevelId()));
 			p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
 			p.setInputDate(forDate);
@@ -191,8 +190,8 @@ public class PriceController {
 				p.setCreatedDate(new Date());
 				p.setStocksEntity(s);
 				p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
-			}
-			priceManager.addMultiplePrice(s.getPriceList());
+				p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(p.getPriceLevelEntity().getPriceLevelId()));
+			}			
 		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
