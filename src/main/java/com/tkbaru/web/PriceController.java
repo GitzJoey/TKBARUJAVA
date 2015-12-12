@@ -191,7 +191,8 @@ public class PriceController {
 				p.setStocksEntity(s);
 				p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
 				p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(p.getPriceLevelEntity().getPriceLevelId()));
-			}			
+			}					
+			priceManager.addMultiplePrice(s.getPriceList());
 		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);

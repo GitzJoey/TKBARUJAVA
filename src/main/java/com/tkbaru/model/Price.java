@@ -161,7 +161,7 @@ public class Price {
 		return "Price [priceId=" + priceId + ", marketPrice=" + marketPrice + ", price=" + price + ", inputDate="
 				+ inputDate + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
 				+ ", updatedDate=" + updatedDate + ", priceLevelEntity=" + priceLevelEntity + ", stocksEntity="
-				+ stocksEntity + ", priceStoreEntity=" + priceStoreEntity + ", priceStatusLookup=" + priceStatusLookup
+				+ "stocksEntity" + ", priceStoreEntity=" + priceStoreEntity + ", priceStatusLookup=" + priceStatusLookup
 				+ "]";
 	}
 

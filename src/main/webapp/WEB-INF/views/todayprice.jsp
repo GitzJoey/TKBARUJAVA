@@ -194,6 +194,7 @@
 								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="todayPriceForm" action="${pageContext.request.contextPath}/price/saveprice" data-parsley-validate="parsley">									
 									<div id="updateaccordion" class="panel-group">
 										<c:forEach items="${ todayPriceForm.stocksList }" var="s" varStatus="sIdx">
+											<form:hidden path="stocksList[${ sIdx.index }].stocksId"/>
 											<div class="panel panel-default">
 									            <div class="panel-heading" data-toggle="collapse" data-parent="#updateaccordion" data-target="#collapse_${ sIdx.index }">
 			               							<h4 class="panel-title">
