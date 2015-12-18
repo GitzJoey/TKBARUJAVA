@@ -222,14 +222,14 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10 offset-md-1">
-				<c:if test="${ERRORPAGE == 'ERRORPAGE_SHOW'}">
-	    			<div class="alert alert-danger alert-dismissible collapse" role="alert">
+				<c:if test="${ ERRORFLAG == 'ERRORFLAG_SHOW' }">
+	    			<div class="alert alert-danger alert-dismissible collapse in" role="alert">
 	  					<button type="button" class="close" data-dismiss="alert">
 	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 	  					</button>
 	  					<h4><strong>Warning!</strong></h4>
 	  					<br>
-	  					${errorMessageText}
+	  					<c:out value="${ errorMessageText }"/>
 					</div>
 				</c:if>
 				

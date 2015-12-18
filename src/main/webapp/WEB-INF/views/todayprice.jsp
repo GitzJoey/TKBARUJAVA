@@ -85,21 +85,21 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				<c:if test="${ERRORPAGE == 'ERRORPAGE_SHOW'}">
-	    			<div class="alert alert-danger alert-dismissible collapse" role="alert">
+				<c:if test="${ ERRORFLAG == 'ERRORFLAG_SHOW' }">
+	    			<div class="alert alert-danger alert-dismissible collapse in" role="alert">
 	  					<button type="button" class="close" data-dismiss="alert">
 	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 	  					</button>
 	  					<h4><strong>Warning!</strong></h4>
 	  					<br>
-	  					${errorMessageText}
+	  					<c:out value="${ errorMessageText }"/>
 					</div>
 				</c:if>
 				
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-dollar fa-fw"></span>&nbsp;Price
+					<span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="today_price_jsp.title" text="Price"></spring:message>
 				</h1>
 
 				<c:choose>
@@ -107,18 +107,10 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;Today Price
+									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;<spring:message code="today_price_jsp.price_list" text="Today Price"></spring:message>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="row">
-									<div class="col-md-2">
-										<label for="inputInputedDate" class="col-sm-2 control-label">Date</label>
-										<div class="col-sm-5">
-											<label for="inputInputedDate" class="col-sm-2 control-label"><fmt:formatDate pattern="dd-MM-yyyy" value="${ cal.time }" /></label>
-										</div>										
-									</div>
-								</div>
 								<div id="stockaccordion" class="panel-group">
 									<c:forEach items="${ stocksList }" var="s" varStatus="sIdx">
 										<div class="panel panel-default">
@@ -127,44 +119,82 @@
 		                   							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">${ s.productEntity.productName }</a>
 								                </h4>
 							            	</div>
+						            		<table class="table">
+						            			<thead>
+						                    		<tr>
+						                    			<th>Date</th>
+						                    			<c:forEach items="${ priceLevelList }" var="pLL" varStatus="pLLIdx">
+						                    				<th>
+						                    					<c:out value="${ pLL.priceLevelName }"/>
+						                    				</th>
+						                    			</c:forEach>
+						                    		</tr>
+						            			</thead>
+						            			<tbody>
+						                    		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+					                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
+					                    				<c:if test="${ pIdx.index == 0 }">					                    				
+								                    		<tr>
+								                    			<td>
+								                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
+								                    			</td>
+								                    			<c:forEach items="${ s.priceList }" var="pL">
+								                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
+								                    				<c:if test="${ pDate eq ppDate }">
+								                    					<td>
+								                    						<c:out value="${ pL.price }"/>
+								                    					</td>
+								                    				</c:if>
+								                    			</c:forEach>
+								                    		</tr>								                    		
+								                    	</c:if>
+								                    </c:forEach>
+						            			</tbody>
+						            		</table>
 						            		<div class="panel-body" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
 						            			<div class="row">
 						            				<div class="col-md-12">
-						            					Market Price : <br/>
-						            					Price : <br/>
+														Price History
 						            				</div>
 						            			</div>						            			
 						            		</div>
+
 							            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse">
 							                    <table class="table">
 							                    	<thead>
 							                    		<tr>
-							                    			<th colspan="10">
-							                    				Price History
-							                    			</th>
-							                    		</tr>
-							                    		<tr>
-							                    			<th width="10%">
-							                    				Input Date
-							                    			</th>
-							                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
-																<th>
-																	<c:out value="${ p.priceLevelEntity.priceLevelName }"/>
-																</th>							                    			
+							                    			<th>Date</th>
+							                    			<c:forEach items="${ priceLevelList }" var="pLL" varStatus="pLLIdx">
+							                    				<th>
+							                    					<c:out value="${ pLL.priceLevelName }"/>
+							                    				</th>
 							                    			</c:forEach>
 							                    		</tr>
 							                    	</thead>
 							                    	<tbody>
-								                    	<tr>
-								                    		<td>
-								                    			<fmt:formatDate pattern="dd-MM-yyyy" value="${ s.priceList[0].inputDate }" />
-								                    		</td>
-							                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
-																<td>
-																	<fmt:formatNumber type="number" pattern="##,###.00" value="${ p.price }"></fmt:formatNumber>
-																</td>
-							                    			</c:forEach>
-								                    	</tr>
+						                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
+						                    				<c:choose>
+							                    				<c:when test="${ pIdx.index == 0 }">
+									                    		</c:when>
+									                    		<c:when test="${ cDate ne pDate }">
+										                    		<tr>
+										                    			<td>
+										                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
+										                    			</td>
+										                    			<c:forEach items="${ s.priceList }" var="pL">
+										                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
+										                    				<c:if test="${ pDate eq ppDate }">
+										                    					<td>
+										                    						<c:out value="${ pL.price }"/>
+										                    					</td>
+										                    				</c:if>
+										                    			</c:forEach>
+										                    		</tr>
+									                    		</c:when>
+						                    				</c:choose>
+						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="cDate"/>
+						                    			</c:forEach>
 							                    	</tbody>
 							                    </table>
 							            	</div>
@@ -204,6 +234,12 @@
 								            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse in">
 					                    			<div class="panel-body">
 														<div class="form-horizontal">
+															<div class="form-group">
+																<label for="inputDate" class="col-md-2 control-label">Input Date</label>
+																<div class="col-md-3">
+																	<fmt:formatDate pattern="dd-MM-yyyy" value="${ stocksList[sIdx.index].priceList[pIdx.index].inputDate }" />
+																</div>
+															</div>
 															<div class="form-group">
 																<label for="marketPrice" class="col-md-2 control-label">Market Price</label>
 																<div class="col-md-3">

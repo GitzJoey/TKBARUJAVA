@@ -133,14 +133,14 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				<c:if test="${ERRORFLAG == 'ERRORFLAG_SHOW' }">
+				<c:if test="${ ERRORFLAG == 'ERRORFLAG_SHOW'  }">
 	    			<div class="alert alert-danger alert-dismissible" role="alert">
 	  					<button type="button" class="close" data-dismiss="alert">
 	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
 	  					</button>
 	  					<h4><strong>Warning!</strong></h4>
 	  					<br>
-	  					${errorMessageText}
+	  					<c:out value="${ errorMessageText }"/>
 					</div>
 				</c:if>
 				

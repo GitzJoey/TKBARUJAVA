@@ -15,6 +15,7 @@ public class TodayPrice {
 	private Date inputDate;
 	private List<Stocks> stocksList;
 	private Integer selectedStockId;
+	private List<PriceLevel> priceLevelList;
 	
 	public Date getInputDate() {
 		return inputDate;
@@ -40,10 +41,18 @@ public class TodayPrice {
 		this.selectedStockId = selectedStockId;
 	}
 
+	public List<PriceLevel> getPriceLevelList() {
+		return priceLevelList;
+	}
+
+	public void setPriceLevelList(List<PriceLevel> priceLevelList) {
+		this.priceLevelList = priceLevelList;
+	}
+
 	@Override
 	public String toString() {
 		return "TodayPrice [inputDate=" + inputDate + ", stocksList=" + stocksList + ", selectedStockId="
-				+ selectedStockId + "]";
+				+ selectedStockId + ", priceLevelList=" + priceLevelList + "]";
 	}
 	
 }
