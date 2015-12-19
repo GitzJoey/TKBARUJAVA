@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -26,11 +27,11 @@ public class PriceDAOImpl implements PriceDAO {
 	public List<Price> getAllPriceForDate(Date inputDate) {
 		logger.info("[getAllPriceForDate] " + "");
 		
-		Session session = this.sessionFactory.getCurrentSession();		
+		Session session = this.sessionFactory.getCurrentSession();
 		
-		List<Price> priceList = session.createQuery("FROM Price").list();
+		List<Price> priceList = session.createQuery("FROM Price a WHERE a.inputDate = :d").setTimestamp("d", inputDate).list();
 	
-		logger.info("Price for Date " + new SimpleDateFormat("dd MMM yyyy").format(inputDate) + " Count: " + priceList.size());		
+		logger.info("Price for Date " + new SimpleDateFormat("dd-MMM-yyyy hh:mm").format(inputDate) + " Count: " + priceList.size());		
 		
 		return priceList;
 	}

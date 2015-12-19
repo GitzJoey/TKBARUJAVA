@@ -122,7 +122,7 @@
 						            		<table class="table">
 						            			<thead>
 						                    		<tr>
-						                    			<th>Date</th>
+						                    			<th><spring:message code="today_price_jsp.current_table.header.date" text="Date"/></th>
 						                    			<c:forEach items="${ priceLevelList }" var="pLL" varStatus="pLLIdx">
 						                    				<th>
 						                    					<c:out value="${ pLL.priceLevelName }"/>
@@ -154,16 +154,16 @@
 						            		<div class="panel-body" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
 						            			<div class="row">
 						            				<div class="col-md-12">
-														Price History
+														<spring:message code="today_price_jsp.price_history" text="Price History"/>
 						            				</div>
-						            			</div>						            			
+						            			</div>
 						            		</div>
 
 							            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse">
 							                    <table class="table">
 							                    	<thead>
 							                    		<tr>
-							                    			<th>Date</th>
+							                    			<th><spring:message code="today_price_jsp.history_table.header.date" text="Date"/></th>
 							                    			<c:forEach items="${ priceLevelList }" var="pLL" varStatus="pLLIdx">
 							                    				<th>
 							                    					<c:out value="${ pLL.priceLevelName }"/>
@@ -207,7 +207,7 @@
 										<input type="text" id="selectedInputDate" class="form-control input-sm" data-parsley-required="true" data-parsley-mindate="true"/>
 									</div>
 									<div class="col-md-8">
-										<a id="updatePrice" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Update Price</a>
+										<a id="updatePrice" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="today_price_jsp.update_price_button" text="Update Price"/></a>
 									</div>
 								</div>
 							</div>
@@ -217,7 +217,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;Update Price 
+									<span class="fa fa-barcode fa-fw fa-2x"></span>&nbsp;<spring:message code="today_price_jsp.update_price" text="Update Price"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -235,13 +235,13 @@
 					                    			<div class="panel-body">
 														<div class="form-horizontal">
 															<div class="form-group">
-																<label for="inputDate" class="col-md-2 control-label">Input Date</label>
+																<label for="inputDate" class="col-md-2 control-label"><spring:message code="today_price_jsp.input_date" text="Input Date"/></label>
 																<div class="col-md-3">
 																	<fmt:formatDate pattern="dd-MM-yyyy" value="${ stocksList[sIdx.index].priceList[pIdx.index].inputDate }" />
 																</div>
 															</div>
 															<div class="form-group">
-																<label for="marketPrice" class="col-md-2 control-label">Market Price</label>
+																<label for="marketPrice" class="col-md-2 control-label"><spring:message code="today_price_jsp.market_price" text="Market Price"/></label>
 																<div class="col-md-3">
 																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control text-right" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
 																	<div id="marketPriceHidden_${ sIdx.index }_${ sIdx.index }">
@@ -252,7 +252,7 @@
 																</div>
 															</div>
 															<div class="form-group">
-																<label for="price" class="col-md-2 control-label">Price</label>
+																<label for="price" class="col-md-2 control-label"><spring:message code="today_price_jsp.price" text="Price"/></label>
 																<div class="col-md-10">
 																	<div class="form-inline">
 																		<div id="priceList_${ sIdx.index }">
@@ -286,9 +286,9 @@
 						                    		</div>
 													<div class="panel-footer">
 														<div class="btn-toolbar">
-														<button id="partialButton_${ sIdx.index }" type="submit" class="btn btn-xs btn-primary" value="${ sIdx.index }">Partial Update</button>
+														<button id="partialButton_${ sIdx.index }" type="submit" class="btn btn-xs btn-primary" value="${ sIdx.index }"><spring:message code="today_price_jsp.update_partial_button" text="Partial Update"/></button>
 														</div>
-													</div>			
+													</div>
 								            	</div>
 											</div>
 										</c:forEach>
