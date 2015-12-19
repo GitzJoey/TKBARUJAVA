@@ -9,6 +9,7 @@ public class TodayPrice {
 	}
 	
 	public TodayPrice(Date inputDate, List<Stocks> stocksList) {
+		this.inputDate = inputDate;
 		this.stocksList = stocksList;
 	}
 	

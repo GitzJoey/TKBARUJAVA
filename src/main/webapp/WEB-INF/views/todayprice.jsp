@@ -131,24 +131,26 @@
 						                    		</tr>
 						            			</thead>
 						            			<tbody>
-						                    		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
-					                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
-					                    				<c:if test="${ pIdx.index == 0 }">					                    				
-								                    		<tr>
-								                    			<td>
-								                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
-								                    			</td>
-								                    			<c:forEach items="${ s.priceList }" var="pL">
-								                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
-								                    				<c:if test="${ pDate eq ppDate }">
-								                    					<td>
-								                    						<c:out value="${ pL.price }"/>
-								                    					</td>
-								                    				</c:if>
-								                    			</c:forEach>
-								                    		</tr>								                    		
-								                    	</c:if>
-								                    </c:forEach>
+						            				<c:if test="${ not empty s.priceList }">
+							                    		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
+						                    				<c:if test="${ pIdx.index == 0 }">					                    				
+									                    		<tr>
+									                    			<td>
+									                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
+									                    			</td>
+									                    			<c:forEach items="${ s.priceList }" var="pL">
+									                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
+									                    				<c:if test="${ pDate eq ppDate }">
+									                    					<td>
+									                    						<c:out value="${ pL.price }"/>
+									                    					</td>
+									                    				</c:if>
+									                    			</c:forEach>
+									                    		</tr>								                    		
+									                    	</c:if>
+									                    </c:forEach>
+								                    </c:if>
 						            			</tbody>
 						            		</table>
 						            		<div class="panel-body" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
@@ -172,29 +174,31 @@
 							                    		</tr>
 							                    	</thead>
 							                    	<tbody>
-						                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
-						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
-						                    				<c:choose>
-							                    				<c:when test="${ pIdx.index == 0 }">
-									                    		</c:when>
-									                    		<c:when test="${ cDate ne pDate }">
-										                    		<tr>
-										                    			<td>
-										                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
-										                    			</td>
-										                    			<c:forEach items="${ s.priceList }" var="pL">
-										                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
-										                    				<c:if test="${ pDate eq ppDate }">
-										                    					<td>
-										                    						<c:out value="${ pL.price }"/>
-										                    					</td>
-										                    				</c:if>
-										                    			</c:forEach>
-										                    		</tr>
-									                    		</c:when>
-						                    				</c:choose>
-						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="cDate"/>
-						                    			</c:forEach>
+							                    		<c:if test="${ not empty s.priceList }">
+							                    			<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+							                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
+							                    				<c:choose>
+								                    				<c:when test="${ pIdx.index == 0 }">
+										                    		</c:when>
+										                    		<c:when test="${ cDate ne pDate }">
+											                    		<tr>
+											                    			<td>
+											                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
+											                    			</td>
+											                    			<c:forEach items="${ s.priceList }" var="pL">
+											                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ pL.inputDate }" var="ppDate"/>
+											                    				<c:if test="${ pDate eq ppDate }">
+											                    					<td>
+											                    						<c:out value="${ pL.price }"/>
+											                    					</td>
+											                    				</c:if>
+											                    			</c:forEach>
+											                    		</tr>
+										                    		</c:when>
+							                    				</c:choose>
+							                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="cDate"/>
+							                    			</c:forEach>
+														</c:if>
 							                    	</tbody>
 							                    </table>
 							            	</div>
@@ -233,6 +237,7 @@
 								            	</div>
 								            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse in">
 					                    			<div class="panel-body">
+					                    				<c:out value="${ todayPriceForm.stocksList[sIdx.index].priceList[pIdx.index].inputDate }"/>
 														<div class="form-horizontal">
 															<div class="form-group">
 																<label for="inputDate" class="col-md-2 control-label"><spring:message code="today_price_jsp.input_date" text="Input Date"/></label>

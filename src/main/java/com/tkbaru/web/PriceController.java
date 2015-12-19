@@ -126,12 +126,7 @@ public class PriceController {
 		}
 		
 		for(Stocks s:stocksList) {
-			if (s.getPriceList().size() == 0) {
-				s.setPriceList(generatePriceList(d));
-			}
-			for(Price p:s.getPriceList()) {
-				logger.info("p:" + p.getPriceId());
-			}
+			s.setPriceList(generatePriceList(d));
 		}
 		
 		model.addAttribute("todayPriceForm", new TodayPrice(d, stocksList));
