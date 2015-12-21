@@ -237,12 +237,17 @@
 								            	</div>
 								            	<div id="collapse_${ sIdx.index }" class="panel-collapse collapse in">
 					                    			<div class="panel-body">
-					                    				<c:out value="${ todayPriceForm.stocksList[sIdx.index].priceList[pIdx.index].inputDate }"/>
 														<div class="form-horizontal">
 															<div class="form-group">
 																<label for="inputDate" class="col-md-2 control-label"><spring:message code="today_price_jsp.input_date" text="Input Date"/></label>
-																<div class="col-md-3">
-																	<fmt:formatDate pattern="dd-MM-yyyy" value="${ stocksList[sIdx.index].priceList[pIdx.index].inputDate }" />
+																<div class="col-md-10">
+																	<label class="control-label">
+																		<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ todayPriceForm.stocksList[sIdx.index].priceList[0].inputDate }" />
+																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
+																			<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ todayPriceForm.stocksList[sIdx.index].priceList[pIdx.index].inputDate }" var="iDate"/>
+																			<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].inputDate"/>
+																		</c:forEach>
+																	</label>
 																</div>
 															</div>
 															<div class="form-group">
@@ -279,14 +284,13 @@
 																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
 																						<form:hidden id="priceLevelPct_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.percentageValue"/>
 																						<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelId"/>
-																						<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].inputDate"/>
 																					</div>
 																				</div>
 																			</c:forEach>
 																		</div>
 																	</div>
 																</div>
-															</div>
+															</div>														
 														</div>
 						                    		</div>
 													<div class="panel-footer">

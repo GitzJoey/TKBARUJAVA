@@ -31,7 +31,7 @@ public class Price {
     @Column(name="price")
     private BigDecimal price;
     @Column(name="input_date")
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date inputDate;
     @Column(name="created_by")
     private int createdBy;

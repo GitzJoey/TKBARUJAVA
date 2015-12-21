@@ -60,7 +60,7 @@ public class PriceController {
 	
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
-		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh:mm");
 		dateFormat.setLenient(true);
 		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
 		binder.registerCustomEditor(Date.class, orderDateEditor);
@@ -141,7 +141,7 @@ public class PriceController {
 	@RequestMapping(value="/saveprice", method = RequestMethod.POST)
 	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") TodayPrice todayPrice, RedirectAttributes redirectAttributes) {
 		logger.info("[savePrice] " + "");
-
+		
 		for (Stocks s:todayPrice.getStocksList()) {
 			for (Price p:s.getPriceList()) {
 				p.setPriceStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
