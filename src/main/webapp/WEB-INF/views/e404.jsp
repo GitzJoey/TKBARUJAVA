@@ -33,7 +33,7 @@
 				
 				<div id="jsAlerts"></div>
 					
-				<h2>Resource Not Found.</h2>
+				<h2>404 - Resource Not Found.</h2>
 
 			</div>
 		</div>
