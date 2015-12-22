@@ -26,6 +26,7 @@ import com.tkbaru.common.Converter;
 import com.tkbaru.model.Deliver;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.model.Lookup;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Receipt;
@@ -143,6 +144,17 @@ public class WarehouseDashboardController {
 			}
 		}
 
+		List<Lookup> unit = lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT);
+		List<Lookup> unitL = new ArrayList<Lookup>();
+		
+		for (Lookup l:unit) {
+			for (ProductUnit pu:selectedItemsObject.getProductEntity().getProductUnit()) {
+				if (pu.getUnitCodeLookup().getLookupKey().equals(l.getLookupKey())) {
+					unitL.add(l);
+				}
+			}
+		}
+		
 		WarehouseDashboard warehouseDashboard = new WarehouseDashboard();
 		warehouseDashboard.setSelectedWarehouse(warehouseId);
 		warehouseDashboard.setSelectedPO(poId);
@@ -153,7 +165,7 @@ public class WarehouseDashboardController {
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);
-		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
+		model.addAttribute("unitDDL", unitL);
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 
