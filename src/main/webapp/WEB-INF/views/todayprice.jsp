@@ -40,6 +40,16 @@
 			
 			$('#selectedInputDate').datetimepicker({ format:'d-m-Y H:i' });
 			
+			$('button[id^="partialButton_"]').click(function() {
+				var s = "s_" +$(this).val();
+				if (true === $('#todayPriceForm').parsley().isValid(s, false)) {
+					$('#todayPriceForm').parsley().destroy();
+					$('#todayPriceForm').attr('action', ctxpath + "/price/saveprice/for/" + s.split('_')[1] + "/save");
+					return true;
+				}
+				return false;
+			})
+			
 			function calculatePrice(sIdx, marketPrice) {
 				var inptL = $('#priceList_' + sIdx + ' input[type="text"]').size();
 				var result = 0;
@@ -69,7 +79,7 @@
 				var stockId = $(this).val();
 				if ($('#todayPriceForm').parsley().isValid('s' + stockId)) {
 					$('#todayPriceForm').parsley().destroy();
-					$('#todayPriceForm').attr('action', ctxpath + "/updateprice/partial/" + stockId);	
+					$('#todayPriceForm').attr('action', ctxpath + "/price/saveprice/s/" + stockId + "/save");	
 				}
 			});
 		});
@@ -225,7 +235,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="todayPriceForm" action="${pageContext.request.contextPath}/price/saveprice" data-parsley-validate="parsley">									
+								<form:form id="todayPriceForm" role="form" class="form-horizontal" modelAttribute="todayPriceForm" action="${pageContext.request.contextPath}/price/saveprice" data-parsley-validate="parsley">
 									<div id="updateaccordion" class="panel-group">
 										<c:forEach items="${ todayPriceForm.stocksList }" var="s" varStatus="sIdx">
 											<form:hidden path="stocksList[${ sIdx.index }].stocksId"/>
@@ -253,7 +263,7 @@
 															<div class="form-group">
 																<label for="marketPrice" class="col-md-2 control-label"><spring:message code="today_price_jsp.market_price" text="Market Price"/></label>
 																<div class="col-md-3">
-																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control text-right" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
+																	<input type="text" id="marketPrice_${ sIdx.index }_${ sIdx.index }" class="form-control text-right" data-parsley-required="true" data-parsley-group="s_${ sIdx.index }" />
 																	<div id="marketPriceHidden_${ sIdx.index }_${ sIdx.index }">
 																		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
 																			<form:hidden path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].marketPrice"/>
@@ -278,7 +288,7 @@
 																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
 																							</c:otherwise>
 																						</c:choose>
-																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true" data-parsley-group="s${ sIdx.index }"/>
+																						<form:input class="form-control" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].price" aria-describedby="helpBlock${ sIdx.index }${ pIdx.index }" data-parsley-required="true" data-parsley-group="s_${ sIdx.index }"/>
 																						<span class="help-block" data-toggle="tooltip" data-placement="top" title="${ tooltipTitle }">Level : <c:out value="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelName }"/></span>
 																						<form:hidden id="priceLevelType_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.priceLevelTypeLookup.lookupKey"/>
 																						<form:hidden id="priceLevelInc_${ sIdx.index }_${ pIdx.index }" path="stocksList[${ sIdx.index }].priceList[${ pIdx.index }].priceLevelEntity.incrementValue"/>
@@ -290,12 +300,12 @@
 																		</div>
 																	</div>
 																</div>
-															</div>														
+															</div>
 														</div>
 						                    		</div>
 													<div class="panel-footer">
 														<div class="btn-toolbar">
-														<button id="partialButton_${ sIdx.index }" type="submit" class="btn btn-xs btn-primary" value="${ sIdx.index }"><spring:message code="today_price_jsp.update_partial_button" text="Partial Update"/></button>
+														<button id="partialButton_${ s.stocksId }" type="submit" class="btn btn-xs btn-primary" value="${ s.stocksId }"><spring:message code="today_price_jsp.update_partial_button" text="Partial Update"/></button>
 														</div>
 													</div>
 								            	</div>

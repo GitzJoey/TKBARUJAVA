@@ -138,6 +138,30 @@ public class PriceController {
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 
+	@RequestMapping(value="/saveprice/s/{stocksId}/save", method = RequestMethod.POST)
+	public String savePricePerStock(Locale locale, Model model , @ModelAttribute("todayPriceForm") TodayPrice todayPrice, @PathVariable int stocksId, RedirectAttributes redirectAttributes) {
+		logger.info("[savePricePerStock] " + "stocksId: " + stocksId);
+		
+		for (Stocks s:todayPrice.getStocksList()) {
+			if (s.getStocksId() != stocksId) continue;
+			for (Price p:s.getPriceList()) {
+				p.setPriceStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+				p.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+				p.setCreatedDate(new Date());
+				p.setStocksEntity(s);
+				p.setPriceStatusLookup(lookupManager.getLookupByKey("L001_A"));
+				p.setPriceLevelEntity(priceLevelManager.getPriceLevelById(p.getPriceLevelEntity().getPriceLevelId()));
+			}					
+			priceManager.addMultiplePrice(s.getPriceList());
+		}
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		return "redirect:/price/todayprice";
+	}
+	
 	@RequestMapping(value="/saveprice", method = RequestMethod.POST)
 	public String savePrice(Locale locale, Model model , @ModelAttribute("todayPriceForm") TodayPrice todayPrice, RedirectAttributes redirectAttributes) {
 		logger.info("[savePrice] " + "");
