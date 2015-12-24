@@ -31,9 +31,9 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/id.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/src/i18n/en.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/i18n/en.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/i18n/id.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-locale.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/metisMenu.cookie.js"></script>

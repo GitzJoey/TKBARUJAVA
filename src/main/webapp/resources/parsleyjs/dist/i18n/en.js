@@ -1,5 +1,5 @@
 // This is bundled with the Parsley library
-import Parsley from '../parsley/main';
+//import Parsley from '../parsley/main';
 
 Parsley.addMessages('en', {
   defaultMessage: "This value seems to be invalid.",
