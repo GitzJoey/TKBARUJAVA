@@ -153,13 +153,23 @@
 			window.Parsley.addValidator('validquantity', function (value, index) {
 				var salesIdx = index.split('_')[0];
 				var itemsIdx = index.split('_')[1];
-				var stock = $('#items_' + salesIdx + '_' + itemsIdx + '_Product_Stocks_prodQuantity').val();
-				console.log(stock);
-				console.log(value);
-				return true;
+				var stocksId = $('#items_' + salesIdx + '_' + itemsIdx + '_stocksId').val();
+				var qty = value;
+				var unit = $('#items_' + salesIdx + '_' + itemsIdx + '_unitSelect').val();
+				var ret = false;
+				
+				var response = $.ajax({
+					url : ctxpath+ "/sales/check/stocks",
+					data : {stocksId: stocksId, qty: qty, unit: unit},
+					type : "GET",
+					async: false
+				}).responseText;
+				
+				if (response == "true") { ret = true; } else { ret = false; }
+				return ret;
 			}, 32)
-			.addMessage('en', 'validquantity', '')
-			.addMessage('id', 'validquantity', '');
+			.addMessage('en', 'validquantity', 'Out of stocks')
+			.addMessage('id', 'validquantity', 'Melebihi stok');
 		});
 		
 		function stringToDate(_date,_format,_delimiter) {
@@ -480,7 +490,7 @@
 																										<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }">
 																											<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_unitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" />
 																										</c:if>
-																										<form:select class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
+																										<form:select id="items_${ soIdx.index }_${ iLIdx.index }_unitSelect" class="form-control no-margin" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-group="['tab_${ soIdx.index }', 'item_${ soIdx.index }']">
 																											<option value=""><spring:message code="common.please_select"></spring:message></option>
 																											<c:forEach items="${ loginContext.soList[ soIdx.index ].itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
 																												<form:option value="${ prdUnit.unitCodeLookup.lookupKey }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>

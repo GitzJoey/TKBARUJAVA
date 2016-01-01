@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
@@ -733,4 +735,10 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 
+	@RequestMapping(value = "/check/stocks", method = RequestMethod.GET)
+	public @ResponseBody String checkStocks(@RequestParam("stocksId") int stocksId, @RequestParam("qty") int qty, @RequestParam("unit") String unit) {
+		logger.info("[checkStocks] " + "stocksId: " + stocksId + ", qty: " + qty + ", unit: " + unit);
+		
+		return "true";
+	}
 }
