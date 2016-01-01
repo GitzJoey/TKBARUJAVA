@@ -15,6 +15,7 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_stocks")
@@ -62,6 +63,20 @@ public class Stocks {
 	@OrderBy("inputDate DESC")
 	private List<Price> priceList;
 
+	@Transient
+	public Price getLatestPrice(int priceLevelId) {
+		if (priceList != null && priceList.size() > 0) {
+			Date latestDate = priceList.get(0).getInputDate();
+			
+			for (Price p:priceList) {
+				if (latestDate.compareTo(p.getInputDate()) == 0 && p.getPriceLevelEntity().getPriceLevelId() == priceLevelId) {
+					return p;
+				}
+			}
+		}
+		return null;
+	}
+	
 	public Integer getStocksId() {
 		return stocksId;
 	}

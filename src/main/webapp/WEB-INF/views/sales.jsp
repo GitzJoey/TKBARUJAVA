@@ -301,6 +301,7 @@
 																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
 																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><c:out value="${ loginContext.soList[soIdx.index].customerEntity }"/></textarea>
+																				<form:hidden path="soList[${ soIdx.index }].customerEntity.priceLevelEntity.priceLevelId"/>
 																			</div>
 																		</div>
 																	</c:if>

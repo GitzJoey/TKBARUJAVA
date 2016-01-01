@@ -185,6 +185,9 @@ public class SalesOrderController {
 		item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		if (!loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_WIN")) {
+			item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
+		}
 		
 		for (ProductUnit productUnit:item.getProductEntity().getProductUnit()) {
 			if (productUnit.getIsBaseUnit()) {
