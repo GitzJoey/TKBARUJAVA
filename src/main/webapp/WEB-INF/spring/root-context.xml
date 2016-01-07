@@ -51,9 +51,6 @@
         <beans:property name="password" value="${jdbc.password}" />
     </beans:bean>
 
-	<!-- Spring Security -->
-	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
-
 	<!-- AOP Proxy Injection Session -->
 	<beans:bean id="loginContextSession" class="com.tkbaru.model.LoginContext" scope="session">     
 		<aop:scoped-proxy/>
@@ -245,7 +242,9 @@
 	<beans:bean id="SmsService" class="com.tkbaru.service.SmsServiceImpl"></beans:bean>
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
 	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
-	<beans:bean id="SetupService" class="com.tkbaru.service.SetupServiceImpl"></beans:bean>
+	<beans:bean id="SetupService" class="com.tkbaru.service.SetupServiceImpl">
+		<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
+	</beans:bean>
 	
 	<!-- Jasper -->
 	<beans:import resource="jasper-views.xml" />

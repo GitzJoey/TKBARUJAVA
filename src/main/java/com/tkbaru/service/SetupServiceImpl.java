@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.tkbaru.dao.SetupDAO;
@@ -34,6 +35,11 @@ public class SetupServiceImpl implements SetupService {
 	
 	@Autowired
 	PriceLevelService priceLevelManager;
+	
+	private BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager;
+	public void setCryptoBCryptPasswordEncoderManager(BCryptPasswordEncoder cryptoBCryptPasswordEncoderManager) {
+		this.cryptoBCryptPasswordEncoderManager = cryptoBCryptPasswordEncoderManager;
+	}
 	
 	@Override
 	public boolean checkDBConnection() {
@@ -113,6 +119,12 @@ public class SetupServiceImpl implements SetupService {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public String encryptString(String s) {
+
+		return cryptoBCryptPasswordEncoderManager.encode(s);
 	}
 
 }

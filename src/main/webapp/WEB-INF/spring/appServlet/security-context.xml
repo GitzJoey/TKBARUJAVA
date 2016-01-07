@@ -8,11 +8,13 @@
 	<http auto-config="true" use-expressions="true" disable-url-rewriting="true">
 		<csrf disabled="true"/>
 
-		<intercept-url pattern="/resources/**" access="permitAll" />
-		<intercept-url pattern="/index.jsp" access="permitAll"/>
-		<intercept-url pattern="/static/**" access="permitAll" />
-		<intercept-url pattern="/login.html" access="permitAll"/>		
-		<intercept-url pattern="/**" access="isAuthenticated()" />
+		<intercept-url pattern="/setup/**" 		access="permitAll" />
+		<intercept-url pattern="/static/**" 	access="permitAll" />
+		<intercept-url pattern="/resources/**" 	access="permitAll" />
+		<intercept-url pattern="/index.jsp" 	access="permitAll" />
+		<intercept-url pattern="/login.html" 	access="permitAll" />
+		
+		<intercept-url pattern="/**" 			access="isAuthenticated()" />
 		
 		<form-login login-page="/login.html"
 					default-target-url="/dologin.html"
@@ -26,6 +28,9 @@
 	</http>
 	
 	<beans:import resource="servlet-context.xml" />
+	
+	<!-- Spring Security -->
+	<beans:bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 	
 	<authentication-manager>
 		<authentication-provider>

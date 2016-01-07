@@ -42,6 +42,7 @@ public class Constants {
 	public static final String JSPPAGE_BANK = "bank";
 	public static final String JSPPAGE_TRUCK = "truck";
 	public static final String JSPPAGE_STATIC = "static";
+	public static final String JSPPAGE_SETUP = "setup";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";
