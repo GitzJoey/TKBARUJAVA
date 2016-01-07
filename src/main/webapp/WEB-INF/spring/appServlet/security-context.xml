@@ -34,9 +34,10 @@
 	
 	<authentication-manager>
 		<authentication-provider>
+			<password-encoder ref="bCryptPasswordEncoder"></password-encoder>
 			<jdbc-user-service data-source-ref="dataSource" 
 				users-by-username-query="
-					SELECT user_name AS USERNAME, 'admin1' AS PASSWORD, CASE status WHEN 'L001_A' THEN 'true' ELSE 'false' END 'ENABLED'
+					SELECT user_name AS USERNAME, passwd AS PASSWORD, CASE status WHEN 'L001_A' THEN 'true' ELSE 'false' END 'ENABLED'
 					FROM tb_user
          			WHERE user_name=?;"
 				
