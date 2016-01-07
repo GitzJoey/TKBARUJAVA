@@ -52,6 +52,8 @@ public class RoleController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_ROLE;
 	}
@@ -66,6 +68,8 @@ public class RoleController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 		
 		return Constants.JSPPAGE_ROLE;
 	}
@@ -96,6 +100,8 @@ public class RoleController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 		
 		return Constants.JSPPAGE_ROLE;
 	}

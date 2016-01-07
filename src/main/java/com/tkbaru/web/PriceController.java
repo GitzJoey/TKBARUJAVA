@@ -100,6 +100,8 @@ public class PriceController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 
@@ -135,6 +137,8 @@ public class PriceController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_TODAYPRICE;
 	}
 
@@ -158,7 +162,7 @@ public class PriceController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-
+		
 		return "redirect:/price/todayprice";
 	}
 	

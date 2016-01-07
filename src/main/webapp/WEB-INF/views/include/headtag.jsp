@@ -1,7 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     
-    <title>Toko Baru</title>
+    <c:choose>
+	    <c:when test="${ not empty pageTitle }">
+	    	<title>Toko Baru - ${ pageTitle }</title>
+	    </c:when>
+		<c:otherwise>
+			<title>Toko Baru</title>
+		</c:otherwise>
+    </c:choose>
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Toko, Baru, Wangon">
     <meta name="author" content="GitzJoey">

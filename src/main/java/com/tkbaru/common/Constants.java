@@ -8,6 +8,8 @@ public class Constants {
 	public static final String PAGEMODE_DELETE = "PAGEMODE_DELETE";
 	public static final String PAGEMODE_LIST = "PAGEMODE_LIST";
 	public static final String PAGEMODE_VIEW = "PAGEMODE_VIEW";
+
+	public static final String PAGE_TITLE = "pageTitle";
 	
 	public static final String ERRORFLAG = "ERRORFLAG";
 	public static final String ERRORFLAG_SHOW = "ERRORFLAG_SHOW";

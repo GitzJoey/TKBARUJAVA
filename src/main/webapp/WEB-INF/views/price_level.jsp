@@ -85,7 +85,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="price_level_jsp.title" text="Price Level"/>					
+					<span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="price_level_jsp.title" text="Price Level"/>
 				</h1>
 
 				<c:choose>
@@ -102,6 +102,7 @@
 										<tr>
 											<th width="5%">&nbsp;</th>
 											<th width="15%"><spring:message code="price_level_jsp.table.header.price_level" text="Price Level"/></th>
+											<th width="5%"><spring:message code="price_level_jsp.table.header.price_weight" text="Weight"/></th>
 											<th width="25%"><spring:message code="price_level_jsp.table.header.description" text="Description"/></th>
 											<th width="25%"><spring:message code="price_level_jsp.table.header.level_type" text="Type"/></th>
 											<th width="25%"><spring:message code="price_level_jsp.table.header.level_value" text="Value"/></th>
@@ -114,6 +115,7 @@
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ p.priceLevelId }"/>" type="checkbox" value="<c:out value="${ p.priceLevelId }"/>" /></td>
 													<td><c:out value="${ p.priceLevelName }"></c:out></td>
+													<td class="text-center"><c:out value="${ p.levelWeight }"></c:out></td>
 													<td><c:out value="${ p.priceLevelDescription }"></c:out></td>
 													<td><spring:message code="${ p.priceLevelTypeLookup.i18nLookupValue }" text="${ p.priceLevelTypeLookup.lookupValue }"></spring:message></td>
 													<td>
@@ -156,12 +158,25 @@
 								<form:form id="priceLevelForm" role="form" class="form-horizontal" modelAttribute="priceLevelForm" action="${pageContext.request.contextPath}/price/savepricelevel" data-parsley-validate="parsley">
 									<div class="form-group">
 										<label for="inputPriceLevelType" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_type" text="Price Level Type"/></label>
-										<div class="col-sm-5">
+										<div class="col-sm-4">
 											<form:select id="priceLevelSelect" class="form-control" path="priceLevelTypeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select"></spring:message></option>
 												<c:forEach items="${ priceLevelDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputPriceLevelWeight" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_weight" text="Weight"/></label>
+										<div class="col-sm-2">
+											<form:select id="priceLevelWeightSelect" class="form-control" path="levelWeight" data-parsley-required="true" data-parsley-trigger="change">
+												<option value=""><spring:message code="common.please_select"></spring:message></option>
+												<form:option value="1">1 - Lowest</form:option>
+												<c:forEach var="i" begin="2" end="8">
+   													<form:option value="${ i }">${ i }</form:option>
+												</c:forEach>
+												<form:option value="9">9 - Highest</form:option>
 											</form:select>
 										</div>
 									</div>
@@ -174,13 +189,13 @@
 									</div>
 									<div class="form-group">
 										<label for="inputPriceLevelDescription" class="col-sm-2 control-label"><spring:message code="price_level_jsp.price_level_description" text="Description"/></label>
-										<div class="col-sm-5">
+										<div class="col-sm-6">
 											<form:input type="text" class="form-control" id="inputPriceLevelDescription" name="inputPriceLevelDescription" path="priceLevelDescription" placeholder="Enter Price Level Name"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPriceLevelStatus" class="col-sm-2 control-label"><spring:message code="price_level_jsp.status" text="Status"/></label>
-										<div class="col-sm-3">
+										<div class="col-sm-2">
 											<form:select class="form-control" path="priceLevelStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"></spring:message></option>
 												<c:forEach items="${ statusDDL }" var="i">

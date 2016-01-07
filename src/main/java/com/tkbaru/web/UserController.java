@@ -57,6 +57,8 @@ public class UserController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_USER;
 	}
 
@@ -72,6 +74,8 @@ public class UserController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 		
 		return Constants.JSPPAGE_USER;
 	}
@@ -92,6 +96,8 @@ public class UserController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_USER;
 	}
 
@@ -110,6 +116,8 @@ public class UserController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 		
 		return Constants.JSPPAGE_USER;
 	}
@@ -163,6 +171,8 @@ public class UserController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_USER;
 	}
 
@@ -188,6 +198,8 @@ public class UserController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 		
 		return Constants.JSPPAGE_USER;
 	}

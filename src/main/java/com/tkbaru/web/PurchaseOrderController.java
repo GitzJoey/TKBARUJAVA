@@ -4,8 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
@@ -38,6 +43,10 @@ import com.tkbaru.service.ProductService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.SupplierService;
 import com.tkbaru.service.WarehouseService;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
 @RequestMapping("/po")
@@ -117,6 +126,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
@@ -156,6 +167,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
@@ -188,6 +201,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
@@ -254,11 +269,30 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PURCHASEORDER;
-
 	}
 
+	@RequestMapping(value = "/t/{tabId}/generate/{poCode}", method = RequestMethod.GET)
+	public ModelAndView poGenerate(Locale locale, Model model, @PathVariable int tabId, @PathVariable String poCode, HttpServletResponse response) throws JRException{
+		logger.info("[poGenerate] " + "tabId: " + tabId + ", poCode: " + poCode);
+		
+		ModelAndView mav = null;
+		Map<String,Object> parameterMap = new HashMap<String,Object>();
+		parameterMap.put("poCode", poCode);
+		
+		//List<PurchaseOrder> po = new ArrayList<PurchaseOrder>();
+				
+		//JRDataSource ds = new JRBeanCollectionDataSource(po);
+		
+		//parameterMap.put("datasource", ds);
+		mav = new ModelAndView("po_pdf", parameterMap); 
+				
+		return mav;
+	}
+	
 	@RequestMapping(value = "/t/{tabId}/cancel", method = RequestMethod.POST)
 	public String poCancel(Locale locale, Model model, RedirectAttributes redirectAttributes, @PathVariable int tabId) {
 		logger.info("[poCancel] " + "tabId: " + tabId);
@@ -285,6 +319,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
@@ -325,6 +361,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
@@ -357,6 +395,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
@@ -383,6 +423,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PURCHASEORDER;
 	}
@@ -397,6 +439,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
+		model.addAttribute(Constants.PAGE_TITLE, "");
+		
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
 
@@ -414,6 +458,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
@@ -439,6 +485,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
@@ -464,6 +512,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
@@ -489,6 +539,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT,loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
@@ -506,6 +558,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_REVISE;
 	}
@@ -613,6 +667,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}
@@ -642,6 +698,8 @@ public class PurchaseOrderController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return Constants.JSPPAGE_PO_PAYMENT;
 	}

@@ -47,7 +47,7 @@ public class PriceLeveLController {
 		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
 		binder.registerCustomEditor(Date.class, orderDateEditor);
 	}
-
+	
 	@RequestMapping(value="/pricelevel", method = RequestMethod.GET)
 	public String priceLevelPageLoad(Locale locale, Model model) {
 		logger.info("[priceLevelPageLoad] " + "");
@@ -59,6 +59,8 @@ public class PriceLeveLController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "List Price Level");
 		
 		return Constants.JSPPAGE_PRICELEVEL;
 	}
@@ -75,6 +77,8 @@ public class PriceLeveLController {
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "Add New Price Level");
 		
 		return Constants.JSPPAGE_PRICELEVEL;
 	}
@@ -93,6 +97,8 @@ public class PriceLeveLController {
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "Edit Price Level " + priceLevel.getPriceLevelName());
 		
 		return Constants.JSPPAGE_PRICELEVEL;
 	}

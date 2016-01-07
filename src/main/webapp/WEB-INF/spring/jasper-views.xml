@@ -9,13 +9,11 @@
 	<bean id="user_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
-			p:reportDataKey="datasource" />
- 
+			p:reportDataKey="datasource" /> 
 	<bean id="user_xls"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsXlsView"
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
 			p:reportDataKey="datasource" />
- 
 	<bean id="user_html"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsHtmlView"
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
@@ -28,9 +26,13 @@
 		         </map>			
 			</property>
 	</bean>
- 
 	<bean id="user_csv"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
 			p:reportDataKey="datasource" />
+	<!--		
+	<bean id="po_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/po.jrxml" /> 
+	-->	
 </beans>

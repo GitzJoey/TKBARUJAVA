@@ -25,6 +25,8 @@ public class PriceLevel{
     @GeneratedValue(strategy=GenerationType.AUTO)
     @Column(name="price_level_id")
     private Integer priceLevelId ;
+    @Column(name="level_weight", length=100)
+    private int levelWeight;
     @Column(name="level_name", length=100)
     private String priceLevelName;
     @Column(name="level_description", length=255)
@@ -62,6 +64,14 @@ public class PriceLevel{
 
 	public void setPriceLevelId(Integer priceLevelId) {
 		this.priceLevelId = priceLevelId;
+	}
+
+	public int getLevelWeight() {
+		return levelWeight;
+	}
+
+	public void setLevelWeight(int levelWeight) {
+		this.levelWeight = levelWeight;
 	}
 
 	public String getPriceLevelName() {
@@ -154,12 +164,12 @@ public class PriceLevel{
 
 	@Override
 	public String toString() {
-		return "PriceLevel [priceLevelId=" + priceLevelId + ", priceLevelName=" + priceLevelName
-				+ ", priceLevelDescription=" + priceLevelDescription + ", incrementValue=" + incrementValue
-				+ ", percentageValue=" + percentageValue + ", createdBy=" + createdBy + ", createdDate=" + createdDate
-				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", priceLevelStatusLookup="
-				+ priceLevelStatusLookup + ", priceLevelStoreEntity=" + priceLevelStoreEntity
-				+ ", priceLevelTypeLookup=" + priceLevelTypeLookup + "]";
+		return "PriceLevel [priceLevelId=" + priceLevelId + ", levelWeight=" + levelWeight + ", priceLevelName="
+				+ priceLevelName + ", priceLevelDescription=" + priceLevelDescription + ", incrementValue="
+				+ incrementValue + ", percentageValue=" + percentageValue + ", createdBy=" + createdBy
+				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
+				+ ", priceLevelStatusLookup=" + priceLevelStatusLookup + ", priceLevelStoreEntity="
+				+ priceLevelStoreEntity + ", priceLevelTypeLookup=" + priceLevelTypeLookup + "]";
 	}
 
 }
