@@ -57,8 +57,6 @@ public class LoginController {
 			
 			return "login";
 		}
-		
-		loginManager.checkInitData();
  		
 		if (errParam != null) {
 			if (errParam.equalsIgnoreCase("invalid")) {

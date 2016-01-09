@@ -180,7 +180,7 @@
 												<c:otherwise>
 													<form:input path="userName" type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Enter User Name" readonly="true"></form:input>
 												</c:otherwise>
-											</c:choose>											
+											</c:choose>
 										</div>
 									</div>
 									<div class="form-group">

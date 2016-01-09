@@ -67,15 +67,6 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public boolean checkInitData() {
-		boolean isValid = false;
-		
-		isValid = setupManager.generateInitData();
-		
-		return isValid;
-	}
-
-	@Override
 	public User changePassword(int userId, String newPassword) {
 		User u = userManager.getUserById(userId);
 		
