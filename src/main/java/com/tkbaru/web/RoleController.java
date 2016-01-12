@@ -30,7 +30,7 @@ import com.tkbaru.service.RoleService;
 @Controller
 @RequestMapping("/admin/role")
 public class RoleController {
-	private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+	private static final Logger logger = LoggerFactory.getLogger(RoleController.class);
 	
 	@Autowired
 	RoleService roleManager;
