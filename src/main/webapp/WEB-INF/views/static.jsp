@@ -146,7 +146,7 @@
 			<div class="col-md-4">
 				<div class="row">
 					<div class="page-header">
-					  <h1>Contacts</h1>
+					  <h1><span class="typcn typcn-phone"></span>Contacts</h1>
 					</div>
 					<div class="col-md-12">
 						<h4 class="pull-right"><strong>Telkomsel:</strong> +62 812-1234-1234</h4>
@@ -156,7 +156,7 @@
 				</div>
 				<div class="row">
 					<div class="page-header">
-					  <h1>Send Email</h1>
+					  <h1><span class="typcn typcn-mail"></span>Send Email</h1>
 					</div>
 					<div class="col-md-12">						
 						<form id="staticForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/sendform" data-parsley-validate="parsley">
