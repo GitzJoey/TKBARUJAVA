@@ -51,16 +51,23 @@
 			})
 			
 			function calculatePrice(sIdx, marketPrice) {
+				console.log("[calculatePrice] sIdx: " + sIdx + ", marketPrice: " + marketPrice);
 				var inptL = $('#priceList_' + sIdx + ' input[type="text"]').size();
 				var result = 0;
 				
 				for(var i=0; i<inptL; i++) {
-					if ($('#priceLevelType_' + sIdx + '_' + i).val() == 'L022_INC') {
+					if ($('#priceLevelType_' + sIdx + '_' + i).val() == 'L021_INC') {
+						console.log("INC");
+						console.log("marketPrice : " + parseInt(marketPrice));
+						console.log("priceLevelInc : " + parseInt($('#priceLevelInc_' + sIdx + '_' + i).val()));
 						result = parseInt(marketPrice) + parseInt($('#priceLevelInc_' + sIdx + '_' + i).val());
+						console.log("result : " + result);
 					} else {
-						console.log();
-
+						console.log("PCT");
+						console.log("marketPrice : " + parseInt(marketPrice));
+						console.log("priceLevelPct : " + (parseInt(marketPrice) * (parseInt($('#priceLevelPct_' + sIdx + '_' + i).val()) / 100)));
 						result = parseInt(marketPrice) + (parseInt(marketPrice) * (parseInt($('#priceLevelPct_' + sIdx + '_' + i).val()) / 100));
+						console.log("result : " + result);
 					}
 					$('input[name="stocksList[' + sIdx + '].priceList[' + i + '].price"]').val(result);
 				}
@@ -281,7 +288,7 @@
 																					<label for="sr-only"></label>
 																					<div class="col-md-10">
 																						<c:choose>
-																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupKey == 'L022_INC' }">
+																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupKey == 'L021_INC' }">
 																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
 																							</c:when>
 																							<c:otherwise>
