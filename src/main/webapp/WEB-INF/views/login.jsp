@@ -32,6 +32,10 @@
     	</div>
 		<c:choose>
 			<c:when test="${ hideLogin == true }">
+				<c:choose>
+					<c:when test="${ true }"></c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
 			</c:when>
 			<c:otherwise>
 		        <div class="row">
@@ -50,12 +54,26 @@
 		                                <div class="form-group">
 		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
 		                                </div>
-		                                <button type="submit" class="btn btn-default"><spring:message code="common.login_button" text="Login"/></button>
+										<div class="form-group">
+											<div class="checkbox">
+							        			<input id="cbx_remember_me" type="checkbox" value=""/>
+							        			<label for="cbx_remember_me"><spring:message code="login_jsp.pic.remember_me" text="Remember Me"/></label> 
+											</div>
+										</div>
+										<div class="button-toolbar">
+											<button type="submit" class="btn btn-default"><spring:message code="common.login_button" text="Login"/></button>
+										</div>
 		                            </fieldset>
 		                        </form>
+		                        
 		                    </div>
 		                </div>
 		            </div>
+		        </div>
+		        <div class="row">
+		        	<div class="col-md-4 col-md-offset-4">
+		        		<a class="pull-right" href="${ pageContext.request.contextPath }/static/forgot.html"><spring:message code="login.jsp.forgot_password" text="Forgot Password"></spring:message></a>
+		        	</div>
 		        </div>
 			</c:otherwise>
 		</c:choose>

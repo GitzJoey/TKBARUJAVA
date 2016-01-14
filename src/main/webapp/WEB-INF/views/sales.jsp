@@ -571,26 +571,14 @@
 															<button id="submitButton" type="submit" class="btn btn-primary pull-right" value="${ soIdx.index }"><spring:message code="common.submit_button" text="Submit"/></button>
 														</c:if>
 														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_WD' }">
-															<button id="printButton" type="button" class="btn btn-primary pull-right"><spring:message code="common.print_button" text="Print"/></button>
 															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="sales_jsp.close_button" text="Close"/></button>
+															<a id="printButton_${ soIdx.index }" href="${ pageContext.request.contextPath }/sales/t/${ soIdx.index }/generate/${ loginContext.soList[ soIdx.index ].salesCode }" target="_blank" class="btn btn-primary pull-right">
+																<spring:message code="common.print_button" text="Print"/>
+															</a>
 														</c:if>
 													</div>
 												</div>
 											</div>
-																				
-											<div id="printModalDialog" class="modal hide fade" tabindex="-1" role="dialog">
-												<div class="modal-header">
-													<button type="button" class="close" data-dismiss="modal">×</button>
-													<h3>Print Preview</h3>
-												</div>
-												<div class="modal-body">
-													<iframe src="" style="zoom:0.60" frameborder="0" height="250" width="99.6%"></iframe>
-												</div>
-												<div class="modal-footer">
-													<button class="btn" data-dismiss="modal">OK</button>
-												</div>
-											</div>
-										
 										</div>
 									</c:forEach>
 								</div>

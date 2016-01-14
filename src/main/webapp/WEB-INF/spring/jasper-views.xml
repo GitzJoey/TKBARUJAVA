@@ -30,9 +30,8 @@
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsCsvView"
 			p:url="/WEB-INF/jasper/reportUser.jrxml"
 			p:reportDataKey="datasource" />
-	<!--		
+
 	<bean id="po_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/po.jrxml" /> 
-	-->	
 </beans>

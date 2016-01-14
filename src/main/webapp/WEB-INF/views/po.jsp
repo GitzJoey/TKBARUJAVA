@@ -425,18 +425,18 @@
 										<div class="row">
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
-												    <c:if test="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_D' }">
+												    <c:if test="${ loginContext.poList[ poIdx.index ].poStatusLookup.lookupKey == 'L013_D' }">
 														<button id="cancelButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
 														<button id="submitButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
-														<a id="printButton${ poIdx.index }" href="${ pageContext.request.contextPath }/po/t/${ poIdx.index }/generate/${ poForm.poCode }" target="_blank" class="btn btn-primary pull-right">
+														<a id="printButton${ poIdx.index }" href="${ pageContext.request.contextPath }/po/t/${ poIdx.index }/generate/${ loginContext.poList[ poIdx.index ].poCode }" target="_blank" class="btn btn-primary pull-right">
 															<spring:message code="common.print_button" text="Print"/>
 														</a>
 													</c:if>
-													<c:if test="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }">
-														<a id="printButton${ poIdx.index }" href="${ pageContext.request.contextPath }/po/t/${ poIdx.index }/generate" target="_blank" class="btn btn-primary pull-right">
+													<c:if test="${ loginContext.poList[ poIdx.index ].poStatusLookup.lookupKey == 'L013_WA' }">
+														<button id="cancelButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="po_jsp.close_button" text="Close"/></button>
+														<a id="printButton${ poIdx.index }" href="${ pageContext.request.contextPath }/po/t/${ poIdx.index }/generate/${ loginContext.poList[ poIdx.index ].poCode }" target="_blank" class="btn btn-primary pull-right">
 															<spring:message code="common.print_button" text="Print"/>
 														</a>
-														<button id="cancelButton${ poIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="po_jsp.close_button" text="Close"/></button>
 													</c:if>
 												</div>
 											</div>

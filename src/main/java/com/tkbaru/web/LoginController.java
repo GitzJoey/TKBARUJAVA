@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 
+import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.User;
 import com.tkbaru.service.LoginService;
@@ -75,7 +76,7 @@ public class LoginController {
 			model.addAttribute("collapseFlag", "");
 			model.addAttribute("messageText", messageText);
 			
-			return "login";			
+			return Constants.JSPPAGE_LOGIN;
 		}
 
 		List<String> metisMenuCookies = new ArrayList<String>(Arrays.asList(
@@ -109,7 +110,7 @@ public class LoginController {
 		model.addAttribute("collapseFlag", "collapse");
 		model.addAttribute("messageText", messageText);
 		
-		return "login";
+		return Constants.JSPPAGE_LOGIN;
 	}
 	
 	@RequestMapping(value = "/dologin.html", method = RequestMethod.GET)	
@@ -126,7 +127,7 @@ public class LoginController {
 		return "redirect:/dashboard";
 	}
 	
-	@RequestMapping(value = "/changepass.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/static/changepass.html", method = RequestMethod.GET)
 	public String changePassword(Locale locale, Model model) {
 		logger.info("[changePassword] " + "");
 
@@ -142,7 +143,23 @@ public class LoginController {
 		
 	}
 
-	@RequestMapping(value = "/change_pass/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/static/forgot.html", method = RequestMethod.GET)
+	public String forgotPassword(Locale locale, Model model) {
+		logger.info("[forgotPassword] " + "");
+
+		String messageText = "";
+
+		model.addAttribute("userForm", loginContextSession.getUserLogin());
+		model.addAttribute("loginContext", loginContextSession);
+
+		model.addAttribute("collapseFlag", "collapse");
+		model.addAttribute("messageText", messageText);
+		
+		return Constants.JSPPAGE_LOGIN;
+		
+	}
+
+	@RequestMapping(value = "/static/change_pass/save", method = RequestMethod.POST)
 	public String savePassword(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
 		logger.info("[savePassword] " + "");
 

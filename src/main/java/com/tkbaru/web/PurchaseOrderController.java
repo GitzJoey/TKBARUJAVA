@@ -281,13 +281,14 @@ public class PurchaseOrderController {
 		
 		ModelAndView mav = null;
 		Map<String,Object> parameterMap = new HashMap<String,Object>();
-		parameterMap.put("poCode", poCode);
+		PurchaseOrder po = poManager.getPurchaseOrderById(1);
 		
-		//List<PurchaseOrder> po = new ArrayList<PurchaseOrder>();
-				
-		//JRDataSource ds = new JRBeanCollectionDataSource(po);
+		List<PurchaseOrder> poList = new ArrayList<PurchaseOrder>();
+		poList.add(po);
 		
-		//parameterMap.put("datasource", ds);
+		JRDataSource ds = new JRBeanCollectionDataSource(poList);
+		
+		parameterMap.put("datasource", ds);
 		mav = new ModelAndView("po_pdf", parameterMap); 
 				
 		return mav;

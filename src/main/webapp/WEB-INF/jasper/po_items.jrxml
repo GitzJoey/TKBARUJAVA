@@ -3,6 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<field name="itemsList.itemsId" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -13,10 +14,20 @@
 		<band height="35" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch"/>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="164" y="2" width="100" height="20" uuid="2404c320-a0cb-44b9-aa0c-843a1835e1e7"/>
+				<text><![CDATA[itemsList.itemsId]]></text>
+			</staticText>
+		</band>
 	</columnHeader>
 	<detail>
-		<band height="125" splitType="Stretch"/>
+		<band height="125" splitType="Stretch">
+			<textField>
+				<reportElement x="164" y="86" width="100" height="20" uuid="acfa7b06-d3f9-4e83-96b6-902631ca8632"/>
+				<textFieldExpression><![CDATA[$F{itemsList.itemsId}]]></textFieldExpression>
+			</textField>
+		</band>
 	</detail>
 	<columnFooter>
 		<band height="45" splitType="Stretch"/>
