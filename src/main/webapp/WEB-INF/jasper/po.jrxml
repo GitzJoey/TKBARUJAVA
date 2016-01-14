@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="33efc333-8c5e-4599-a5b0-c2ccaecef423">
-	<property name="ireport.zoom" value="1.5"/>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["C:\\TKBARU\\workspace\\TKBARU\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="poCode" class="java.lang.String"/>
 	<field name="poCode" class="java.lang.String"/>
 	<field name="poStoreEntity.storeName" class="java.lang.String"/>
 	<field name="poCreatedDate" class="java.lang.String"/>
@@ -18,48 +17,36 @@
 	<field name="poStoreEntity.storeAddress2" class="java.lang.String"/>
 	<field name="poStoreEntity.storeAddress3" class="java.lang.String"/>
 	<field name="poStoreEntity.npwpNumber" class="java.lang.String"/>
-	<field name="itemsList.itemsId" class="java.lang.String"/>
-	<field name="itemsList" class="java.lang.String"/>
+	<field name="itemsList" class="java.util.List"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
-			<textField>
-				<reportElement x="455" y="0" width="100" height="20" uuid="122c51c0-706e-4537-b5b4-f3c9837ecb1c"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{poStoreEntity.storeName}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="361" y="20" width="194" height="16" uuid="b652b531-381a-4c42-815e-85359456af9b"/>
-				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA[$F{poStoreEntity.storeAddress1}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="361" y="36" width="194" height="16" uuid="db0b6f98-0d39-4bc4-b69e-cd4298ddb281"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{poStoreEntity.storeAddress2}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="361" y="52" width="194" height="16" uuid="2502123a-52b5-4e92-a5a1-1d78be3fa622"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{poStoreEntity.storeAddress3}]]></textFieldExpression>
-			</textField>
+		<band height="20" splitType="Stretch">
 			<staticText>
-				<reportElement x="0" y="0" width="174" height="20" uuid="6084b35f-8a39-4e91-86d1-26fa75721f0a"/>
-				<textElement verticalAlignment="Middle">
+				<reportElement x="67" y="0" width="100" height="20" uuid="5f699837-061b-4625-bc9b-29895aff0422"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[NOTA PEMBELIAN]]></text>
+				<text><![CDATA[PEMBELIAN]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch">
+		<band height="89" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="17" width="100" height="20" uuid="c1fba2f6-8eea-4db9-8d7d-4bd708ba7256"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[PO Code]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="100" y="17" width="8" height="20" uuid="d1cc7eb5-69bc-4a2f-b633-860993eceeaa"/>
+				<textElement textAlignment="Justified" verticalAlignment="Middle"/>
+				<text><![CDATA[ : ]]></text>
+			</staticText>
 			<textField>
-				<reportElement x="0" y="0" width="100" height="20" uuid="d16c38db-a40a-4779-9175-10619cdde365"/>
+				<reportElement x="108" y="17" width="100" height="20" uuid="e6c201e7-9ee6-4443-a632-45d544097fbd"/>
+				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{poCode}]]></textFieldExpression>
 			</textField>
 		</band>
@@ -70,8 +57,8 @@
 	<detail>
 		<band height="125" splitType="Stretch">
 			<subreport>
-				<reportElement x="298" y="25" width="200" height="100" uuid="13fc12da-339a-497f-8e10-6f7e22c87e6b"/>
-				<dataSourceExpression><![CDATA[$F{itemsList}]]></dataSourceExpression>
+				<reportElement x="45" y="25" width="200" height="100" uuid="4d18cc5c-e882-4184-bdee-a6acdd598e9f"/>
+				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{itemsList})]]></dataSourceExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "po_items.jasper"]]></subreportExpression>
 			</subreport>
 		</band>

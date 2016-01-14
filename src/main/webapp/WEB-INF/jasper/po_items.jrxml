@@ -3,29 +3,30 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<field name="itemsList.itemsId" class="java.lang.String"/>
+	<field name="itemsId" class="java.lang.String"/>
+	<field name="productEntity.productName" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="61" splitType="Stretch">
+		<band height="52" splitType="Stretch">
 			<staticText>
-				<reportElement x="164" y="2" width="100" height="20" uuid="2404c320-a0cb-44b9-aa0c-843a1835e1e7"/>
-				<text><![CDATA[itemsList.itemsId]]></text>
+				<reportElement x="10" y="18" width="100" height="20" uuid="69451bad-5d42-4076-aa61-30f650606d2e"/>
+				<text><![CDATA[productEntity.productName]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
 		<band height="125" splitType="Stretch">
 			<textField>
-				<reportElement x="164" y="86" width="100" height="20" uuid="acfa7b06-d3f9-4e83-96b6-902631ca8632"/>
-				<textFieldExpression><![CDATA[$F{itemsList.itemsId}]]></textFieldExpression>
+				<reportElement x="10" y="0" width="100" height="20" uuid="fc1b56ca-101b-4dd2-a384-941c4c59ffbc"/>
+				<textFieldExpression><![CDATA[$F{productEntity.productName}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
