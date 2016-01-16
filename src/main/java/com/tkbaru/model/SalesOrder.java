@@ -89,6 +89,10 @@ public class SalesOrder implements Serializable {
 	@JoinColumn(name="so_type", referencedColumnName="lookup_key")
 	private Lookup salesTypeLookup;
 
+	@ManyToOne
+	@JoinColumn(name="customer_type", referencedColumnName="lookup_key")
+	private Lookup customerTypeLookup;
+
 	@Transient
 	private String customerSearchQuery;
 	@Transient
@@ -190,6 +194,12 @@ public class SalesOrder implements Serializable {
 	public void setSalesTypeLookup(Lookup salesTypeLookup) {
 		this.salesTypeLookup = salesTypeLookup;
 	}
+	public Lookup getCustomerTypeLookup() {
+		return customerTypeLookup;
+	}
+	public void setCustomerTypeLookup(Lookup customerTypeLookup) {
+		this.customerTypeLookup = customerTypeLookup;
+	}	
 	public String getCustomerSearchQuery() {
 		return customerSearchQuery;
 	}
@@ -210,6 +220,7 @@ public class SalesOrder implements Serializable {
 				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
 				+ paymentList + ", customerEntity=" + customerEntity + ", salesStoreEntity=" + salesStoreEntity
 				+ ", salesStatusLookup=" + salesStatusLookup + ", salesTypeLookup=" + salesTypeLookup
+				+ ", customerTypeLookup=" + customerTypeLookup
 				+ ", customerSearchQuery=" + customerSearchQuery + ", customerSearchResults=" + customerSearchResults
 				+ "]";
 	}

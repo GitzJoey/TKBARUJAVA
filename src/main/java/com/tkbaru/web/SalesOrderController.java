@@ -94,6 +94,7 @@ public class SalesOrderController {
 		}
 		
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -105,16 +106,16 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value="/t/{tabId}/select/type/{soTypeValue}", method = RequestMethod.POST)
-	public String salesSelectSoType(Locale locale, Model model, @PathVariable int tabId, @PathVariable String soTypeValue) {
-		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", soTypeValue: " + soTypeValue);
+	@RequestMapping(value="/t/{tabId}/select/type/{custTypeValue}", method = RequestMethod.POST)
+	public String salesSelectSoType(Locale locale, Model model, @PathVariable int tabId, @PathVariable String custTypeValue) {
+		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", custTypeValue: " + custTypeValue);
 		
 		if (!loginContextSession.getSoList().isEmpty()) {
-			((SalesOrder)loginContextSession.getSoList().get(tabId)).setSalesTypeLookup(lookupManager.getLookupByKey(soTypeValue));
+			((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerTypeLookup(lookupManager.getLookupByKey(custTypeValue));
 			
-			if(soTypeValue.equals("L015_WIN")){
+			if(custTypeValue.equals("L022_WIN")){
 				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerEntity(null);
-			} else if (soTypeValue.equals("L015_S")) {
+			} else if (custTypeValue.equals("L022_R")) {
 
 			} else {
 				
@@ -125,8 +126,10 @@ public class SalesOrderController {
 
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
-		if (soTypeValue.equals("L015_WIN")) {
+
+		if (custTypeValue.equals("L022_WIN")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		}
 		
@@ -168,6 +171,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 
@@ -195,7 +199,7 @@ public class SalesOrderController {
 		item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		if (!loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_WIN")) {
+		if (!loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L022_WIN")) {
 			item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
 		}
 		
@@ -212,7 +216,8 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -242,7 +247,8 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -271,7 +277,7 @@ public class SalesOrderController {
 		SalesOrder so = loginContext.getSoList().get(tabId);
 		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WD"));
 
-		if (so.getSalesTypeLookup().getLookupKey().equals("L015_WIN")) {
+		if (so.getCustomerTypeLookup().getLookupKey().equals("L022_WIN")) {
 			so.setCustomerEntity(null);
 		}
 		
@@ -310,7 +316,8 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
-
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);

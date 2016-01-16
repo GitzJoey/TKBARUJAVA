@@ -130,22 +130,22 @@
 
 			$('#list a[href="#soTab_' + lastTab + '"]').tab('show');
 
-    		$('[id^="selectSoType_"]').change(function() {
+    		$('[id^="selectCustType_"]').change(function() {
     			var activetab = $(".nav-tabs li.active").attr("id");
-    			var salesType = $('[id="selectSoType_' + activetab + '"]').val();
+    			var custType = $('[id="selectCustType_' + activetab + '"]').val();
     			
-    			if (salesType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + salesType);
+    			if (custType != '') {
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + custType);
 	    			$('#soForm').submit();
     			}
     		});
     		
-    		$('[id^="submitSalesType_"]').click(function() {
+    		$('[id^="submitCustType_"]').click(function() {
     			var activetab = $(".nav-tabs li.active").attr("id");
-    			var salesType = $('[id="selectSoType_' + activetab + '"]').val();    			
+    			var custType = $('[id="selectCustType_' + activetab + '"]').val();
 
-    			if (salesType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + salesType);
+    			if (custType != '') {
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + custType);
 	    			$('#soForm').submit();
     			}
     		});    		
@@ -264,57 +264,19 @@
 																		<label for="inputSalesCode" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_code" text="Sales Code"/></label>
 																		<div class="col-sm-5">
 																			<form:input type="text" class="form-control data-so" id="inputSalesCode_${ soIdx.index }" name="inputSalesCode_${ soIdx.index }" path="soList[${ soIdx.index }].salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
-																		</div>										
+																		</div>
 																	</div>
 																	<div class="form-group">
-																		<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_type" text="Sales Type"/></label>										
+																		<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="sales_jsp.sales_type" text="Sales Type"/></label>
 																		<div class="col-sm-7">
-																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_D' }">
-																		   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesTypeLookup.lookupKey" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
-																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																					<form:options items="${ soTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																				</form:select>
-																			</c:if>
-																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }">
-																				<form:hidden path="soList[${ soIdx.index }].salesTypeLookup.lookupKey"/>
-																				<form:input type="text" class="form-control" id="inputSalesType_${ soIdx.index }" name="inputSalesType_${ soIdx.index }" path="soList[${ soIdx.index }].salesTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab_${ soIdx.index }"></form:input>
-																		   </c:if>
-																		</div>
-																		<div class="col-sm-1">
-																			<button id="submitSalesType_${ soIdx.index }" type="button" class="btn btn-default pull-right"><span class="fa fa-repeat fa-fw"></span></button>
+																	   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesTypeLookup.lookupKey" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
+																				<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																				<c:forEach items="${ soTypeDDL }" var="i">
+																					<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+																				</c:forEach>
+																			</form:select>																		
 																		</div>
 																	</div>
-																	<div class="form-group">
-																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer" text="Customer"/></label>
-																		<div class="col-sm-10">
-																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerEntity.customerId"/>
-																			<c:choose>
-																				<c:when test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_WIN' }">
-																					<input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" placeholder="Walk In Customer" disabled="disabled"/>
-																				</c:when>
-																				<c:otherwise>
-																					<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerEntity.customerName" placeholder="Search Customer" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-																				</c:otherwise>
-																			</c:choose>
-																		</div>
-																	</div>
-																	<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_WIN' }">
-																		<div class="form-group">
-																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																			<div class="col-sm-10">
-																				<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" placeholder="Enter Walk In Customer Detail"/>
-																			</div>
-																		</div>
-																	</c:if>					
-																	<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && not empty loginContext.soList[soIdx.index].customerEntity.customerId }">
-																		<div class="form-group">
-																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
-																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><c:out value="${ loginContext.soList[soIdx.index].customerEntity }"/></textarea>
-																				<form:hidden path="soList[${ soIdx.index }].customerEntity.priceLevelEntity.priceLevelId"/>
-																			</div>
-																		</div>
-																	</c:if>
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
@@ -334,7 +296,90 @@
 																	</div>
 																</div>
 															</div>
-															<c:if test="${ loginContext.soList[soIdx.index].salesTypeLookup.lookupKey == 'L015_S' && empty loginContext.soList[soIdx.index].customerEntity.customerId }">
+															<hr>
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="sales_jsp.shipping_date" text="Shipping Date"/></label>
+																		<div class="col-sm-5">
+																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />																			
+																			<fmt:formatDate value="${ todayDate }" var="formattedTodayDate" type="date" pattern="dd-MM-yyyy" />
+																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }"></form:input>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>			
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+												             <h4 class="panel-title">
+												             	<spring:message code="sales_jsp.customer" text="Customer"/>
+												      		</h4>
+												      	</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputCustomerType" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer_type" text="Customer Type"/></label>										
+																		<div class="col-sm-7">
+																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_D' }">
+																		   		<form:select id="selectCustType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].customerTypeLookup.lookupKey" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																					<c:forEach items="${ custTypeDDL }" var="i">
+																						<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+																					</c:forEach>
+																				</form:select>
+																			</c:if>
+																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }">
+																				<form:hidden path="soList[${ soIdx.index }].customerTypeLookup.lookupKey"/>
+																				<form:input type="text" class="form-control" id="inputCustType_${ soIdx.index }" name="inputCustType_${ soIdx.index }" path="soList[${ soIdx.index }].customerTypeLookup.lookupValue" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab_${ soIdx.index }"></form:input>
+																		   </c:if>
+																		</div>
+																		<div class="col-sm-1">
+																			<button id="submitCustType_${ soIdx.index }" type="button" class="btn btn-default pull-right"><span class="fa fa-repeat fa-fw"></span></button>
+																		</div>
+																	</div>
+																	<div class="form-group">
+																		<label for="inputCustomerId_${soIdx.index}" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer" text="Customer"/></label>
+																		<div class="col-sm-10">
+																			<form:hidden id="soList_${ soIdx.index }_customerId" path="soList[${ soIdx.index }].customerEntity.customerId"/>
+																			<c:choose>
+																				<c:when test="${ loginContext.soList[soIdx.index].customerTypeLookup.lookupKey == 'L022_WIN' }">
+																					<input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" placeholder="Walk In Customer" disabled="disabled"/>
+																				</c:when>
+																				<c:otherwise>
+																					<form:input type="text" class="form-control" id="inputCustomerId_${ soIdx.index }" name="inputCustomerId_${ soIdx.index }" path="soList[${ soIdx.index }].customerEntity.customerName" placeholder="Search Customer" readonly="true" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+																				</c:otherwise>
+																			</c:choose>
+																		</div>
+																	</div>
+																	<c:if test="${ loginContext.soList[soIdx.index].customerTypeLookup.lookupKey == 'L022_WIN' }">
+																		<div class="form-group">
+																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<form:textarea class="form-control" path="soList[${ soIdx.index }].walkInCustDetail" rows="3" readonly="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" placeholder="Enter Walk In Customer Detail"/>
+																			</div>
+																		</div>
+																	</c:if>
+																	<c:if test="${ loginContext.soList[soIdx.index].customerTypeLookup.lookupKey == 'L022_R' && not empty loginContext.soList[soIdx.index].customerEntity.customerId }">
+																		<div class="form-group">
+																			<label for="inputCustomerDetail_${ soIdx.index }" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail_${ soIdx.index }" readonly="readonly"><c:out value="${ loginContext.soList[soIdx.index].customerEntity }"/></textarea>
+																				<form:hidden path="soList[${ soIdx.index }].customerEntity.priceLevelEntity.priceLevelId"/>
+																			</div>
+																		</div>
+																	</c:if>
+																</div>
+																<div class="col-md-5">
+																</div>
+															</div>
+															<c:if test="${ loginContext.soList[soIdx.index].customerTypeLookup.lookupKey == 'L022_R' && empty loginContext.soList[soIdx.index].customerEntity.customerId }">
 																<div class="row">
 																	<div class="col-md-12">
 																		<div id="panelSearchCustomer_${ soIdx.index }" class="panel panel-default">
@@ -410,19 +455,6 @@
 																	</div>
 																</div>
 															</c:if>
-															<hr>
-															<div class="row">
-																<div class="col-md-7">
-																	<div class="form-group">
-																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="sales_jsp.shipping_date" text="Shipping Date"/></label>
-																		<div class="col-sm-5">
-																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />																			
-																			<fmt:formatDate value="${ todayDate }" var="formattedTodayDate" type="date" pattern="dd-MM-yyyy" />
-																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }"></form:input>
-																		</div>
-																	</div>
-																</div>
-															</div>
 														</div>
 													</div>
 													<div class="row">

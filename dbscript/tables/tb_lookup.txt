@@ -211,8 +211,8 @@ VALUES ('SO_TYPE', 'L015_S',
 		'SO_TYPE.L015_S', 'Standard SO',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('SO_TYPE', 'L015_WIN',
-		'SO_TYPE.L015_WIN', 'Walk In Customer',
+VALUES ('SO_TYPE', 'L015_SVC',
+		'SO_TYPE.L015_SVC', 'Service Sales',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*SO Status - L016*/
@@ -285,6 +285,16 @@ VALUES ('PRICE_LEVEL_TYPE', 'L021P_CT',
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('PRICE_LEVEL_TYPE', 'L021_INC',
 		'PRICE_LEVEL_TYPE.L021_INC', 'Increment',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*Customer Type L022 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('CUSTOMER_TYPE', 'L022_R',
+		'CUSTOMER_TYPE.L022_R', 'Return Customer',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('CUSTOMER_TYPE', 'L022_WIN',
+		'CUSTOMER_TYPE.L022_WIN', 'Walk In Customer',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*
