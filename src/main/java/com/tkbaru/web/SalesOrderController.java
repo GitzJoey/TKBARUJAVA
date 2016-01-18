@@ -107,19 +107,15 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/t/{tabId}/select/type/{custTypeValue}", method = RequestMethod.POST)
-	public String salesSelectSoType(Locale locale, Model model, @PathVariable int tabId, @PathVariable String custTypeValue) {
+	public String salesSelectSoType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String custTypeValue) {
 		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", custTypeValue: " + custTypeValue);
-		
-		if (!loginContextSession.getSoList().isEmpty()) {
-			((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerTypeLookup(lookupManager.getLookupByKey(custTypeValue));
+
+		if (!loginContextSession.getSoList().isEmpty()) {			
+			loginContextSession.setSoList(loginContext.getSoList());
 			
 			if(custTypeValue.equals("L022_WIN")){
 				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerEntity(null);
-			} else if (custTypeValue.equals("L022_R")) {
-
-			} else {
-				
-			}
+			} 
 		} else {
 			
 		}
@@ -199,7 +195,7 @@ public class SalesOrderController {
 		item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
 		item.setCreatedDate(new Date());
 		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		if (!loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L022_WIN")) {
+		if (!loginContext.getSoList().get(tabId).getCustomerTypeLookup().getLookupKey().equals("L022_WIN")) {
 			item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
 		}
 		
