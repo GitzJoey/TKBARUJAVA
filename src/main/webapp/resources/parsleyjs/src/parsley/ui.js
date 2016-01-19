@@ -7,15 +7,14 @@ var ParsleyUI = function (options) {
 
 ParsleyUI.prototype = {
   listen: function () {
-    var that = this;
     window.Parsley
-    .on('form:init',       function () { that.setupForm (this); } )
-    .on('field:init',      function () { that.setupField(this); } )
-    .on('field:validated', function () { that.reflow    (this); } )
-    .on('form:validated',  function () { that.focus     (this); } )
-    .on('field:reset',     function () { that.reset     (this); } )
-    .on('form:destroy',    function () { that.destroy   (this); } )
-    .on('field:destroy',   function () { that.destroy   (this); } );
+    .on('form:init',       (form ) => { this.setupForm (form ); } )
+    .on('field:init',      (field) => { this.setupField(field); } )
+    .on('field:validated', (field) => { this.reflow    (field); } )
+    .on('form:validated',  (form ) => { this.focus     (form ); } )
+    .on('field:reset',     (field) => { this.reset     (field); } )
+    .on('form:destroy',    (form ) => { this.destroy   (form ); } )
+    .on('field:destroy',   (field) => { this.destroy   (field); } );
 
     return this;
   },
@@ -30,9 +29,6 @@ ParsleyUI.prototype = {
 
     // Then store current validation result for next reflow
     fieldInstance._ui.lastValidationResult = fieldInstance.validationResult;
-
-    // Field have been validated at least once if here. Useful for binded key events...
-    fieldInstance._ui.validatedOnce = true;
 
     // Handle valid / invalid / none field class
     this.manageStatusClass(fieldInstance);
@@ -208,8 +204,8 @@ ParsleyUI.prototype = {
   },
 
   setupForm: function (formInstance) {
-    formInstance.$element.on('submit.Parsley', false, $.proxy(formInstance.onSubmitValidate, formInstance));
-    formInstance.$element.on('click.Parsley', 'input[type="submit"], button[type="submit"]', $.proxy(formInstance.onSubmitButton, formInstance));
+    formInstance.$element.on('submit.Parsley', evt => { formInstance.onSubmitValidate(evt); });
+    formInstance.$element.on('click.Parsley', 'input[type="submit"], button[type="submit"]', evt => { formInstance.onSubmitButton(evt); });
 
     // UI could be disabled
     if (false === formInstance.options.uiEnabled)
@@ -240,7 +236,6 @@ ParsleyUI.prototype = {
 
     // ValidationResult UI storage to detect what have changed bwt two validations, and update DOM accordingly
     _ui.lastValidationResult = [];
-    _ui.validatedOnce = false;
     _ui.validationInformationVisible = false;
 
     // Store it in fieldInstance for later
@@ -296,9 +291,7 @@ ParsleyUI.prototype = {
   },
 
   actualizeTriggers: function (fieldInstance) {
-    var $toBind = fieldInstance.$element;
-    if (fieldInstance.options.multiple)
-      $toBind = $('[' + fieldInstance.options.namespace + 'multiple="' + fieldInstance.options.multiple + '"]');
+    var $toBind = fieldInstance._findRelated();
 
     // Remove Parsley events already binded on this field
     $toBind.off('.Parsley');
@@ -312,23 +305,21 @@ ParsleyUI.prototype = {
     if ('' === triggers)
       return;
 
-    // Bind fieldInstance.eventValidate if exists (for parsley.ajax for example), ParsleyUI.eventValidate otherwise
     $toBind.on(
       triggers.split(' ').join('.Parsley ') + '.Parsley',
-      $.proxy('function' === typeof fieldInstance.eventValidate ? fieldInstance.eventValidate : this.eventValidate, fieldInstance));
+      event => { this.eventValidate(fieldInstance, event); }
+    );
   },
 
-  // Called through $.proxy with fieldInstance. `this` context is ParsleyField
-  eventValidate: function (event) {
+  eventValidate: function (field, event) {
     // For keyup, keypress, keydown... events that could be a little bit obstrusive
     // do not validate if val length < min threshold on first validation. Once field have been validated once and info
     // about success or failure have been displayed, always validate with this trigger to reflect every yalidation change.
-    if (new RegExp('key').test(event.type))
-      if (!this._ui.validationInformationVisible && this.getValue().length <= this.options.validationThreshold)
+    if (/key/.test(event.type))
+      if (!field._ui.validationInformationVisible && field.getValue().length <= field.options.validationThreshold)
         return;
 
-    this._ui.validatedOnce = true;
-    this.validate();
+    field.validate();
   },
 
   manageFailingFieldTrigger: function (fieldInstance) {
@@ -336,19 +327,19 @@ ParsleyUI.prototype = {
 
     // Radio and checkboxes fields must bind every field multiple
     if (fieldInstance.options.multiple)
-      $('[' + fieldInstance.options.namespace + 'multiple="' + fieldInstance.options.multiple + '"]').each(function () {
-        if (!new RegExp('change', 'i').test($(this).parsley().options.trigger || ''))
-          return $(this).on('change.ParsleyFailedOnce', false, $.proxy(fieldInstance.validate, fieldInstance));
+      fieldInstance._findRelated().each(function () {
+        if (!/change/i.test($(this).parsley().options.trigger || ''))
+          $(this).on('change.ParsleyFailedOnce', () => { fieldInstance.validate(); });
       });
 
     // Select case
     if (fieldInstance.$element.is('select'))
-      if (!new RegExp('change', 'i').test(fieldInstance.options.trigger || ''))
-        return fieldInstance.$element.on('change.ParsleyFailedOnce', false, $.proxy(fieldInstance.validate, fieldInstance));
+      if (!/change/i.test(fieldInstance.options.trigger || ''))
+        return fieldInstance.$element.on('change.ParsleyFailedOnce', () => { fieldInstance.validate(); });
 
     // All other inputs fields
-    if (!new RegExp('keyup', 'i').test(fieldInstance.options.trigger || ''))
-      return fieldInstance.$element.on('keyup.ParsleyFailedOnce', false, $.proxy(fieldInstance.validate, fieldInstance));
+    if (!/keyup/i.test(fieldInstance.options.trigger || ''))
+      return fieldInstance.$element.on('keyup.ParsleyFailedOnce', () => { fieldInstance.validate(); });
   },
 
   reset: function (parsleyInstance) {
@@ -373,7 +364,6 @@ ParsleyUI.prototype = {
     this._resetClass(parsleyInstance);
 
     // Reset validation flags and last validation result
-    parsleyInstance._ui.validatedOnce = false;
     parsleyInstance._ui.lastValidationResult = [];
     parsleyInstance._ui.validationInformationVisible = false;
     parsleyInstance._ui.failedOnce = false;

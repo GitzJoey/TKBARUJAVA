@@ -33,8 +33,14 @@ ParsleyField.prototype = {
   // Validate field and trigger some events for mainly `ParsleyUI`
   // @returns `true`, an array of the validators that failed, or
   // `null` if validation is not finished. Prefer using whenValidate
-  validate: function (force) {
-    var promise = this.whenValidate(force);
+  validate: function (options) {
+    if (arguments.length >= 1 && !$.isPlainObject(options)) {
+      ParsleyUtils.warnOnce('Calling validate on a parsley field without passing arguments as an object is deprecated.');
+      options = {options};
+    }
+    var promise = this.whenValidate(options);
+    if (!promise)  // If excluded with `group` option
+      return true;
     switch (promise.state()) {
       case 'pending': return null;
       case 'resolved': return true;
@@ -43,19 +49,23 @@ ParsleyField.prototype = {
   },
 
   // Validate field and trigger some events for mainly `ParsleyUI`
-  // @returns a promise that succeeds only when all validations do.
-  whenValidate: function (force) {
-    var that = this;
+  // @returns a promise that succeeds only when all validations do
+  // or `undefined` if field is not in the given `group`.
+  whenValidate: function ({force, group} =  {}) {
+    // do not validate a field if not the same as given validation group
+    this.refreshConstraints();
+    if (group && !this._isInGroup(group))
+      return;
 
     this.value = this.getValue();
 
     // Field Validate event. `this.value` could be altered for custom needs
     this._trigger('validate');
 
-    return this.whenValid(force, this.value)
-      .done(function ()   { that._trigger('success'); })
-      .fail(function ()   { that._trigger('error'); })
-      .always(function () { that._trigger('validated'); });
+    return this.whenValid({force, value: this.value, _refreshed: true})
+      .done(() =>   { this._trigger('success'); })
+      .fail(() =>   { this._trigger('error'); })
+      .always(() => { this._trigger('validated'); });
   },
 
   hasConstraints: function () {
@@ -75,32 +85,47 @@ ParsleyField.prototype = {
     return true;
   },
 
+  _isInGroup: function (group) {
+    if ($.isArray(this.options.group))
+      return -1 !== $.inArray(group, this.options.group);
+    return this.options.group === group;
+  },
+
   // Just validate field. Do not trigger any event.
   // Returns `true` iff all constraints pass, `false` if there are failures,
   // or `null` if the result can not be determined yet (depends on a promise)
   // See also `whenValid`.
-  isValid: function (force, value) {
-    return statusMapping[this.whenValid(force, value).state()];
+  isValid: function (options) {
+    if (arguments.length >= 1 && !$.isPlainObject(options)) {
+      ParsleyUtils.warnOnce('Calling isValid on a parsley field without passing arguments as an object is deprecated.');
+      var [force, value] = arguments;
+      options = {force, value};
+    }
+    var promise = this.whenValid(options);
+    if (!promise) // Excluded via `group`
+      return true;
+    return statusMapping[promise.state()];
   },
 
   // Just validate field. Do not trigger any event.
-  // @returns a promise that succeeds only when all validations do.
-  // The argument `force` is optional, defaults to `false`.
-  // The argument `value` is optional. If given, it will be validated instead of the value of the input.
-  whenValid: function (force, value) {
+  // @returns a promise that succeeds only when all validations do
+  // or `undefined` if the field is not in the given `group`.
+  // The argument `force` will force validation of empty fields.
+  // If a `value` is given, it will be validated instead of the value of the input.
+  whenValid: function ({force = false, value, group, _refreshed} = {}) {
     // Recompute options and rebind constraints to have latest changes
-    this.refreshConstraints();
+    if (!_refreshed)
+      this.refreshConstraints();
+    // do not validate a field if not the same as given validation group
+    if (group && !this._isInGroup(group))
+      return;
+
     this.validationResult = true;
 
     // A field without constraint is valid
     if (!this.hasConstraints())
       return $.when();
 
-    // Make `force` argument optional
-    if ('boolean' !== typeof force && 'undefined' === typeof value) {
-      value = force;
-      force = false;
-    }
     // Value could be passed as argument, needed to add more power to 'parsley:field:validate'
     if ('undefined' === typeof value || null === value)
       value = this.getValue();
@@ -110,12 +135,11 @@ ParsleyField.prototype = {
 
     var groupedConstraints = this._getGroupedConstraints();
     var promises = [];
-    var that = this;
-    $.each(groupedConstraints, function(_, constraints) {
+    $.each(groupedConstraints, (_, constraints) => {
       // Process one group of constraints at a time, we validate the constraints
       // and combine the promises together.
-      var promise = $.when.apply($,
-        $.map(constraints, $.proxy(that, '_validateConstraint', value))
+      var promise = $.when(
+        ...$.map(constraints, constraint => this._validateConstraint(value, constraint))
       );
       promises.push(promise);
       if (promise.state() === 'rejected')
@@ -126,16 +150,15 @@ ParsleyField.prototype = {
 
   // @returns a promise
   _validateConstraint: function(value, constraint) {
-    var that = this;
     var result = constraint.validate(value, this);
     // Map false to a failed promise
     if (false === result)
       result = $.Deferred().reject();
     // Make sure we return a promise and that we record failures
-    return $.when(result).fail(function(errorMessage) {
-      if (true === that.validationResult)
-        that.validationResult = [];
-      that.validationResult.push({
+    return $.when(result).fail(errorMessage => {
+      if (true === this.validationResult)
+        this.validationResult = [];
+      this.validationResult.push({
         assert: constraint,
         errorMessage: 'string' === typeof errorMessage && errorMessage
       });
@@ -279,11 +302,10 @@ ParsleyField.prototype = {
 
     // Small special case here for HTML5 number: integer validator if step attribute is undefined or an integer value, number otherwise
     if ('number' === type) {
-      if (('undefined' === typeof this.$element.attr('step')) || (0 === parseFloat(this.$element.attr('step')) % 1)) {
-        return this.addConstraint('type', 'integer', undefined, true);
-      } else {
-        return this.addConstraint('type', 'number', undefined, true);
-      }
+      return this.addConstraint('type', ['number', {
+        step: this.$element.attr('step'),
+        base: this.$element.attr('min') || this.$element.attr('value')
+      }], undefined, true);
     // Regular other HTML5 supported types
     } else if (/^(email|url|range)$/i.test(type)) {
       return this.addConstraint('type', type, undefined, true);

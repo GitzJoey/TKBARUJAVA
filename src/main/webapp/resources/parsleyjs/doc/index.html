@@ -20,7 +20,7 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <link href="http://yandex.st/highlightjs/7.3/styles/github.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/styles/github.min.css" rel="stylesheet">
     <link href="../src/parsley.css" rel="stylesheet">
 
     <style>
@@ -318,6 +318,15 @@ if (false === instance.options.priorityEnabled)
                 <td>Either validate higher priority constraints first and stop on first failure (<code>true</code>), or validate all constraints simultaneously and show all the failing ones (<code>false</code>).</td>
               </tr>
               <tr>
+                <td><code>data-parsley-inputs</code> <version>#2.0</version></td>
+                <td>
+                  <code>input,</code><br/>
+                  <code>textarea,</code><br/>
+                  <code>select</code></td>
+                <td>When looking for fields within a form, Parsley uses this selector.
+                  The fields found will then be filtered using the <code>excluded<code> option below.</td>
+              </tr>
+              <tr>
                 <td><code>data-parsley-excluded</code> <version>#2.0</version></td>
                 <td>
                   <code>input[type=button],</code><br/>
@@ -340,24 +349,24 @@ if (false === instance.options.priorityEnabled)
             </thead>
             <tbody>
               <tr>
-                <td><code>whenValid(group, force)</code> <version>#2.2</version></td>
+                <td><code>whenValid({group, force})</code> <version>#2.2</version></td>
                 <td><code>promise</code></td>
                 <td>Returns a jQuery promise that will be fulfilled if and only if the Form is valid. <strong>Does not affect UI nor fires <a href="#events">events</a>.</strong> If <code>group</code> is given, it only validates fields that belong to this group. If <code>force</code> is given, it force validates even non-required fields (<a href="examples/events.html">See example</a>)</td>
               </tr>
               <tr>
-                <td><code>isValid(group, force)</code> <version>#2.0</version></td>
+                <td><code>isValid({group, force})</code> <version>#2.0</version></td>
                 <td><code>boolean or null</code></td>
                 <td>Similar to <code>whenValid</code> but returns <code>true</code> if the promise is already fulfilled, <code>false</code> if already rejected, and <code>null</code> if the validation is still pending.</td>
               </tr>
               <tr>
-                <td><code>whenValidate(group, force)</code> <version>#2.0</version></td>
+                <td><code>whenValidate({group, force})</code> <version>#2.0</version></td>
                 <td>
                   <code>promise</code>
                 </td>
                 <td>Validate form. Prevents submission if not valid. <strong>Fires <a href="#events">events</a> and affects UI.</strong>. You can only validate a certain group of fields by specifying optional <code>group</code> string parameter. If <code>group</code> is given, it only validates fields that belong to this group. If <code>force</code> is given, it force validates even non required fields (<a href="examples/events.html">See example</a>). Same result as <code>whenValid</code>.</td>
               </tr>
               <tr>
-                <td><code>validate(group, force)</code> <version>#2.0</version></td>
+                <td><code>validate({group, force})</code> <version>#2.0</version></td>
                 <td>
                   <code>boolean or null</code>
                 </td>
@@ -455,22 +464,22 @@ if (false === instance.options.priorityEnabled)
             </thead>
             <tbody>
               <tr>
-                <td><code>isValid(force)</code> <version>#2.0</version></td>
+                <td><code>isValid({force})</code> <version>#2.0</version></td>
                 <td>
                   <code>true</code> if all ok<br/>
-                  <code>[]</code> if empty optional field<br/>
-                  <code>[Violation [, Violation..]]</code> if fails
+                  <code>null</code> if some validations are still pending<br/>
+                  <code>[Violation, ...]]</code> if fails
                 </td>
-                <td>Returns if the field is valid or not. <strong>Does not affect UI nor fires <a href="#events">events</a>.</strong> If <code>force</code> is given, it forces validation even on non-required fields (<a href="examples/events.html">See example</a>)</td>
+                <td>Returns if the field is valid or not. <strong>Does not affect UI nor fires <a href="#events">events</a>.</strong> If <code>force</code> is set, it forces validation even on non-required fields (<a href="examples/events.html">See example</a>)</td>
               </tr>
               <tr>
-                <td><code>validate(force)</code> <version>#2.0</version></td>
+                <td><code>validate({force, group})</code> <version>#2.0</version></td>
                 <td>
                   <code>true</code> if all ok<br/>
-                  <code>[]</code> if empty optional field<br/>
-                  <code>[Violation [, Violation..]]</code> if fails
+                  <code>null</code> if some validations are still pending<br/>
+                  <code>[Violation, ...]]</code> if fails
                 </td>
-                <td>Validate Field. <strong>Fires <a href="#events">events</a> and affects UI.</strong> If <code>force</code> is given, force validate even non required fields (<a href="examples/events.html">See example</a>)</td>
+                <td>Validate Field. <strong>Fires <a href="#events">events</a> and affects UI.</strong> If <code>force</code> is set, force validate even non required fields (<a href="examples/events.html">See example</a>)</td>
               </tr>
               <tr>
                 <td><code>reset()</code> <version>#2.0</version></td>
@@ -560,7 +569,8 @@ if (false === instance.options.priorityEnabled)
                   Number <version>#2.0</version>
                 </td>
                 <td><code>data-parsley-type="number"</code></td>
-                <td>Validates that a value is a valid number.<span class="label label-warning">Warning!</span> HTML5 <code>type="number"</code> is bound with the below <code>integer</code> validator, but for browsers that support it, the value accessible from javascript in case of invalid input is <code>""</code>, so you will never get an error (unless it is also <code>required</code>).</td>
+                <td>Validates that a value is a valid number according to the given <code>step</code>, <code>min</code> and original <code>value</code>.
+                  <span class="label label-warning">Warning!</span> HTML5 <code>type="number"</code> can be counterintuitive. Moreover, for browsers that support it, the value accessible from javascript in case of invalid input is <code>""</code>, so you will never get an error (unless it is also <code>required</code>).</td>
               </tr>
               <tr>
                 <td>
@@ -734,7 +744,7 @@ if (false === instance.options.priorityEnabled)
                 </td>
                 <td>Validates that a value matches a specific regular expression (regex).
                   <br/>Note that patterns are anchored, i.e. must match the whole string.
-                  <br/>Parsley deviates from the standard for patterns looking like <code>/<i>pattern</i>/<i>{flag}</i></code>; these are interpreted as litteral regexp and are not anchored.
+                  <br/>Parsley deviates from the standard for patterns looking like <code>/<i>pattern</i>/<i>{flag}</i></code>; these are interpreted as literal regexp and are not anchored.
                 </td>
               </tr>
               <tr>
@@ -1439,7 +1449,7 @@ window.Parsley.addAsyncValidator('mycustom', function (xhr) {
     <script type="text/javascript" src="../bower_components/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript" src="../bower_components/bootstrap/js/affix.js"></script>
     <script type="text/javascript" src="../bower_components/bootstrap/js/scrollspy.js"></script>
-    <script type="text/javascript" src="http://yandex.st/highlightjs/7.3/highlight.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/7.3/highlight.min.js"></script>
     <script type="text/javascript" src="assets/docs.js"></script>
     <script type="text/javascript" src="../dist/parsley.min.js"></script>
 

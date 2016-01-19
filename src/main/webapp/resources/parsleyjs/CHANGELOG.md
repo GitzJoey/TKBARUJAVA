@@ -1,5 +1,15 @@
 # Parsley 2.x changelog
 
+## master
+
+## 2.2.0
+
+- type="number" now follows HTML5 spec. In particular, commas are no longer accepted. (#1037)
+- Calls to validate, isValid, whenValidate, whenValid use named arguments
+  (e.g. validate({force: true, group: 'foo'})). Previous API is supported for
+  isValid/validate but is deprecated.
+- Drop support for undocumented option `eventValidate`.
+
 ## 2.2.0-rc3
 
 - Merged both versions (remote and basic) of Parsley.

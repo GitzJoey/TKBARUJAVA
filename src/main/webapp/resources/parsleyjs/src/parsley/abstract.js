@@ -115,13 +115,15 @@ ParsleyAbstract.prototype = {
     this._trigger('destroy');
   },
 
-  asyncIsValid: function () {
-    ParsleyUtils.warnOnce("asyncIsValid is deprecated; please use whenIsValid instead");
-    return this.whenValid.apply(this, arguments);
+  asyncIsValid: function (group, force) {
+    ParsleyUtils.warnOnce("asyncIsValid is deprecated; please use whenValid instead");
+    return this.whenValid({group, force});
   },
 
-  _findRelatedMultiple: function () {
-    return this.parent.$element.find(`[${this.options.namespace}multiple="${this.options.multiple}"]`);
+  _findRelated: function () {
+    return this.options.multiple ?
+      this.parent.$element.find(`[${this.options.namespace}multiple="${this.options.multiple}"]`)
+    : this.$element;
   }
 };
 
