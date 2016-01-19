@@ -56,7 +56,7 @@
 		                                </div>
 										<div class="form-group">
 											<div class="checkbox">
-							        			<input id="cbx_remember_me" type="checkbox" value=""/>
+							        			<input id="cbx_remember_me" name="_spring_security_remember_me" type="checkbox" value=""/>
 							        			<label for="cbx_remember_me"><spring:message code="login_jsp.pic.remember_me" text="Remember Me"/></label> 
 											</div>
 										</div>

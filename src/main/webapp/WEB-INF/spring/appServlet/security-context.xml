@@ -22,6 +22,8 @@
 					
 		<logout invalidate-session="true" delete-cookies="JSESSIONID" />
 		
+		<remember-me key="uniqueAndSecret" token-validity-seconds="432000"/>		
+		
 		<session-management invalid-session-url="/login.html?e=session">
 			<concurrency-control expired-url="/login.html?e=expired" error-if-maximum-exceeded="true" max-sessions="1" session-registry-alias="sessionRegistry"/>
 		</session-management>
