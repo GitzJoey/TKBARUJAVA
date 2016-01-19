@@ -139,13 +139,16 @@ public class SalesOrderController {
 	}
 
 	@RequestMapping(value="/t/{tabId}/search/cust/{searchQuery}", method = RequestMethod.POST)
-	public String salesSearchCustomer(Locale locale, Model model, @PathVariable int tabId, @PathVariable String searchQuery) {
+	public String salesSearchCustomer(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String searchQuery) {
 		logger.info("[salesSearchCustomer] " + "tabId: " + tabId + ", searchQuery: " + searchQuery);
 		
 		List<Customer> custList = customerManager.searchCustomer(searchQuery);
 		
+		loginContextSession.setSoList(loginContext.getSoList());
+		
 		model.addAttribute("customerList", custList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("searchQuery", searchQuery);
 		
