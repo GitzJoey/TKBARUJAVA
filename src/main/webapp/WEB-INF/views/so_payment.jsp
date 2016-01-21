@@ -136,9 +136,9 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
-								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
-								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="cashPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-dollar fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.cash_button" text="Cash Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="transferPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-bank fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.transfer_button" text="Transfer Payment"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="giroPayButton" class="btn btn-sm btn-primary" href=""><span class="fa fa-book fa-fw"></span>&nbsp;<spring:message code="so_payment_jsp.giro_button" text="Giro Payment"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
 					</c:when>
@@ -219,7 +219,7 @@
 																			<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
 																		</div>
 																	</div>
-																	<c:if test="${ paymentSalesForm.salesTypeLookup.lookupKey == 'L022_WIN' }">
+																	<c:if test="${ paymentSalesForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
 																		<div class="form-group">																
 																			<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-9">
@@ -227,11 +227,11 @@
 																			</div>
 																		</div>
 																	</c:if>
-																	<c:if test="${ paymentSalesForm.salesTypeLookup.lookupKey == 'L022_S' }">
+																	<c:if test="${ paymentSalesForm.customerTypeLookup.lookupKey == 'L022_R' }">
 																		<div class="form-group">
 																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="so_payment_jsp.customer_details" text="Customer Details"/></textarea>
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ paymentSalesForm.customerEntity }"/></textarea>
 																			</div>
 																		</div>
 																	</c:if>																

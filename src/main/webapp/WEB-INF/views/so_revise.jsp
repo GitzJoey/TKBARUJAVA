@@ -221,7 +221,7 @@
 																			<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
 																		</div>
 																	</div>
-																	<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_WIN' }">
+																	<c:if test="${ reviseSalesForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
 																		<div class="form-group">
 																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
@@ -229,11 +229,11 @@
 																			</div>
 																		</div>
 																	</c:if>
-																	<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
+																	<c:if test="${ reviseSalesForm.customerTypeLookup.lookupKey == 'L022_R' }">
 																		<div class="form-group">
 																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="sales_jsp.customer_details" text="Customer Details"/></textarea>
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ paymentSalesForm.customerEntity }"/></textarea>
 																			</div>
 																		</div>
 																	</c:if>																		
