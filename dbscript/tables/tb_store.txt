@@ -6,6 +6,7 @@ CREATE TABLE `tb_store` (
   `address_1` 		varchar(145)	DEFAULT NULL,
   `address_2` 		varchar(145) 	DEFAULT NULL,
   `address_3` 		varchar(145) 	DEFAULT NULL,
+  `phone_num` 		varchar(145) 	DEFAULT NULL,
   `is_default` 		varchar(10) 	DEFAULT NULL,
   `npwp_number` 	varchar(45) 	DEFAULT NULL,
   `status` 			varchar(15) 	DEFAULT NULL,
@@ -16,7 +17,7 @@ CREATE TABLE `tb_store` (
   PRIMARY KEY (`store_id`)
 );
 
-INSERT INTO tb_store (store_name, address_1, address_2, address_3, is_default, status, created_by, created_date)
-VALUES ('Toko Baru', '', '', '', 'L003_YES', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_store (store_name, address_1, address_2, address_3, phone_num, is_default, status, created_by, created_date)
+VALUES ('Toko Baru', '', '', '', '', 'L003_YES', 'L001_A', 0, (SELECT CURRENT_TIMESTAMP()));
 
 COMMIT;

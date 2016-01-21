@@ -34,6 +34,8 @@ public class Store implements Serializable {
 	private String storeAddress2;
 	@Column(name="address_3")
 	private String storeAddress3;
+	@Column(name="phone_num")
+	private String storePhone;
 	@Column(name="npwp_number")
 	private String npwpNumber;
 	@Column(name="created_by")
@@ -95,6 +97,14 @@ public class Store implements Serializable {
 		this.storeAddress3 = storeAddress3;
 	}
 
+	public String getStorePhone() {
+		return storePhone;
+	}
+
+	public void setStorePhone(String storePhone) {
+		this.storePhone = storePhone;
+	}
+
 	public String getNpwpNumber() {
 		return npwpNumber;
 	}
@@ -154,10 +164,10 @@ public class Store implements Serializable {
 	@Override
 	public String toString() {
 		return "Store [storeId=" + storeId + ", storeName=" + storeName + ", storeAddress1=" + storeAddress1
-				+ ", storeAddress2=" + storeAddress2 + ", storeAddress3=" + storeAddress3 + ", npwpNumber=" + npwpNumber
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", storeStatusLookup=" + storeStatusLookup + ", isDefaultLookup="
-				+ isDefaultLookup + "]";
+				+ ", storeAddress2=" + storeAddress2 + ", storeAddress3=" + storeAddress3 + ", storePhone=" + storePhone
+				+ ", npwpNumber=" + npwpNumber + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", storeStatusLookup="
+				+ storeStatusLookup + ", isDefaultLookup=" + isDefaultLookup + "]";
 	}
 
 }

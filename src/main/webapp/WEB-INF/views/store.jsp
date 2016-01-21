@@ -161,6 +161,12 @@
 										</div>
 									</div>
 									<div class="form-group">
+										<label for="inputPhoneNumber" class="col-sm-2 control-label"><spring:message code="store_jsp.phone_number" text="Phone Number"/></label>
+										<div class="col-sm-3">
+											<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="storePhone" placeholder="Phone Number"></form:input>
+										</div>
+									</div>
+									<div class="form-group">
 										<label for="inputIsDefault" class="col-sm-2 control-label"><spring:message code="store_jsp.is_default" text="Is Default Store"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="isDefaultLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">

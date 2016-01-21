@@ -3,8 +3,12 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["C:\\TKBARU\\workspace\\TKBARU\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
+	</parameter>
 	<field name="itemsId" class="java.lang.String"/>
 	<field name="productEntity.productName" class="java.lang.String"/>
+	<field name="receiptList" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -28,15 +32,20 @@
 				<reportElement x="10" y="0" width="100" height="20" uuid="fc1b56ca-101b-4dd2-a384-941c4c59ffbc"/>
 				<textFieldExpression><![CDATA[$F{productEntity.productName}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="10" y="25" width="200" height="100" uuid="7b7f4380-2c82-42f0-8a84-2b05a6386a9c"/>
+				<connectionExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{receiptList})]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "po_items_receipt.jasper"]]></subreportExpression>
+			</subreport>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="42" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</summary>
 </jasperReport>
