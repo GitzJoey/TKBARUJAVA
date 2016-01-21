@@ -175,29 +175,6 @@
 																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>	
 																</div>
 															</div>
-															<div class="form-group">
-																<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.customer" text="Customer"/></label>
-																<div class="col-sm-10">
-																	<form:hidden path="customerEntity.customerId"/>
-																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
-																</div>
-															</div>
-															<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_WIN' }">
-																<div class="form-group">
-																	<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																	<div class="col-sm-10">
-																		<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="true"/>
-																	</div>
-																</div>
-															</c:if>
-															<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
-																<div class="form-group">
-																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																	<div class="col-sm-10">
-																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="sales_jsp.customer_details" text="Customer Details"/></textarea>
-																	</div>
-																</div>
-															</c:if>
 														</div>
 														<div class="col-md-5">
 															<div class="form-group">
@@ -224,6 +201,47 @@
 																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
 																</div>										
 															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_revise_jsp.customer_title" text="Customer"/></h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.customer" text="Customer"/></label>
+																		<div class="col-sm-10">
+																			<form:hidden path="customerEntity.customerId"/>
+																			<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																		</div>
+																	</div>
+																	<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_WIN' }">
+																		<div class="form-group">
+																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="true"/>
+																			</div>
+																		</div>
+																	</c:if>
+																	<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
+																		<div class="form-group">
+																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="sales_jsp.customer_details" text="Customer Details"/></textarea>
+																			</div>
+																		</div>
+																	</c:if>																		
+																</div>
+																<div class="col-md-5">
+																	
+																</div>
+															</div>								
 														</div>
 													</div>
 												</div>

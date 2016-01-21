@@ -64,6 +64,16 @@
 			});
 		
 		    $('#paymentListTable').DataTable();
+			
+		    $('input[id^="cbxBank_"]').click(function() {
+				var id = $(this).attr('id');
+				
+				$('input[id^="cbxBank_"]').each(function(index, item) {
+					if ($(this).attr('id') != id) { 
+						$(this).prop('checked', false);	
+					}
+				});
+			});
 		});
 	</script>	
 </head>
@@ -119,7 +129,7 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><a href="${ pageContext.request.contextPath }/so/payment/view/${ i.salesId }"><c:out value="${ i.salesCode }"/></a></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
-													<td><c:out value="${ i.customerLookup.customerName }"></c:out>
+													<td><c:out value="${ i.customerEntity.customerName }"></c:out>
 													</td>
 												</tr>
 											</c:forEach>
@@ -159,33 +169,10 @@
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.sales_type" text="Sales Type"/></label>
 																<div class="col-sm-8">
-																<form:hidden path="salesType"/>
-																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="soTypeLookup.lookupValue" readonly="true"></form:input>
+																<form:hidden path="salesTypeLookup.lookupKey"/>
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>
 																</div>										
 															</div>
-															<div class="form-group">
-																<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.customer" text="Customer"/></label>
-																<div class="col-sm-10">
-																	<form:hidden path="customerId"/>
-																	<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerLookup.customerName" placeholder="Search Customer" disabled="true"></form:input>
-																</div>
-															</div>
-															<c:if test="${ paymentSalesForm.salesType == 'L015_WIN' }">
-																<div class="form-group">																
-																	<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
-																	<div class="col-sm-9">
-																		<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDetail" readonly="true"></form:textarea>
-																	</div>
-																</div>
-															</c:if>
-															<c:if test="${ paymentSalesForm.salesType == 'L015_S' }">
-																<div class="form-group">
-																	<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
-																	<div class="col-sm-10">
-																		<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="so_payment_jsp.customer_details" text="Customer Details"/></textarea>
-																	</div>
-																</div>
-															</c:if>
 														</div>					
 														<div class="col-md-5">
 															<div class="form-group">
@@ -197,8 +184,8 @@
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
-																<form:hidden path="salesStatus"/>
-																	<label id="inputPOStatus" class="control-label"><c:out value="${ paymentSalesForm.statusLookup.lookupValue }"></c:out></label>
+																<form:hidden path="salesStatusLookup.lookupKey"/>
+																	<label id="inputPOStatus" class="control-label"><c:out value="${ paymentSalesForm.salesStatusLookup.lookupValue }"></c:out></label>
 																</div>										
 															</div>
 														</div>
@@ -211,6 +198,46 @@
 																<div class="col-sm-5">
 																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
 																</div>										
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_payment_jsp.customer_title" text="Customer"/></h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.customer" text="Customer"/></label>
+																		<div class="col-sm-10">
+																			<form:hidden path="customerEntity.customerId"/>
+																			<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																		</div>
+																	</div>
+																	<c:if test="${ paymentSalesForm.salesTypeLookup.lookupKey == 'L022_WIN' }">
+																		<div class="form-group">																
+																			<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-9">
+																				<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDetail" readonly="true"></form:textarea>
+																			</div>
+																		</div>
+																	</c:if>
+																	<c:if test="${ paymentSalesForm.salesTypeLookup.lookupKey == 'L022_S' }">
+																		<div class="form-group">
+																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><spring:message code="so_payment_jsp.customer_details" text="Customer Details"/></textarea>
+																			</div>
+																		</div>
+																	</c:if>																
+																</div>
+																<div class="col-md-5">
+																</div>
 															</div>
 														</div>
 													</div>
@@ -242,8 +269,8 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
-																						<form:hidden path="itemsList[${ iLIdx.index }].productId"/>
-																						<c:out value="${ paymentSalesForm.itemsList[iLIdx.index].productLookup.productName }"></c:out>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>
+																						<c:out value="${ paymentSalesForm.itemsList[iLIdx.index].productEntity.productName }"></c:out>
 																					</td>
 																					<td>
 																						<label>
@@ -339,7 +366,7 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="paymentList[${ iLIdx.index }].paymentId" />
-																						<form:hidden path="paymentList[${ iLIdx.index }].paymentType" />
+																						<form:hidden path="paymentList[${ iLIdx.index }].paymentTypeLookup.lookupKey" />
 																						<label><c:out value="${ paymentSalesForm.paymentList[ iLIdx.index ].paymentTypeLookup.lookupValue }"></c:out></label>
 																					</td>
 																					<td>
@@ -349,7 +376,7 @@
 																					</td>
 																					<td>
 																					<div class="input-group">
-																						<c:if test="${ iL.paymentType == 'L017_TRANSFER' || iL.paymentType == 'L017_GIRO'}">
+																						<c:if test="${ iL.paymentTypeLookup.lookupKey == 'L017_TRANSFER' || iL.paymentTypeLookup.lookupKey == 'L017_GIRO'}">
 																							<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																								<c:set var="test" value="0" />
 																								<c:if test="${bankL.lookupKey == paymentSalesForm.paymentList[iLIdx.index].bankCode}">
@@ -414,13 +441,13 @@
 																<div class="panel-heading">
 																	<h1 class="panel-title">
 																		<c:choose>
-																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' }">
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_TRANSFER' }">
 																				Transfer Payment
 																			</c:when>
-																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO' }">
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_GIRO' }">
 																				Giro Payment
 																			</c:when>
-																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_CASH' }">
+																			<c:when test="${ paymentSalesForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_CASH' }">
 																				Cash Payment
 																			</c:when>
 																			<c:otherwise>
@@ -435,30 +462,30 @@
 																			<div class="form-group">
 																				<label for="inputPaymentDate" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.payment_type" text="Payment Type"/></label>
 																				<div class="col-sm-5">
-																					<form:hidden path="paymentList[${ lastIdx }].paymentType" ></form:hidden>
+																					<form:hidden path="paymentList[${ lastIdx }].paymentTypeLookup.lookupKey" ></form:hidden>
 																					<form:input class="form-control" path="paymentList[${ lastIdx }].paymentTypeLookup.lookupValue" readonly="true"></form:input>
 																				</div>
 																			</div>
-																			<c:if test="${ paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_TRANSFER' || paymentSalesForm.paymentList[lastIdx].paymentType == 'L017_GIRO'}">
+																			<c:if test="${ paymentSalesForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_TRANSFER' || paymentSalesForm.paymentList[lastIdx].paymentTypeLookup.lookupKey == 'L017_GIRO'}">
 																				<div class="form-group">
 																					<label for="inputBank" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.bank" text="Bank"/></label>
 																					<div class="col-sm-8">
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
-																							<c:if test="${ bankL.lookupKey == paymentSalesForm.paymentList[lastIdx].bankCode }">
+																							<c:if test="${ bankL.lookupKey == paymentSalesForm.paymentList[lastIdx].bankCodeLookup.lookupKey }">
 																								<c:set var="test" value="1" />
 																							</c:if>
 																							<c:choose>
 																								<c:when test="${ test == 1 }">
 																									<form:hidden path="paymentList[${ lastIdx }].bankCode"/>
 																									<div class="checkbox">
-																										<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${lastIdx}].bankCode" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																										<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${lastIdx}].bankCodeLookup.lookupKey" disabled="true" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																									</div>
 																								</c:when>
 																								<c:otherwise>
-																									<c:if test="${ empty paymentSalesForm.paymentList[ lastIdx ].bankCode }">
+																									<c:if test="${ empty paymentSalesForm.paymentList[ lastIdx ].bankCodeLookup.lookupKey }">
 																										<div class="checkbox">
-																											<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${ lastIdx }].bankCode" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
+																											<form:checkbox id="cbxBank_${ lastIdx }" path="paymentList[${ lastIdx }].bankCodeLookup.lookupKey" value="${ bankL.lookupKey }" label="${ bankL.lookupValue }" />
 																										</div>
 																									</c:if>
 																								</c:otherwise>
@@ -490,32 +517,33 @@
 																			<div class="form-group">
 																				<label for="linked_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.linked" text="Linked"/></label>
 																				<div class="col-sm-9">
-																					<div class="checkbox">
-																						<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].linked" label="linked" />
-																				    </div>
+																					<c:if test="${ not empty paymentList[ lastIdx ].isLinked }">
+																						<div class="checkbox">
+																							<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].isLinked" label="linked" />
+																					    </div>								
+																					</c:if>
 																				</div>
 																			</div>
 																			<div class="form-group">
 																				<label for="status_${ lastIdx }" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.status" text="Status"/></label>
 																				<div class="col-sm-9">
-																				    <c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_CASH'}">
+																				    <c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_CASH'}">
 																						<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ lastIdx }].paymentStatus" value="${ cash.lookupKey }" label="${ cash.lookupValue }" />
+																								<form:checkbox id="cbx_cash_${ cashIdx.index }" path="paymentList[${ lastIdx }].paymentStatusLookup.lookupKey" value="${ cash.lookupKey }" label="${ cash.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if> 
-																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_TRANSFER' }">
+																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' }">
 																						<c:forEach items="${ transferStatusDDL }" var="transfer" varStatus="transferIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_transfer_${transferIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ transfer.lookupKey }" label="${ transfer.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if>
-																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentType == 'L017_GIRO' }">
+																					<c:if test="${ paymentSalesForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_GIRO' }">
 																						<c:forEach items="${ giroStatusDDL }" var="giro" varStatus="giroIdx">
 																							<div class="checkbox">
-																								<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ lastIdx }].paymentStatus" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
+																								<form:checkbox id="cbx_giro_${giroIdx.index}" path="paymentList[${ lastIdx }].paymentStatusLookup.lookupKey" value="${ giro.lookupKey }" label="${ giro.lookupValue }" />
 																							</div>
 																						</c:forEach>
 																					</c:if> 
