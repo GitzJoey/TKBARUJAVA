@@ -49,7 +49,7 @@
 										<c:import url="/WEB-INF/views/include/menuchild.jsp"/>
 										<c:remove var="functionList" scope="request"/>
 									</li>
-								</ul>						
+								</ul>
 							</div>
 						</div>
 					</c:if>
