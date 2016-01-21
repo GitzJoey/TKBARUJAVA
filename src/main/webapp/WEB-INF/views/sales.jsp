@@ -272,7 +272,7 @@
 																	   		<form:select id="selectSoType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].salesTypeLookup.lookupKey" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
 																				<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																				<c:forEach items="${ soTypeDDL }" var="i">
-																					<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+																					<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
 																				</c:forEach>
 																			</form:select>																		
 																		</div>
