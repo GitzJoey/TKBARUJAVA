@@ -480,7 +480,7 @@
 																				<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
 																			</div>
 																		</div>
-																	</c:if>																	
+																	</c:if>
 																	<br/>
 																	<div class="row">
 																		<div class="col-md-12">
