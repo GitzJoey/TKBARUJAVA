@@ -173,6 +173,7 @@ public class SalesOrderController {
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -213,9 +214,10 @@ public class SalesOrderController {
 		loginContextSession.setSoList(loginContext.getSoList());
 
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -244,9 +246,10 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(iLNew);
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -313,9 +316,10 @@ public class SalesOrderController {
 		loginContextSession.getSoList().get(tabId).setItemsList(itemList);
 		
 		model.addAttribute("activeTab", tabId);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
@@ -351,6 +355,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("reviseSalesForm", so);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -389,6 +394,7 @@ public class SalesOrderController {
 
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -422,6 +428,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
 		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
