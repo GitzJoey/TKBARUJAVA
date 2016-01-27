@@ -4,8 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
@@ -31,12 +36,17 @@ import com.tkbaru.model.Payment;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.model.Stocks;
+import com.tkbaru.model.report.SalesOrderReportView;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
 import com.tkbaru.service.StocksService;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
 @RequestMapping("/sales")
@@ -793,5 +803,43 @@ public class SalesOrderController {
 		logger.info("[checkStocks] " + "stocksId: " + stocksId + ", qty: " + qty + ", unit: " + unit);
 		
 		return "true";
+	}
+	
+	@RequestMapping(value = "/t/{tabId}/generate/{soId}", method = RequestMethod.GET)
+	public ModelAndView soGenerate(Locale locale, Model model, @PathVariable int tabId, @PathVariable String soId, HttpServletResponse response) throws JRException{
+		logger.info("[soGenerate] " + "tabId: " + tabId + ", soId: " + soId);
+		
+		ModelAndView mav = null;
+		Map<String,Object> parameterMap = new HashMap<String,Object>();
+		SalesOrder so = salesOrderManager.getSalesOrderById(Integer.parseInt(soId));
+		
+		List<SalesOrderReportView> soReportList = new ArrayList<SalesOrderReportView>();
+		
+		for (Items item : so.getItemsList()){
+			SalesOrderReportView objSo = new SalesOrderReportView();
+			objSo.setSalesCode(so.getSalesCode());
+			objSo.setCustomerName(so.getCustomerEntity().getCustomerName());
+			objSo.setStoreName(so.getSalesStoreEntity().getStoreName());
+			objSo.setStoreAddress1(so.getSalesStoreEntity().getStoreAddress1());
+			objSo.setStoreAddress2(so.getSalesStoreEntity().getStoreAddress2());
+			objSo.setStoreAddress3(so.getSalesStoreEntity().getStoreAddress3());
+			objSo.setNpwpNumber(so.getSalesStoreEntity().getNpwpNumber());
+			objSo.setStorePhone(so.getSalesStoreEntity().getStorePhone());
+			objSo.setProductName(item.getProductEntity().getProductName());
+			objSo.setProdPrice(item.getProdPrice());
+			objSo.setProdQuantity(item.getProdQuantity());
+			objSo.setUnitCode(item.getUnitCodeLookup().getLookupValue());
+			objSo.setShippingDate(so.getShippingDate());
+			objSo.setSalesCreatedDate(so.getSalesCreatedDate());
+			objSo.setSalesRemarks(so.getSalesRemarks());
+			soReportList.add(objSo);
+		}
+		
+		JRDataSource ds = new JRBeanCollectionDataSource(soReportList,false);
+		
+		parameterMap.put("datasource", ds);
+		mav = new ModelAndView("so_pdf", parameterMap); 
+				
+		return mav;
 	}
 }
