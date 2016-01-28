@@ -39,6 +39,10 @@ public class PurchaseOrderReportView {
 	private String npwpNumber;
 
 	private String storePhone;
+	
+	private String warehouseName;
+	
+	private String supplierName;
 
 	public String getPoCode() {
 		return poCode;
@@ -185,4 +189,22 @@ public class PurchaseOrderReportView {
 	public void setUnitCode(String unitCode) {
 		this.unitCode = unitCode;
 	}
+
+	public String getWarehouseName() {
+		return warehouseName;
+	}
+
+	public void setWarehouseName(String warehouseName) {
+		this.warehouseName = warehouseName;
+	}
+
+	public String getSupplierName() {
+		return supplierName;
+	}
+
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
+	}
+	
+	
 }

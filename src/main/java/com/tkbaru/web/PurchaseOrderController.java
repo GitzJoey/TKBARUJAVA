@@ -307,6 +307,8 @@ public class PurchaseOrderController {
 			objPo.setShippingDate(po.getShippingDate());
 			objPo.setPoCreatedDate(po.getPoCreatedDate());
 			objPo.setPoRemarks(po.getPoRemarks());
+			objPo.setSupplierName(po.getSupplierEntity().getSupplierName());
+			objPo.setWarehouseName(po.getWarehouseEntity().getWarehouseName());
 			poReportList.add(objPo);
 		}
 
