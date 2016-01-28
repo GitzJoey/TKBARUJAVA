@@ -37,18 +37,16 @@ import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Receipt;
 import com.tkbaru.model.Supplier;
-import com.tkbaru.model.report.PurchaseOrderReportView;
-import com.tkbaru.model.report.SalesOrderReportView;
 import com.tkbaru.service.BankService;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SupplierService;
 import com.tkbaru.service.WarehouseService;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Controller
 @RequestMapping("/po")
@@ -75,6 +73,9 @@ public class PurchaseOrderController {
 
 	@Autowired
 	private LoginContext loginContextSession;
+	
+	@Autowired
+	ReportService reportManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -288,34 +289,29 @@ public class PurchaseOrderController {
 		ModelAndView mav = null;
 		Map<String, Object> parameterMap = new HashMap<String, Object>();
 		PurchaseOrder po = poManager.getPurchaseOrderById(Integer.parseInt(poId));
-
-		List<PurchaseOrderReportView> poReportList = new ArrayList<PurchaseOrderReportView>();
-
-		for (Items item : po.getItemsList()) {
-			PurchaseOrderReportView objPo = new PurchaseOrderReportView();
-			objPo.setPoCode(po.getPoCode());
-			objPo.setStoreName(po.getPoStoreEntity().getStoreName());
-			objPo.setStoreAddress1(po.getPoStoreEntity().getStoreAddress1());
-			objPo.setStoreAddress2(po.getPoStoreEntity().getStoreAddress2());
-			objPo.setStoreAddress3(po.getPoStoreEntity().getStoreAddress3());
-			objPo.setNpwpNumber(po.getPoStoreEntity().getNpwpNumber());
-			objPo.setStorePhone(po.getPoStoreEntity().getStorePhone());
-			objPo.setProductName(item.getProductEntity().getProductName());
-			objPo.setProdPrice(item.getProdPrice());
-			objPo.setProdQuantity(item.getProdQuantity());
-			objPo.setUnitCode(item.getUnitCodeLookup().getLookupValue());
-			objPo.setShippingDate(po.getShippingDate());
-			objPo.setPoCreatedDate(po.getPoCreatedDate());
-			objPo.setPoRemarks(po.getPoRemarks());
-			objPo.setSupplierName(po.getSupplierEntity().getSupplierName());
-			objPo.setWarehouseName(po.getWarehouseEntity().getWarehouseName());
-			poReportList.add(objPo);
-		}
-
-		JRDataSource ds = new JRBeanCollectionDataSource(poReportList);
+		
+		JRDataSource ds = reportManager.generateReportDS_PurchaseOrder(po);
 
 		parameterMap.put("datasource", ds);
 		mav = new ModelAndView("po_pdf", parameterMap);
+
+		return mav;
+	}
+	
+	
+	@RequestMapping(value = "/payment/generate/{selectedPo}", method = RequestMethod.GET)
+	public ModelAndView paymentGenerate(Locale locale, Model model, @PathVariable String selectedPo,
+			HttpServletResponse response) throws JRException {
+		logger.info("[poGenerate] " + "selectedPo: " + selectedPo);
+
+		ModelAndView mav = null;
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		PurchaseOrder po = poManager.getPurchaseOrderById(Integer.parseInt(selectedPo));
+
+		JRDataSource ds = reportManager.generateReportDS_PurchaseOrder(po);
+
+		parameterMap.put("datasource", ds);
+		mav = new ModelAndView("po_payment_pdf", parameterMap);
 
 		return mav;
 	}

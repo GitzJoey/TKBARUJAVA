@@ -1,8 +1,14 @@
 package com.tkbaru.model.report;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 public class PurchaseOrderReportView {
+
+	/**
+	 * 
+	 */
 
 	private String poCode;
 
@@ -15,18 +21,6 @@ public class PurchaseOrderReportView {
 	private Integer createdBy;
 
 	private Date createdDate;
-
-	private Long prodQuantity;
-
-	private Long prodPrice;
-
-	private String unitCode;
-
-	private Long toBaseValue;
-
-	private Long toBaseQty;
-
-	private String productName;
 
 	private String storeName;
 
@@ -43,6 +37,11 @@ public class PurchaseOrderReportView {
 	private String warehouseName;
 	
 	private String supplierName;
+	
+	private List<ItemsReportView> items;
+	
+	private PurchasePaymentReportView payment;
+	
 
 	public String getPoCode() {
 		return poCode;
@@ -74,46 +73,6 @@ public class PurchaseOrderReportView {
 
 	public void setPoRemarks(String poRemarks) {
 		this.poRemarks = poRemarks;
-	}
-
-	public Long getProdQuantity() {
-		return prodQuantity;
-	}
-
-	public void setProdQuantity(Long prodQuantity) {
-		this.prodQuantity = prodQuantity;
-	}
-
-	public Long getProdPrice() {
-		return prodPrice;
-	}
-
-	public void setProdPrice(Long prodPrice) {
-		this.prodPrice = prodPrice;
-	}
-
-	public Long getToBaseValue() {
-		return toBaseValue;
-	}
-
-	public void setToBaseValue(Long toBaseValue) {
-		this.toBaseValue = toBaseValue;
-	}
-
-	public Long getToBaseQty() {
-		return toBaseQty;
-	}
-
-	public void setToBaseQty(Long toBaseQty) {
-		this.toBaseQty = toBaseQty;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	
@@ -182,14 +141,6 @@ public class PurchaseOrderReportView {
 		this.createdDate = createdDate;
 	}
 
-	public String getUnitCode() {
-		return unitCode;
-	}
-
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
-	}
-
 	public String getWarehouseName() {
 		return warehouseName;
 	}
@@ -204,6 +155,22 @@ public class PurchaseOrderReportView {
 
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
+	}
+
+	public List<ItemsReportView> getItems() {
+		return items;
+	}
+
+	public void setItems(List<ItemsReportView> items) {
+		this.items = items;
+	}
+
+	public PurchasePaymentReportView getPayment() {
+		return payment;
+	}
+
+	public void setPayment(PurchasePaymentReportView payment) {
+		this.payment = payment;
 	}
 	
 	
