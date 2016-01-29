@@ -34,4 +34,12 @@
 	<bean id="po_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/po.jrxml" /> 
+			
+	<bean id="so_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/so.jrxml" />
+			
+	<bean id="po_payment_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/po_payment.jrxml" />
 </beans>
