@@ -106,9 +106,30 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
+	@RequestMapping(value="/t/{tabId}/select/sales/type/{salesTypeValue}", method = RequestMethod.POST)
+	public String salesSelectSoType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String salesTypeValue) {
+		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", salesTypeValue: " + salesTypeValue);
+
+		loginContextSession.setSoList(loginContext.getSoList());
+		
+		model.addAttribute("activeTab", tabId);
+		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
+
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SALESORDER;
+	
+	}	
+	
 	@RequestMapping(value="/t/{tabId}/select/type/{custTypeValue}", method = RequestMethod.POST)
-	public String salesSelectSoType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String custTypeValue) {
-		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", custTypeValue: " + custTypeValue);
+	public String salesSelectCustType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String custTypeValue) {
+		logger.info("[salesSelectCustType] " + "tabId: " + tabId + ", custTypeValue: " + custTypeValue);
 
 		if (!loginContextSession.getSoList().isEmpty()) {			
 			loginContextSession.setSoList(loginContext.getSoList());
@@ -184,24 +205,33 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SALESORDER;
 	}
 	
-	@RequestMapping(value = "/t/{tabId}/additems/{stocksId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/t/{tabId}/additems/{productIdORstocksId}", method = RequestMethod.POST)
 	public String soAddItems(Locale locale, 
 								Model model, 
 								@ModelAttribute("loginContext") LoginContext loginContext, 
 								@PathVariable int tabId,
-								@PathVariable int stocksId) {
-		logger.info("[soAddItems] " + "tabId: " + tabId + ", stocksId: " + stocksId);
+								@PathVariable int productIdORstocksId) {
+		logger.info("[soAddItems] " + "tabId: " + tabId + ", productIdORstocksId: " + productIdORstocksId);
 		
-		Stocks s = stocksManager.getStocksById(stocksId);
-
-		Items item = new Items();		
-		item.setStocksEntity(s);
-		item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
-		item.setCreatedDate(new Date());
-		item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-		if (!loginContext.getSoList().get(tabId).getCustomerTypeLookup().getLookupKey().equals("L022_WIN")) {
-			item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
-		}
+		Items item = new Items();
+		
+		if(loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_SVC")) {
+		
+			item.setStocksEntity(null);
+			item.setProductEntity(productManager.getProductById(productIdORstocksId));
+			item.setCreatedDate(new Date());
+			item.setCreatedBy(loginContextSession.getUserLogin().getUserId());			
+		} else {
+			Stocks s = stocksManager.getStocksById(productIdORstocksId);
+			
+			item.setStocksEntity(s);
+			item.setProductEntity(productManager.getProductById(s.getProductEntity().getProductId()));
+			item.setCreatedDate(new Date());
+			item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			if (!loginContext.getSoList().get(tabId).getCustomerTypeLookup().getLookupKey().equals("L022_WIN")) {
+				item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
+			}			
+		}		
 		
 		for (ProductUnit productUnit:item.getProductEntity().getProductUnit()) {
 			if (productUnit.getIsBaseUnit()) {
