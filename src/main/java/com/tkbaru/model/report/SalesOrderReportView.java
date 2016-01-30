@@ -6,20 +6,22 @@ import java.util.List;
 public class SalesOrderReportView {
 
 	private String salesCode;
+	
+	private String salesType;
 
 	private Date salesCreatedDate;
 
 	private Date shippingDate;
-
-	private String walkInCustDetail;
+	
+	private String customerType;
+	
+	private String customerName;
 
 	private String salesRemarks;
 
 	private Integer createdBy;
 
 	private Date createdDate;
-
-	private String customerName;
 
 	private String storeName;
 
@@ -61,14 +63,6 @@ public class SalesOrderReportView {
 
 	public void setShippingDate(Date shippingDate) {
 		this.shippingDate = shippingDate;
-	}
-
-	public String getWalkInCustDetail() {
-		return walkInCustDetail;
-	}
-
-	public void setWalkInCustDetail(String walkInCustDetail) {
-		this.walkInCustDetail = walkInCustDetail;
 	}
 
 	public String getSalesRemarks() {
@@ -173,6 +167,22 @@ public class SalesOrderReportView {
 
 	public void setDeliver(DeliverReportView deliver) {
 		this.deliver = deliver;
+	}
+
+	public String getSalesType() {
+		return salesType;
+	}
+
+	public void setSalesType(String salesType) {
+		this.salesType = salesType;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
 	}
 	
 	
