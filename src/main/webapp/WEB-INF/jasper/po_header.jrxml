@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po_header" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
+	</parameter>
+	<field name="poCode" class="java.lang.String"/>
+	<field name="storeName" class="java.lang.String"/>
+	<field name="poCreatedDate" class="java.util.Date"/>
+	<field name="shippingDate" class="java.util.Date"/>
+	<field name="poRemarks" class="java.lang.String"/>
+	<field name="createdBy" class="java.lang.String"/>
+	<field name="createdDate" class="java.lang.String"/>
+	<field name="storeAddress1" class="java.lang.String"/>
+	<field name="storeAddress2" class="java.lang.String"/>
+	<field name="storeAddress3" class="java.lang.String"/>
+	<field name="npwpNumber" class="java.lang.String"/>
+	<field name="storePhone" class="java.lang.String"/>
+	<field name="supplierName" class="java.lang.String"/>
+	<field name="warehouseName" class="java.lang.String"/>
+	<field name="items" class="java.util.List"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="106" splitType="Stretch">
+			<textField>
+				<reportElement x="401" y="3" width="100" height="20" uuid="e6c201e7-9ee6-4443-a632-45d544097fbd"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="23" width="169" height="20" uuid="425f6c68-8d5e-4ce6-a2c6-b2b013739b59"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="3" width="169" height="20" uuid="7f7a76b7-8260-4bf0-922c-1e416c786b61"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{storeName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="43" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="63" width="169" height="20" uuid="c7b0e40c-6c07-4b9b-ba30-804749c34bc5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="83" width="169" height="20" uuid="1df6779e-590b-4a64-bb3d-3806811c554d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storePhone}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="401" y="23" width="100" height="20" uuid="99d1f715-1140-4e52-b877-65535238516a"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{poCreatedDate}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="401" y="63" width="100" height="20" uuid="b1a2ad4f-06e0-44d3-a3fe-77907b168358"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{shippingDate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="105" width="553" height="1" uuid="2717410f-39e2-4d58-b7ad-7288bd3cab71"/>
+			</line>
+			<staticText>
+				<reportElement x="301" y="3" width="100" height="20" uuid="028137a1-55a7-44ac-a4a2-79f8116a8d27"/>
+				<text><![CDATA[Nomor PO :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="23" width="100" height="20" uuid="3fa30ee8-3527-42b2-9070-7a8aa2c4ab25"/>
+				<text><![CDATA[Tanggal :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="63" width="100" height="20" uuid="9ef482b4-b592-4117-b2f2-0736d7342786"/>
+				<text><![CDATA[Pengiriman :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="401" y="43" width="100" height="20" uuid="d927e600-2fda-43c1-8561-959e667fa1d6"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{supplierName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="401" y="83" width="100" height="20" uuid="ec89e3d3-9ba6-4598-bc8c-be0561ab91dc"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{warehouseName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="301" y="43" width="100" height="20" uuid="cdc6179f-b507-448f-80fe-f03d503726e2"/>
+				<text><![CDATA[Supplier :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="301" y="83" width="100" height="20" uuid="ad9362a8-39cb-4901-a0f8-0e76dcb30058"/>
+				<text><![CDATA[Warehouse :]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

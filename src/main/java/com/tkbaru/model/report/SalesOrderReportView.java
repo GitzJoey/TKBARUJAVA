@@ -36,6 +36,8 @@ public class SalesOrderReportView {
 	private List<ItemsReportView> items;
 
 	private SalesPaymentReportView payment;
+	
+	private DeliverReportView deliver;
 
 	public String getSalesCode() {
 		return salesCode;
@@ -164,5 +166,15 @@ public class SalesOrderReportView {
 	public void setPayment(SalesPaymentReportView payment) {
 		this.payment = payment;
 	}
+
+	public DeliverReportView getDeliver() {
+		return deliver;
+	}
+
+	public void setDeliver(DeliverReportView deliver) {
+		this.deliver = deliver;
+	}
+	
+	
 
 }

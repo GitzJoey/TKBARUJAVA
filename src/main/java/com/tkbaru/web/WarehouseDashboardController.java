@@ -379,7 +379,7 @@ public class WarehouseDashboardController {
 	}
 	
 	@RequestMapping(value = "/receipt/generate/{selectedPo}/{itemId}", method = RequestMethod.GET)
-	public ModelAndView paymentGenerate(Locale locale, Model model, @PathVariable String selectedPo, @PathVariable int itemId,
+	public ModelAndView receiptGenerate(Locale locale, Model model, @PathVariable String selectedPo, @PathVariable int itemId,
 			HttpServletResponse response) throws JRException {
 		logger.info("[poGenerate] " + "selectedPo: " + selectedPo);
 
@@ -391,6 +391,23 @@ public class WarehouseDashboardController {
 
 		parameterMap.put("datasource", ds);
 		mav = new ModelAndView("po_receipt_pdf", parameterMap);
+
+		return mav;
+	}
+	
+	@RequestMapping(value = "/deliver/generate/{selectedSo}/{itemId}", method = RequestMethod.GET)
+	public ModelAndView deliverGenerate(Locale locale, Model model, @PathVariable String selectedSo, @PathVariable int itemId,
+			HttpServletResponse response) throws JRException {
+		logger.info("[poGenerate] " + "selectedSo: " + selectedSo);
+
+		ModelAndView mav = null;
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		SalesOrder so = salesManager.getSalesOrderById(Integer.parseInt(selectedSo));
+
+		JRDataSource ds = reportManager.generateReportDS_SalesOrder(so);
+
+		parameterMap.put("datasource", ds);
+		mav = new ModelAndView("so_deliver_pdf", parameterMap);
 
 		return mav;
 	}

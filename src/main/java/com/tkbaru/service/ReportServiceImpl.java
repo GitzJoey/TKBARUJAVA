@@ -3,9 +3,6 @@ package com.tkbaru.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,12 +12,16 @@ import com.tkbaru.model.Items;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.model.User;
+import com.tkbaru.model.report.DeliverReportView;
 import com.tkbaru.model.report.ItemsReportView;
 import com.tkbaru.model.report.PurchaseOrderReportView;
 import com.tkbaru.model.report.PurchasePaymentReportView;
 import com.tkbaru.model.report.ReceiptReportView;
 import com.tkbaru.model.report.SalesOrderReportView;
 import com.tkbaru.model.report.SalesPaymentReportView;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -95,6 +96,7 @@ public class ReportServiceImpl implements ReportService {
 			receipt.setTare(po.getItemsList().get(0).getReceiptList().get(0).getTare());
 			receipt.setUnitCode(po.getItemsList().get(0).getReceiptList().get(0).getUnitCodeLookup().getLookupValue());
 			receipt.setReceiptStore(po.getItemsList().get(0).getReceiptList().get(0).getReceiptStoreEntity().getStoreName());
+			objPo.setReceipt(receipt);
 		}
 		
 		List<PurchaseOrderReportView> poReportList = new ArrayList<PurchaseOrderReportView>();
@@ -152,6 +154,18 @@ public class ReportServiceImpl implements ReportService {
 		payment.setPaymentStore(so.getPaymentList().get(0).getPaymentStoreEntity().getStoreName());
 		
 		objSo.setPayment(payment);
+		}
+		
+		if(so.getItemsList().get(0).getDeliverList().size() > 0){
+			
+			DeliverReportView deliver = new DeliverReportView();
+			deliver.setDeliverDate(so.getItemsList().get(0).getDeliverList().get(0).getDeliverDate());
+			deliver.setBruto(so.getItemsList().get(0).getDeliverList().get(0).getBruto());
+			deliver.setNet(so.getItemsList().get(0).getDeliverList().get(0).getNet());
+			deliver.setTare(so.getItemsList().get(0).getDeliverList().get(0).getTare());
+			deliver.setUnitCode(so.getItemsList().get(0).getDeliverList().get(0).getUnitCodeLookup().getLookupValue());
+			deliver.setDeliverStore(so.getItemsList().get(0).getDeliverList().get(0).getDeliverStoreEntity().getStoreName());
+			objSo.setDeliver(deliver);
 		}
 		
 		soReportList.add(objSo);

@@ -48,4 +48,7 @@
 	<bean id="po_receipt_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/po_receipt.jrxml" />
+	<bean id="so_deliver_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/so_deliver.jrxml" />
 </beans>

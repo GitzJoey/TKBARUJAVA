@@ -23,7 +23,7 @@
 	<field name="items" class="java.util.List"/>
 	<field name="receipt.receiptDate" class="java.util.Date"/>
 	<field name="receipt.bruto" class="java.lang.Long"/>
-	<field name="receipt.netto" class="java.lang.Long"/>
+	<field name="receipt.net" class="java.lang.Long"/>
 	<field name="receipt.tare" class="java.lang.Long"/>
 	<field name="receipt.unitCode" class="java.lang.String"/>
 	<field name="receipt.receiptStore" class="java.lang.String"/>
@@ -186,7 +186,7 @@
 			</textField>
 			<textField>
 				<reportElement x="87" y="84" width="100" height="20" uuid="759a1099-bdfe-4d77-b704-a3c4505d4f38"/>
-				<textFieldExpression><![CDATA[$F{receipt.netto}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{receipt.net}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="329" y="84" width="100" height="20" uuid="6d8b51e2-e26a-4611-8b6f-057d38e99c64"/>
