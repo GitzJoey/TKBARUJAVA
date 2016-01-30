@@ -1,7 +1,5 @@
 package com.tkbaru.model.report;
 
-import java.io.Serializable;
-
 public class ItemsReportView {
 
 	/**

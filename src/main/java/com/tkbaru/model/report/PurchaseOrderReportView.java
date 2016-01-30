@@ -42,6 +42,7 @@ public class PurchaseOrderReportView {
 	
 	private PurchasePaymentReportView payment;
 	
+	private ReceiptReportView receipt;
 
 	public String getPoCode() {
 		return poCode;
@@ -172,6 +173,13 @@ public class PurchaseOrderReportView {
 	public void setPayment(PurchasePaymentReportView payment) {
 		this.payment = payment;
 	}
-	
+
+	public ReceiptReportView getReceipt() {
+		return receipt;
+	}
+
+	public void setReceipt(ReceiptReportView receipt) {
+		this.receipt = receipt;
+	}
 	
 }

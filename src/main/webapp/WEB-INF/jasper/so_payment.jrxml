@@ -19,6 +19,12 @@
 	<field name="npwpNumber" class="java.lang.String"/>
 	<field name="storePhone" class="java.lang.String"/>
 	<field name="items" class="java.util.List"/>
+	<field name="payment.paymentDate" class="java.util.Date"/>
+	<field name="payment.totalAmount" class="java.lang.Long"/>
+	<field name="payment.effectiveDate" class="java.util.Date"/>
+	<field name="payment.paymentType" class="java.lang.String"/>
+	<field name="payment.paymentStore" class="java.lang.String"/>
+	<field name="payment.bankCode" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -51,7 +57,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[PENJUALAN]]></text>
+				<text><![CDATA[PENERIMAAN]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="60" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
@@ -99,7 +105,7 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="62" splitType="Stretch">
+		<band height="144" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="a9a99e03-ae95-4dfe-8c75-0399faca7ca4"/>
 				<text><![CDATA[remarks :]]></text>
@@ -108,6 +114,54 @@
 				<reportElement x="0" y="20" width="555" height="42" uuid="4fbd52c9-4efc-40ae-afd7-7fccc1291bd6"/>
 				<textFieldExpression><![CDATA[$F{salesRemarks}]]></textFieldExpression>
 			</textField>
+			<textField>
+				<reportElement x="90" y="90" width="100" height="20" uuid="678c067c-4042-49f2-b83f-28b67e665ecd"/>
+				<textFieldExpression><![CDATA[$F{payment.paymentType}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="90" y="62" width="100" height="20" uuid="52030f30-b1c7-41f4-89d3-7da92975be2f"/>
+				<textFieldExpression><![CDATA[$F{payment.paymentDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="90" y="112" width="100" height="20" uuid="665e3771-c4b4-4dcc-9a6d-1b24cb9fc79a"/>
+				<textFieldExpression><![CDATA[$F{payment.effectiveDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="112" width="100" height="20" uuid="409efae2-2b78-4191-90e8-7def36ee7936"/>
+				<textFieldExpression><![CDATA[$F{payment.totalAmount}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="92" width="100" height="20" uuid="4d9c7183-ae42-49bd-82dd-8e71209156f0"/>
+				<textFieldExpression><![CDATA[$F{payment.paymentStore}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="62" width="100" height="20" uuid="73b2576f-3e82-41fd-9447-f2e72219303b"/>
+				<textFieldExpression><![CDATA[$F{payment.bankCode}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="90" width="64" height="20" uuid="c4d9261a-cfc1-4e42-b9ef-9a16bad0fbdd"/>
+				<text><![CDATA[Cara Bayar :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="62" width="64" height="20" uuid="ce74450c-0783-4fc9-b27d-936e7e85c845"/>
+				<text><![CDATA[Tgl Bayar :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="112" width="64" height="20" uuid="2738bca4-c63d-476a-be0a-c726c6a5d6a5"/>
+				<text><![CDATA[Effective :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="112" width="100" height="20" uuid="788310a7-f752-4ae3-b76e-409ab582999d"/>
+				<text><![CDATA[Total :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="92" width="100" height="20" uuid="4839fb8d-0bc0-4520-a6db-f8fd322ce33c"/>
+				<text><![CDATA[Toko :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="62" width="100" height="20" uuid="3bcd0553-20a7-44d0-8e0e-8e238ec7c278"/>
+				<text><![CDATA[Bank :]]></text>
+			</staticText>
 		</band>
 	</summary>
 </jasperReport>

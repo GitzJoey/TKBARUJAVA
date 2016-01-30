@@ -4,8 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -19,6 +23,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
@@ -36,10 +41,14 @@ import com.tkbaru.model.StocksOut;
 import com.tkbaru.model.WarehouseDashboard;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.StocksOutService;
 import com.tkbaru.service.StocksService;
 import com.tkbaru.service.WarehouseService;
+
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JRException;
 
 @Controller
 @RequestMapping("/warehouse/dashboard")
@@ -66,6 +75,9 @@ public class WarehouseDashboardController {
 
 	@Autowired
 	private LoginContext loginContextSession;
+	
+	@Autowired
+	private ReportService reportManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -364,5 +376,22 @@ public class WarehouseDashboardController {
 		model.addAttribute(Constants.PAGE_TITLE, "");
 
 		return "redirect:/warehouse/dashboard/id/" + warehouseDashboard.getSelectedWarehouse();
+	}
+	
+	@RequestMapping(value = "/receipt/generate/{selectedPo}/{itemId}", method = RequestMethod.GET)
+	public ModelAndView paymentGenerate(Locale locale, Model model, @PathVariable String selectedPo, @PathVariable int itemId,
+			HttpServletResponse response) throws JRException {
+		logger.info("[poGenerate] " + "selectedPo: " + selectedPo);
+
+		ModelAndView mav = null;
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		PurchaseOrder po = poManager.getPurchaseOrderById(Integer.parseInt(selectedPo));
+
+		JRDataSource ds = reportManager.generateReportDS_PurchaseOrder(po);
+
+		parameterMap.put("datasource", ds);
+		mav = new ModelAndView("po_receipt_pdf", parameterMap);
+
+		return mav;
 	}
 }

@@ -1,49 +1,41 @@
 package com.tkbaru.model.report;
 
 import java.util.Date;
+import java.util.List;
 
 public class SalesOrderReportView {
 
-	
 	private String salesCode;
-	
+
 	private Date salesCreatedDate;
-	
+
 	private Date shippingDate;
-	
+
 	private String walkInCustDetail;
-	
+
 	private String salesRemarks;
-	
+
 	private Integer createdBy;
-	
+
 	private Date createdDate;
-	
-	private Long prodQuantity;
-	
-	private Long prodPrice;
-	
-	private String unitCode;
-	
-	private Long toBaseValue;
-	
-	private Long toBaseQty;
-	
-	private String productName;
-	
+
 	private String customerName;
-	
+
 	private String storeName;
-	
+
 	private String storeAddress1;
-	
+
 	private String storeAddress2;
-	
+
 	private String storeAddress3;
-	
+
 	private String npwpNumber;
-	
+
 	private String storePhone;
+
+	private List<ItemsReportView> items;
+
+	private SalesPaymentReportView payment;
 
 	public String getSalesCode() {
 		return salesCode;
@@ -83,46 +75,6 @@ public class SalesOrderReportView {
 
 	public void setSalesRemarks(String salesRemarks) {
 		this.salesRemarks = salesRemarks;
-	}
-
-	public Long getProdQuantity() {
-		return prodQuantity;
-	}
-
-	public void setProdQuantity(Long prodQuantity) {
-		this.prodQuantity = prodQuantity;
-	}
-
-	public Long getProdPrice() {
-		return prodPrice;
-	}
-
-	public void setProdPrice(Long prodPrice) {
-		this.prodPrice = prodPrice;
-	}
-
-	public Long getToBaseValue() {
-		return toBaseValue;
-	}
-
-	public void setToBaseValue(Long toBaseValue) {
-		this.toBaseValue = toBaseValue;
-	}
-
-	public Long getToBaseQty() {
-		return toBaseQty;
-	}
-
-	public void setToBaseQty(Long toBaseQty) {
-		this.toBaseQty = toBaseQty;
-	}
-
-	public String getProductName() {
-		return productName;
-	}
-
-	public void setProductName(String productName) {
-		this.productName = productName;
 	}
 
 	public String getCustomerName() {
@@ -197,14 +149,20 @@ public class SalesOrderReportView {
 		this.createdDate = createdDate;
 	}
 
-	public String getUnitCode() {
-		return unitCode;
+	public List<ItemsReportView> getItems() {
+		return items;
 	}
 
-	public void setUnitCode(String unitCode) {
-		this.unitCode = unitCode;
+	public void setItems(List<ItemsReportView> items) {
+		this.items = items;
 	}
 
-	
-	
+	public SalesPaymentReportView getPayment() {
+		return payment;
+	}
+
+	public void setPayment(SalesPaymentReportView payment) {
+		this.payment = payment;
+	}
+
 }

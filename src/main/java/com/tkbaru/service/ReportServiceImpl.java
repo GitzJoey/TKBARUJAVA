@@ -18,7 +18,9 @@ import com.tkbaru.model.User;
 import com.tkbaru.model.report.ItemsReportView;
 import com.tkbaru.model.report.PurchaseOrderReportView;
 import com.tkbaru.model.report.PurchasePaymentReportView;
+import com.tkbaru.model.report.ReceiptReportView;
 import com.tkbaru.model.report.SalesOrderReportView;
+import com.tkbaru.model.report.SalesPaymentReportView;
 
 @Service
 public class ReportServiceImpl implements ReportService {
@@ -70,16 +72,30 @@ public class ReportServiceImpl implements ReportService {
 		
 		objPo.setItems(itemsReportList);
 		
-		PurchasePaymentReportView payment = new PurchasePaymentReportView();
-		payment.setPaymentType(po.getPaymentList().get(0).getPaymentTypeLookup().getLookupValue());
-		payment.setPaymentDate(po.getPaymentList().get(0).getPaymentDate());
-		payment.setEffectiveDate(po.getPaymentList().get(0).getEffectiveDate());
-		payment.setBankCode(po.getPaymentList().get(0).getBankCodeLookup().getLookupValue());
-		payment.setTotalAmount(po.getPaymentList().get(0).getTotalAmount());
-		payment.setPaymentStore(po.getPaymentList().get(0).getPaymentStoreEntity().getStoreName());
+		if (po.getPaymentList().size() > 0){
+		
+			PurchasePaymentReportView payment = new PurchasePaymentReportView();
+			payment.setPaymentType(po.getPaymentList().get(0).getPaymentTypeLookup().getLookupValue());
+			payment.setPaymentDate(po.getPaymentList().get(0).getPaymentDate());
+			payment.setEffectiveDate(po.getPaymentList().get(0).getEffectiveDate());
+			payment.setBankCode(po.getPaymentList().get(0).getBankCodeLookup().getLookupValue());
+			payment.setTotalAmount(po.getPaymentList().get(0).getTotalAmount());
+			payment.setPaymentStore(po.getPaymentList().get(0).getPaymentStoreEntity().getStoreName());
+		
+			objPo.setPayment(payment);
+		}
 		
 		
-		objPo.setPayment(payment);
+		if(po.getItemsList().get(0).getReceiptList().size() > 0){
+			
+			ReceiptReportView receipt = new ReceiptReportView();
+			receipt.setReceiptDate(po.getItemsList().get(0).getReceiptList().get(0).getReceiptDate());
+			receipt.setBruto(po.getItemsList().get(0).getReceiptList().get(0).getBruto());
+			receipt.setNet(po.getItemsList().get(0).getReceiptList().get(0).getNet());
+			receipt.setTare(po.getItemsList().get(0).getReceiptList().get(0).getTare());
+			receipt.setUnitCode(po.getItemsList().get(0).getReceiptList().get(0).getUnitCodeLookup().getLookupValue());
+			receipt.setReceiptStore(po.getItemsList().get(0).getReceiptList().get(0).getReceiptStoreEntity().getStoreName());
+		}
 		
 		List<PurchaseOrderReportView> poReportList = new ArrayList<PurchaseOrderReportView>();
 		poReportList.add(objPo);
@@ -96,10 +112,52 @@ public class ReportServiceImpl implements ReportService {
 	}
 
 	@Override
-	public JRDataSource generateReportDS_SalesOrder(SalesOrder data) {
+	public JRDataSource generateReportDS_SalesOrder(SalesOrder so) {
 		logger.info("[generateReportDS_SalesOrder] " + "");
+		List<SalesOrderReportView> soReportList = new ArrayList<SalesOrderReportView>();
+		SalesOrderReportView objSo = new SalesOrderReportView();
+		objSo.setSalesCode(so.getSalesCode());
+		objSo.setCustomerName(so.getCustomerEntity().getCustomerName());
+		objSo.setStoreName(so.getSalesStoreEntity().getStoreName());
+		objSo.setStoreAddress1(so.getSalesStoreEntity().getStoreAddress1());
+		objSo.setStoreAddress2(so.getSalesStoreEntity().getStoreAddress2());
+		objSo.setStoreAddress3(so.getSalesStoreEntity().getStoreAddress3());
+		objSo.setNpwpNumber(so.getSalesStoreEntity().getNpwpNumber());
+		objSo.setStorePhone(so.getSalesStoreEntity().getStorePhone());
+		objSo.setShippingDate(so.getShippingDate());
+		objSo.setSalesCreatedDate(so.getSalesCreatedDate());
+		objSo.setSalesRemarks(so.getSalesRemarks());
 		
-		return null;
+		List<ItemsReportView> itemsList = new ArrayList<ItemsReportView>();
+		
+		for (Items item : so.getItemsList()){
+			ItemsReportView objItem = new ItemsReportView();
+			objItem.setProductName(item.getProductEntity().getProductName());
+			objItem.setProdPrice(item.getProdPrice());
+			objItem.setProdQuantity(item.getProdQuantity());
+			objItem.setUnitCode(item.getUnitCodeLookup().getLookupValue());
+			itemsList.add(objItem);
+			
+		}
+		objSo.setItems(itemsList);
+		
+		if(so.getPaymentList().size() > 0) {
+		
+		SalesPaymentReportView payment = new SalesPaymentReportView();
+		payment.setPaymentType(so.getPaymentList().get(0).getPaymentTypeLookup().getLookupValue());
+		payment.setPaymentDate(so.getPaymentList().get(0).getPaymentDate());
+		payment.setEffectiveDate(so.getPaymentList().get(0).getEffectiveDate());
+		payment.setBankCode(so.getPaymentList().get(0).getBankCodeLookup().getLookupValue());
+		payment.setTotalAmount(so.getPaymentList().get(0).getTotalAmount());
+		payment.setPaymentStore(so.getPaymentList().get(0).getPaymentStoreEntity().getStoreName());
+		
+		objSo.setPayment(payment);
+		}
+		
+		soReportList.add(objSo);
+		
+		JRDataSource ds = new JRBeanCollectionDataSource(soReportList,false);
+		return ds;
 	}
 
 	@Override

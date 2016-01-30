@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="0"/>
+	<property name="ireport.y" value="228"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
 	</parameter>
@@ -21,6 +21,12 @@
 	<field name="supplierName" class="java.lang.String"/>
 	<field name="warehouseName" class="java.lang.String"/>
 	<field name="items" class="java.util.List"/>
+	<field name="receipt.receiptDate" class="java.util.Date"/>
+	<field name="receipt.bruto" class="java.lang.Long"/>
+	<field name="receipt.netto" class="java.lang.Long"/>
+	<field name="receipt.tare" class="java.lang.Long"/>
+	<field name="receipt.unitCode" class="java.lang.String"/>
+	<field name="receipt.receiptStore" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -49,11 +55,11 @@
 				<textFieldExpression><![CDATA[$F{storeName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="0" y="0" width="100" height="20" uuid="5f699837-061b-4625-bc9b-29895aff0422"/>
+				<reportElement x="0" y="0" width="174" height="20" uuid="5f699837-061b-4625-bc9b-29895aff0422"/>
 				<textElement verticalAlignment="Middle">
 					<font size="14"/>
 				</textElement>
-				<text><![CDATA[PEMBELIAN]]></text>
+				<text><![CDATA[PENERIMAAN BARANG]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="5" y="66" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
@@ -131,20 +137,68 @@
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="22" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="2" splitType="Stretch"/>
+		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="119" splitType="Stretch">
+		<band height="126" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="a9a99e03-ae95-4dfe-8c75-0399faca7ca4"/>
 				<text><![CDATA[Catatan :]]></text>
 			</staticText>
 			<textField isBlankWhenNull="true">
-				<reportElement x="5" y="20" width="548" height="42" uuid="4fbd52c9-4efc-40ae-afd7-7fccc1291bd6"/>
+				<reportElement x="0" y="20" width="548" height="42" uuid="4fbd52c9-4efc-40ae-afd7-7fccc1291bd6"/>
 				<textFieldExpression><![CDATA[$F{poRemarks}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="84" width="64" height="20" uuid="c4d9261a-cfc1-4e42-b9ef-9a16bad0fbdd"/>
+				<text><![CDATA[Netto :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="62" width="64" height="20" uuid="ce74450c-0783-4fc9-b27d-936e7e85c845"/>
+				<text><![CDATA[Tgl Terima :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="106" width="64" height="20" uuid="2738bca4-c63d-476a-be0a-c726c6a5d6a5"/>
+				<text><![CDATA[Satuan :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="106" width="100" height="20" uuid="788310a7-f752-4ae3-b76e-409ab582999d"/>
+				<text><![CDATA[Toko :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="84" width="100" height="20" uuid="4839fb8d-0bc0-4520-a6db-f8fd322ce33c"/>
+				<text><![CDATA[Tare :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="224" y="62" width="100" height="20" uuid="3bcd0553-20a7-44d0-8e0e-8e238ec7c278"/>
+				<text><![CDATA[Bruto :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="87" y="62" width="100" height="20" uuid="092edb8f-6a8e-4df3-b7d7-b5ac9b92034f"/>
+				<textFieldExpression><![CDATA[$F{receipt.receiptDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="62" width="100" height="20" uuid="5ec9ad9d-d45d-46d4-a9bd-2e5b8f35bab7"/>
+				<textFieldExpression><![CDATA[$F{receipt.bruto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="84" width="100" height="20" uuid="759a1099-bdfe-4d77-b704-a3c4505d4f38"/>
+				<textFieldExpression><![CDATA[$F{receipt.netto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="84" width="100" height="20" uuid="6d8b51e2-e26a-4611-8b6f-057d38e99c64"/>
+				<textFieldExpression><![CDATA[$F{receipt.tare}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="87" y="106" width="100" height="20" uuid="25e2e8b1-1f60-4db1-9f04-9fc77fb85818"/>
+				<textFieldExpression><![CDATA[$F{receipt.unitCode}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="329" y="106" width="100" height="20" uuid="9fd9cf22-e3c0-480a-9bac-7ae635538c17"/>
+				<textFieldExpression><![CDATA[$F{receipt.receiptStore}]]></textFieldExpression>
 			</textField>
 		</band>
 	</summary>

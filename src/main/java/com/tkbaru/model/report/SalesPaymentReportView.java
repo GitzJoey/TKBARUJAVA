@@ -2,7 +2,7 @@ package com.tkbaru.model.report;
 
 import java.util.Date;
 
-public class PurchasePaymentReportView {
+public class SalesPaymentReportView {
 
 	
 	private Date paymentDate;
