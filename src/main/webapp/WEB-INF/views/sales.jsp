@@ -102,7 +102,6 @@
 				var id = "";
 				var button = $(this).attr('id');
 				var activetab = $(".nav-tabs li.active").attr("id");
-				var salesType = $('[id="selectSoType_' + activetab + '"]').val(); 
 				var custId = $('input[id="soList_' + activetab + '_customerId"]').val();
 				
 				if (button == 'addProdButton') {
@@ -139,7 +138,17 @@
 	    			$('#soForm').submit();
     			}
     		});
-    		
+
+    		$('[id^="selectSoType_"]').change(function() {
+    			var activetab = $(".nav-tabs li.active").attr("id");
+    			var salesType = $('[id="selectSoType_' + activetab + '"]').val();
+    			
+    			if (salesType != '') {
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/sales/type/" + salesType);
+	    			$('#soForm').submit();
+    			}
+    		});
+
     		$('[id^="submitCustType_"]').click(function() {
     			var activetab = $(".nav-tabs li.active").attr("id");
     			var custType = $('[id="selectCustType_' + activetab + '"]').val();

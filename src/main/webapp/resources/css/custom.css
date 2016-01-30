@@ -109,7 +109,7 @@ strong.title {
 }
 
 .sidebar-nav ul a {
-	padding: 8px 18px;
+	padding: 8px 10px;
 	color: #23527C;
 	border-top: 1px solid rgba(0, 0, 0, 0.3);
 	/*box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.05) inset;*/
@@ -150,11 +150,11 @@ strong.title {
 }
 
 .metismenu > li > ul > li > ul	> li > a {
-	padding-left: 35px;
+	padding-left: 25px;
 }
 
 .metismenu > li > ul > li > ul	> li > ul > li > a {
-	padding-left: 55px;
+	padding-left: 40px;
 }
 
 .parsley-asterisk {
