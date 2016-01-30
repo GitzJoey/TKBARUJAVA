@@ -613,7 +613,7 @@
 														</c:if>
 														<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_WD' }">
 															<button id="cancelButton_${ soIdx.index }" type="submit" class="btn btn-primary pull-right"><spring:message code="sales_jsp.close_button" text="Close"/></button>
-															<a id="printButton_${ soIdx.index }" href="${ pageContext.request.contextPath }/sales/t/${ soIdx.index }/generate/${ loginContext.soList[ soIdx.index ].salesCode }" target="_blank" class="btn btn-primary pull-right">
+															<a id="printButton_${ soIdx.index }" href="${ pageContext.request.contextPath }/sales/t/${ soIdx.index }/generate/${ loginContext.soList[ soIdx.index ].salesId }" target="_blank" class="btn btn-primary pull-right">
 																<spring:message code="common.print_button" text="Print"/>
 															</a>
 														</c:if>

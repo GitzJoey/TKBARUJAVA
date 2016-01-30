@@ -119,7 +119,13 @@ public class ReportServiceImpl implements ReportService {
 		List<SalesOrderReportView> soReportList = new ArrayList<SalesOrderReportView>();
 		SalesOrderReportView objSo = new SalesOrderReportView();
 		objSo.setSalesCode(so.getSalesCode());
-		objSo.setCustomerName(so.getCustomerEntity().getCustomerName());
+		objSo.setSalesType(so.getSalesTypeLookup().getLookupValue());
+		objSo.setCustomerType(so.getCustomerTypeLookup().getLookupValue());
+		if(so.getCustomerTypeLookup().getLookupValue().equals("L022_R")){
+			objSo.setCustomerName(so.getCustomerEntity().getCustomerName());
+		}else{
+			objSo.setCustomerName(so.getWalkInCustDetail());	
+		}
 		objSo.setStoreName(so.getSalesStoreEntity().getStoreName());
 		objSo.setStoreAddress1(so.getSalesStoreEntity().getStoreAddress1());
 		objSo.setStoreAddress2(so.getSalesStoreEntity().getStoreAddress2());
