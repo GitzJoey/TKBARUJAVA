@@ -3,9 +3,7 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="salesCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
 	<field name="salesCreatedDate" class="java.lang.String"/>
@@ -25,7 +23,7 @@
 	<field name="payment.paymentType" class="java.lang.String"/>
 	<field name="payment.paymentStore" class="java.lang.String"/>
 	<field name="payment.bankCode" class="java.lang.String"/>
-    <field name="salesType" class="java.lang.String"/>
+	<field name="salesType" class="java.lang.String"/>
 	<field name="customerType" class="java.lang.String"/>
 	<field name="customerName" class="java.lang.String"/>
 	<background>
@@ -60,7 +58,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PENJUALAN]]></text>
+				<text><![CDATA[PENERIMAAN]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="68" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
@@ -129,7 +127,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="340" height="60" uuid="003b0441-ad85-4681-8c5c-541e34c837b5"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{items})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "so_items.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{JasperCustomSubReportLocation}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

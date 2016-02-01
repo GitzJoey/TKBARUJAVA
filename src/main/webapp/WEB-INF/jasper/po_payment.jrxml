@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po_payment" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
 	<property name="ireport.zoom" value="1.5"/>
-	<property name="ireport.x" value="0"/>
+	<property name="ireport.x" value="208"/>
 	<property name="ireport.y" value="0"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
-	</parameter>
+	<parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="poCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
 	<field name="poCreatedDate" class="java.util.Date"/>
@@ -90,7 +88,7 @@
 				<reportElement x="0" y="134" width="340" height="1" uuid="2717410f-39e2-4d58-b7ad-7288bd3cab71"/>
 			</line>
 			<line>
-				<reportElement x="0" y="22" width="553" height="1" uuid="a0556a46-1fdc-451a-99b1-20aad6adcae2"/>
+				<reportElement x="0" y="22" width="340" height="1" uuid="a0556a46-1fdc-451a-99b1-20aad6adcae2"/>
 			</line>
 			<staticText>
 				<reportElement x="174" y="26" width="62" height="20" uuid="028137a1-55a7-44ac-a4a2-79f8116a8d27"/>
@@ -132,7 +130,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="340" height="62" uuid="3c9c288f-2342-4890-9bed-2fea7cb1fd37"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{items})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "po_items.jasper"]]></subreportExpression>
+				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{JasperCustomSubReportLocation}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

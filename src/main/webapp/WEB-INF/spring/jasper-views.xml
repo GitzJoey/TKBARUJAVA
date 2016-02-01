@@ -2,9 +2,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:util="http://www.springframework.org/schema/util"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans 
 						http://www.springframework.org/schema/beans/spring-beans.xsd
-						">
+						http://www.springframework.org/schema/util 
+		                http://www.springframework.org/schema/util/spring-util.xsd">
 	
 	<bean id="user_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
@@ -33,22 +35,38 @@
 
 	<bean id="po_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/po.jrxml" /> 
-			
+			p:url="/WEB-INF/jasper/po.jrxml" 
+			p:subReportUrls-ref="customSubReportUrls"/>
+				
 	<bean id="so_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/so.jrxml" />
+			p:url="/WEB-INF/jasper/so.jrxml" 
+			p:subReportUrls-ref="customSoSubReportUrls"/>
 			
 	<bean id="po_payment_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/po_payment.jrxml" />
+			p:url="/WEB-INF/jasper/po_payment.jrxml" 
+			p:subReportUrls-ref="customSubReportUrls"/>
 	<bean id="so_payment_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/so_payment.jrxml" />
+			p:url="/WEB-INF/jasper/so_payment.jrxml" 
+			p:subReportUrls-ref="customSoSubReportUrls"/>
 	<bean id="po_receipt_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/po_receipt.jrxml" />
+			p:url="/WEB-INF/jasper/po_receipt.jrxml" 
+			p:subReportUrls-ref="customSubReportUrls"/>
 	<bean id="so_deliver_pdf"
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
-			p:url="/WEB-INF/jasper/so_deliver.jrxml" />
+			p:url="/WEB-INF/jasper/so_deliver.jrxml" 
+			p:subReportUrls-ref="customSoSubReportUrls"/>
+			
+	<util:map id="customSubReportUrls">
+	    <!-- This entry key must be declared exactly as you declared it in the master JRXML file -->
+	    <entry key="JasperCustomSubReportLocation" value="/WEB-INF/jasper/po_items.jrxml"/>
+	</util:map>
+			
+	<util:map id="customSoSubReportUrls">
+	    <!-- This entry key must be declared exactly as you declared it in the master JRXML file -->
+	    <entry key="JasperCustomSubReportLocation" value="/WEB-INF/jasper/so_items.jrxml"/>
+	</util:map>
 </beans>

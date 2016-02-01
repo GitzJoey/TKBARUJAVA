@@ -3,9 +3,7 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="3"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
-	</parameter>
+    <parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="poCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
 	<field name="poCreatedDate" class="java.util.Date"/>
@@ -126,7 +124,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="340" height="62" uuid="3c9c288f-2342-4890-9bed-2fea7cb1fd37"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{items})]]></dataSourceExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR} + "po_items.jasper"]]></subreportExpression>
+                <subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{JasperCustomSubReportLocation}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
