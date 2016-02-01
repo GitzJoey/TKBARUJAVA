@@ -3,7 +3,13 @@
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="3"/>
+<<<<<<< HEAD
     <parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
+=======
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
+	</parameter>
+>>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 	<field name="poCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
 	<field name="poCreatedDate" class="java.util.Date"/>

@@ -23,7 +23,11 @@
 	<field name="payment.paymentType" class="java.lang.String"/>
 	<field name="payment.paymentStore" class="java.lang.String"/>
 	<field name="payment.bankCode" class="java.lang.String"/>
+<<<<<<< HEAD
 	<field name="salesType" class="java.lang.String"/>
+=======
+    <field name="salesType" class="java.lang.String"/>
+>>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 	<field name="customerType" class="java.lang.String"/>
 	<field name="customerName" class="java.lang.String"/>
 	<background>
@@ -58,7 +62,7 @@
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PENERIMAAN]]></text>
+				<text><![CDATA[PENJUALAN]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="68" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>

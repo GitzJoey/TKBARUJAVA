@@ -3,7 +3,13 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+<<<<<<< HEAD
 	<parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
+=======
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["D:\\Fandy\\git\\tkbaru\\src\\main\\webapp\\WEB-INF\\jasper\\"]]></defaultValueExpression>
+	</parameter>
+>>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 	<field name="salesCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
 	<field name="salesCreatedDate" class="java.lang.String"/>
@@ -23,7 +29,11 @@
 	<field name="deliver.tare" class="java.lang.Long"/>
 	<field name="deliver.unitCode" class="java.lang.String"/>
 	<field name="deliver.deliverStore" class="java.lang.String"/>
+<<<<<<< HEAD
 	<field name="salesType" class="java.lang.String"/>
+=======
+    <field name="salesType" class="java.lang.String"/>
+>>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 	<field name="customerType" class="java.lang.String"/>
 	<field name="customerName" class="java.lang.String"/>
 	<background>
@@ -58,7 +68,11 @@
 				<textElement verticalAlignment="Middle">
 					<font size="14" isBold="true"/>
 				</textElement>
+<<<<<<< HEAD
 				<text><![CDATA[PENGIRIMAN]]></text>
+=======
+				<text><![CDATA[PENJUALAN]]></text>
+>>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 			</staticText>
 			<textField>
 				<reportElement x="0" y="68" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
