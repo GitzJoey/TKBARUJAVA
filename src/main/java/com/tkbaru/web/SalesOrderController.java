@@ -122,13 +122,21 @@ public class SalesOrderController {
 	public String salesSelectSoType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String salesTypeValue) {
 		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", salesTypeValue: " + salesTypeValue);
 
+		loginContext.getSoList().get(tabId).setSalesTypeLookup(lookupManager.getLookupByKey(salesTypeValue));
+		
 		loginContextSession.setSoList(loginContext.getSoList());
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
-		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -139,29 +147,29 @@ public class SalesOrderController {
 	
 	}	
 	
-	@RequestMapping(value="/t/{tabId}/select/type/{custTypeValue}", method = RequestMethod.POST)
+	@RequestMapping(value="/t/{tabId}/select/cust/type/{custTypeValue}", method = RequestMethod.POST)
 	public String salesSelectCustType(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable String custTypeValue) {
 		logger.info("[salesSelectCustType] " + "tabId: " + tabId + ", custTypeValue: " + custTypeValue);
 
-		if (!loginContextSession.getSoList().isEmpty()) {			
-			loginContextSession.setSoList(loginContext.getSoList());
-			
-			if(custTypeValue.equals("L022_WIN")){
-				((SalesOrder)loginContextSession.getSoList().get(tabId)).setCustomerEntity(null);
-			} 
-		} else {
-			
-		}
+		loginContext.getSoList().get(tabId).setCustomerTypeLookup(lookupManager.getLookupByKey(custTypeValue));
+
+		if(custTypeValue.equals("L022_WIN")){
+			loginContext.getSoList().get(tabId).setCustomerEntity(null);
+		} 
+
+		loginContextSession.setSoList(loginContext.getSoList());
 
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
 
-		if (custTypeValue.equals("L022_WIN")) {
-			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
 		}
-		
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -178,14 +186,20 @@ public class SalesOrderController {
 		List<Customer> custList = customerManager.searchCustomer(searchQuery);
 		
 		loginContextSession.setSoList(loginContext.getSoList());
-		
+
+		model.addAttribute("activeTab", tabId);
 		model.addAttribute("customerList", custList);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("searchQuery", searchQuery);
-		
-		model.addAttribute("activeTab", tabId);
+
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
+
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -196,17 +210,23 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="/t/{tabId}/select/cust/{customerid}", method = RequestMethod.POST)
-	public String salesSelectCustomer(Locale locale, Model model, @PathVariable int tabId, @PathVariable int customerid) {
+	public String salesSelectCustomer(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId, @PathVariable int customerid) {
 		logger.info("[salesSelectCustomer] " + "tabId:" + tabId + ", customerid: " + customerid);
 		
-		loginContextSession.getSoList().get(tabId).setCustomerEntity(customerManager.getCustomerById(customerid));		
+		loginContext.getSoList().get(tabId).setCustomerEntity(customerManager.getCustomerById(customerid));		
+		
+		loginContextSession.setSoList(loginContext.getSoList());
 		
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
+
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -258,8 +278,12 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
+
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -290,8 +314,12 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
+
+		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);

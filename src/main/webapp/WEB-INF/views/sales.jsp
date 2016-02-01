@@ -134,7 +134,7 @@
     			var custType = $('[id="selectCustType_' + activetab + '"]').val();
     			
     			if (custType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + custType);
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/cust/type/" + custType);
 	    			$('#soForm').submit();
     			}
     		});
@@ -480,9 +480,16 @@
 																			<div class="col-md-11">
 																				<select id="productSelect_${ soIdx.index }" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																					<c:forEach items="${ stocksListDDL }" var="sddl">
-																						<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
-																					</c:forEach>
+																					<c:if test="${ loginContext.soList[ soIdx.index ].salesTypeLookup.lookupKey == 'L015_S' }">
+																						<c:forEach items="${ stocksListDDL }" var="sddl">
+																							<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
+																						</c:forEach>
+																					</c:if>
+																					<c:if test="${ loginContext.soList[ soIdx.index ].salesTypeLookup.lookupKey == 'L015_SVC' }">
+																						<c:forEach items="${ productListDDL }" var="pddl">
+																							<option value="${ pddl.productId }">${ pddl.productName }</option>
+																						</c:forEach>
+																					</c:if>
 																				</select>
 																			</div>
 																			<div class="col-md-1">
