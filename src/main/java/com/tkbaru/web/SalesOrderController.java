@@ -345,7 +345,6 @@ public class SalesOrderController {
 	public String salesSave(Locale locale, Model model, @ModelAttribute("loginContext") LoginContext loginContext, @PathVariable int tabId) {
 		logger.info("[salesSave] " + "tabId: " + tabId);
 		
-		loginContextSession.setSoList(loginContext.getSoList());
 		SalesOrder so = loginContext.getSoList().get(tabId);
 		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_WD"));
 
@@ -358,7 +357,11 @@ public class SalesOrderController {
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
-			items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
+			
+			if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+				items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
+			}
+			
 			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
 				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){
 					items.setToBaseValue(productUnit.getConversionValue());
@@ -388,8 +391,6 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
