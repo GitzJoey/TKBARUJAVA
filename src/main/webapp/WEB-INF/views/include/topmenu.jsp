@@ -37,6 +37,9 @@
 							</li>
 						</ul>
 					</li>
+					<li>
+						<a href="${ pageContext.request.contextPath }/static/index.html" target="_blank" title="Open website in new browser"><span class="fa fa-external-link fa-fw"></span></a>
+					</li>
 				</ul>
       			<p class="navbar-text pull-right hidden-xs hidden-sm">
       				<marquee scrollamount="2">

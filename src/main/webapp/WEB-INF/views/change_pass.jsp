@@ -19,9 +19,7 @@
 
 		<div class="row">
 			<div class="col-md-2">				
-				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp">
-					<jsp:param value="true" name="hideMenu"/>
-				</jsp:include>
+				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
 				<c:if test="${ ERRORFLAG == 'ERRORFLAG_SHOW' }">
@@ -37,6 +35,10 @@
 				
 				<div id="jsAlerts"></div>
 
+				<h1>
+					<span class="fa fa-user fa-fw"></span>&nbsp;<spring:message code="user_jsp.title" text="User"/>
+				</h1>
+
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h1 class="panel-title">
@@ -49,6 +51,12 @@
 							<div class="panel-body">
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/change_pass/save" data-parsley-validate="parsley">
 									<form:hidden path="userId"/>
+									<div class="form-group">
+										<label for="inputOldPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.old_password" text="Old Password"/></label>
+										<div class="col-md-4">
+											<form:password id="inputOldPassword" class="form-control" path="userPassword" data-parsley-required="true"/>
+										</div>
+									</div>
 									<div class="form-group">
 										<label for="inputNewPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.new_password" text="New Password"/></label>
 										<div class="col-md-4">

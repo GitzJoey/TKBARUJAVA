@@ -127,7 +127,7 @@ public class LoginController {
 		return "redirect:/dashboard";
 	}
 	
-	@RequestMapping(value = "/static/changepass.html", method = RequestMethod.GET)
+	@RequestMapping(value = "/changepass", method = RequestMethod.GET)
 	public String changePassword(Locale locale, Model model) {
 		logger.info("[changePassword] " + "");
 
