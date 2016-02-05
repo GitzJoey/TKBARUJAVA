@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
@@ -26,7 +27,7 @@
 				});
 			});
 			
-			$('#editTableSelection, #deleteTableSelection').click(function() {
+			$('#editTableSelection, #deleteTableSelection, #maintenanceTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 								
@@ -42,7 +43,9 @@
 				} else {
 					if (button == 'editTableSelection') {
 						$('#editTableSelection').attr("href", ctxpath + "/truck/edit/" + id);	
-					} else {
+					} else if (button == 'maintenanceTableSelection') {
+						$('#maintenanceTableSelection').attr("href", ctxpath + "/truck/maintenance/" + id);
+					}else {
 						$('#deleteTableSelection').attr("href", ctxpath + "/truck/delete/" + id);	
 					}						
 				}				
@@ -125,7 +128,8 @@
 								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
-								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
+								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a id="maintenanceTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-gears fa-fw"></span>&nbsp;<spring:message code="common.maintenance_button" text="Maintenance"/></a>
 							</div>
 						</div>						
 					</c:when>
