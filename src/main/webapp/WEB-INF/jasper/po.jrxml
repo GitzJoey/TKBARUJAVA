@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
-	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.zoom" value="3.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="139"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="JasperCustomSubReportLocation" class="net.sf.jasperreports.engine.JasperReport"/>
 	<field name="poCode" class="java.lang.String"/>
 	<field name="storeName" class="java.lang.String"/>
@@ -28,14 +28,6 @@
 	<pageHeader>
 		<band height="153" splitType="Stretch">
 			<textField>
-				<reportElement x="247" y="46" width="93" height="20" uuid="e6c201e7-9ee6-4443-a632-45d544097fbd"/>
-				<box leftPadding="5" rightPadding="5"/>
-				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{poCode}]]></textFieldExpression>
-			</textField>
-			<textField>
 				<reportElement x="5" y="46" width="169" height="20" uuid="425f6c68-8d5e-4ce6-a2c6-b2b013739b59"/>
 				<textElement verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{storeAddress1}]]></textFieldExpression>
@@ -43,7 +35,7 @@
 			<textField>
 				<reportElement x="5" y="26" width="169" height="20" uuid="7f7a76b7-8260-4bf0-922c-1e416c786b61"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+					<font size="14" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{storeName}]]></textFieldExpression>
 			</textField>
@@ -86,35 +78,72 @@
 				<reportElement x="0" y="22" width="340" height="1" uuid="a0556a46-1fdc-451a-99b1-20aad6adcae2"/>
 			</line>
 			<staticText>
-				<reportElement x="180" y="46" width="66" height="20" uuid="028137a1-55a7-44ac-a4a2-79f8116a8d27"/>
-				<text><![CDATA[Nomor PO :]]></text>
+				<reportElement x="180" y="46" width="62" height="20" uuid="028137a1-55a7-44ac-a4a2-79f8116a8d27"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Nomor PO]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="66" width="66" height="20" uuid="3fa30ee8-3527-42b2-9070-7a8aa2c4ab25"/>
-				<text><![CDATA[Tanggal :]]></text>
+				<reportElement x="180" y="66" width="62" height="20" uuid="3fa30ee8-3527-42b2-9070-7a8aa2c4ab25"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Tanggal]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="106" width="66" height="20" uuid="9ef482b4-b592-4117-b2f2-0736d7342786"/>
-				<text><![CDATA[Pengiriman :]]></text>
+				<reportElement x="180" y="106" width="62" height="20" uuid="9ef482b4-b592-4117-b2f2-0736d7342786"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Pengiriman]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="247" y="86" width="93" height="20" uuid="d927e600-2fda-43c1-8561-959e667fa1d6"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{supplierName}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="247" y="126" width="93" height="20" uuid="ec89e3d3-9ba6-4598-bc8c-be0561ab91dc"/>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{warehouseName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="180" y="86" width="66" height="20" uuid="cdc6179f-b507-448f-80fe-f03d503726e2"/>
-				<text><![CDATA[Pemasok :]]></text>
+				<reportElement x="180" y="86" width="62" height="20" uuid="cdc6179f-b507-448f-80fe-f03d503726e2"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Pemasok]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="180" y="126" width="66" height="20" uuid="ad9362a8-39cb-4901-a0f8-0e76dcb30058"/>
-				<text><![CDATA[Gudang :]]></text>
+				<reportElement x="180" y="126" width="62" height="20" uuid="ad9362a8-39cb-4901-a0f8-0e76dcb30058"/>
+				<textElement verticalAlignment="Middle"/>
+				<text><![CDATA[Gudang]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="242" y="46" width="5" height="20" uuid="bc541fda-87fd-4ebe-8a63-b4b364511e73"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="86" width="5" height="20" uuid="a8ca3299-7cc6-4e71-9bac-abc4ff0c8ad1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="66" width="5" height="20" uuid="18d9cfa8-484a-4c38-875a-558ffc0ec70b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="106" width="5" height="20" uuid="0d20e9aa-be3f-4014-ac3e-ced56ea0350d"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="242" y="126" width="5" height="20" uuid="b2e5f307-e3ad-4a8d-a369-14353f211bf1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="247" y="46" width="93" height="20" uuid="1bc78f28-e6d0-4642-b400-39541a345951"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{poCode}]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
