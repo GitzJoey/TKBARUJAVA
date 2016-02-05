@@ -27,9 +27,9 @@
 		<band splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="149" splitType="Stretch">
+		<band height="178" splitType="Stretch">
 			<textField>
-				<reportElement x="202" y="10" width="100" height="20" uuid="e6c201e7-9ee6-4443-a632-45d544097fbd"/>
+				<reportElement x="253" y="48" width="87" height="20" uuid="e6c201e7-9ee6-4443-a632-45d544097fbd"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
@@ -43,7 +43,7 @@
 			<textField>
 				<reportElement x="0" y="28" width="169" height="20" uuid="7f7a76b7-8260-4bf0-922c-1e416c786b61"/>
 				<textElement verticalAlignment="Middle">
-					<font size="12"/>
+					<font size="12" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{storeName}]]></textFieldExpression>
 			</textField>
@@ -70,47 +70,57 @@
 				<textFieldExpression><![CDATA[$F{storePhone}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="68" width="87" height="20" uuid="99d1f715-1140-4e52-b877-65535238516a"/>
+				<reportElement x="253" y="87" width="87" height="20" uuid="99d1f715-1140-4e52-b877-65535238516a"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{salesCreatedDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="88" width="87" height="20" uuid="b1a2ad4f-06e0-44d3-a3fe-77907b168358"/>
+				<reportElement x="253" y="107" width="87" height="20" uuid="b1a2ad4f-06e0-44d3-a3fe-77907b168358"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{shippingDate}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="108" width="87" height="20" uuid="5a37e37d-5351-4ccc-b74b-65a6ff6004fc"/>
+				<reportElement x="253" y="127" width="87" height="20" uuid="5a37e37d-5351-4ccc-b74b-65a6ff6004fc"/>
 				<textFieldExpression><![CDATA[$F{customerType}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="128" width="87" height="20" uuid="bf082e81-3e22-42fe-a7b5-df372f8d7c37"/>
+				<reportElement x="253" y="147" width="87" height="20" uuid="bf082e81-3e22-42fe-a7b5-df372f8d7c37"/>
 				<textFieldExpression><![CDATA[$F{customerName}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="253" y="48" width="87" height="20" uuid="6de5c9f9-271c-428f-92f7-677332bebf13"/>
+				<reportElement x="253" y="67" width="87" height="20" uuid="6de5c9f9-271c-428f-92f7-677332bebf13"/>
 				<textFieldExpression><![CDATA[$F{salesType}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="172" y="49" width="81" height="20" uuid="609c719f-1e99-4659-81da-cbe8686cfda1"/>
+				<reportElement x="172" y="68" width="81" height="20" uuid="609c719f-1e99-4659-81da-cbe8686cfda1"/>
 				<text><![CDATA[Tipe Penjualan :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="69" width="81" height="20" uuid="8ec9b5fd-f07c-4432-a90f-5d2752b34711"/>
+				<reportElement x="172" y="88" width="81" height="20" uuid="8ec9b5fd-f07c-4432-a90f-5d2752b34711"/>
 				<text><![CDATA[Tanggal :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="89" width="81" height="20" uuid="df8e6313-15ed-46a4-bbcd-433c2ecb2917"/>
+				<reportElement x="172" y="108" width="81" height="20" uuid="df8e6313-15ed-46a4-bbcd-433c2ecb2917"/>
 				<text><![CDATA[Tanggal Kirim :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="109" width="81" height="20" uuid="fef3d110-9c08-48f8-8960-d8c1520be7b0"/>
-				<text><![CDATA[Tipe Customer :]]></text>
+				<reportElement x="172" y="128" width="81" height="20" uuid="fef3d110-9c08-48f8-8960-d8c1520be7b0"/>
+				<text><![CDATA[Tipe Pelanggan :]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="172" y="129" width="81" height="20" uuid="5286217a-3ef2-4a25-9de3-58f139f9328f"/>
-				<text><![CDATA[Customer :]]></text>
+				<reportElement x="172" y="148" width="81" height="20" uuid="5286217a-3ef2-4a25-9de3-58f139f9328f"/>
+				<text><![CDATA[Pelanggan :]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="172" y="48" width="81" height="20" uuid="b1d28d53-4bbc-4612-8dcb-6a7ac8a5fb07"/>
+				<text><![CDATA[No. Penjualan :]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="24" width="340" height="1" uuid="03081a45-8be4-4130-8baf-831967514494"/>
+			</line>
+			<line>
+				<reportElement x="0" y="174" width="340" height="1" uuid="2193876e-77f6-42dd-8f69-e73fe0283471"/>
+			</line>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -121,7 +131,7 @@
 			<subreport>
 				<reportElement x="0" y="0" width="340" height="60" uuid="003b0441-ad85-4681-8c5c-541e34c837b5"/>
 				<dataSourceExpression><![CDATA[new net.sf.jasperreports.engine.data.JRBeanCollectionDataSource($F{items})]]></dataSourceExpression>
-				<subreportExpression class="net.sf.jasperreports.engine.JasperReport"><![CDATA[$P{JasperCustomSubReportLocation}]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{JasperCustomSubReportLocation}]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>
@@ -132,13 +142,19 @@
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="62" splitType="Stretch">
+		<band height="65" splitType="Stretch">
 			<staticText>
 				<reportElement x="0" y="0" width="100" height="20" uuid="a9a99e03-ae95-4dfe-8c75-0399faca7ca4"/>
 				<text><![CDATA[Catatan :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="0" y="20" width="340" height="42" uuid="4fbd52c9-4efc-40ae-afd7-7fccc1291bd6"/>
+				<box topPadding="5" leftPadding="5" bottomPadding="5" rightPadding="5">
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
 				<textFieldExpression><![CDATA[$F{salesRemarks}]]></textFieldExpression>
 			</textField>
 		</band>
