@@ -187,7 +187,7 @@
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_revise_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
 																    <form:hidden path="salesStatusLookup.lookupKey"/>
-																	<label id="inputPOStatus" class="control-label"><c:out value="${ reviseSalesForm.salesStatusLookup.lookupValue }"></c:out></label>
+																	<label id="inputPOStatus" class="control-label"><spring:message code="${ reviseSalesForm.salesStatusLookup.i18nLookupValue }" text="${ reviseSalesForm.salesStatusLookup.lookupValue }"></spring:message></label>
 																</div>										
 															</div>
 														</div>
@@ -233,7 +233,7 @@
 																		<div class="form-group">
 																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ paymentSalesForm.customerEntity }"/></textarea>
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ reviseSalesForm.customerEntity }"/></textarea>
 																			</div>
 																		</div>
 																	</c:if>																		
