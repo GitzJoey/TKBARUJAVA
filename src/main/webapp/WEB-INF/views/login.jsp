@@ -57,7 +57,7 @@
 										<div class="form-group">
 											<div class="checkbox">
 							        			<input id="cbx_remember_me" name="_spring_security_remember_me" type="checkbox" value=""/>
-							        			<label for="cbx_remember_me"><spring:message code="login_jsp.pic.remember_me" text="Remember Me"/></label> 
+							        			<label for="cbx_remember_me"><spring:message code="login_jsp.remember_me" text="Remember Me"/></label> 
 											</div>
 										</div>
 										<div class="button-toolbar">
@@ -72,7 +72,7 @@
 		        </div>
 		        <div class="row">
 		        	<div class="col-md-4 col-md-offset-4">
-		        		<a class="pull-right" href="${ pageContext.request.contextPath }/static/forgot.html"><spring:message code="login.jsp.forgot_password" text="Forgot Password"></spring:message></a>
+		        		<a class="pull-right" href="${ pageContext.request.contextPath }/static/forgot.html"><spring:message code="login_jsp.forgot_password" text="Forgot Password"></spring:message></a>
 		        	</div>
 		        </div>
 			</c:otherwise>
