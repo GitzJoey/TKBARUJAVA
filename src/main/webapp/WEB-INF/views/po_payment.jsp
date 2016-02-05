@@ -357,7 +357,7 @@
 																			<tbody>
 																				<c:set var="totalPay" value="${ 0 }" />
 																				<c:forEach items="${ poForm.paymentList }" var="iL" varStatus="ilIdx" >
-																					<c:if test="${ poForm.paymentList[ ilIdx.index].paymentId != 0 }">																					
+																					<c:if test="${ not empty poForm.paymentList[ ilIdx.index].paymentId }">																					
 																						<tr>
 																							<td style="vertical-align: middle;">
 																								<form:hidden path="paymentList[${ ilIdx.index }].paymentId" />
