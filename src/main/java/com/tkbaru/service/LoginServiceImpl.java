@@ -33,21 +33,6 @@ public class LoginServiceImpl implements LoginService {
 	}
 
 	@Override
-	public boolean successLogin(String userName, String userPswd) {
-		logger.info("[successLogin] " + "userName: " + userName + ", userPswd: " + userPswd);
-		
-		boolean result = false;
-		
-		User userdata = userManager.getUserByUserName(userName);
-			
-		if (userdata == null) { result = false; } 
-		
-		if (cryptoBCryptPasswordEncoderManager.matches(userPswd, userdata.getUserPassword())) { result = true; }
-		
-		return result;
-	}
-
-	@Override
 	public User createUserContext(String userName) {
 		logger.info("[createUserContext] " + "userName: " + userName);
 		
