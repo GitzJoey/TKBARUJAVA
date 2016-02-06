@@ -36,15 +36,15 @@ public class LoginServiceImpl implements LoginService {
 	public boolean successLogin(String userName, String userPswd) {
 		logger.info("[successLogin] " + "userName: " + userName + ", userPswd: " + userPswd);
 		
+		boolean result = false;
+		
 		User userdata = userManager.getUserByUserName(userName);
 			
-		if (userdata == null) {
-			return false;
-		} else if (cryptoBCryptPasswordEncoderManager.matches(userPswd, userdata.getUserPassword())) {
-			return false;
-		} else {
-			return true;	
-		}
+		if (userdata == null) { result = false; } 
+		
+		if (cryptoBCryptPasswordEncoderManager.matches(userPswd, userdata.getUserPassword())) { result = true; }
+		
+		return result;
 	}
 
 	@Override
@@ -70,13 +70,28 @@ public class LoginServiceImpl implements LoginService {
 	public User changePassword(int userId, String newPassword) {
 		User u = userManager.getUserById(userId);
 		
-		String encPassword = newPassword;
+		String encPassword = cryptoBCryptPasswordEncoderManager.encode(newPassword);
 		
 		u.setUserPassword(encPassword);
 		
 		userManager.editUser(u);
 		
 		return createUserContext(u.getUserName());
+	}
+
+	@Override
+	public boolean checkPassword(String userName, String userPswd) {
+		logger.info("[checkPassword] " + "userName: " + userName + ", userPswd: " + userPswd);
+		
+		boolean result = false;
+		
+		User userdata = userManager.getUserByUserName(userName);
+			
+		if (userdata == null) { result = false; } 
+		
+		if (cryptoBCryptPasswordEncoderManager.matches(userPswd, userdata.getUserPassword())) { result = true; }
+		
+		return result;
 	}
 
 }

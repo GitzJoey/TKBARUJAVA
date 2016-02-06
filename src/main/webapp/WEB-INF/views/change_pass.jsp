@@ -49,12 +49,13 @@
 					<c:choose>
 						<c:when test="${true}">
 							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/change_pass/save" data-parsley-validate="parsley">
+								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/changepass/save" data-parsley-validate="parsley">
 									<form:hidden path="userId"/>
+									<form:hidden path="userName"/>
 									<div class="form-group">
 										<label for="inputOldPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.old_password" text="Old Password"/></label>
 										<div class="col-md-4">
-											<form:password id="inputOldPassword" class="form-control" path="userPassword" data-parsley-required="true"/>
+											<input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" data-parsley-required="true"/>
 										</div>
 									</div>
 									<div class="form-group">

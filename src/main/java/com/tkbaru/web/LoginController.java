@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
@@ -74,7 +75,7 @@ public class LoginController {
 			
 			model.addAttribute("hideLogin", false);
 			model.addAttribute("collapseFlag", "");
-			model.addAttribute("messageText", messageText);
+			model.addAttribute("errorMessageText", messageText);
 			
 			return Constants.JSPPAGE_LOGIN;
 		}
@@ -108,7 +109,7 @@ public class LoginController {
 		
 		model.addAttribute("hideLogin", false);
 		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
+		model.addAttribute("errorMessageText", messageText);
 		
 		return Constants.JSPPAGE_LOGIN;
 	}
@@ -137,10 +138,9 @@ public class LoginController {
 		model.addAttribute("loginContext", loginContextSession);
 
 		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
+		model.addAttribute("errorMessageText", messageText);
 		
 		return "change_pass";
-		
 	}
 
 	@RequestMapping(value = "/static/forgot.html", method = RequestMethod.GET)
@@ -153,27 +153,31 @@ public class LoginController {
 		model.addAttribute("loginContext", loginContextSession);
 
 		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
+		model.addAttribute("errorMessageText", messageText);
 		
 		return Constants.JSPPAGE_LOGIN;
-		
 	}
 
-	@RequestMapping(value = "/static/change_pass/save", method = RequestMethod.POST)
-	public String savePassword(Locale locale, Model model, @ModelAttribute("userForm") User usr) {
-		logger.info("[savePassword] " + "");
+	@RequestMapping(value = "/changepass/save", method = RequestMethod.POST)
+	public String saveNewPassword(Locale locale, Model model, @RequestParam("inputOldPassword") String oldPassword, @ModelAttribute("userForm") User usr, RedirectAttributes redirectAttributes) {
+		logger.info("[saveNewPassword] " + "");
 
-		loginContextSession.setUserLogin(loginManager.changePassword(usr.getUserId(), usr.getUserPassword()));
-		
 		String messageText = "";
+		
+		if (loginManager.checkPassword(usr.getUserName(), oldPassword)) {
+			loginContextSession.setUserLogin(loginManager.changePassword(usr.getUserId(), usr.getUserPassword()));
+		} else {
+			messageText = "Failed.";
+			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
+		}
+		
 
 		model.addAttribute("loginContext", loginContextSession);
 
-		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
+		redirectAttributes.addFlashAttribute("collapseFlag", "collapse");
+		redirectAttributes.addFlashAttribute("errorMessageText", messageText);
 		
-		return "change_pass";
-		
+		return "redirect:/admin/user/view/" + usr.getUserId();
 	}
 
 }
