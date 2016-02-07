@@ -166,6 +166,9 @@
 				var qty = value;
 				var unit = $('#items_' + salesIdx + '_' + itemsIdx + '_unitSelect').val();
 				var ret = false;
+				var salesType = $('#selectSoType_' + salesIdx).val();
+
+				if (salesType == 'L015_SVC') { ret = true; return ret; }
 				
 				var response = $.ajax({
 					url : ctxpath+ "/sales/check/stocks",
@@ -518,11 +521,13 @@
 																							<td style="vertical-align: middle;">
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_itemsId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].itemsId"/>
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_productId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.productId"/>
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_stocksId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_baseUnitCode" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseValue" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseValue" />
 																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_toBaseQty" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].toBaseQty" />
-																								<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.stocksList[0].prodQuantity" />
+																								<c:if test="${ soForm.salesTypeLookup.lookupKey == 'L015_S' }">
+																									<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_stocksId" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
+																									<form:hidden id="items_${ soIdx.index }_${ iLIdx.index }_Product_Stocks_prodQuantity" path="soList[${ soIdx.index }].itemsList[${ iLIdx.index }].productEntity.stocksList[0].prodQuantity" />
+																								</c:if>
 																								<c:out value="${ soForm.itemsList[iLIdx.index].productEntity.productName }"></c:out>
 																							</td>
 																							<td style="vertical-align: middle;">

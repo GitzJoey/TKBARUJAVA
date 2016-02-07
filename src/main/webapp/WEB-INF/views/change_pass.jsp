@@ -45,41 +45,36 @@
 							<span class="fa fa-exclamation-circle fa-fw fa-2x"></span><spring:message code="change_pass_jsp.title" text="Change Password"/>
 						</h1>
 					</div>
-					
-					<c:choose>
-						<c:when test="${ true }">
-							<div class="panel-body">
-								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/changepass/save" data-parsley-validate="parsley">
-									<form:hidden path="userId"/>
-									<form:hidden path="userName"/>
-									<div class="form-group">
-										<label for="inputOldPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.old_password" text="Old Password"/></label>
-										<div class="col-md-4">
-											<input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" data-parsley-required="true"/>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputNewPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.new_password" text="New Password"/></label>
-										<div class="col-md-4">
-											<form:password id="inputNewPassword" class="form-control" path="userPassword" data-parsley-required="true"/>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="inputConfirmNewPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.confirm_new_password" text="Confirm New Password"/></label>
-										<div class="col-md-4">
-											<input id="inputConfirmNewPassword" type="password" class="form-control" data-parsley-required="true" data-parsley-equalto="#inputNewPassword"/>
-										</div>
-									</div>
-									<div class="form-group">
-										<label for="submitButton" class="col-md-2 control-label sr-only"></label>
-										<div class="col-md-10">
-											<button type="submit" id="submitButton" class="btn btn-primary"><spring:message code="common.submit_button" text="Submit"/></button>
-										</div>
-									</div>
-								</form:form>
+					<div class="panel-body">
+						<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/changepass/save" data-parsley-validate="parsley">
+							<form:hidden path="userId"/>
+							<form:hidden path="userName"/>
+							<div class="form-group">
+								<label for="inputOldPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.old_password" text="Old Password"/></label>
+								<div class="col-md-4">
+									<input type="password" class="form-control" name="inputOldPassword" id="inputOldPassword" data-parsley-required="true"/>
+								</div>
 							</div>
-						</c:when>
-					</c:choose>
+							<div class="form-group">
+								<label for="inputNewPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.new_password" text="New Password"/></label>
+								<div class="col-md-4">
+									<form:password id="inputNewPassword" class="form-control" path="userPassword" data-parsley-required="true"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inputConfirmNewPassword" class="col-md-2 control-label"><spring:message code="change_pass_jsp.confirm_new_password" text="Confirm New Password"/></label>
+								<div class="col-md-4">
+									<input id="inputConfirmNewPassword" type="password" class="form-control" data-parsley-required="true" data-parsley-equalto="#inputNewPassword"/>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="submitButton" class="col-md-2 control-label sr-only"></label>
+								<div class="col-md-10">
+									<button type="submit" id="submitButton" class="btn btn-primary"><spring:message code="common.submit_button" text="Submit"/></button>
+								</div>
+							</div>
+						</form:form>
+					</div>					
 				</div>
 			</div>
 		</div>

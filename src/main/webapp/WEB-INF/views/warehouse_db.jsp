@@ -236,7 +236,7 @@
 											    	<tr>
 											    		<td>
 											    			<c:choose>
-											    				<c:when test="${ so.salesTypeLookup.lookupKey == 'L015_WIN' }">
+											    				<c:when test="${ so.customerTypeLookup.lookupKey == 'L022_WIN' }">
 											    					<c:out value="${ so.walkInCustDetail }"/>
 											    				</c:when>
 											    				<c:otherwise>
