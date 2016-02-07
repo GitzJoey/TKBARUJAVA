@@ -33,6 +33,8 @@
 						return false;
 					}
 					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + usrId + "/removephone/" + idx);
+				} else if (button == "logoutButton") {
+					return true;
 				} else {
 					return false;	
 				}
@@ -325,71 +327,6 @@
 								</form:form>
 							</div>
 						</div>					
-					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_VIEW'}">
-						<div class="panel panel-default">
-							<div class="panel-heading">
-								<h1 class="panel-title">
-									<span class="fa fa-user fa-fw fa-2x"></span><spring:message code="user_jsp.user_profile" text="User Profile"></spring:message>
-								</h1>
-							</div>
-							<div class="panel-body">
-            					<div class="panel-body">
-              						<div class="row">
-                						<div class="col-md-3" align="center">
-											<form:hidden path="userForm.userId"/>
-											<br/>
-											<img class="img-responsive" alt="user" src="${ pageContext.request.contextPath }/resources/images/def-user.png">
-                						</div>
-										<div class="col-md-9"> 
-											<table class="table">
-												<thead>
-													<tr>
-														<th width="15%">&nbsp;</th>
-														<th width="85%">&nbsp;</th>
-													</tr>
-												</thead>
-							                    <tbody>
-													<tr>
-														<td><spring:message code="user_jsp.user_name" text="User Name"/></td>
-														<td><c:out value="${ userForm.userName }"/></td>
-													</tr>
-													<tr>
-														<td><spring:message code="user_jsp.user_role" text="Role"/></td>
-														<td><c:out value="${ userForm.roleEntity.roleName }"/></td>
-													</tr>
-													<tr>
-														<td><spring:message code="user_jsp.name" text="Name"/></td>
-														<td><c:out value="${ userForm.personEntity.firstName }"/>&nbsp;<c:out value="${ userForm.personEntity.lastName }"/></td>
-													</tr>
-													<tr>
-														<td><spring:message code="user_jsp.address" text="Address"/></td>
-														<td>
-															<c:out value="${ userForm.personEntity.addressLine1 }"/><br/>
-															<c:out value="${ userForm.personEntity.addressLine2 }"/><br/>
-															<c:out value="${ userForm.personEntity.addressLine3 }"/>
-														</td>
-													</tr>
-													<tr>
-														<td><spring:message code="user_jsp.email" text="Email"/></td>
-														<td><c:out value="${ userForm.personEntity.emailAddr }"/></td>
-													</tr>
-													<tr>
-														<td><spring:message code="user_jsp.phone_number" text="Phone Number"/></td>
-														<td>
-															<c:forEach items="${ userForm.personEntity.phoneList }" var="i">
-																(&nbsp;<c:out value="${ i.providerLookup.lookupValue }"/>&nbsp;)&nbsp;&nbsp;&nbsp;<c:out value="${ i.phoneNumber }"/><br/>
-															</c:forEach>
-														</td>     
-													</tr>
-							                    </tbody>
-                  							</table>
-                  							<a href="${ pageContext.request.contextPath }/changepass" class="btn btn-primary"><span class="fa fa-key fa-fw"></span>&nbsp;<spring:message code="common.change_password" text="Change Password"/></a>
-                						</div>
-              						</div>
-            					</div>
-							</div>
-						</div>
 					</c:when>
 				</c:choose> 				
 			</div>

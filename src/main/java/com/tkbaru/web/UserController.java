@@ -101,27 +101,6 @@ public class UserController {
 		return Constants.JSPPAGE_USER;
 	}
 
-	@RequestMapping(value = "/view/{selectedId}", method = RequestMethod.GET)
-	public String userView(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[userView] " + "selectedId: " + selectedId);
-		
-		User selectedUser = userManager.getUserById(selectedId);
-			
-		model.addAttribute("userForm", selectedUser);
-		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
-		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
-		model.addAttribute("roleDDL", roleManager.getAllRole());
-		model.addAttribute("storeDDL", storeManager.getAllStore());
-		
-		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
-		
-		model.addAttribute(Constants.PAGE_TITLE, "");
-		
-		return Constants.JSPPAGE_USER;
-	}
-
 	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
 	public String userDelete(Locale locale, Model model, @PathVariable Integer selectedId, RedirectAttributes redirectAttributes) {
 		logger.info("[userDelete] " + "selectedId:" + selectedId);

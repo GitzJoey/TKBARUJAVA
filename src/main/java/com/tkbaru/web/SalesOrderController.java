@@ -425,9 +425,11 @@ public class SalesOrderController {
 		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
 		
 		model.addAttribute("reviseSalesForm", so);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
-		
+		if (so.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -437,19 +439,22 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_REVISE;
 	}
 	
-	@RequestMapping(value = "/revise/{salesId}/additems/{stocksId}", method = RequestMethod.POST)
-	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int stocksId) {
-		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", stocksId: " + stocksId);
-		
+	@RequestMapping(value = "/revise/{salesId}/additems/{productORstocksId}", method = RequestMethod.POST)
+	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int productORstocksId) {
+		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", productORstocksId: " + productORstocksId);
+
+		reviseSalesForm.setSalesStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatusLookup().getLookupKey()));
+		reviseSalesForm.setSalesTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesTypeLookup().getLookupKey()));
+
 		Items i = new Items();
-		i.setProductEntity(stocksManager.getStocksById(stocksId).getProductEntity());
+		i.setProductEntity(productManager.getProductById(productORstocksId));
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.getItemsList().add(i);
 		
 		for (Items item : reviseSalesForm.getItemsList()) {
-			if (item.getProductEntity() != null && item.getProductEntity().getProductId() != null) {
-				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			if (reviseSalesForm.getSalesTypeLookup().equals("L022_S")) {
+				item.setStocksEntity(stocksManager.getStocksById(productORstocksId));
 			}
 			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {
 				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
@@ -458,15 +463,17 @@ public class SalesOrderController {
 		
 		if (reviseSalesForm.getCustomerEntity().getCustomerId() != null) {
 			reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
-
 		}
-		reviseSalesForm.setSalesStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatusLookup().getLookupKey()));
-		reviseSalesForm.setSalesTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesTypeLookup().getLookupKey()));
 
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
+		if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		} else {
+			model.addAttribute("prodListDDL", productManager.getAllProduct());
+		}
+
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -498,8 +505,11 @@ public class SalesOrderController {
 		}
 		
 		model.addAttribute("reviseSalesForm", reviseSalesForm);
-		model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
-		model.addAttribute("prodListDDL", productManager.getAllProduct());
+		if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		} else {
+			model.addAttribute("prodListDDL", productManager.getAllProduct());
+		}
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);

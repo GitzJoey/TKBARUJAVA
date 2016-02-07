@@ -127,7 +127,7 @@
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
 													<td>
 														<c:choose>
-															<c:when test="${ i.salesTypeLookup.lookupKey == 'L015_WIN' }">
+															<c:when test="${ i.salesTypeLookup.lookupKey == 'L022_WIN' }">
 																<c:out value="${ i.walkInCustDetail }"></c:out>
 															</c:when>
 															<c:otherwise>
@@ -258,9 +258,16 @@
 																<div class="form-group" style="padding-left: 2%">
 																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																		<c:forEach items="${ stocksListDDL }" var="sddl">
-																			<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
-																		</c:forEach>
+																		<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_SVC' }">
+																			<c:forEach items="${ stocksListDDL }" var="sddl">
+																				<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
+																			</c:forEach>
+																		</c:if>
+																		<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_SVC' }">
+																			<c:forEach items="${ productListDDL }" var="pddl">
+																				<option value="${ pddl.productId }">${ pddl.productName }</option>
+																			</c:forEach>
+																		</c:if>
 																	</select>
 																	</div>
 																</div>

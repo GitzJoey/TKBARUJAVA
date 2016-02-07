@@ -44,6 +44,7 @@ public class Constants {
 	public static final String JSPPAGE_STATIC = "static";
 	public static final String JSPPAGE_SETUP = "setup";
 	public static final String JSPPAGE_LOGIN = "login";
+	public static final String JSPPAGE_USER_PROFILE = "user_profile";
 	
 	public static final String LOOKUPCATEGORY_STATUS = "STATUS";
 	public static final String LOOKUPCATEGORY_SALUTATION = "SALUTATION";

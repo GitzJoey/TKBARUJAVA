@@ -15,12 +15,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
@@ -128,20 +126,6 @@ public class LoginController {
 		return "redirect:/dashboard";
 	}
 	
-	@RequestMapping(value = "/changepass", method = RequestMethod.GET)
-	public String changePassword(Locale locale, Model model) {
-		logger.info("[changePassword] " + "");
-
-		String messageText = "";
-
-		model.addAttribute("userForm", loginContextSession.getUserLogin());
-		model.addAttribute("loginContext", loginContextSession);
-
-		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("errorMessageText", messageText);
-		
-		return "change_pass";
-	}
 
 	@RequestMapping(value = "/static/forgot.html", method = RequestMethod.GET)
 	public String forgotPassword(Locale locale, Model model) {
@@ -157,27 +141,5 @@ public class LoginController {
 		
 		return Constants.JSPPAGE_LOGIN;
 	}
-
-	@RequestMapping(value = "/changepass/save", method = RequestMethod.POST)
-	public String saveNewPassword(Locale locale, Model model, @RequestParam("inputOldPassword") String oldPassword, @ModelAttribute("userForm") User usr, RedirectAttributes redirectAttributes) {
-		logger.info("[saveNewPassword] " + "");
-
-		String messageText = "";
-		
-		if (loginManager.checkPassword(usr.getUserName(), oldPassword)) {
-			loginContextSession.setUserLogin(loginManager.changePassword(usr.getUserId(), usr.getUserPassword()));
-		} else {
-			messageText = "Failed.";
-			model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_SHOW);
-		}
-		
-
-		model.addAttribute("loginContext", loginContextSession);
-
-		redirectAttributes.addFlashAttribute("collapseFlag", "collapse");
-		redirectAttributes.addFlashAttribute("errorMessageText", messageText);
-		
-		return "redirect:/admin/user/view/" + usr.getUserId();
-	}
-
+	
 }
