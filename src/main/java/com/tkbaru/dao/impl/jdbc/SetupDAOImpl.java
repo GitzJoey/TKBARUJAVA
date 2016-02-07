@@ -31,7 +31,7 @@ public class SetupDAOImpl implements SetupDAO {
 	    JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 	    
 	    try {
-	        Integer i = jdbcTemplate.queryForObject(CHECK_SQL_QUERY, Integer.class);
+	        jdbcTemplate.queryForObject(CHECK_SQL_QUERY, Integer.class);
 	        isConnected = true;
 	    } catch (Exception err) {
 	        logger.info("[checkDBConnection] Connection failed. Reason: " + err.getMessage());
