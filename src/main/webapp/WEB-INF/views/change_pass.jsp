@@ -47,7 +47,7 @@
 					</div>
 					
 					<c:choose>
-						<c:when test="${true}">
+						<c:when test="${ true }">
 							<div class="panel-body">
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/changepass/save" data-parsley-validate="parsley">
 									<form:hidden path="userId"/>

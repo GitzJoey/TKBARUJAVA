@@ -23,7 +23,7 @@ public class ResourceNotFoundController {
 		model.addAttribute("loginContext", loginContextSession);
 
 		model.addAttribute("collapseFlag", "collapse");
-		model.addAttribute("messageText", messageText);
+		model.addAttribute("errorMessageText", messageText);
 		
 		return "e404";
 	}

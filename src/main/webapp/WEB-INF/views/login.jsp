@@ -24,7 +24,7 @@
 	  						<spring:message code="spring_security_${ SPRING_SECURITY_LAST_EXCEPTION.message }" text="${ SPRING_SECURITY_LAST_EXCEPTION.message }"></spring:message>
   						</c:when>
   						<c:otherwise>
-  							${messageText}
+  							${ errorMessageText }
   						</c:otherwise>
   					</c:choose>
 				</div>
