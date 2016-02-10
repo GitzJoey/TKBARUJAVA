@@ -88,6 +88,7 @@
                 <beans:value>com.tkbaru.model.Modem</beans:value>
                 <beans:value>com.tkbaru.model.Deliver</beans:value>
                 <beans:value>com.tkbaru.model.StocksOut</beans:value>
+                <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -129,6 +130,7 @@
                 <beans:value>com.tkbaru.model.Modem</beans:value>
                 <beans:value>com.tkbaru.model.Deliver</beans:value>
                 <beans:value>com.tkbaru.model.StocksOut</beans:value>
+                <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -187,6 +189,9 @@
     <beans:bean id="TruckDAO" class="com.tkbaru.dao.impl.hibernate.TruckDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="TruckMtcDAO" class="com.tkbaru.dao.impl.hibernate.TruckMaintenanceDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+    </beans:bean>
     <beans:bean id="PurchaseOrderDAO" class="com.tkbaru.dao.impl.hibernate.PurchaseOrderDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
     </beans:bean>
@@ -242,6 +247,7 @@
 	<beans:bean id="SmsService" class="com.tkbaru.service.SmsServiceImpl"></beans:bean>
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
 	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
+	<beans:bean id="TruckMtcService" class="com.tkbaru.service.TruckMtcServiceImpl"></beans:bean>
 	<beans:bean id="SetupService" class="com.tkbaru.service.SetupServiceImpl">
 		<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
 	</beans:bean>

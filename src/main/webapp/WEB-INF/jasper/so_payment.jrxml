@@ -23,11 +23,7 @@
 	<field name="payment.paymentType" class="java.lang.String"/>
 	<field name="payment.paymentStore" class="java.lang.String"/>
 	<field name="payment.bankCode" class="java.lang.String"/>
-<<<<<<< HEAD
 	<field name="salesType" class="java.lang.String"/>
-=======
-    <field name="salesType" class="java.lang.String"/>
->>>>>>> branch 'master' of https://gitzjoey@bitbucket.org/gitzjoey/tkbaru.git
 	<field name="customerType" class="java.lang.String"/>
 	<field name="customerName" class="java.lang.String"/>
 	<background>
