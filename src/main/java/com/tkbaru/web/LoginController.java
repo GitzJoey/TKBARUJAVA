@@ -133,13 +133,12 @@ public class LoginController {
 
 		String messageText = "";
 
-		model.addAttribute("userForm", loginContextSession.getUserLogin());
 		model.addAttribute("loginContext", loginContextSession);
 
 		model.addAttribute("collapseFlag", "collapse");
 		model.addAttribute("errorMessageText", messageText);
 		
-		return Constants.JSPPAGE_LOGIN;
+		return "forgot";
 	}
 	
 }
