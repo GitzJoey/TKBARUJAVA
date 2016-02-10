@@ -28,7 +28,7 @@
 					remember-me-cookie="tkBaruRememberMe"/>		
 		
 		<session-management invalid-session-url="/login.html?e=session">
-			<concurrency-control expired-url="/login.html?e=expired" error-if-maximum-exceeded="true" max-sessions="1" session-registry-alias="sessionRegistry"/>
+			<concurrency-control expired-url="/login.html?e=expired" max-sessions="1" session-registry-alias="sessionRegistry"/>
 		</session-management>
 	</http>
 	
