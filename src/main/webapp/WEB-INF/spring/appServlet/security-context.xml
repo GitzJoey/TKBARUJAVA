@@ -22,7 +22,10 @@
 					
 		<logout invalidate-session="true" delete-cookies="JSESSIONID" />
 		
-		<remember-me key="uniqueAndSecret" token-validity-seconds="432000"/>		
+		<remember-me key="ReVKpgd2tKB4ch2TiLdO" 
+					token-validity-seconds="432000"
+					remember-me-parameter="remember-me"
+					remember-me-cookie="tkBaruRememberMe"/>		
 		
 		<session-management invalid-session-url="/login.html?e=session">
 			<concurrency-control expired-url="/login.html?e=expired" error-if-maximum-exceeded="true" max-sessions="1" session-registry-alias="sessionRegistry"/>
