@@ -353,6 +353,7 @@ public class SalesOrderController {
 		}
 		
 		so.setSalesTypeLookup(lookupManager.getLookupByKey(so.getSalesTypeLookup().getLookupKey()));
+		so.setCustomerTypeLookup(lookupManager.getLookupByKey(so.getCustomerTypeLookup().getLookupKey()));
 		
 		List<Items> itemList = new ArrayList<Items>();
 		for (Items items : loginContext.getSoList().get(tabId).getItemsList()) {
@@ -469,7 +470,7 @@ public class SalesOrderController {
 		if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		} else {
-			model.addAttribute("prodListDDL", productManager.getAllProduct());
+			model.addAttribute("productListDDL", productManager.getAllProduct());
 		}
 
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -485,12 +486,15 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value = "/revise/{salesId}/removeitems/{iIdx}", method = RequestMethod.POST)
-	public String soRemoveItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int iIdx) {
-		logger.info("[soRemoveItems] " + "salesId: " + salesId + ", iIdx: " + iIdx);
+	public String soReviseRemoveItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int iIdx) {
+		logger.info("[soReviseRemoveItems] " + "salesId: " + salesId + ", iIdx: " + iIdx);
 		
 		reviseSalesForm.setSalesStatusLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesStatusLookup().getLookupKey()));
-		reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
 		reviseSalesForm.setSalesTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesTypeLookup().getLookupKey()));
+
+		if (reviseSalesForm.getCustomerTypeLookup().getLookupKey().equals("L022_R")) {
+			reviseSalesForm.setCustomerEntity(customerManager.getCustomerById(reviseSalesForm.getCustomerEntity().getCustomerId()));
+		}
 		
 		List<Items> iLNew = new ArrayList<Items>();
 		for (int x = 0; x < reviseSalesForm.getItemsList().size(); x++) {
@@ -508,7 +512,7 @@ public class SalesOrderController {
 		if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
 		} else {
-			model.addAttribute("prodListDDL", productManager.getAllProduct());
+			model.addAttribute("productListDDL", productManager.getAllProduct());
 		}
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -528,8 +532,13 @@ public class SalesOrderController {
 
 		for (Items items : reviseSalesForm.getItemsList()) {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
-			items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
+			if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+				items.setStocksEntity(stocksManager.getStocksById(items.getStocksEntity().getStocksId()));
+			}
 			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
+				if (productUnit.getIsBaseUnit() == true) {
+					items.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
+				}
 				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){
 					items.setToBaseValue(productUnit.getConversionValue());
 					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());

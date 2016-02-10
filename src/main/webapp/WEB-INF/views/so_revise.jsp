@@ -35,11 +35,16 @@
 			$('#submitButton').click(function() {
 				var salesId = $('#inputHiddenSalesId').val();
 
+				if ($('#itemsListTable tbody tr').size() == 0) {
+					jsAlert("Please specify at least 1 product");
+					return false;
+				}
+				
 				$('#reviseSalesForm').parsley({
 				    excluded: '[id^="productSelect"]'
 				}).validate();
 
-				if(false == $('#reviseSalesForm').parsley().isValid()) {
+				if (false == $('#reviseSalesForm').parsley().isValid()) {
 					return false;
 	            } else {
 					$('#reviseSalesForm').attr('action', ctxpath + "/sales/revise/" + salesId + "/save");
@@ -127,7 +132,7 @@
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
 													<td>
 														<c:choose>
-															<c:when test="${ i.salesTypeLookup.lookupKey == 'L022_WIN' }">
+															<c:when test="${ i.customerTypeLookup.lookupKey == 'L022_WIN' }">
 																<c:out value="${ i.walkInCustDetail }"></c:out>
 															</c:when>
 															<c:otherwise>
@@ -199,7 +204,7 @@
 																<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.shipping_date" text="Shipping Date"/></label>
 																<div class="col-sm-5">
 																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 														</div>
 													</div>
@@ -218,7 +223,13 @@
 																		<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.customer" text="Customer"/></label>
 																		<div class="col-sm-10">
 																			<form:hidden path="customerEntity.customerId"/>
-																			<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																			<form:hidden path="customerTypeLookup.lookupKey"/>
+																			<c:if test="${ reviseSalesForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
+																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Walk In Customer" disabled="true"></form:input>
+																			</c:if>
+																			<c:if test="${ reviseSalesForm.customerTypeLookup.lookupKey == 'L022_R' }">
+																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
+																			</c:if>
 																		</div>
 																	</div>
 																	<c:if test="${ reviseSalesForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
@@ -296,7 +307,9 @@
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
 																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>																																														
-																						<form:hidden path="itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
+																						<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
+																							<form:hidden path="itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
+																						</c:if>
 																						<form:hidden path="itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
 																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseValue" />
 																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseQty" />
