@@ -92,7 +92,9 @@ public class PriceController {
 		logger.info("[todayPricePageLoad] " + "");
 		
 		List<Stocks> stocksList = stocksManager.getAllStocks();
-				
+		
+		Price p = priceManager.getLatestRetailPriceByProductId(2);
+		
 		model.addAttribute("stocksList", stocksList);
 		model.addAttribute("priceLevelList", priceLevelManager.getAllPriceLevel());
 		
