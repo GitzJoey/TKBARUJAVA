@@ -68,6 +68,7 @@ public class Constants {
 	public static final String LOOKUPCATEGORY_PAYMENT_STATUS_GIRO = "PAYMENT_STATUS_GIRO";
 	public static final String LOOKUPCATEGORY_PRICE_LEVEL_TYPE = "PRICE_LEVEL_TYPE";
 	public static final String LOOKUPCATEGORY_CUSTOMER_TYPE = "CUSTOMER_TYPE";
+	public static final String LOOKUPCATEGORY_TRUCK_MTC_TYPE = "TRUCK_MTC_TYPE";
 	
 	public static final String JASPERREPORT_OUTPUTTYPE_HTML = "html";
 	public static final String JASPERREPORT_OUTPUTTYPE_PDF = "pdf";

@@ -1,6 +1,7 @@
 package com.tkbaru.model;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,6 +60,10 @@ public class Truck {
 	@ManyToOne
 	@JoinColumn(name="store_id")
 	private Store truckStoreEntity;
+	
+	@OneToMany
+	@JoinColumn(name="truck_id", referencedColumnName="truck_id")
+	private List<TruckMaintenance> truckMaintenances;
 
 	public Integer getTruckId() {
 		return truckId;
@@ -161,6 +167,14 @@ public class Truck {
 
 	public void setTruckStoreEntity(Store truckStoreEntity) {
 		this.truckStoreEntity = truckStoreEntity;
+	}
+
+	public List<TruckMaintenance> getTruckMaintenances() {
+		return truckMaintenances;
+	}
+
+	public void setTruckMaintenances(List<TruckMaintenance> truckMaintenances) {
+		this.truckMaintenances = truckMaintenances;
 	}
 
 	@Override
