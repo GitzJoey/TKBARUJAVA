@@ -297,6 +297,38 @@ VALUES ('CUSTOMER_TYPE', 'L022_WIN',
 		'CUSTOMER_TYPE.L022_WIN', 'Walk In Customer',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
+/*Maintenance Truck Type L023 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('TRUCK_MTC_TYPE', 'L023_A',
+		'TRUCK_MTC_TYPE.L023_A', 'A',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('TRUCK_MTC_TYPE', 'L023_B',
+		'TRUCK_MTC_TYPE.L023_B', 'B',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
+/*User Type L024 */
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('USER_TYPE', 'L024_ADM',
+		'USER_TYPE.L024_ADM', 'Admin',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('USER_TYPE', 'L024_OWN',
+		'USER_TYPE.L024_OWN', 'Owner',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('USER_TYPE', 'L024_EMP',
+		'USER_TYPE.L024_EMP', 'Employee',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('USER_TYPE', 'L024_CUS',
+		'USER_TYPE.L024_CUS', 'Customer',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('USER_TYPE', 'L024_SUP',
+		'USER_TYPE.L024_SUP', 'Supplier',
+        1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+
 /*
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
 VALUES ('', '',

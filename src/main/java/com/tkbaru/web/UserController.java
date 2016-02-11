@@ -70,6 +70,8 @@ public class UserController {
 		model.addAttribute("statusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_STATUS));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
+		model.addAttribute("userTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_USERTYPE));
+		model.addAttribute("allowLoginDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -91,6 +93,8 @@ public class UserController {
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
+		model.addAttribute("userTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_USERTYPE));
+		model.addAttribute("allowLoginDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -145,6 +149,8 @@ public class UserController {
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
+		model.addAttribute("userTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_USERTYPE));
+		model.addAttribute("allowLoginDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
@@ -173,6 +179,8 @@ public class UserController {
 		model.addAttribute("providerDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PHONE_PROVIDER));
 		model.addAttribute("roleDDL", roleManager.getAllRole());
 		model.addAttribute("storeDDL", storeManager.getAllStore());
+		model.addAttribute("userTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_USERTYPE));
+		model.addAttribute("allowLoginDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);

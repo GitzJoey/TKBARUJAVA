@@ -104,8 +104,8 @@ public class TruckMtcController {
 		return "redirect:/truck";
 	}
 	
-	@RequestMapping(value="/save", method = RequestMethod.POST)
-	public String saveMaintenance(Locale locale, Model model, @ModelAttribute("mtcForm") TruckMaintenance mtc, RedirectAttributes redirectAttributes) {	
+	@RequestMapping(value="/save/{truckId}", method = RequestMethod.POST)
+	public String saveMaintenance(Locale locale, Model model, @ModelAttribute("mtcForm") TruckMaintenance mtc, RedirectAttributes redirectAttributes, @PathVariable Integer truckId) {	
 		
 		if (mtc.getTruckMaintenanceId() == null) {
 			mtc.setCreatedBy(loginContextSession.getUserLogin().getUserId());
@@ -122,6 +122,6 @@ public class TruckMtcController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck/maintenance/"+mtc.getTruckId();
+		return "redirect:/truck/maintenance/" + mtc.getTruckId();
 	}
 }

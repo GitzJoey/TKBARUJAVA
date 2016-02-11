@@ -80,7 +80,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cubes fa-fw"></span>&nbsp;<spring:message code="truckmtc_jsp.title" text="Truck Maintenance"/>
+					<span class="fa fa-gears fa-fw"></span>&nbsp;<spring:message code="truckmtc_jsp.title" text="Truck Maintenance"/>
 				</h1>
 
 				<c:choose>
@@ -88,7 +88,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-cubes fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.truckmtc_list" text="Truck Maintenance List"/>
+									<span class="fa fa-gears fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.truckmtc_list" text="Truck Maintenance List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -127,26 +127,26 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.add_product" text="Add Maintenance"/>
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.add_maintenance" text="Add Maintenance"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.edit_product" text="Edit Maintenance"/>
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.edit_maintenance" text="Edit Maintenance"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
+								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/save/${ mtcForm.truckId }" data-parsley-validate="parsley">
 									<form:hidden path="truckMaintenanceId"/>
-									<form:hidden path="truckId"></form:hidden>									
+									<form:hidden path="truckId"/>
 									<div class="form-group">
-										<label for="inputProductType" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.producttype" text="Maintenance Type"/></label>
+										<label for="inputMaintenanceType" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.maintenance_type" text="Maintenance Type"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="maintenanceTypeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<c:forEach items="${ maintenanceTypeDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
-												</c:forEach>										
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>
@@ -162,7 +162,6 @@
 											<form:input type="text" class="form-control" id="inputOdometer" name="inputOdometer" path="odometer" placeholder="Enter Odometer" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
-					
 									<div class="form-group">
 										<label for="inputRemarks" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.remarks" text="Remarks"/></label>
 										<div class="col-sm-6">
