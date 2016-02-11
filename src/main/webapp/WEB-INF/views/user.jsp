@@ -316,6 +316,24 @@
 											</div>
 										</div>
 									</div>
+									<div class="form-group">
+										<label for="inputUserType" class="col-sm-2 control-label">User Type</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="userType" data-parsley-required="true" data-parsley-trigger="change">
+												<option value="">Please Select</option>
+												<form:options items="${ userTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputAllowLogin" class="col-sm-2 control-label">Allow Login</label>
+										<div class="col-sm-3">
+											<form:select class="form-control" path="allowLogin" data-parsley-required="true" data-parsley-trigger="change">
+												<option value="">Please Select</option>
+												<form:options items="${ allowLoginDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+											</form:select>
+										</div>
+									</div>
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>

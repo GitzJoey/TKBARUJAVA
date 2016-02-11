@@ -104,7 +104,9 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.role_id,			"+
 				"		tbuser.store_id,		"+
 				"		tbuser.person_id,		"+
-				"		tbuser.status			"+				
+				"		tbuser.status,			"+
+				"		tbuser.user_type,		"+
+				"		tbuser.allow_login		"+
 				"FROM tb_user tbuser            "+
 				"WHERE tbuser.user_id = ? 		";
 
@@ -121,6 +123,8 @@ public class UserDAOImpl implements UserDAO {
 				usr.setStoreId(rs.getInt("store_id"));
 				usr.setPersonId(rs.getInt("person_id"));
 				usr.setUserStatus(rs.getString("status"));
+				usr.setUserType(rs.getString("user_type"));
+				usr.setAllowLogin(rs.getString("allow_login"));
 				
 				return usr;
 			}
@@ -133,13 +137,13 @@ public class UserDAOImpl implements UserDAO {
 	public void addUser(User usr) {
 		logger.info("[addUser] " + "");
 		
-        String sql = "INSERT INTO tb_user (user_name, passwd, role_id, person_id, store_id, status) " +
-        				"VALUES (?, ?, ?, ?, ?, ?) ";
+        String sql = "INSERT INTO tb_user (user_name, passwd, role_id, person_id, store_id, status, user_type, allow_login) " +
+        				"VALUES (?, ?, ?, ?, ?, ?, ?, ?) ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
 
         try {
-	        jdbcTemplate.update(sql, new Object[] { usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus() });
+	        jdbcTemplate.update(sql, new Object[] { usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus(), usr.getUserType(), usr.getAllowLogin() });
         } catch(Exception err) {
         	logger.info ("Error : " + err.getMessage());
         }
@@ -150,7 +154,7 @@ public class UserDAOImpl implements UserDAO {
 	public void editUser(User usr) {
 		logger.info("[editUser] " + "");
 		
-        String query = "UPDATE tb_user SET user_name = ?, passwd = ?, role_id = ?, person_id = ?, store_id = ?, status = ? " +
+        String query = "UPDATE tb_user SET user_name = ?, passwd = ?, role_id = ?, person_id = ?, store_id = ?, status = ?, user_type = ?, allow_login = ? " +
         				"WHERE user_id = ? ";
 
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
@@ -159,7 +163,7 @@ public class UserDAOImpl implements UserDAO {
         
         try {
             Object[] args = new Object[] { 
-            		usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus(), usr.getUserId() };
+            		usr.getUserName(), usr.getUserPassword(), usr.getRoleId(), usr.getPersonId(), usr.getStoreId(), usr.getUserStatus(),usr.getUserType(), usr.getAllowLogin(), usr.getUserId() };
 
             out = jdbcTemplate.update(query, args);        	
         } catch (Exception err) {

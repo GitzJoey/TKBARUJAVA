@@ -32,6 +32,9 @@ public class User implements Serializable {
 	
 	private Lookup statusLookup;
 	
+	private String userType;
+	private String allowLogin;
+	
 	public Integer getUserId() {
 		return userId;
 	}
@@ -121,6 +124,19 @@ public class User implements Serializable {
 	}
 	public void setStatusLookup(Lookup statusLookup) {
 		this.statusLookup = statusLookup;
+	}
+	
+	public String getUserType() {
+		return userType;
+	}
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+	public String getAllowLogin() {
+		return allowLogin;
+	}
+	public void setAllowLogin(String allowLogin) {
+		this.allowLogin = allowLogin;
 	}
 	@Override
 	public String toString() {

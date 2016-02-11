@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS `tb_truck_maintenance`;
+
+CREATE TABLE `tb_truck_maintenance` (
+  `truck_maintenance_id` int(11) NOT NULL AUTO_INCREMENT,
+  `truck_id` int(11) DEFAULT '0',
+  `maintenance_type` varchar(45) DEFAULT NULL,
+  `cost` bigint(11) DEFAULT '0',
+  `odometer` bigint(11) DEFAULT '0',
+  `remarks` varchar(255) DEFAULT NULL,
+  `created_by` int(11) DEFAULT '0',
+  `created_date` datetime DEFAULT NULL,
+  `updated_by` int(11) DEFAULT '0',
+  `updated_date` datetime DEFAULT NULL,
+  PRIMARY KEY (`truck_maintenance_id`)
+);

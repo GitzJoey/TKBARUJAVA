@@ -12,6 +12,8 @@ CREATE TABLE `tb_user` (
   `created_date` 	datetime DEFAULT NULL,
   `updated_by` 		int(11) DEFAULT '0',
   `updated_date` 	datetime DEFAULT NULL,
+  `user_type`       varchar(45) DEFAULT NULL,
+  `allow_login`     varchar(45) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 );
 
