@@ -322,8 +322,10 @@
 										<label for="inputUserType" class="col-sm-2 control-label">User Type</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="userType" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ userTypeDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ userTypeDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>
@@ -331,8 +333,10 @@
 										<label for="inputAllowLogin" class="col-sm-2 control-label">Allow Login</label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="allowLogin" data-parsley-required="true" data-parsley-trigger="change">
-												<option value="">Please Select</option>
-												<form:options items="${ allowLoginDDL }" itemValue="lookupKey" itemLabel="lookupValue"></form:options>
+												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+												<c:forEach items="${ allowLoginDDL }" var="i">
+													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>

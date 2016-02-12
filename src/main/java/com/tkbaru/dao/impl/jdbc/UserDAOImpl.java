@@ -48,6 +48,8 @@ public class UserDAOImpl implements UserDAO {
 				user.setPersonId(rs.getInt("person_id"));
 				user.setStoreId(rs.getInt("store_id"));
 				user.setUserStatus(rs.getString("status"));
+				user.setUserType(rs.getString("user_type"));
+				user.setAllowLogin(rs.getString("allow_login"));
 				
 				return user;
 			}
@@ -68,6 +70,8 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.role_id,														"+
 				"		tbuser.store_id,													"+
 				"		tbuser.person_id,													"+
+				"		tbuser.user_type,													"+
+				"		tbuser.allow_login													"+
 				"		tbuser.status														"+
 				"FROM tb_user tbuser														"+
 				"WHERE tbuser.status = 'L001_A'												";
@@ -84,6 +88,8 @@ public class UserDAOImpl implements UserDAO {
 			res.setStoreId(Integer.valueOf(String.valueOf(row.get("store_id"))));
 			res.setPersonId(Integer.valueOf(String.valueOf(row.get("person_id"))));
 			res.setUserStatus(String.valueOf(row.get("status")));
+			res.setUserType(String.valueOf(row.get("user_type")));
+			res.setAllowLogin(String.valueOf(row.get("allow_login")));
 			
 			result.add(res);
 		}
@@ -203,6 +209,8 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.role_id,														"+
 				"		tbuser.store_id,													"+
 				"		tbuser.person_id,													"+
+				"		tbuser.user_type,													"+
+				"		tbuser.allow_login,													"+
 				"		tbuser.status														"+
 				"FROM tb_user tbuser														"+
 				"WHERE tbuser.status = 'L001_A'												";
@@ -219,6 +227,8 @@ public class UserDAOImpl implements UserDAO {
 			res.setStoreId(Integer.valueOf(String.valueOf(row.get("store_id"))));
 			res.setPersonId(Integer.valueOf(String.valueOf(row.get("person_id"))));
 			res.setUserStatus(String.valueOf(row.get("status")));
+			res.setUserType(String.valueOf("user_type"));
+			res.setAllowLogin(String.valueOf("allow_login"));
 			
 			result.add(res);
 		}
