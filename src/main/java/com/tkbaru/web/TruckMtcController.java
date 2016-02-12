@@ -46,6 +46,7 @@ public class TruckMtcController {
 		Truck truck = truckManager.getTruckById(selectedTruckId);
 
 		model.addAttribute("truckId", selectedTruckId);
+		model.addAttribute("truckEntity", truck);
 		model.addAttribute("mtcList", truck.getTruckMaintenances());		
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);

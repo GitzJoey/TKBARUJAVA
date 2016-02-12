@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
@@ -97,6 +98,12 @@
 							<div class="panel-body">
 								<table id="mtcListTable" class="table table-bordered table-hover display dt-responsive nowrap" style="width: 100%; border-collapse: separate;">
 									<thead>
+										<tr>
+											<th colspan="5">
+												<spring:message code="${ truckEntity.truckTypeLookup.i18nLookupValue }" text="${ truckEntity.truckTypeLookup.lookupValue }"/>&nbsp;(&nbsp;<c:out value="${ truckEntity.plateNumber }"/>&nbsp;)
+												<span class="pull-right">KIR:&nbsp;<fmt:formatDate pattern="dd MMM yyyy" value="${ truckEntity.kirDate }" /></span>
+											</th>
+										</tr>
 										<tr>
 											<th width="5%">&nbsp;</th>
 											<th width="15%"><spring:message code="truckmtc_jsp.table.header.type" text="Type"/></th>
