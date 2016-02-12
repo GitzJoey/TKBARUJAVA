@@ -299,12 +299,12 @@ VALUES ('CUSTOMER_TYPE', 'L022_WIN',
 
 /*Maintenance Truck Type L023 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('TRUCK_MTC_TYPE', 'L023_A',
-		'TRUCK_MTC_TYPE.L023_A', 'A',
+VALUES ('TRUCK_MTC_TYPE', 'L023_R',
+		'TRUCK_MTC_TYPE.L023_R', 'Regular Checkup',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
-VALUES ('TRUCK_MTC_TYPE', 'L023_B',
-		'TRUCK_MTC_TYPE.L023_B', 'B',
+VALUES ('TRUCK_MTC_TYPE', 'L023_T',
+		'TRUCK_MTC_TYPE.L023_T', 'Tire Change',
         1, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
 
 /*User Type L024 */

@@ -11,7 +11,9 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {
-				window.location.href = ctxpath + "/truck";
+				var truckId = $('#inputHidden_truckId').val();
+				
+				window.location.href = ctxpath + "/truck/maintenance/tr/" + truckId;
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -32,7 +34,8 @@
 			$('#editTableSelection, #deleteTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
-								
+				var truckId = $('#inputHidden_truckId').val();
+				
 				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
 					if ($(item).prop('checked')) {
 						id = $(item).attr("value");	
@@ -44,9 +47,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/truck/maintenance/edit/" + id);
+						$('#editTableSelection').attr("href", ctxpath + "/truck/maintenance/tr/" + truckId + "/edit/" + id);
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/truck/maintenance/delete/" + id);
+						$('#deleteTableSelection').attr("href", ctxpath + "/truck/maintenance/tr/" + truckId + "/delete/" + id);
 					}						
 				}				
 			});
@@ -96,9 +99,9 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="10%"><spring:message code="truckmtc_jsp.table.header.type" text="Type"/></th>
+											<th width="15%"><spring:message code="truckmtc_jsp.table.header.type" text="Type"/></th>
 											<th width="10%"><spring:message code="truckmtc_jsp.table.header.cost" text="Cost"/></th>
-											<th width="25%"><spring:message code="truckmtc_jsp.table.header.odometer" text="Odometer"/></th>
+											<th width="10%"><spring:message code="truckmtc_jsp.table.header.odometer" text="Odometer"/></th>
 											<th width="50%"><spring:message code="truckmtc_jsp.table.header.remarks" text="Remarks"/></th>
 										</tr>
 									</thead>
@@ -106,8 +109,13 @@
 										<c:if test="${ not empty mtcList }">
 											<c:forEach items="${ mtcList }" var="i" varStatus="mtcIdx">
 												<tr>
-													<td align="center"><input id="cbx_<c:out value="${ i.truckMaintenanceId }"/>" type="checkbox" value="<c:out value="${ i.truckMaintenanceId }"/>"/></td>
-													<td><spring:message code="${ i.maintenanceTypeLookup.i18nLookupValue }" text="${ i.maintenanceTypeLookup.lookupValue }"/></td>
+													<td align="center">
+														<input type="hidden" id="inputHidden_truckId" value="${ truckId }"/>
+														<input id="cbx_<c:out value="${ i.truckMaintenanceId }"/>" type="checkbox" value="<c:out value="${ i.truckMaintenanceId }"/>"/>
+													</td>
+													<td>
+														<spring:message code="${ i.maintenanceTypeLookup.i18nLookupValue }" text="${ i.maintenanceTypeLookup.lookupValue }"/>
+													</td>
 													<td><c:out value="${ i.cost }"></c:out></td>
 													<td><c:out value="${ i.odometer }"></c:out></td>
 													<td><c:out value="${ i.remarks }"></c:out></td>
@@ -116,8 +124,8 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/maintenance/add/${ truckId }"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/maintenance/tr/${ truckId }/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>						
 					</c:when>
@@ -127,20 +135,20 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.add_maintenance" text="Add Maintenance"/>
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.add_truckmtc" text="Add Maintenance"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.edit_maintenance" text="Edit Maintenance"/>
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="truckmtc_jsp.edit_truckmtc" text="Edit Maintenance"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/save/${ mtcForm.truckId }" data-parsley-validate="parsley">
+								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/tr/${ mtcForm.truckId }/save" data-parsley-validate="parsley">
 									<form:hidden path="truckMaintenanceId"/>
-									<form:hidden path="truckId"/>
+									<form:hidden id="inputHidden_truckId" path="truckId"/>
 									<div class="form-group">
-										<label for="inputMaintenanceType" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.maintenance_type" text="Maintenance Type"/></label>
+										<label for="inputMaintenanceType" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.truckmtctype" text="Maintenance Type"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="maintenanceTypeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
@@ -158,14 +166,14 @@
 									</div>
 									<div class="form-group">
 										<label for="inputOdometer" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.odometer" text="Odometer"/></label>
-										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputOdometer" name="inputOdometer" path="odometer" placeholder="Enter Odometer" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+										<div class="col-sm-2">
+											<form:input type="text" class="form-control" id="inputOdometer" name="inputOdometer" path="odometer" placeholder="Enter Odometer" data-parsley-required="true" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputRemarks" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.remarks" text="Remarks"/></label>
 										<div class="col-sm-6">
-											<form:input type="text" class="form-control" id="inputRemarks" name="inputRemarks" path="remarks" placeholder="Enter Remarks"></form:input>
+											<form:textarea class="form-control" id="inputRemarks" name="inputRemarks" path="remarks" rows="5" placeholder="Enter Remarks"/>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">

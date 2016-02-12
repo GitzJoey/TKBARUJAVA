@@ -39,14 +39,14 @@ public class TruckMtcController {
 	@Autowired
 	private LoginContext loginContextSession;
 
-	@RequestMapping(value="/{selectedTruckId}",method = RequestMethod.GET)
+	@RequestMapping(value="/tr/{selectedTruckId}",method = RequestMethod.GET)
 	public String mtcPageLoad(Locale locale, Model model, @PathVariable Integer selectedTruckId) {
 		logger.info("[mtcPageLoad] : " + "");
 		
 		Truck truck = truckManager.getTruckById(selectedTruckId);
-		model.addAttribute("mtcList", truck.getTruckMaintenances());
-		
+
 		model.addAttribute("truckId", selectedTruckId);
+		model.addAttribute("mtcList", truck.getTruckMaintenances());		
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
@@ -54,15 +54,17 @@ public class TruckMtcController {
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
 
-		return "truck_maintenance";
+		return Constants.JSPPAGE_TRUCK_MTC;
 	}
 	
-	@RequestMapping(value="/add/{truckId}", method = RequestMethod.GET)
+	@RequestMapping(value="/tr/{truckId}/add", method = RequestMethod.GET)
 	public String addTruckMaintenance(Locale locale, Model model, @PathVariable int truckId) {
 		logger.info("[addTruckMaintenance] : " + "");
 		
 		TruckMaintenance mtc = new TruckMaintenance();
+		
 		mtc.setTruckId(truckId);
+		
 		model.addAttribute("mtcForm", mtc);
 		model.addAttribute("maintenanceTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_TRUCK_MTC_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
@@ -71,12 +73,12 @@ public class TruckMtcController {
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
 	
-		return "truck_maintenance";
+		return Constants.JSPPAGE_TRUCK_MTC;
 	}
 	
-	@RequestMapping(value = "/edit/{selectedId}", method = RequestMethod.GET)
-	public String editTruckMaintenance(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[editTruckMaintenance] " + "selectedId = " + selectedId);
+	@RequestMapping(value = "/tr/{truckId}/edit/{selectedId}", method = RequestMethod.GET)
+	public String editTruckMaintenance(Locale locale, Model model, @PathVariable Integer truckId, @PathVariable Integer selectedId) {
+		logger.info("[editTruckMaintenance] " + "truckId:" + truckId + "selectedId = " + selectedId);
 			
 		TruckMaintenance selectedMtc = truckMtcManager.getTruckMaintenanceById(selectedId);
 		
@@ -89,22 +91,22 @@ public class TruckMtcController {
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
 
-		return "truck_maintenance";
+		return Constants.JSPPAGE_TRUCK_MTC;
 	}
 	
-	@RequestMapping(value = "/delete/{selectedId}", method = RequestMethod.GET)
-	public String deleteTruckMaintenance(Locale locale, Model model, @PathVariable Integer selectedId) {
-		logger.info("[deleteTruckMaintenance] : " + "selectedId = " + selectedId);
+	@RequestMapping(value = "/tr/{truckId}/delete/{selectedId}", method = RequestMethod.GET)
+	public String deleteTruckMaintenance(Locale locale, Model model, @PathVariable Integer truckId, @PathVariable Integer selectedId) {
+		logger.info("[deleteTruckMaintenance] : " + "truckId:" + truckId + ", selectedId = " + selectedId);
 
 		truckMtcManager.deleteTruckMaintenance(selectedId);
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck";
+		return "redirect:/truck/maintenance/tr/" + truckId;
 	}
 	
-	@RequestMapping(value="/save/{truckId}", method = RequestMethod.POST)
+	@RequestMapping(value="/tr/{truckId}/save", method = RequestMethod.POST)
 	public String saveMaintenance(Locale locale, Model model, @ModelAttribute("mtcForm") TruckMaintenance mtc, RedirectAttributes redirectAttributes, @PathVariable Integer truckId) {	
 		
 		if (mtc.getTruckMaintenanceId() == null) {
@@ -122,6 +124,6 @@ public class TruckMtcController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck/maintenance/" + mtc.getTruckId();
+		return "redirect:/truck/maintenance/tr/" + mtc.getTruckId();
 	}
 }

@@ -43,7 +43,7 @@
 					if (button == 'editTableSelection') {
 						$('#editTableSelection').attr("href", ctxpath + "/truck/edit/" + id);	
 					} else if (button == 'maintenanceTableSelection') {
-						$('#maintenanceTableSelection').attr("href", ctxpath + "/truck/maintenance/" + id);
+						$('#maintenanceTableSelection').attr("href", ctxpath + "/truck/maintenance/tr/" + id);
 					} else {
 						$('#deleteTableSelection').attr("href", ctxpath + "/truck/delete/" + id);	
 					}						
