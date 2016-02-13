@@ -120,6 +120,7 @@
 											<th width="5%">&nbsp;</th>
 											<th width="20%"><spring:message code="so_revise_jsp.table.revise.header.sales_code" text="Sales Code"/></th>
 											<th width="20%"><spring:message code="so_revise_jsp.table.revise.header.sales_date" text="Sales Date"/></th>
+											<th width="20%"><spring:message code="so_revise_jsp.table.revise.header.sales_type" text="Sales Type"/></th>
 											<th width="20%"><spring:message code="so_revise_jsp.table.revise.header.customer" text="Customer"/></th>
 										</tr>
 									</thead>
@@ -130,6 +131,9 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><c:out value="${ i.salesCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
+													<td>
+														<spring:message code="${ i.salesTypeLookup.i18nLookupValue }" text="${ i.salesTypeLookup.lookupValue }"/>
+													</td>
 													<td>
 														<c:choose>
 															<c:when test="${ i.customerTypeLookup.lookupKey == 'L022_WIN' }">

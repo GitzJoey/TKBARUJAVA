@@ -117,9 +117,12 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.sales_code" text="Sales Code"/></th>
-											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.sales_date" text="Sales Date"/></th>
+											<th width="10%"><spring:message code="so_payment_jsp.table.payment.header.sales_code" text="Sales Code"/></th>
+											<th width="10%"><spring:message code="so_payment_jsp.table.payment.header.sales_date" text="Sales Date"/></th>
 											<th width="20%"><spring:message code="so_payment_jsp.table.payment.header.customer" text="Customer"/></th>
+											<th width="10%" class="text-right"><spring:message code="so_payment_jsp.table.payment.header.total" text="Total"/></th>
+											<th width="10%" class="text-right"><spring:message code="so_payment_jsp.table.payment.header.payment" text="Payment"/></th>
+											<th width="10%" class="text-right"><spring:message code="so_payment_jsp.table.payment.header.outstanding" text="Outstanding"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -129,8 +132,10 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><a href="${ pageContext.request.contextPath }/so/payment/view/${ i.salesId }"><c:out value="${ i.salesCode }"/></a></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
-													<td><c:out value="${ i.customerEntity.customerName }"></c:out>
-													</td>
+													<td><c:out value="${ i.customerEntity.customerName }"></c:out></td>
+													<td></td>
+													<td></td>
+													<td></td>
 												</tr>
 											</c:forEach>
 										</c:if>
