@@ -131,7 +131,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="backButton" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck"><span class="fa fa-arrow-left fa-fw"></span>&nbsp;<spring:message code="common.back_button" text="Back"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="backButton" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck"><span class="fa fa-arrow-left fa-fw"></span>&nbsp;<spring:message code="common.back_button" text="Back"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/maintenance/tr/${ truckId }/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
@@ -155,8 +155,6 @@
 								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/tr/${ mtcForm.truckId }/save" data-parsley-validate="parsley">
 									<form:hidden path="truckMaintenanceId"/>
 									<form:hidden id="inputHidden_truckId" path="truckId"/>
-									<form:hidden path="createdBy"/>
-									<form:hidden path="createdDate"/>
 									<div class="form-group">
 										<label for="inputMaintenanceType" class="col-sm-2 control-label"><spring:message code="truckmtc_jsp.truckmtctype" text="Maintenance Type"/></label>
 										<div class="col-sm-3">
@@ -186,6 +184,8 @@
 											<form:textarea class="form-control" id="inputRemarks" name="inputRemarks" path="remarks" rows="5" placeholder="Enter Remarks"/>
 										</div>
 									</div>
+									<form:hidden path="createdBy"/>
+									<form:hidden path="createdDate"/>
 									<div class="col-md-7 col-offset-md-5">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>

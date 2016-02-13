@@ -71,7 +71,7 @@ public class UserDAOImpl implements UserDAO {
 				"		tbuser.store_id,													"+
 				"		tbuser.person_id,													"+
 				"		tbuser.user_type,													"+
-				"		tbuser.allow_login													"+
+				"		tbuser.allow_login,													"+
 				"		tbuser.status														"+
 				"FROM tb_user tbuser														"+
 				"WHERE tbuser.status = 'L001_A'												";
