@@ -93,8 +93,6 @@ public class PriceController {
 		
 		List<Stocks> stocksList = stocksManager.getAllStocks();
 		
-		Price p = priceManager.getLatestRetailPriceByProductId(2);
-		
 		model.addAttribute("stocksList", stocksList);
 		model.addAttribute("priceLevelList", priceLevelManager.getAllPriceLevel());
 		
