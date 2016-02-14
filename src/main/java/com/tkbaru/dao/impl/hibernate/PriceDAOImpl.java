@@ -47,9 +47,26 @@ public class PriceDAOImpl implements PriceDAO {
         
         session.persist(price);        
 	}
+
+	@Override
+	public List<Price> getLatestRetailPrice() {
+		logger.info("[getLatestRetailPrice] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		Criteria cr = session.createCriteria(Price.class, "pr")
+				.createCriteria("pr.stocksEntity", "se", JoinType.INNER_JOIN)
+				.createCriteria("se.productEntity", "prd", JoinType.INNER_JOIN)
+				.setProjection(Projections.max("pr.inputDate"));
+				
+		List<Price> priceList = cr.list();
+		
+		return priceList;
+	}
+
 	@Override
 	public Price getLatestRetailPriceByProductId(int productId) {
-		logger.info("[getLatestRetailPriceByProductId] " + "");
+		logger.info("[getLatestRetailPriceByProductId] " + "productId: " + productId);
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		

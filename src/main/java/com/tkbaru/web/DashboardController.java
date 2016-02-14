@@ -1,5 +1,6 @@
 package com.tkbaru.web;
 
+import java.util.List;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -11,11 +12,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.tkbaru.model.LoginContext;
+import com.tkbaru.model.Price;
+import com.tkbaru.service.PriceService;
 
 @Controller
 @RequestMapping(value="/dashboard")
 public class DashboardController {
 	private static final Logger logger = LoggerFactory.getLogger(DashboardController.class);
+
+	@Autowired
+	PriceService priceManager;
 	
 	@Autowired
 	private LoginContext loginContextSession;
@@ -24,6 +30,9 @@ public class DashboardController {
 	public String dashboard(Locale locale, Model model) {
 		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
+		List<Price> priceList = priceManager.getLatestRetailPrice();
+		
+		model.addAttribute("PriceList", priceList);
 		model.addAttribute("loginContext", loginContextSession);
 		
 		return "dashboard";

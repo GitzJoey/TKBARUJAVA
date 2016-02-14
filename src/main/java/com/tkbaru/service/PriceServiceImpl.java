@@ -48,5 +48,12 @@ public class PriceServiceImpl implements PriceService {
 		
 		return priceDAO.getLatestRetailPriceByProductId(productId);
 	}
+
+	@Override
+	@Transactional
+	public List<Price> getLatestRetailPrice() {
+		
+		return priceDAO.getLatestRetailPrice();
+	}
 	
 }
