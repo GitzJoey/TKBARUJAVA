@@ -80,6 +80,7 @@ function build(done) {
 
     $.file(exportFileName + '.js', res.code, { src: true })
       .pipe($.plumber())
+      .pipe($.replace('@@version', manifest.version))
       .pipe($.sourcemaps.init({ loadMaps: true }))
       .pipe($.babel())
       .pipe($.header(head, {pkg: manifest, now: moment()}))
@@ -109,7 +110,6 @@ function buildDoc(done) {
       gulp.src(dest + '*.html', { base: "./" })
       .pipe($.replace('<div id="jump_page">', '<div id="jump_page"><a class="source" href="../index.html"><<< back to documentation</a>'))
       .pipe($.replace('</body>', '<script type="text/javascript">var _gaq=_gaq||[];_gaq.push(["_setAccount","UA-37229467-1"]);_gaq.push(["_trackPageview"]);(function(){var e=document.createElement("script");e.type="text/javascript";e.async=true;e.src=("https:"==document.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";var t=document.getElementsByTagName("script")[0];t.parentNode.insertBefore(e,t)})();</script></body>'))
-      .pipe($.replace('@@version', manifest.version))
       .pipe(gulp.dest('.'))
       .on('end', done);
   });
@@ -117,16 +117,17 @@ function buildDoc(done) {
 
 function copyI18n(done) {
   gulp.src(['src/i18n/*.js'])
-    .pipe($.replace("import Parsley from 'parsley';", "// Load this after Parsley"))  // Quick hack
+    .pipe($.replace("import Parsley from '../parsley';", "// Load this after Parsley"))  // Quick hack
     .pipe($.replace("import Parsley from '../parsley/main';", ""))  // en uses special import
     .pipe(gulp.dest('dist/i18n/'))
     .on('end', done);
 }
 
 function writeVersion() {
-  return gulp.src(['index.html', 'doc/download.html'], { base: "./" })
+  return gulp.src(['index.html', 'doc/download.html', 'README.md'], { base: "./" })
     .pipe($.replace(/class="parsley-version">[^<]*</, `class="parsley-version">v${manifest.version}<`))
     .pipe($.replace(/releases\/tag\/[^"]*/, `releases/tag/${manifest.version}`))
+    .pipe($.replace(/## Version\n\n\S+\n\n/, `## Version\n\n${manifest.version}\n\n`))
     .pipe(gulp.dest('.'))
 }
 
@@ -151,6 +152,7 @@ function browserifyBundler() {
   const allFiles = ['./test/setup/browserify.js'].concat(testFiles);
 
   // Create our bundler, passing in the arguments required for watchify
+  watchify.args.debug = true;
   const bundler = browserify(allFiles, watchify.args);
 
   // Set up Babelify so that ES6 works in the tests

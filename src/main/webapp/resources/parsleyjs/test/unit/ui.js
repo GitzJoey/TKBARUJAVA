@@ -3,19 +3,16 @@ import ParsleyUI from '../../src/parsley/ui';
 import Parsley from '../../src/parsley';
 
 describe('ParsleyUI', () => {
-  it('should be a function', () => {
-    expect(ParsleyUI).to.be.a('function');
+  before(() => {
+    Parsley.setLocale('en');
   });
-  it('should have a listen() method', () => {
-    var UI = new ParsleyUI();
-    expect(UI.listen).not.to.be(undefined);
-  });
+
   it('should create proper errors container when needed', () => {
     $('body').append('<input type="text" id="element" data-parsley-required />');
     var parsleyField = $('#element').psly();
-    expect($('#element').attr('data-parsley-id')).to.be(parsleyField.__id__);
     expect($('ul#parsley-id-' + parsleyField.__id__).length).to.be(0);
     parsleyField.validate();
+    expect($('#element').attr('data-parsley-id')).to.be(parsleyField.__id__);
     expect($('ul#parsley-id-' + parsleyField.__id__).length).to.be(1);
     expect($('ul#parsley-id-' + parsleyField.__id__).hasClass('parsley-errors-list')).to.be(true);
   });
@@ -31,7 +28,11 @@ describe('ParsleyUI', () => {
     $('#element').psly().destroy();
     $('#field1').removeAttr('data-parsley-errors-container');
     $('#element').psly({
-      errorsContainer: () => { return $('#container2'); }
+      errorsContainer: function (ins) {
+        expect(ins).to.be($('#field1').psly());
+        expect(this).to.be($('#field1').psly());
+        return $('#container2');
+      }
     }).validate();
     expect($('#container2 .parsley-errors-list').length).to.be(1);
   });
@@ -109,7 +110,11 @@ describe('ParsleyUI', () => {
     $('#element').psly().destroy();
     $('#field1').removeAttr('data-parsley-class-handler');
     $('#element').psly({
-      classHandler: () => { return $('#field3'); }
+      classHandler: function (ins) {
+        expect(ins).to.be($('#field1').parsley());
+        expect(this).to.be($('#field1').parsley());
+        return $('#field3');
+      }
     }).validate();
     expect($('#field3').hasClass('parsley-error')).to.be(true);
   });
@@ -175,6 +180,17 @@ describe('ParsleyUI', () => {
     $('#element').trigger($.Event('change'));
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(1);
   });
+  it('should allow customization of triggers after first error', () => {
+    $('body').append('<input type="email" id="element" required data-parsley-trigger-after-failure="focusout" />');
+    var parsleyField = $('#element').psly();
+    parsleyField.validate();
+    expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(1);
+    $('#element').val('a@example.com');
+    $('#element').trigger('input');
+    expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(1);
+    $('#element').trigger('focusout');
+    expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(0);
+  });
   it('should auto bind error trigger on select field error (input=text)', () => {
     $('body').append('<input type="email" id="element" required />');
     var parsleyField = $('#element').psly();
@@ -182,7 +198,7 @@ describe('ParsleyUI', () => {
     parsleyField.validate();
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(1);
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').hasClass('parsley-required')).to.be(true);
-    $('#element').val('foo').trigger($.Event('keyup'));
+    $('#element').val('foo').trigger('input');
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').hasClass('parsley-type')).to.be(true);
   });
   it('should auto bind error trigger on select field error (select)', () => {
@@ -262,14 +278,20 @@ describe('ParsleyUI', () => {
     parsleyField.validate();
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(0);
     expect($('#element').hasClass('parsley-error')).to.be(false);
-    window.ParsleyUI.addError(parsleyField, 'foo', 'bar');
+    expectWarning(() => {
+      window.ParsleyUI.addError(parsleyField, 'foo', 'bar');
+    });
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(1);
     expect($('#element').hasClass('parsley-error')).to.be(true);
     expect($('li.parsley-foo').length).to.be(1);
     expect($('li.parsley-foo').text()).to.be('bar');
-    window.ParsleyUI.updateError(parsleyField, 'foo', 'baz');
+    expectWarning(() => {
+      window.ParsleyUI.updateError(parsleyField, 'foo', 'baz');
+    });
     expect($('li.parsley-foo').text()).to.be('baz');
-    window.ParsleyUI.removeError(parsleyField, 'foo');
+    expectWarning(() => {
+      window.ParsleyUI.removeError(parsleyField, 'foo');
+    });
     expect($('#element').hasClass('parsley-error')).to.be(false);
     expect($('ul#parsley-id-' + parsleyField.__id__ + ' li').length).to.be(0);
   });
@@ -277,6 +299,9 @@ describe('ParsleyUI', () => {
     $('body').append('<input type="email" id="element" value="foo" data-parsley-minlength="5" />');
     var parsleyInstance = $('#element').parsley();
     parsleyInstance.validate();
+    expectWarning(() => {
+      window.ParsleyUI.getErrorsMessages(parsleyInstance);
+    });
     expect(window.ParsleyUI.getErrorsMessages(parsleyInstance).length).to.be(1);
     expect(window.ParsleyUI.getErrorsMessages(parsleyInstance)[0]).to.be('This value should be a valid email.');
 
@@ -284,6 +309,7 @@ describe('ParsleyUI', () => {
     parsleyInstance.validate();
     expect(window.ParsleyUI.getErrorsMessages(parsleyInstance).length).to.be(2);
     expect(window.ParsleyUI.getErrorsMessages(parsleyInstance)[0]).to.be('This value is too short. It should have 5 characters or more.');
+
   });
   it('should not have errors ul created for excluded fields', () => {
     $('body').append('<div id="hidden"><input type="hidden" id="element" value="foo" data-parsley-minlength="5" /></div>');
@@ -305,7 +331,7 @@ describe('ParsleyUI', () => {
     parsleyInstance.reset();
     parsleyInstance.validate();
     expect($('ul#parsley-id-' + parsleyInstance.__id__ + ' li').length).to.be(1);
-    $('#element').val('foo').trigger($.Event('keyup'));
+    $('#element').val('foo').trigger('input');
     expect($('ul#parsley-id-' + parsleyInstance.__id__ + ' li').length).to.be(0);
   });
   it('should re-bind error triggers after a reset (select)', () => {
@@ -320,7 +346,7 @@ describe('ParsleyUI', () => {
     parsleyInstance.validate();
     expect($('ul#parsley-id-' + parsleyInstance.__id__ + ' li').length).to.be(1);
     $('#element option[value="foo"]').prop('selected', true);
-    $('#element').trigger($.Event('change'));
+    $('#element').trigger('input');
     expect($('ul#parsley-id-' + parsleyInstance.__id__ + ' li').length).to.be(0);
   });
   it('should re-bind custom triggers after a reset', () => {
@@ -350,6 +376,13 @@ describe('ParsleyUI', () => {
     parsleyField.validate();
     expect($(`ul#parsley-id-${parsleyField.__id__} li`).text()).to.be("Hey, this ain't good at all");
     window.Parsley.removeValidator('customValidator');
+  });
+  it('should run before events are fired', () => {
+    $('body').append('<input type="text" id="element" required/>');
+    var parsley = $('#element').parsley().on('field:validated', () => {
+      expect($('.parsley-errors-list')).to.have.length(1);
+    });
+    parsley.validate();
   });
 
   afterEach(() => {

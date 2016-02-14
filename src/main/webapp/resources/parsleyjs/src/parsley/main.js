@@ -27,8 +27,8 @@ var Parsley = $.extend(new ParsleyAbstract(), {
 
 // Supplement ParsleyField and Form with ParsleyAbstract
 // This way, the constructors will have access to those methods
-$.extend(ParsleyField.prototype, ParsleyAbstract.prototype);
-$.extend(ParsleyForm.prototype, ParsleyAbstract.prototype);
+$.extend(ParsleyField.prototype, ParsleyUI.Field, ParsleyAbstract.prototype);
+$.extend(ParsleyForm.prototype, ParsleyUI.Form, ParsleyAbstract.prototype);
 // Inherit actualizeOptions and _resetOptions:
 $.extend(ParsleyFactory.prototype, ParsleyAbstract.prototype);
 
@@ -81,10 +81,26 @@ $.each('setLocale addCatalog addMessage addMessages getErrorMessage formatMessag
 });
 
 // ### ParsleyUI
-// UI is a separate class that only listens to some events and then modifies the DOM accordingly
-// Could be overriden by defining a `window.ParsleyConfig.ParsleyUI` appropriate class (with `listen()` method basically)
-window.ParsleyUI = 'function' === typeof window.ParsleyConfig.ParsleyUI ?
-  new window.ParsleyConfig.ParsleyUI().listen() : new ParsleyUI().listen();
+// Deprecated global object
+window.Parsley.UI = ParsleyUI;
+window.ParsleyUI = {
+  removeError: function (instance, name, doNotUpdateClass) {
+    var updateClass = true !== doNotUpdateClass;
+    ParsleyUtils.warnOnce(`Accessing ParsleyUI is deprecated. Call 'removeError' on the instance directly.`);
+    return instance.removeError(name, {updateClass});
+  },
+  getErrorsMessages: function (instance) {
+    ParsleyUtils.warnOnce(`Accessing ParsleyUI is deprecated. Call 'getErrorsMessages' on the instance directly.`);
+    return instance.getErrorsMessages();
+  }
+};
+$.each('addError updateError'.split(' '), function (i, method) {
+  window.ParsleyUI[method] = function (instance, name, message, assert, doNotUpdateClass) {
+    var updateClass = true !== doNotUpdateClass;
+    ParsleyUtils.warnOnce(`Accessing ParsleyUI is deprecated. Call '${method}' on the instance directly.`);
+    return instance[method](name, {message, assert, updateClass});
+  };
+});
 
 // ### PARSLEY auto-binding
 // Prevent it by setting `ParsleyConfig.autoBind` to `false`

@@ -24,23 +24,24 @@ ParsleyForm.prototype = {
       return;
 
     // If we didn't come here through a submit button, use the first one in the form
-    this._$submitSource = this._$submitSource || this.$element.find('input[type="submit"], button[type="submit"]').first();
-
-    if (this._$submitSource.is('[formnovalidate]')) {
-      this._$submitSource = null;
+    var $submitSource = this._$submitSource || this.$element.find('input[type="submit"], button[type="submit"]').first();
+    this._$submitSource = null;
+    this.$element.find('.parsley-synthetic-submit-button').prop('disabled', true);
+    if ($submitSource.is('[formnovalidate]'))
       return;
+
+    var promise = this.whenValidate({event});
+
+    if ('resolved' === promise.state() && false !== this._trigger('submit')) {
+      // All good, let event go through. We make this distinction because browsers
+      // differ in their handling of `submit` being called from inside a submit event [#1047]
+    } else {
+      // Rejected or pending: cancel this submit
+      event.stopImmediatePropagation();
+      event.preventDefault();
+      if ('pending' === promise.state())
+        promise.done(() => { this._submit($submitSource); });
     }
-
-    // Because some validations might be asynchroneous,
-    // we cancel this submit and will fake it after validation.
-    event.stopImmediatePropagation();
-    event.preventDefault();
-
-    this.whenValidate({event})
-      .done(() => { this._submit(); })
-      .always(() => { this._$submitSource = null; });
-
-    return this;
   },
 
   onSubmitButton: function(event) {
@@ -49,18 +50,20 @@ ParsleyForm.prototype = {
   // internal
   // _submit submits the form, this time without going through the validations.
   // Care must be taken to "fake" the actual submit button being clicked.
-  _submit: function () {
+  _submit: function ($submitSource) {
     if (false === this._trigger('submit'))
       return;
-    this.$element.find('.parsley_synthetic_submit_button').remove();
     // Add submit button's data
-    if (this._$submitSource) {
-      $('<input class="parsley_synthetic_submit_button" type="hidden">')
-      .attr('name', this._$submitSource.attr('name'))
-      .attr('value', this._$submitSource.attr('value'))
-      .appendTo(this.$element);
+    if ($submitSource) {
+      var $synthetic = this.$element.find('.parsley-synthetic-submit-button').prop('disabled', false);
+      if (0 === $synthetic.length)
+        $synthetic = $('<input class="parsley-synthetic-submit-button" type="hidden">').appendTo(this.$element);
+      $synthetic.attr({
+        name: $submitSource.attr('name'),
+        value: $submitSource.attr('value')
+      });
     }
-    //
+
     this.$element.trigger($.extend($.Event('submit'), {parsley: true}));
   },
 
@@ -81,10 +84,10 @@ ParsleyForm.prototype = {
   whenValidate: function ({group, force, event} = {}) {
     this.submitEvent = event;
     if (event) {
-      this.submitEvent.preventDefault = () => {
+      this.submitEvent = $.extend({}, event, {preventDefault: () => {
         ParsleyUtils.warnOnce("Using `this.submitEvent.preventDefault()` is deprecated; instead, call `this.validationResult = false`");
         this.validationResult = false;
-      };
+      }});
     }
     this.validationResult = true;
 
@@ -109,7 +112,11 @@ ParsleyForm.prototype = {
 
     return $.when(...promises)
       .done(  () => { this._trigger('success'); })
-      .fail(  () => { this.validationResult = false; this._trigger('error'); })
+      .fail(  () => {
+        this.validationResult = false;
+        this.focus();
+        this._trigger('error');
+      })
       .always(() => { this._trigger('validated'); })
       .pipe(  promiseBasedOnValidationResult, promiseBasedOnValidationResult);
   },
