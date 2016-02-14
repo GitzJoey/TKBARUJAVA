@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,7 +48,7 @@
 		                    <div class="panel-body">
 		                        <form id="loginForm" role="form" action="<c:url value="/login"/>" method="post" data-parsley-validate="parsley">
 		                            <fieldset>
-										<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+										<sec:csrfInput/>
 		                                <div class="form-group">
 		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                                
 		                                </div>
