@@ -84,7 +84,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-gears fa-fw"></span>&nbsp;<spring:message code="truckmtc_jsp.title" text="Truck Maintenance"/>
+					<span class="fa fa-truck fa-flip-horizontal fa-fw"></span>&nbsp;<spring:message code="truckmtc_jsp.title" text="Truck"/>
 				</h1>
 
 				<c:choose>

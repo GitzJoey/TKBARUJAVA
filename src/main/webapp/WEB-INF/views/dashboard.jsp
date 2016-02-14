@@ -1270,96 +1270,102 @@
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
-				<div class="row">
-					<div class="col-md-3">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-md-6">
-										<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
+				<c:choose>
+					<c:when test="${ not empty priceList }">
+					</c:when>
+					<c:otherwise>
+						<div class="row">
+							<div class="col-md-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-md-6">
+												<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
+											</div>
+											<div class="col-md-6 text-right">
+												<div class="huge">9800<span class="small">/Kg</span></div>
+												<div class="tiny">17 March 2015</div>
+											</div>
+										</div>
 									</div>
-									<div class="col-md-6 text-right">
-										<div class="huge">9800<span class="small">/Kg</span></div>
-										<div class="tiny">17 March 2015</div>
-									</div>
-								</div>
-							</div>
-							<div class="panel-footer">
-								<a href="#">
-									<span class="pull-left">View Details</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								</a>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-md-6">
-										<img src="${ pageContext.request.contextPath }/resources/images/soybeans.jpg" class="img-responsive img-circle"/>
-									</div>
-									<div class="col-md-6 text-right">
-										<div class="huge">7100<span class="small">/Kg</span></div>
-										<div class="tiny">17 March 2015</div>
+									<div class="panel-footer">
+										<a href="#">
+											<span class="pull-left">View Details</span>
+											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+										</a>
+										<div class="clearfix"></div>
 									</div>
 								</div>
 							</div>
-							<div class="panel-footer">
-								<a href="#">
-									<span class="pull-left">View Details</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								</a>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-md-6">
-										<img src="${ pageContext.request.contextPath }/resources/images/sugar.jpg" class="img-responsive img-circle"/>
+							<div class="col-md-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-md-6">
+												<img src="${ pageContext.request.contextPath }/resources/images/soybeans.jpg" class="img-responsive img-circle"/>
+											</div>
+											<div class="col-md-6 text-right">
+												<div class="huge">7100<span class="small">/Kg</span></div>
+												<div class="tiny">17 March 2015</div>
+											</div>
+										</div>
 									</div>
-									<div class="col-md-6 text-right">
-										<div class="huge">8900<span class="small">/Kg</span></div>
-										<div class="tiny">17 March 2015</div>
-									</div>
-								</div>
-							</div>
-							<div class="panel-footer">
-								<a href="#">
-									<span class="pull-left">View Details</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								</a>
-								<div class="clearfix"></div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-3">
-						<div class="panel panel-primary">
-							<div class="panel-heading">
-								<div class="row">
-									<div class="col-md-6">
-										<img src="${ pageContext.request.contextPath }/resources/images/wheat.jpg" class="img-responsive img-circle"/>
-									</div>
-									<div class="col-md-6 text-right">
-										<div class="huge">2600<span class="small">/Kg</span></div>
-										<div class="tiny">17 March 2015</div>
+									<div class="panel-footer">
+										<a href="#">
+											<span class="pull-left">View Details</span>
+											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+										</a>
+										<div class="clearfix"></div>
 									</div>
 								</div>
 							</div>
-							<div class="panel-footer">
-								<a href="#">
-									<span class="pull-left">View Details</span>
-									<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
-								</a>
-								<div class="clearfix"></div>
+							<div class="col-md-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-md-6">
+												<img src="${ pageContext.request.contextPath }/resources/images/sugar.jpg" class="img-responsive img-circle"/>
+											</div>
+											<div class="col-md-6 text-right">
+												<div class="huge">8900<span class="small">/Kg</span></div>
+												<div class="tiny">17 March 2015</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-footer">
+										<a href="#">
+											<span class="pull-left">View Details</span>
+											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+										</a>
+										<div class="clearfix"></div>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-3">
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<div class="row">
+											<div class="col-md-6">
+												<img src="${ pageContext.request.contextPath }/resources/images/wheat.jpg" class="img-responsive img-circle"/>
+											</div>
+											<div class="col-md-6 text-right">
+												<div class="huge">2600<span class="small">/Kg</span></div>
+												<div class="tiny">17 March 2015</div>
+											</div>
+										</div>
+									</div>
+									<div class="panel-footer">
+										<a href="#">
+											<span class="pull-left">View Details</span>
+											<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+										</a>
+										<div class="clearfix"></div>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
-				</div>
+					</c:otherwise>
+				</c:choose>				
             	<div class="row">
 	                <div class="col-lg-12 col-md-12">
 	                    <div class="panel panel-default">
