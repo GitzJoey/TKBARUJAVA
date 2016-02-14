@@ -30,20 +30,33 @@ composer require onokumus/metismenu:dev-master
 1. Include metisMenu StyleSheet
 
     ```html
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.1.0/metisMenu.min.css">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.css">
+    ```
+    OR
+    ```html
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/jquery.metismenu/2.4.0/metisMenu.min.css">
     ```
 
 2. Include jQuery
 
     ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    ```
+    OR
+    ```html
+    <script src="//cdn.jsdelivr.net/jquery/2.2.0/jquery.min.js"></script>
     ```
 
 3. Include metisMenu plugin's code
 
     ```html
-    <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.1.0/metisMenu.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/metisMenu/2.4.0/metisMenu.min.js"></script>
     ```
+    OR
+    ```html
+    <script src="//cdn.jsdelivr.net/jquery.metismenu/2.4.0/metisMenu.min.js"></script>
+    ```
+
 4. Add class `metismenu` to unordered list
 
     ```html
@@ -77,7 +90,8 @@ composer require onokumus/metismenu:dev-master
 
     ```javascript
     $("#menu").metisMenu();
-    ```
+   ```
+
 
 ### Options
 
@@ -150,6 +164,42 @@ For double tap support.
   });
 ```
 
+#### preventDefault
+Type: `Boolean`
+Default: `true`
+
+Prevents or allows dropdowns' onclick events after expanding/collapsing.
+
+```javascript
+  $("#menu").metisMenu({
+    preventDefault: false
+  });
+```
+
+### Events
+
+#### onTransitionStart
+#### onTransitionEnd
+
+```javascript
+  $('#menu').metisMenu({
+    onTransitionStart: function(){
+      console.log('onTransitionStart');
+    },
+    onTransitionEnd: function(){
+      console.log('onTransitionEnd');
+    }
+  });
+```
+
+### Stopping list opening on certain elements
+Setting aria-disabled="true" in the `<a>` element as shown will stop metisMenu opening the menu for that particular list. This can be changed dynamically and will be obeyed correctly:
+
+```html
+<a href="#" aria-expanded="false" aria-disabled="true">List 1</a>
+```
+
+
 ### Testing
 ```bash
 npm install
@@ -175,18 +225,22 @@ $ tsd install metismenu
 Contains a simple HTML file to demonstrate metisMenu plugin.
 
 ### Release History
-**DATE**       **VERSION**   **CHANGES**
-* 2015-08-06   v2.1.0        RTL & `aria-expanded` attribute & TypeScript type definitions support
-* 2015-07-25   v2.0.3        When the active item has doubleTapToGo should not collapse
-* 2015-05-23   v2.0.2        [fixed](https://github.com/onokumus/metisMenu/issues/34#issuecomment-104656754)
-* 2015-05-22   v2.0.1        changeable classname support
-* 2015-04-03   v2.0.0        Remove Bootstrap dependency
-* 2015-03-24   v1.1.3        composer support
-* 2014-11-01   v1.1.3        Bootstrap 3.3.0
-* 2014-07-07   v1.1.0	       Add double tap functionality
-* 2014-06-24   v1.0.3	       cdnjs support & rename plugin
-* 2014-06-18   v1.0.3        Create grunt task
-* 2014-06-10   v1.0.2        Fixed for IE8 & IE9
+|**DATE**      |**VERSION**  |**CHANGES**|
+|-||
+|2016-01-25    |v2.4.0        |Support AMD / Node / CommonJS|
+|2016-01-08    |v2.3.0        |Adding aria-disabled=true to the link element prevents the dropdown from opening|
+|2015-09-27    |v2.2.0        |Events supported & added preventDefault options|
+|2015-08-06    |v2.1.0        |RTL & `aria-expanded` attribute & TypeScript type definitions support|
+|2015-07-25    |v2.0.3        |When the active item has doubleTapToGo should not collapse|
+|2015-05-23    |v2.0.2        |[fixed](https://github.com/onokumus/metisMenu/issues/34#issuecomment-104656754)|
+|2015-05-22    |v2.0.1        |changeable classname support|
+|2015-04-03    |v2.0.0        |Remove Bootstrap dependency|
+|2015-03-24    |v1.1.3        |composer support|
+|2014-11-01    |v1.1.3        |Bootstrap 3.3.0|
+|2014-07-07    |v1.1.0	      |Add double tap functionality|
+|2014-06-24    |v1.0.3	      |cdnjs support & rename plugin|
+|2014-06-18    |v1.0.3        |Create grunt task|
+|2014-06-10    |v1.0.2        |Fixed for IE8 & IE9|
 
 
 ## Author
