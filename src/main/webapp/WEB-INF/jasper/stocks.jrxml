@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="po" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2850b1ef-dbec-48d1-9541-b66a0bb0348e">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<field name="productName" class="java.lang.String"/>
+	<field name="storeName" class="java.lang.String"/>
+	<field name="storeAddress1" class="java.lang.String"/>
+	<field name="storeAddress2" class="java.lang.String"/>
+	<field name="storeAddress3" class="java.lang.String"/>
+	<field name="npwpNumber" class="java.lang.String"/>
+	<field name="storePhone" class="java.lang.String"/>
+	<field name="warehouseName" class="java.lang.String"/>
+	<field name="prodQuantity" class="java.lang.Long"/>
+	<field name="currentQuantity" class="java.lang.Long"/>
+	<variable name="PRODUCT_QTY" class="java.lang.Long" resetType="Group" resetGroup="product_group" calculation="Sum">
+		<variableExpression><![CDATA[$F{currentQuantity}]]></variableExpression>
+	</variable>
+	<group name="warehouse_group">
+		<groupExpression><![CDATA[$F{warehouseName}]]></groupExpression>
+		<groupHeader>
+			<band height="22">
+				<textField>
+					<reportElement x="0" y="0" width="340" height="20" uuid="c9e193a1-8995-4118-beb7-f9bbf682676c"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{warehouseName}]]></textFieldExpression>
+				</textField>
+				<line>
+					<reportElement x="0" y="21" width="340" height="1" uuid="06c3cc97-25f9-4f0c-a562-0ec2e57d868a"/>
+				</line>
+			</band>
+		</groupHeader>
+		<groupFooter>
+			<band/>
+		</groupFooter>
+	</group>
+	<group name="product_group">
+		<groupExpression><![CDATA[$F{productName}]]></groupExpression>
+		<groupHeader>
+			<band/>
+		</groupHeader>
+		<groupFooter>
+			<band height="20">
+				<textField>
+					<reportElement x="200" y="0" width="100" height="20" uuid="69d6fc55-7c5d-4b44-9fa7-a78b843abde7"/>
+					<textElement textAlignment="Right"/>
+					<textFieldExpression><![CDATA[$V{PRODUCT_QTY}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement x="16" y="0" width="184" height="20" uuid="87591afd-ad94-45bb-b529-e6a4ae104959"/>
+					<textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="153" splitType="Stretch">
+			<textField>
+				<reportElement x="5" y="46" width="169" height="20" uuid="425f6c68-8d5e-4ce6-a2c6-b2b013739b59"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="26" width="169" height="20" uuid="7f7a76b7-8260-4bf0-922c-1e416c786b61"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{storeName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="0" width="100" height="20" uuid="5f699837-061b-4625-bc9b-29895aff0422"/>
+				<textElement verticalAlignment="Middle">
+					<font size="14"/>
+				</textElement>
+				<text><![CDATA[PERSEDIAAN]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="5" y="66" width="169" height="20" uuid="804139c9-854d-44ef-8bf7-ad987d1fab10"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="86" width="169" height="20" uuid="c7b0e40c-6c07-4b9b-ba30-804749c34bc5"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storeAddress3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="5" y="106" width="169" height="20" uuid="1df6779e-590b-4a64-bb3d-3806811c554d"/>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{storePhone}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="151" width="340" height="1" uuid="2717410f-39e2-4d58-b7ad-7288bd3cab71"/>
+			</line>
+			<line>
+				<reportElement x="0" y="22" width="340" height="1" uuid="a0556a46-1fdc-451a-99b1-20aad6adcae2"/>
+			</line>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="200" height="20" uuid="d0a784b4-11a1-4b83-9a97-a46ec5d70f1c"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Nama Barang]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="200" y="0" width="100" height="20" uuid="53f02c90-6463-4771-b6c6-c99ec5af47d4"/>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Jumlah]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="22" width="340" height="1" uuid="cd749521-5eee-48c8-a6ee-42333ff59af3"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch"/>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

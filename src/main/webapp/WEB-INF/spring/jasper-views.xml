@@ -59,6 +59,9 @@
 			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
 			p:url="/WEB-INF/jasper/so_deliver.jrxml" 
 			p:subReportUrls-ref="customSoSubReportUrls"/>
+	<bean id="stocks_pdf"
+			class="org.springframework.web.servlet.view.jasperreports.JasperReportsPdfView"			
+			p:url="/WEB-INF/jasper/stocks.jrxml" />
 			
 	<util:map id="customSubReportUrls">
 	    <!-- This entry key must be declared exactly as you declared it in the master JRXML file -->
