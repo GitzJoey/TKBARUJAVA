@@ -29,7 +29,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jQuery/jquery-2.x.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datetimepicker/build/jquery.datetimepicker.full.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/JSON/json2.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot/excanvas.min.js"></script>
