@@ -14,7 +14,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Toko, Baru, Wangon">
     <meta name="author" content="GitzJoey">
-    <<sec:csrfMetaTags/>
+    <sec:csrfMetaTags/>
     
     <link rel="shortcut icon" type="image/x-icon" href="${pageContext.request.contextPath}/resources/images/favicon.ico" />
 	
