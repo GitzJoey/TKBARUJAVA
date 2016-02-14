@@ -1,5 +1,25 @@
 ### Change log:
 
+### Version 1.9.43 released 2015-12-19
++ UMD support
+
+### Version 1.9.42 released 2015-11-20
++ Fixed bug when pasting using  ctrl & v keys
+
+### Version 1.9.41 released 2015-11-2
++ Fixed bug that allowed two currency symbols
+
+### Version 1.9.40 released 2015-10-25
++ Fixed bug when pasting value and the decimal seperator is a comma ","
+
+### Version 1.9.39
++ Fixed 'aForm'option.
++ Updated the readme file
+
+### Version 1.9.38
++ Added / fixed option to address asp.Net WebForm postback.
++ please see the readme section on default settings & options 
+
 ### Version 1.9.37
 + Added / fixed support for asp.Net WebForm postback.
 + During postback the default value is re-rendered showing the updated value

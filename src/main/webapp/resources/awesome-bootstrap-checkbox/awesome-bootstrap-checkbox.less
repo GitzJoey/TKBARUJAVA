@@ -3,6 +3,8 @@
 // --------------------------------------------------
 
 @font-family-icon: 'FontAwesome';
+@fa-var-check: "\f00c";
+@check-icon: @fa-var-check;
 
 .checkbox-variant(@parent, @color) {
   .@{parent} input[type="checkbox"]:checked + label,
@@ -13,6 +15,19 @@
     }
     &::after {
       color: #fff;
+    }
+  }
+}
+
+.checkbox-variant-indeterminate(@parent, @color) {
+  .@{parent} input[type="checkbox"]:indeterminate + label,
+  .@{parent} input[type="radio"]:indeterminate + label {
+    &::before {
+      background-color: @color;
+      border-color: @color;
+    }
+    &::after {
+      background-color: #fff;
     }
   }
 }
@@ -67,7 +82,18 @@
 
     &:checked + label::after{
       font-family: @font-family-icon;
-      content: @fa-var-check;
+      content: @check-icon;
+    }
+
+    &:indeterminate + label::after{
+      display: block;
+      content: " ";
+      width: 10px;
+      height: 3px;
+      background-color: #555555;
+      border-radius: 2px;
+      margin-left: -16.5px;
+      margin-top: 7px;
     }
 
     &:disabled + label{
@@ -95,6 +121,12 @@
 .checkbox-variant(checkbox-info, @brand-info);
 .checkbox-variant(checkbox-warning, @brand-warning);
 .checkbox-variant(checkbox-success, @brand-success);
+
+.checkbox-variant-indeterminate(checkbox-primary, @brand-primary);
+.checkbox-variant-indeterminate(checkbox-danger, @brand-danger);
+.checkbox-variant-indeterminate(checkbox-info, @brand-info);
+.checkbox-variant-indeterminate(checkbox-warning, @brand-warning);
+.checkbox-variant-indeterminate(checkbox-success, @brand-success);
 
 //
 // Radios
@@ -195,8 +227,8 @@
 input[type="checkbox"],
 input[type="radio"] {
   &.styled:checked + label:after {
-    font-family: 'FontAwesome';
-    content: "\f00c";
+    font-family: @font-family-icon;
+    content: @check-icon;
   }
   & .styled:checked + label {
     &::before {

@@ -1,5 +1,40 @@
 ### Change log autoNumeric-2.0-BETA.js:
 
+### 2016-01-11
++ Fixed bug in "get" method
++ Mods to the trailing minus sign code 
+
+### 2015-12-19
++ Added UMD support
+
+### 2015-11-29
++ Modified & improved the shim for throwing the "input" event
+
+### 2015-11-20
++ Fixed bug when pasting using  ctrl & v keys
+
+### 2015-11-2
++ Fixed bug that allowed two currency symbols - thanks Mic Biert
+
+### 2015-10-25
++ Fixed bug when pasting value and the decimal seperator is a comma ","
++ Modified the "destroy" method so that an error is not thrown if the "init" method has not been called previously 
+
+### 2015-08-15
++ Added option "unSetOnSubmit" to unformat input on the submit event
++ Added option "debug" to turn on and off error being thrown
+
+### 2015-08-09
++ Added support for rbitrary-precision decimal arithmetic. This was adapted from Big.js https://github.com/MikeMcl/big.js/ Many thanks to Mike
++ Added support for trailing minus signs
++ Added rounding methods for currencys with smallest coin being $0.05
++ Added modified sNumber option that selects only numbers ctr & a keys thanks Zayter
++ Added support for return values to have locale formats
++ Added debug option to turn off errors
++ Added option anDefault to help ASP.NETR postback erros
++ Modified the wEmpty option
++ Removed oRide option
+
 ### 2015-03-30
 + Modified the 'init' && 'set' methods
 + General code clean up
