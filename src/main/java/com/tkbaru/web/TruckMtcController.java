@@ -121,7 +121,7 @@ public class TruckMtcController {
 	}
 	
 	@RequestMapping(value="/tr/{truckId}/save", method = RequestMethod.POST)
-	public String saveMaintenance(Locale locale, Model model, @ModelAttribute("mtcForm") TruckMaintenance mtc, RedirectAttributes redirectAttributes, @PathVariable Integer truckId) {	
+	public String saveTruckMaintenance(Locale locale, Model model, @ModelAttribute("mtcForm") TruckMaintenance mtc, RedirectAttributes redirectAttributes, @PathVariable Integer truckId) {	
 		
 		if (mtc.getTruckMaintenanceId() == null) {
 			mtc.setCreatedBy(loginContextSession.getUserLogin().getUserId());
