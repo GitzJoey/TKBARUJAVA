@@ -78,6 +78,9 @@ public class WarehouseDashboardController {
 	
 	@Autowired
 	private ReportService reportManager;
+	
+	@Autowired
+	private StocksService stockManager;
 
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
@@ -408,6 +411,22 @@ public class WarehouseDashboardController {
 
 		parameterMap.put("datasource", ds);
 		mav = new ModelAndView("so_deliver_pdf", parameterMap);
+
+		return mav;
+	}
+	
+	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
+	public ModelAndView stocksGenerate(Locale locale, Model model ,HttpServletResponse response) throws JRException {
+		logger.info("[stocksGenerate] ");
+
+		ModelAndView mav = null;
+		Map<String, Object> parameterMap = new HashMap<String, Object>();
+		List<Stocks> stocks = stockManager.getAllStocks();
+
+		JRDataSource ds = reportManager.generateReportDS_Stocks(stocks);
+
+		parameterMap.put("datasource", ds);
+		mav = new ModelAndView("stocks_pdf", parameterMap);
 
 		return mav;
 	}

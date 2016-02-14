@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.Stocks;
 import com.tkbaru.model.User;
 import com.tkbaru.model.report.DeliverReportView;
 import com.tkbaru.model.report.ItemsReportView;
@@ -19,6 +20,7 @@ import com.tkbaru.model.report.PurchasePaymentReportView;
 import com.tkbaru.model.report.ReceiptReportView;
 import com.tkbaru.model.report.SalesOrderReportView;
 import com.tkbaru.model.report.SalesPaymentReportView;
+import com.tkbaru.model.report.StocksReportView;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
@@ -185,6 +187,28 @@ public class ReportServiceImpl implements ReportService {
 		logger.info("[generateReportDS_SalesOrder] " + "");
 		
 		return null;
+	}
+
+	@Override
+	public JRDataSource generateReportDS_Stocks(List<Stocks> data) {
+		logger.info("[generateReportDS_Stocks] " + "");
+		List<StocksReportView> stockReportList = new ArrayList<StocksReportView>();
+		for(Stocks stock : data){
+			StocksReportView stockReportView = new StocksReportView();
+			stockReportView.setProductName(stock.getProductEntity().getProductName());
+			stockReportView.setProdQuantity(stock.getProdQuantity());
+			stockReportView.setCurrentQuantity(stock.getCurrentQuantity());
+			stockReportView.setStoreName(stock.getStocksStoreEntity().getStoreName());
+			stockReportView.setStoreAddress1(stock.getStocksStoreEntity().getStoreAddress1());
+			stockReportView.setStoreAddress2(stock.getStocksStoreEntity().getStoreAddress2());
+			stockReportView.setStoreAddress3(stock.getStocksStoreEntity().getStoreAddress3());
+			stockReportView.setStorePhone(stock.getStocksStoreEntity().getStorePhone());
+			stockReportView.setWarehouseName(stock.getWarehouseEntity().getWarehouseName());
+			stockReportList.add(stockReportView);
+		}
+		
+		JRDataSource ds = new JRBeanCollectionDataSource(stockReportList,false);
+		return ds;
 	}
 	
 }
