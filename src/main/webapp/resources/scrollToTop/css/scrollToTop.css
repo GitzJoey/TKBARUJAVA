@@ -18,8 +18,8 @@
     -o-transition: all 0.3s ease;
     transition: all 0.3s ease;
 	zoom: 1;
-	filter: alpha(opacity=35);
-	opacity: 0.35;
+	filter: alpha(opacity=10);
+	opacity: 0.10;
 }
 
 #return-to-top i {
@@ -38,6 +38,9 @@
 
 #return-to-top:hover {
     background: rgba(0, 0, 0, 0.9);
+	zoom: 1;
+	filter: alpha(opacity=35);
+	opacity: 0.35;
 }
 
 #return-to-top:hover i {
