@@ -14,13 +14,17 @@
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
-		<div class="row">
-			<div class="col-md-3">
-				<input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Input User Name" />
-				<br/>
-				<button type="submit" class="btn btn-default">Submit</button>
+		<form:form id="userForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/forgot/reset" data-parsley-validate="parsley">
+			<div class="row">
+				<div class="col-md-3">
+					<label for="inputUserName" class="control-label">Please input your user name or email to reset</label>
+					<input type="text" class="form-control" id="inputUserName" name="inputUserName" placeholder="Input User Name or Email" data-parsley-required="true"/>
+					<br/>
+					<button type="submit" class="btn btn-default">Submit</button>
+					<a href="${ pageContext.request.contextPath }/login.html" class="btn btn-default">Cancel</a>
+				</div>
 			</div>
-		</div>
+		</form:form>
 	</div>	
 </body>
 </html>
