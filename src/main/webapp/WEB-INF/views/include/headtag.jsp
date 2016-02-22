@@ -26,6 +26,7 @@
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">	
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/scrollToTop/css/scrollToTop.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jQuery/jquery-2.x.min.js"></script>
@@ -48,6 +49,7 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/metisMenu.cookie.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/autoNumeric/autoNumeric.js"> </script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scrollToTop/js/scrollToTop.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	
 	<script type="text/javascript">
@@ -57,5 +59,11 @@
     				cookieName: "metisMenuState"
     			});
     		});
+			
+			$('#return-to-top').click(function() {
+				$('body, html').animate({
+			        scrollTop : 0
+			    }, 500);
+			});
     	});
 	</script>
