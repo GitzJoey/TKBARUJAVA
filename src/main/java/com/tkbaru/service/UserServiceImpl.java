@@ -107,7 +107,7 @@ public class UserServiceImpl implements UserService {
 			String path = servletContext.getRealPath("/web/cdn");
 			RandomProvider rndm = new RandomProvider();			
 			String fileName = Integer.toString(usr.getUserId()) + "-" + usr.getUserName() + "-" + Converter.todayDateToString() + "-" + rndm.generateRandomInString() + ".jpg"; 			
-			usr.getPersonEntity().getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
+			usr.getPersonEntity().getImageBinary().transferTo(new File(path + "/" + fileName).getAbsoluteFile());
 			
 			usr.getPersonEntity().setPhotoPath(fileName);
 			

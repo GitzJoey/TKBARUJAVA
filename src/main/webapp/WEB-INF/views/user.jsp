@@ -18,10 +18,9 @@
 			$('button[type="submit"]').click(function(item) {
 				var button = $(this).attr('id'); 
 				var usrId = $('#userId').val().length == 0 ? 0 : $('#userId').val();
-				var csrf = "?" + "${_csrf.parameterName}" + "=" + "${_csrf.token}";
 				
 				if (button == "submitButton") { 
-					$('#userForm').attr('action', ctxpath + "/admin/user/save" + csrf); 
+					$('#userForm').attr('action', ctxpath + "/admin/user/save"); 
 				} else if (button == "addPhone") {
 					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + usrId + "/addphone"); 
 				} else if (button == "deletePhone") {
@@ -227,7 +226,7 @@
 										<div class="col-sm-6">
 											<c:choose>											
 												<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
-													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/user/${userForm.personEntity.photoPath}"/>
+													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/cdn/${userForm.personEntity.photoPath}"/>
 													<form:input type="hidden" path="personEntity.photoPath"></form:input>
 												</c:when>
 												<c:otherwise>
