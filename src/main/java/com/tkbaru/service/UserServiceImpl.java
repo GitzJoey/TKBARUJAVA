@@ -5,13 +5,13 @@ import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
-import javax.transaction.Transactional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.common.Converter;
 import com.tkbaru.common.RandomProvider;
@@ -104,7 +104,7 @@ public class UserServiceImpl implements UserService {
 		logger.info("[editUser] " + "");
 
 		try {
-			String path = servletContext.getRealPath("/") + "resources\\images\\user\\";
+			String path = servletContext.getRealPath("/web/cdn");
 			RandomProvider rndm = new RandomProvider();			
 			String fileName = Integer.toString(usr.getUserId()) + "-" + usr.getUserName() + "-" + Converter.todayDateToString() + "-" + rndm.generateRandomInString() + ".jpg"; 			
 			usr.getPersonEntity().getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
@@ -114,7 +114,7 @@ public class UserServiceImpl implements UserService {
 			usr.setUserPassword(cryptoBCryptPasswordEncoderManager.encode(usr.getUserPassword()));
 			
 		} catch (Exception e) {
-			
+			logger.info("[editUser] " + "error:" + e.getMessage());
 		}
 				
 		personManager.editPerson(usr.getPersonEntity());

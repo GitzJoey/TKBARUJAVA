@@ -18,9 +18,10 @@
 			$('button[type="submit"]').click(function(item) {
 				var button = $(this).attr('id'); 
 				var usrId = $('#userId').val().length == 0 ? 0 : $('#userId').val();
+				var csrf = "?" + "${_csrf.parameterName}" + "=" + "${_csrf.token}";
 				
 				if (button == "submitButton") { 
-					$('#userForm').attr('action', ctxpath + "/admin/user/save"); 
+					$('#userForm').attr('action', ctxpath + "/admin/user/save" + csrf); 
 				} else if (button == "addPhone") {
 					$('#userForm').attr('action', ctxpath + "/admin/user/edit/" + usrId + "/addphone"); 
 				} else if (button == "deletePhone") {
