@@ -1,6 +1,6 @@
 /*!
 * Parsley.js
-* Version 2.3.2 - built Wed, Feb 10th 2016, 7:37 pm
+* Version 2.3.4 - built Tue, Feb 23rd 2016, 11:10 am
 * http://parsleyjs.org
 * Guillaume Potier - <guillaume@wisembly.com>
 * Marc-Andre Lafortune - <petroselinum@marc-andre.ca>
@@ -1051,7 +1051,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       // For keyup, keypress, keydown, input... events that could be a little bit obstrusive
       // do not validate if val length < min threshold on first validation. Once field have been validated once and info
       // about success or failure have been displayed, always validate with this trigger to reflect every yalidation change.
-      if (/key|input/.test(event.type)) if (!(this._ui && field._ui.validationInformationVisible) && this.getValue().length <= this.options.validationThreshold) return;
+      if (/key|input/.test(event.type)) if (!(this._ui && this._ui.validationInformationVisible) && this.getValue().length <= this.options.validationThreshold) return;
 
       this.validate();
     },
@@ -1826,7 +1826,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
   ParsleyFactory.prototype = {
     init: function init(options) {
       this.__class__ = 'Parsley';
-      this.__version__ = '2.3.2';
+      this.__version__ = '2.3.4';
       this.__id__ = ParsleyUtils__default.generateID();
 
       // Pre-compute options
@@ -1948,7 +1948,7 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     actualizeOptions: null,
     _resetOptions: null,
     Factory: ParsleyFactory,
-    version: '2.3.2'
+    version: '2.3.4'
   });
 
   // Supplement ParsleyField and Form with ParsleyAbstract
@@ -2028,6 +2028,14 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
       return instance[method](name, { message: message, assert: assert, updateClass: updateClass });
     };
   });
+
+  // Alleviate glaring Firefox bug https://bugzilla.mozilla.org/show_bug.cgi?id=1250521
+  // See also https://github.com/guillaumepotier/Parsley.js/issues/1068
+  if (/firefox/i.test(navigator.userAgent)) {
+    $(document).on('change', 'select', function (evt) {
+      $(evt.target).trigger('input');
+    });
+  }
 
   // ### PARSLEY auto-binding
   // Prevent it by setting `ParsleyConfig.autoBind` to `false`
