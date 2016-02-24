@@ -14,7 +14,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                </button>      				
-      			</div>      			
+      			</div>
 				<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
 	  				<div class="form-group">
 	    				<input id="searchTopMenuQuery" type="text" class="form-control" placeholder="Search"/>
