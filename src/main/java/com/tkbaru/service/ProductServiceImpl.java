@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,12 +40,16 @@ public class ProductServiceImpl implements ProductService {
 		return productDAO.getProductById(selectedId);
 	}
 
+	@Value("${app.settings.cdnfolder}")
+	private String cdnFolder;
+	
 	@Override
 	@Transactional
 	public void addProduct(Product product) {
 		try {
 			if (product.getImageBinary() != null) {
 				String path = servletContext.getRealPath("/") +  "resources\\images\\product\\";
+				path = cdnFolder;
 				RandomProvider rndm = new RandomProvider();			
 				String fileName = product.getProductName() + "-" + rndm.generateRandomInString() + ".jpg"; 			
 				product.getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());

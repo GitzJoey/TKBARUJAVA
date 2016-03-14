@@ -32,6 +32,7 @@
             <beans:property name="locations">
                 <beans:list>
                     <beans:value>/WEB-INF/spring/jdbc.properties</beans:value>
+                    <beans:value>/WEB-INF/spring/appSettings.properties</beans:value>
                 </beans:list>
             </beans:property>
 	</beans:bean>
