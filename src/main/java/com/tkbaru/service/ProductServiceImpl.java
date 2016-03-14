@@ -2,6 +2,8 @@ package com.tkbaru.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,11 +50,11 @@ public class ProductServiceImpl implements ProductService {
 	public void addProduct(Product product) {
 		try {
 			if (product.getImageBinary() != null) {
-				String path = servletContext.getRealPath("/") +  "resources\\images\\product\\";
-				path = cdnFolder;
-				RandomProvider rndm = new RandomProvider();			
-				String fileName = product.getProductName() + "-" + rndm.generateRandomInString() + ".jpg"; 			
-				product.getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
+				RandomProvider rndm = new RandomProvider(10000, 99999);
+				Path p = Paths.get(product.getImageBinary().getOriginalFilename());
+				
+				String fileName = product.getProductName() + "-" + rndm.generateRandomInString() + "-" + p.getFileName();
+				product.getImageBinary().transferTo(new File(cdnFolder + fileName).getAbsoluteFile());
 				
 				product.setImagePath(fileName);				
 			}
