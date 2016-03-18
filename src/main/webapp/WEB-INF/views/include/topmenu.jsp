@@ -13,7 +13,7 @@
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
 	                    <span class="icon-bar"></span>
-	                </button>      				
+	                </button>
       			</div>
 				<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
 	  				<div class="form-group">

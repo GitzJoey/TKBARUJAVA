@@ -10,7 +10,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -25,6 +25,6 @@
 				</div>
 			</div>
 		</form:form>
-	</div>	
+	</div>
 </body>
 </html>

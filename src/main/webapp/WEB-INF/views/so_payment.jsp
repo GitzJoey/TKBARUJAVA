@@ -75,7 +75,7 @@
 				});
 			});
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -111,7 +111,7 @@
 								<h1 class="panel-title">
 									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_payment_jsp.subtitle" text="Payment Sales Order"/>
 								</h1>
-							</div>						
+							</div>
 							<div class="panel-body">
 								<table id="paymentListTable" class="table table-bordered table-hover display responsive">
 									<thead>
@@ -169,29 +169,29 @@
 																	<form:hidden path="createdBy"/>
 																	<form:hidden path="createdDate"/>
 																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.sales_type" text="Sales Type"/></label>
 																<div class="col-sm-8">
 																<form:hidden path="salesTypeLookup.lookupKey"/>
 																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
-														</div>					
+														</div>
 														<div class="col-md-5">
 															<div class="form-group">
 																<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.sales_date" text="Sales Date"/></label>
 																<div class="col-sm-9">
 																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_payment_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
 																<form:hidden path="salesStatusLookup.lookupKey"/>
 																	<label id="inputPOStatus" class="control-label"><c:out value="${ paymentSalesForm.salesStatusLookup.lookupValue }"></c:out></label>
-																</div>										
+																</div>
 															</div>
 														</div>
 													</div>
@@ -202,7 +202,7 @@
 																<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="so_payment_jsp.shipping_date" text="Shipping Date"/></label>
 																<div class="col-sm-5">
 																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 														</div>
 													</div>
@@ -225,7 +225,7 @@
 																		</div>
 																	</div>
 																	<c:if test="${ paymentSalesForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
-																		<div class="form-group">																
+																		<div class="form-group">
 																			<label for="inputWalkInCustDet" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-9">
 																				<form:textarea type="text" class="form-control" id="inputWalkInCustDet" rows="5" path="walkInCustDetail" readonly="true"></form:textarea>
@@ -239,7 +239,7 @@
 																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ paymentSalesForm.customerEntity }"/></textarea>
 																			</div>
 																		</div>
-																	</c:if>																
+																	</c:if>
 																</div>
 																<div class="col-md-5">
 																</div>
@@ -254,7 +254,7 @@
 														<div class="panel-heading">
 															<h1 class="panel-title"><spring:message code="so_payment_jsp.transactions" text="Transactions"/></h1>
 														</div>
-														<div class="panel-body">															
+														<div class="panel-body">
 															<br/>
 															<div class="row">
 																<div class="col-md-12">
@@ -285,7 +285,7 @@
 																					</td>
 																					<td class="text-right">
 																						<form:hidden path="itemsList[${ iLIdx.index }].prodPrice"></form:hidden>
-																						<label><c:out value="${ paymentSalesForm.itemsList[ iLIdx.index ].prodPrice }"></c:out></label>																					
+																						<label><c:out value="${ paymentSalesForm.itemsList[ iLIdx.index ].prodPrice }"></c:out></label>
 																					</td>
 																					<td>
 																						
@@ -314,7 +314,7 @@
 																			</tr>
 																		</tbody>
 																	</table>
-																</div>														
+																</div>
 															</div>
 														</div>
 													</div>
@@ -347,7 +347,7 @@
 														<div class="panel-heading">
 															<h1 class="panel-title"><spring:message code="so_payment_jsp.payment_history" text="Payment History"/></h1>
 														</div>
-														<div class="panel-body">															
+														<div class="panel-body">
 															<div class="row">
 																<div class="col-md-12">
 																	<table id="paymentHistoryListTable"
@@ -438,7 +438,7 @@
 																</div>
 															</div>
 														</div>
-													</div>													
+													</div>
 													<div class="row">
 														<div class="col-md-12">
 															<div class="panel panel-default">
@@ -524,7 +524,7 @@
 																					<c:if test="${ not empty paymentList[ lastIdx ].isLinked }">
 																						<div class="checkbox">
 																							<form:checkbox id="linked_${ lastIdx }" path="paymentList[${ lastIdx }].isLinked" label="linked" />
-																					    </div>								
+																					    </div>
 																					</c:if>
 																				</div>
 																			</div>
@@ -557,7 +557,7 @@
 																	</div>
 																</div>
 															</div>
-														</div>													    
+														</div>    
 													</div>
 												</div>
 											</div>
@@ -571,14 +571,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>	
+						</div>
 					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

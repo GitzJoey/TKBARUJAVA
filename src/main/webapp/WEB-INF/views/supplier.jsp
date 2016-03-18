@@ -216,7 +216,7 @@
 	            }
 			};
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -283,7 +283,7 @@
 																					<td width="35%">
 																						<strong><spring:message code="supplier_jsp.table.list.header.supplier_detail" text="Supplier Details"/></strong><br/>
 																						<c:out value="${ i.supplierAddress }"></c:out><br/>
-																						<c:out value="${ i.supplierCity }"></c:out><br/>															
+																						<c:out value="${ i.supplierCity }"></c:out><br/>
 																						<c:out value="${ i.supplierPhone }"></c:out><br/>
 																						<c:out value="${ i.npwpNum }"></c:out><br/>
 																						<c:out value="${ i.supplierRemarks }"></c:out><br/>
@@ -374,7 +374,7 @@
 												</div>
 												<div class="form-group">
 													<label for="inputCity" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_city" text="City"/></label>
-													<div class="col-sm-5">											
+													<div class="col-sm-5">
 														<form:input type="text" class="form-control" id="inputCity" name="inputCity" path="supplierCity" placeholder="City" data-parsley-required="true" data-parsley-trigger="keyup" data-parsley-group="tab1"></form:input>
 													</div>
 												</div>
@@ -383,7 +383,7 @@
 													<div class="col-sm-4">
 														<form:input type="text" class="form-control" id="inputPhoneNumber" name="inputPhoneNumber" path="supplierPhone"  placeholder="Enter Supplier Phone Number" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 													</div>
-												</div>                     
+												</div>
 												<div class="form-group">
 													<label for="inputFax" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_fax" text="Fax"/></label>
 													<div class="col-sm-4">
@@ -395,7 +395,7 @@
 													<div class="col-sm-6">
 														<form:input type="text" class="form-control" id="inputNpwpNum" name="inputNpwpNum" path="npwpNum"  placeholder="Enter Supplier NPWP"></form:input>
 													</div>
-												</div>        
+												</div>
 												<div class="form-group">
 													<label for="inputSupplierRemarks" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_remarks" text="Remarks"/></label>
 													<div class="col-sm-10">
@@ -416,7 +416,7 @@
 												<br/>
 												<div id="personListPanel" class="panel panel-default">
 													<div class="panel-heading">
-														<div class="btn-toolbar">															
+														<div class="btn-toolbar">
 															<button type="submit" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</button>
 														</div>
 													</div>
@@ -426,7 +426,7 @@
 																<spring:message code="supplier_jsp.no_data" text="No Data."/>
 															</c:when>
 															<c:otherwise>
-																<div id="accordion_picList" class="panel-group" >															
+																<div id="accordion_picList" class="panel-group" >
 																	<c:forEach items="${ supplierForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
 																		<div class="panel panel-default">
 																	        <div class="panel-heading accordion-toggle <c:if test="${ editPersonIdx != picListLoopIdx.index }"><c:out value="collapsed"/></c:if>" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
@@ -453,7 +453,7 @@
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
 																							</div>
-																						</div>									
+																						</div>
 																					</div>
 																					<br/>
 																					<div class="row">
@@ -461,20 +461,20 @@
 																							<label for="emailAddr" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_email" text="Email"/></label>
 																							<div class="col-sm-5">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr"/>
-																							</div>																						
+																							</div>
 																						</div>
 																					</div>
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_phonelist" text="Phone List"/></label>														
+																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="supplier_jsp.supplier_pic_phonelist" text="Phone List"/></label>
 																							<div class="col-sm-10 pull-right">
 																								<div id="phoneListPanel" class="panel panel-default">
 																									<div class="panel-heading no-padding">
 																										<div class="btn-toolbar">
 																											<button type="submit" id="phoneButton_minusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
 																											<button type="submit" id="phoneButton_plusPhone_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
-																										</div>																																																															
+																										</div>
 																									</div>
 																									<table id="phoneListTable" class="table table-bordered table-hover">
 																										<thead>
@@ -496,7 +496,7 @@
 																													<td>
 																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerLookup.lookupValue">
 																															<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																														</form:select>																						
+																														</form:select>
 																													</td>
 																													<td>
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber" data-parsley-required="true" data-parsley-trigger="keyup"/>
@@ -504,11 +504,11 @@
 																													<td>
 																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneStatusLookup.lookupKey">
 																															<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																														</form:select>																						
+																														</form:select>
 																													</td>
 																													<td>
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumRemarks"/>
-																													</td>																					
+																													</td>
 																												</tr>
 																											</c:forEach>
 																										</tbody>
@@ -518,7 +518,7 @@
 																						</div>
 																					</div>
 																	            </div>
-																		        <ul class="list-group">	
+																		        <ul class="list-group">
 																		        	<li class="list-group-item">
 																						<div class="checkbox">
 																							<input id="cbx_picList_<c:out value="${ supplierForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
@@ -581,7 +581,7 @@
 															</tbody>
 														</table>
 													</div>
-												</c:if>		
+												</c:if>
 												<c:forEach items="${ supplierForm.bankAccList }" varStatus="baIdx">
 													<c:set var="collapseFlag" value="collapse"/>
 													<c:if test="${ editBankIdx == baIdx.index }">
@@ -597,7 +597,7 @@
 															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/>"/>
 															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ supplierForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
-													</c:if>													
+													</c:if>
 													<div id="bankAccListInputPanel_<c:out value="${ supplierForm.bankAccList[baIdx.index].bankAccId }"/>" class="panel panel-default <c:out value="${ collapseFlag }"/>">
 														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
 														<br/>
@@ -622,7 +622,7 @@
 																<form:select class="form-control" path="bankAccList[${ baIdx.index }].bankAccStatusLookup.lookupKey">
 																	<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
 																</form:select>
-															</div>																																	
+															</div>
 														</div>
 														<br/>
 														<div class="row">
@@ -639,7 +639,7 @@
 														</div>
 														<br/>
 													</div>
-												</c:forEach>												
+												</c:forEach>
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'prodTab' }"><c:out value="active"/></c:if>" id="prodTab">
 												<br/>
@@ -684,7 +684,7 @@
 																			<c:forEach items="${ i.productUnit }" var="pu">
 																				<c:if test="${ pu.isBaseUnit == 'true' }">
 																					<c:out value="${ pu.unitCodeLookup.lookupValue }"></c:out>
-																				</c:if>	
+																				</c:if>
 																			</c:forEach>
 																		</td>
 																		<td><c:out value="${ i.productDesc }"></c:out></td>
@@ -719,10 +719,10 @@
 					</c:when>
 				</c:choose>
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

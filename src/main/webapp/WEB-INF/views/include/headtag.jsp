@@ -23,9 +23,9 @@
 	<link rel="stylesheet" type="text.css" href="${pageContext.request.contextPath}/resources/parsleyjs/src/parsley.css">
 	<link rel="stylesheet" type="text/css" media="screen" href="${pageContext.request.contextPath}/resources/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/bootstrap-fileinput/css/fileinput.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datetimepicker/jquery.datetimepicker.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/datatables/datatables.min.css">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">	
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/scrollToTop/css/scrollToTop.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/custom.css">
 	
@@ -40,15 +40,15 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot/jquery.flot.time.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/flot.tooltip/js/jquery.flot.tooltip.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/datatables/datatables.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>	
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>	
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootstrap-fileinput/js/fileinput.min.js"></script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-config.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/parsley.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/i18n/en.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/parsleyjs/dist/i18n/id.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/parsley-locale.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/metisMenu/dist/metisMenu.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/metisMenu.cookie.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/autoNumeric/autoNumeric.js"> </script>
+	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/autoNumeric/autoNumeric.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scrollToTop/js/scrollToTop.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>
 	

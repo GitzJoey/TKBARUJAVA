@@ -76,7 +76,7 @@
 		    
 			$('#reviseTableList').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -112,7 +112,7 @@
 								<h1 class="panel-title">
 									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_revise_jsp.subtitle" text="Revise SO List"/>
 								</h1>
-							</div>					
+							</div>
 							<div class="panel-body">
 								<table id="reviseTableList" class="table table-bordered table-hover display responsive">
 									<thead>
@@ -175,13 +175,13 @@
 																	<form:hidden path="createdBy"/>
 																	<form:hidden path="createdDate"/>
 																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.sales_type" text="Sales Type"/></label>
-																<div class="col-sm-8">																
+																<div class="col-sm-8">
 																 <form:hidden path="salesTypeLookup.lookupKey"/>
-																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>	
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>
 																</div>
 															</div>
 														</div>
@@ -190,14 +190,14 @@
 																<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="so_revise_jsp.sales_date" text="Sales Date"/></label>
 																<div class="col-sm-9">
 																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date" readonly="true"></form:input>
-																</div>										
+																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_revise_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
 																    <form:hidden path="salesStatusLookup.lookupKey"/>
 																	<label id="inputPOStatus" class="control-label"><spring:message code="${ reviseSalesForm.salesStatusLookup.i18nLookupValue }" text="${ reviseSalesForm.salesStatusLookup.lookupValue }"></spring:message></label>
-																</div>										
+																</div>
 															</div>
 														</div>
 													</div>
@@ -251,12 +251,12 @@
 																				<textarea class="form-control" rows="3" id="inputCustomerDetail" readonly="readonly"><c:out value="${ reviseSalesForm.customerEntity }"/></textarea>
 																			</div>
 																		</div>
-																	</c:if>																		
+																	</c:if>
 																</div>
 																<div class="col-md-5">
 																	
 																</div>
-															</div>								
+															</div>
 														</div>
 													</div>
 												</div>
@@ -310,7 +310,7 @@
 																				<tr>
 																					<td style="vertical-align: middle;">
 																						<form:hidden path="itemsList[${ iLIdx.index }].itemsId"/>
-																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>																																														
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>	
 																						<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
 																							<form:hidden path="itemsList[${ iLIdx.index }].stocksEntity.stocksId"/>
 																						</c:if>
@@ -374,7 +374,7 @@
 																			</tr>
 																		</tbody>
 																	</table>
-																</div>														
+																</div>
 															</div>
 														</div>
 													</div>
@@ -410,14 +410,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>	
+						</div>
 					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

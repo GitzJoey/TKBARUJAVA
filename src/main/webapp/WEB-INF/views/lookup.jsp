@@ -59,7 +59,7 @@
 			$('#lookupListTable').DataTable();
 			
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -111,7 +111,7 @@
 									<ul class="dropdown-menu" role="menu">
 										<c:forEach items="${ categoryDDL }" var="catDDL">
 											<li role="presentation"><a role="menuitem" tabindex="-1" href="${ pageContext.request.contextPath }/admin/lookup/bycategory/${ catDDL.lookupCategory }">${ catDDL.lookupCategory }</a></li>
-										</c:forEach>										
+										</c:forEach>
 									</ul>
 								</div>
 								<div>&nbsp;</div>
@@ -136,7 +136,7 @@
 													<td><c:out value="${ i.lookupCategory }"/></td>
 													<td><c:out value="${ i.lookupKey }"/></td>
 													<td><c:out value="${ i.localeMessageCodes }"/></td>
-													<td><c:out value="${ i.lookupValue }"/></td>													
+													<td><c:out value="${ i.lookupValue }"/></td>
 													<td><c:out value="${ i.orderNum }"/></td>
 													<td><c:out value="${ i.statusLookup.lookupValue }"/></td>
 													<td><c:out value="${ i.maintainabilityLookup.lookupValue }"/></td>
@@ -185,7 +185,7 @@
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" path="localeMessageCodes" placeholder="Enter Locale Message Codes" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
-									</div>									
+									</div>
 									<div class="form-group">
 										<label for="inputValue" class="col-sm-2 control-label">Value</label>
 										<div class="col-sm-5">
@@ -208,7 +208,7 @@
 												</c:forEach>
 											</form:select>
 										</div>
-									</div>									
+									</div>
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label">Status</label>
 										<div class="col-sm-2">
@@ -219,7 +219,7 @@
 												</c:forEach>
 											</form:select>
 										</div>
-									</div>									
+									</div>
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
@@ -228,14 +228,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
 				</c:choose> 				
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

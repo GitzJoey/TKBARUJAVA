@@ -10,7 +10,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -18,7 +18,7 @@
 		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
 
 		<div class="row">
-			<div class="col-md-2">				
+			<div class="col-md-2">
 				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
 			</div>
 			<div id="content" class="col-md-10">
@@ -74,13 +74,13 @@
 								</div>
 							</div>
 						</form:form>
-					</div>					
+					</div>
 				</div>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

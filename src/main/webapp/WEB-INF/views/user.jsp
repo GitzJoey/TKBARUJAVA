@@ -75,7 +75,7 @@
 			
 			$('#userListTable').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -137,8 +137,8 @@
 														<c:out value="${ i.personEntity.addressLine2 }"/><br/>
 														<c:out value="${ i.personEntity.addressLine3 }"/><br/>
 														<c:out value="${ i.personEntity.emailAddr }"/><br/>
-														<br/><br/>	
-														<strong>Phone Number:</strong><br/>												
+														<br/><br/>
+														<strong>Phone Number:</strong><br/>
 														<c:forEach items="${ i.personEntity.phoneList }" var="ph">
 															<c:out value="${ ph.providerLookup.lookupValue }"/>&nbsp;-&nbsp;<c:out value="${ ph.phoneNumber }"/><br/>
 														</c:forEach>
@@ -148,7 +148,7 @@
 											</c:forEach>
 										</c:if>
 									</tbody>
-								</table>				
+								</table>
 								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/admin/user/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
@@ -224,7 +224,7 @@
 									<div class="form-group">
 										<label for="inputImage" class="col-sm-2 control-label">&nbsp;</label>
 										<div class="col-sm-6">
-											<c:choose>											
+											<c:choose>
 												<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
 													<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/cdn/${userForm.personEntity.photoPath}"/>
 													<form:input type="hidden" path="personEntity.photoPath"></form:input>
@@ -238,7 +238,7 @@
 									</div>
 									<div class="form-group">
 										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
-										<div class="col-sm-5">											
+										<div class="col-sm-5">
 											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name" data-parsley-required="true" data-parsley-pattern="^[a-zA-Z]+$" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
@@ -283,18 +283,18 @@
 															<th width="55%">Number</th>
 															<th width="15%">Status</th>
 														</tr>
-													</thead>											
+													</thead>
 													<tbody>
-														<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">													
+														<c:forEach items="${ userForm.personEntity.phoneList }" var="pList" varStatus="phoneIdx">
 															<tr>
 																<td align="center">
 																	<input type="checkbox" id="cbx_phoneListId_<c:out value="${ pList.phoneListId }"/>" value="<c:out value="${ phoneIdx.index }"/>"/>
-																	<form:hidden path="personEntity.phoneList[${phoneIdx.index}].phoneListId"/>																	
+																	<form:hidden path="personEntity.phoneList[${phoneIdx.index}].phoneListId"/>
 																</td>
 																<td>
 																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].providerLookup.lookupValue">
 																		<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																	</form:select>																	
+																	</form:select>
 																	<br/>
 																	<form:input path="personEntity.phoneList[${phoneIdx.index}].phoneNumber" type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Phone Number"></form:input>
 																	<br/>
@@ -303,9 +303,9 @@
 																<td>
 																	<form:select class="form-control" path="personEntity.phoneList[${phoneIdx.index}].phoneStatusLookup.lookupKey">
 																		<form:options items="${ statusDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																	</form:select>																																			
+																	</form:select>
 																</td>
-															</tr>													
+															</tr>
 														</c:forEach>
 													</tbody>
 												</table>
@@ -343,19 +343,19 @@
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
-											<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>											
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 										</div>
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
 				</c:choose> 				
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

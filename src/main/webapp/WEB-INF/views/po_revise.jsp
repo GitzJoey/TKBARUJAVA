@@ -299,7 +299,7 @@
 																						<c:forEach items="${ productSelectionDDL }" var="psddl">
 																						<option value="${ psddl.productId }">${ psddl.productName }</option>
 																					</c:forEach>
-																				</select>																			
+																				</select>
 																			</c:otherwise>
 																		</c:choose>
 																	</div>
@@ -374,8 +374,8 @@
 																				</tr>
 																				<c:set var="total" value="${ total+ (iL.toBaseQty * iL.prodPrice) }" />
 																				<c:forEach items="${ iL.receiptList }" var="iR" varStatus="iRIdx">
-																					<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" />																				
-																				</c:forEach>																				
+																					<form:hidden path="itemsList[${ iLIdx.index }].receiptList[${ iRIdx.index }].receiptId" />
+																				</c:forEach>
 																			</c:forEach>
 																		</tbody>
 																	</table>
@@ -402,7 +402,7 @@
 														<div class="col-md-12">
 															<div class="panel panel-default">
 																<div class="panel-heading">
-																	<h1 class="panel-title"><spring:message code="po_revise_jsp.remarks" text="Remarks"/></h1>																	
+																	<h1 class="panel-title"><spring:message code="po_revise_jsp.remarks" text="Remarks"/></h1>
 																</div>
 																<div class="panel-body">
 																	<div class="row">

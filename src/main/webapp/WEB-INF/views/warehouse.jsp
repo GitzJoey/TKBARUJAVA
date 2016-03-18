@@ -38,7 +38,7 @@
 			
 			$('#whListTable').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -82,7 +82,7 @@
 											<th width="5%">&nbsp;</th>
 											<th width="30%"><spring:message code="warehouse_jsp.table.header.warehouse_name" text="Warehouse Name"/></th>
 											<th width="60%"><spring:message code="warehouse_jsp.table.header.location" text="Location"/></th>
-											<th width="5%"><spring:message code="warehouse_jsp.table.header.status" text="Status"/></th>												
+											<th width="5%"><spring:message code="warehouse_jsp.table.header.status" text="Status"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -108,7 +108,7 @@
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
-						</div>						
+						</div>
 					</c:when>
 					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
@@ -137,7 +137,7 @@
 										<label for="inputWarehouseLocation" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.location" text="Location"/></label>
 										<div class="col-sm-5">
 											<form:input type="text" class="form-control" id="inputWarehouseLocation" name="inputWarehouseLocation" path="warehouseLocation" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
-										</div>										
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputWarehouseRemarks" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.remarks" text="Remarks"/></label>
@@ -167,13 +167,13 @@
 								</form:form>
 							</div>
 						</div>
-					</c:when>					
+					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

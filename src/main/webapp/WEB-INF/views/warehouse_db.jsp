@@ -121,7 +121,7 @@
 				});				
 			}
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -173,7 +173,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<table id="inflowTable" class="table table-bordered table-hover display responsive" style="width: 100%; border-collapse: separate;">														
+										<table id="inflowTable" class="table table-bordered table-hover display responsive" style="width: 100%; border-collapse: separate;">
 											<thead>
 												<tr>
 													<th colspan="6"><spring:message code="warehouse_db_jsp.table.inflow.header.po_code" text="Po Code"/></th>
@@ -187,7 +187,7 @@
 													<th width="3%" class="all">&nbsp;</th>
 												</tr>
 											</thead>
-											<tbody >											
+											<tbody >
 												<c:forEach items="${ warehouseDashboard.purchaseOrderList }" var="po" varStatus="poIdx">
 													<c:forEach items="${ po.itemsList }" var="iL" varStatus="iLIdx">
 												    	<tr id="${ po.poCode }">
@@ -210,7 +210,7 @@
 												</c:forEach>
 											</tbody>
 										</table>
-									</div>									
+									</div>
 								</div>
 								<br/>
 								<br/>
@@ -240,7 +240,7 @@
 											    					<c:out value="${ so.walkInCustDetail }"/>
 											    				</c:when>
 											    				<c:otherwise>
-											    					<c:out value="${ so.customerEntity.customerName }"/>	
+											    					<c:out value="${ so.customerEntity.customerName }"/>
 											    				</c:otherwise>
 											    			</c:choose>
 											    		</td>
@@ -281,7 +281,7 @@
 											<div class="form-group">
 												<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.sales_code" text="Sales Code"/></label>
 												<div class="col-sm-3">
-													<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>											
+													<input class="form-control" value="${ selectedSoObject.salesCode }" readonly="readonly"/>
 												</div>
 											</div>
 											<div class="form-group">
@@ -292,11 +292,11 @@
 															<input class="form-control" value="${ selectedSoObject.walkInCustDetail }" readonly="readonly"/>
 														</c:when>
 														<c:otherwise>
-															<input class="form-control" value="${ selectedSoObject.customerEntity.customerName }" readonly="readonly"/>	
+															<input class="form-control" value="${ selectedSoObject.customerEntity.customerName }" readonly="readonly"/>
 														</c:otherwise>
 													</c:choose>
 												</div>
-											</div>											
+											</div>
 											<div class="form-group">
 												<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.product" text="Product"/></label>
 												<div class="col-sm-10">
@@ -346,7 +346,7 @@
 												<label for="inputShippingDate" class="col-sm-2 control-label">Shipping Date</label>
 												<div class="col-sm-5">
 													<fmt:formatDate pattern="dd MMM yyyy" value="${ selectedSoObject.shippingDate }" var="formattedShippingDate"/>
-													<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>			
+													<input class="form-control" value="${ formattedShippingDate }" readonly="readonly"/>
 												</div>
 											</div>
 											<div class="form-group">
@@ -357,7 +357,7 @@
 															<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].deliverDate"/>
 														</c:forEach>
 													</div>
-													<input id="inputDeliverDate" class="form-control" data-parsley-required="true" data-parsley-trigger="change"/>												
+													<input id="inputDeliverDate" class="form-control" data-parsley-required="true" data-parsley-trigger="change"/>
 												</div>
 											</div>
 											<div class="col-md-7 col-offset-md-5">
@@ -390,7 +390,7 @@
 											<div class="form-group">
 												<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.po_code" text="PO Code"/></label>
 												<div class="col-sm-3">
-													<input class="form-control" value="${ selectedPoObject.poCode }" readonly="readonly"/>											
+													<input class="form-control" value="${ selectedPoObject.poCode }" readonly="readonly"/>
 												</div>
 											</div>
 											<div class="form-group">
@@ -425,7 +425,7 @@
 												<label for="inputNet" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.net" text="Net"/></label>
 												<div class="col-sm-3">
 													<div class="input-group">
-														<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>										
+														<form:input class="form-control" path="receipt.net" data-parsley-min="1" data-parsley-required="true" data-parsley-equalwithbruto="true" data-parsley-type="digits"/>
 														<span id="netUnitText" class="input-group-addon"></span>
 													</div>
 												</div>
@@ -461,15 +461,15 @@
 										</form:form>
 									</div>
 								</div>
-							</c:otherwise>						
-						</c:choose>						
+							</c:otherwise>
+						</c:choose>
 					</c:when>
-				</c:choose>				
+				</c:choose>
 			</div>
 		</div>
 		
 		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 		
-	</div>	
+	</div>
 </body>
 </html>

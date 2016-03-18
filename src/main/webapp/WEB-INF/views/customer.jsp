@@ -298,7 +298,7 @@
 																					</c:forEach>
 																					<br/>
 																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong><br/>
-																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;<c:out value="${ i.priceLevelEntity.priceLevelName }"/>																				
+																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;<c:out value="${ i.priceLevelEntity.priceLevelName }"/>
 																					<br/>
 																					<br/>
 																				</td>
@@ -307,7 +307,7 @@
 																	</td>
 																</tr>
 															</tbody>
-														</table>															
+														</table>
 													</td>
 												</tr>
 											</c:forEach>
@@ -380,7 +380,7 @@
 												</div>
 												<div class="form-group">
 													<label for="inputCustomerStatus" class="col-sm-2 control-label"><spring:message code="customer_jsp.customer_status" text="Status"/></label>
-													<div class="col-sm-2">														
+													<div class="col-sm-2">
 														<form:select class="form-control" path="customerStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 															<option value=""><spring:message code="common.please_select"></spring:message></option>
 															<c:forEach items="${ statusDDL }" var="i">
@@ -400,7 +400,7 @@
 												<br/>
 												<div id="personListPanel" class="panel panel-default">
 													<div class="panel-heading">
-														<div class="btn-toolbar">															
+														<div class="btn-toolbar">
 															<button type="submit" id="addPerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="customer_jsp.add_person" text="Add"/></button>
 														</div>
 													</div>
@@ -410,16 +410,16 @@
 																<p><spring:message code="customer_jsp.pic.no_data" text="No Data."/></p>
 															</c:when>
 															<c:otherwise>
-																<div id="accordion_picList" class="panel-group" >															
+																<div id="accordion_picList" class="panel-group" >
 																	<c:forEach items="${ customerForm.picList }" var="picListLoop" varStatus="picListLoopIdx">
 																		<div class="panel panel-default">
 																	        <div class="panel-heading accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion_picList" data-target="#collapse_<c:out value="${ picListLoopIdx.index }"/>">
-																	             <h4 class="panel-title"><spring:message code="customer_jsp.pic_num" text="PIC"/>&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>														
+																	             <h4 class="panel-title"><spring:message code="customer_jsp.pic_num" text="PIC"/>&nbsp;<c:out value="${ picListLoopIdx.index + 1 }"/>&nbsp;-&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].firstName }"/>&nbsp;<c:out value="${ customerForm.picList[picListLoopIdx.index].lastName }"/></h4>
 																	        </div>
 																	        <div id="collapse_<c:out value="${ picListLoopIdx.index }"/>" class="panel-collapse collapse <c:if test="${ editPersonIdx == picListLoopIdx.index }"><c:out value="in"/></c:if>">
 																	            <div class="panel-body">
 																					<form:hidden path="picList[${picListLoopIdx.index}].personId"/>
-																					<div class="row">																	
+																					<div class="row">
 																						<div class="form-group">
 																							<label for="firstName" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.name" text="Name"/></label>
 																							<div class="col-sm-4">
@@ -432,7 +432,7 @@
 																					<div class="row">
 																						<div class="form-group">
 																							<label for="addressLine1" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.address" text="Address"/></label>
-																							<div class="col-sm-7">																						
+																							<div class="col-sm-7">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine1"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine2"/>
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].addressLine3"/>
@@ -442,7 +442,7 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="emailAddr" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.email" text="Email"/></label>																				
+																							<label for="emailAddr" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.email" text="Email"/></label>
 																							<div class="col-sm-5">
 																								<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].emailAddr" />
 																							</div>
@@ -451,14 +451,14 @@
 																					<br/>
 																					<div class="row">
 																						<div class="form-group">
-																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.phone_list" text="Phone List"/></label>														
+																							<label for="phoneListPanel" class="col-sm-2 control-label"><spring:message code="customer_jsp.pic.phone_list" text="Phone List"/></label>
 																							<div class="col-sm-10 pull-right">
 																								<div id="phoneListPanel" class="panel panel-default">
 																									<div class="panel-heading no-padding">
 																										<div class="btn-toolbar">
 																											<button type="submit" id="phoneButton_minusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-minus fa-fw"></span></button>
 																											<button type="submit" id="phoneButton_plusPhone_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>_<c:out value="${ picListLoopIdx.index }"/>" class="btn btn-xs btn-primary pull-right"><span class="fa fa-plus fa-fw"></span></button>
-																										</div>																																																									
+																										</div>
 																									</div>
 																									<table id="phoneListTable" class="table table-bordered table-hover">
 																										<thead>
@@ -480,7 +480,7 @@
 																													<td>
 																														<form:select class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].providerLookup.lookupKey">
 																															<form:options items="${ providerDDL }" itemValue="lookupKey" itemLabel="lookupValue"/>
-																														</form:select>			
+																														</form:select>
 																													</td>
 																													<td>
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumber"/>
@@ -492,7 +492,7 @@
 																													</td>
 																													<td>
 																														<form:input type="text" class="form-control" path="picList[${picListLoopIdx.index}].phoneList[${phoneListLoopIdx.index}].phoneNumRemarks"/>
-																													</td>																					
+																													</td>
 																												</tr>
 																											</c:forEach>
 																										</tbody>
@@ -502,14 +502,14 @@
 																						</div>
 																	            	</div>
 																	            </div>
-																		        <ul class="list-group">	
+																		        <ul class="list-group">
 																		        	<li class="list-group-item">
 																		        		<div class="checkbox">
 																		        			<input id="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>" type="checkbox" value="<c:out value="${ picListLoopIdx.index }"/>"/>
-																		        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>"><spring:message code="customer_jsp.pic.delete_check" text="Delete"/></label> 
+																		        			<label for="cbx_picList_<c:out value="${ customerForm.picList[picListLoopIdx.index].personId }"/>"><spring:message code="customer_jsp.pic.delete_check" text="Delete"/></label>
 																		        		</div>
 																		        	</li>
-																		        </ul>				            
+																		        </ul>
 																		        <div class="panel-footer">
 																		        	<div class="btn-toolbar">
 																		        		<button type="submit" id="deletePerson" class="btn btn-xs btn-primary pull-right"><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="customer_jsp.pic.delete_button" text="Delete"/></button>
@@ -518,7 +518,7 @@
 																	        </div>
 																	    </div>
 																    </c:forEach>
-																</div>										
+																</div>
 															</c:otherwise>
 														</c:choose>
 													</div>
@@ -565,7 +565,7 @@
 															</tbody>
 														</table>
 													</div>
-												</c:if>										
+												</c:if>
 												<c:forEach items="${ customerForm.bankAccList }" varStatus="baIdx">
 													<c:set var="collapseFlag" value="collapse"/>
 													<c:if test="${ editBankIdx == baIdx.index }">
@@ -581,7 +581,7 @@
 															<input id="fromDB_bankStatus" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccStatusLookup.lookupValue }"/>"/>
 															<input id="fromDB_bankRemarks" type="hidden" value="<c:out value="${ customerForm.bankAccList[baIdx.index].bankRemarks }"/>"/>
 														</div>
-													</c:if>							
+													</c:if>
 													<div id="bankAccListInputPanel_<c:out value="${ customerForm.bankAccList[baIdx.index].bankAccId }"/>" class="panel panel-default <c:out value="${ collapseFlag }"/>">
 														<form:hidden path="bankAccList[${ baIdx.index }].bankAccId"/>
 														<br/>
@@ -619,7 +619,7 @@
 														<br/>
 														<div class="row">
 															<label for="bankAccButton" class="col-sm-2 control-label">&nbsp;</label>
-															<div class="col-sm-5">																 
+															<div class="col-sm-5">
 																<button id="saveBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="customer_jsp.bank_account.save_button" text="Save"/></button>
 																<button id="discardBankAcc" type="submit" class="btn btn-sm btn-primary"><spring:message code="customer_jsp.bank_account.discard_button" text="Discard"/></button>
 															</div>
@@ -655,14 +655,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
-				</c:choose> 				
+				</c:choose>
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

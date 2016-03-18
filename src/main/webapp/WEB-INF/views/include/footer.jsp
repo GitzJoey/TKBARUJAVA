@@ -9,7 +9,7 @@
 		<div class="col-md-12">
 			<p class="footer">
 				Copyright © 2015. All Rights Reserved. Proudly Powered by Brain and Coffee<br/>
-			</p>	
+			</p>
 		</div>
 	</div>
 </footer>

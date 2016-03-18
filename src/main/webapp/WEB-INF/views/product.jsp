@@ -116,7 +116,7 @@
 			
 			$('#productListTable').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -184,7 +184,7 @@
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
-						</div>						
+						</div>
 					</c:when>
 					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
@@ -202,7 +202,7 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
-									<form:hidden path="productId"/>									
+									<form:hidden path="productId"/>
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label"><spring:message code="product_jsp.producttype" text="Product Type"/></label>
 										<div class="col-sm-3">
@@ -210,7 +210,7 @@
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<c:forEach items="${ productTypeDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
-												</c:forEach>										
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>
@@ -249,7 +249,7 @@
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<c:forEach items="${ statusDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
-												</c:forEach>										
+												</c:forEach>
 											</form:select>
 										</div>
 									</div>
@@ -318,8 +318,8 @@
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

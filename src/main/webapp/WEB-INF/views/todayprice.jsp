@@ -151,7 +151,7 @@
 						            				<c:if test="${ not empty s.priceList }">
 							                    		<c:forEach items="${ s.priceList }" var="p" varStatus="pIdx">
 						                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }" var="pDate"/>
-						                    				<c:if test="${ pIdx.index == 0 }">					                    				
+						                    				<c:if test="${ pIdx.index == 0 }">                    				
 									                    		<tr>
 									                    			<td>
 									                    				<fmt:formatDate pattern="dd-MM-yyyy hh:mm" value="${ p.inputDate }"/>
@@ -164,7 +164,7 @@
 									                    					</td>
 									                    				</c:if>
 									                    			</c:forEach>
-									                    		</tr>								                    		
+									                    		</tr>                    		
 									                    	</c:if>
 									                    </c:forEach>
 								                    </c:if>
@@ -234,7 +234,7 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">						
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -289,7 +289,7 @@
 																					<div class="col-md-10">
 																						<c:choose>
 																							<c:when test="${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupKey == 'L021_INC' }">
-																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>	
+																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.incrementValue }"></c:set>
 																							</c:when>
 																							<c:otherwise>
 																								<c:set var="tooltipTitle" value="Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.priceLevelTypeLookup.lookupValue }&#013;Type: ${ todayPriceForm.stocksList[ sIdx.index ].priceList[ pIdx.index ].priceLevelEntity.percentageValue }%"></c:set>
@@ -326,17 +326,17 @@
 												<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 											</div>
 										</div>
-									</div>								
+									</div>
 								</form:form>
 							</div>
-						</div>	
+						</div>
 					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

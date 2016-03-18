@@ -1261,7 +1261,7 @@
 		});
 	</script>
 </head>
-<body>	
+<body>
 	<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
 	
 	<div id="wrapper" class="container-fluid">
@@ -1365,7 +1365,7 @@
 							</div>
 						</div>
 					</c:otherwise>
-				</c:choose>				
+				</c:choose>
             	<div class="row">
 	                <div class="col-lg-12 col-md-12">
 	                    <div class="panel panel-default">

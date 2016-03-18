@@ -56,7 +56,7 @@
 										</c:when>
 										<c:when test="${ reportId == 'rptmntr' }">
 											<span class="fa fa-connectdevelop fa-fw"></span>&nbsp;Monitoring
-										</c:when>										
+										</c:when>
 										<c:when test="${ reportId == 'rptmaster' }">
 											<span class="fa fa-file-text-o fa-fw"></span>&nbsp;Master Data
 										</c:when>
@@ -79,7 +79,7 @@
 										<div role="tabpanel">
 											<ul class="nav nav-tabs" role="tablist">
 												<li role="presentation" class="active"><a href="#poTab" aria-controls="poTab" role="tab" data-toggle="tab"><span class="fa fa-truck fa-fw"></span>&nbsp;Purchase Order</a></li>
-												<li role="presentation" class=""><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;Sales Order</a></li>											
+												<li role="presentation" class=""><a href="#soTab" aria-controls="soTab" role="tab" data-toggle="tab"><span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;Sales Order</a></li>
 											</ul>
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="poTab">
@@ -111,7 +111,7 @@
 																		<td>
 																			<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="0" />
 																			<c:forEach items="${ p.itemsList }" var="i">
-																				<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="${ poTotal + ( i.prodPrice * i.toBaseQty ) }" />	
+																				<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="${ poTotal + ( i.prodPrice * i.toBaseQty ) }" />
 																			</c:forEach>
 																			<fmt:formatNumber type="number" pattern="##,###.00" value="${ poTotal }"></fmt:formatNumber>
 																		</td>
@@ -151,7 +151,7 @@
 										<div role="tabpanel">
 											<ul class="nav nav-tabs" role="tablist">
 												<li role="presentation" class="active"><a href="#deliveryTab" aria-controls="deliveryTab" role="tab" data-toggle="tab"><span class="fa fa-connectdevelop fa-fw"></span>&nbsp;Delivery Status</a></li>
-												<li role="presentation" class=""><a href="#stockTab" aria-controls="stockTab" role="tab" data-toggle="tab"><span class="fa fa-database fa-fw"></span>&nbsp;Stocks</a></li>											
+												<li role="presentation" class=""><a href="#stockTab" aria-controls="stockTab" role="tab" data-toggle="tab"><span class="fa fa-database fa-fw"></span>&nbsp;Stocks</a></li>
 											</ul>
 											<div class="tab-content">
 												<div role="tabpanel" class="tab-pane active" id="deliveryTab">
@@ -178,7 +178,7 @@
 																</c:forEach>
 															</c:if>
 														</tbody>
-													</table>		
+													</table>
 												</div>
 											</div>
 										</div>
@@ -191,7 +191,7 @@
 										<div class="row">
 											<div class="col-md-12">
 												<button type="button" class="btn">Download Faktur Pembelian</button>
-												<button type="button" class="btn">Download Faktur Penjualan</button>											
+												<button type="button" class="btn">Download Faktur Penjualan</button>
 											</div>
 										</div>
 									</c:when>
@@ -245,7 +245,7 @@
 																<th>&nbsp;</th>
 															</tr>
 														</thead>
-														<tbody>										
+														<tbody>
 														</tbody>
 													</table>
 												</div>
@@ -260,12 +260,12 @@
 																<th></th>
 															</tr>
 														</thead>
-														<tbody>														
+														<tbody>
 														</tbody>
 													</table>
 												</div>
 											</div>
-										</div>						
+										</div>
 									</c:when>
 									<c:when test="${ reportId == 'rptadmin' }">
 										<div role="tabpanel">
@@ -353,12 +353,12 @@
 													</table>
 												</div>
 											</div>
-										</div>														
+										</div>
 									</c:when>
 									<c:otherwise>
 										<p>reportId not found.</p>
 									</c:otherwise>
-								</c:choose>							
+								</c:choose>
 							</div>
 						</div>
 					</c:when>
@@ -369,8 +369,8 @@
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

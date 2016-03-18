@@ -49,7 +49,7 @@
 
 			$('#storeList').DataTable();					
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -145,7 +145,7 @@
 							</div>
 							<div class="panel-body">
 								<form:form id="storeForm" role="form" class="form-horizontal" modelAttribute="storeForm" action="${pageContext.request.contextPath}/admin/store/save" data-parsley-validate="parsley"> 
-									<form:hidden path="storeId"/>									
+									<form:hidden path="storeId"/>
 									<div class="form-group">
 										<label for="inputStoreName" class="col-sm-2 control-label"><spring:message code="store_jsp.store_name" text="Store Name"/></label>
 										<div class="col-sm-3">
@@ -191,7 +191,7 @@
 												<c:forEach items="${ statusDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
-											</form:select>		
+											</form:select>
 										</div>
 									</div>
 									<form:hidden path="createdBy"/>
@@ -210,7 +210,7 @@
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
 	</div>
 </body>

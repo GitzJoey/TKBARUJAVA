@@ -59,7 +59,7 @@
 			
 			$('#priceLevelTableList').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -128,19 +128,19 @@
 															</c:otherwise>
 														</c:choose>
 													</td>
-													<td><spring:message code="${ p.priceLevelStatusLookup.i18nLookupValue }" text="${ p.priceLevelStatusLookup.lookupValue }"></spring:message></td>	
+													<td><spring:message code="${ p.priceLevelStatusLookup.i18nLookupValue }" text="${ p.priceLevelStatusLookup.lookupValue }"></spring:message></td>
 												</tr>
 											</c:forEach>
 										</c:if>
 									</tbody>
 								</table>
 								<a id="addTableSelection" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/price/addpricelevel"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>					
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
 						</div>
-					</c:when>	
-					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' || PAGEMODE == 'PAGEMODE_ADD' }">						
+					</c:when>
+					<c:when test="${ PAGEMODE == 'PAGEMODE_EDIT' || PAGEMODE == 'PAGEMODE_ADD' }">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -212,10 +212,10 @@
 													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value"></form:input>
 												</c:when>
 												<c:otherwise>
-													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value" readonly="true"></form:input>	
+													<form:input type="text" class="form-control" id="inputIncrementValue" name="inputIncrementValue" path="incrementValue" placeholder="Enter Increment Value" readonly="true"></form:input>
 												</c:otherwise>
 											</c:choose>
-										</div>	
+										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputPercentageValue" class="col-sm-2 control-label"><spring:message code="price_level_jsp.percentage_value" text="Percentage Value"/></label>
@@ -240,14 +240,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>	
+						</div>
 					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

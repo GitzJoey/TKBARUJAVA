@@ -34,7 +34,7 @@
 		        return '<strong>Bank Details</strong><br/><br/>';
 		    }
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -186,11 +186,11 @@
 													<td>&nbsp;</td>
 												</tr>
 											</tbody>
-										</table>									
+										</table>
 									</div>
-								</div>	
-							</div>									
-						</div>					
+								</div>
+							</div>
+						</div>
 					</c:when>
 					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
 						<div class="panel panel-default">
@@ -220,13 +220,13 @@
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right">Cancel</button>
-											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>											
+											<button id="submitButton" type="submit" class="btn btn-primary pull-right">Submit</button>
 										</div>
 									</div>
 								</form:form>
 							</div>
 						</div>
-					</c:when>				
+					</c:when>
 					<c:when test="${PAGEMODE == 'PAGEMODE_EDIT'}">
 						<div class="panel panel-default">
 							<div class="panel-heading">
@@ -239,12 +239,12 @@
 							</div>
 						</div>
 					</c:when>
-				</c:choose>				
+				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

@@ -58,7 +58,7 @@
 			
 			$('#truckListTable').DataTable();			
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -120,7 +120,7 @@
 													<td><c:out value="${ i.kirDate }"></c:out></td>
 													<td><c:out value="${ i.driver }"></c:out></td>
 													<td><spring:message code="${ i.truckStatusLookup.localeMessageCodes }" text="${ i.truckStatusLookup.lookupValue }"></spring:message></td>
-													<td><c:out value="${ i.remarks }"></c:out></td>						
+													<td><c:out value="${ i.remarks }"></c:out></td>
 												</tr>
 											</c:forEach>
 										</c:if>
@@ -131,7 +131,7 @@
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 								<a id="maintenanceTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-gears fa-fw"></span>&nbsp;<spring:message code="common.maintenance_button" text="Maintenance"/></a>
 							</div>
-						</div>						
+						</div>
 					</c:when>
 					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' || PAGEMODE == 'PAGEMODE_EDIT' }">
 						<div class="panel panel-default">
@@ -186,22 +186,22 @@
 									</div>
 									<div class="form-group">
 										<label for="inputDriver" class="col-sm-2 control-label"><spring:message code="truck_jsp.driver" text="Driver"/></label>
-										<div class="col-sm-2">											
+										<div class="col-sm-2">
 											<form:select class="form-control" path="driver" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<form:options items="${ driverDDL }" itemValue="userId" itemLabel="personEntity.fullName"/>
 											</form:select>
 										</div>
-									</div>                  									
+									</div>
 									<div class="form-group">
 										<label for="inputStatus" class="col-sm-2 control-label"><spring:message code="truck_jsp.status" text="Status"/></label>
-										<div class="col-sm-2">											
+										<div class="col-sm-2">
 											<form:select class="form-control" path="truckStatusLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change">
 												<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 												<c:forEach items="${ statusDDL }" var="l">
 													<form:option value="${ l.lookupKey }"><spring:message code="${ l.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
-											</form:select>	
+											</form:select>
 										</div>
 									</div>
 									<div class="form-group">
@@ -221,13 +221,13 @@
 								</form:form>
 							</div>
 						</div>
-					</c:when>					
+					</c:when>
 				</c:choose>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

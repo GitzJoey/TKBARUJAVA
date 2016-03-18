@@ -4,14 +4,14 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
 <html>
-<head>		
+<head>
 	<jsp:include page="/WEB-INF/views/include/headtag.jsp"></jsp:include>
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/static.css">
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div class="container">
@@ -129,7 +129,7 @@
 			<div class="col-md-8">
 				<div class="page-header">
 				  <h1>About Us</h1>
-				</div>			
+				</div>
 				<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
 				<br/>
 				<br/>
@@ -158,7 +158,7 @@
 					<div class="page-header">
 					  <h1><span class="typcn typcn-mail"></span>Send Email</h1>
 					</div>
-					<div class="col-md-12">						
+					<div class="col-md-12">
 						<form id="staticForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/sendform" data-parsley-validate="parsley">
 							<div class="form-group">
 								<label for="inputName" class="control-label pull-left"><spring:message code="static_jsp.name" text="Name"/></label>
@@ -180,7 +180,7 @@
 								<div class="btn-toolbar">
 									<button id="cancelButton" type="reset" class="btn btn-primary"><spring:message code="common.cancel_button" text="Cancel"/></button>
 									<button id="submitButton" type="submit" class="btn btn-primary"><spring:message code="common.submit_button" text="Submit"/></button>
-								</div>							
+								</div>
 							</div>
 						</form>
 					</div>

@@ -61,7 +61,7 @@
 			
 			$('#functionListTable').DataTable();
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -107,7 +107,7 @@
 											<th width="25%"><spring:message code="function_jsp.table.header.menu_name" text="Menu Name"/></th>
 											<th width="25%"><spring:message code="function_jsp.table.header.url" text="Url Link"/></th>
 											<th width="5%"><spring:message code="function_jsp.table.header.order" text="Order"/></th>
-											<th width="5%"><spring:message code="function_jsp.table.header.parent_function_id" text="Parent Function Id"/></th>					
+											<th width="5%"><spring:message code="function_jsp.table.header.parent_function_id" text="Parent Function Id"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -207,14 +207,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
-				</c:choose> 				
+				</c:choose>
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

@@ -39,4 +39,4 @@
 			</c:otherwise>
 		</c:choose>
 	</c:forEach>
-</ul>	
+</ul>

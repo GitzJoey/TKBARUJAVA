@@ -286,7 +286,7 @@
 																				<c:forEach items="${ soTypeDDL }" var="i">
 																					<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
 																				</c:forEach>
-																			</form:select>																		
+																			</form:select>
 																		</div>
 																	</div>
 																</div>
@@ -314,7 +314,7 @@
 																	<div class="form-group">
 																		<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="sales_jsp.shipping_date" text="Shipping Date"/></label>
 																		<div class="col-sm-5">
-																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />																			
+																			<jsp:useBean id="todayDate" class="java.util.Date" scope="page" />
 																			<fmt:formatDate value="${ todayDate }" var="formattedTodayDate" type="date" pattern="dd-MM-yyyy" />
 																			<form:input type="text" class="form-control" id="inputShippingDate_${ soIdx.index }" name="inputShippingDate_${ soIdx.index }" path="soList[${ soIdx.index }].shippingDate" placeholder="Enter Shipping Date" readonly="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-nobackdate="${ formattedTodayDate }" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }"></form:input>
 																		</div>
@@ -323,7 +323,7 @@
 															</div>
 														</div>
 													</div>
-												</div>			
+												</div>
 											</div>
 											<div class="row">
 												<div class="col-md-12">
@@ -337,7 +337,7 @@
 															<div class="row">
 																<div class="col-md-7">
 																	<div class="form-group">
-																		<label for="inputCustomerType" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer_type" text="Customer Type"/></label>										
+																		<label for="inputCustomerType" class="col-sm-2 control-label"><spring:message code="sales_jsp.customer_type" text="Customer Type"/></label>
 																		<div class="col-sm-7">
 																			<c:if test="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey == 'L016_D' }">
 																		   		<form:select id="selectCustType_${ soIdx.index }" class="form-control" path="soList[${ soIdx.index }].customerTypeLookup.lookupKey" disabled="${ loginContext.soList[ soIdx.index ].salesStatusLookup.lookupKey != 'L016_D' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="tab_${ soIdx.index }">
@@ -447,7 +447,7 @@
 																											<td>
 																												<c:forEach items="${ customerList[cIdx.index].bankAccList }" varStatus="baIdx">
 																													<c:out value="${ customerList[cIdx.index].bankAccList[baIdx.index].bankName }"/><br/>
-																												</c:forEach>																	
+																												</c:forEach>
 																											</td>
 																											<td align="center">
 																												<spring:message code="${ customerList[cIdx.index].customerStatusLookup.i18nLookupValue }" text="${ customerList[cIdx.index].customerStatusLookup.lookupValue }"/>
@@ -463,7 +463,7 @@
 																					</div>
 																				</div>
 																			</div>
-																		</div>	
+																		</div>
 																	</div>
 																</div>
 															</c:if>
@@ -637,13 +637,13 @@
 								</div>
 							</div>
 						</form:form>
-					</div>					
-				</div>						
+					</div>
+				</div>
 			</div>
 		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

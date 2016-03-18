@@ -77,7 +77,7 @@
 			
 			
 		});
-	</script>	
+	</script>
 </head>
 <body>
 	<div id="wrapper" class="container-fluid">
@@ -136,7 +136,7 @@
 																	<option>
 																		<c:out value="${ f.functionCode }"/>&nbsp;-&nbsp;<spring:message code="${ f.functionCode }" text="${ f.menuName }"/>&nbsp;(<c:out value="${ f.urlLink }"/>)
 																	</option>
-																</c:forEach>																
+																</c:forEach>
         													</select>
 														</td>
 													</tr>
@@ -183,15 +183,15 @@
 												<c:forEach items="${ statusDDL }" var="i">
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
-											</form:select>											
-										</div>										
-									</div>									
+											</form:select>
+										</div>
+									</div>
 									<div class="form-group">
 										<label for="inputFunctionList" class="col-sm-2 control-label">Function List</label>
 										<div class="col-sm-10">
 											<table class="table borderless nopaddingrow">
 												<tr>
-													<td width="45%">														
+													<td width="45%">
 														<select id="selectLeft" multiple class="form-control" size="15">
 															<c:forEach items="${ functionListLeft }" var="fl">
 																<option value="${ fl.functionId }"><c:out value="${ fl.functionCode }" /> - <c:out value="${ fl.menuName }" /></option> 	
@@ -199,7 +199,7 @@
 														</select>
 													</td>
 													<td width="5%" align="center" style="vertical-align: middle;">
-														<button id="moveLeftButton" type="button" class="btn btn-xs btn-default"><span class="fa fa-arrow-circle-o-left fa-fw fa-2x"></span></button>						
+														<button id="moveLeftButton" type="button" class="btn btn-xs btn-default"><span class="fa fa-arrow-circle-o-left fa-fw fa-2x"></span></button>
 														<br/>
 														<br/>
 														<br/>
@@ -226,7 +226,7 @@
 												</tr>
 											</table>
 										</div>
-									</div>									
+									</div>
 									<div class="col-md-3 offset-md-9">
 										<div class="btn-toolbar">
 											<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
@@ -235,14 +235,14 @@
 									</div>
 								</form:form>
 							</div>
-						</div>					
+						</div>
 					</c:when>
 				</c:choose> 				
 			</div>
-		</div>		
+		</div>
 		
-		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>		
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
-	</div>	
+	</div>
 </body>
 </html>

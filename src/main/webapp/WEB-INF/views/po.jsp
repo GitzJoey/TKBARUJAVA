@@ -348,7 +348,7 @@
 																						<div class="col-md-12">
 																							<c:if test="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }">
 																								<form:hidden path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" />
-																							</c:if>																							
+																							</c:if>
 																							<form:select class="form-control no-margin" path="poList[${ poIdx.index }].itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-group="poTab${ poIdx.index }">
 																								<option value=""><spring:message code="common.please_select"></spring:message></option>
 																								<c:forEach items="${ loginContext.poList[poIdx.index].itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
@@ -437,7 +437,7 @@
 													</c:if>
 												</div>
 											</div>
-										</div>									
+										</div>
 									</div>
 								</c:forEach>
 							</div>

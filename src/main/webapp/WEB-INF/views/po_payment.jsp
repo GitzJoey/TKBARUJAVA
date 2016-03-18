@@ -128,7 +128,7 @@
 														<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="0" />
 														<c:forEach items="${ p.itemsList }" var="iL">
 															<c:if test="${ not empty iL.receiptList }">
-																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].net * iL.prodPrice)) }" />															
+																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].net * iL.prodPrice)) }" />
 															</c:if>
 														</c:forEach>
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt }"></fmt:formatNumber>
@@ -136,7 +136,7 @@
 													<td class="text-right">
 														<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="0" />
 														<c:forEach items="${ p.paymentList }" var="ppL">
-															<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="${ (intTotalPaid + ppL.totalAmount) }" />															
+															<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="${ (intTotalPaid + ppL.totalAmount) }" />
 														</c:forEach>
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalPaid }"></fmt:formatNumber>
 													</td>
@@ -339,7 +339,7 @@
 															<div class="panel-heading">
 																<h1 class="panel-title"><spring:message code="po_payment_jsp.payment_history" text="Payment History"/></h1>
 															</div>
-															<div class="panel-body">									
+															<div class="panel-body">
 																<div class="row">
 																	<div class="col-md-12">
 																		<table id="paymentListTable" class="table table-bordered table-hover display responsive">
@@ -357,7 +357,7 @@
 																			<tbody>
 																				<c:set var="totalPay" value="${ 0 }" />
 																				<c:forEach items="${ poForm.paymentList }" var="iL" varStatus="ilIdx" >
-																					<c:if test="${ not empty poForm.paymentList[ ilIdx.index].paymentId }">																					
+																					<c:if test="${ not empty poForm.paymentList[ ilIdx.index].paymentId }">
 																						<tr>
 																							<td style="vertical-align: middle;">
 																								<form:hidden path="paymentList[${ ilIdx.index }].paymentId" />
@@ -375,7 +375,7 @@
 																							<td>
 																								<div class="input-group">
 																									<c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' || poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_GIRO'}">
-																										<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">																											
+																										<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																											<c:set var="test" value="0" />
 																											<c:if test="${ bankL.lookupKey == poForm.paymentList[ ilIdx.index ].bankCodeLookup.lookupKey }">
 																												<c:set var="test" value="1" />
@@ -411,13 +411,13 @@
 																									<form:hidden path="paymentList[${ ilIdx.index }].isLinked"/>
 																									<div class="checkbox">
 																										<form:checkbox id="linked_${ ilIdx.index }" path="paymentList[${ ilIdx.index }].isLinked" label="" disabled="true"/>
-																									</div>																									
+																									</div>
 																								</c:if>
 																							</td>
 																							<td>
 																							    <form:hidden path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey"/>
 																							    <c:if test="${ poForm.paymentList[ ilIdx.index ].paymentTypeLookup.lookupKey == 'L017_CASH'}">
-																									<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">						
+																									<c:forEach items="${ cashStatusDDL }" var="cash" varStatus="cashIdx">
 																										<div class="checkbox">
 																											<form:checkbox id="cbx_cash_${ statusIdx.index }" path="paymentList[${ ilIdx.index }].paymentStatusLookup.lookupKey" value="${ cash.lookupKey }" label="${ cash.lookupValue }" disabled="true"/>
 																										</div>
@@ -506,7 +506,7 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-5">		
+																		<div class="col-md-5">
 																		</div>
 																	</div>
 																	<div class="row">
@@ -514,7 +514,7 @@
 																			<c:if test="${ poForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_TRANSFER' || poForm.paymentList[ lastIdx ].paymentTypeLookup.lookupKey == 'L017_GIRO'}">
 																				<div class="form-group">
 																					<label for="inputBank" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.bank" text="Bank"/></label>
-																					<div class="col-sm-8">		
+																					<div class="col-sm-8">
 																						<c:forEach items="${ bankDDL }" var="bankL" varStatus="bankIdx">
 																							<c:set var="test" value="0" />
 																							<c:if test="${ bankL.lookupKey == poForm.paymentList[ lastIdx ].bankCodeLookup.lookupKey }">
@@ -552,7 +552,7 @@
 																				</div>
 																			</div>
 																		</div>
-																		<div class="col-md-5">																		
+																		<div class="col-md-5">
 																			<div class="form-group">
 																				<label for="inputEffectiveDate" class="col-sm-3 control-label"><spring:message code="po_payment_jsp.effective_date" text="Effective Date"/></label>
 																				<div class="col-sm-7">
@@ -596,7 +596,7 @@
 															<div class="col-md-7 col-offset-md-5">
 																<div class="btn-toolbar">
 																	<button id="cancelButton" type="button" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
-																	<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>											
+																	<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
 																</div>
 															</div>
 														</c:otherwise>

@@ -38,11 +38,11 @@
 								<button id="logoutButton" type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"><span class="fa fa-child">&nbsp;<spring:message code="common.logout_button" text="Logout"/></span></button>
 					</form>
 					<a href="${ pageContext.request.contextPath }/user/profile/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;<spring:message code="common.profile_button" text="Profile"/></span></a>
-				</div>					
+				</div>
 			</div>
 		</div>
 
-		<c:if test="${ empty param.hideMenu }">				
+		<c:if test="${ empty param.hideMenu }">
 			<div class="navbar-default sidebar" role="navigation">
 				<div class="sidebar-nav navbar-collapse in override-navbar-collapse">
 					<ul id="menu" class="nav metismenu">

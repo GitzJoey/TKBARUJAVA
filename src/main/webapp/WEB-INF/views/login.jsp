@@ -50,7 +50,7 @@
 		                            <fieldset>
 										<sec:csrfInput/>
 		                                <div class="form-group">
-		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                                
+		                                    <input class="form-control" placeholder="UserName" name="username" type="text" autofocus data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-trigger="keyup">                              
 		                                </div>
 		                                <div class="form-group">
 		                                    <input class="form-control" placeholder="Password" name="password" type="password" value="" data-parsley-minlength="6" data-parsley-trigger="keyup">
@@ -78,6 +78,6 @@
 		        </div>
 			</c:otherwise>
 		</c:choose>
-    </div>    
+    </div>  
 </body>
 </html>
