@@ -52,7 +52,6 @@ SELECT 'F_WH_WAREHOUSE', 'Dashboard', 'fa fa-wrench fa-fw', '/warehouse/dashboar
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 SELECT 'F_WH_STOCK', 'Stock Report', 'fa fa-wrench fa-fw', '/warehouse/dashboard/stocks', 400300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_WH';
 
-
 /*Bank*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 VALUES ('F_BANK', 'Bank', 'fa fa-bank fa-fw', '#', 500100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));
@@ -61,19 +60,25 @@ SELECT 'F_BANK_UPLOAD', 'Upload', 'fa fa-cloud-upload fa-fw', '/bank/upload', 50
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 SELECT 'F_BANK_CONSOLIDATE', 'Consolidate', 'fa fa-compress fa-fw', '/bank/consolidate', 500300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_BANK';
 
+/*Customer*/
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+VALUES ('F_CUSTOMER', 'Customer', 'fa fa-smile-o fa-fw', '#', 600100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_CUSTOMER_CONFIRM', 'Delivery Confirmation', 'fa fa-check fa-fw', '/customer/delivery/confirmation', 600200, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_CUSTOMER';
+
 /*Reports*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-VALUES ('F_RPT', 'Reports', 'fa fa-bar-chart-o fa-fw', '#', 600100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));
+VALUES ('F_RPT', 'Reports', 'fa fa-bar-chart-o fa-fw', '#', 700100, NULL, 0, (SELECT CURRENT_TIMESTAMP()));
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-SELECT 'F_RPT_RPTTRX', 'Transactions', 'fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 600200, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
+SELECT 'F_RPT_RPTTRX', 'Transactions', 'fa fa-connectdevelop fa-fw', '/report/id/rpttrx', 700200, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-SELECT 'F_RPT_RPTMNTR', 'Monitoring', 'fa fa-eye fa-fw', '/report/id/rptmntr', 600300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
+SELECT 'F_RPT_RPTMNTR', 'Monitoring', 'fa fa-eye fa-fw', '/report/id/rptmntr', 700300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-SELECT 'F_RPT_RPTTAX', 'Tax Reports', 'fa fa-institution fa-fw', '/report/id/rpttax', 600400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
+SELECT 'F_RPT_RPTTAX', 'Tax Reports', 'fa fa-institution fa-fw', '/report/id/rpttax', 700400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-SELECT 'F_RPT_RPTMASTER', 'Master Data', 'fa fa-file-text-o fa-fw', '/report/id/rptmaster', 698100, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
+SELECT 'F_RPT_RPTMASTER', 'Master Data', 'fa fa-file-text-o fa-fw', '/report/id/rptmaster', 798100, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
-SELECT 'F_RPT_RPTADMIN', 'Admin Data', 'glyphicon glyphicon-cog', '/report/id/rptadmin', 699100, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
+SELECT 'F_RPT_RPTADMIN', 'Admin Data', 'glyphicon glyphicon-cog', '/report/id/rptadmin', 799100, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_RPT';
 
 /*Master Data*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)

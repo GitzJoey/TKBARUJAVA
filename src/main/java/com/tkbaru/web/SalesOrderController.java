@@ -123,6 +123,7 @@ public class SalesOrderController {
 		logger.info("[salesSelectSoType] " + "tabId: " + tabId + ", salesTypeValue: " + salesTypeValue);
 
 		loginContext.getSoList().get(tabId).setSalesTypeLookup(lookupManager.getLookupByKey(salesTypeValue));
+		loginContext.getSoList().get(tabId).setSalesStatusLookup(lookupManager.getLookupByKey(loginContext.getSoList().get(tabId).getSalesStatusLookup().getLookupKey()));
 		
 		loginContextSession.setSoList(loginContext.getSoList());
 		
@@ -278,6 +279,7 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
@@ -314,6 +316,7 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		

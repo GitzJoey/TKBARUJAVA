@@ -269,7 +269,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savedeliver/${ warehouseDashboard.selectedSales }/${ warehouseDashboard.selectedWarehouse }" data-parsley-validate="parsley">
+										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/id/${ warehouseDashboard.selectedWarehouse }/savedeliver/${ warehouseDashboard.selectedSales }" data-parsley-validate="parsley">
 											<div class="form-group">
 												<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.warehouse" text="Warehouse"/></label>
 												<div class="col-sm-5">
@@ -288,7 +288,7 @@
 												<label for="inputCustomerName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.customer_name" text="Customer Name"/></label>
 												<div class="col-sm-3">
 													<c:choose>
-														<c:when test="${ selectedSoObject.salesTypeLookup.lookupKey == 'L015_WIN' }">
+														<c:when test="${ selectedSoObject.customerTypeLookup.lookupKey == 'L022_WIN' }">
 															<input class="form-control" value="${ selectedSoObject.walkInCustDetail }" readonly="readonly"/>
 														</c:when>
 														<c:otherwise>
@@ -324,6 +324,9 @@
 	 																		<td>
 	 																			<c:if test="${ selectedSoObject.salesTypeLookup.lookupKey == 'L015_S' }">
 	 																				<c:out value="${ iL.stocksEntity.prodQuantity }"/>&nbsp;<c:out value="${ iL.unitCodeLookup.lookupValue }"/>
+	 																			</c:if>
+	 																			<c:if test="${ selectedSoObject.salesTypeLookup.lookupKey == 'L015_SVC' }">
+	 																				<c:out value="-"/>
 	 																			</c:if>
 	 																		</td>
 	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
@@ -378,7 +381,7 @@
 										</h1>
 									</div>
 									<div class="panel-body">
-										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/savereceipt/${ warehouseDashboard.selectedPO }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
+										<form:form id="warehouseDashboardForm" role="form" class="form-horizontal" modelAttribute="warehouseDashboard" action="${pageContext.request.contextPath}/warehouse/dashboard/id/${ warehouseDashboard.selectedWarehouse }/savereceipt/${ warehouseDashboard.selectedPO }/${ warehouseDashboard.selectedItems }" data-parsley-validate="parsley">
 											<div class="form-group">
 												<label for="inputWarehouseId" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.warehouse" text="Warehouse"></spring:message></label>
 												<div class="col-sm-5">

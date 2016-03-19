@@ -79,9 +79,6 @@ public class WarehouseDashboardController {
 	@Autowired
 	private ReportService reportManager;
 	
-	@Autowired
-	private StocksService stockManager;
-
 	@InitBinder
 	public void bindingPreparation(WebDataBinder binder) {
 		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy HH:mm");
@@ -196,9 +193,9 @@ public class WarehouseDashboardController {
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 
-	@RequestMapping(value = "/savereceipt/{poId}/{itemId}", method = RequestMethod.POST)
-	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int poId, @PathVariable int itemId) {
-		logger.info("[saveReceipt] " + "poId: " + poId + ", itemId: " + itemId);
+	@RequestMapping(value = "/id/{warehouseId}/savereceipt/{poId}/{itemId}", method = RequestMethod.POST)
+	public String saveReceipt(Locale locale, Model model, @ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, RedirectAttributes redirectAttributes, @PathVariable int warehouseId, @PathVariable int poId, @PathVariable int itemId) {
+		logger.info("[saveReceipt] " + "warehouseId: " + warehouseId + ", poId: " + poId + ", itemId: " + itemId);
 
 		PurchaseOrder po = poManager.getPurchaseOrderById(poId);
 
@@ -312,7 +309,7 @@ public class WarehouseDashboardController {
 		return Constants.JSPPAGE_WAREHOUSE_DASHBOARD;
 	}
 
-	@RequestMapping(value = "/savedeliver/{salesId}/{warehouseId}", method = RequestMethod.POST)
+	@RequestMapping(value = "/id/{warehouseId}/savedeliver/{salesId}", method = RequestMethod.POST)
 	public String saveDeliver(Locale locale, 
 										Model model, 
 										@ModelAttribute("warehouseDashboard") WarehouseDashboard warehouseDashboard, 
@@ -341,23 +338,25 @@ public class WarehouseDashboardController {
 					itemX.getDeliverList().get(0).setCreatedBy(loginContextSession.getUserLogin().getUserId());
 					itemX.getDeliverList().get(0).setCreatedDate(new Date());					
 					items.setDeliverList(itemX.getDeliverList());
-					
-					StocksOut stocksOut = new StocksOut();
-					stocksOut.setSalesOrderEntity(sales);
-					stocksOut.setProductEntity(items.getProductEntity());
-					stocksOut.setWarehouseEntity(warehouseManager.getWarehouseById(warehouseId));
-					stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
-					stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-					stocksOut.setCreatedDate(new Date());
-					stocksOut.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
-					stocksOutList.add(stocksOut);
-					
-					
-					Stocks s = items.getStocksEntity();
-					s.setCurrentQuantity(s.getCurrentQuantity() - itemX.getDeliverList().get(0).getBruto());
-					s.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
-					s.setUpdatedDate(new Date());
-					stocksList.add(s);
+
+					if (sales.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+						StocksOut stocksOut = new StocksOut();
+						stocksOut.setSalesOrderEntity(sales);
+						stocksOut.setProductEntity(items.getProductEntity());
+						stocksOut.setWarehouseEntity(warehouseManager.getWarehouseById(warehouseId));
+						stocksOut.setProdQuantity(itemX.getDeliverList().get(0).getBruto());
+						stocksOut.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+						stocksOut.setCreatedDate(new Date());
+						stocksOut.setSalesStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+						stocksOutList.add(stocksOut);
+						
+						
+						Stocks s = items.getStocksEntity();
+						s.setCurrentQuantity(s.getCurrentQuantity() - itemX.getDeliverList().get(0).getBruto());
+						s.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+						s.setUpdatedDate(new Date());
+						stocksList.add(s);
+					}
 				}
 			}
 		}
@@ -366,11 +365,13 @@ public class WarehouseDashboardController {
 
 		salesManager.editSalesOrder(sales);
 
-		for (StocksOut stocks : stocksOutList) {
-			stocksOutManager.addOrCreateStocksOut(stocks);
-		}
+		if (sales.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			for (StocksOut stocks : stocksOutList) {
+				stocksOutManager.addOrCreateStocksOut(stocks);
+			}
 
-		stocksManager.updateStocks(stocksList);
+			stocksManager.updateStocks(stocksList);
+		}
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
@@ -378,7 +379,7 @@ public class WarehouseDashboardController {
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
 
-		return "redirect:/warehouse/dashboard/id/" + warehouseDashboard.getSelectedWarehouse();
+		return "redirect:/warehouse/dashboard/id/" + warehouseId;
 	}
 	
 	@RequestMapping(value = "/receipt/generate/{selectedPo}/{itemId}", method = RequestMethod.GET)
@@ -415,19 +416,4 @@ public class WarehouseDashboardController {
 		return mav;
 	}
 	
-	@RequestMapping(value = "/stocks", method = RequestMethod.GET)
-	public ModelAndView stocksGenerate(Locale locale, Model model ,HttpServletResponse response) throws JRException {
-		logger.info("[stocksGenerate] ");
-
-		ModelAndView mav = null;
-		Map<String, Object> parameterMap = new HashMap<String, Object>();
-		List<Stocks> stocks = stockManager.getAllStocks();
-
-		JRDataSource ds = reportManager.generateReportDS_Stocks(stocks);
-
-		parameterMap.put("datasource", ds);
-		mav = new ModelAndView("stocks_pdf", parameterMap);
-
-		return mav;
-	}
 }
