@@ -35,7 +35,7 @@
 				<div class="btn-toolbar">
 					<form action="${ pageContext.request.contextPath }/logout" method="post">
 						<sec:csrfInput/>
-								<button id="logoutButton" type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"><span class="fa fa-child">&nbsp;<spring:message code="common.logout_button" text="Logout"/></span></button>
+						<button id="logoutButton" type="submit" class="btn btn-primary btn-xs pull-right" value="Logout"><span class="fa fa-child">&nbsp;<spring:message code="common.logout_button" text="Logout"/></span></button>
 					</form>
 					<a href="${ pageContext.request.contextPath }/user/profile/view/${ loginContext.userLogin.userId }" class="btn btn-primary btn-xs pull-right"><span class="fa fa-user">&nbsp;<spring:message code="common.profile_button" text="Profile"/></span></a>
 				</div>
