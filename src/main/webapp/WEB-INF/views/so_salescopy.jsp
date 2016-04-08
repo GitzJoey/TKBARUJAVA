@@ -48,7 +48,7 @@
 				<div id="jsAlerts"></div>
 				
 				<h1>
-					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;<spring:message code="so_sales_copy_jsp.title" text="Sales Copy"/>
+					<span class="fa fa-cart-arrow-down fa-fw"></span>&nbsp;<spring:message code="so_sales_copy_jsp.title" text="Sales"/>
 				</h1>
 
 				<c:choose>
@@ -56,7 +56,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -77,7 +77,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
 								</h1>
 							</div>
 							<div class="panel-body">

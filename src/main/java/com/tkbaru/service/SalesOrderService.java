@@ -9,7 +9,7 @@ public interface SalesOrderService {
 	public List<Customer> searchCustomer(String querySearch);
 	public List<SalesOrder> getAwaitingPaymentSales(int selectedCustomerId);
 	public List<SalesOrder> getSalesOrderByStatus(String statusCode);
-	public List<SalesOrder> getSalesOrderBySalesCode(String salesStatus, String salesCode);
+	public List<SalesOrder> getSalesOrderBySalesCode(String salesCode);
 	public SalesOrder getSalesOrderById(int selectedId);
 	public void addSalesOrder(SalesOrder so);
 	public void editSalesOrder(SalesOrder so);

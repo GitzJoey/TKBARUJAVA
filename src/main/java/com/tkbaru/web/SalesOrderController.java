@@ -568,7 +568,7 @@ public class SalesOrderController {
 
 	@RequestMapping(value="/salescopy", method = RequestMethod.GET)
 	public String salesCopy(Locale locale, Model model) {
-		logger.info("[salescopy] " + "");
+		logger.info("[salesCopy] " + "");
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
@@ -580,10 +580,10 @@ public class SalesOrderController {
 	}
 	
 	@RequestMapping(value="salescopy/view/{salesCode}", method = RequestMethod.GET)
-	public String salesCopy(Locale locale, Model model, @PathVariable String salesCode) {
-		logger.info("[salescopy] " + "salesCode = " + salesCode);
+	public String salesCopySearch(Locale locale, Model model, @PathVariable String salesCode) {
+		logger.info("[salesCopySearch] " + "salesCode = " + salesCode);
 		
-		List<SalesOrder> soList = salesOrderManager.getSalesOrderBySalesCode("L016_WD", salesCode);
+		List<SalesOrder> soList = salesOrderManager.getSalesOrderBySalesCode(salesCode);
 	
 		model.addAttribute("SalesCopyList", soList);
 		

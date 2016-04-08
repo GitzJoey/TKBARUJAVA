@@ -43,9 +43,9 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
 	@Override
 	@Transactional
-	public List<SalesOrder> getSalesOrderBySalesCode(String salesStatus, String salesCode) {
+	public List<SalesOrder> getSalesOrderBySalesCode(String salesCode) {
 		
-		return salesOrderDAO.getSalesOrderBySalesCode(salesStatus, salesCode);
+		return salesOrderDAO.getSalesOrderBySalesCode(salesCode);
 	}
 
 	@Override
