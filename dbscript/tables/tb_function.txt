@@ -35,6 +35,8 @@ INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, pa
 SELECT 'F_SO_REVISE', 'Revise SO', 'fa fa fa-code-fork fa-fw', '/sales/revise', 200300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_SO';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 SELECT 'F_SO_PAYMENT', 'SO Payment', 'fa fa-calculator fa-fw', '/sales/payment', 200400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_SO';
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_SO_COPY', 'SO Copy', 'fa fa-copy fa-fw', '/sales/salescopy', 200500, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_SO';
 
 /*Price*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
