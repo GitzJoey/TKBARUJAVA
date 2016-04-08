@@ -90,6 +90,8 @@
                 <beans:value>com.tkbaru.model.Deliver</beans:value>
                 <beans:value>com.tkbaru.model.StocksOut</beans:value>
                 <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
+				<beans:value>com.tkbaru.model.SalesOrderCopy</beans:value>
+				<beans:value>com.tkbaru.model.SalesOrderCopyItems</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -132,6 +134,8 @@
                 <beans:value>com.tkbaru.model.Deliver</beans:value>
                 <beans:value>com.tkbaru.model.StocksOut</beans:value>
                 <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
+				<beans:value>com.tkbaru.model.SalesOrderCopy</beans:value>
+				<beans:value>com.tkbaru.model.SalesOrderCopyItems</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>

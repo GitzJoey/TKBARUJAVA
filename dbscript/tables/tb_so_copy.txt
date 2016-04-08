@@ -1,0 +1,21 @@
+DROP TABLE IF EXISTS `tb_so_copy`;
+
+CREATE TABLE `tb_so_copy` (
+  `so_copy_id` 			int(11) 		NOT NULL AUTO_INCREMENT,
+  `so_id` 				int(11) 		NOT NULL,
+  `store_id` 			int(11) 		DEFAULT '0',
+  `so_code` 			varchar(45) 	DEFAULT NULL,
+  `so_created` 			datetime 		DEFAULT NULL,
+  `shipping_date` 		datetime 		DEFAULT NULL,
+  `customer_type` 		varchar(45) 	DEFAULT NULL,
+  `customer_id` 		int(11) 		DEFAULT NULL,
+  `walk_in_cust_det` 	varchar(255) 	DEFAULT NULL,
+  `so_type` 			varchar(45) 	DEFAULT NULL,
+  `status` 				varchar(45) 	DEFAULT NULL,
+  `remarks` 			varchar(255)	DEFAULT NULL,
+  `created_by` 			int(11) 		DEFAULT '0',
+  `created_date` 		datetime 		DEFAULT NULL,
+  `updated_by` 			int(11) 		DEFAULT '0',
+  `updated_date` 		datetime 		DEFAULT NULL,
+  PRIMARY KEY (`so_copy_id`)
+);

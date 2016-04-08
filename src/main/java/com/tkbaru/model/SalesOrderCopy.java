@@ -1,45 +1,37 @@
 package com.tkbaru.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import javax.persistence.Transient;
 
-import org.apache.commons.collections.FactoryUtils;
-import org.apache.commons.collections.list.LazyList;
 import org.hibernate.annotations.NotFound;
 import org.hibernate.annotations.NotFoundAction;
 
 @Entity
-@Table(name="tb_so")
-@SuppressWarnings("unchecked")
-public class SalesOrder implements Serializable {
-	private static final long serialVersionUID = -906634449231153892L;
+@Table(name="tb_so_copy")
+public class SalesOrderCopy implements Serializable {
+	private static final long serialVersionUID = -1616534193996270137L;
 
-	public SalesOrder() {
+	public SalesOrderCopy() {
 		
 	}
 
 	@Id
-	@Column(name="so_id")
+	@Column(name="so_copy_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer salesId;	
+	private Integer salesCopyId;	
 	@Column(name="so_code")
 	private String salesCode;
 	@Column(name="so_created")
@@ -60,18 +52,9 @@ public class SalesOrder implements Serializable {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
-	
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="tb_so_items", 
-				joinColumns={@JoinColumn(name="so_id", referencedColumnName="so_id")},
-				inverseJoinColumns={@JoinColumn(name="items_id", referencedColumnName="items_id")})
-	private List<Items> itemsList = LazyList.decorate(new ArrayList<Items>(), FactoryUtils.instantiateFactory(Items.class));
 
-	@ManyToMany(cascade=CascadeType.ALL)
-	@JoinTable(name="tb_so_payment", 
-				joinColumns={@JoinColumn(name="so_id", referencedColumnName="so_id")},
-				inverseJoinColumns={@JoinColumn(name="payment_id", referencedColumnName="payment_id")})
-	private List<Payment> paymentList = LazyList.decorate(new ArrayList<Payment>(), FactoryUtils.instantiateFactory(Payment.class));
+	@OneToMany(mappedBy="salesOrderCopyEntity")
+	private List<SalesOrderCopyItems> itemsList;
 
 	@ManyToOne
 	@JoinColumn(name="customer_id")
@@ -94,20 +77,15 @@ public class SalesOrder implements Serializable {
 	@JoinColumn(name="customer_type", referencedColumnName="lookup_key")
 	private Lookup customerTypeLookup;
 
-	@OneToMany(mappedBy="salesOrderEntity")
-	@NotFound(action=NotFoundAction.IGNORE)
-	private List<SalesOrderCopy> soCopyList;
+	@ManyToOne
+	@JoinColumn(name="so_id", nullable=false)
+	private SalesOrder salesOrderEntity;
 	
-	@Transient
-	private String customerSearchQuery;
-	@Transient
-	private List<Customer> customerSearchResults;
-
-	public Integer getSalesId() {
-		return salesId;
+	public Integer getSalesCopyId() {
+		return salesCopyId;
 	}
-	public void setSalesId(Integer salesId) {
-		this.salesId = salesId;
+	public void setSalesCopyId(Integer salesCopyId) {
+		this.salesCopyId = salesCopyId;
 	}
 	public String getSalesCode() {
 		return salesCode;
@@ -163,17 +141,11 @@ public class SalesOrder implements Serializable {
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-	public List<Items> getItemsList() {
+	public List<SalesOrderCopyItems> getItemsList() {
 		return itemsList;
 	}
-	public void setItemsList(List<Items> itemsList) {
+	public void setItemsList(List<SalesOrderCopyItems> itemsList) {
 		this.itemsList = itemsList;
-	}
-	public List<Payment> getPaymentList() {
-		return paymentList;
-	}
-	public void setPaymentList(List<Payment> paymentList) {
-		this.paymentList = paymentList;
 	}
 	public Customer getCustomerEntity() {
 		return customerEntity;
@@ -205,29 +177,4 @@ public class SalesOrder implements Serializable {
 	public void setCustomerTypeLookup(Lookup customerTypeLookup) {
 		this.customerTypeLookup = customerTypeLookup;
 	}	
-	public String getCustomerSearchQuery() {
-		return customerSearchQuery;
-	}
-	public void setCustomerSearchQuery(String customerSearchQuery) {
-		this.customerSearchQuery = customerSearchQuery;
-	}
-	public List<Customer> getCustomerSearchResults() {
-		return customerSearchResults;
-	}
-	public void setCustomerSearchResults(List<Customer> customerSearchResults) {
-		this.customerSearchResults = customerSearchResults;
-	}
-	@Override
-	public String toString() {
-		return "SalesOrder [salesId=" + salesId + ", salesCode=" + salesCode + ", salesCreatedDate=" + salesCreatedDate
-				+ ", shippingDate=" + shippingDate + ", walkInCustDetail=" + walkInCustDetail + ", salesRemarks="
-				+ salesRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
-				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
-				+ paymentList + ", customerEntity=" + customerEntity + ", salesStoreEntity=" + salesStoreEntity
-				+ ", salesStatusLookup=" + salesStatusLookup + ", salesTypeLookup=" + salesTypeLookup
-				+ ", customerTypeLookup=" + customerTypeLookup
-				+ ", customerSearchQuery=" + customerSearchQuery + ", customerSearchResults=" + customerSearchResults
-				+ "]";
-	}
-
 }
