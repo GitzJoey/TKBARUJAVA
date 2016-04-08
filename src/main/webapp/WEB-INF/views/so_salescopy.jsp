@@ -10,7 +10,6 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
-			var salesCode = $('#searchSalesCode').val(); 
 			
 			$('#searchTableSelection').click(function() {
 				$('#searchTableSelection').attr("href", ctxpath + "/sales/salescopy/view/" + $('#searchSalesCode').val());	
@@ -95,8 +94,11 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%"><spring:message code="so_sales_copy_jsp.table.revise.header.sales_code" text="Sales Code"/></th>
-											<th width="20%"><spring:message code="so_sales_copy_jsp.table.revise.header.sales_copy_count" text="Copy Count"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_code" text="Sales Code"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.transaction_date" text="Transaction Date"/></th>
+											<th width="20%"><spring:message code="so_sales_copy_jsp.table.header.customer_name" text="Customer Name"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_type" text="Sales Type"/></th>
+											<th width="5%"><spring:message code="so_sales_copy_jsp.table.header.sales_copy_count" text="Copy Count"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -105,6 +107,9 @@
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><c:out value="${ i.salesCode }"></c:out></td>
+													<td></td>
+													<td></td>
+													<td></td>
 													<td><c:out value=""></c:out></td>
 												</tr>
 											</c:forEach>
