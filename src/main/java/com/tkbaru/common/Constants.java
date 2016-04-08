@@ -27,6 +27,7 @@ public class Constants {
 	public static final String JSPPAGE_SALESORDER = "sales";
 	public static final String JSPPAGE_SO_PAYMENT = "so_payment";
 	public static final String JSPPAGE_SO_REVISE = "so_revise";
+	public static final String JSPPAGE_SO_SALESCOPY = "so_salescopy"; 
 	public static final String JSPPAGE_REPORT = "report";
 	public static final String JSPPAGE_PURCHASEORDER = "po";
 	public static final String JSPPAGE_PO_PAYMENT = "po_payment";
@@ -78,5 +79,5 @@ public class Constants {
 	public static final String JASPERREPORT_OUTPUTTYPE_CSV = "csv";
 	public static final String JASPERREPORT_OUTPUTTYPE_XLS = "xls";
 	
-	public static final String SESSIONKEY_LOGINCONTEXT = "loginContext"; 
+	public static final String SESSIONKEY_LOGINCONTEXT = "loginContext";	
 }
