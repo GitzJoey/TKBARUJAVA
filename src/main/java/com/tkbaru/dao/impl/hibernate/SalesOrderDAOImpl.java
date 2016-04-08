@@ -44,7 +44,19 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		
 		return soList;
 	}
+	
+	@Override
+	public List<SalesOrder> getSalesOrderBySalesCode(String statusCode, String salesCode) {
+		logger.info("[getSalesOrderByStatus] " + "status: " + salesCode);
 
+		Session session = this.sessionFactory.getCurrentSession();
+		List<SalesOrder> soList = session.createQuery("FROM SalesOrder s WHERE s.salesStatusLookup.lookupKey = :status AND s.salesCode LIKE :salesCode ").setString("status", statusCode).setString("salesCode", salesCode).list();
+		
+		logger.info("SalesOrder Count: " + soList.size());
+		
+		return soList;
+	}
+	
 	@Override
 	public SalesOrder getSalesOrderById(int selectedId) {
 		logger.info("[getSalesOrderById] " + "selectedId: " + selectedId);

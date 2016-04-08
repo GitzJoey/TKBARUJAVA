@@ -43,6 +43,13 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
 	@Override
 	@Transactional
+	public List<SalesOrder> getSalesOrderBySalesCode(String salesStatus, String salesCode) {
+		
+		return salesOrderDAO.getSalesOrderBySalesCode(salesStatus, salesCode);
+	}
+
+	@Override
+	@Transactional
 	public SalesOrder getSalesOrderById(int selectedId) {
 		
 		return salesOrderDAO.getSalesOrderById(selectedId);
@@ -83,4 +90,5 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 		return generatedSalesCode;
 	}
 
+	
 }

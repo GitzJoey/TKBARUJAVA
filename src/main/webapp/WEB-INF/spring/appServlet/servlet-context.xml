@@ -27,6 +27,7 @@
 				<beans:value>/WEB-INF/spring/i18n/supplier</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/po</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/so</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/so_salescopy</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/function</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/price</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/pricelevel</beans:value>

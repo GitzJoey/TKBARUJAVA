@@ -566,6 +566,36 @@ public class SalesOrderController {
 		return "redirect:/sales/revise";
 	}
 
+	@RequestMapping(value="/salescopy", method = RequestMethod.GET)
+	public String salesCopy(Locale locale, Model model) {
+		logger.info("[salescopy] " + "");
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+	
+	@RequestMapping(value="salescopy/view/{salesCode}", method = RequestMethod.GET)
+	public String salesCopy(Locale locale, Model model, @PathVariable String salesCode) {
+		logger.info("[salescopy] " + "salesCode = " + salesCode);
+		
+		List<SalesOrder> soList = salesOrderManager.getSalesOrderBySalesCode("L016_WD", salesCode);
+	
+		model.addAttribute("SalesCopyList", soList);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+
 	@RequestMapping(value="/payment", method = RequestMethod.GET)
 	public String salesPayment(Locale locale, Model model) {
 		logger.info("[salesPayment] " + "");
