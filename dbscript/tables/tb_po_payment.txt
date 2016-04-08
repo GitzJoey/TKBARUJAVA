@@ -4,3 +4,5 @@ CREATE TABLE `tb_po_payment` (
   `po_id` int(11) DEFAULT NULL,
   `payment_id` int(11) DEFAULT NULL
 );
+
+COMMIT;

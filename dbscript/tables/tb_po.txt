@@ -17,3 +17,5 @@ CREATE TABLE `tb_po` (
   `updated_date` 	datetime 		DEFAULT NULL,
   PRIMARY KEY (`po_id`)
 );
+
+COMMIT;

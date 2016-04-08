@@ -19,11 +19,3 @@ CREATE TABLE `tb_customer` (
 );
 
 COMMIT;
-
-INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, price_level_id, status, remarks, created_by, created_date)
-VALUES ('Walk In Customer', '', '', '', 0, 1, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
-
-INSERT INTO tb_customer (customer_name, address, city, phone, npwp_num, price_level_id, status, remarks, created_by, created_date)
-VALUES ('Test Customer', '', '', '', 0, 1, 'L001_A', '', 0, (SELECT CURRENT_TIMESTAMP()));
-
-COMMIT;

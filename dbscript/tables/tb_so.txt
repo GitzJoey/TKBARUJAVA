@@ -18,3 +18,5 @@ CREATE TABLE `tb_so` (
   `updated_date` 		datetime 		DEFAULT NULL,
   PRIMARY KEY (`so_id`)
 );
+
+COMMIT;

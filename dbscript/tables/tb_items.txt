@@ -17,3 +17,5 @@ CREATE TABLE `tb_items` (
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`items_id`)
 );
+
+COMMIT;

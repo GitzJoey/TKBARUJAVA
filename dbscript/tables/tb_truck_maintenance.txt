@@ -13,3 +13,5 @@ CREATE TABLE `tb_truck_maintenance` (
   `updated_date` 			datetime 		DEFAULT NULL,
   PRIMARY KEY (`truck_maintenance_id`)
 );
+
+COMMIT;

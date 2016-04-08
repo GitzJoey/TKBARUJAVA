@@ -18,3 +18,5 @@ CREATE TABLE `tb_receipt` (
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`receipt_id`)
 );
+
+COMMIT;

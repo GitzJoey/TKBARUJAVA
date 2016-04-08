@@ -4,3 +4,5 @@ CREATE TABLE `tb_items_receipt` (
   `items_id` 	int(11) DEFAULT NULL,
   `receipt_id` 	int(11) DEFAULT NULL
 );
+
+COMMIT;

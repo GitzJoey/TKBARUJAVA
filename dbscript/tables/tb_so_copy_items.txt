@@ -17,3 +17,5 @@ CREATE TABLE `tb_so_copy_items` (
   `updated_date` 		datetime 	DEFAULT NULL,
   PRIMARY KEY (`so_copy_items_id`)
 );
+
+COMMIT;

@@ -7,3 +7,5 @@ CREATE TABLE `tb_sms_in` (
   `created_date` datetime DEFAULT NULL,
   PRIMARY KEY (`sms_in_id`)
 );
+
+COMMIT;

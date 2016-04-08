@@ -7,3 +7,5 @@ CREATE TABLE `tb_sms_out` (
   `created_date` datetime DEFAULT NULL,
   PRIMARY KEY (`sms_out_id`)
 );
+
+COMMIT;

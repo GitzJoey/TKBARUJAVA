@@ -15,3 +15,5 @@ CREATE TABLE `tb_price` (
   `updated_date` 	datetime 		DEFAULT NULL,
   PRIMARY KEY (`price_id`)
 );
+
+COMMIT;

@@ -13,3 +13,5 @@ CREATE TABLE `tb_warehouse` (
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`warehouse_id`)
 );
+
+COMMIT;

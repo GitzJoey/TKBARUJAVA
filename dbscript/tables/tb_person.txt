@@ -16,8 +16,10 @@ CREATE TABLE `tb_person` (
   PRIMARY KEY (`person_id`)
 );
 
-INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('admin', 'admin', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) 
+VALUES ('admin', 'admin', 0, (SELECT CURRENT_TIMESTAMP()));
 
-INSERT INTO tb_person (first_name, last_name, created_by, created_date) VALUES ('non admin', 'non admin', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_person (first_name, last_name, created_by, created_date) 
+VALUES ('non admin', 'non admin', 0, (SELECT CURRENT_TIMESTAMP()));
 
 COMMIT;

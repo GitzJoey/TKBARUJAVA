@@ -19,3 +19,5 @@ CREATE TABLE `tb_deliver` (
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`deliver_id`)
 );
+
+COMMIT;
