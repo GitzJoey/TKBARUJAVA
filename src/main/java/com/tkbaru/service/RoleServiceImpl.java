@@ -80,6 +80,7 @@ public class RoleServiceImpl implements RoleService {
 	}
 
 	@Override
+	@Transactional
 	public Role getRoleByName(String roleName) {
 		List<Role> allRole = getAllRole();
 		
