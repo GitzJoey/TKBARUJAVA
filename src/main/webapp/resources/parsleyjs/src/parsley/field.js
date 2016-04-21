@@ -5,7 +5,6 @@ import ParsleyUtils from './utils';
 
 var ParsleyField = function (field, domOptions, options, parsleyFormInstance) {
   this.__class__ = 'ParsleyField';
-  this.__id__ = ParsleyUtils.generateID();
 
   this.$element = $(field);
 
@@ -20,7 +19,7 @@ var ParsleyField = function (field, domOptions, options, parsleyFormInstance) {
   // Initialize some properties
   this.constraints = [];
   this.constraintsByName = {};
-  this.validationResult = [];
+  this.validationResult = true;
 
   // Bind constraints
   this._bindConstraints();
@@ -66,7 +65,8 @@ ParsleyField.prototype = {
       .always(() => { this._reflowUI(); })
       .done(() =>   { this._trigger('success'); })
       .fail(() =>   { this._trigger('error'); })
-      .always(() => { this._trigger('validated'); });
+      .always(() => { this._trigger('validated'); })
+      .pipe(...this._pipeAccordingToValidationResult());
   },
 
   hasConstraints: function () {
@@ -127,7 +127,7 @@ ParsleyField.prototype = {
     if (!this.hasConstraints())
       return $.when();
 
-    // Value could be passed as argument, needed to add more power to 'parsley:field:validate'
+    // Value could be passed as argument, needed to add more power to 'field:validate'
     if ('undefined' === typeof value || null === value)
       value = this.getValue();
 
@@ -157,7 +157,7 @@ ParsleyField.prototype = {
       result = $.Deferred().reject();
     // Make sure we return a promise and that we record failures
     return $.when(result).fail(errorMessage => {
-      if (true === this.validationResult)
+      if (!(this.validationResult instanceof Array))
         this.validationResult = [];
       this.validationResult.push({
         assert: constraint,

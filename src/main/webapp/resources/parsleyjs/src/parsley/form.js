@@ -4,7 +4,6 @@ import ParsleyUtils from './utils';
 
 var ParsleyForm = function (element, domOptions, options) {
   this.__class__ = 'ParsleyForm';
-  this.__id__ = ParsleyUtils.generateID();
 
   this.$element = $(element);
   this.domOptions = domOptions;
@@ -103,13 +102,6 @@ ParsleyForm.prototype = {
       });
     });
 
-    var promiseBasedOnValidationResult = () => {
-      var r = $.Deferred();
-      if (false === this.validationResult)
-        r.reject();
-      return r.resolve().promise();
-    };
-
     return $.when(...promises)
       .done(  () => { this._trigger('success'); })
       .fail(  () => {
@@ -118,7 +110,7 @@ ParsleyForm.prototype = {
         this._trigger('error');
       })
       .always(() => { this._trigger('validated'); })
-      .pipe(  promiseBasedOnValidationResult, promiseBasedOnValidationResult);
+      .pipe(...this._pipeAccordingToValidationResult());
   },
 
   // Iterate over refreshed fields, and stop on first failure.

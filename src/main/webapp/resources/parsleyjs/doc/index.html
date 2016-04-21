@@ -161,26 +161,13 @@
             Parsley comes with various error messages for its built-in validators. They are shipped in English by default, but many other languages are available, thanks to the awesome international Parsley community. <a href="https://github.com/guillaumepotier/Parsley.js/tree/master/src/i18n">See the available localizations here</a>.
           </p>
           <p>
-            To load a different locale and its messages, you have two possibilities:
-            <ul>
-              <li>
-                Load your needed localization <strong>before</strong> Parsley, then select the one you need once Parsley is loaded and if you want to switch from the English default. In this example, we'll load both French and Italian translations, and use French:
-<pre><code>&lt;script src="jquery.js">&lt;/script>
-&lt;script src="i18n/fr.js">&lt;/script>
-&lt;script src="i18n/it.js">&lt;/script>
-&lt;script src="parsley.min.js">&lt;/script>
-&lt;script type="text/javascript">
-  window.Parsley.setLocale('fr');
-&lt;/script>
-</code></pre>
-              </li>
-              <li>
-                Load your needed localization <strong>after</strong> Parsley. The last loaded file will automatically set the messages locale for Parsley. In this example, we'll load both French and Italian translations, and use Italian:
+            To load a different locale and its messages, include them after Parsley:
 <pre><code>&lt;script src="jquery.js">&lt;/script>
 &lt;script src="parsley.min.js">&lt;/script>
 &lt;script src="i18n/fr.js">&lt;/script>
 &lt;script src="i18n/it.js">&lt;/script>
 </code></pre>
+                The last loaded file will automatically set the messages locale for Parsley. In the example above, we load both French and Italian translations, and use Italian.
             </li>
             </ul>
           </p>
@@ -881,7 +868,7 @@ window.Parsley
           <p>You can also specify an array of these kinds. For example, if a validator has <code>requirementType: ['integer', 'integer']</code>, then given the requirement string <code>"[1, 2]"</code> it will receive <code>1</code> and <code>2</code> as second and third arguments (the first one being the value(s) to validate).
           </p>
 
-          <p>For even cases where more complex parameters are needed, you can specify extra parameters; refer to the source and check how the <code>remote</code> validator uses that.</p>
+          <p>For cases where more complex parameters are needed, you can specify extra parameters; refer to the source and check how the <code>remote</code> validator uses that.</p>
         </div>
 
           <h3 id="custom-messages">Error messages</h3>
@@ -1077,7 +1064,7 @@ window.Parsley
               <td><code>ParsleyForm</code></td>
               <td><code>submit()</code></td>
               <td>Triggered when after a form validation succeeds and before the form is actually submitted.<br/>
-                Prevent the default to interrupt submission.</td>
+                Return `false` to interrupt submission.</td>
             </tr>
             <tr>
               <td><code>field:init</code> <version>#2.1</version></td>
@@ -1115,7 +1102,7 @@ window.Parsley
         <!-- ****************** Remote ****************** -->
         <h1 id="remote" class="page-header">Parsley Remote</h1>
         <p>
-          Parsley <a href="annotated-source/main.remote.html" target="_blank">remote</a> is an easy to use <strong>ajax asynchronous validator</strong>.
+          Parsley <a href="annotated-source/remote.html" target="_blank">remote</a> is an easy to use <strong>ajax asynchronous validator</strong>.
         </p>
 
         <h3>Options</h3>

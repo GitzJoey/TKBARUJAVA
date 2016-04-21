@@ -240,7 +240,7 @@ describe('ParsleyField', () => {
     $('#element').psly()
     .on('field:validate', function () {
       // we are before validation!
-      expect(this.validationResult.length).to.be(0);
+      expect(this.validationResult).to.be(true);
       done();
     })
     .validate();
@@ -273,6 +273,29 @@ describe('ParsleyField', () => {
     })
     .validate();
   });
+
+  it('should have the validationResult be changeable', () => {
+    var submitted = false;
+    $('<form id="element"><input/></form>')
+    .appendTo('body')
+    .parsley()
+    .on('field:success', field => {
+      field.validationResult = false;
+    })
+    .on('field:error', field => {
+      field.validationResult = true;
+    })
+    .on('form:submit', form => {
+      submitted = true;
+      return false;
+    });
+    $('#element').submit();
+    expect(submitted).to.be(false);
+    $('#element input').attr('required', true);
+    $('#element').submit();
+    expect(submitted).to.be(true);
+  });
+
   it('should have validateIfEmpty option', () => {
     $('body').append('<input type="email" data-parsley-rangelength="[5, 10]" id="element" />');
     expect($('#element').psly().isValid()).to.be.eql(true);

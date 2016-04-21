@@ -6,7 +6,7 @@ JavaScript form validation, without actually writing a single line of JavaScript
 
 ## Version
 
-2.3.5
+2.3.10
 
 ## Doc
 
@@ -19,7 +19,7 @@ See `index.html` and `doc/`
 
 ## Contributing
 
-See the [`CONTRIBUTING.md` file](https://github.com/guillaumepotier/Parsley.js/blob/master/CONTRIBUTING.md)
+See the [`CONTRIBUTING.md` file](https://github.com/guillaumepotier/Parsley.js/blob/master/.github/CONTRIBUTING.md)
 
 ## Integrations
 

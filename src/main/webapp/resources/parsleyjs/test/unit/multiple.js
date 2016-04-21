@@ -179,7 +179,7 @@ describe('ParsleyMultiple', () => {
         '<input type="checkbox" name="check[]" id="check4" value="4" />'  +
       '</form>');
     var parsleyInstance = $('#check1').parsley();
-    expect(parsleyInstance.validationResult.length).to.be(0);
+    expect(parsleyInstance.validationResult).to.be(true);
     $('#check3').trigger($.Event('change'));
     expect(parsleyInstance.validationResult.length).to.be(1);
   });
@@ -225,6 +225,21 @@ describe('ParsleyMultiple', () => {
     // validate form to go through all multiple inputs. TODO refacto multiple binding
     $('#element').parsley().validate();
     expect(parsleyInstance.$elements.length).to.be(3);
+  });
+  it('value option can be a function', () => {
+    $('body').append(
+      '<form id="element" >' +
+        '<input type="checkbox" name="check[]" id="check1" value="1" required />'  +
+        '<input type="checkbox" name="check[]" id="check2" value="2" />'  +
+        '<input type="checkbox" name="check[]" id="check3" value="3" />'  +
+        '<input type="checkbox" name="check[]" id="check4" value="4" />'  +
+      '</form>');
+    var called = false;
+    var valid = $('#element')
+    .parsley({value: function() { called = true; return ['x']; }})
+    .isValid();
+    expect(valid).to.be(true);
+    expect(called).to.be(true);
   });
   afterEach(() => {
     $('#element, #element-2, .parsley-errors-list').remove();
