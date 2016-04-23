@@ -95,6 +95,10 @@ INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, pa
 SELECT 'F_MASTER_WAREHOUSE', 'Warehouse', 'fa fa-wrench fa-fw', '/warehouse', 998400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_MASTER';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 SELECT 'F_MASTER_TRUCK', 'Truck', 'fa fa-truck fa-flip-horizontal fa-fw', '/truck', 998500, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_MASTER';
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_MASTER_VENDOR', 'Vendor', 'fa fa-vine fa-flip-horizontal fa-fw', '#', 998600, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_MASTER';
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_MSTR_VENDOR_TRUCKING', 'Trucking', 'fa fa-ge fa-fw', '/master/vendor/trucking', 998601, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_MASTER_VENDOR';
 
 /*Admin Menu*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
