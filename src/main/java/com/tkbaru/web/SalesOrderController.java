@@ -606,7 +606,7 @@ public class SalesOrderController {
 		SalesOrder so = salesOrderManager.getSalesOrderById(salesId);
 		
 		soList.add(so);
-		model.addAttribute("SalesCopyViewList", soList);
+		model.addAttribute("salesCopyViewList", soList);
  
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
