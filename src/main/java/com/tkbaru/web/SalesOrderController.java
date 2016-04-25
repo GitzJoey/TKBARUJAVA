@@ -35,6 +35,8 @@ import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.SalesOrderCopy;
+import com.tkbaru.model.SalesOrderCopyItems;
 import com.tkbaru.model.Stocks;
 import com.tkbaru.service.CustomerService;
 import com.tkbaru.service.LookupService;
@@ -571,7 +573,7 @@ public class SalesOrderController {
 		logger.info("[salesCopy] " + "");
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
@@ -584,8 +586,28 @@ public class SalesOrderController {
 		logger.info("[salesCopySearch] " + "salesCode = " + salesCode);
 		
 		List<SalesOrder> soList = salesOrderManager.getSalesOrderBySalesCode(salesCode);
-	
+
 		model.addAttribute("SalesCopyList", soList);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+
+	@RequestMapping(value="salescopy/view/{salesId}/detail", method = RequestMethod.GET)
+	public String salesCopyViewSearch(Locale locale, Model model, @PathVariable int salesId) {
+		logger.info("[salesCopyViewSearch] " + "salesId = " + salesId);
+		
+		List<SalesOrder> soList = new ArrayList<SalesOrder>();
+		SalesOrder so = salesOrderManager.getSalesOrderById(salesId);
+		
+		soList.add(so);
+		model.addAttribute("SalesCopyViewList", soList);
+ 
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
@@ -596,6 +618,178 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_SALESCOPY;
 	}
 
+	@RequestMapping(value="/salescopy/{selectedId}", method = RequestMethod.GET)
+	public String salesCopySelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
+		logger.info("[salesCopySelectedSales] " + "selectedId: " + selectedId);
+		
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		
+		SalesOrderCopy cp = new SalesOrderCopy();
+
+		cp.setSalesOrderEntity(so);
+		cp.setSalesCode(so.getSalesCode());
+		cp.setSalesStoreEntity(so.getSalesStoreEntity());
+		cp.setCreatedDate(so.getCreatedDate());
+		cp.setCreatedBy(so.getCreatedBy());
+		if (so.getCustomerEntity() != null) {
+			cp.setCustomerEntity(so.getCustomerEntity());
+		}
+		cp.setCustomerTypeLookup(so.getCustomerTypeLookup());
+		cp.setSalesCreatedDate(so.getSalesCreatedDate());
+		cp.setSalesRemarks(so.getSalesRemarks());
+		cp.setSalesStatusLookup(so.getSalesStatusLookup());
+		cp.setSalesStoreEntity(so.getSalesStoreEntity());
+		cp.setSalesTypeLookup(so.getSalesTypeLookup());
+		cp.setShippingDate(so.getShippingDate());
+		cp.setUpdatedBy(so.getUpdatedBy());
+		cp.setUpdatedDate(so.getUpdatedDate());
+		cp.setWalkInCustDetail(so.getWalkInCustDetail());
+		cp.setSalesOrderCopyCode(so.getSalesCode() + "C" + (so.getSoCopyList().size() + 1));
+		
+		List<SalesOrderCopyItems> list = new ArrayList<SalesOrderCopyItems>();
+		for (Items it:so.getItemsList()) {
+			SalesOrderCopyItems si = new SalesOrderCopyItems();
+
+			si.setBaseUnitCodeLookup(it.getBaseUnitCodeLookup()); 
+			si.setCreatedBy(it.getCreatedBy());
+			si.setCreatedDate(it.getCreatedDate());
+			si.setProdPrice(it.getProdPrice());
+			si.setProdQuantity(it.getProdQuantity());
+			si.setProductEntity(it.getProductEntity());
+			si.setSalesOrderCopyItemsId(it.getItemsId());
+			si.setToBaseQty(it.getToBaseQty());
+			si.setToBaseValue(it.getToBaseValue());
+			si.setUnitCodeLookup(it.getUnitCodeLookup());
+			si.setUpdatedBy(it.getUpdatedBy());
+			si.setUpdatedDate(it.getUpdatedDate());
+						
+			list.add(si);
+		}
+		
+		cp.setItemsList(list);
+		
+		model.addAttribute("salesOrderCopyForm", cp);
+		model.addAttribute("productListDDL", productManager.getAllProduct());
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+
+	@RequestMapping(value = "/salescopy/{salesId}/additems/{productORstocksId}", method = RequestMethod.POST)
+	public String salesCopyAddItems(Locale locale, Model model, @ModelAttribute("salesOrderCopyForm") SalesOrderCopy salesOrderCopyForm, @PathVariable int salesId, @PathVariable int productORstocksId) {
+		logger.info("[salesOrderCopyAddItems] " + "salesId: " + salesId + ", productORstocksId: " + productORstocksId);
+
+		salesOrderCopyForm.setSalesStatusLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesStatusLookup().getLookupKey()));
+		salesOrderCopyForm.setSalesTypeLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesTypeLookup().getLookupKey()));
+
+		SalesOrderCopyItems i = new SalesOrderCopyItems();
+		i.setProductEntity(productManager.getProductById(productORstocksId));
+		i.setCreatedDate(new Date());
+		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+		
+		salesOrderCopyForm.getItemsList().add(i);
+
+		for (SalesOrderCopyItems item : salesOrderCopyForm.getItemsList()) {
+			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {
+				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}
+		}
+		
+		if (salesOrderCopyForm.getCustomerEntity().getCustomerId() != null) {
+			salesOrderCopyForm.setCustomerEntity(customerManager.getCustomerById(salesOrderCopyForm.getCustomerEntity().getCustomerId()));
+		}
+
+		model.addAttribute("salesOrderCopyForm", salesOrderCopyForm);
+		model.addAttribute("productListDDL", productManager.getAllProduct());
+			
+		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
+		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+	
+	@RequestMapping(value = "/salescopy/{salesId}/removeitems/{iIdx}", method = RequestMethod.POST)
+	public String soSalesCopyRemoveItems(Locale locale, Model model, @ModelAttribute("salesOrderCopyForm") SalesOrderCopy salesOrderCopyForm, @PathVariable int salesId, @PathVariable int iIdx) {
+		logger.info("[salesOrderCopyRemoveItems] " + "salesId: " + salesId + ", iIdx: " + iIdx);
+		
+		salesOrderCopyForm.setSalesStatusLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesStatusLookup().getLookupKey()));
+		salesOrderCopyForm.setSalesTypeLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesTypeLookup().getLookupKey()));
+
+		if (salesOrderCopyForm.getCustomerTypeLookup().getLookupKey().equals("L022_R")) {
+			salesOrderCopyForm.setCustomerEntity(customerManager.getCustomerById(salesOrderCopyForm.getCustomerEntity().getCustomerId()));
+		}
+		
+		List<SalesOrderCopyItems> iLNew = new ArrayList<SalesOrderCopyItems>();
+		for (int x = 0; x < salesOrderCopyForm.getItemsList().size(); x++) {
+			if (x == iIdx) continue;
+			iLNew.add(salesOrderCopyForm.getItemsList().get(x));
+		}
+		
+		salesOrderCopyForm.setItemsList(iLNew);
+		for (SalesOrderCopyItems item : salesOrderCopyForm.getItemsList()) {
+			item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+		}
+	
+		model.addAttribute("salesOrderCopyForm", salesOrderCopyForm);
+		model.addAttribute("productListDDL", productManager.getAllProduct());
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return Constants.JSPPAGE_SO_SALESCOPY;
+	}
+
+	@RequestMapping(value = "/salescopy/{salesId}/save", method = RequestMethod.POST)
+	public String salesCopySave(Locale locale, Model model, @ModelAttribute("salesOrderCopyForm") SalesOrderCopy salesOrderCopyForm, RedirectAttributes redirectAttributes, @PathVariable int salesId) {
+		logger.info("[salesCopySave] " + "salesId: " + salesId);
+
+		salesOrderCopyForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+		salesOrderCopyForm.setUpdatedDate(new Date());
+
+		for (SalesOrderCopyItems items : salesOrderCopyForm.getItemsList()) {
+			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
+			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
+				if (productUnit.getIsBaseUnit() == true) {
+					items.setBaseUnitCodeLookup(lookupManager.getLookupByKey(productUnit.getUnitCodeLookup().getLookupKey()));
+				}
+				if(productUnit.getUnitCodeLookup().getLookupKey().equals(items.getUnitCodeLookup().getLookupKey())){
+					items.setToBaseValue(productUnit.getConversionValue());
+					items.setToBaseQty(items.getProdQuantity() * productUnit.getConversionValue());
+				}
+			}
+			items.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			items.setUpdatedDate(new Date());
+		}
+
+		if (salesOrderCopyForm.getCustomerEntity().getCustomerId() == null) {
+			salesOrderCopyForm.setCustomerEntity(null);
+		}
+		
+		salesOrderManager.addSalesOrderCopy(salesOrderCopyForm);
+		
+		model.addAttribute("salesOrderCopyForm", salesOrderCopyForm);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
+
+		return "redirect:/sales/salescopy";
+	}
+	
 	@RequestMapping(value="/payment", method = RequestMethod.GET)
 	public String salesPayment(Locale locale, Model model) {
 		logger.info("[salesPayment] " + "");

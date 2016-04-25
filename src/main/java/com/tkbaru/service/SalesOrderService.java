@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.tkbaru.model.Customer;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.SalesOrderCopy;
 
 public interface SalesOrderService {
 	public List<Customer> searchCustomer(String querySearch);
@@ -13,7 +14,8 @@ public interface SalesOrderService {
 	public SalesOrder getSalesOrderById(int selectedId);
 	public void addSalesOrder(SalesOrder so);
 	public void editSalesOrder(SalesOrder so);
+	public void addSalesOrderCopy(SalesOrderCopy cp);
+	public void editSalesOrderCopy(SalesOrderCopy cp);
 	public void deleteSalesOrder(int selectedId);
-
 	public String generateSalesCode();
 }

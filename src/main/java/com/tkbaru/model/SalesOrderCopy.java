@@ -34,6 +34,10 @@ public class SalesOrderCopy implements Serializable {
 	private Integer salesCopyId;	
 	@Column(name="so_code")
 	private String salesCode;
+	@Column(name="so_copy_code")
+	private String salesOrderCopyCode;
+	@Column(name="so_copy_desc")
+	private String salesOrderCopyDescription;
 	@Column(name="so_created")
 	private Date salesCreatedDate;
 	@Column(name="shipping_date")
@@ -80,101 +84,157 @@ public class SalesOrderCopy implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="so_id", nullable=false)
 	private SalesOrder salesOrderEntity;
-	
+
+	public String getSalesOrderCopyCode() {
+		return salesOrderCopyCode;
+	}
+
+	public void setSalesOrderCopyCode(String salesOrderCopyCode) {
+		this.salesOrderCopyCode = salesOrderCopyCode;
+	}
+
+	public String getSalesOrderCopyDescription() {
+		return salesOrderCopyDescription;
+	}
+
+	public void setSalesOrderCopyDescription(String salesOrderCopyDescription) {
+		this.salesOrderCopyDescription = salesOrderCopyDescription;
+	}
+
 	public Integer getSalesCopyId() {
 		return salesCopyId;
 	}
+
 	public void setSalesCopyId(Integer salesCopyId) {
 		this.salesCopyId = salesCopyId;
 	}
+
 	public String getSalesCode() {
 		return salesCode;
 	}
+
 	public void setSalesCode(String salesCode) {
 		this.salesCode = salesCode;
 	}
+
 	public Date getSalesCreatedDate() {
 		return salesCreatedDate;
 	}
+
 	public void setSalesCreatedDate(Date salesCreatedDate) {
 		this.salesCreatedDate = salesCreatedDate;
 	}
+
 	public Date getShippingDate() {
 		return shippingDate;
 	}
+
 	public void setShippingDate(Date shippingDate) {
 		this.shippingDate = shippingDate;
 	}
+
 	public String getWalkInCustDetail() {
 		return walkInCustDetail;
 	}
+
 	public void setWalkInCustDetail(String walkInCustDetail) {
 		this.walkInCustDetail = walkInCustDetail;
 	}
+
 	public String getSalesRemarks() {
 		return salesRemarks;
 	}
+
 	public void setSalesRemarks(String salesRemarks) {
 		this.salesRemarks = salesRemarks;
 	}
+
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
+
 	public void setCreatedBy(Integer createdBy) {
 		this.createdBy = createdBy;
 	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
+
 	public List<SalesOrderCopyItems> getItemsList() {
 		return itemsList;
 	}
+
 	public void setItemsList(List<SalesOrderCopyItems> itemsList) {
 		this.itemsList = itemsList;
 	}
+
 	public Customer getCustomerEntity() {
 		return customerEntity;
 	}
+
 	public void setCustomerEntity(Customer customerEntity) {
 		this.customerEntity = customerEntity;
 	}
+
 	public Store getSalesStoreEntity() {
 		return salesStoreEntity;
 	}
+
 	public void setSalesStoreEntity(Store salesStoreEntity) {
 		this.salesStoreEntity = salesStoreEntity;
 	}
+
 	public Lookup getSalesStatusLookup() {
 		return salesStatusLookup;
 	}
+
 	public void setSalesStatusLookup(Lookup salesStatusLookup) {
 		this.salesStatusLookup = salesStatusLookup;
 	}
+
 	public Lookup getSalesTypeLookup() {
 		return salesTypeLookup;
 	}
+
 	public void setSalesTypeLookup(Lookup salesTypeLookup) {
 		this.salesTypeLookup = salesTypeLookup;
 	}
+
 	public Lookup getCustomerTypeLookup() {
 		return customerTypeLookup;
 	}
+
 	public void setCustomerTypeLookup(Lookup customerTypeLookup) {
 		this.customerTypeLookup = customerTypeLookup;
-	}	
+	}
+
+	public SalesOrder getSalesOrderEntity() {
+		return salesOrderEntity;
+	}
+
+	public void setSalesOrderEntity(SalesOrder salesOrderEntity) {
+		this.salesOrderEntity = salesOrderEntity;
+	}
+	
 }

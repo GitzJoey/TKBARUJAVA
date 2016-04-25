@@ -204,7 +204,13 @@ public class SalesOrder implements Serializable {
 	}
 	public void setCustomerTypeLookup(Lookup customerTypeLookup) {
 		this.customerTypeLookup = customerTypeLookup;
-	}	
+	}
+	public List<SalesOrderCopy> getSoCopyList() {
+		return soCopyList;
+	}
+	public void setSoCopyList(List<SalesOrderCopy> soCopyList) {
+		this.soCopyList = soCopyList;
+	}
 	public String getCustomerSearchQuery() {
 		return customerSearchQuery;
 	}
@@ -224,10 +230,9 @@ public class SalesOrder implements Serializable {
 				+ salesRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
 				+ paymentList + ", customerEntity=" + customerEntity + ", salesStoreEntity=" + salesStoreEntity
-				+ ", salesStatusLookup=" + salesStatusLookup + ", salesTypeLookup=" + salesTypeLookup
-				+ ", customerTypeLookup=" + customerTypeLookup
-				+ ", customerSearchQuery=" + customerSearchQuery + ", customerSearchResults=" + customerSearchResults
-				+ "]";
+				+ ", salesStatusLookup=" + "salesStatusLookup" + ", salesTypeLookup=" + "salesTypeLookup"
+				+ ", customerTypeLookup=" + "customerTypeLookup" + ", soCopyList=" + soCopyList + ", customerSearchQuery="
+				+ customerSearchQuery + ", customerSearchResults=" + customerSearchResults + "]";
 	}
 
 }

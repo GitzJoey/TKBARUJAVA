@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.tkbaru.dao.SalesOrderDAO;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.SalesOrderCopy;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -56,7 +57,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		
 		return soList;
 	}
-	
+
 	@Override
 	public SalesOrder getSalesOrderById(int selectedId) {
 		logger.info("[getSalesOrderById] " + "selectedId: " + selectedId);
@@ -91,6 +92,24 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		
 		session.update(so);
+	}
+
+	@Override
+	public void addSalesOrderCopy(SalesOrderCopy cp) {
+		logger.info("[addSalesOrder] " + "");
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		session.persist(cp);
+	}
+
+	@Override
+	public void editSalesOrderCopy(SalesOrderCopy cp) {
+		logger.info("[editSalesOrder] " + "");
+
+		Session session = this.sessionFactory.getCurrentSession();
+		
+		session.update(cp);
 	}
 
 	@Override

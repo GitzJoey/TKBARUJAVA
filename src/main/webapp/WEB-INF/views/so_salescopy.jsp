@@ -11,6 +11,64 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
+			$('#makeCopySelection').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");
+					}
+				});
+				if (id == "") {
+					jsAlert("Please select at least 1 copy");
+					return false;
+				} else {
+					if (button == 'makeCopySelection') {
+						$('#makeCopySelection').attr("href", ctxpath + "/sales/salescopy/" + id);
+					} else {
+						return false;
+					}
+				}
+			});		
+			
+			$('#viewSelection').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+				
+				$('input[type="checkbox"][id^="cbx_"]').each(function(index, item) {
+					if ($(item).prop('checked')) {
+						id = $(item).attr("value");
+					}
+				});
+				
+				if (id == "") {
+					jsAlert("Please select at least 1 copy");
+					return false;
+				}
+				
+				$('#viewSelection').attr("href", ctxpath + "/sales/salescopy/view/" + id + "/detail");	
+			});		
+			
+			$('#submitButton').click(function() {
+				var salesId = $('#inputHiddenSalesId').val();
+
+				if ($('#itemsListTable tbody tr').size() == 0) {
+					jsAlert("Please specify at least 1 product");
+					return false;
+				}
+				
+				$('#salesOrderCopyForm').parsley({
+				    excluded: '[id^="productSelect"]'
+				}).validate();
+
+				if (false == $('#salesOrderCopyForm').parsley().isValid()) {
+					return false;
+	            } else {
+					$('#salesOrderCopyForm').attr('action', ctxpath + "/sales/salescopy/" + salesId + "/save");
+	            }
+			});
+						
 			$('#searchTableSelection').click(function() {
 				$('#searchTableSelection').attr("href", ctxpath + "/sales/salescopy/view/" + $('#searchSalesCode').val());	
 			});
@@ -18,8 +76,29 @@
 			$('#cancelButton').click(function() {
 		    	window.location.href = ctxpath + "/sales/salescopy";
 			});
-		    
-		    $('#salesCopyTableList').DataTable();
+			
+			$('#addProdButton, #removeProdButton').click(function() {
+				var id = "";
+				var button = $(this).attr('id');
+				var salesId = $('#inputHiddenSalesId').val();
+				
+				if (button == 'addProdButton') {
+					id = $('#productSelect').val();
+					$('#productSelect').parsley().validate();
+					if(false == $('#productSelect').parsley().isValid()) {
+						return false;
+					} else {
+						$('#salesOrderCopyForm').attr('action',ctxpath + "/sales/salescopy/" + salesId + "/additems/" + id);
+					}
+				} else {
+					id = $(this).val();
+					$('#salesOrderCopyForm').attr('action',ctxpath + "/sales/salescopy/" + salesId + "/removeitems/" + id);
+				}
+			});
+			
+			$('#salesCopyTableList').DataTable();
+			$('[id^="inputShippingDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
+			$('[id^="inputSalesDate"]').datetimepicker({ format:'d-m-Y', timepicker:false });
 		});
 	</script>
 </head>
@@ -51,7 +130,7 @@
 				</h1>
 
 				<c:choose>
-					<c:when test="${PAGEMODE == 'PAGEMODE_LIST'}">
+					<c:when test="${PAGEMODE == 'PAGEMODE_PAGELOAD'}">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -72,7 +151,7 @@
 							</div>
 						</div>
 					</c:when>
-					<c:when test="${PAGEMODE == 'PAGEMODE_VIEW'}">
+					<c:when test="${PAGEMODE == 'PAGEMODE_LIST'}">
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
@@ -95,9 +174,6 @@
 										<tr>
 											<th width="5%">&nbsp;</th>
 											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_code" text="Sales Code"/></th>
-											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.transaction_date" text="Transaction Date"/></th>
-											<th width="20%"><spring:message code="so_sales_copy_jsp.table.header.customer_name" text="Customer Name"/></th>
-											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_type" text="Sales Type"/></th>
 											<th width="5%"><spring:message code="so_sales_copy_jsp.table.header.sales_copy_count" text="Copy Count"/></th>
 										</tr>
 									</thead>
@@ -106,19 +182,540 @@
 											<c:forEach items="${ SalesCopyList }" var="i" varStatus="status">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
-													<td><c:out value="${ i.salesCode }"></c:out></td>
-													<td></td>
-													<td></td>
-													<td></td>
-													<td><c:out value=""></c:out></td>
+													<td><c:out value="${ i.salesCode }"></c:out>													</td>
+													<td>${ i.soCopyList.size() }</td>
 												</tr>
 											</c:forEach>
 										</c:if>
 									</tbody>
 								</table>
+								<a id="makeCopySelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.make_copy_button" text="Make Copy"/></a>
+								<a id="viewSelection" class="btn btn-sm btn-primary" data-parent="#accordion" href="#collapseThree" ><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.view_button" text="View"/></a>
+							</div>
+						</div>
+						<div class="panel panel-default">
+							<div class="panel-body">
+							<c:forEach items="${ SalesCopyList  }" var="i" varStatus="status">
+				           		<c:forEach items="${ i.soCopyList }" var="x">
+			           			<div class="panel panel-primary">
+			           				<div class="panel-heading">
+						                <h4 class="panel-title">
+						                    <a data-toggle="collapse" data-parent="#accordion" href="#${ x.salesCopyId }"><c:out value="${ x.salesOrderCopyCode }"></c:out></a>
+						                </h4>
+						            </div>
+						            <div id="${ x.salesCopyId }" class="panel-collapse collapse">
+						                <div class="panel-body">
+						                	<div role="tabpanel">
+												<div class="tab-content">
+						                			<div class="row">
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputSalesOrderCopyCode" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.sales_order_copy_code" text="Sales Order Copy Code"/></label>
+																				<label class="col-sm-4 control-label"><c:out value="${ x.salesOrderCopyCode }"></c:out></label>
+																			</div>
+																		</div>
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputSalesOrderCopyDescription" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.sales_order_copy_description" text="salesOrderCopyDescription"/></label>
+																				<label class="col-sm-4 control-label"><c:out value="${ x.salesOrderCopyDescription }"></c:out></label>
+																			</div>
+																		</div>
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputSalesCode" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.sales_code" text="Sales Code"/></label>
+																				<label class="col-sm-4 control-label"><c:out value="${ x.salesCode }"></c:out></label>
+																			</div>
+																		</div>
+																		<div class="col-md-5">
+																			<div class="form-group">
+																				<label for="inputSalesDate" class="col-sm-4 control-label"><spring:message code="so_sales_copy_jsp.sales_date" text="Sales Date"/></label>
+																				<label class="col-sm-8 control-label"><fmt:formatDate value="${ x.salesCreatedDate }" pattern="dd-MM-yyyy" /></label>
+																			</div>
+																		</div>
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputSalesType" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.sales_type" text="Sales Type"/></label>
+																				<label class="col-sm-4 control-label"><spring:message code="${ x.salesTypeLookup.i18nLookupValue }" text="${ x.salesTypeLookup.lookupValue }"></spring:message></label>
+																			</div>
+																		</div>
+																		<div class="col-md-5">
+																			<div class="form-group">
+																				<label for="inputSalesStatus" class="col-sm-4 control-label"><spring:message code="so_sales_copy_jsp.status" text="Status"/></label>
+																				<label class="col-sm-8 control-label"><spring:message code="${ x.salesStatusLookup.i18nLookupValue }" text="${ x.salesStatusLookup.lookupValue }"></spring:message></label>
+																			</div>
+																		</div>
+																	</div>
+																	<hr>
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputShippingDate" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.shipping_date" text="Shipping Date"/></label>
+																				<label class="col-sm-4 control-label"><fmt:formatDate value="${ x.createdDate }" pattern="dd-MM-yyyy" /></label>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-heading">
+														             <h4 class="panel-title">
+														             	<spring:message code="so_sales_copy_jsp.customer" text="Customer"/>
+														      		</h4>
+														      	</div>
+														    	<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputCustomerType" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.customer_type" text="Customer Type"/></label>
+																				<label class="col-sm-4 control-label"><spring:message code="${ x.customerTypeLookup.i18nLookupValue }" text="${ x.customerTypeLookup.lookupValue }"></spring:message></label>
+																			</div>
+																		</div>
+																		<div class="col-md-7">
+																			<div class="form-group">
+																				<label for="inputCustomerName" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.customer_name" text="Customer Name"/></label>
+																				<label class="col-sm-4 control-label"><c:out value="${ x.customerEntity.customerName }"></c:out></label>
+																			</div>
+																		</div>
+																		<div class="col-md-5">
+																		
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="panel panel-default">
+																<div class="panel-heading">
+														             <h4 class="panel-title">
+														             	<spring:message code="so_sales_copy_jsp.transactions" text="Transactions"/>
+														      		</h4>
+														      	</div>
+																<div class="panel-body">
+																	<div class="row">
+																		<div class="col-md-12">
+																			<table id="searchProductResultTable" class="table table-bordered table-hover display responsive">
+																				<thead>
+																					<tr>
+																						<th width="30%"><spring:message code="so_sales_copy_jsp.table.item.header.product_name" text="Product Name"/></th>
+																						<th width="20%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.quantity" text="Quantity"/></th>
+																						<th width="15%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.unit" text="Unit"/></th>
+																						<th width="15%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
+																						<th width="20%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.total_price" text="Total Price"/></th>
+																					</tr>
+																				</thead>
+																				<tbody>
+																					<c:set var="total" value="${0}" />
+																					<c:forEach items="${ i.itemsList }" var="y" varStatus="yx">
+																						<tr>
+																							<td style="vertical-align: middle;">
+																								<spring:message code="${ i.itemsList[yx.index].productEntity.productName }" text="${ i.itemsList[yx.index].productEntity.productName }"></spring:message>
+																							</td>
+																							<td class="text-right">
+																								<c:out value="${ i.itemsList[yx.index].prodQuantity }"></c:out>
+																							</td>
+																							<td class="text-right">
+																								<spring:message code="${ i.itemsList[yx.index].unitCodeLookup.lookupValue }" text="${ i.itemsList[yx.index].unitCodeLookup.lookupValue }"></spring:message>
+																							</td>
+																							<td style="vertical-align: middle;"  class="text-right">
+																								<c:out value="${ i.itemsList[yx.index].toBaseQty }"></c:out>
+																							</td>
+																							<td style="vertical-align: middle;"  class="text-right">
+																								<c:set var="total" value="${ (i.itemsList[yx.index].toBaseQty * i.itemsList[yx.index].prodQuantity) }" />
+																								<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
+																							</td>
+																						</tr>
+																					</c:forEach>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="col-md-12">
+																			<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
+																				<tbody>
+																					<tr>
+																						<td width="80%" class="text-right">
+																							<spring:message code="so_sales_copy_jsp.total" text="Total"/>
+																						</td>
+																						<td width="20%" class="text-right">
+																							<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
+																						</td>
+																					</tr>
+																				</tbody>
+																			</table>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_sales_copy_jsp.remarks" text="Remarks"/></h1>
+														</div>
+														<div class="panel-body">
+															<br/>
+															<div class="row">
+																<div class="col-md-12">
+																	<label class="control-label"><c:out value="${ i.salesRemarks }"></c:out></label>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							   </c:forEach>
+				          </c:forEach>
+				    	</div>
+			    	</div>
+					</c:when>
+					<c:when test="${PAGEMODE == 'PAGEMODE_VIEW'}">
+						<div class="panel panel-default">
+					    	<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+								</h1>
+							</div>
+							<div class="panel-body">
+								<br />
+								<table id="salesCopyViewTableList" class="table table-bordered table-hover display responsive">
+									<thead>
+										<tr>
+											<th width="5%">&nbsp;</th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_id" text="Sales Id"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_code" text="Sales Code"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_created_date" text="Sales Created Date"/></th>
+											<th width="20%"><spring:message code="so_sales_copy_jsp.table.header.customer_name" text="Customer Name"/></th>
+											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.copy_created_date" text="Copy Created Date"/></th>
+											<th width="5%"><spring:message code="so_sales_copy_jsp.table.header.updated_date" text="Update Date"/></th>
+										</tr>
+									</thead>
+									<tbody>
+										<c:if test="${ not empty SalesCopyViewList }">
+											<c:forEach items="${ SalesCopyViewList }" var="i" varStatus="status">
+												<c:out value="${ i.salesCode }"></c:out>
+												<c:forEach items="${ i.soCopyList }" var="x">
+													<tr>
+														<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
+														<td>${ x.salesCopyId }</td>
+														<td>${ x.salesCode }</td>
+														<td>${ x.salesCreatedDate }</td>
+														<td>${ x.customerEntity.customerName }</td>
+														<td>${ x.createdDate }</td>
+														<td>${ x.updatedDate }</td>
+													</tr>
+												</c:forEach>
+											</c:forEach>
+										</c:if>
+									</tbody>
+								</table>
+								<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.back_button" text="Back"/></button>
 							</div>
 						</div>
 					</c:when>
+					<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+								</h1>
+							</div>
+							<div class="panel-body">
+								<form:form id="salesOrderCopyForm" role="form" class="form-horizontal" modelAttribute="salesOrderCopyForm" action="${pageContext.request.contextPath}/sales/savecopy">
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-md-7">
+															<div class="form-group">
+																<label for="inputSalesOrderCopyCode" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_order_copy_code" text="Sales Order Copy Code"/></label>
+																<div class="col-sm-5">
+																 	<form:input type="text" class="form-control" id="inputsalesOrderCopyCode" name="inputsalesOrderCopyCode" path="salesOrderCopyCode" readonly="false"></form:input>
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="inputSalesOrderCopyDescription" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_order_copy_description" text="Sales Order Copy Description"/></label>
+																<div class="col-sm-8">
+																	<form:input type="text" class="form-control" id="inputsalesOrderCopyDescription" name="inputsalesOrderCopyDescription" path="salesOrderCopyDescription" placeholder="Enter Description" readonly="false"></form:input>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-5">
+															
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12">
+											<div class="panel panel-default">
+												<div class="panel-body">
+													<div class="row">
+														<div class="col-md-7">
+															<div class="form-group">
+																<label for="inputSalesCode" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_code" text="Sales Code"/></label>
+																<div class="col-sm-5">
+																	<form:hidden id="inputHiddenSalesId" path="salesOrderEntity.salesId"/>
+																	<form:hidden path="createdBy"/>
+																	<form:hidden path="createdDate"/>
+																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="false"></form:input>
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_type" text="Sales Type"/></label>
+																<div class="col-sm-8">
+																 <form:hidden path="salesTypeLookup.lookupKey"/>
+																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="false"></form:input>
+																</div>
+															</div>
+														</div>
+														<div class="col-md-5">
+															<div class="form-group">
+																<label for="inputSalesDate" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.sales_date" text="Sales Date"/></label>
+																<div class="col-sm-9">
+																	<form:input type="text" class="form-control" id="inputSalesDate" name="inputSalesDate" path="salesCreatedDate" placeholder="Enter Sales Date" readonly="false"></form:input>
+																</div>
+															</div>
+															<div class="form-group">
+																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.status" text="Status"/></label>
+																<div class="col-sm-9">
+																    <form:hidden path="salesStatusLookup.lookupKey"/>
+																	<label id="inputPOStatus" class="control-label"><spring:message code="${ salesOrderCopyForm.salesStatusLookup.i18nLookupValue }" text="${ salesOrderCopyForm.salesStatusLookup.lookupValue }"></spring:message></label>
+																</div>
+															</div>
+														</div>
+													</div>
+													<hr>
+													<div class="row">
+														<div class="col-md-7">
+															<div class="form-group">
+																<label for="inputShippingDate" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.shipping_date" text="Shipping Date"/></label>
+																<div class="col-sm-5">
+																	<form:input type="text" class="form-control" id="inputShippingDate" name="inputShippingDate" path="shippingDate" placeholder="Enter Shipping Date" readonly="false"></form:input>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_sales_copy_jsp.customer_title" text="Customer"/></h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-7">
+																	<div class="form-group">
+																		<label for="inputCustomerId" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.customer" text="Customer"/></label>
+																		<div class="col-sm-10">
+																			<form:hidden path="customerEntity.customerId"/>
+																			<form:hidden path="customerTypeLookup.lookupKey"/>
+																			<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
+																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Walk In Customer" disabled="false"></form:input>
+																			</c:if>
+																			<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_R' }">
+																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="false"></form:input>
+																			</c:if>
+																		</div>
+																	</div>
+																	<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
+																		<div class="form-group">
+																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="false"/>
+																			</div>
+																		</div>
+																	</c:if>
+																	<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_R' }">
+																		<div class="form-group">
+																			<label for="inputCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
+																			<div class="col-sm-10">
+																				<textarea class="form-control" rows="3" id="inputCustomerDetail"><c:out value="${ salesOrderCopyForm.customerEntity }"/></textarea>
+																			</div>
+																		</div>
+																	</c:if>
+																</div>
+																<div class="col-md-5">
+																	
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_sales_copy_jsp.transactions" text="Transactions"/></h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-11">
+																<div class="form-group" style="padding-left: 2%">
+																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
+																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																		<c:forEach items="${ productListDDL }" var="pddl">
+																			<option value="${ pddl.productId }">${ pddl.productName }</option>
+																		</c:forEach>
+																		<c:if test="${ salesOrderCopyForm.salesTypeLookup.lookupKey == 'L015_SVC' }">
+																			<c:forEach items="${ stocksListDDL }" var="sddl">
+																				<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
+																			</c:forEach>
+																		</c:if>
+																		<c:if test="${ salesOrderCopyForm.salesTypeLookup.lookupKey == 'L015_SVC' }">
+																		</c:if>
+																	</select>
+																	</div>
+																</div>
+																<div class="col-md-1">
+																	<button id="addProdButton" type="submit" class="btn btn-primary pull-right"><span class="fa fa-plus"></span></button>
+																</div>
+															</div>
+															<br/>
+															<div class="row">
+																<div class="col-md-12">
+																	<table id="itemsListTable" class="table table-bordered table-hover display responsive">
+																		<thead>
+																			<tr>
+																				<th width="30%"><spring:message code="so_sales_copy_jsp.table.item.header.product_name" text="Product Name"/></th>
+																				<th width="15%"><spring:message code="so_sales_copy_jsp.table.item.header.quantity" text="Quantity"/></th>
+																				<th width="15%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.unit" text="Unit"/></th>
+																				<th width="15%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.price_unit" text="Price/Base Unit"/></th>
+																				<th width="5%">&nbsp;</th>
+																				<th width="20%" class="text-right"><spring:message code="so_sales_copy_jsp.table.item.header.total_price" text="Total Price"/></th>
+																			</tr>
+																		</thead>
+																		<tbody>
+																		<c:set var="total" value="${0}" />
+																			<c:forEach items="${ salesOrderCopyForm.itemsList }" var="iL" varStatus="iLIdx">
+																				<tr>
+																					<td style="vertical-align: middle;">
+																						<form:hidden path="itemsList[${ iLIdx.index }].SalesOrderCopyItemsId"/>
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId"/>	
+																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productName"/>	
+																						<form:hidden path="itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupValue" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseValue" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].toBaseQty" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdBy" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdDate" />
+																						<c:out value="${ salesOrderCopyForm.itemsList[iLIdx.index].productEntity.productName }"></c:out>
+																					</td>
+																					<td style="vertical-align:middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsQuantity" name="inputItemsQuantity" path="itemsList[${ iLIdx.index }].prodQuantity" placeholder="Enter Quantity" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
+																					</td>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-md-12">
+																								<form:select class="form-control no-margin" path="itemsList[${ iLIdx.index }].unitCodeLookup.lookupKey">
+																									<option value=""><spring:message code="common.please_select"></spring:message></option>
+																									<c:forEach items="${ salesOrderCopyForm.itemsList[iLIdx.index].productEntity.productUnit }" var="prdUnit">
+																										<form:option value="${ prdUnit.unitCodeLookup.lookupKey }"><c:out value="${ prdUnit.unitCodeLookup.lookupValue }"/></form:option>
+																									</c:forEach>
+																								</form:select>
+																							</div>
+																						</div>
+																					</td>
+																					<td style="vertical-align: middle;">
+																						<div class="form-group no-margin">
+																							<div class="col-sm-12">
+																								<form:input type="text" class="form-control text-right" id="inputItemsProdPrice" name="inputItemsProdPrice" path="itemsList[${ iLIdx.index }].prodPrice" placeholder="Enter Price" data-parsley-type="number" data-parsley-trigger="keyup"></form:input>
+																							</div>
+																						</div>
+																					</td>
+																					<td>
+																						<button id="removeProdButton" type="submit" class="btn btn-primary pull-right" value="${ iLIdx.index }"><span class="fa fa-minus"></span></button>
+																					</td>
+																					<td style="vertical-align: middle; text-align: right;">
+																						<fmt:formatNumber type="number" pattern="##,###.00" value="${ (iL.toBaseQty * iL.prodPrice) }"></fmt:formatNumber>
+																					</td>
+																				</tr>
+																				<c:set var="total" value="${ total + (iL.toBaseQty * iL.prodPrice) }" />
+																			</c:forEach>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-12">
+																	<table id="itemsTotalListTable" class="table table-bordered table-hover display responsive">
+																		<tbody>
+																			<tr>
+																				<td width="80%" class="text-right">
+																					<spring:message code="so_sales_copy_jsp.total" text="Total"/>
+																				</td>
+																				<td width="20%" class="text-right">
+																					<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
+																				</td>
+																			</tr>
+																		</tbody>
+																	</table>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-md-12">
+													<div class="panel panel-default">
+														<div class="panel-heading">
+															<h1 class="panel-title"><spring:message code="so_sales_copy_jsp.remarks" text="Remarks"/></h1>
+														</div>
+														<div class="panel-body">
+															<div class="row">
+																<div class="col-md-12">
+																	<div class="form-group">
+																		<div class="col-sm-12">
+																			<form:textarea class="form-control" path="salesRemarks" rows="5"/>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-md-7 col-offset-md-5">
+												<div class="btn-toolbar">
+													<button id="cancelButton" type="reset" class="btn btn-primary pull-right"><spring:message code="common.cancel_button" text="Cancel"/></button>
+													<button id="submitButton" type="submit" class="btn btn-primary pull-right"><spring:message code="common.submit_button" text="Submit"/></button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</form:form>
+							</div>
+						</div>
+					</c:when>
+					
 				</c:choose>
 			</div>
 		</div>

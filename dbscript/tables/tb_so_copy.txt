@@ -5,6 +5,8 @@ CREATE TABLE `tb_so_copy` (
   `so_id` 				int(11) 		NOT NULL,
   `store_id` 			int(11) 		DEFAULT '0',
   `so_code` 			varchar(45) 	DEFAULT NULL,
+  `so_copy_code`		varchar(45)		DEFAULT NULL,
+  `so_copy_desc`		varchar(45)		DEFAULT NULL,
   `so_created` 			datetime 		DEFAULT NULL,
   `shipping_date` 		datetime 		DEFAULT NULL,
   `customer_type` 		varchar(45) 	DEFAULT NULL,

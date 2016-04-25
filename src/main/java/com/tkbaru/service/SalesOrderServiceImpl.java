@@ -10,6 +10,7 @@ import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.SalesOrderDAO;
 import com.tkbaru.model.Customer;
 import com.tkbaru.model.SalesOrder;
+import com.tkbaru.model.SalesOrderCopy;
 
 @Service
 public class SalesOrderServiceImpl implements SalesOrderService {
@@ -67,6 +68,20 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 	public void editSalesOrder(SalesOrder so) {
 		
 		salesOrderDAO.editSalesOrder(so);		
+	}
+
+	@Override
+	@Transactional
+	public void addSalesOrderCopy(SalesOrderCopy cp) {
+		
+		salesOrderDAO.addSalesOrderCopy(cp);		
+	}
+
+	@Override
+	@Transactional
+	public void editSalesOrderCopy(SalesOrderCopy cp) {
+		
+		salesOrderDAO.editSalesOrderCopy(cp);		
 	}
 
 	@Override
