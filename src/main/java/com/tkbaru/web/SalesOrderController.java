@@ -663,8 +663,6 @@ public class SalesOrderController {
 		
 		cp.setItemsList(list);
 		
-		salesOrderManager.addSalesOrderCopy(cp);
-		
 		model.addAttribute("salesOrderCopyForm", cp);
 		model.addAttribute("productListDDL", productManager.getAllProduct());
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
@@ -699,6 +697,9 @@ public class SalesOrderController {
 		for (SalesOrderCopyItems item : salesOrderCopyForm.getItemsList()) {
 			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {
 				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}
+			if (item.getProductEntity() != null && item.getProductEntity().getProductId() != null) {
+				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
 			}
 		}
 		
@@ -761,8 +762,6 @@ public class SalesOrderController {
 
 		salesOrderCopyForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		salesOrderCopyForm.setUpdatedDate(new Date());
-
-		List<SalesOrderCopyItems> newList = new ArrayList<SalesOrderCopyItems>();
 		
 		for (SalesOrderCopyItems items : salesOrderCopyForm.getItemsList()) {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
@@ -781,10 +780,8 @@ public class SalesOrderController {
 			if (items.getSalesOrderCopyEntity() == null) {
 				items.setSalesOrderCopyEntity(salesOrderCopyForm);
 			}
-			newList.add(items);
 		}
 
-		salesOrderCopyForm.setItemsList(newList);
 		
 		if (salesOrderCopyForm.getCustomerEntity().getCustomerId() == null) {
 			salesOrderCopyForm.setCustomerEntity(null);

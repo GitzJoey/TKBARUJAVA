@@ -154,7 +154,7 @@
 							    		<input id="searchSalesCode" class="form-control" type="text" name="searchSalesCode" placeholder="Enter Sales Code" >
 									</div>
 									<div class="col-md-8">
-										<a id="searchTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="" text="Search"/></a>
+										<a id="searchTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-search fa-fw"></span>&nbsp;<spring:message code="common.search_button" text="Search"/></a>
 									</div>
 								</div>
 								<br />
@@ -175,7 +175,7 @@
 								    	<input id="searchSalesCode" class="form-control" type="text" name="searchSalesCode" placeholder="Enter Sales Code" value="${ searchString }">
 									</div>
 									<div class="col-md-8">
-										<a id="searchTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="" text="Search"/></a>
+										<a id="searchTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-search fa-fw"></span>&nbsp;<spring:message code="common.search_button" text="Search"/></a>
 									</div>
 								</div>
 								<br />
@@ -183,8 +183,8 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="10%"><spring:message code="so_sales_copy_jsp.table.header.sales_code" text="Sales Code"/></th>
-											<th width="5%"><spring:message code="so_sales_copy_jsp.table.header.sales_copy_count" text="Copy Count"/></th>
+											<th width="80%"><spring:message code="so_sales_copy_jsp.table.header.sales_code" text="Sales Code"/></th>
+											<th width="15%"><spring:message code="so_sales_copy_jsp.table.header.sales_copy_count" text="Copy Count"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -199,8 +199,8 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="makeCopySelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.make_copy_button" text="Make Copy"/></a>
-								<a id="viewSelection" class="btn btn-sm btn-primary" data-parent="#accordion" href="#collapseThree" ><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.view_button" text="View"/></a>
+								<a id="makeCopySelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-copy fa-fw"></span>&nbsp;<spring:message code="common.make_copy_button" text="Make Copy"/></a>
+								<a id="viewSelection" class="btn btn-sm btn-primary" data-parent="#accordion" href="#collapseThree" ><span class="fa fa-eye fa-fw"></span>&nbsp;<spring:message code="common.view_button" text="View"/></a>
 							</div>
 						</div>
 					</c:when>
@@ -208,17 +208,10 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.detail_copy" text="Detail Copy"/>
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="panel panel-primary">
-									<div class="panel-heading">
-										<h1 class="panel-title">
-											<span class="fa fa-search fa-fw"></span>&nbsp;<spring:message code="so_sales_copy_jsp.detail_copy" text="Detail Copy"/>
-										</h1>
-									</div>
-								</div>
 								<div class="panel-body">
 									<input type="hidden" id="hidden_salesCode" value="${ salesCopyViewList.salesCode }"/>
 					           		<c:forEach items="${ salesCopyViewList.soCopyList }" var="x">
@@ -358,23 +351,23 @@
 																						</thead>
 																						<tbody>
 																							<c:set var="total" value="${0}" />
-																							<c:forEach items="${ i.itemsList }" var="y" varStatus="yx">
+																							<c:forEach items="${ x.itemsList }" var="y">
 																								<tr>
 																									<td style="vertical-align: middle;">
-																										<spring:message code="${ i.itemsList[yx.index].productEntity.productName }" text="${ i.itemsList[yx.index].productEntity.productName }"></spring:message>
+																										<c:out value="${ y.productEntity.productName }"/>
 																									</td>
 																									<td class="text-right">
-																										<c:out value="${ i.itemsList[yx.index].prodQuantity }"></c:out>
+																										<c:out value="${ y.prodQuantity }"></c:out>
 																									</td>
 																									<td class="text-right">
-																										<spring:message code="${ i.itemsList[yx.index].unitCodeLookup.lookupValue }" text="${ i.itemsList[yx.index].unitCodeLookup.lookupValue }"></spring:message>
+																										<spring:message code="${ y.unitCodeLookup.i18nLookupValue }" text="${ y.unitCodeLookup.lookupValue }"></spring:message>
 																									</td>
 																									<td style="vertical-align: middle;"  class="text-right">
-																										<c:out value="${ i.itemsList[yx.index].toBaseQty }"></c:out>
+																										<c:out value="${ y.prodPrice }"></c:out>
 																									</td>
-																									<td style="vertical-align: middle;"  class="text-right">
-																										<c:set var="total" value="${ (i.itemsList[yx.index].toBaseQty * i.itemsList[yx.index].prodQuantity) }" />
-																										<fmt:formatNumber type="number" pattern="##,###.00" value="${ total }"></fmt:formatNumber>
+																									<td style="vertical-align: middle;"  class="text-right">																										
+																										<c:set var="total" value="${ total + (y.toBaseQty * y.prodQuantity) }" />
+																										<fmt:formatNumber type="number" pattern="##,###.00" value="${ (y.toBaseQty * y.prodQuantity) }"></fmt:formatNumber>
 																									</td>
 																								</tr>
 																							</c:forEach>
@@ -426,7 +419,7 @@
 										</div>
 									</c:forEach>
 								</div>
-					    		<button id="cancelButton" type="reset" class="btn btn-primary"><span class="fa fa-back"></span><spring:message code="common.back_button" text="Back"/></button>								
+					    		<button id="cancelButton" type="reset" class="btn btn-primary"><span class="fa fa-arrow-left"></span>&nbsp;<spring:message code="common.back_button" text="Back"/></button>								
 							</div>
 						</div>
 					</c:when>
@@ -434,7 +427,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-code-fork fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
+									<span class="fa fa-copy fa-fw fa-2x"></span>&nbsp;<spring:message code="so_sales_copy_jsp.subtitle" text="Sales Copy"/>
 								</h1>
 							</div>
 							<div class="panel-body">
