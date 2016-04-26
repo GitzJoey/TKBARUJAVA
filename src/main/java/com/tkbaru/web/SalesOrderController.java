@@ -589,6 +589,7 @@ public class SalesOrderController {
 
 		model.addAttribute("SalesCopyList", soList);
 		
+		model.addAttribute("searchString", salesCode);
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -602,13 +603,10 @@ public class SalesOrderController {
 	public String salesCopyViewSearch(Locale locale, Model model, @PathVariable int salesId) {
 		logger.info("[salesCopyViewSearch] " + "salesId = " + salesId);
 		
-		List<SalesOrder> soList = new ArrayList<SalesOrder>();
 		SalesOrder so = salesOrderManager.getSalesOrderById(salesId);
 		
-		soList.add(so);
-		model.addAttribute("salesCopyViewList", soList);
+		model.addAttribute("salesCopyViewList", so);
  
-		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_VIEW);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -618,11 +616,11 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_SALESCOPY;
 	}
 
-	@RequestMapping(value="/salescopy/{selectedId}", method = RequestMethod.GET)
-	public String salesCopySelectedSales(Locale locale, Model model, @PathVariable int selectedId) {
-		logger.info("[salesCopySelectedSales] " + "selectedId: " + selectedId);
+	@RequestMapping(value="/salescopy/{salesId}", method = RequestMethod.GET)
+	public String salesCopySelectedSales(Locale locale, Model model, @PathVariable int salesId) {
+		logger.info("[salesCopySelectedSales] " + "salesId: " + salesId);
 		
-		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+		SalesOrder so = salesOrderManager.getSalesOrderById(salesId);
 		
 		SalesOrderCopy cp = new SalesOrderCopy();
 
@@ -656,7 +654,6 @@ public class SalesOrderController {
 			si.setProdPrice(it.getProdPrice());
 			si.setProdQuantity(it.getProdQuantity());
 			si.setProductEntity(it.getProductEntity());
-			si.setSalesOrderCopyItemsId(it.getItemsId());
 			si.setToBaseQty(it.getToBaseQty());
 			si.setToBaseValue(it.getToBaseValue());
 			si.setUnitCodeLookup(it.getUnitCodeLookup());
@@ -670,6 +667,7 @@ public class SalesOrderController {
 		
 		model.addAttribute("salesOrderCopyForm", cp);
 		model.addAttribute("productListDDL", productManager.getAllProduct());
+		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -680,15 +678,19 @@ public class SalesOrderController {
 		return Constants.JSPPAGE_SO_SALESCOPY;
 	}
 
-	@RequestMapping(value = "/salescopy/{salesId}/additems/{productORstocksId}", method = RequestMethod.POST)
-	public String salesCopyAddItems(Locale locale, Model model, @ModelAttribute("salesOrderCopyForm") SalesOrderCopy salesOrderCopyForm, @PathVariable int salesId, @PathVariable int productORstocksId) {
-		logger.info("[salesOrderCopyAddItems] " + "salesId: " + salesId + ", productORstocksId: " + productORstocksId);
+	@RequestMapping(value = "/salescopy/{salesId}/additems/{productId}", method = RequestMethod.POST)
+	public String salesCopyAddItems(Locale locale, 
+									Model model, 
+									@ModelAttribute("salesOrderCopyForm") SalesOrderCopy salesOrderCopyForm, 
+									@PathVariable int salesId, 
+									@PathVariable int productId) {
+		logger.info("[salesOrderCopyAddItems] " + "salesId: " + salesId + ", productId: " + productId);
 
 		salesOrderCopyForm.setSalesStatusLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesStatusLookup().getLookupKey()));
 		salesOrderCopyForm.setSalesTypeLookup(lookupManager.getLookupByKey(salesOrderCopyForm.getSalesTypeLookup().getLookupKey()));
 
 		SalesOrderCopyItems i = new SalesOrderCopyItems();
-		i.setProductEntity(productManager.getProductById(productORstocksId));
+		i.setProductEntity(productManager.getProductById(productId));
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		
@@ -706,7 +708,6 @@ public class SalesOrderController {
 
 		model.addAttribute("salesOrderCopyForm", salesOrderCopyForm);
 		model.addAttribute("productListDDL", productManager.getAllProduct());
-			
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		
@@ -744,6 +745,7 @@ public class SalesOrderController {
 	
 		model.addAttribute("salesOrderCopyForm", salesOrderCopyForm);
 		model.addAttribute("productListDDL", productManager.getAllProduct());
+		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -773,6 +775,10 @@ public class SalesOrderController {
 			}
 			items.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 			items.setUpdatedDate(new Date());
+			
+			if (items.getSalesOrderCopyEntity() == null) {
+				items.setSalesOrderCopyEntity(salesOrderCopyForm);
+			}
 		}
 
 		if (salesOrderCopyForm.getCustomerEntity().getCustomerId() == null) {
@@ -787,7 +793,7 @@ public class SalesOrderController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG,Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/sales/salescopy";
+		return "redirect:/sales/salescopy/view/" + salesOrderCopyForm.getSalesCode();
 	}
 	
 	@RequestMapping(value="/payment", method = RequestMethod.GET)

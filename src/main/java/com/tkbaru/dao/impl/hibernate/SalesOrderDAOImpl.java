@@ -82,7 +82,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		
-		session.persist(so);
+		session.save(so);
 	}
 
 	@Override
@@ -96,7 +96,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 
 	@Override
 	public void addSalesOrderCopy(SalesOrderCopy cp) {
-		logger.info("[addSalesOrder] " + "");
+		logger.info("[addSalesOrderCopy] " + "");
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		
@@ -105,7 +105,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 
 	@Override
 	public void editSalesOrderCopy(SalesOrderCopy cp) {
-		logger.info("[editSalesOrder] " + "");
+		logger.info("[editSalesOrderCopy] " + "");
 
 		Session session = this.sessionFactory.getCurrentSession();
 		

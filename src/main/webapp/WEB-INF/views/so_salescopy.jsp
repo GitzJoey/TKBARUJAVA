@@ -78,7 +78,13 @@
 			});
 		
 			$('#cancelButton').click(function() {
-		    	window.location.href = ctxpath + "/sales/salescopy";
+				if ($('#hidden_salesCode').size() != 0) {
+					window.location.href = ctxpath + "/sales/salescopy/view/" + $('#hidden_salesCode').val();	
+				} else if ($('#inputSalesCode').size() != 0) {
+					window.location.href = ctxpath + "/sales/salescopy/view/" + $('#inputSalesCode').val(); 
+				} else {
+					window.location.href = ctxpath + "/sales/salescopy";
+				}
 			});
 			
 			$('#addProdButton, #removeProdButton').click(function() {
@@ -166,7 +172,7 @@
 								<br />
 								<div class="row">
 									<div class="col-md-4">
-								    	<input id="searchSalesCode" class="form-control" type="text" name="searchSalesCode" placeholder="Enter Sales Code" >
+								    	<input id="searchSalesCode" class="form-control" type="text" name="searchSalesCode" placeholder="Enter Sales Code" value="${ searchString }">
 									</div>
 									<div class="col-md-8">
 										<a id="searchTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="" text="Search"/></a>
@@ -213,8 +219,9 @@
 										</h1>
 									</div>
 								</div>
-								<c:forEach items="${ salesCopyViewList  }" var="i" varStatus="status">
-					           		<c:forEach items="${ i.soCopyList }" var="x">
+								<div class="panel-body">
+									<input type="hidden" id="hidden_salesCode" value="${ salesCopyViewList.salesCode }"/>
+					           		<c:forEach items="${ salesCopyViewList.soCopyList }" var="x">
 					           			<div class="panel panel-default">
 					           				<div class="panel-heading">
 								                <h4 class="panel-title">
@@ -310,7 +317,14 @@
 																				<div class="col-md-7">
 																					<div class="form-group">
 																						<label for="inputCustomerName" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.customer_name" text="Customer Name"/></label>
-																						<label class="col-sm-4 control-label"><c:out value="${ x.customerEntity.customerName }"></c:out></label>
+																						<label class="col-sm-4 control-label">
+																							<c:if test="${ x.customerTypeLookup.lookupKey == 'L022_WIN' }">
+																								<c:out value="${ x.walkInCustDetail }"></c:out>
+																							</c:if>
+																							<c:if test="${ x.customerTypeLookup.lookupKey == 'L022_R' }">
+																								<c:out value="${ x.customerEntity.customerName }"></c:out>
+																							</c:if>
+																						</label>
 																					</div>
 																				</div>
 																				<div class="col-md-5">
@@ -411,8 +425,8 @@
 											</div>
 										</div>
 									</c:forEach>
-								</c:forEach>
-					    		<button id="cancelButton" type="reset" class="btn btn-primary"><spring:message code="common.back_button" text="Back"/></button>								
+								</div>
+					    		<button id="cancelButton" type="reset" class="btn btn-primary"><span class="fa fa-back"></span><spring:message code="common.back_button" text="Back"/></button>								
 							</div>
 						</div>
 					</c:when>
@@ -434,7 +448,7 @@
 															<div class="form-group">
 																<label for="inputSalesOrderCopyCode" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_order_copy_code" text="Sales Order Copy Code"/></label>
 																<div class="col-sm-5">
-																 	<form:input type="text" class="form-control" id="inputsalesOrderCopyCode" name="inputsalesOrderCopyCode" path="salesOrderCopyCode" readonly="false"></form:input>
+																 	<form:input type="text" class="form-control" id="inputsalesOrderCopyCode" name="inputsalesOrderCopyCode" path="salesOrderCopyCode" readonly="true"></form:input>
 																</div>
 															</div>
 															<div class="form-group">
@@ -464,14 +478,18 @@
 																	<form:hidden id="inputHiddenSalesId" path="salesOrderEntity.salesId"/>
 																	<form:hidden path="createdBy"/>
 																	<form:hidden path="createdDate"/>
-																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="false"></form:input>
+																	<form:input type="text" class="form-control" id="inputSalesCode" name="inputSalesCode" path="salesCode" placeholder="Enter Sales Code" readonly="true"></form:input>
 																</div>
 															</div>
 															<div class="form-group">
 																<label for="inputSalesType" class="col-sm-2 control-label"><spring:message code="so_sales_copy_jsp.sales_type" text="Sales Type"/></label>
 																<div class="col-sm-8">
-																 <form:hidden path="salesTypeLookup.lookupKey"/>
-																 <form:input type="text" class="form-control" id="inputSalesType" name="inputSalesType" path="salesTypeLookup.lookupValue" readonly="true"></form:input>
+															   		<form:select class="form-control" path="salesTypeLookup.lookupKey">
+																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																		<c:forEach items="${ soTypeDDL }" var="i">
+																			<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }" text="${ i.lookupValue }"></spring:message></form:option>
+																		</c:forEach>
+																	</form:select>
 																</div>
 															</div>
 														</div>
@@ -486,7 +504,7 @@
 																<label for="inputSalesStatus" class="col-sm-3 control-label"><spring:message code="so_sales_copy_jsp.status" text="Status"/></label>
 																<div class="col-sm-9">
 																    <form:hidden path="salesStatusLookup.lookupKey"/>
-																	<label id="inputPOStatus" class="control-label"><spring:message code="${ salesOrderCopyForm.salesStatusLookup.i18nLookupValue }" text="${ salesOrderCopyForm.salesStatusLookup.lookupValue }"></spring:message></label>
+																	<label id="inputSalesStatus" class="control-label"><spring:message code="${ salesOrderCopyForm.salesStatusLookup.i18nLookupValue }" text="${ salesOrderCopyForm.salesStatusLookup.lookupValue }"></spring:message></label>
 																</div>
 															</div>
 														</div>
@@ -519,7 +537,7 @@
 																			<form:hidden path="customerEntity.customerId"/>
 																			<form:hidden path="customerTypeLookup.lookupKey"/>
 																			<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
-																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Walk In Customer" disabled="false"></form:input>
+																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Walk In Customer" disabled="true"></form:input>
 																			</c:if>
 																			<c:if test="${ salesOrderCopyForm.customerTypeLookup.lookupKey == 'L022_R' }">
 																				<form:input type="text" class="form-control" id="inputCustomerId" name="inputCustomerId" path="customerEntity.customerName" placeholder="Search Customer" disabled="true"></form:input>
@@ -530,7 +548,7 @@
 																		<div class="form-group">
 																			<label for="inputWalkInCustomerDetail" class="col-sm-2 control-label">&nbsp;</label>
 																			<div class="col-sm-10">
-																				<form:textarea class="form-control" path="walkInCustDetail" rows="3" readonly="false"/>
+																				<form:textarea class="form-control" path="walkInCustDetail" rows="3"/>
 																			</div>
 																		</div>
 																	</c:if>

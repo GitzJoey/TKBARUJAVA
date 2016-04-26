@@ -134,6 +134,14 @@ public class SalesOrderCopyItems implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
+	public SalesOrderCopy getSalesOrderCopyEntity() {
+		return salesOrderCopyEntity;
+	}
+
+	public void setSalesOrderCopyEntity(SalesOrderCopy salesOrderCopyEntity) {
+		this.salesOrderCopyEntity = salesOrderCopyEntity;
+	}
+
 	public Product getProductEntity() {
 		return productEntity;
 	}
@@ -163,8 +171,9 @@ public class SalesOrderCopyItems implements Serializable {
 		return "SalesOrderCopyItems [salesOrderCopyItemsId=" + salesOrderCopyItemsId + ", prodQuantity=" + prodQuantity
 				+ ", prodPrice=" + prodPrice + ", toBaseValue=" + toBaseValue + ", toBaseQty=" + toBaseQty
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", productEntity=" + "productEntity" + ", unitCodeLookup="
-				+ "unitCodeLookup" + ", baseUnitCodeLookup=" + "baseUnitCodeLookup" + "]";
-	}	
-	
+				+ ", updatedDate=" + updatedDate + ", salesOrderCopyEntity=" + "salesOrderCopyEntity" + ", productEntity="
+				+ "productEntity" + ", unitCodeLookup=" + "unitCodeLookup" + ", baseUnitCodeLookup=" + "baseUnitCodeLookup"
+				+ "]";
+	}
+
 }
