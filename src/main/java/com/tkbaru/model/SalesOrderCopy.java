@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -57,7 +58,7 @@ public class SalesOrderCopy implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 
-	@OneToMany(mappedBy="salesOrderCopyEntity")
+	@OneToMany(mappedBy="salesOrderCopyEntity", cascade=CascadeType.ALL)
 	private List<SalesOrderCopyItems> itemsList;
 
 	@ManyToOne

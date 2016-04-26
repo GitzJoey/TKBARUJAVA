@@ -100,16 +100,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		
 		Session session = this.sessionFactory.getCurrentSession();
 		
-		session.persist(cp);
-	}
-
-	@Override
-	public void editSalesOrderCopy(SalesOrderCopy cp) {
-		logger.info("[editSalesOrderCopy] " + "");
-
-		Session session = this.sessionFactory.getCurrentSession();
-		
-		session.update(cp);
+		session.saveOrUpdate(cp);
 	}
 
 	@Override

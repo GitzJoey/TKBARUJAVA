@@ -47,7 +47,7 @@ public class SalesOrderCopyItems implements Serializable {
 	private Date updatedDate;
 
 	@ManyToOne
-	@JoinColumn(name="so_copy_id", nullable=false)
+	@JoinColumn(name="so_copy_id")
 	private SalesOrderCopy salesOrderCopyEntity;
 
 	@ManyToOne

@@ -13,7 +13,6 @@ public interface SalesOrderDAO {
 	public void addSalesOrder(SalesOrder so);
 	public void editSalesOrder(SalesOrder so);
 	public void addSalesOrderCopy(SalesOrderCopy cp);
-	public void editSalesOrderCopy(SalesOrderCopy cp);
 	public void deleteSalesOrder(int selectedId);
 
 	public boolean isExistingSalesCode(String salesCode);

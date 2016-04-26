@@ -649,21 +649,21 @@ public class SalesOrderController {
 			SalesOrderCopyItems si = new SalesOrderCopyItems();
 
 			si.setBaseUnitCodeLookup(it.getBaseUnitCodeLookup()); 
-			si.setCreatedBy(it.getCreatedBy());
-			si.setCreatedDate(it.getCreatedDate());
 			si.setProdPrice(it.getProdPrice());
 			si.setProdQuantity(it.getProdQuantity());
 			si.setProductEntity(it.getProductEntity());
 			si.setToBaseQty(it.getToBaseQty());
 			si.setToBaseValue(it.getToBaseValue());
 			si.setUnitCodeLookup(it.getUnitCodeLookup());
-			si.setUpdatedBy(it.getUpdatedBy());
-			si.setUpdatedDate(it.getUpdatedDate());
-						
+			si.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			si.setCreatedDate(new Date());
+			si.setSalesOrderCopyEntity(cp);
 			list.add(si);
 		}
 		
 		cp.setItemsList(list);
+		
+		salesOrderManager.addSalesOrderCopy(cp);
 		
 		model.addAttribute("salesOrderCopyForm", cp);
 		model.addAttribute("productListDDL", productManager.getAllProduct());
@@ -762,6 +762,8 @@ public class SalesOrderController {
 		salesOrderCopyForm.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
 		salesOrderCopyForm.setUpdatedDate(new Date());
 
+		List<SalesOrderCopyItems> newList = new ArrayList<SalesOrderCopyItems>();
+		
 		for (SalesOrderCopyItems items : salesOrderCopyForm.getItemsList()) {
 			items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
 			for (ProductUnit productUnit : items.getProductEntity().getProductUnit()) {
@@ -779,8 +781,11 @@ public class SalesOrderController {
 			if (items.getSalesOrderCopyEntity() == null) {
 				items.setSalesOrderCopyEntity(salesOrderCopyForm);
 			}
+			newList.add(items);
 		}
 
+		salesOrderCopyForm.setItemsList(newList);
+		
 		if (salesOrderCopyForm.getCustomerEntity().getCustomerId() == null) {
 			salesOrderCopyForm.setCustomerEntity(null);
 		}
