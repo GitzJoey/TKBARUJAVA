@@ -33,6 +33,7 @@ import com.tkbaru.model.Customer;
 import com.tkbaru.model.Items;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Payment;
+import com.tkbaru.model.Price;
 import com.tkbaru.model.ProductUnit;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.model.SalesOrderCopy;
@@ -45,6 +46,7 @@ import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.SearchService;
 import com.tkbaru.service.StocksService;
+import com.tkbaru.service.TruckVendorService;
 
 import net.sf.jasperreports.engine.JRDataSource;
 import net.sf.jasperreports.engine.JRException;
@@ -74,6 +76,9 @@ public class SalesOrderController {
 	
 	@Autowired
 	StocksService stocksManager;
+
+	@Autowired
+	TruckVendorService truckVendorManager;
 	
 	@Autowired
 	ReportService reportManager;
@@ -110,7 +115,8 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -133,6 +139,7 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
@@ -166,7 +173,8 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));		
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
 		} else {
@@ -196,7 +204,8 @@ public class SalesOrderController {
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
 		model.addAttribute("searchQuery", searchQuery);
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
 		} else {
@@ -224,7 +233,8 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
 		} else {
@@ -264,7 +274,10 @@ public class SalesOrderController {
 			item.setCreatedDate(new Date());
 			item.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			if (!loginContext.getSoList().get(tabId).getCustomerTypeLookup().getLookupKey().equals("L022_WIN")) {
-				item.setProdPrice(s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId()).getPrice().longValue());
+				Price p = s.getLatestPrice(loginContext.getSoList().get(tabId).getCustomerEntity().getPriceLevelEntity().getPriceLevelId());
+				if (p != null) {
+					item.setProdPrice(p.getPrice().longValue());
+				}
 			}			
 		}		
 		
@@ -276,13 +289,20 @@ public class SalesOrderController {
 
 		loginContext.getSoList().get(tabId).getItemsList().add(item);
 		
+		for (Items i:loginContext.getSoList().get(tabId).getItemsList()) {
+			if (i.getProductEntity().getProductId() != null) {
+				i.setProductEntity(productManager.getProductById(i.getProductEntity().getProductId()));
+			}
+		}
+		
 		loginContextSession.setSoList(loginContext.getSoList());
 
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
 		} else {
@@ -319,7 +339,8 @@ public class SalesOrderController {
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
 		model.addAttribute("soStatusDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_STATUS));
-
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
+		
 		if (loginContext.getSoList().get(tabId).getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());		
 		} else {
@@ -397,6 +418,7 @@ public class SalesOrderController {
 		model.addAttribute("activeTab", tabId);
 		model.addAttribute("soTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_SO_TYPE));
 		model.addAttribute("custTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_CUSTOMER_TYPE));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE,Constants.PAGEMODE_ADD);
@@ -453,13 +475,22 @@ public class SalesOrderController {
 		reviseSalesForm.setSalesTypeLookup(lookupManager.getLookupByKey(reviseSalesForm.getSalesTypeLookup().getLookupKey()));
 
 		Items i = new Items();
-		i.setProductEntity(productManager.getProductById(productORstocksId));
+		if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			Stocks s = stocksManager.getStocksById(productORstocksId);
+			i.setProductEntity(s.getProductEntity());
+		} else {
+			i.setProductEntity(productManager.getProductById(productORstocksId));
+		}
+		
 		i.setCreatedDate(new Date());
 		i.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 		reviseSalesForm.getItemsList().add(i);
 		
 		for (Items item : reviseSalesForm.getItemsList()) {
-			if (reviseSalesForm.getSalesTypeLookup().equals("L022_S")) {
+			if (item.getProductEntity() != null && item.getProductEntity().getProductId() != null) {
+				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
+			}
+			if (reviseSalesForm.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 				item.setStocksEntity(stocksManager.getStocksById(productORstocksId));
 			}
 			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {

@@ -223,7 +223,7 @@ public class Deliver {
 				+ ", truckPlate=" + truckPlate + ", createdBy=" + createdBy + ", createdDate=" + createdDate
 				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup
 				+ ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", deliverStoreEntity=" + deliverStoreEntity
-				+ ", deliverItemsEntity=" + deliverItemsEntity + ", truckVendorEntity=" + truckVendorEntity + "]";
+				+ ", deliverItemsEntity=" + "deliverItemsEntity" + ", truckVendorEntity=" + truckVendorEntity + "]";
 	}
 
 }

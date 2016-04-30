@@ -211,6 +211,15 @@
 																</div>
 															</div>
 														</div>
+														<div class="col-md-5">
+															<div class="form-group">
+																<label for="inputTruckVendor" class="col-sm-2 control-label"><spring:message code="so_revise_jsp.truck_vendor" text="Truck Vendor"></spring:message></label>
+																<div class="col-sm-8">
+																	<form:hidden path="truckVendorEntity.vendorTruckId" />
+																	<form:input type="text" class="form-control" path="truckVendorEntity.vendorTruckName" readonly="true" />
+																</div>
+															</div>
+														</div>
 													</div>
 												</div>
 											</div>
@@ -271,9 +280,10 @@
 															<div class="row">
 																<div class="col-md-11">
 																<div class="form-group" style="padding-left: 2%">
+																	<c:out value="${ productListDDL }"/>
 																	<select id="productSelect" class="form-control" data-parsley-required="true" data-parsley-trigger="change">
 																		<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-																		<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_SVC' }">
+																		<c:if test="${ reviseSalesForm.salesTypeLookup.lookupKey == 'L015_S' }">
 																			<c:forEach items="${ stocksListDDL }" var="sddl">
 																				<option value="${ sddl.stocksId }">${ sddl.productEntity.productName }</option>
 																			</c:forEach>

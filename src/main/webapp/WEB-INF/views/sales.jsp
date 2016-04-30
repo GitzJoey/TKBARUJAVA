@@ -320,6 +320,25 @@
 																		</div>
 																	</div>
 																</div>
+																<div class="col-md-5">
+																	<div class="form-group">
+																		<label for="inputTruckVendor" class="col-sm-3 control-label"><spring:message code="sales_jsp.truck_vendor" text="Truck Vendor"></spring:message></label>
+																		<div class="col-sm-9">
+																			<c:choose>
+																				<c:when test="${ loginContext.soList[soIdx.index].salesStatusLookup.lookupKey == 'L013_WA' }">
+																			        <form:hidden path="soList[${ soIdx.index }].truckVendorEntity.vendorTruckId"/>
+																			    	<form:input type="text" class="form-control" id="truckVendorId_${ soIdx.index }" path="soList[${ soIdx.index }].truckVendorEntity.vendorTruckName" readonly="true"></form:input>																				
+																				</c:when>
+																				<c:otherwise>
+																					<form:select class="form-control" id="inputTruckVendor_${ soIdx.index }" path="soList[${ soIdx.index }].truckVendorEntity.vendorTruckId" disabled="${ loginContext.soList[soIdx.index].salesStatusLookup.lookupKey == 'L013_WA' }">
+																						<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																						<form:options items="${ truckVendorDDL }" itemValue="vendorTruckId" itemLabel="vendorTruckName" />
+																					</form:select>
+																				</c:otherwise>
+																			</c:choose>
+																		</div>
+																	</div>
+																</div>
 															</div>
 														</div>
 													</div>

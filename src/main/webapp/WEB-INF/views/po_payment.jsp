@@ -237,7 +237,13 @@
 																	</div>
 																	<div class="col-md-5">
 																		<div class="form-group">
-																			<div class="col-sm-9"></div>
+																			<div class="form-group">
+																				<label for="inputTruckVendor" class="col-sm-2 control-label"><spring:message code="po_payment_jsp.truck_vendor" text="Truck Vendor"></spring:message></label>
+																				<div class="col-sm-8">
+																					<form:hidden path="truckVendorEntity.vendorTruckId" />
+																					<form:input type="text" class="form-control" path="truckVendorEntity.vendorTruckName" readonly="true" />
+																				</div>
+																			</div>
 																		</div>
 																	</div>
 																</div>

@@ -288,6 +288,8 @@ public class WarehouseDashboardController {
 			d.setDeliverStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			d.setDeliverItemsEntity(i);
 			
+			d.setTruckVendorEntity(selectedSoObject.getTruckVendorEntity());
+			
 			dl.add(d);
 			i.setDeliverList(dl);
 		}
@@ -300,6 +302,7 @@ public class WarehouseDashboardController {
 		warehouseDashboard.setSalesOrderList(soList);
 		
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
+		model.addAttribute("truckVendorSelectionDDL", truckVendorManager.getAllTruckVendor());
 		model.addAttribute("selectedSoObject", selectedSoObject);
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));

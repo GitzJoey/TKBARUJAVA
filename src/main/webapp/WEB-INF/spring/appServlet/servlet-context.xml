@@ -41,6 +41,7 @@
 				<beans:value>/WEB-INF/spring/i18n/warehousedashboard</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/product</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/login</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/truck_vendor</beans:value>
 			</beans:list>
         </beans:property>
         <beans:property name="defaultEncoding" value="UTF-8" />

@@ -116,8 +116,12 @@
 			
 			if($('#inputDeliverDate').size() > 0) {
 				$('#inputDeliverDate').parsley().on('field:success', function() {
-					console.log('ok');
 					$('#deliverDateHidden input[type="hidden"]').val($('#inputDeliverDate').val());
+				});				
+			}
+			if($('#inputTruckPlate').size() > 0) {
+				$('#inputTruckPlate').parsley().on('field:success', function() {
+					$('#truckPlateHidden input[type="hidden"]').val($('#inputTruckPlate').val());
 				});				
 			}
 		});
@@ -366,11 +370,23 @@
 											<div class="form-group">
 												<label for="inputTruckVendor" class="col-sm-2 control-label">Truck Vendor</label>
 												<div class="col-sm-5">
+													<div id="truckVendorHidden">
+														<c:forEach items="${ selectedSoObject.itemsList }" var="iL" varStatus="itIdx">
+															<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].truckVendorEntity.vendorTruckId"/>
+														</c:forEach>
+													</div>
+													<input id="inputTruckVendor" class="form-control" readonly="readonly" value="${ selectedSoObject.itemsList[0].deliverList[0].truckVendorEntity.vendorTruckName }"/>
 												</div>
 											</div>
 											<div class="form-group">
 												<label for="inputTruckPlate" class="col-sm-2 control-label">Truck Plate</label>
 												<div class="col-sm-5">
+													<div id="truckPlateHidden">
+														<c:forEach items="${ selectedSoObject.itemsList }" var="iL" varStatus="itIdx">
+															<form:hidden path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].truckPlate"/>
+														</c:forEach>
+													</div>
+													<input id="inputTruckPlate" class="form-control" data-parsley-required="true"/>
 												</div>
 											</div>											
 											<div class="col-md-7 col-offset-md-5">
