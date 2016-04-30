@@ -363,6 +363,16 @@
 													<input id="inputDeliverDate" class="form-control" data-parsley-required="true" data-parsley-trigger="change"/>
 												</div>
 											</div>
+											<div class="form-group">
+												<label for="inputTruckVendor" class="col-sm-2 control-label">Truck Vendor</label>
+												<div class="col-sm-5">
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputTruckPlate" class="col-sm-2 control-label">Truck Plate</label>
+												<div class="col-sm-5">
+												</div>
+											</div>											
 											<div class="col-md-7 col-offset-md-5">
 												<div class="btn-toolbar">
 													<button id="cancelButton" type="button" class="btn btn-primary pull-right">Cancel</button>
@@ -453,6 +463,23 @@
 												<label for="inputReceiptDate" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.receipt_date" text="Receipt Date"/></label>
 												<div class="col-sm-5">
 													<form:input id="inputReceiptDate" class="form-control" path="receipt.receiptDate" data-parsley-required="true" data-parsley-trigger="change"/>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputTruckVendor" class="col-sm-2 control-label">Truck Vendor</label>
+												<div class="col-sm-5">
+													<form:select class="form-control" path="receipt.truckVendorEntity.vendorTruckId" data-parsley-required="true" data-parsley-trigger="change">
+														<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+														<c:forEach items="${ truckVendorSelectionDDL }" var="i">
+															<form:option value="${ i.vendorTruckId }"><c:out value="${ i.vendorTruckName }"/></form:option>
+														</c:forEach>
+													</form:select>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="inputTruckPlate" class="col-sm-2 control-label">Truck Plate</label>
+												<div class="col-sm-5">
+													<form:input id="inputTruckPlate" class="form-control" path="receipt.truckPlate" data-parsley-required="true"/>
 												</div>
 											</div>
 											<div class="col-md-7 col-offset-md-5">

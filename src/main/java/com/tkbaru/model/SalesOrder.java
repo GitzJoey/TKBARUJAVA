@@ -79,6 +79,11 @@ public class SalesOrder implements Serializable {
 	private Customer customerEntity;
 
 	@ManyToOne
+	@JoinColumn(name="vendor_truck_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	private TruckVendor truckVendorEntity;
+
+	@ManyToOne
 	@JoinColumn(name="store_id")
 	private Store salesStoreEntity;
 
@@ -181,6 +186,12 @@ public class SalesOrder implements Serializable {
 	public void setCustomerEntity(Customer customerEntity) {
 		this.customerEntity = customerEntity;
 	}
+	public TruckVendor getTruckVendorEntity() {
+		return truckVendorEntity;
+	}
+	public void setTruckVendorEntity(TruckVendor truckVendorEntity) {
+		this.truckVendorEntity = truckVendorEntity;
+	}
 	public Store getSalesStoreEntity() {
 		return salesStoreEntity;
 	}
@@ -229,10 +240,11 @@ public class SalesOrder implements Serializable {
 				+ ", shippingDate=" + shippingDate + ", walkInCustDetail=" + walkInCustDetail + ", salesRemarks="
 				+ salesRemarks + ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy="
 				+ updatedBy + ", updatedDate=" + updatedDate + ", itemsList=" + itemsList + ", paymentList="
-				+ paymentList + ", customerEntity=" + customerEntity + ", salesStoreEntity=" + salesStoreEntity
-				+ ", salesStatusLookup=" + "salesStatusLookup" + ", salesTypeLookup=" + "salesTypeLookup"
-				+ ", customerTypeLookup=" + "customerTypeLookup" + ", soCopyList=" + soCopyList + ", customerSearchQuery="
-				+ customerSearchQuery + ", customerSearchResults=" + customerSearchResults + "]";
+				+ paymentList + ", customerEntity=" + customerEntity + ", truckVendorEntity=" + truckVendorEntity
+				+ ", salesStoreEntity=" + salesStoreEntity + ", salesStatusLookup=" + salesStatusLookup
+				+ ", salesTypeLookup=" + salesTypeLookup + ", customerTypeLookup=" + customerTypeLookup
+				+ ", soCopyList=" + soCopyList + ", customerSearchQuery=" + customerSearchQuery
+				+ ", customerSearchResults=" + customerSearchResults + "]";
 	}
 
 }

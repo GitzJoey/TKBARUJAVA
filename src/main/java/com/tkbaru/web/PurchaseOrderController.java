@@ -43,6 +43,7 @@ import com.tkbaru.service.ProductService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SupplierService;
+import com.tkbaru.service.TruckVendorService;
 import com.tkbaru.service.WarehouseService;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -71,6 +72,9 @@ public class PurchaseOrderController {
 	@Autowired
 	BankService bankManager;
 
+	@Autowired
+	TruckVendorService truckVendorManager;
+	
 	@Autowired
 	private LoginContext loginContextSession;
 	
@@ -126,6 +130,7 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -169,6 +174,7 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -206,6 +212,7 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -256,6 +263,7 @@ public class PurchaseOrderController {
 		for (PurchaseOrder poVar : loginContext.getPoList()) {
 			poVar.setSupplierEntity(supplierManager.getSupplierById(poVar.getSupplierEntity().getSupplierId()));
 			poVar.setWarehouseEntity(warehouseManager.getWarehouseById(poVar.getWarehouseEntity().getWarehouseId()));
+			poVar.setTruckVendorEntity(truckVendorManager.getTruckVendorById(poVar.getTruckVendorEntity().getVendorTruckId()));
 			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoTypeLookup().getLookupKey()));
 			for (Items items : poVar.getItemsList()) {
 				items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));
@@ -271,6 +279,7 @@ public class PurchaseOrderController {
 		model.addAttribute("supplierSelectionDDL", supplierManager.getAllSupplier());
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
 		model.addAttribute("poTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PO_TYPE));
+		model.addAttribute("truckVendorDDL", truckVendorManager.getAllTruckVendor());
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
@@ -349,8 +358,10 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/revise/{poId}/additems/{productId}", method = RequestMethod.POST)
-	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseForm") PurchaseOrder reviseForm,
-			@PathVariable int poId, @PathVariable int productId) {
+	public String reviseAddItems(Locale locale, Model model, 
+									@ModelAttribute("reviseForm") PurchaseOrder reviseForm,
+									@PathVariable int poId, 
+									@PathVariable int productId) {
 		logger.info("[reviseAddItems] " + "poId: " + poId + ", productId: " + productId);
 
 		Items i = new Items();
@@ -370,8 +381,11 @@ public class PurchaseOrderController {
 			if (item.getProductEntity().getProductId() != null) {
 				item.setProductEntity(productManager.getProductById(item.getProductEntity().getProductId()));
 			}
-			if (item.getUnitCodeLookup() != null) {
+			if (item.getUnitCodeLookup() != null && item.getUnitCodeLookup().getLookupKey() != null) {
 				item.setUnitCodeLookup(lookupManager.getLookupByKey(item.getUnitCodeLookup().getLookupKey()));
+			}
+			if (item.getBaseUnitCodeLookup() != null && item.getBaseUnitCodeLookup().getLookupKey() != null) {
+				item.setBaseUnitCodeLookup(lookupManager.getLookupByKey(item.getBaseUnitCodeLookup().getLookupKey()));
 			}
 		}
 

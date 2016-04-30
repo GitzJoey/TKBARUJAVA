@@ -38,6 +38,8 @@ public class Receipt {
 	private Long tare;
 	@Column(name="to_base_tare")
 	private Long baseTare;
+	@Column(name="truck_plate")
+	private String truckPlate;
 	@Column(name="created_by")
 	private Integer createdBy;
 	@Column(name="created_date")
@@ -60,6 +62,10 @@ public class Receipt {
 	@ManyToOne
 	@JoinColumn(name="store_id")
 	private Store receiptStoreEntity;
+
+	@ManyToOne
+	@JoinColumn(name="vendor_truck_id")
+	private TruckVendor truckVendorEntity;
 
 	public Integer getReceiptId() {
 		return receiptId;
@@ -125,6 +131,14 @@ public class Receipt {
 		this.baseTare = baseTare;
 	}
 
+	public String getTruckPlate() {
+		return truckPlate;
+	}
+
+	public void setTruckPlate(String truckPlate) {
+		this.truckPlate = truckPlate;
+	}
+
 	public Integer getCreatedBy() {
 		return createdBy;
 	}
@@ -181,13 +195,22 @@ public class Receipt {
 		this.receiptStoreEntity = receiptStoreEntity;
 	}
 
+	public TruckVendor getTruckVendorEntity() {
+		return truckVendorEntity;
+	}
+
+	public void setTruckVendorEntity(TruckVendor truckVendorEntity) {
+		this.truckVendorEntity = truckVendorEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Receipt [receiptId=" + receiptId + ", receiptDate=" + receiptDate + ", bruto=" + bruto + ", baseBruto="
 				+ baseBruto + ", net=" + net + ", baseNet=" + baseNet + ", tare=" + tare + ", baseTare=" + baseTare
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", unitCodeLookup=" + "unitCodeLookup" + ", baseUnitCodeLookup="
-				+ "baseUnitCodeLookup" + ", receiptStoreEntity=" + "receiptStoreEntity" + "]";
+				+ ", truckPlate=" + truckPlate + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup
+				+ ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", receiptStoreEntity=" + receiptStoreEntity
+				+ ", truckVendorEntity=" + truckVendorEntity + "]";
 	}
 
 }

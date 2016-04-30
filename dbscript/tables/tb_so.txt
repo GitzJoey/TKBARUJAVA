@@ -6,6 +6,7 @@ CREATE TABLE `tb_so` (
   `so_code` 			varchar(45) 	DEFAULT NULL,
   `so_created` 			datetime 		DEFAULT NULL,
   `shipping_date` 		datetime 		DEFAULT NULL,
+  `vendor_truck_id`		int(11) 		DEFAULT NULL,
   `customer_type` 		varchar(45) 	DEFAULT NULL,
   `customer_id` 		int(11) 		DEFAULT NULL,
   `walk_in_cust_det` 	varchar(255) 	DEFAULT NULL,

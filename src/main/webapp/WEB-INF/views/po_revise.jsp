@@ -248,7 +248,11 @@
 																</div>
 																<div class="col-md-5">
 																	<div class="form-group">
-																		<div class="col-sm-9"></div>
+																		<label for="inputTruckVendor" class="col-sm-2 control-label"><spring:message code="po_revise_jsp.truck_vendor" text="Truck Vendor"></spring:message></label>
+																		<div class="col-sm-8">
+																			<form:hidden path="truckVendorEntity.vendorTruckId" />
+																			<form:input type="text" class="form-control" path="truckVendorEntity.vendorTruckName" readonly="true" />
+																		</div>
 																	</div>
 																</div>
 															</div>
@@ -331,6 +335,9 @@
 																					<td style="vertical-align: middle;">
 																					    <form:hidden path="itemsList[${ iLIdx.index }].itemsId" /> 
 																						<form:hidden path="itemsList[${ iLIdx.index }].productEntity.productId" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].baseUnitCodeLookup.lookupKey" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdBy" />
+																						<form:hidden path="itemsList[${ iLIdx.index }].createdDate" />
 																						<c:out value="${iL.productEntity.productName }"></c:out>
 																					</td>
 																					<td class="center-align">

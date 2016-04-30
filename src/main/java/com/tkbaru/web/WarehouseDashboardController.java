@@ -45,6 +45,7 @@ import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SalesOrderService;
 import com.tkbaru.service.StocksOutService;
 import com.tkbaru.service.StocksService;
+import com.tkbaru.service.TruckVendorService;
 import com.tkbaru.service.WarehouseService;
 
 import net.sf.jasperreports.engine.JRDataSource;
@@ -73,6 +74,9 @@ public class WarehouseDashboardController {
 	@Autowired
 	LookupService lookupManager;
 
+	@Autowired
+	TruckVendorService truckVendorManager;
+	
 	@Autowired
 	private LoginContext loginContextSession;
 	
@@ -178,6 +182,7 @@ public class WarehouseDashboardController {
 		warehouseDashboard.setPurchaseOrderList(poList);
 
 		model.addAttribute("warehouseSelectionDDL", warehouseManager.getAllWarehouse());
+		model.addAttribute("truckVendorSelectionDDL", truckVendorManager.getAllTruckVendor());
 		model.addAttribute("warehouseDashboard", warehouseDashboard);
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);

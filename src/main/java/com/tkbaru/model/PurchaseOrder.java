@@ -21,6 +21,8 @@ import javax.persistence.TemporalType;
 
 import org.apache.commons.collections.FactoryUtils;
 import org.apache.commons.collections.list.LazyList;
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
 
 @Entity
 @Table(name="tb_po")
@@ -72,6 +74,11 @@ public class PurchaseOrder implements Serializable {
 	@JoinColumn(name="supplier_id")
 	private Supplier supplierEntity;
 
+	@ManyToOne
+	@JoinColumn(name="vendor_truck_id")
+	@NotFound(action=NotFoundAction.IGNORE)
+	private TruckVendor truckVendorEntity;
+	
 	@ManyToOne
 	@JoinColumn(name="store_id")
 	private Store poStoreEntity;
@@ -184,6 +191,14 @@ public class PurchaseOrder implements Serializable {
 		this.supplierEntity = supplierEntity;
 	}
 
+	public TruckVendor getTruckVendorEntity() {
+		return truckVendorEntity;
+	}
+
+	public void setTruckVendorEntity(TruckVendor truckVendorEntity) {
+		this.truckVendorEntity = truckVendorEntity;
+	}
+
 	public Store getPoStoreEntity() {
 		return poStoreEntity;
 	}
@@ -222,8 +237,8 @@ public class PurchaseOrder implements Serializable {
 				+ ", shippingDate=" + shippingDate + ", poRemarks=" + poRemarks + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
 				+ ", itemsList=" + itemsList + ", paymentList=" + paymentList + ", supplierEntity=" + supplierEntity
-				+ ", poStoreEntity=" + poStoreEntity + ", warehouseEntity=" + warehouseEntity + ", poStatusLookup="
-				+ poStatusLookup + ", poTypeLookup=" + poTypeLookup + "]";
+				+ ", truckVendorEntity=" + truckVendorEntity + ", poStoreEntity=" + poStoreEntity + ", warehouseEntity="
+				+ warehouseEntity + ", poStatusLookup=" + poStatusLookup + ", poTypeLookup=" + poTypeLookup + "]";
 	}
 
 }

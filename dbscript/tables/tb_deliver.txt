@@ -13,6 +13,8 @@ CREATE TABLE `tb_deliver` (
   `to_base_net`		bigint(11) 	DEFAULT '0',
   `tare` 			bigint(11) 	DEFAULT '0',
   `to_base_tare` 	bigint(11) 	DEFAULT '0',
+  `vendor_truck_id`	int(11) 	DEFAULT NULL,
+  `truck_plate`		varchar(15) DEFAULT NULL,
   `created_by` 		int(11) 	DEFAULT NULL,
   `created_date` 	datetime 	DEFAULT NULL,
   `updated_by` 		int(11) 	DEFAULT NULL,

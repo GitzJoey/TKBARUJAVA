@@ -262,7 +262,7 @@
 																		    	<form:input type="text" class="form-control" id="warehouse_${ poIdx.index }" path="poList[${ poIdx.index }].warehouseEntity.warehouseName" readonly="true"></form:input>
 																		    </c:when>
 																		    <c:otherwise>
-																				<form:select class="form-control warehouseId" id="inputWarehouseId${ poIdx.index }" path="poList[${ poIdx.index }].warehouseEntity.warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatusLookup == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
+																				<form:select class="form-control" id="inputWarehouseId${ poIdx.index }" path="poList[${ poIdx.index }].warehouseEntity.warehouseId" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ warehouseSelectionDDL }" itemValue="warehouseId" itemLabel="warehouseName" />
 																				</form:select>
@@ -273,8 +273,21 @@
 															</div>
 															<div class="col-md-5">
 																<div class="form-group">
-																	<label for="inputEmpty" class="col-sm-3 control-label"></label>
-																	<div class="col-sm-9"></div>
+																	<label for="inputTruckVendor" class="col-sm-3 control-label"><spring:message code="po_jsp.truck_vendor" text="Truck Vendor"></spring:message></label>
+																	<div class="col-sm-9">
+																		<c:choose>
+																			<c:when test="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }">
+																		        <form:hidden path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckId"/>
+																		    	<form:input type="text" class="form-control" id="truckVendorId_${ poIdx.index }" path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckName" readonly="true"></form:input>																				
+																			</c:when>
+																			<c:otherwise>
+																				<form:select class="form-control" id="inputTruckVendor${ poIdx.index }" path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckId" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
+																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
+																					<form:options items="${ truckVendorDDL }" itemValue="vendorTruckId" itemLabel="vendorTruckName" />
+																				</form:select>
+																			</c:otherwise>
+																		</c:choose>
+																	</div>
 																</div>
 															</div>
 														</div>

@@ -39,6 +39,8 @@ public class Deliver {
 	private Long tare;
 	@Column(name="to_base_tare")
 	private Long baseTare;
+	@Column(name="truck_plate")
+	private String truckPlate;
 	@Column(name="created_by")
 	private Integer createdBy;
 	@Column(name="created_date")
@@ -65,6 +67,10 @@ public class Deliver {
 	@ManyToOne
 	@JoinColumn(name="items_id")
 	private Items deliverItemsEntity;
+
+	@ManyToOne
+	@JoinColumn(name="vendor_truck_id")
+	private TruckVendor truckVendorEntity;
 
 	public Integer getDeliverId() {
 		return deliverId;
@@ -128,6 +134,14 @@ public class Deliver {
 
 	public void setBaseTare(Long baseTare) {
 		this.baseTare = baseTare;
+	}
+
+	public String getTruckPlate() {
+		return truckPlate;
+	}
+
+	public void setTruckPlate(String truckPlate) {
+		this.truckPlate = truckPlate;
 	}
 
 	public Integer getCreatedBy() {
@@ -194,14 +208,22 @@ public class Deliver {
 		this.deliverItemsEntity = deliverItemsEntity;
 	}
 
+	public TruckVendor getTruckVendorEntity() {
+		return truckVendorEntity;
+	}
+
+	public void setTruckVendorEntity(TruckVendor truckVendorEntity) {
+		this.truckVendorEntity = truckVendorEntity;
+	}
+
 	@Override
 	public String toString() {
 		return "Deliver [deliverId=" + deliverId + ", deliverDate=" + deliverDate + ", bruto=" + bruto + ", baseBruto="
 				+ baseBruto + ", net=" + net + ", baseNet=" + baseNet + ", tare=" + tare + ", baseTare=" + baseTare
-				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup + ", baseUnitCodeLookup="
-				+ baseUnitCodeLookup + ", deliverStoreEntity=" + "deliverStoreEntity" + ", deliverItemsEntity="
-				+ "deliverItemsEntity" + "]";
+				+ ", truckPlate=" + truckPlate + ", createdBy=" + createdBy + ", createdDate=" + createdDate
+				+ ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate + ", unitCodeLookup=" + unitCodeLookup
+				+ ", baseUnitCodeLookup=" + baseUnitCodeLookup + ", deliverStoreEntity=" + deliverStoreEntity
+				+ ", deliverItemsEntity=" + deliverItemsEntity + ", truckVendorEntity=" + truckVendorEntity + "]";
 	}
 
 }
