@@ -1,4 +1,6 @@
-CREATE TABLE `tkbaru`.`tb_vendor_truck` (
+DROP TABLE IF EXISTS `tb_vendor_truck`;
+
+CREATE TABLE `tb_vendor_truck` (
   `vendor_truck_id` INT NOT NULL AUTO_INCREMENT,
   `vendor_truck_name` VARCHAR(45) NULL,
   `vendor_truck_address` VARCHAR(45) NULL,
@@ -7,4 +9,5 @@ CREATE TABLE `tkbaru`.`tb_vendor_truck` (
   `status` VARCHAR(45) NULL,
   `remarks` VARCHAR(45) NULL,
   `bank` VARCHAR(45) NULL,
-  PRIMARY KEY (`vendor_truck_id`));
+  PRIMARY KEY (`vendor_truck_id`)
+);

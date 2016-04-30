@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 
 			$('#cancelButton').click(function() {				
-				window.location.href = ctxpath + "/admin/store";
+				window.location.href = ctxpath + "/master/vendor/trucking";
 			});
 				
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -83,7 +83,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-ge fa-fw"></span><spring:message code="vendor_truck_jsp.vendor_truck_list" text="Truck Vendor List"/>
+									<span class="fa fa-ge fa-fw"></span>&nbsp;<spring:message code="vendor_truck_jsp.vendor_truck_list" text="Truck Vendor List"/>
 								</h1>
 							</div>
 							<div class="panel-body">
@@ -91,14 +91,11 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="5%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_id" text="Vendor Truck Id"/></th>
 											<th width="20%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_name" text="Vendor Truck Name"/></th>
-											<th width="20%"><spring:message code="vendor_truck_jsp.table.header.Vendor_truck_address" text="Vendor Truck Address"/></th>
-											<th width="10%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_npwp_number" text="NPWP Number"/></th>
-											<th width="10%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_account" text="account"/></th>
-											<th width="10%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_bank" text="bank"/></th>
+											<th width="25%"><spring:message code="vendor_truck_jsp.table.header.Vendor_truck_address" text="Vendor Truck Address"/></th>
+											<th width="15%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_bank" text="bank"/></th>
 											<th width="10%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_status" text="status"/></th>
-											<th width="10%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_remarks" text="remarks"/></th>
+											<th width="25%"><spring:message code="vendor_truck_jsp.table.header.vendor_truck_remarks" text="remarks"/></th>
 										</tr>
 									</thead>
 									<tbody>
@@ -106,7 +103,6 @@
 											<c:forEach items="${ TruckVendorList }" var="i" varStatus="storeIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.vendorTruckId }"/>" type="checkbox" value="<c:out value="${ i.vendorTruckId }"/>"/></td>
-													<td><c:out value="${ i.vendorTruckId }"></c:out></td>
 													<td>
 														<strong><c:out value="${ i.vendorTruckName }"></c:out></strong><br/><br/>
 													</td>
@@ -114,13 +110,8 @@
 														<c:out value="${ i.vendorTruckAddress }"></c:out>
 													</td>
 													<td>
-														<c:out value="${ i.npwpNumber }"/><br/>
-													</td>
-													<td>
-														<c:out value="${ i.accNum }"></c:out><br/>
-													</td>
-													<td>
 														<spring:message code="${ i.truckVendorBankLookup.localeMessageCodes }" text="${ i.truckVendorBankLookup.lookupValue }"/><br/>
+														<c:out value="${ i.accNum }"></c:out>
 													</td>
 													<td>
 														<spring:message code="${ i.truckVendorStatusLookup.localeMessageCodes }" text="${ i.truckVendorStatusLookup.lookupValue }"/><br/>
@@ -145,10 +136,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="store_jsp.add_store" text="Add Store"/>
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.add_truck_vendor" text="Add Truck Vendor"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="store_jsp.edit_store" text="Edit Store"/>
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.edit_truck_vendor" text="Edit Truck Vendor"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
@@ -175,12 +166,6 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputAccNumr" class="col-sm-2 control-label"><spring:message code="vendor_truck_jsp.table.vendor_truck_account" text="acc Number"/></label>
-										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputAccNum" name="inputAccNum" path="accNum" placeholder="accNum"></form:input>
-										</div>
-									</div>
-									<div class="form-group">
 										<label for="inputStoreStatus" class="col-sm-2 control-label"><spring:message code="vendor_truck_jsp.table.vendor_truck_bank" text="Truck Vendor Bank"/></label>
 										<div class="col-sm-3">
 											<form:select class="form-control" path="truckVendorBankLookup.lookupKey" data-parsley-required="true" data-parsley-trigger="change" placeholder="bank">
@@ -189,6 +174,12 @@
 													<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>
 												</c:forEach>
 											</form:select>
+										</div>
+									</div>
+									<div class="form-group">
+										<label for="inputAccNumr" class="col-sm-2 control-label"><spring:message code="vendor_truck_jsp.table.vendor_truck_account" text="acc Number"/></label>
+										<div class="col-sm-3">
+											<form:input type="text" class="form-control" id="inputAccNum" name="inputAccNum" path="accNum" placeholder="accNum" data-parsley-type="number"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
