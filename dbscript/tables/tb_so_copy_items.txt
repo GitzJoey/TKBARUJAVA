@@ -3,7 +3,6 @@ DROP TABLE IF EXISTS `tb_so_copy_items`;
 CREATE TABLE `tb_so_copy_items` (
   `so_copy_items_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
   `so_copy_id` 			int(11) 	NOT NULL,
-  `store_id` 			int(11) 	DEFAULT '0',
   `product_id` 			int(11) 	DEFAULT NULL,
   `quantity` 			int(11) 	DEFAULT NULL,
   `unit_code` 			varchar(45) DEFAULT NULL,

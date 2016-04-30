@@ -79,13 +79,6 @@ public class SalesOrderServiceImpl implements SalesOrderService {
 
 	@Override
 	@Transactional
-	public void editSalesOrderCopy(SalesOrderCopy cp) {
-		
-		salesOrderDAO.editSalesOrderCopy(cp);		
-	}
-
-	@Override
-	@Transactional
 	public void deleteSalesOrder(int selectedId) {
 		
 		salesOrderDAO.deleteSalesOrder(selectedId);
