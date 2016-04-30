@@ -1,0 +1,71 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>kitUtils example</title>
+    <link href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
+  </head>
+
+  <body>
+
+    <div class="container">
+      <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+          <h1 class="text-center">kitUtils 1.2.0</h1>
+          <hr />
+
+          <div class="method">
+            <h2>Device checking</h2>
+            <p><code>kitUtils.isAndroid();</code></p>
+            <p><code>kitUtils.isIOS();</code></p>
+            <p><code>kitUtils.isBlackBerry();</code></p>
+            <p><code>kitUtils.isIEMobile();</code></p>
+            <p><code>kitUtils.isOperaMini();</code></p>
+            <p><code>kitUtils.isMobileBrowser();</code></p>
+
+
+            <hr />
+
+            <h2>Internet Explorer Version</h2>
+            <p><code>kitUtils.detectIEVersion();</code> Adds the Internet Explorer version as a class on the document element.</p>
+
+            <hr />
+
+            <h2>EPiServer Iframe Check</h2>
+            <p><code>kitUtils.episerverIframeCheck();</code> Adds .episerver on the body element.</p>
+
+            <hr />
+
+            <h2>Last Child Fix</h2>
+            <p><code>kitUtils.lastChildFix();</code> Adds .last-child on all elements with :last-child. A fix for IE8.</p>
+
+            <hr />
+
+            <h2>Safe Logging</h2>
+            <p><code>kitUtils.log('My console message');</code> Logs messages and objects in browsers with console support.</p>
+            <p>You can also provide two more parameters, <code>data</code> and <code>type</code>. Both are optional</p>
+            <p><code>kitUtils.log('My console message', {foo: 'bar'}, 'info');</code></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="../kitUtils.js"></script>
+    <script>
+      $(function() {
+        kitUtils.debug = true;
+        kitUtils.detectBrowserVendor();
+        kitUtils.log('Standard log message');
+        kitUtils.log('I want to inform you', null, 'info');
+        kitUtils.log('Uh my god, BUGS!', {bugs: 'die'}, 'debug');
+        kitUtils.log('Epic fail', {bugs: 'won', server: 'dead'}, 'error');
+
+      });
+    </script>
+  </body>
+</html>
