@@ -13,28 +13,6 @@
 	</script>
 </head>
 <body>
-<nav id="sidebar" class="tuxedo-menu tuxedo-menu-fixed tuxedo-menu-slide-closing tuxedo-menu-pristine">
-  <ul>
-    <li class="menu-depth-0"><a href="#">Item 1</a></li>
-    <li class="menu-depth-0">
-      <div class="heading">Heading 2</div>
-    </li>
-    <li class="menu-depth-0"><a href="#">Item 2</a></li>
-    <li class="menu-depth-1"><a href="#">Item 2.1</a></li>
-    <li class="menu-depth-1"><a href="#">Item 2.2</a></li>
-    <li class="menu-depth-2"><a href="#">Item 2.2.1</a></li>
-    <li class="menu-depth-0"><a href="#">Item 3</a></li>
-    <li class="menu-depth-0">
-      <div class="heading">Heading 4</div>
-    </li>
-    <li class="menu-depth-0"><a href="#">Item 4</a></li>
-    <li class="menu-depth-0">
-      <div class="heading">Heading 4.1</div>
-    </li>
-    <li class="menu-depth-1"><a href="#">Item 4.1</a></li>
-  </ul>
-</nav>
-
 	<div id="wrapper" class="container-fluid">
 
 		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
@@ -70,7 +48,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								Contents<span class="tuxedo-menu-trigger">&#9776;</span>
+								Contents
 							</div>
 						</div>
 					</c:when>
