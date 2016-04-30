@@ -11,95 +11,52 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 		});
 	</script>
-	
-	
-	
 </head>
-<body  data-debug="true">
+<body>
+	<div id="wrapper" class="container-fluid">
 
-<div class="flypanels-container preload">
+		<jsp:include page="/WEB-INF/views/include/topmenu.jsp"></jsp:include>
 
-<div class="offcanvas flypanels-left">
+		<div class="row">
+			<div class="col-md-2">
+				<jsp:include page="/WEB-INF/views/include/sidemenu.jsp"></jsp:include>
+			</div>
+			<div id="content" class="col-md-10">
+				<c:if test="${ ERRORFLAG == 'ERRORFLAG_SHOW' }">
+	    			<div class="alert alert-danger alert-dismissible collapse in" role="alert">
+	  					<button type="button" class="close" data-dismiss="alert">
+	  						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+	  					</button>
+	  					<h4><strong>Warning!</strong></h4>
+	  					<br>
+	  					<c:out value="${ errorMessageText }"/>
+					</div>
+				</c:if>
+				
+				<div id="jsAlerts"></div>
 
-  <div class="panelcontent" data-panel="treemenu">
-
-    <nav class="flypanels-treemenu" role="navigation">
-
-      <ul>
-
-        <li class="haschildren">
-
-          <div> <a href="#" class="link">Node 1</a> <a href="#" class="expand">2</a></div>
-
-          <ul>
-
-            <li>
-
-              <div><a href="#" class="link">Node 1-1</a></div>
-
-            </li>
-
-            <li>
-
-              <div><a href="#" class="link">Node 1-2</a></div>
-
-            </li>
-
-          </ul>
-
-        </li>
-
-        <li class="haschildren">
-
-          <div class="link"> <a href="#" class="link">Node 2</a> <a href="#" class="expand">2</a></div>
-
-          <ul>
-
-            <li>
-
-              <div><a href="#" class="link">Node 2-1</a></div>
-
-            </li>
-
-            <li>
-
-              <div><a href="#" class="link">Node 2-2</a></div>
-
-            </li>
-
-          </ul>
-
-        </li>
-
-      </ul>
-
-    </nav>
-
-  </div>
-
-</div>
-
-</div>
-
-
-<div class="flypanels-main">
-
-  <div class="flypanels-topbar">
-
-    <a class="flypanels-button-left icon-menu" data-panel="treemenu" href="#">aaaaaaa</a>
-
-  </div>
-
-  <div class="flypanels-content">
-
-    Main content goes here
-
-  </div>
-
-</div>
-
-
-
-
+				<h1>
+					<span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="" text="Title"/>
+				</h1>
+				
+				<c:choose>
+					<c:when test="${true}">
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h1 class="panel-title">
+									<span class="fa fa-plus fa-fw fa-2x"></span><spring:message code="" text="Sub Title"/>
+								</h1>
+							</div>
+							<div class="panel-body">
+								Contents
+							</div>
+						</div>
+					</c:when>
+				</c:choose>
+			</div>
+		</div>
+		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
+	
+	</div>
 </body>
 </html>
