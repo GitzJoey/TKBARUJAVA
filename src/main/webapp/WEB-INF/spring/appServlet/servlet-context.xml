@@ -35,12 +35,13 @@
 				<beans:value>/WEB-INF/spring/i18n/store</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/truck</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/truckmtc</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/truck_vendor</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/user</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/warehouse</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/warehousedashboard</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/product</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/login</beans:value>
-        	</beans:list>
+			</beans:list>
         </beans:property>
         <beans:property name="defaultEncoding" value="UTF-8" />
     </beans:bean>

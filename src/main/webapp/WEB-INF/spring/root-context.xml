@@ -92,6 +92,7 @@
                 <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
 				<beans:value>com.tkbaru.model.SalesOrderCopy</beans:value>
 				<beans:value>com.tkbaru.model.SalesOrderCopyItems</beans:value>
+				<beans:value>com.tkbaru.model.TruckVendor</beans:value>
             </beans:list>
         </beans:property>
         <beans:property name="hibernateProperties">
@@ -136,6 +137,7 @@
                 <beans:value>com.tkbaru.model.TruckMaintenance</beans:value>
 				<beans:value>com.tkbaru.model.SalesOrderCopy</beans:value>
 				<beans:value>com.tkbaru.model.SalesOrderCopyItems</beans:value>
+				<beans:value>com.tkbaru.model.TruckVendor</beans:value>
         	</beans:list>
         </beans:property>
     </beans:bean>
@@ -221,6 +223,9 @@
     <beans:bean id="StocksOutDAO" class="com.tkbaru.dao.impl.hibernate.StocksOutDAOImpl">
     	<beans:property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
     </beans:bean>
+    <beans:bean id="TruckVendorDAO" class="com.tkbaru.dao.impl.hibernate.TruckVendorDAOImpl">
+    	<beans:property name="sessionFactory" ref="hibernateAnnotatedSessionFactory" />
+    </beans:bean>
     
     <!-- declare spring Service -->
     <beans:bean id="loginService" class="com.tkbaru.service.LoginServiceImpl">
@@ -253,6 +258,7 @@
 	<beans:bean id="ModemService" class="com.tkbaru.service.ModemServiceImpl"></beans:bean>
 	<beans:bean id="StocksOutService" class="com.tkbaru.service.StocksOutServiceImpl"></beans:bean>
 	<beans:bean id="TruckMtcService" class="com.tkbaru.service.TruckMtcServiceImpl"></beans:bean>
+	<beans:bean id="TruckVendorService" class="com.tkbaru.service.TruckVendorServiceImpl"></beans:bean>
 	<beans:bean id="SetupService" class="com.tkbaru.service.SetupServiceImpl">
 		<beans:property name="cryptoBCryptPasswordEncoderManager" ref="bCryptPasswordEncoder" />
 	</beans:bean>
