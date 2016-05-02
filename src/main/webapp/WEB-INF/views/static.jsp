@@ -19,16 +19,7 @@
 			<nav>
 				<ul class="nav nav-pills pull-right">
 					<li role="presentation">
-						<a href="${pageContext.request.contextPath}/static/index.html"><spring:message code="static_jsp.menu.home" text="Home"/></a>
-					</li>
-					<li role="presentation">
-						<a href="${pageContext.request.contextPath}/static/index.html#aboutus"><spring:message code="static_jsp.menu.about_us" text="About Us"/></a>
-					</li>
-					<li role="presentation">
-						<a href="${pageContext.request.contextPath}/static/index.html#contacts"><spring:message code="static_jsp.menu.contacts" text="Contact"/></a>
-					</li>
-					<li role="presentation">
-						<a href="${pageContext.request.contextPath}/login.html"><spring:message code="static_jsp.menu.login" text="Login"/></a>
+						<a href="${pageContext.request.contextPath}/login.html"><span class="fa fa-power-off"></span>&nbsp;<spring:message code="static_jsp.menu.login" text="Login"/></a>
 					</li>
 				</ul>
 			</nav>
@@ -51,8 +42,6 @@
 					</h4>
 				</div>
 			</div>
-			<br/>
-			<br/>
 			<br/>
 			<br/>
 			<br/>
@@ -128,25 +117,39 @@
 		<div class="row">
 			<div class="col-md-8">
 				<div class="page-header">
-				  <h1>About Us</h1>
+				  <h1><span class="fa fa-envelope"></span>&nbsp;Contacts</h1>
 				</div>
-				<p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum. Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
-				<br/>
+				<div class="well">
+					<form id="staticForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/sendform" data-parsley-validate="parsley">
+						<div class="form-group">
+							<label for="inputName" class="control-label pull-left"><spring:message code="static_jsp.name" text="Name"/></label>
+							<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Enter Name" data-parsley-required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="inputPhoneNum" class="control-label"><spring:message code="static_jsp.phone_num" text="Phone Number"/></label>
+							<input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Enter Phone Number" data-parsley-required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="inputEmail" class="control-label"><spring:message code="static_jsp.email" text="Email"/></label>
+							<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Enter Email" data-parsley-required="true"/>
+						</div>
+						<div class="form-group">
+							<label for="inputMessage" class="control-label"><spring:message code="static_jsp.message" text="Message"/></label>
+							<textarea id="inputMessage" class="form-control" rows="5"></textarea>
+						</div>
+						<div class="form-group">
+							<div class="btn-toolbar">
+								<button id="submitButton" type="submit" class="btn btn-primary"><spring:message code="common.send_button" text="Send"/></button>
+								<button id="cancelButton" type="reset" class="btn btn-primary"><spring:message code="common.cancel_button" text="Cancel"/></button>
+							</div>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div class="col-md-4">
 				<div class="row">
 					<div class="page-header">
-					  <h1><span class="typcn typcn-phone"></span>Contacts</h1>
+					  <h1><span class="fa fa-phone"></span>&nbsp;Phone</h1>
 					</div>
 					<div class="col-md-12">
 						<h4 class="pull-right"><strong>Telkomsel:</strong> +62 812-1234-1234</h4>
@@ -154,57 +157,19 @@
 						<h4 class="pull-right"><strong>XL:</strong> +62 812-1234-1234</h4>
 					</div>
 				</div>
-				<div class="row">
-					<div class="page-header">
-					  <h1><span class="typcn typcn-mail"></span>Send Email</h1>
-					</div>
-					<div class="col-md-12">
-						<form id="staticForm" role="form" class="form-horizontal" action="${pageContext.request.contextPath}/static/sendform" data-parsley-validate="parsley">
-							<div class="form-group">
-								<label for="inputName" class="control-label pull-left"><spring:message code="static_jsp.name" text="Name"/></label>
-								<input type="text" class="form-control" id="inputName" name="inputName" placeholder="Enter Name" data-parsley-required="true"/>
-							</div>
-							<div class="form-group">
-								<label for="inputPhoneNum" class="control-label"><spring:message code="static_jsp.phone_num" text="Phone Number"/></label>
-								<input type="text" class="form-control" id="inputPhoneNum" name="inputPhoneNum" placeholder="Enter Phone Number" data-parsley-required="true"/>
-							</div>
-							<div class="form-group">
-								<label for="inputEmail" class="col-md-4 control-label"><spring:message code="static_jsp.email" text="Email"/></label>
-								<input type="text" class="form-control" id="inputEmail" name="inputEmail" placeholder="Enter Email" data-parsley-required="true"/>
-							</div>
-							<div class="form-group">
-								<label for="inputMessage" class="col-md-4 control-label"><spring:message code="static_jsp.message" text="Message"/></label>
-								<textarea id="inputMessage" class="form-control" rows="5"></textarea>
-							</div>
-							<div class="col-md-12">
-								<div class="btn-toolbar">
-									<button id="cancelButton" type="reset" class="btn btn-primary"><spring:message code="common.cancel_button" text="Cancel"/></button>
-									<button id="submitButton" type="submit" class="btn btn-primary"><spring:message code="common.submit_button" text="Submit"/></button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
-				<div class="row">
-					<div class="page-header">
-					  <h1>Maps</h1>
-					</div>
-					<div class="col-md-12">
-						<img class="img-responsive img-thumbnail" alt="Maps" src="${pageContext.request.contextPath}/resources/images/dummy-maps.png"/>
-					</div>
-				</div>
-				<div class="row">
-					<div class="page-header">
-					  <h1>You</h1>
-					</div>
-					<p class="pull-right">
-						IP Address:
-						<c:out value="${ pageContext.request.remoteAddr }"/><br/>
-					</p>
-				</div>
 			</div>
 		</div>
 
+		<div class="row">
+			<div class="col-md-12">
+				<p class="pull-right">
+					IP Address: <c:out value="${ pageContext.request.remoteAddr }"/><br/>							
+				</p>
+			</div>
+		</div>
+		
+		<hr>
+		
 		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 
 	</div>

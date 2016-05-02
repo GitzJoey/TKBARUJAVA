@@ -150,7 +150,7 @@
 									<div class="form-group">
 										<label for="inputTruckVendorName" class="col-sm-2 control-label"><spring:message code="vendor_truck_jsp.table.vendor_truck_name" text="Truck Vendor Name"/></label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputTruckVendorName" name="inputTruckVendorName" path="vendorTruckName" placeholder="Truck Vendor Name" data-parsley-required="true" data-parsley-length="[6, 30]" data-parsley-trigger="keyup"></form:input>
+											<form:input type="text" class="form-control" id="inputTruckVendorName" name="inputTruckVendorName" path="vendorTruckName" placeholder="Truck Vendor Name" data-parsley-required="true" data-parsley-length="[1, 30]" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
