@@ -19,6 +19,9 @@
 			<nav>
 				<ul class="nav nav-pills pull-right">
 					<li role="presentation">
+						<a href="${pageContext.request.contextPath}/static/signup.html"><span class="fa fa-pencil"></span>&nbsp;<spring:message code="static_jsp.menu.signup" text="Sign Up"/></a>
+					</li>
+					<li role="presentation">
 						<a href="${pageContext.request.contextPath}/login.html"><span class="fa fa-power-off"></span>&nbsp;<spring:message code="static_jsp.menu.login" text="Login"/></a>
 					</li>
 				</ul>

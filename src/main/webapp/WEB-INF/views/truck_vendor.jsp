@@ -136,10 +136,10 @@
 								<h1 class="panel-title">
 									<c:choose>
 										<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
-											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.add_truck_vendor" text="Add Truck Vendor"/>
+											<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.add_vendor_truck" text="Add Truck Vendor"/>
 										</c:when>
 										<c:otherwise>
-											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.edit_truck_vendor" text="Edit Truck Vendor"/>
+											<span class="fa fa-edit fa-fw fa-2x"></span>&nbsp;<spring:message code="vendor_truck_jsp.edit_vendor_truck" text="Edit Truck Vendor"/>
 										</c:otherwise>
 									</c:choose>
 								</h1>
