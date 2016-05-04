@@ -232,8 +232,10 @@
 											<c:if test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
 												<c:set var="req" value="${ pageContext.request }" />
 												<c:set var="baseURL" value="${ req.scheme }://${ req.serverName }:${ req.serverPort }" />
-												<img class="img-responsive" width="150" height="150" src="${ baseURL }/cdn/${ productForm.imagePath }"/>
-												<form:input type="hidden" path="imagePath"></form:input>
+												<c:if test="${ not empty productForm.imagePath }">
+													<img class="img-responsive" width="150" height="150" src="${ baseURL }/cdn/${ productForm.imagePath }"/>
+												</c:if>
+												<form:hidden path="imagePath"></form:hidden>
 											</c:if>
 											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="imageBinary"></form:input>
 										</div>

@@ -2,13 +2,12 @@ package com.tkbaru.service;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 
+import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tkbaru.common.Converter;
 import com.tkbaru.common.RandomProvider;
 import com.tkbaru.dao.ProductDAO;
-import com.tkbaru.dao.impl.hibernate.ProductDAOImpl;
 import com.tkbaru.model.Product;
 
 @Service
@@ -53,25 +51,27 @@ public class ProductServiceImpl implements ProductService {
 	@Transactional
 	public void addProduct(Product product) {
 		try {
-			logger.info("[addProduct] " + "product.getImageBinary()isEmpty(): " + product.getImageBinary().isEmpty());
+			if (product.getImageBinary() != null) {
+				RandomProvider rndm = new RandomProvider(100000, 999999);
 
-			if (!product.getImageBinary().isEmpty()) {
-				RandomProvider rndm = new RandomProvider(10000, 99999);
-				Path p = Paths.get(product.getImageBinary().getOriginalFilename());
-				
-				String fileName = product.getProductName() + "-" + rndm.generateRandomInString() + "-" + p.getFileName();
+				String fileName = product.getProductName().replace(" ", "-") + "-" + 
+									rndm.generateRandomInString() + "." + 
+									FilenameUtils.getExtension(product.getImageBinary().getOriginalFilename());
 				product.getImageBinary().transferTo(new File(cdnFolder + fileName).getAbsoluteFile());
 				
 				product.setImagePath(fileName);
 				logger.info("[addProduct] " + "Adding product image: " + fileName);
+				productDAO.addProduct(product);
 			} else {
 				logger.info("[addProduct] " + "Not adding product image.");
 				productDAO.addProduct(product);
 			}
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			logger.info("[addProduct] " + "IllegalStateException: " + e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.info("[addProduct] " + "IOException: " + e.getMessage());
+		} catch (Exception e) {
+			logger.info("[addProduct] " + "Exception: " + e.getMessage());
 		}
 	}
 
@@ -80,28 +80,31 @@ public class ProductServiceImpl implements ProductService {
 	public void editProduct(Product product) {
 		try {			
 			logger.info("[editProduct] " + "product.getImagePath(): " + product.getImagePath());
-			logger.info("[editProduct] " + "product.getImageBinary()isEmpty(): " + product.getImageBinary().isEmpty());
-
-			if (product.getImagePath() != null && !product.getImageBinary().isEmpty()) {
+			logger.info("[editProduct] " + "product.getImageBinary(): " + product.getImageBinary() == null ? "null":product.getImageBinary().toString());
+			logger.info("[editProduct] " + "product.getImageBinary().isEmpty(): " + String.valueOf(product.getImageBinary().isEmpty()));
+			
+			if (product.getImagePath() != null && !product.getImageBinary().isEmpty()) {				
+				RandomProvider rndm = new RandomProvider(100000, 999999);
 				
-				
-				RandomProvider rndm = new RandomProvider(10000, 99999);
-				Path p = Paths.get(product.getImageBinary().getOriginalFilename());
-				
-				String fileName = product.getProductName().replaceAll(" ", "-") + "-" + rndm.generateRandomInString() + "-" + p.getFileName();
+				String fileName = product.getProductName().replaceAll(" ", "-") + "-" + 
+									rndm.generateRandomInString() + "." +
+									FilenameUtils.getExtension(product.getImageBinary().getOriginalFilename());
 				product.getImageBinary().transferTo(new File(cdnFolder + fileName).getAbsoluteFile());
 				
 				product.setImagePath(fileName);
 				logger.info("[editProduct] " + "Product image changed to: " + fileName);
+				productDAO.editProduct(product);
 			}
 			else {
 				logger.info("[editProduct] " + "Product image not changed.");
 				productDAO.editProduct(product);
 			}			
 		} catch (IllegalStateException e) {
-			e.printStackTrace();
+			logger.info("[editProduct] " + "IllegalStateException: " + e.getMessage());
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.info("[editProduct] " + "IOException: " + e.getMessage());
+		} catch (Exception e) {
+			logger.info("[editProduct] " + "Exception: " + e.getMessage());
 		}
 	}
 

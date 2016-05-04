@@ -103,6 +103,7 @@
 		        <beans:prop key="hibernate.use_sql_comments">false</beans:prop>
 				<beans:prop key="hibernate.hbm2ddl.auto"></beans:prop>
 				<beans:prop key="hibernate.enable_lazy_load_no_trans">true</beans:prop>
+				<beans:prop key="hibernate.id.new_generator_mappings">false</beans:prop>
             </beans:props>
         </beans:property>
         <beans:property name="packagesToScan">
