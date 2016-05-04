@@ -61,10 +61,8 @@ public class ProductServiceImpl implements ProductService {
 				
 				product.setImagePath(fileName);
 				logger.info("[addProduct] " + "Adding product image: " + fileName);
-				productDAO.addProduct(product);
 			} else {
 				logger.info("[addProduct] " + "Not adding product image.");
-				productDAO.addProduct(product);
 			}
 		} catch (IllegalStateException e) {
 			logger.info("[addProduct] " + "IllegalStateException: " + e.getMessage());
@@ -73,6 +71,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (Exception e) {
 			logger.info("[addProduct] " + "Exception: " + e.getMessage());
 		}
+		productDAO.addProduct(product);
 	}
 
 	@Override
@@ -93,11 +92,9 @@ public class ProductServiceImpl implements ProductService {
 				
 				product.setImagePath(fileName);
 				logger.info("[editProduct] " + "Product image changed to: " + fileName);
-				productDAO.editProduct(product);
 			}
 			else {
 				logger.info("[editProduct] " + "Product image not changed.");
-				productDAO.editProduct(product);
 			}			
 		} catch (IllegalStateException e) {
 			logger.info("[editProduct] " + "IllegalStateException: " + e.getMessage());
@@ -106,6 +103,7 @@ public class ProductServiceImpl implements ProductService {
 		} catch (Exception e) {
 			logger.info("[editProduct] " + "Exception: " + e.getMessage());
 		}
+		productDAO.editProduct(product);
 	}
 
 	@Override
