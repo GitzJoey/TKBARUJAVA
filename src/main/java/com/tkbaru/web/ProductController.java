@@ -146,8 +146,6 @@ public class ProductController {
 			prod.getProductUnit().add(new ProductUnit());
 		}
 		
-		String x = prod.getImageBinary().getOriginalFilename();
-		
 		model.addAttribute("productForm", prod);
 		model.addAttribute("productTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_PRODUCT_TYPE));
 		model.addAttribute("unitDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_UNIT));
