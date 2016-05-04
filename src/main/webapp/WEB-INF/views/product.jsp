@@ -230,7 +230,9 @@
 										<label for="inputImage" class="col-sm-2 control-label"><spring:message code="product_jsp.image" text="Image"/></label>
 										<div class="col-sm-6">
 											<c:if test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
-												<img class="img-responsive" width="150" height="150" src="${pageContext.request.contextPath}/resources/images/product/${productForm.imagePath}"/>
+												<c:set var="req" value="${ pageContext.request }" />
+												<c:set var="baseURL" value="${ req.scheme }://${ req.serverName }:${ req.serverPort }" />
+												<img class="img-responsive" width="150" height="150" src="${ baseURL }/cdn/${ productForm.imagePath }"/>
 												<form:input type="hidden" path="imagePath"></form:input>
 											</c:if>
 											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="imageBinary"></form:input>
