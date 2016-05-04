@@ -43,6 +43,11 @@
 				});
 			});
 
+			$('#inputImage').fileinput({
+				showUpload:false,
+				allowedFileExtensions:['jpg', 'gif', 'png']
+			});
+			
 			$('input[type="checkbox"][id^="cbxunit_"]').click(function() {
 				var selected = $(this);
 
@@ -230,14 +235,13 @@
 										<label for="inputImage" class="col-sm-2 control-label"><spring:message code="product_jsp.image" text="Image"/></label>
 										<div class="col-sm-6">
 											<c:if test="${ PAGEMODE == 'PAGEMODE_EDIT' }">
-												<c:set var="req" value="${ pageContext.request }" />
-												<c:set var="baseURL" value="${ req.scheme }://${ req.serverName }:${ req.serverPort }" />
 												<c:if test="${ not empty productForm.imagePath }">
+													<c:set var="baseURL" value="${ pageContext.request.scheme }://${ pageContext.request.serverName }:${ pageContext.request.serverPort }" />
 													<img class="img-responsive" width="150" height="150" src="${ baseURL }/cdn/${ productForm.imagePath }"/>
 												</c:if>
 												<form:hidden path="imagePath"></form:hidden>
 											</c:if>
-											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="imageBinary"></form:input>
+											<form:input type="file" class="form-control file" id="inputImage" name="inputImage" path="imageBinary" data-show-upload="false"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
