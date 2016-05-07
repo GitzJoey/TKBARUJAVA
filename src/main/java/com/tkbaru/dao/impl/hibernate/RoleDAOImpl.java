@@ -28,7 +28,7 @@ public class RoleDAOImpl implements RoleDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Role> roleList = session.createQuery("FROM Role").list();
 	
-		logger.info("Role Count: " + roleList.size());
+		logger.info("[getAllRole] " + "Role Count: " + roleList.size());
 		
 		return roleList;
 	}
@@ -46,7 +46,7 @@ public class RoleDAOImpl implements RoleDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Role loaded successfully, Role details = " + role.toString());
+        logger.info("[getRoleById] " + "Role loaded successfully, Role details = " + role.toString());
         
         return role;	
 	}
@@ -59,7 +59,7 @@ public class RoleDAOImpl implements RoleDAO {
         
         session.save(role);
         
-        logger.info("Role added successfully, Role Details = " + role.toString());		
+        logger.info("[addRole] " + "Role added successfully, Role Details = " + role.toString());		
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class RoleDAOImpl implements RoleDAO {
 	    
 		session.update(role);
 	    
-	    logger.info("Role updated successfully, Role Details = " + role.toString());			
+	    logger.info("[editRole] " + "Role updated successfully, Role Details = " + role.toString());			
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class RoleDAOImpl implements RoleDAO {
             session.delete(role);
         }
         
-        logger.info("Role deleted successfully, Role details = " + role.toString());	
+        logger.info("[deleteRole] " + "Role deleted successfully, Role details = " + role.toString());	
 	}
 	
 }

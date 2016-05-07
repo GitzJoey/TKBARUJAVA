@@ -34,7 +34,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
-		logger.info("PurchaseOrder : " + purchaseOrderList.size());
+		logger.info("[getAllPurchaseOrder] " + "PurchaseOrder : " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -52,7 +52,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 			logger.info(err.getMessage());
 		}
 
-		logger.info("PurchaseOrder loaded successfully, PurchaseOrder details = " + po.toString());
+		logger.info("[getPurchaseOrderById] " + "PurchaseOrder loaded successfully, PurchaseOrder details = " + po.toString());
 
 		return po;
 	}
@@ -95,7 +95,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder").list();
 
-		logger.info("PurchaseOrder : " + purchaseOrderList.size());
+		logger.info("[getPurchaseOrderByIds] " + "PurchaseOrder : " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -116,7 +116,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder po WHERE po.poStatusLookup.lookupKey = :status ").setString("status", status).list();
 		
-		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
+		logger.info("[getPurchaseOrderByStatus] " + "PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -128,7 +128,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<PurchaseOrder> purchaseOrderList = session.createQuery("FROM PurchaseOrder po WHERE po.warehouseEntity.warehouseId = :warehouseId AND po.poStatusLookup.lookupKey = :status ").setInteger("warehouseId", warehouseId).setString("status", status).list();
 		
-		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
+		logger.info("[getPurchaseOrderByWarehouseId] " + "PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -140,7 +140,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean exist = (long)session.createQuery("SELECT COUNT(*) FROM PurchaseOrder WHERE poCode = :poCode").setString("poCode", poCode).uniqueResult() > 0;
 		
-		logger.info("poCode " + poCode + " is exists: " + exist);
+		logger.info("[isExistingPOCode] " + "poCode " + poCode + " is exists: " + exist);
 
 		return exist;
 	}
@@ -164,7 +164,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 		List<PurchaseOrder> purchaseOrderList = q.list();
 		
-		logger.info("PurchaseOrder Count: " + purchaseOrderList.size());
+		logger.info("[getPurchaseOrderByWarehouseIdByShippingDate] " + "PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}
@@ -179,7 +179,7 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 		List<PurchaseOrder> purchaseOrderList = q.list();
 		
-		logger.info("Unfinished PurchaseOrder Count: " + purchaseOrderList.size());
+		logger.info("[getAllUnfinishedPurchaseOrder] " + "Unfinished PurchaseOrder Count: " + purchaseOrderList.size());
 
 		return purchaseOrderList;
 	}

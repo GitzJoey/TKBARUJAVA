@@ -29,7 +29,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Warehouse> whList = session.createQuery("FROM Warehouse").list();
 	
-		logger.info("Warehouse Count: " + whList.size());
+		logger.info("[getAllWarehouse] " + "Warehouse Count: " + whList.size());
 		
 		return whList;
 	}
@@ -47,7 +47,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Warehouse loaded successfully, Warehouse details = " + w.toString());
+        logger.info("[getWarehouseById] " + "Warehouse loaded successfully, Warehouse details = " + w.toString());
         
         return w;
 	}
@@ -60,7 +60,7 @@ public class WarehouseDAOImpl implements WarehouseDAO {
         
         session.persist(warehouse);
         
-        logger.info("Warehouse added successfully, Warehouse Details = " + warehouse.toString());		
+        logger.info("[addWarehouse] " + "Warehouse added successfully, Warehouse Details = " + warehouse.toString());		
 	}
 
 	@Override
@@ -71,12 +71,12 @@ public class WarehouseDAOImpl implements WarehouseDAO {
 	 
 		session.update(warehouse);
 	    
-	    logger.info("Warehouse updated successfully, Warehouse Details = " + warehouse.toString());			
+	    logger.info("[editWarehouse] " + "Warehouse updated successfully, Warehouse Details = " + warehouse.toString());			
 	}
 
 	@Override
 	public void deleteWarehouse(int selectedId) {
-		logger.info("[deleteWarehouse] " + "");
+		logger.info("[deleteWarehouse] " + "selectedId: " + selectedId);
 		
         Session session = this.sessionFactory.getCurrentSession();
         Warehouse warehouse = (Warehouse) session.load(Warehouse.class, new Integer(selectedId));
@@ -84,6 +84,6 @@ public class WarehouseDAOImpl implements WarehouseDAO {
             session.delete(warehouse);
         }
         
-        logger.info("Warehouse deleted successfully, Warehouse details = " + warehouse.toString());
+        logger.info("[deleteWarehouse] " + "Warehouse deleted successfully, Warehouse details = " + warehouse.toString());
 	}
 }

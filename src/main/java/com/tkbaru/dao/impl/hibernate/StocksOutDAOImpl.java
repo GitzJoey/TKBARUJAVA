@@ -28,7 +28,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<StocksOut> stocksList = session.createQuery("FROM StocksOut").list();
 	
-		logger.info("StocksOut retrieved: " + stocksList.size());
+		logger.info("[getAllStocksOut] " + "StocksOut retrieved: " + stocksList.size());
 		
 		return stocksList;
 	}
@@ -41,7 +41,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 		
 	     session.persist(stocks);
 	        
-        logger.info("Stock added successfully, Stock Details = " + stocks.toString());		
+        logger.info("[addStocksOut] " + "Stock added successfully, Stock Details = " + stocks.toString());		
 		
 	}
 
@@ -53,7 +53,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 		
 	     session.merge(stocks);
 	        
-	     logger.info("Stock update successfully, Stock Details = " + stocks.toString());
+	     logger.info("[updateStocksOut] " + "Stock update successfully, Stock Details = " + stocks.toString());
 		
 	}
 
@@ -74,7 +74,7 @@ public class StocksOutDAOImpl implements StocksOutDAO {
 				"INNER JOIN s.poLookup " +
 				"WHERE s.poLookup.warehouseId = :whId").setInteger("whId", warehouseId).list();
 	
-		logger.info("StocksOut in warehouseId " + warehouseId + ": " + stocksList.size());
+		logger.info("[getAllStocksByWarehouseId] " + "StocksOut in warehouseId " + warehouseId + ": " + stocksList.size());
 		
 		return stocksList;
 	}

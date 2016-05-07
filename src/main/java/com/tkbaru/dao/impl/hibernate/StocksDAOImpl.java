@@ -23,12 +23,17 @@ public class StocksDAOImpl implements StocksDAO {
     
 	@Override
 	public List<Stocks> getAllStocks() {
-		logger.info("[getAllStocks]" + "");
+		logger.info("[getAllStocks] " + "");
 		
+		List<Stocks> stocksList = null;
 		Session session = this.sessionFactory.getCurrentSession();
-		List<Stocks> stocksList = session.createQuery("FROM Stocks").list();
+		stocksList = session.createQuery("FROM Stocks").list();
 	
-		logger.info("Stocks retrieved: " + stocksList.size());
+		if (stocksList != null) {
+			logger.info("[getAllStocks] " + "Stocks retrieved: " + stocksList.size());
+		} else {
+			logger.info("[getAllStocks] " + "Stocks retrieved: " + "null");
+		}
 		
 		return stocksList;
 	}
@@ -41,7 +46,7 @@ public class StocksDAOImpl implements StocksDAO {
 		
 	     session.persist(stocks);
 	        
-        logger.info("Stock added successfully, Stock Details = " + stocks.toString());		
+        logger.info("[addStocks] " + "Stock added successfully, Stock Details = " + stocks.toString());		
 		
 	}
 
@@ -53,7 +58,7 @@ public class StocksDAOImpl implements StocksDAO {
 		
 	     session.merge(stocks);
 	        
-	     logger.info("Stock update successfully, Stock Details = " + stocks.toString());
+	     logger.info("[updateStocks] " + "Stock update successfully, Stock Details = " + stocks.toString());
 		
 	}
 
@@ -75,7 +80,7 @@ public class StocksDAOImpl implements StocksDAO {
 				"INNER JOIN s.poLookup " +
 				"WHERE s.poLookup.warehouseId = :whId").setInteger("whId", warehouseId).list();
 	
-		logger.info("Stocks in warehouseId " + warehouseId + ": " + stocksList.size());
+		logger.info("[getAllStocksByWarehouseId] " + "Stocks in warehouseId " + warehouseId + ": " + stocksList.size());
 		
 		return stocksList;
 	}
@@ -102,7 +107,7 @@ public class StocksDAOImpl implements StocksDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Stocks loaded successfully, Stocks details = " + s.toString());
+        logger.info("[getStocksById] " + "Stocks loaded successfully, Stocks details = " + s.toString());
 
 		return s;
 	}

@@ -25,14 +25,14 @@ public class TruckVendorDAOImpl implements TruckVendorDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<TruckVendor> TruckVendorList = session.createQuery("FROM TruckVendor").list();
 	
-		logger.info("TruckVendor Count: " + TruckVendorList.size());
+		logger.info("[getAllTruckVendor] " + "TruckVendor Count: " + TruckVendorList.size());
 		
 		return TruckVendorList;
 	}
 
 	@Override
 	public TruckVendor getTruckVendorById(int selectedId) {
-		logger.info("[getTruckVendorById] " + "");
+		logger.info("[getTruckVendorById] " + "selectedId: " + selectedId);
         
 		Session session = this.sessionFactory.getCurrentSession();
 		TruckVendor tv = null;
@@ -43,7 +43,7 @@ public class TruckVendorDAOImpl implements TruckVendorDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("TruckVendor loaded successfully, TruckVendor details = " + tv.toString());
+        logger.info("[getTruckVendorById] " + "TruckVendor loaded successfully, TruckVendor details = " + tv.toString());
         
         return tv;
 	}
@@ -67,12 +67,12 @@ public class TruckVendorDAOImpl implements TruckVendorDAO {
 	    
 		session.update(truckVendor);
 	    
-	    logger.info("TruckVendor updated successfully, TruckVendor Details = " + truckVendor.toString());			
+	    logger.info("[editTruckVendor] " + "TruckVendor updated successfully, TruckVendor Details = " + truckVendor.toString());			
 	}
 
 	@Override
 	public void deleteTruckVendor(int selectedId) {
-		logger.info("[deleteTruckVendor] " + "");
+		logger.info("[deleteTruckVendor] " + "selectedId: " + selectedId);
 		
         Session session = this.sessionFactory.getCurrentSession();
         
@@ -82,7 +82,7 @@ public class TruckVendorDAOImpl implements TruckVendorDAO {
             session.delete(truckVendor);
         }
         
-        logger.info("TruckVendor deleted successfully, TruckVendor details = " + truckVendor.toString());
+        logger.info("[deleteTruckVendor] " + "TruckVendor deleted successfully, TruckVendor details = " + truckVendor.toString());
 	}
 
 }

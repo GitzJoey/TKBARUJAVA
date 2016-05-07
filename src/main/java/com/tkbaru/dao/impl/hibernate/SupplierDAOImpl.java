@@ -33,7 +33,7 @@ public class SupplierDAOImpl implements SupplierDAO {
         	logger.info(err.getMessage());
         }
 
-        logger.info("Supplier loaded successfully, Supplier details = " + supp.toString());
+        logger.info("[getSupplierById] " + "Supplier loaded successfully, Supplier details = " + supp.toString());
 
         return supp;	
 	}
@@ -63,7 +63,7 @@ public class SupplierDAOImpl implements SupplierDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Supplier> supplierList = session.createQuery("FROM Supplier").list();
 
-		logger.info("Supplier : " + supplierList.size());
+		logger.info("[getAllSupplier] " + "Supplier : " + supplierList.size());
 
 		return supplierList;
 	}

@@ -35,7 +35,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("PriceLevel loaded successfully, PriceLevel details = " + priceLevel.toString());
+        logger.info("[loadPriceLevelById] " + "PriceLevel loaded successfully, PriceLevel details = " + priceLevel.toString());
                 
         return priceLevel;	
 	}
@@ -46,7 +46,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<PriceLevel> priceLevelList = session.createQuery("FROM PriceLevel").list();
 	
-		logger.info("PriceLevel Size: " + priceLevelList.size());
+		logger.info("[loadAllPriceLevel] " + "PriceLevel Size: " + priceLevelList.size());
 		
 		return priceLevelList;
 	}
@@ -58,7 +58,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 
         session.persist(priceLevel);
         
-        logger.info("Price Level added successfully, Price Level Details = " + priceLevel.toString());
+        logger.info("[addPriceLevel] " + "Price Level added successfully, Price Level Details = " + priceLevel.toString());
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
 	    
 		session.update(priceLevel);
 		
-	    logger.info("Price Level updated successfully, Price Level Details = " + priceLevel.toString());
+	    logger.info("[editPriceLevel] " + "Price Level updated successfully, Price Level Details = " + priceLevel.toString());
 	}
 	
 	@Override
@@ -84,7 +84,7 @@ public class PriceLevelDAOImpl implements PriceLevelDAO {
             session.delete(priceLevel);
         }
         
-        logger.info("Price Level deleted successfully, Price Level details = " + priceLevel.toString());
+        logger.info("[deletePriceLevel] " + "Price Level deleted successfully, Price Level details = " + priceLevel.toString());
 	}
 
 }
