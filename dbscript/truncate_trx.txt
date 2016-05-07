@@ -1,0 +1,15 @@
+truncate table tb_po;
+truncate table tb_po_items;
+truncate table tb_po_payment;
+truncate table tb_so;
+truncate table tb_so_items;
+truncate table tb_so_payment;
+truncate table tb_so_copy;
+truncate table tb_so_copy_items;
+truncate table tb_items;
+truncate table tb_items_deliver;
+truncate table tb_items_receipt;
+truncate table tb_payment;
+truncate table tb_price;
+truncate table tb_receipt;
+truncate table tb_deliver;
