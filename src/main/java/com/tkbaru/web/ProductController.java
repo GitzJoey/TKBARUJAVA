@@ -24,7 +24,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.ProductService;
 
 @Controller
-@RequestMapping("/product")
+@RequestMapping("/master/product")
 public class ProductController {
 	private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
 

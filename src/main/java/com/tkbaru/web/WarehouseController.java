@@ -27,7 +27,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.WarehouseService;
 
 @Controller
-@RequestMapping("/warehouse")
+@RequestMapping("/master/warehouse")
 public class WarehouseController {
 	private static final Logger logger = LoggerFactory.getLogger(WarehouseController.class);
 

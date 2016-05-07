@@ -25,15 +25,15 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/warehouse/edit/" + id);
+						$('#editTableSelection').attr("href", ctxpath + "/master/warehouse/edit/" + id);
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/warehouse/delete/" + id);	
+						$('#deleteTableSelection').attr("href", ctxpath + "/master/warehouse/delete/" + id);	
 					}
 				}				
 			});
 
 			$('#cancelButton').click(function() {
-				window.location.href = ctxpath + "/warehouse";
+				window.location.href = ctxpath + "/master/warehouse";
 			});
 			
 			$('#whListTable').DataTable();
@@ -104,7 +104,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/warehouse/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/master/warehouse/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
@@ -125,7 +125,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/warehouse/save" data-parsley-validate="parsley"> 
+								<form:form id="warehouseForm" role="form" class="form-horizontal" modelAttribute="warehouseForm" action="${pageContext.request.contextPath}/master/warehouse/save" data-parsley-validate="parsley"> 
 									<form:hidden path="warehouseId"/>
 									<div class="form-group">
 										<label for="inputWarehouseName" class="col-sm-2 control-label"><spring:message code="warehouse_jsp.warehouse_name" text="Warehouse Name"/></label>

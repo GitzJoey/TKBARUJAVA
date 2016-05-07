@@ -27,7 +27,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PriceLevelService;
 
 @Controller
-@RequestMapping("/customer")
+@RequestMapping("/master/customer")
 public class CustomerController {
 	private static final Logger logger = LoggerFactory.getLogger(CustomerController.class);
 	

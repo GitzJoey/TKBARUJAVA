@@ -30,7 +30,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/supplier")
+@RequestMapping("/master/supplier")
 public class SupplierController {
 	private static final Logger logger = LoggerFactory.getLogger(SupplierController.class);
 	

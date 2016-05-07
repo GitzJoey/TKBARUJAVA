@@ -28,7 +28,7 @@
 				var button = $(this).attr('id');				
 				
 				if (button == 'addBankAcc') {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/addbank/0");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/bank/addbank/0");
 				} else {
 					var bankAccId = 0;
 					$('input[id^="cbx_bankAccId_"]').each(function(index, item) { 
@@ -41,9 +41,9 @@
 					if (!hasSelected) { jsAlert('Please select at least 1 bank account'); return false;}
 					else {
 						if (button == 'editBankAcc') {
-							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/editbank/" + bankAccId);
+							$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/bank/editbank/" + bankAccId);
 						} else {
-							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/deletebank/" + bankAccId);
+							$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/bank/deletebank/" + bankAccId);
 						}
 					}
 				}				
@@ -54,7 +54,7 @@
 				var bankAccButtonMode = $('#bankAccButtonMode').val();
 				
 				if (button == 'saveBankAcc') {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/save");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/save");
 				} else if (button == 'discardBankAcc') {
 					var index = $('#currentBankAccIndexSelected').val();
 					
@@ -64,7 +64,7 @@
 					$('input[name="bankAccList[' + index + '].bankAccStatusLookup.lookupKey"]').val($('#fromDB_bankStatus').val());
 					$('input[name="bankAccList[' + index + '].bankRemarks"]').val($('#fromDB_bankRemarks').val());					
 					
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/discard");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/bank/" + bankAccButtonMode + "/" + $('#currentBankAccIdSelected').val() + "/discard");
 				}
 			});
 			
@@ -87,7 +87,7 @@
 				var personIdx = '';
 				
 				if (button == 'addPerson') {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/addperson/0");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/person/addperson/0");
 				} else {
 					$('input[id^="cbx_picList_"]').each(function(index, item) {
 						if ($(item).prop("checked") == true) {
@@ -99,7 +99,7 @@
 					if (!hasSelected) { jsAlert('Please select at least 1 person'); return false; }
 					else {
 						if (button == 'deletePerson') {
-							$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/deleteperson/" + personIdx);
+							$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/person/deleteperson/" + personIdx);
 						} else {
 							
 						}						
@@ -112,9 +112,9 @@
 				var personButtonMode = $('#personButtonMode').val();
 				
 				if (button == 'savePerson') {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/save");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/save");
 				} else {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/discard");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/person/" + personButtonMode + "/" + $('#currentPersonIdSelected').val() + "/discard");
 				}
 			});
 
@@ -124,7 +124,7 @@
 				var prsnIdx = $(this).attr('id').split('_')[3];
 				
 				if (button == 'plusPhone') {
-					$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + 	"/person/" + prsnId + "/" + prsnIdx + "/addphone/0/0");
+					$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + 	"/person/" + prsnId + "/" + prsnIdx + "/addphone/0/0");
 				} else {
 					var hasSelected = false;
 					var phoneListId = "";
@@ -139,13 +139,13 @@
 
 					if (!hasSelected) { jsAlert('Please select at least 1 phone'); return false;}
 					else {
-						$('#customerForm').attr('action', ctxpath + "/customer/edit/" + $('#customerId').val() + "/person/" + prsnId + "/" + prsnIdx + "/deletephone/" + phoneListId + "/" + phoneListIndex);	
+						$('#customerForm').attr('action', ctxpath + "/master/customer/edit/" + $('#customerId').val() + "/person/" + prsnId + "/" + prsnIdx + "/deletephone/" + phoneListId + "/" + phoneListIndex);	
 					}
 				}
 			});
 			
 			$('#cancelButton').click(function() {				
-				window.location.href = ctxpath + "/customer";
+				window.location.href = ctxpath + "/master/customer";
 			});
 			
 			$('#customerListTable').DataTable({
@@ -179,9 +179,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/customer/edit/" + id);	
+						$('#editTableSelection').attr("href", ctxpath + "/master/customer/edit/" + id);	
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/customer/delete/" + id);	
+						$('#deleteTableSelection').attr("href", ctxpath + "/master/customer/delete/" + id);	
 					}						
 				}				
 			});						
@@ -314,7 +314,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/customer/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/master/customer/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
@@ -335,7 +335,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/customer/save" data-parsley-validate="parsley">
+								<form:form id="customerForm" role="form" class="form-horizontal" modelAttribute="customerForm" action="${pageContext.request.contextPath}/master/customer/save" data-parsley-validate="parsley">
 									<div role="tabpanel">
 										<ul class="nav nav-tabs" role="tablist">
 											<li role="presentation" class="<c:if test="${ activeTab == 'custDataTab' }"><c:out value="active"/></c:if>"><a href="#custDataTab" aria-controls="custDataTab" role="tab" data-toggle="tab"><span class="fa fa-info-circle fa-fw"></span>&nbsp;<spring:message code="customer_jsp.tab.customer_data" text="Customer Data"/><span id="custDataTabError" class="parsley-asterisk hidden">&nbsp;*</span></a></li>

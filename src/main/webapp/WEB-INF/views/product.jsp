@@ -11,7 +11,7 @@
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
 			$('#cancelButton').click(function() {
-				window.location.href = ctxpath + "/product";
+				window.location.href = ctxpath + "/master/product";
 			});
 			
 			$('#submitButton').click(function() {
@@ -93,9 +93,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/product/edit/" + id);
+						$('#editTableSelection').attr("href", ctxpath + "/master/product/edit/" + id);
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/product/delete/" + id);
+						$('#deleteTableSelection').attr("href", ctxpath + "/master/product/delete/" + id);
 					}						
 				}				
 			});
@@ -105,7 +105,7 @@
 				var id = "";
 				
 				if (button == "plusUnit") {
-					$('#productForm').attr('action', ctxpath + "/product/addunit/0");
+					$('#productForm').attr('action', ctxpath + "/master/product/addunit/0");
 				} else {
 					$('input[type="checkbox"][id^="cbxunit_"]').each(function(index, item) {
 						if ($(item).prop('checked')) {
@@ -115,7 +115,7 @@
 					
 					if (id == "") { jsAlert('Please select at least 1 unit'); return false; }
 					
-					$('#productForm').attr('action', ctxpath + "/product/removeunit/" + id);
+					$('#productForm').attr('action', ctxpath + "/master/product/removeunit/" + id);
 				}
 			});
 			
@@ -185,7 +185,7 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/product/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/master/product/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;<spring:message code="common.delete_button" text="Delete"/></a>
 							</div>
@@ -206,7 +206,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/product/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
+								<form:form id="productForm" role="form" class="form-horizontal" modelAttribute="productForm" action="${pageContext.request.contextPath}/master/product/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
 									<form:hidden path="productId"/>
 									<div class="form-group">
 										<label for="inputProductType" class="col-sm-2 control-label"><spring:message code="product_jsp.producttype" text="Product Type"/></label>
