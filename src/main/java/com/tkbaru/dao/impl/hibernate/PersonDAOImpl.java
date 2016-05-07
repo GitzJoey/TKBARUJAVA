@@ -81,7 +81,7 @@ public class PersonDAOImpl implements PersonDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Person loaded successfully, Person details = " + pers.toString());
+        logger.info("[getPersonById] " + "Person loaded successfully, Person details = " + pers.toString());
         
         return pers;
 	}
@@ -93,7 +93,7 @@ public class PersonDAOImpl implements PersonDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(person);
         
-        logger.info("Person added successfully, Person Details = " + person.toString());
+        logger.info("[addPerson] " + "Person added successfully, Person Details = " + person.toString());
         
         return person.getPersonId();
 	}
@@ -105,7 +105,7 @@ public class PersonDAOImpl implements PersonDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(person);
 	    
-	    logger.info("Person updated successfully, Person Details = " + person.toString());	
+	    logger.info("[editPerson] " + "Person updated successfully, Person Details = " + person.toString());	
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class PersonDAOImpl implements PersonDAO {
             session.delete(person);
         }
         
-        logger.info("Person deleted successfully, Person details = " + person.toString());	
+        logger.info("[deletePerson] " + "Person deleted successfully, Person details = " + person.toString());	
 	}
 	
 }

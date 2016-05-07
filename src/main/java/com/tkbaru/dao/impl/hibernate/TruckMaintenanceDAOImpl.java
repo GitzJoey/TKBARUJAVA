@@ -28,14 +28,14 @@ public class TruckMaintenanceDAOImpl implements TruckMtcDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<TruckMaintenance> mtcList = session.createQuery("FROM TruckMaintenance").list();
 	
-		logger.info("Maintenance Count: " + mtcList.size());
+		logger.info("[getAllMaintenance] " + "Maintenance Count: " + mtcList.size());
 		
 		return mtcList;
 	}
 
 	@Override
 	public TruckMaintenance getMaintenanceById(int selectedId) {
-		logger.info("[getMaintenanceById] " + "");
+		logger.info("[getMaintenanceById] " + "selectedId: " + selectedId);
         
 		Session session = this.sessionFactory.getCurrentSession();
 		TruckMaintenance mtc = null;
@@ -46,7 +46,7 @@ public class TruckMaintenanceDAOImpl implements TruckMtcDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Maintenance loaded successfully, Maintenance details = " + mtc.toString());
+        logger.info("[getMaintenanceById] " + "Maintenance loaded successfully, Maintenance details = " + mtc.toString());
                 
         return mtc;	
 	}
@@ -86,10 +86,15 @@ public class TruckMaintenanceDAOImpl implements TruckMtcDAO {
 	public List<TruckMaintenance> getMaintenanceByIds(String selectedIdINClause) {
 		logger.info("[getMaintenanceByIds] " + "selectedIdINClause: " + selectedIdINClause);
 		
+		List<TruckMaintenance> mtcList = null;
 		Session session = this.sessionFactory.getCurrentSession();		
-		List<TruckMaintenance> mtcList = session.createQuery("FROM TruckMaintenance WHERE truckMaintenanceId IN " + selectedIdINClause).list();
+		mtcList = session.createQuery("FROM TruckMaintenance WHERE truckMaintenanceId IN " + selectedIdINClause).list();
 	
-		logger.info("Maintenance Count : " + mtcList.size());
+		if (mtcList != null) {
+			logger.info("[getMaintenanceByIds] " + "Maintenance Count : " + mtcList.size());
+		} else {
+			logger.info("[getMaintenanceByIds] " + "Maintenance Count : " + "null");
+		}
 		
 		return mtcList;
 	}

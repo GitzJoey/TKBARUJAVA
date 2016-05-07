@@ -29,7 +29,7 @@ public class StoreDAOImpl implements StoreDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Store> storeList = session.createQuery("FROM Store").list();
 	
-		logger.info("Store Count: " + storeList.size());
+		logger.info("[getAllStore] " + "Store Count: " + storeList.size());
 		
 		return storeList;
 	}
@@ -47,7 +47,7 @@ public class StoreDAOImpl implements StoreDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Store loaded successfully, Store details = " + s.toString());
+        logger.info("[getStoreById] " + "Store loaded successfully, Store details = " + s.toString());
         
         return s;
 	}
@@ -60,7 +60,7 @@ public class StoreDAOImpl implements StoreDAO {
         
         session.persist(store);
         
-        logger.info("Store added successfully, Store Details = " + store.toString());		
+        logger.info("[addStore] " + "Store added successfully, Store Details = " + store.toString());		
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class StoreDAOImpl implements StoreDAO {
 	    
 		session.update(store);
 	    
-	    logger.info("Store updated successfully, Store Details = " + store.toString());			
+	    logger.info("[editStore] " + "Store updated successfully, Store Details = " + store.toString());			
 	}
 
 	@Override
@@ -86,7 +86,7 @@ public class StoreDAOImpl implements StoreDAO {
             session.delete(store);
         }
         
-        logger.info("Store deleted successfully, Store details = " + store.toString());
+        logger.info("[deleteStore] " + "Store deleted successfully, Store details = " + store.toString());
 	}
 
 	@Override
@@ -101,9 +101,9 @@ public class StoreDAOImpl implements StoreDAO {
 		Store s = (Store)q.uniqueResult();
 
 		if (s == null) {
-			logger.info("Default Store Data : " + "null");
+			logger.info("[getDefaultStore] " + "Default Store Data : " + "null");
 		} else {
-			logger.info("Default Store Data : " + s.toString());
+			logger.info("[getDefaultStore] " + "Default Store Data : " + s.toString());
 		}
 		
 		return s;
@@ -119,6 +119,6 @@ public class StoreDAOImpl implements StoreDAO {
 	    	session.update(s);
 	    }
 	    
-	    logger.info("Batch Edit Store updated successfully");					
+	    logger.info("[batchEditStore] " + "Batch Edit Store updated successfully");					
 	}
 }

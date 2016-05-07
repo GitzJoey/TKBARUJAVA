@@ -28,7 +28,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Product> productList = session.createQuery("FROM Product").list();
 	
-		logger.info("Product Count: " + productList.size());
+		logger.info("[getAllProduct] " + "Product Count: " + productList.size());
 		
 		return productList;
 	}
@@ -46,7 +46,7 @@ public class ProductDAOImpl implements ProductDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Product loaded successfully, Product details = " + prod.toString());
+        logger.info("[getProductById] " + "Product loaded successfully, Product details = " + prod.toString());
                 
         return prod;	
 	}
@@ -57,7 +57,7 @@ public class ProductDAOImpl implements ProductDAO {
 		
         Session session = this.sessionFactory.getCurrentSession();
         
-        session.persist(prod);		
+        session.persist(prod);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Product> productList = session.createQuery("FROM Product WHERE productId IN " + selectedIdINClause).list();
 	
-		logger.info("Product Count : " + productList.size());
+		logger.info("[getProductByIds] " + "Product Count : " + productList.size());
 		
 		return productList;
 	}
@@ -101,7 +101,7 @@ public class ProductDAOImpl implements ProductDAO {
 		Session session = this.sessionFactory.getCurrentSession();		
 		List<Product> productList = session.createQuery("SELECT p FROM Product p INNER JOIN p.stocksList stk WHERE stk.prodQuantity > 0 ").list();
 		
-		logger.info("List Products In Stocks: " +  productList.size());
+		logger.info("[getAllProduct] " + "List Products In Stocks: " +  productList.size());
 		
 		return productList;
 	}

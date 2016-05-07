@@ -34,7 +34,7 @@ public class PriceDAOImpl implements PriceDAO {
 		
 		List<Price> priceList = session.createQuery("FROM Price a WHERE a.inputDate = :d").setTimestamp("d", inputDate).list();
 	
-		logger.info("Price for Date " + new SimpleDateFormat("dd-MMM-yyyy hh:mm").format(inputDate) + " Count: " + priceList.size());		
+		logger.info("[getAllPriceForDate] " + "Price for Date " + new SimpleDateFormat("dd-MMM-yyyy hh:mm").format(inputDate) + " Count: " + priceList.size());		
 		
 		return priceList;
 	}

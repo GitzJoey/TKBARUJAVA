@@ -41,7 +41,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<SalesOrder> soList = session.createQuery("FROM SalesOrder s WHERE s.salesStatusLookup = :status ").setString("status", statusCode).list();
 	
-		logger.info("SalesOrder Count: " + soList.size());
+		logger.info("[getSalesOrderByStatus] " + "SalesOrder Count: " + soList.size());
 		
 		return soList;
 	}
@@ -53,7 +53,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<SalesOrder> soList = session.createQuery("FROM SalesOrder s WHERE s.salesCode LIKE :salesCode").setParameter("salesCode", "%"+salesCode.toUpperCase()+"%").list();
 		
-		logger.info("SalesOrder Count: " + soList.size());
+		logger.info("[getSalesOrderBySalesCode] " + "SalesOrder Count: " + soList.size());
 		
 		return soList;
 	}
@@ -71,7 +71,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 			logger.info(err.getMessage());
 		}
 
-		logger.info("SalesOrder loaded successfully, SalesOrder details = " + so.toString());
+		logger.info("[getSalesOrderById] " + "SalesOrder loaded successfully, SalesOrder details = " + so.toString());
 
 		return so;
 	}
@@ -123,7 +123,7 @@ public class SalesOrderDAOImpl implements SalesOrderDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		boolean exist = (long)session.createQuery("SELECT COUNT(*) FROM SalesOrder WHERE salesCode = :salesCode").setString("salesCode", salesCode).uniqueResult() > 0;
 		
-		logger.info("salesCode " + salesCode + " is exists: " + exist);
+		logger.info("[isExistingSalesCode] " + "salesCode " + salesCode + " is exists: " + exist);
 
 		return exist;
 	}

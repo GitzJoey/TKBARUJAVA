@@ -35,7 +35,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		
 		List<Customer> customerList = session.createQuery("FROM Customer").list();
 
-		logger.info("Customer Count: " + customerList.size());
+		logger.info("[getAllCustomer] " + "Customer Count: " + customerList.size());
 
 		return customerList;
 	}
@@ -53,7 +53,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         	logger.info(err.getMessage());
         }
         
-        logger.info("Customer loaded successfully, Customer details = " + cust.toString());
+        logger.info("[getCustomerById] " + "Customer loaded successfully, Customer details = " + cust.toString());
         
         return cust;	
 	}
@@ -65,7 +65,7 @@ public class CustomerDAOImpl implements CustomerDAO {
         Session session = this.sessionFactory.getCurrentSession();
         session.persist(cust);
         
-        logger.info("Customer added successfully, Customer Details = " + cust.toString());
+        logger.info("[addCustomer] " + "Customer added successfully, Customer Details = " + cust.toString());
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 	    session.update(cust);
 	    
-	    logger.info("Customer updated successfully, Customer Details = " + cust.toString());		
+	    logger.info("[editCustomer] " + "Customer updated successfully, Customer Details = " + cust.toString());		
 	}
 
 	@Override
@@ -88,7 +88,7 @@ public class CustomerDAOImpl implements CustomerDAO {
             session.delete(customer);
         }
         
-        logger.info("Customer deleted successfully, Customer details = " + customer.toString());
+        logger.info("[deleteCustomer] " + "Customer deleted successfully, Customer details = " + customer.toString());
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Customer> customerList = session.createQuery("FROM Customer WHERE customerId != 1 AND customerName LIKE :customerName").setString("customerName", "%"+searchQuery+"%").list();
 	
-		logger.info("Customer Count: " + customerList.toString());
+		logger.info("[searchCustomer] " + "Customer Count: " + customerList.toString());
 		
 		return customerList;
 	}
