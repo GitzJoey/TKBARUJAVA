@@ -16,6 +16,7 @@ public class Constants {
 	public static final String ERRORFLAG_HIDE 									= "ERRORFLAG_HIDE";
 	
 	public static final String JSPPAGE_USER 									= "user";
+	public static final String JSPPAGE_SIGNUP 									= "signup";
 	public static final String JSPPAGE_LOOKUP 									= "lookup";
 	public static final String JSPPAGE_ROLE 									= "role";
 	public static final String JSPPAGE_FUNCTION 								= "function";
