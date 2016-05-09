@@ -130,7 +130,7 @@ public class ProductController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/product";
+		return "redirect:/master/product";
 	}
 
 	@RequestMapping(value="/addunit/{selectedUnit}", method = RequestMethod.POST)

@@ -136,7 +136,7 @@ public class SupplierController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/supplier";
+		return "redirect:/master/supplier";
 	}        
 	
 	@RequestMapping(value="/edit/{supplierId}/bank/{bankAccButtonMode}/{bankAccId}", method = RequestMethod.POST)

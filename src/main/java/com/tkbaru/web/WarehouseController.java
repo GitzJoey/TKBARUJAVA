@@ -117,7 +117,7 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/warehouse";
+		return "redirect:/master/warehouse";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)

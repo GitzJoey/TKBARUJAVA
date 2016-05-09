@@ -110,7 +110,7 @@ public class CustomerController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/customer";
+		return "redirect:/master/customer";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)
