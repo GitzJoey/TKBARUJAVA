@@ -3,8 +3,6 @@ package com.tkbaru.web;
 import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +16,6 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
 import com.tkbaru.model.LoginContext;
-import com.tkbaru.model.Supplier;
 import com.tkbaru.model.TruckVendor;
 import com.tkbaru.service.LookupService;
 import com.tkbaru.service.TruckVendorService;
