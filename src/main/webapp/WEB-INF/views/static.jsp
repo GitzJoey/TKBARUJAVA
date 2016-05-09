@@ -54,7 +54,7 @@
 			<br/>
 		</div>
 		
-		<div class="row">
+		<div class="row row-horizon">
 			<div class="col-md-3">
 				<div class="panel panel-default">
 					<div class="panel-body">
@@ -79,6 +79,36 @@
 							</div>
 							<div class="col-md-6 text-right">
 								<div class="huge">7100<span class="small">/Kg</span></div>
+								<div class="tiny">17 March 2015</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-6">
+								<img src="${ pageContext.request.contextPath }/resources/images/sugar.jpg" class="img-responsive img-circle"/>
+							</div>
+							<div class="col-md-6 text-right">
+								<div class="huge">8900<span class="small">/Kg</span></div>
+								<div class="tiny">17 March 2015</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="row">
+							<div class="col-md-6">
+								<img src="${ pageContext.request.contextPath }/resources/images/sugar.jpg" class="img-responsive img-circle"/>
+							</div>
+							<div class="col-md-6 text-right">
+								<div class="huge">8900<span class="small">/Kg</span></div>
 								<div class="tiny">17 March 2015</div>
 							</div>
 						</div>
@@ -170,8 +200,6 @@
 				</p>
 			</div>
 		</div>
-		
-		<hr>
 		
 		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 

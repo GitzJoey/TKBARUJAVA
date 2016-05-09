@@ -21,7 +21,7 @@ import com.tkbaru.service.StoreService;
 import com.tkbaru.service.UserService;
 
 @Controller
-@RequestMapping("/static/signup.html")
+
 public class SignUpController {
 	private static final Logger logger = LoggerFactory.getLogger(SignUpController.class);
 	
@@ -37,7 +37,7 @@ public class SignUpController {
 	@Autowired
 	StoreService storeManager;
 	
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(value = "/static/signup.html", method = RequestMethod.GET)
 	public String staticPageLoad(Locale locale, Model model) {
 		logger.info("[userAdd] " + "");
 		
@@ -47,6 +47,7 @@ public class SignUpController {
 		model.addAttribute("storeDDL", storeManager.getAllStore());
 		model.addAttribute("userTypeDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_USERTYPE));
 		model.addAttribute("allowLoginDDL", lookupManager.getLookupByCategory(Constants.LOOKUPCATEGORY_YESNOSELECTION));
+		model.addAttribute("storeData", storeManager.getDefaultStore());
 		
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_ADD);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
@@ -56,7 +57,7 @@ public class SignUpController {
 		return Constants.JSPPAGE_SIGNUP;
 	}
 
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	@RequestMapping(value = "/static/signup/save", method = RequestMethod.POST)
 	public String userSave(Locale locale, Model model, @ModelAttribute("userForm") User usr, RedirectAttributes redirectAttributes) {
 		
 		if (usr.getUserId() == null) {
