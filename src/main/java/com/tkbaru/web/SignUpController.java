@@ -61,12 +61,14 @@ public class SignUpController {
 		
 		if (usr.getUserId() == null) {
 			usr.setCreatedDate(new Date());
-			usr.setRoleId(2);
-			usr.setStoreId(2);
+			usr.setRoleId(roleManager.getRoleByName("NONADMIN").getRoleId()); 
+			usr.setStoreId(storeManager.getDefaultStore().getStoreId());
 			usr.setUserStatus("L001_I");
-			usr.setUserType("L024_CUS");
-			usr.setAllowLogin("L003_YES");
+			usr.setStatusLookup(lookupManager.getLookupByKey("L001_I"));			
+			usr.setUserType("L024_CUS"); 
+			usr.setAllowLogin("L003_YES"); 
 			logger.info("[userSave] " + "addNewUser: " + usr.toString());
+			
 			userManager.addNewUser(usr);		
 		} else {
 	

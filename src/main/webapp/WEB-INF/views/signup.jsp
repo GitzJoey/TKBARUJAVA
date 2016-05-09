@@ -73,7 +73,7 @@
 								<form:form id="userForm" role="form" class="form-horizontal" modelAttribute="userForm" action="${pageContext.request.contextPath}/admin/user/save" enctype="multipart/form-data" data-parsley-validate="parsley" data-parsley-excluded="input[type=file]">
 									<form:hidden path="userId"/>
 									<div class="form-group">
-										<label for="inputUserName" class="col-sm-2 control-label">User Name</label>
+										<label for="inputUserName" class="col-sm-2 control-label"><spring:message code="signup_jsp.user_name" text="user name"/></label>
 										<div class="col-sm-3">
 											<c:choose>
 												<c:when test="${ PAGEMODE == 'PAGEMODE_ADD' }">
@@ -86,7 +86,7 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
+										<label for="inputPassword" class="col-sm-2 control-label"><spring:message code="signup_jsp.password" text="password"/></label>
 										<div class="col-sm-3">
 											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
@@ -95,19 +95,19 @@
 									<form:hidden path="personId"/>
 									<form:hidden path="personEntity.personId"/>
 									<div class="form-group">
-										<label for="inputFirstName" class="col-sm-2 control-label">First Name</label>
+										<label for="inputFirstName" class="col-sm-2 control-label"><spring:message code="signup_jsp.first_name" text="first name"/></label>
 										<div class="col-sm-5">
 											<form:input path="personEntity.firstName" type="text" class="form-control" id="inputFirstName" name="inputFirstName" placeholder="First Name" data-parsley-required="true" data-parsley-pattern="^[a-zA-Z]+$" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputLastName" class="col-sm-2 control-label">Last Name</label>
+										<label for="inputLastName" class="col-sm-2 control-label"><spring:message code="signup_jsp.Last_Name" text="Last Name"/></label>
 										<div class="col-sm-5">
 											<form:input path="personEntity.lastName" type="text" class="form-control" id="inputLastName" name="inputLastName" placeholder="Last Name" data-parsley-required="true" data-parsley-pattern="^[a-zA-Z]+$"  data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputEmailAddress" class="col-sm-2 control-label">Email Address</label>
+										<label for="inputEmailAddress" class="col-sm-2 control-label"><spring:message code="signup_jsp.email_address" text="email address"/></label>
 										<div class="col-sm-6">
 											<form:input path="personEntity.emailAddr" type="text" class="form-control" id="inputEmailAddress" name="inputEmailAddress" placeholder="Enter Email Address"></form:input>
 										</div>
