@@ -30,7 +30,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-@RequestMapping("/supplier")
+@RequestMapping("/master/supplier")
 public class SupplierController {
 	private static final Logger logger = LoggerFactory.getLogger(SupplierController.class);
 	
@@ -136,7 +136,7 @@ public class SupplierController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/supplier";
+		return "redirect:/master/supplier";
 	}        
 	
 	@RequestMapping(value="/edit/{supplierId}/bank/{bankAccButtonMode}/{bankAccId}", method = RequestMethod.POST)

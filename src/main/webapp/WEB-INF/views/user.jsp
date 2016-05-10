@@ -188,7 +188,7 @@
 									<div class="form-group">
 										<label for="inputPassword" class="col-sm-2 control-label">Password</label>
 										<div class="col-sm-3">
-											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+											<form:input path="userPassword" type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password" data-parsley-required="true" data-parsley-minlength="6" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

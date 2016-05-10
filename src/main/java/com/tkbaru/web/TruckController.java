@@ -27,7 +27,7 @@ import com.tkbaru.service.TruckService;
 import com.tkbaru.service.UserService;
 
 @Controller
-@RequestMapping("/truck")
+@RequestMapping("/master/truck")
 public class TruckController {
 	private static final Logger logger = LoggerFactory.getLogger(TruckController.class);
 
@@ -115,7 +115,7 @@ public class TruckController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck";
+		return "redirect:/master/truck";
 	}
 	
 	@RequestMapping(value="/save", method = RequestMethod.POST)

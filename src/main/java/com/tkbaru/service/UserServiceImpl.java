@@ -86,12 +86,10 @@ public class UserServiceImpl implements UserService {
 			usr.getPersonEntity().getImageBinary().transferTo(new File(path + fileName).getAbsoluteFile());
 			
 			usr.getPersonEntity().setPhotoPath(fileName);
-			
-			usr.setUserPassword(cryptoBCryptPasswordEncoderManager.encode(usr.getUserPassword()));
-			
 		} catch (Exception e) {
-			
+			logger.info("[addNewUser] " + "Exception: " + e.getMessage());
 		} 
+		usr.setUserPassword(cryptoBCryptPasswordEncoderManager.encode(usr.getUserPassword()));
 		
 		usr.setPersonId(personManager.addPerson(usr.getPersonEntity()));
 		

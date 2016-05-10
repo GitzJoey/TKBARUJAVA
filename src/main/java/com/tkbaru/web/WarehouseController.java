@@ -27,7 +27,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.WarehouseService;
 
 @Controller
-@RequestMapping("/warehouse")
+@RequestMapping("/master/warehouse")
 public class WarehouseController {
 	private static final Logger logger = LoggerFactory.getLogger(WarehouseController.class);
 
@@ -117,7 +117,7 @@ public class WarehouseController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/warehouse";
+		return "redirect:/master/warehouse";
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
