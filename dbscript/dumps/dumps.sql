@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.9, for Win32 (AMD64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: tkbaru
 -- ------------------------------------------------------
--- Server version	5.6.28-log
+-- Server version	5.7.12-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -192,6 +192,8 @@ CREATE TABLE `tb_deliver` (
   `to_base_net` bigint(11) DEFAULT '0',
   `tare` bigint(11) DEFAULT '0',
   `to_base_tare` bigint(11) DEFAULT '0',
+  `vendor_truck_id` int(11) DEFAULT NULL,
+  `truck_plate` varchar(15) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT NULL,
@@ -206,7 +208,7 @@ CREATE TABLE `tb_deliver` (
 
 LOCK TABLES `tb_deliver` WRITE;
 /*!40000 ALTER TABLE `tb_deliver` DISABLE KEYS */;
-INSERT INTO `tb_deliver` VALUES (1,1,'2015-12-09 00:00:00',2,'L005_TN','L005_KG',10,10000,NULL,NULL,NULL,NULL,1,'2015-12-09 12:59:28',NULL,NULL),(2,1,'2016-01-21 00:00:00',5,'L005_TN','L005_KG',100,100000,NULL,NULL,NULL,NULL,1,'2016-01-21 09:42:31',NULL,NULL),(3,1,'2016-03-18 00:00:00',1,'L005_KG','L005_KG',9800,9800,NULL,NULL,NULL,NULL,1,'2016-03-18 20:40:08',NULL,NULL),(4,1,'2016-03-18 00:00:00',2,'L005_KG','L005_KG',9800,9800,NULL,NULL,NULL,NULL,1,'2016-03-18 20:53:04',NULL,NULL),(5,1,'2016-03-18 00:00:00',3,'L005_KG','L005_KG',14900,14900,NULL,NULL,NULL,NULL,1,'2016-03-18 20:56:57',NULL,NULL);
+INSERT INTO `tb_deliver` VALUES (1,1,'2015-12-09 00:00:00',2,'L005_TN','L005_KG',10,10000,NULL,NULL,NULL,NULL,NULL,NULL,1,'2015-12-09 12:59:28',NULL,NULL),(2,1,'2016-01-21 00:00:00',5,'L005_TN','L005_KG',100,100000,NULL,NULL,NULL,NULL,NULL,NULL,1,'2016-01-21 09:42:31',NULL,NULL),(3,1,'2016-03-18 00:00:00',1,'L005_KG','L005_KG',9800,9800,NULL,NULL,NULL,NULL,NULL,NULL,1,'2016-03-18 20:40:08',NULL,NULL),(4,1,'2016-03-18 00:00:00',2,'L005_KG','L005_KG',9800,9800,NULL,NULL,NULL,NULL,NULL,NULL,1,'2016-03-18 20:53:04',NULL,NULL),(5,1,'2016-03-18 00:00:00',3,'L005_KG','L005_KG',14900,14900,NULL,NULL,NULL,NULL,NULL,NULL,1,'2016-03-18 20:56:57',NULL,NULL);
 /*!40000 ALTER TABLE `tb_deliver` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -230,7 +232,7 @@ CREATE TABLE `tb_function` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`function_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=46 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -239,7 +241,7 @@ CREATE TABLE `tb_function` (
 
 LOCK TABLES `tb_function` WRITE;
 /*!40000 ALTER TABLE `tb_function` DISABLE KEYS */;
-INSERT INTO `tb_function` VALUES (1,'F_PO','Purchase Order','fa fa-truck fa-fw','#',NULL,100100,0,'2016-04-09 00:23:40',0,NULL),(2,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','/po/add',1,100200,0,'2016-04-09 00:23:40',0,NULL),(3,'F_PO_REVISE','Revise PO','fa fa-code-fork fa-rotate-180 fa-fw','/po/revise',1,100300,0,'2016-04-09 00:23:40',0,NULL),(4,'F_PO_PAYMENT','PO Payment','fa fa-calculator fa-fw','/po/payment',1,100400,0,'2016-04-09 00:23:40',0,NULL),(5,'F_SO','Sales Order','fa fa-cart-arrow-down fa-fw','#',NULL,200100,0,'2016-04-09 00:23:40',0,NULL),(6,'F_SO_SALESORDER','Sales Order','fa fa-cart-arrow-down fa-fw','/sales/add',5,200200,0,'2016-04-09 00:23:40',0,NULL),(7,'F_SO_REVISE','Revise SO','fa fa fa-code-fork fa-fw','/sales/revise',5,200300,0,'2016-04-09 00:23:40',0,NULL),(8,'F_SO_PAYMENT','SO Payment','fa fa-calculator fa-fw','/sales/payment',5,200400,0,'2016-04-09 00:23:40',0,NULL),(9,'F_SO_COPY','SO Copy','fa fa-copy fa-fw','/sales/salescopy',5,200500,0,'2016-04-09 00:23:40',0,NULL),(10,'F_PRICE','Price','fa  fa-barcode fa-fw','#',NULL,300100,0,'2016-04-09 00:23:40',0,NULL),(11,'F_PRICE_TODAYPRICE','Today Price','fa fa-barcode fa-fw','/price/todayprice',10,300200,0,'2016-04-09 00:23:40',0,NULL),(12,'F_PRICE_PRICELEVEL','Price Level','fa  fa-table fa-fw','/price/pricelevel',10,300300,0,'2016-04-09 00:23:40',0,NULL),(13,'F_WH','Warehouse','fa fa-wrench fa-fw','#',NULL,400100,0,'2016-04-09 00:23:40',0,NULL),(14,'F_WH_WAREHOUSE','Dashboard','fa fa-wrench fa-fw','/warehouse/dashboard',13,400200,0,'2016-04-09 00:23:40',0,NULL),(15,'F_WH_STOCK','Stock Report','fa fa-wrench fa-fw','/warehouse/dashboard/stocks',13,400300,0,'2016-04-09 00:23:40',0,NULL),(16,'F_BANK','Bank','fa fa-bank fa-fw','#',NULL,500100,0,'2016-04-09 00:23:40',0,NULL),(17,'F_BANK_UPLOAD','Upload','fa fa-cloud-upload fa-fw','/bank/upload',16,500200,0,'2016-04-09 00:23:40',0,NULL),(18,'F_BANK_CONSOLIDATE','Consolidate','fa fa-compress fa-fw','/bank/consolidate',16,500300,0,'2016-04-09 00:23:40',0,NULL),(19,'F_CUSTOMER','Customer','fa fa-smile-o fa-fw','#',NULL,600100,0,'2016-04-09 00:23:40',0,NULL),(20,'F_CUSTOMER_CONFIRM','Delivery Confirmation','fa fa-check fa-fw','/customer/delivery/confirmation',19,600200,0,'2016-04-09 00:23:40',0,NULL),(21,'F_RPT','Reports','fa fa-bar-chart-o fa-fw','#',NULL,700100,0,'2016-04-09 00:23:40',0,NULL),(22,'F_RPT_RPTTRX','Transactions','fa fa-connectdevelop fa-fw','/report/id/rpttrx',21,700200,0,'2016-04-09 00:23:40',0,NULL),(23,'F_RPT_RPTMNTR','Monitoring','fa fa-eye fa-fw','/report/id/rptmntr',21,700300,0,'2016-04-09 00:23:40',0,NULL),(24,'F_RPT_RPTTAX','Tax Reports','fa fa-institution fa-fw','/report/id/rpttax',21,700400,0,'2016-04-09 00:23:40',0,NULL),(25,'F_RPT_RPTMASTER','Master Data','fa fa-file-text-o fa-fw','/report/id/rptmaster',21,798100,0,'2016-04-09 00:23:40',0,NULL),(26,'F_RPT_RPTADMIN','Admin Data','glyphicon glyphicon-cog','/report/id/rptadmin',21,799100,0,'2016-04-09 00:23:41',0,NULL),(27,'F_MASTER','Master Data','fa fa-file-text-o fa-fw','#',NULL,998100,0,'2016-04-09 00:23:41',0,NULL),(28,'F_MASTER_CUSTOMER','Customer','fa fa-smile-o fa-fw','/customer',27,998100,0,'2016-04-09 00:23:41',0,NULL),(29,'F_MASTER_SUPPLIER','Supplier','fa fa-building-o fa-fw','/supplier',27,998200,0,'2016-04-09 00:23:41',0,NULL),(30,'F_MASTER_PRODUCT','Product','fa fa-cubes fa-fw','/product',27,998300,0,'2016-04-09 00:23:41',0,NULL),(31,'F_MASTER_WAREHOUSE','Warehouse','fa fa-wrench fa-fw','/warehouse',27,998400,0,'2016-04-09 00:23:41',0,NULL),(32,'F_MASTER_TRUCK','Truck','fa fa-truck fa-flip-horizontal fa-fw','/truck',27,998500,0,'2016-04-09 00:23:41',0,NULL),(33,'F_ADM','Admin Menu','glyphicon glyphicon-cog','#',NULL,999100,0,'2016-04-09 00:23:41',0,NULL),(34,'F_ADM_USER','User','fa fa-user fa-fw','/admin/user',33,999100,0,'2016-04-09 00:23:41',0,NULL),(35,'F_ADM_STORE','Store','fa fa-umbrella fa-fw','/admin/store',33,999200,0,'2016-04-09 00:23:41',0,NULL),(36,'F_ADM_ROLE','Role','fa fa-tree fa-fw','/admin/role',33,999300,0,'2016-04-09 00:23:41',0,NULL),(37,'F_ADM_FUNCTION','Function','fa fa-minus-square fa-fw','/admin/function',33,999400,0,'2016-04-09 00:23:41',0,NULL),(38,'F_ADM_LOOKUP','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup',33,999500,0,'2016-04-09 00:23:41',0,NULL),(39,'F_ADM_SMS','SMS Service','fa fa-cog fa-fw','#',33,999600,0,'2016-04-09 00:23:41',0,NULL),(40,'F_ADM_SMS_SERV','Service Status','fa fa-cog fa-fw','/admin/sms',39,999601,0,'2016-04-09 00:23:41',0,NULL),(41,'F_ADM_SMS_IN','SMS Inbox','fa fa-envelope fa-fw','/admin/smsin',39,999602,0,'2016-04-09 00:23:41',0,NULL),(42,'F_ADM_SMS_OUT','SMS Out','fa fa-paper-plane fa-fw','/admin/smsout',39,999603,0,'2016-04-09 00:23:41',0,NULL),(43,'F_ADM_MODEM','Modem','fa fa-cog fa-fw','/admin/modem',39,999604,0,'2016-04-09 00:23:41',0,NULL);
+INSERT INTO `tb_function` VALUES (1,'F_PO','Purchase Order','fa fa-truck fa-fw','#',NULL,100100,0,'2016-04-23 10:46:45',0,NULL),(2,'F_PO_PURCHASEORDER','Purchase Order','fa fa-truck fa-fw','/po/add',1,100200,0,'2016-04-23 10:46:45',0,NULL),(3,'F_PO_REVISE','Revise PO','fa fa-code-fork fa-rotate-180 fa-fw','/po/revise',1,100300,0,'2016-04-23 10:46:45',0,NULL),(4,'F_PO_PAYMENT','PO Payment','fa fa-calculator fa-fw','/po/payment',1,100400,0,'2016-04-23 10:46:45',0,NULL),(5,'F_SO','Sales Order','fa fa-cart-arrow-down fa-fw','#',NULL,200100,0,'2016-04-23 10:46:45',0,NULL),(6,'F_SO_SALESORDER','Sales Order','fa fa-cart-arrow-down fa-fw','/sales/add',5,200200,0,'2016-04-23 10:46:45',0,NULL),(7,'F_SO_REVISE','Revise SO','fa fa fa-code-fork fa-fw','/sales/revise',5,200300,0,'2016-04-23 10:46:45',0,NULL),(8,'F_SO_PAYMENT','SO Payment','fa fa-calculator fa-fw','/sales/payment',5,200400,0,'2016-04-23 10:46:45',0,NULL),(9,'F_SO_COPY','SO Copy','fa fa-copy fa-fw','/sales/salescopy',5,200500,0,'2016-04-23 10:46:45',0,NULL),(10,'F_PRICE','Price','fa  fa-barcode fa-fw','#',NULL,300100,0,'2016-04-23 10:46:45',0,NULL),(11,'F_PRICE_TODAYPRICE','Today Price','fa fa-barcode fa-fw','/price/todayprice',10,300200,0,'2016-04-23 10:46:45',0,NULL),(12,'F_PRICE_PRICELEVEL','Price Level','fa  fa-table fa-fw','/price/pricelevel',10,300300,0,'2016-04-23 10:46:45',0,NULL),(13,'F_WH','Warehouse','fa fa-wrench fa-fw','#',NULL,400100,0,'2016-04-23 10:46:45',0,NULL),(14,'F_WH_WAREHOUSE','Dashboard','fa fa-wrench fa-fw','/warehouse/dashboard',13,400200,0,'2016-04-23 10:46:45',0,NULL),(15,'F_WH_STOCK','Stock Report','fa fa-wrench fa-fw','/warehouse/dashboard/stocks',13,400300,0,'2016-04-23 10:46:45',0,NULL),(16,'F_BANK','Bank','fa fa-bank fa-fw','#',NULL,500100,0,'2016-04-23 10:46:45',0,NULL),(17,'F_BANK_UPLOAD','Upload','fa fa-cloud-upload fa-fw','/bank/upload',16,500200,0,'2016-04-23 10:46:45',0,NULL),(18,'F_BANK_CONSOLIDATE','Consolidate','fa fa-compress fa-fw','/bank/consolidate',16,500300,0,'2016-04-23 10:46:45',0,NULL),(19,'F_CUSTOMER','Customer','fa fa-smile-o fa-fw','#',NULL,600100,0,'2016-04-23 10:46:45',0,NULL),(20,'F_CUSTOMER_CONFIRM','Delivery Confirmation','fa fa-check fa-fw','/customer/delivery/confirmation',19,600200,0,'2016-04-23 10:46:46',0,NULL),(21,'F_RPT','Reports','fa fa-bar-chart-o fa-fw','#',NULL,700100,0,'2016-04-23 10:46:46',0,NULL),(22,'F_RPT_RPTTRX','Transactions','fa fa-connectdevelop fa-fw','/report/id/rpttrx',21,700200,0,'2016-04-23 10:46:46',0,NULL),(23,'F_RPT_RPTMNTR','Monitoring','fa fa-eye fa-fw','/report/id/rptmntr',21,700300,0,'2016-04-23 10:46:46',0,NULL),(24,'F_RPT_RPTTAX','Tax Reports','fa fa-institution fa-fw','/report/id/rpttax',21,700400,0,'2016-04-23 10:46:46',0,NULL),(25,'F_RPT_RPTMASTER','Master Data','fa fa-file-text-o fa-fw','/report/id/rptmaster',21,798100,0,'2016-04-23 10:46:46',0,NULL),(26,'F_RPT_RPTADMIN','Admin Data','glyphicon glyphicon-cog','/report/id/rptadmin',21,799100,0,'2016-04-23 10:46:46',0,NULL),(27,'F_MASTER','Master Data','fa fa-file-text-o fa-fw','#',NULL,998100,0,'2016-04-23 10:46:46',0,NULL),(28,'F_MASTER_CUSTOMER','Customer','fa fa-smile-o fa-fw','/customer',27,998100,0,'2016-04-23 10:46:47',0,NULL),(29,'F_MASTER_SUPPLIER','Supplier','fa fa-building-o fa-fw','/supplier',27,998200,0,'2016-04-23 10:46:47',0,NULL),(30,'F_MASTER_PRODUCT','Product','fa fa-cubes fa-fw','/product',27,998300,0,'2016-04-23 10:46:47',0,NULL),(31,'F_MASTER_WAREHOUSE','Warehouse','fa fa-wrench fa-fw','/warehouse',27,998400,0,'2016-04-23 10:46:47',0,NULL),(32,'F_MASTER_TRUCK','Truck','fa fa-truck fa-flip-horizontal fa-fw','/truck',27,998500,0,'2016-04-23 10:46:47',0,NULL),(33,'F_MASTER_VENDOR','Vendor','fa fa-vine fa-flip-horizontal fa-fw','#',27,998600,0,'2016-04-23 10:46:47',0,NULL),(34,'F_MSTR_VENDOR_TRUCKING','Trucking','fa fa-ge fa-fw','/master/vendor/trucking',33,998601,0,'2016-04-23 10:46:47',0,NULL),(35,'F_ADM','Admin Menu','glyphicon glyphicon-cog','#',NULL,999100,0,'2016-04-23 10:46:47',0,NULL),(36,'F_ADM_USER','User','fa fa-user fa-fw','/admin/user',35,999100,0,'2016-04-23 10:46:47',0,NULL),(37,'F_ADM_STORE','Store','fa fa-umbrella fa-fw','/admin/store',35,999200,0,'2016-04-23 10:46:48',0,NULL),(38,'F_ADM_ROLE','Role','fa fa-tree fa-fw','/admin/role',35,999300,0,'2016-04-23 10:46:48',0,NULL),(39,'F_ADM_FUNCTION','Function','fa fa-minus-square fa-fw','/admin/function',35,999400,0,'2016-04-23 10:46:48',0,NULL),(40,'F_ADM_LOOKUP','Lookup','fa fa-hand-o-up fa-fw','/admin/lookup',35,999500,0,'2016-04-23 10:46:48',0,NULL),(41,'F_ADM_SMS','SMS Service','fa fa-cog fa-fw','#',35,999600,0,'2016-04-23 10:46:48',0,NULL),(42,'F_ADM_SMS_SERV','Service Status','fa fa-cog fa-fw','/admin/sms',41,999601,0,'2016-04-23 10:46:48',0,NULL),(43,'F_ADM_SMS_IN','SMS Inbox','fa fa-envelope fa-fw','/admin/smsin',41,999602,0,'2016-04-23 10:46:48',0,NULL),(44,'F_ADM_SMS_OUT','SMS Out','fa fa-paper-plane fa-fw','/admin/smsout',41,999603,0,'2016-04-23 10:46:48',0,NULL),(45,'F_ADM_MODEM','Modem','fa fa-cog fa-fw','/admin/modem',41,999604,0,'2016-04-23 10:46:48',0,NULL);
 /*!40000 ALTER TABLE `tb_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -265,7 +267,7 @@ CREATE TABLE `tb_items` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`items_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -274,7 +276,7 @@ CREATE TABLE `tb_items` (
 
 LOCK TABLES `tb_items` WRITE;
 /*!40000 ALTER TABLE `tb_items` DISABLE KEYS */;
-INSERT INTO `tb_items` VALUES (1,2,NULL,10,'L005_TN','L005_KG',1000,10000,10000,1,'2016-02-10 10:31:04',NULL,NULL),(2,2,NULL,10,'L005_TN','L005_KG',1000,10000,9800,1,'2016-03-18 20:48:28',NULL,NULL),(3,2,NULL,15000,'L005_KG','L005_KG',1,15000,9000,1,'2016-03-18 20:56:31',NULL,NULL),(4,6,NULL,100,'L005_TN','L005_KG',1000,100000,11400,1,'2016-03-18 21:05:27',NULL,NULL),(5,6,NULL,10,'L005_TN','L005_KG',1000,10000,11300,1,'2016-03-18 22:04:16',NULL,NULL);
+INSERT INTO `tb_items` VALUES (1,2,NULL,10,'L005_TN','L005_KG',1000,10000,10000,1,'2016-02-10 10:31:04',NULL,NULL),(2,2,NULL,10,'L005_TN','L005_KG',1000,10000,9800,1,'2016-03-18 20:48:28',NULL,NULL),(3,2,NULL,15000,'L005_KG','L005_KG',1,15000,9000,1,'2016-03-18 20:56:31',NULL,NULL),(4,6,NULL,100,'L005_TN','L005_KG',1000,100000,11400,1,'2016-03-18 21:05:27',NULL,NULL),(5,6,NULL,10,'L005_TN','L005_KG',1000,10000,11300,1,'2016-03-18 22:04:16',NULL,NULL),(6,6,NULL,100,'L005_KG','L005_KG',1,100,10000,1,'2016-04-30 13:54:36',NULL,NULL),(7,6,NULL,100,'L005_TN','L005_KG',1000,100000,10000,1,'2016-04-30 13:57:00',NULL,NULL),(8,6,NULL,100,'L005_TN','L005_KG',1000,100000,10000,1,'2016-04-30 14:00:31',NULL,NULL),(9,6,NULL,100,'L005_TN','L005_KG',1000,100000,1000,1,'2016-04-30 14:01:15',NULL,NULL),(10,6,NULL,100,'L005_TN','L005_KG',1000,100000,10000,1,'2016-04-30 14:01:15',1,'2016-04-30 14:14:24'),(11,6,NULL,102,'L005_TN','L005_KG',1000,102000,10000,1,'2016-04-30 00:00:00',1,'2016-04-30 15:08:32'),(12,6,NULL,10,'L005_TN','L005_KG',1000,10000,10000,1,'2016-04-30 14:01:15',1,'2016-04-30 14:14:24'),(13,6,NULL,20,'L005_TN','L005_KG',1000,20000,10000,1,'2016-04-30 00:00:00',1,'2016-04-30 15:08:32');
 /*!40000 ALTER TABLE `tb_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -320,7 +322,7 @@ CREATE TABLE `tb_items_receipt` (
 
 LOCK TABLES `tb_items_receipt` WRITE;
 /*!40000 ALTER TABLE `tb_items_receipt` DISABLE KEYS */;
-INSERT INTO `tb_items_receipt` VALUES (4,1),(5,2);
+INSERT INTO `tb_items_receipt` VALUES (4,1),(5,2),(9,3);
 /*!40000 ALTER TABLE `tb_items_receipt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -524,6 +526,7 @@ CREATE TABLE `tb_po` (
   `shipping_date` datetime DEFAULT NULL,
   `supplier_id` int(11) DEFAULT NULL,
   `warehouse_id` int(11) DEFAULT NULL,
+  `vendor_truck_id` int(11) DEFAULT NULL,
   `po_type` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `remarks` varchar(255) DEFAULT NULL,
@@ -532,7 +535,7 @@ CREATE TABLE `tb_po` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`po_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -541,7 +544,7 @@ CREATE TABLE `tb_po` (
 
 LOCK TABLES `tb_po` WRITE;
 /*!40000 ALTER TABLE `tb_po` DISABLE KEYS */;
-INSERT INTO `tb_po` VALUES (1,1,'FG5BCJ','2016-03-18 00:00:00','2016-03-18 00:00:00',5,1,'L014_S','L013_WP','',1,'2016-03-18 21:05:27',NULL,NULL),(2,1,'WV3SJM','2016-03-18 00:00:00','2016-03-18 00:00:00',5,1,'L014_S','L013_WP','',1,'2016-03-18 22:04:16',NULL,NULL);
+INSERT INTO `tb_po` VALUES (1,1,'FG5BCJ','2016-03-18 00:00:00','2016-03-18 00:00:00',5,1,NULL,'L014_S','L013_WP','',1,'2016-03-18 21:05:27',NULL,NULL),(2,1,'WV3SJM','2016-03-18 00:00:00','2016-03-18 00:00:00',5,1,NULL,'L014_S','L013_WP','',1,'2016-03-18 22:04:16',NULL,NULL),(3,1,'X4DIT8','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WA','',1,'2016-04-30 13:54:36',NULL,NULL),(4,1,'0D3RCN','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WA','',1,'2016-04-30 13:57:00',NULL,NULL),(5,1,'WMHPN7','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WA','',1,'2016-04-30 14:00:31',NULL,NULL),(6,1,'QECDYD','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WP','',1,'2016-04-30 14:01:15',NULL,NULL),(7,NULL,'W7XSUL','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WA','',1,'2016-04-30 00:00:00',1,'2016-04-30 14:14:24'),(8,NULL,'FRFUNW','2016-04-30 00:00:00','2016-04-30 00:00:00',5,1,2,'L014_S','L013_WA','',1,'2016-04-30 00:00:00',1,'2016-04-30 15:08:32');
 /*!40000 ALTER TABLE `tb_po` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -564,7 +567,7 @@ CREATE TABLE `tb_po_items` (
 
 LOCK TABLES `tb_po_items` WRITE;
 /*!40000 ALTER TABLE `tb_po_items` DISABLE KEYS */;
-INSERT INTO `tb_po_items` VALUES (1,4),(2,5);
+INSERT INTO `tb_po_items` VALUES (1,4),(2,5),(3,6),(4,7),(5,8),(6,9),(7,10),(7,12),(8,11),(8,13);
 /*!40000 ALTER TABLE `tb_po_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -680,7 +683,7 @@ CREATE TABLE `tb_product` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -689,7 +692,7 @@ CREATE TABLE `tb_product` (
 
 LOCK TABLES `tb_product` WRITE;
 /*!40000 ALTER TABLE `tb_product` DISABLE KEYS */;
-INSERT INTO `tb_product` VALUES (2,1,'L004_KDLI','BIJO','Kedelai Bola Hijau','Kedelai Bola Hijau','','L001_A',0,NULL,0,NULL),(4,1,'L004_ML','ML KPN','Minyak Curah KPN','Minyak Curah','0-Minyak Curah KPN-50.jpg','L001_A',0,NULL,1,'2015-11-17 00:20:38'),(5,1,'L004_ML','ML Indo','Minyak Curah Indo ','Minyak Curah','0-Minyak Curah Indo -44.jpg','L001_A',0,NULL,0,NULL),(6,1,'L004_GL','GL J','Gula Jombang','Gula Putih','0-GULA JOMBANG-50.jpg','L001_A',0,NULL,0,NULL),(7,1,'L004_KTN','KT','Beras Ketan AAA','Beras Ketan','0-Beras Ketan AAA-62.jpg','L001_A',NULL,NULL,1,'2016-02-23 02:04:24');
+INSERT INTO `tb_product` VALUES (2,1,'L004_KDLI','BIJO','Kedelai Bola Hijau','Kedelai Bola Hijau','','L001_A',0,NULL,0,NULL),(4,1,'L004_ML','ML KPN','Minyak Curah KPN','Minyak Curah','0-Minyak Curah KPN-50.jpg','L001_A',0,NULL,1,'2015-11-17 00:20:38'),(5,1,'L004_ML','ML Indo','Minyak Curah Indo ','Minyak Curah','0-Minyak Curah Indo -44.jpg','L001_A',0,NULL,0,NULL),(6,1,'L004_GL','GL J','Gula Jombang','Gula Putih','0-GULA JOMBANG-50.jpg','L001_A',0,NULL,0,NULL),(7,1,'L004_KTN','KT','Beras Ketan AAA','Beras Ketan','0-Beras Ketan AAA-62.jpg','L001_I',NULL,NULL,1,'2016-05-04 14:57:48');
 /*!40000 ALTER TABLE `tb_product` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -743,7 +746,7 @@ CREATE TABLE `tb_product_unit` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`prod_unit_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -775,12 +778,14 @@ CREATE TABLE `tb_receipt` (
   `to_base_net` bigint(11) DEFAULT '0',
   `tare` bigint(11) DEFAULT '0',
   `to_base_tare` bigint(11) DEFAULT '0',
+  `vendor_truck_id` int(11) DEFAULT NULL,
+  `truck_plate` varchar(15) DEFAULT NULL,
   `created_by` int(11) DEFAULT '0',
   `created_date` datetime DEFAULT NULL,
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`receipt_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -789,7 +794,7 @@ CREATE TABLE `tb_receipt` (
 
 LOCK TABLES `tb_receipt` WRITE;
 /*!40000 ALTER TABLE `tb_receipt` DISABLE KEYS */;
-INSERT INTO `tb_receipt` VALUES (1,1,'2016-03-18 22:04:00','L005_TN','L005_KG',10,10000,10,10000,0,0,1,'2016-03-18 22:05:09',NULL,NULL),(2,1,'2016-03-18 22:05:00','L005_KG','L005_KG',100,100,100,100,0,0,1,'2016-03-18 22:06:22',NULL,NULL);
+INSERT INTO `tb_receipt` VALUES (1,1,'2016-03-18 22:04:00','L005_TN','L005_KG',10,10000,10,10000,0,0,NULL,NULL,1,'2016-03-18 22:05:09',NULL,NULL),(2,1,'2016-03-18 22:05:00','L005_KG','L005_KG',100,100,100,100,0,0,NULL,NULL,1,'2016-03-18 22:06:22',NULL,NULL),(3,1,'2016-04-30 15:41:00','L005_TN','L005_KG',10,10000,10,10000,0,0,2,'R 1234 E',1,'2016-04-30 15:41:22',NULL,NULL);
 /*!40000 ALTER TABLE `tb_receipt` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -841,7 +846,7 @@ CREATE TABLE `tb_role_function` (
 
 LOCK TABLES `tb_role_function` WRITE;
 /*!40000 ALTER TABLE `tb_role_function` DISABLE KEYS */;
-INSERT INTO `tb_role_function` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(1,33),(1,34),(1,35),(1,36),(1,37),(1,38),(1,39),(1,40),(1,41),(1,42),(1,43),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,13),(2,14),(2,15),(2,16),(2,17),(2,18),(2,19),(2,20),(2,21),(2,22),(2,23),(2,24),(2,25),(2,26),(2,27),(2,28),(2,29),(2,30),(2,31),(2,32);
+INSERT INTO `tb_role_function` VALUES (1,1),(1,2),(1,3),(1,4),(1,5),(1,6),(1,7),(1,8),(1,9),(1,10),(1,11),(1,12),(1,13),(1,14),(1,15),(1,16),(1,17),(1,18),(1,19),(1,20),(1,21),(1,22),(1,23),(1,24),(1,25),(1,26),(1,27),(1,28),(1,29),(1,30),(1,31),(1,32),(1,33),(1,34),(1,35),(1,36),(1,37),(1,38),(1,39),(1,40),(1,41),(1,42),(1,43),(1,44),(1,45),(2,1),(2,2),(2,3),(2,4),(2,5),(2,6),(2,7),(2,8),(2,9),(2,10),(2,11),(2,12),(2,13),(2,14),(2,15),(2,16),(2,17),(2,18),(2,19),(2,20),(2,21),(2,22),(2,23),(2,24),(2,25),(2,26),(2,27),(2,28),(2,29),(2,30),(2,31),(2,32),(2,33),(2,34);
 /*!40000 ALTER TABLE `tb_role_function` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -883,6 +888,7 @@ CREATE TABLE `tb_so` (
   `so_code` varchar(45) DEFAULT NULL,
   `so_created` datetime DEFAULT NULL,
   `shipping_date` datetime DEFAULT NULL,
+  `vendor_truck_id` int(11) DEFAULT NULL,
   `customer_type` varchar(45) DEFAULT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `walk_in_cust_det` varchar(255) DEFAULT NULL,
@@ -903,7 +909,7 @@ CREATE TABLE `tb_so` (
 
 LOCK TABLES `tb_so` WRITE;
 /*!40000 ALTER TABLE `tb_so` DISABLE KEYS */;
-INSERT INTO `tb_so` VALUES (1,1,'EX0SMY','2016-02-10 00:00:00','2016-02-10 00:00:00','L022_WIN',NULL,'kkk','L015_SVC','L016_WP','',1,'2016-02-10 10:31:04',NULL,NULL),(2,1,'IUHJ1O','2016-03-18 00:00:00','2016-03-18 00:00:00','L022_WIN',NULL,'kkkk','L015_SVC','L016_WP','',1,'2016-03-18 20:48:28',NULL,NULL),(3,1,'IKPYRN','2016-03-18 00:00:00','2016-03-18 00:00:00','L022_WIN',NULL,'kkkk','L015_SVC','L016_WP','',1,'2016-03-18 20:56:31',NULL,NULL);
+INSERT INTO `tb_so` VALUES (1,1,'EX0SMY','2016-02-10 00:00:00','2016-02-10 00:00:00',NULL,'L022_WIN',NULL,'kkk','L015_SVC','L016_WP','',1,'2016-02-10 10:31:04',NULL,NULL),(2,1,'IUHJ1O','2016-03-18 00:00:00','2016-03-18 00:00:00',NULL,'L022_WIN',NULL,'kkkk','L015_SVC','L016_WP','',1,'2016-03-18 20:48:28',NULL,NULL),(3,1,'IKPYRN','2016-03-18 00:00:00','2016-03-18 00:00:00',NULL,'L022_WIN',NULL,'kkkk','L015_SVC','L016_WP','',1,'2016-03-18 20:56:31',NULL,NULL);
 /*!40000 ALTER TABLE `tb_so` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -919,6 +925,8 @@ CREATE TABLE `tb_so_copy` (
   `so_id` int(11) NOT NULL,
   `store_id` int(11) DEFAULT '0',
   `so_code` varchar(45) DEFAULT NULL,
+  `so_copy_code` varchar(45) DEFAULT NULL,
+  `so_copy_desc` varchar(45) DEFAULT NULL,
   `so_created` datetime DEFAULT NULL,
   `shipping_date` datetime DEFAULT NULL,
   `customer_type` varchar(45) DEFAULT NULL,
@@ -932,7 +940,7 @@ CREATE TABLE `tb_so_copy` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`so_copy_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -941,6 +949,7 @@ CREATE TABLE `tb_so_copy` (
 
 LOCK TABLES `tb_so_copy` WRITE;
 /*!40000 ALTER TABLE `tb_so_copy` DISABLE KEYS */;
+INSERT INTO `tb_so_copy` VALUES (1,3,NULL,'IKPYRN','IKPYRNC1','','2016-03-18 00:00:00','2016-03-18 00:00:00','L022_WIN',NULL,'kkkk','L015_SVC','L016_WP','',1,'2016-03-18 00:00:00',1,'2016-04-26 12:49:27');
 /*!40000 ALTER TABLE `tb_so_copy` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -954,7 +963,6 @@ DROP TABLE IF EXISTS `tb_so_copy_items`;
 CREATE TABLE `tb_so_copy_items` (
   `so_copy_items_id` int(11) NOT NULL AUTO_INCREMENT,
   `so_copy_id` int(11) NOT NULL,
-  `store_id` int(11) DEFAULT '0',
   `product_id` int(11) DEFAULT NULL,
   `quantity` int(11) DEFAULT NULL,
   `unit_code` varchar(45) DEFAULT NULL,
@@ -967,7 +975,7 @@ CREATE TABLE `tb_so_copy_items` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`so_copy_items_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -976,6 +984,7 @@ CREATE TABLE `tb_so_copy_items` (
 
 LOCK TABLES `tb_so_copy_items` WRITE;
 /*!40000 ALTER TABLE `tb_so_copy_items` DISABLE KEYS */;
+INSERT INTO `tb_so_copy_items` VALUES (1,1,2,15000,'L005_KG','L005_KG',1,15000,9000,1,'2016-04-26 00:00:00',1,'2016-04-26 12:49:27'),(2,1,7,2000,'L005_ZK','L005_KG',25,50000,2000,1,'2016-04-26 00:00:00',1,'2016-04-26 12:49:37');
 /*!40000 ALTER TABLE `tb_so_copy_items` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1069,7 +1078,7 @@ CREATE TABLE `tb_stocks` (
   `updated_by` int(11) DEFAULT '0',
   `updated_date` datetime DEFAULT NULL,
   PRIMARY KEY (`stocks_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1078,7 +1087,7 @@ CREATE TABLE `tb_stocks` (
 
 LOCK TABLES `tb_stocks` WRITE;
 /*!40000 ALTER TABLE `tb_stocks` DISABLE KEYS */;
-INSERT INTO `tb_stocks` VALUES (1,1,1,6,1,10,10,1,'2016-03-18 22:05:09',NULL,NULL),(2,1,2,6,1,100,100,1,'2016-03-18 22:06:22',NULL,NULL);
+INSERT INTO `tb_stocks` VALUES (1,1,1,6,1,10,10,1,'2016-03-18 22:05:09',NULL,NULL),(2,1,2,6,1,100,100,1,'2016-03-18 22:06:22',NULL,NULL),(3,1,6,6,1,10,10,1,'2016-04-30 15:41:22',NULL,NULL);
 /*!40000 ALTER TABLE `tb_stocks` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1358,6 +1367,36 @@ INSERT INTO `tb_user` VALUES (1,'admin','$2a$10$bfxVPp9/GE6zbRWHo3FKPuMPOCRVcW0q
 UNLOCK TABLES;
 
 --
+-- Table structure for table `tb_vendor_truck`
+--
+
+DROP TABLE IF EXISTS `tb_vendor_truck`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `tb_vendor_truck` (
+  `vendor_truck_id` int(11) NOT NULL AUTO_INCREMENT,
+  `vendor_truck_name` varchar(45) DEFAULT NULL,
+  `vendor_truck_address` varchar(45) DEFAULT NULL,
+  `npwp_number` varchar(45) DEFAULT NULL,
+  `account` int(11) DEFAULT NULL,
+  `status` varchar(45) DEFAULT NULL,
+  `remarks` varchar(45) DEFAULT NULL,
+  `bank` varchar(45) DEFAULT NULL,
+  PRIMARY KEY (`vendor_truck_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `tb_vendor_truck`
+--
+
+LOCK TABLES `tb_vendor_truck` WRITE;
+/*!40000 ALTER TABLE `tb_vendor_truck` DISABLE KEYS */;
+INSERT INTO `tb_vendor_truck` VALUES (2,'testtsd','tesdf','2323d',2342342,'L001_A','sdfsdf','L007_BCA');
+/*!40000 ALTER TABLE `tb_vendor_truck` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `tb_warehouse`
 --
 
@@ -1398,4 +1437,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-04-09  3:04:41
+-- Dump completed on 2016-05-10  8:24:28
