@@ -17,5 +17,6 @@ public interface PurchaseOrderService {
 	public void editPurchaseOrder(PurchaseOrder po);
 	public void deletePurchaseOrder(int selectedId);
 
+	public int getCountPaymentDue();
 	public String generatePOCode();
 }

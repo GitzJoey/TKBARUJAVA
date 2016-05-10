@@ -18,5 +18,6 @@ public interface PurchaseOrderDAO {
 	public void deletePurchaseOrder(int selectedId);
 	public void savePayment(PurchaseOrder po);
 
+	public int getCountPaymentDue();
 	public boolean isExistingPOCode(String poCode);
 }

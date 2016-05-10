@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
 import com.tkbaru.service.PriceService;
+import com.tkbaru.service.PurchaseOrderService;
 
 @Controller
 @RequestMapping(value="/dashboard")
@@ -24,6 +25,9 @@ public class DashboardController {
 	PriceService priceManager;
 	
 	@Autowired
+	PurchaseOrderService purchaseOrderManager;
+	
+	@Autowired
 	private LoginContext loginContextSession;
 	
 	@RequestMapping(method = RequestMethod.GET)
@@ -31,8 +35,10 @@ public class DashboardController {
 		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
 		List<Price> priceList = priceManager.getLatestRetailPrice();
+		int POPaymentDue = purchaseOrderManager.getCountPaymentDue();
 		
 		model.addAttribute("PriceList", priceList);
+		model.addAttribute("countPaymentDue", POPaymentDue);
 		model.addAttribute("loginContext", loginContextSession);
 		
 		return "dashboard";

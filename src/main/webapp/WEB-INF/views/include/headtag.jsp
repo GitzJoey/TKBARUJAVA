@@ -63,6 +63,20 @@
     			});
     		});
 
+			var sessionTimeout = 900000;
+			function timeout() {
+			    setTimeout(function () {
+			    	sessionTimeout = (sessionTimeout - 1000);
+			    	if (sessionTimeout != 1000) {
+			    		$('#timeoutCount').text(sessionTimeout / 1000);	
+			    	} else {
+			    		$('#timeoutCount').text(0);
+			    	}					
+			        timeout();
+			    }, 1000);
+			}
+			timeout();
+			
 			$('#return-to-top').click(function() {
 				$('body, html').animate({
 			        scrollTop : 0

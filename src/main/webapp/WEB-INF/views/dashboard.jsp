@@ -1419,7 +1419,7 @@
 					</c:otherwise>
 				</c:choose>
             	<div class="row">
-	                <div class="col-lg-12 col-md-12">
+	                <div class="col-lg-10 col-md-10">
 	                    <div class="panel panel-default">
 	                        <div class="panel-body">
 	                            <div class="flot-chart">
@@ -1428,6 +1428,17 @@
 	                        </div>
 	                    </div>
 	                </div>
+	                <div class="col-lg-2 col-md-2">
+	                    <div class="panel panel-default">
+	                        <div class="panel-body">
+	                        	<div class="text-center">
+	                        		<h1><a href="${ pageContext.request.contextPath }/po/payment"><c:out value="${ countPaymentDue }"/></a><br/><span class="badge">Payment Due</span></h1>
+	                        	</div>
+	                        </div>
+	                    </div>	                
+	                </div>
+				</div>
+				<div class="row">
 	                <div class="col-lg-6 col-md-6">
 	                    <div class="panel panel-default">
 	                        <div class="panel-body">

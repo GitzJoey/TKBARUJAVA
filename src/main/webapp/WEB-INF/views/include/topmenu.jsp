@@ -42,9 +42,7 @@
 					</li>
 				</ul>
       			<p class="navbar-text pull-right hidden-xs hidden-sm">
-      				<marquee scrollamount="2">
-      					*&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-      				</marquee>
+					<span id="timeoutCount"></span>
       			</p>
   			</div>
 		</nav>

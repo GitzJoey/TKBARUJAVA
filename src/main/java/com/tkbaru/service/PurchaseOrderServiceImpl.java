@@ -116,4 +116,11 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 		return purchaseOrderDAO.getAllUnfinishedPurchaseOrder();
 	}
 
+	@Override
+	@Transactional
+	public int getCountPaymentDue() {
+		
+		return purchaseOrderDAO.getCountPaymentDue();
+	}
+
 }

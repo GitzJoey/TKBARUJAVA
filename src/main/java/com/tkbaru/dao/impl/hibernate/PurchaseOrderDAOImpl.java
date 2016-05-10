@@ -183,4 +183,19 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 
 		return purchaseOrderList;
 	}
+
+	@Override
+	public int getCountPaymentDue() {
+		logger.info("[getCountPaymentDue] " + "");
+
+		Session session = this.sessionFactory.getCurrentSession();
+	
+		Query q = session.createQuery("FROM PurchaseOrder po WHERE po.poStatusLookup.lookupKey <> 'L013_WP'");
+
+		List<PurchaseOrder> purchaseOrderList = q.list();
+		
+		logger.info("[getCountPaymentDue] " + "Count: " + purchaseOrderList.size());
+
+		return purchaseOrderList.size();
+	}
 }
