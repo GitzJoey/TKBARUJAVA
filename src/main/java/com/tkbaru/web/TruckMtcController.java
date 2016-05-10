@@ -28,7 +28,7 @@ import com.tkbaru.service.TruckMtcService;
 import com.tkbaru.service.TruckService;
 
 @Controller
-@RequestMapping("/truck/maintenance")
+@RequestMapping("/master/truck/maintenance")
 public class TruckMtcController {
 	private static final Logger logger = LoggerFactory.getLogger(TruckMtcController.class);
 

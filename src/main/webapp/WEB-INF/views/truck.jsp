@@ -114,8 +114,8 @@
 											<c:forEach items="${ truckList }" var="i" varStatus="truckIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.truckId }"/>" type="checkbox" value="<c:out value="${ i.truckId }"/>"/></td>
-													<td><c:out value="${ i.truckTypeLookup.lookupValue }"></c:out></td>
-													<td><c:out value="${ i.weightTypeLookup.lookupValue }"></c:out></td>
+													<td><spring:message code="${ i.truckTypeLookup.i18nLookupValue }" text="${ i.truckTypeLookup.lookupValue }"></spring:message></td>
+													<td><spring:message code="${ i.weightTypeLookup.i18nLookupValue }" text="${ i.weightTypeLookup.lookupValue }"></spring:message></td>
 													<td><c:out value="${ i.plateNumber }"></c:out></td>
 													<td><c:out value="${ i.kirDate }"></c:out></td>
 													<td><c:out value="${ i.driver }"></c:out></td>
