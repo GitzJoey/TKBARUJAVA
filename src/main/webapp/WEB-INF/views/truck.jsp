@@ -175,13 +175,13 @@
 									<div class="form-group">
 										<label for="inputPlateNumber" class="col-sm-2 control-label"><spring:message code="truck_jsp.plate_number" text="Plate Number"/></label>
 										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputPlateNumber" path="plateNumber" placeholder="Enter Plate Number" data-parsley-length="[4, 10]" data-parsley-pattern="^[a-zA-Z0-9]+$" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+											<form:input type="text" class="form-control" id="inputPlateNumber" path="plateNumber" placeholder="Enter Plate Number" data-parsley-length="[4, 10]" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
 										<label for="inputKirDate" class="col-sm-2 control-label"><spring:message code="truck_jsp.kir_date" text="KIR Date"/></label>
 										<div class="col-sm-4">
-											<form:input type="text" class="form-control" id="inputKirDate" path="kirDate" placeholder="Enter KIR Date" data-parsley-required="true" data-parsley-trigger="keyup"></form:input>
+											<form:input type="text" class="form-control" id="inputKirDate" path="kirDate" placeholder="Enter KIR Date" data-parsley-required="true" data-parsley-trigger="change"></form:input>
 										</div>
 									</div>
 									<div class="form-group">

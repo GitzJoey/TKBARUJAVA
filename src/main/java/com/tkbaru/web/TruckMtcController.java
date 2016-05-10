@@ -117,7 +117,7 @@ public class TruckMtcController {
 		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_DELETE);
 		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck/maintenance/tr/" + truckId;
+		return "redirect:/master/truck/maintenance/tr/" + truckId;
 	}
 	
 	@RequestMapping(value="/tr/{truckId}/save", method = RequestMethod.POST)
@@ -138,6 +138,6 @@ public class TruckMtcController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		return "redirect:/truck/maintenance/tr/" + mtc.getTruckId();
+		return "redirect:/master/truck/maintenance/tr/" + mtc.getTruckId();
 	}
 }
