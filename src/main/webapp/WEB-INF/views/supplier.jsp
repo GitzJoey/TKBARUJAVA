@@ -285,7 +285,7 @@
 																						<c:out value="${ i.supplierAddress }"></c:out><br/>
 																						<c:out value="${ i.supplierCity }"></c:out><br/>
 																						<c:out value="${ i.supplierPhone }"></c:out><br/>
-																						<c:out value="${ i.npwpNum }"></c:out><br/>
+																						<c:out value="${ i.npwpNum }"></c:out><br/><br/><br/>
 																						<c:out value="${ i.supplierRemarks }"></c:out><br/>
 																					</td>
 																					<td width="65%">

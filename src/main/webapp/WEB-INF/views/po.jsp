@@ -281,7 +281,7 @@
 																		    	<form:input type="text" class="form-control" id="truckVendorId_${ poIdx.index }" path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckName" readonly="true"></form:input>																				
 																			</c:when>
 																			<c:otherwise>
-																				<form:select class="form-control" id="inputTruckVendor${ poIdx.index }" path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckId" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }" data-parsley-required="true" data-parsley-trigger="change" data-parsley-group="poTab${ poIdx.index }">
+																				<form:select class="form-control" id="inputTruckVendor${ poIdx.index }" path="poList[${ poIdx.index }].truckVendorEntity.vendorTruckId" disabled="${ loginContext.poList[poIdx.index].poStatusLookup.lookupKey == 'L013_WA' }">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<form:options items="${ truckVendorDDL }" itemValue="vendorTruckId" itemLabel="vendorTruckName" />
 																				</form:select>
