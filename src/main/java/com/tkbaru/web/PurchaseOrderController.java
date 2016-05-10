@@ -247,6 +247,10 @@ public class PurchaseOrderController {
 			itemList.add(items);
 		}
 
+		if (po.getTruckVendorEntity().getVendorTruckId() == null) {
+			po.setTruckVendorEntity(null);
+		}
+		
 		if (po.getPoId() == null) {
 			po.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			po.setCreatedDate(new Date());
@@ -262,7 +266,9 @@ public class PurchaseOrderController {
 		for (PurchaseOrder poVar : loginContext.getPoList()) {
 			poVar.setSupplierEntity(supplierManager.getSupplierById(poVar.getSupplierEntity().getSupplierId()));
 			poVar.setWarehouseEntity(warehouseManager.getWarehouseById(poVar.getWarehouseEntity().getWarehouseId()));
-			poVar.setTruckVendorEntity(truckVendorManager.getTruckVendorById(poVar.getTruckVendorEntity().getVendorTruckId()));
+			if (poVar.getTruckVendorEntity() != null && poVar.getTruckVendorEntity().getVendorTruckId() != null) {
+				poVar.setTruckVendorEntity(truckVendorManager.getTruckVendorById(poVar.getTruckVendorEntity().getVendorTruckId()));
+			}
 			poVar.setPoTypeLookup(lookupManager.getLookupByKey(poVar.getPoTypeLookup().getLookupKey()));
 			for (Items items : poVar.getItemsList()) {
 				items.setProductEntity(productManager.getProductById(items.getProductEntity().getProductId()));

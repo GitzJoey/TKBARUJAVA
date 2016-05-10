@@ -187,6 +187,7 @@ public class WarehouseDashboardController {
 		model.addAttribute("selectedPoObject", selectedPoObject);
 		model.addAttribute("selectedItemsObject", selectedItemsObject);
 		model.addAttribute("unitDDL", unitL);
+		model.addAttribute("flow", "Inflow");
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 
@@ -255,6 +256,7 @@ public class WarehouseDashboardController {
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		model.addAttribute("flow", "Inflow");
 		
 		model.addAttribute(Constants.PAGE_TITLE, "");
 

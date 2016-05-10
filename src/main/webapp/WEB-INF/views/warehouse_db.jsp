@@ -399,7 +399,7 @@
 									</div>
 								</div>
 							</c:when>
-							<c:otherwise>
+							<c:when test="${ flow == 'Inflow' }">
 								<div class="panel panel-default">
 									<div class="panel-heading">
 										<h1 class="panel-title">
@@ -482,18 +482,24 @@
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="inputTruckVendor" class="col-sm-2 control-label">Truck Vendor</label>
+												<label for="inputTruckVendor" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.vendor_truck" text="Truck Vendor"/></label>
 												<div class="col-sm-5">
-													<form:select class="form-control" path="receipt.truckVendorEntity.vendorTruckId" data-parsley-required="true" data-parsley-trigger="change">
-														<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
-														<c:forEach items="${ truckVendorSelectionDDL }" var="i">
-															<form:option value="${ i.vendorTruckId }"><c:out value="${ i.vendorTruckName }"/></form:option>
-														</c:forEach>
-													</form:select>
+													<c:choose>	
+														<c:when test="${ empty selectedPoObject.truckVendorEntity && empty selectedPoObject.truckVendorEntity.vendorTruckId }">
+															<label class="control-label"><spring:message code="common.label.not_available" text="Not Available"/></label>
+														</c:when>
+														<c:otherwise>
+															<form:select class="form-control" path="receipt.truckVendorEntity.vendorTruckId" disabled="true">
+																<c:forEach items="${ truckVendorSelectionDDL }" var="i">
+																	<form:option value="${ i.vendorTruckId }"><c:out value="${ i.vendorTruckName }"/></form:option>
+																</c:forEach>
+															</form:select>
+														</c:otherwise>
+													</c:choose>
 												</div>
 											</div>
 											<div class="form-group">
-												<label for="inputTruckPlate" class="col-sm-2 control-label">Truck Plate</label>
+												<label for="inputTruckPlate" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.inflow.license_plate" text="License Plate"/></label>
 												<div class="col-sm-5">
 													<form:input id="inputTruckPlate" class="form-control" path="receipt.truckPlate" data-parsley-required="true"/>
 												</div>
@@ -507,6 +513,9 @@
 										</form:form>
 									</div>
 								</div>
+							</c:when>
+							<c:otherwise>
+								Error
 							</c:otherwise>
 						</c:choose>
 					</c:when>
