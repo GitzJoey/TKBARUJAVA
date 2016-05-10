@@ -52,7 +52,6 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/autoNumeric/autoNumeric.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scrollToTop/js/scrollToTop.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery.easing/jquery.easing.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/Modernizr/bin/modernizr"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-mousewheel/jquery.mousewheel.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>	
 
