@@ -14,7 +14,7 @@
 			$('#cancelButton').click(function() {
 				var truckId = $('#inputHidden_truckId').val();
 				
-				window.location.href = ctxpath + "/truck/maintenance/tr/" + truckId;
+				window.location.href = ctxpath + "/master/truck/maintenance/tr/" + truckId;
 			});
 			
 			$('input[type="checkbox"][id^="cbx_"]').click(function() {
@@ -48,9 +48,9 @@
 					return false;	
 				} else {
 					if (button == 'editTableSelection') {
-						$('#editTableSelection').attr("href", ctxpath + "/truck/maintenance/tr/" + truckId + "/edit/" + id);
+						$('#editTableSelection').attr("href", ctxpath + "/master/truck/maintenance/tr/" + truckId + "/edit/" + id);
 					} else {
-						$('#deleteTableSelection').attr("href", ctxpath + "/truck/maintenance/tr/" + truckId + "/delete/" + id);
+						$('#deleteTableSelection').attr("href", ctxpath + "/master/truck/maintenance/tr/" + truckId + "/delete/" + id);
 					}						
 				}				
 			});
@@ -131,8 +131,8 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="backButton" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck"><span class="fa fa-arrow-left fa-fw"></span>&nbsp;<spring:message code="common.back_button" text="Back"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/truck/maintenance/tr/${ truckId }/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
+								<a id="backButton" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/master/truck"><span class="fa fa-arrow-left fa-fw"></span>&nbsp;<spring:message code="common.back_button" text="Back"/></a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<a id="addNew" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/master/truck/maintenance/tr/${ truckId }/add"><span class="fa fa-plus fa-fw"></span>&nbsp;<spring:message code="common.add_button" text="Add"/></a>&nbsp;&nbsp;&nbsp;
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="common.edit_button" text="Edit"/></a>&nbsp;&nbsp;&nbsp;
 							</div>
 						</div>
@@ -152,7 +152,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/truck/maintenance/tr/${ mtcForm.truckId }/save" data-parsley-validate="parsley">
+								<form:form id="mtcForm" role="form" class="form-horizontal" modelAttribute="mtcForm" action="${pageContext.request.contextPath}/master/truck/maintenance/tr/${ mtcForm.truckId }/save" data-parsley-validate="parsley">
 									<form:hidden path="truckMaintenanceId"/>
 									<form:hidden id="inputHidden_truckId" path="truckId"/>
 									<div class="form-group">
