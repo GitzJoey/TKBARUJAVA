@@ -50,7 +50,7 @@ public class PriceServiceImpl implements PriceService {
 	@Override
 	@Transactional
 	public List<Price> getLatestRetailPrice(int stocksId, int priceLevelId) {
-		List<Price> perStock = getLatestRetailPrice(stocksId, priceLevelId);
+		List<Price> perStock = priceDAO.getLatestRetailPrice(stocksId, priceLevelId);
 
 		return perStock;
 	}
@@ -62,7 +62,7 @@ public class PriceServiceImpl implements PriceService {
 		
 		List<Stocks> stocksList = stocksManager.getAllStocks();		
 		for (Stocks s:stocksList) {
-			List<Price> perStock = getLatestRetailPrice(s.getStocksId(), priceLevelId);
+			List<Price> perStock = priceDAO.getLatestRetailPrice(s.getStocksId(), priceLevelId);
 			if (perStock.size() > 0) {
 				result.addAll(perStock);
 			}

@@ -67,11 +67,7 @@
 			function timeout() {
 			    setTimeout(function () {
 			    	sessionTimeout = (sessionTimeout - 1000);
-			    	if (sessionTimeout < 1000) {
-			    		$('#timeoutCount').text(sessionTimeout / 1000);	
-			    	} else {
-			    		$('#timeoutCount').text(0);
-			    	}					
+			    	$('#timeoutCount').text(sessionTimeout / 1000);
 			        timeout();
 			    }, 1000);
 			}

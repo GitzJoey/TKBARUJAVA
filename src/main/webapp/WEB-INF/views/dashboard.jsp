@@ -1276,19 +1276,16 @@
 			</div>
 			<div id="content" class="col-md-10">
 				<c:choose>
-					<c:when test="${ not empty priceList }">
-					</c:when>
-					<c:otherwise>
+					<c:when test="${ not empty PriceList }">
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<div id="priceList" class="row row-horizon">
-									<!--
-									<c:forEach items="${ PriceList }" var="pr" varStatus="prIdx">
+									<c:forEach items="${ PriceList }" var="p" varStatus="pIdx">
 										<div class="col-md-3">
 											<div class="panel panel-primary">
 												<div class="panel-heading">
 													<div class="row">
-														<div class="col-sm-2 col-md-6">
+														<div class="col-md-6">
 															<c:choose>																
 																<c:when test="${ empty p.stocksEntity.productEntity.imagePath }">
 																	<c:choose>
@@ -1304,7 +1301,7 @@
 																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_ACI' }">
 																			<img src="${ pageContext.request.contextPath }/resources/images/wheat.jpg" class="img-responsive img-circle"/>
 																		</c:when>
-																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KDLL' || p.stocksEntity.prodQuantity.productTypeLookup.lookupKey == 'L004_KDLI' }">
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KDLL' || p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KDLI' }">
 																			<img src="${ pageContext.request.contextPath }/resources/images/soybeans.jpg" class="img-responsive img-circle"/>
 																		</c:when>
 																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KTN' }">
@@ -1325,21 +1322,35 @@
 															<div class="huge">
 																<c:out value="${ p.price }"/>
 																<span class="small">
-																	<c:forEach items="${ p.stocksEntity.prodQuantity.productUnit }" var="pu" varStatus="puIdx">
+																	<c:forEach items="${ p.stocksEntity.productEntity.productUnit }" var="pu" varStatus="puIdx">
 																		<c:if test="${ pu.isBaseUnit }">
 																			/<spring:message code="${ pu.unitCodeLookup.i18nLookupValue }" text="${ pu.unitCodeLookup.lookupValue }"/>
 																		</c:if>
 																	</c:forEach>
 																</span>
 															</div>
-															<div class="tiny"><fmt:formatDate pattern="dd MMM yyyy" value="${ p.inputDate }" /></div>														
+															<div class="tiny"><fmt:formatDate pattern="dd MMM yyyy" value="${ p.inputDate }" /></div>
 														</div>
 													</div>
 												</div>
+												<div class="panel-footer">
+													<a href="#">
+														<span class="pull-left">View Details</span>
+														<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+													</a>
+													<div class="clearfix"></div>
+												</div>												
 											</div>
 										</div>
 									</c:forEach>
-									-->
+								</div>
+							</div>
+						</div>						
+					</c:when>
+					<c:otherwise>
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div id="priceList" class="row row-horizon">
 									<div class="col-md-3">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
