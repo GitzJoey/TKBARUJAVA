@@ -9,5 +9,4 @@ public interface PriceDAO {
 	public List<Price> getAllPriceForDate(Date inputDate);
 	public void addPrice(Price price);
 	public List<Price> getLatestRetailPrice();
-	public Price getLatestRetailPriceByProductId(int productId);
 }

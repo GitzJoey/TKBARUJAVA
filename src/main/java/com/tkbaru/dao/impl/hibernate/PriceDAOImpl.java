@@ -8,7 +8,6 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,21 +63,4 @@ public class PriceDAOImpl implements PriceDAO {
 		return priceList;
 	}
 
-	@Override
-	public Price getLatestRetailPriceByProductId(int productId) {
-		logger.info("[getLatestRetailPriceByProductId] " + "productId: " + productId);
-		
-		Session session = this.sessionFactory.getCurrentSession();
-		
-		Criteria cr = session.createCriteria(Price.class, "pr")
-				.createCriteria("pr.stocksEntity", "se", JoinType.INNER_JOIN)
-				.createCriteria("se.productEntity", "prd", JoinType.INNER_JOIN)
-				.setProjection(Projections.max("pr.inputDate"))
-				.add(Restrictions.eq("prd.productId", productId));
-		
-		cr.list();
-		
-		return null;
-	}
-    
 }

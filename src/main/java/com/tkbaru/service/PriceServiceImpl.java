@@ -44,15 +44,8 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	@Transactional
-	public Price getLatestRetailPriceByProductId(int productId) {
-		
-		return priceDAO.getLatestRetailPriceByProductId(productId);
-	}
-
-	@Override
-	@Transactional
 	public List<Price> getLatestRetailPrice() {
-		
+
 		return priceDAO.getLatestRetailPrice();
 	}
 	

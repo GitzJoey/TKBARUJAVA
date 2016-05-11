@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <!DOCTYPE html>
 <html>
@@ -1281,6 +1282,64 @@
 						<div class="panel panel-default">
 							<div class="panel-body">
 								<div id="priceList" class="row row-horizon">
+									<!--
+									<c:forEach items="${ PriceList }" var="pr" varStatus="prIdx">
+										<div class="col-md-3">
+											<div class="panel panel-primary">
+												<div class="panel-heading">
+													<div class="row">
+														<div class="col-sm-2 col-md-6">
+															<c:choose>																
+																<c:when test="${ empty p.stocksEntity.productEntity.imagePath }">
+																	<c:choose>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_ML' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_GL' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/sugar.jpg" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_TRG' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/wheat.jpg" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_ACI' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/wheat.jpg" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KDLL' || p.stocksEntity.prodQuantity.productTypeLookup.lookupKey == 'L004_KDLI' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/soybeans.jpg" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_KTN' }">
+																			<img src="${ pageContext.request.contextPath }/resources/images/no_image.png" class="img-responsive img-circle"/>
+																		</c:when>
+																		<c:otherwise>
+																			<img src="${ pageContext.request.contextPath }/resources/images/no_image.png" class="img-responsive img-circle"/>
+																		</c:otherwise>
+																	</c:choose>																
+																</c:when>
+																<c:otherwise>
+																	<c:set var="baseURL" value="${ pageContext.request.scheme }://${ pageContext.request.serverName }:${ pageContext.request.serverPort }" />																	
+																	<img src="${ baseURL }/cdn/${ p.stocksEntity.productEntity.imagePath }" class="img-responsive img-circle"/>
+																</c:otherwise>
+															</c:choose>
+														</div>
+														<div class="col-md-6 text-right">
+															<div class="huge">
+																<c:out value="${ p.price }"/>
+																<span class="small">
+																	<c:forEach items="${ p.stocksEntity.prodQuantity.productUnit }" var="pu" varStatus="puIdx">
+																		<c:if test="${ pu.isBaseUnit }">
+																			/<spring:message code="${ pu.unitCodeLookup.i18nLookupValue }" text="${ pu.unitCodeLookup.lookupValue }"/>
+																		</c:if>
+																	</c:forEach>
+																</span>
+															</div>
+															<div class="tiny"><fmt:formatDate pattern="dd MMM yyyy" value="${ p.inputDate }" /></div>														
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:forEach>
+									-->
 									<div class="col-md-3">
 										<div class="panel panel-primary">
 											<div class="panel-heading">
@@ -1289,7 +1348,7 @@
 														<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
 													</div>
 													<div class="col-md-6 text-right">
-														<div class="huge">9800<span class="small">/Kg</span></div>
+														<div class="huge">19800<span class="small">/Kg</span></div>
 														<div class="tiny">17 March 2015</div>
 													</div>
 												</div>
