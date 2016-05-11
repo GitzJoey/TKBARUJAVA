@@ -1,5 +1,6 @@
 package com.tkbaru.service;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,12 +10,16 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.dao.PriceDAO;
 import com.tkbaru.model.Price;
+import com.tkbaru.model.Stocks;
 
 @Service
 public class PriceServiceImpl implements PriceService {
 	@Autowired
 	PriceDAO priceDAO;
 
+	@Autowired
+	StocksService stocksManager;
+	
 	@Override
 	@Transactional
 	public boolean checkExistPriceForDate(Date inputDate) {
@@ -44,9 +49,26 @@ public class PriceServiceImpl implements PriceService {
 
 	@Override
 	@Transactional
-	public List<Price> getLatestRetailPrice() {
+	public List<Price> getLatestRetailPrice(int stocksId, int priceLevelId) {
+		List<Price> perStock = getLatestRetailPrice(stocksId, priceLevelId);
 
-		return priceDAO.getLatestRetailPrice();
+		return perStock;
 	}
-	
+
+	@Override
+	@Transactional
+	public List<Price> getLatestRetailPrice(int priceLevelId) {
+		List<Price> result = new ArrayList<Price>();
+		
+		List<Stocks> stocksList = stocksManager.getAllStocks();		
+		for (Stocks s:stocksList) {
+			List<Price> perStock = getLatestRetailPrice(s.getStocksId(), priceLevelId);
+			if (perStock.size() > 0) {
+				result.addAll(perStock);
+			}
+		}
+
+		return result;
+	}
+
 }

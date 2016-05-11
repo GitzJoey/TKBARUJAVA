@@ -34,7 +34,7 @@ public class DashboardController {
 	public String dashboard(Locale locale, Model model) {
 		logger.info("[dashboard] " + "Locale: " + locale.toString());
 
-		List<Price> priceList = priceManager.getLatestRetailPrice();
+		List<Price> priceList = priceManager.getLatestRetailPrice(1);
 		int POPaymentDue = purchaseOrderManager.getCountPaymentDue();
 		
 		model.addAttribute("PriceList", priceList);

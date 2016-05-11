@@ -8,5 +8,6 @@ import com.tkbaru.model.Price;
 public interface PriceDAO {
 	public List<Price> getAllPriceForDate(Date inputDate);
 	public void addPrice(Price price);
-	public List<Price> getLatestRetailPrice();
+	
+	public List<Price> getLatestRetailPrice(int stocksId, int priceLevelId);
 }

@@ -10,5 +10,6 @@ public interface PriceService {
 	public void addPrice(Price price);
 	public void addMultiplePrice(List<Price> priceList);
 	
-	public List<Price> getLatestRetailPrice();
+	public List<Price> getLatestRetailPrice(int stocksId, int priceLevelId);
+	public List<Price> getLatestRetailPrice(int priceLevelId);
 }
