@@ -133,7 +133,10 @@
 										<div class="panel panel-default">
 								            <div class="panel-heading" data-toggle="collapse" data-parent="#stockaccordion" data-target="#collapse_${ sIdx.index }">
 		               							<h4 class="panel-title">
-		                   							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">${ s.productEntity.productName }</a>
+		                   							<a data-toggle="collapse" data-parent="#stockaccordion" href="#collapse_${ sIdx.index }">
+		                   								${ s.productEntity.productName }&nbsp;-&nbsp;[<fmt:formatDate pattern="dd-MM-yyyy" value="${ s.purchaseOrderEntity.poCreatedDate }"/>]
+		                   								<span class="pull-right">[&nbsp;${ s.purchaseOrderEntity.poCode }&nbsp;]</span>
+		                   							</a>
 								                </h4>
 							            	</div>
 						            		<table class="table">

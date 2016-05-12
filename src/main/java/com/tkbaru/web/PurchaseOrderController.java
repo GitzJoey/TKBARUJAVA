@@ -633,6 +633,9 @@ public class PurchaseOrderController {
 			itemList.add(items);
 		}
 
+		if (reviseForm.getTruckVendorEntity().getVendorTruckId() == null) {
+			reviseForm.setTruckVendorEntity(null);
+		}		
 		poManager.editPurchaseOrder(reviseForm);
 
 		model.addAttribute("reviseForm", reviseForm);

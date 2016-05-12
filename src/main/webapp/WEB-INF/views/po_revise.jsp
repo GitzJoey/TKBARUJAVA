@@ -138,9 +138,10 @@
 									<thead>
 										<tr>
 											<th width="5%">&nbsp;</th>
-											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_code" text="PO Code"/></th>
+											<th width="10%"><spring:message code="po_revise_jsp.table.revise.header.po_code" text="PO Code"/></th>
 											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.po_date" text="PO Date"/></th>
-											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.supplier" text="Supplier"/></th>
+											<th width="25%"><spring:message code="po_revise_jsp.table.revise.header.supplier" text="Supplier"/></th>
+											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.arrival_date" text="Arrival Date"/></th>
 											<th width="20%"><spring:message code="po_revise_jsp.table.revise.header.status" text="Status"/></th>
 										</tr>
 									</thead>
@@ -152,6 +153,7 @@
 													<td><c:out value="${ i.poCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
 													<td><c:out value="${ i.supplierEntity.supplierName }"></c:out></td>
+													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.shippingDate }" /></td>
 													<td><spring:message code="${ i.poStatusLookup.i18nLookupValue }" text="${ i.poStatusLookup.lookupValue }"/></td>
 												</tr>
 											</c:forEach>
