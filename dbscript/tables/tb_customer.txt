@@ -10,6 +10,7 @@ CREATE TABLE `tb_customer` (
   `npwp_num` 		varchar(45)	DEFAULT NULL,
   `price_level_id`	int(11) 	DEFAULT NULL,
   `status` 			varchar(15) DEFAULT NULL,
+  `payment_due_day` int(11) 	DEFAULT '0',
   `remarks` 		varchar(45) DEFAULT NULL,
   `created_by` 		int(11) 	DEFAULT '0',
   `created_date` 	datetime 	DEFAULT NULL,
