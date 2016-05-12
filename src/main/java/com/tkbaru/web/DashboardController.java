@@ -15,6 +15,7 @@ import com.tkbaru.model.LoginContext;
 import com.tkbaru.model.Price;
 import com.tkbaru.service.PriceService;
 import com.tkbaru.service.PurchaseOrderService;
+import com.tkbaru.service.SalesOrderService;
 
 @Controller
 @RequestMapping(value="/dashboard")
@@ -26,6 +27,9 @@ public class DashboardController {
 	
 	@Autowired
 	PurchaseOrderService purchaseOrderManager;
+	
+	@Autowired
+	SalesOrderService salesOrderManager;
 	
 	@Autowired
 	private LoginContext loginContextSession;
@@ -43,4 +47,13 @@ public class DashboardController {
 		
 		return "dashboard";
 	}
+	
+	@RequestMapping(value = "/get/sales", method = RequestMethod.GET)
+	public String retrieveSalesData(Locale locale, Model model) {
+		logger.info("[retrieveSalesData] " + "Locale: " + locale.toString());
+
+		
+		return "dashboard";
+	}
+	
 }

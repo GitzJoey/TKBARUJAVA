@@ -42,7 +42,7 @@
 		                }
 		            },
 		            grid: {
-		                hoverable: true //IMPORTANT! this is needed for tooltip to work
+		                hoverable: true
 		            },
 		            yaxis: {
 		                min: -1.2,
