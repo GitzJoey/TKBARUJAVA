@@ -1283,11 +1283,11 @@
 									<c:forEach items="${ PriceList }" var="p" varStatus="pIdx">
 										<div class="col-md-3">
 											<div class="panel panel-primary">
-												<div class="panel-heading">
+												<div class="panel-body panel-primary-background">
 													<div class="row">
 														<div class="col-md-6">
 															<c:choose>																
-																<c:when test="${ empty p.stocksEntity.productEntity.imagePath }">
+																<c:when test="${ not empty p.stocksEntity.productEntity.imagePath }">
 																	<c:choose>
 																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_ML' }">
 																			<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
@@ -1314,27 +1314,25 @@
 																</c:when>
 																<c:otherwise>
 																	<c:set var="baseURL" value="${ pageContext.request.scheme }://${ pageContext.request.serverName }:${ pageContext.request.serverPort }" />																	
-																	<img src="${ baseURL }/cdn/${ p.stocksEntity.productEntity.imagePath }" class="img-responsive img-circle"/>
+																	<img src="${ baseURL }/cdn/${ p.stocksEntity.productEntity.imagePath }" class="img-responsive img-rounded"/>
 																</c:otherwise>
 															</c:choose>
 														</div>
 														<div class="col-md-6 text-right">
-															<div class="huge">
-																<c:out value="${ p.price }"/>
-																<span class="small">
-																	<c:forEach items="${ p.stocksEntity.productEntity.productUnit }" var="pu" varStatus="puIdx">
-																		<c:if test="${ pu.isBaseUnit }">
-																			/<spring:message code="${ pu.unitCodeLookup.i18nLookupValue }" text="${ pu.unitCodeLookup.lookupValue }"/>
-																		</c:if>
-																	</c:forEach>
-																</span>
-															</div>
-															<div class="tiny"><fmt:formatDate pattern="dd MMM yyyy" value="${ p.inputDate }" /></div>
+															<h4><strong><fmt:formatNumber type="number" pattern="##,###" value="${ p.price }"></fmt:formatNumber></strong></h4>
+															<span class="small">
+																<c:forEach items="${ p.stocksEntity.productEntity.productUnit }" var="pu" varStatus="puIdx">
+																	<c:if test="${ pu.isBaseUnit }">
+																		/<spring:message code="${ pu.unitCodeLookup.i18nLookupValue }" text="${ pu.unitCodeLookup.lookupValue }"/>
+																	</c:if>
+																</c:forEach>
+															</span>
+															<div class="small"><fmt:formatDate pattern="dd MMM yyyy" value="${ p.inputDate }" /></div>
 														</div>
 													</div>
 												</div>
 												<div class="panel-footer">
-													<a href="#">
+													<a href="${ pageContext.request.contextPath }/price/todayprice">
 														<span class="pull-left">View Details</span>
 														<span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
 													</a>

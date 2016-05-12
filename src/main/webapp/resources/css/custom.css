@@ -38,27 +38,6 @@ strong.title {
 	font-size: 30px;
 }
 
-.huge {
-	font-size: 25px;
-}
-
-.small {
-	font-size: 15px;
-}
-
-.tiny {
-	font-size: 10px;
-}
-
-.center-align {
-	vertical-align: middle;
-	text-align: center;
-}
-
-.right-align {
-	text-align: right;
-}
-
 .valign-middle {
 	vertical-align: middle; !important
 }
@@ -171,4 +150,9 @@ tr.group, tr.group:hover {
 
 .btn-xs-valign-bottom {
 	padding-top: 8px;
+}
+
+.panel-primary-background {
+	background-color: #008cba;
+	color: #ffffff;
 }
