@@ -309,6 +309,7 @@
 																						<br/>
 																						<strong><spring:message code="supplier_jsp.table.list.header.settings" text="Settings"/></strong>
 																						<br/>
+																						<spring:message code="supplier_jsp.table.list.header.settings.payment_due_day" text="Payment Due Day"/>&nbsp;:&nbsp;<c:out value="${ i.paymentDueDay }"/><br/>
 																						<br/>
 																						<br/>
 																					</td>
@@ -702,7 +703,15 @@
 												</div>
 											</div>
 											<div role="tabpanel" class="tab-pane <c:if test="${ activeTab == 'settingsTab' }"><c:out value="active"/></c:if>" id="settingsTab">
-												&nbsp;
+												<br/>
+												<div class="form-horizontal">
+													<div class="form-group">
+														<label for="inputPaymentDueDay" class="col-sm-2 control-label"><spring:message code="supplier_jsp.setting.payment_due_day" text="Payment Due Day"/></label>
+														<div class="col-sm-5">
+														 	<form:input type="text" class="form-control" id="paymentDueDay" name="paymentDueDay" path="paymentDueDay" readonly="false" data-parsley-required="true"></form:input>
+														</div>
+													</div>
+												</div>
 											</div>
 										</div>
 									</div>

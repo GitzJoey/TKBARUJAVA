@@ -300,6 +300,9 @@
 																					<strong><spring:message code="customer_jsp.table.list.header.settings" text="Settings"/></strong><br/>
 																					<spring:message code="customer_jsp.table.list.header.settings.level" text="Level"/>&nbsp;:&nbsp;<c:out value="${ i.priceLevelEntity.priceLevelName }"/>
 																					<br/>
+																					<spring:message code="customer_jsp.table.list.header.settings.payment_due_day" text="Payment Due Day"/>&nbsp;:&nbsp;<c:out value="${ i.paymentDueDay }"/><br/>
+																					<br/>
+																					<br/>
 																					<br/>
 																				</td>
 																			</tr>
@@ -640,6 +643,12 @@
 																	<form:option value="${ k.priceLevelId }"><c:out value="${ k.priceLevelName }"/>&nbsp;-&nbsp;<c:out value="${ k.priceLevelDescription }"/></form:option>
 																</c:forEach>
 															</form:select>
+														</div>
+													</div>
+													<div class="form-group">
+														<label for="inputPaymentDueDay" class="col-sm-2 control-label"><spring:message code="customer_jsp.setting.payment_due_day" text="Payment Due Day"/></label>
+														<div class="col-sm-5">
+														 	<form:input type="text" class="form-control" id="paymentDueDay" name="paymentDueDay" path="paymentDueDay" readonly="false" data-parsley-required="true"></form:input>
 														</div>
 													</div>
 												</div>

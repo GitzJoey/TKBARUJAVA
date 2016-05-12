@@ -67,6 +67,8 @@ public class Customer implements Serializable {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
+	@Column(name="payment_due_day")
+	private Integer paymentDueDay;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 
@@ -181,6 +183,14 @@ public class Customer implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
+	public Integer getPaymentDueDay() {
+		return paymentDueDay;
+	}
+
+	public void setPaymentDueDay(Integer paymentDueDay) {
+		this.paymentDueDay = paymentDueDay;
+	}
+
 	public List<BankAccount> getBankAccList() {
 		return bankAccList;
 	}
@@ -227,9 +237,9 @@ public class Customer implements Serializable {
 				+ customerAddress + ", customerCity=" + customerCity + ", customerPhone=" + customerPhone
 				+ ", customerRemarks=" + customerRemarks + ", npwpNum=" + npwpNum + ", createdBy=" + createdBy
 				+ ", createdDate=" + createdDate + ", updatedBy=" + updatedBy + ", updatedDate=" + updatedDate
-				+ ", bankAccList=" + bankAccList + ", picList=" + picList + ", customerStatusLookup="
-				+ customerStatusLookup + ", customerStoreEntity=" + customerStoreEntity + ", priceLevelEntity="
-				+ priceLevelEntity + "]";
+				+ ", paymentDueDay=" + paymentDueDay + ", bankAccList=" + bankAccList + ", picList=" + picList
+				+ ", customerStatusLookup=" + customerStatusLookup + ", customerStoreEntity=" + customerStoreEntity
+				+ ", priceLevelEntity=" + priceLevelEntity + "]";
 	}
 
 }
