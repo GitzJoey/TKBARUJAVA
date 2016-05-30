@@ -198,6 +198,10 @@ INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, statu
 VALUES ('PO_STATUS', 'L013_C',
 		'PO_STATUS.L013_C', 'Closed',
         4, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('PO_STATUS', 'L013_RJT',
+		'PO_STATUS.L013_RJT', 'Rejected',
+        5, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
 /*PO Type - L014*/
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
@@ -232,6 +236,10 @@ INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, statu
 VALUES ('SO_STATUS', 'L016_C',
 		'SO_STATUS.L016_C', 'Closed',
         4, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
+INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)
+VALUES ('SO_STATUS', 'L016_RJT',
+		'SO_STATUS.L016_RJT', 'Rejected',
+        5, 'L001_A', 'L003_NO', 0, (SELECT CURRENT_TIMESTAMP()));
         
 /*Payment Type L017 */
 INSERT INTO tb_lookup (category, lookup_key, loc_msg_code, val, order_num, status, maintainable, created_by, created_date)

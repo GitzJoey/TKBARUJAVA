@@ -161,6 +161,7 @@
 									</tbody>
 								</table>
 								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;<spring:message code="po_revise_jsp.revise_button" text="Revise"/></a>
+								<a id="rejectTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-hand-stop-o fa-fw"></span>&nbsp;<spring:message code="common.reject_button" text="Reject"/></a>
 							</div>
 						</div>
 					</c:when>
