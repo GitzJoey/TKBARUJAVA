@@ -1308,8 +1308,8 @@
 												<div class="panel-body panel-primary-background">
 													<div class="row">
 														<div class="col-md-6">
-															<c:choose>																
-																<c:when test="${ not empty p.stocksEntity.productEntity.imagePath }">
+															<c:choose>
+																<c:when test="${ empty p.stocksEntity.productEntity.imagePath }">
 																	<c:choose>
 																		<c:when test="${ p.stocksEntity.productEntity.productTypeLookup.lookupKey == 'L004_ML' }">
 																			<img src="${ pageContext.request.contextPath }/resources/images/palm-oil.jpg" class="img-responsive img-circle"/>
