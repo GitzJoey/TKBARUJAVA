@@ -62,6 +62,8 @@ public class Supplier implements Serializable {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
+	@Column(name="payment_due_day")
+	private Integer paymentDueDay;
 
 	public String getProductIdList() {
 		List<Integer> ids = new ArrayList<Integer>();
@@ -195,6 +197,14 @@ public class Supplier implements Serializable {
 		this.updatedDate = updatedDate;
 	}
 
+	public Integer getPaymentDueDay() {
+		return paymentDueDay;
+	}
+
+	public void setPaymentDueDay(Integer paymentDueDay) {
+		this.paymentDueDay = paymentDueDay;
+	}
+
 	public List<BankAccount> getBankAccList() {
 		return bankAccList;
 	}
@@ -241,9 +251,9 @@ public class Supplier implements Serializable {
 				+ supplierAddress + ", supplierCity=" + supplierCity + ", supplierRemarks=" + supplierRemarks
 				+ ", supplierPhone=" + supplierPhone + ", supplierFax=" + supplierFax + ", npwpNum=" + npwpNum
 				+ ", createdBy=" + createdBy + ", createdDate=" + createdDate + ", updatedBy=" + updatedBy
-				+ ", updatedDate=" + updatedDate + ", bankAccList=" + bankAccList + ", picList=" + picList
-				+ ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup + ", supplierStoreEntity="
-				+ supplierStoreEntity + "]";
-	} 
-	
+				+ ", updatedDate=" + updatedDate + ", paymentDueDay=" + paymentDueDay + ", bankAccList=" + bankAccList
+				+ ", picList=" + picList + ", prodList=" + prodList + ", supplierStatusLookup=" + supplierStatusLookup
+				+ ", supplierStoreEntity=" + supplierStoreEntity + "]";
+	}
+
 }

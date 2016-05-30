@@ -400,6 +400,10 @@ public class SalesOrderController {
 			itemList.add(items);
 		}
 
+		if (so.getTruckVendorEntity().getVendorTruckId() == null) {
+			so.setTruckVendorEntity(null);
+		}
+		
 		if (so.getSalesId() == null) {
 			so.setCreatedBy(loginContextSession.getUserLogin().getUserId());
 			so.setCreatedDate(new Date());

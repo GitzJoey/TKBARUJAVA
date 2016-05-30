@@ -133,7 +133,7 @@ public class CustomerController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/customer";
+		return "redirect:/master/customer";
 	}
 	
 	@RequestMapping(value="/edit/{customerId}/bank/{bankAccButtonMode}/{bankAccId}", method = RequestMethod.POST)

@@ -289,8 +289,9 @@ public class WarehouseDashboardController {
 			Deliver d = new Deliver();
 			d.setDeliverStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
 			d.setDeliverItemsEntity(i);
-			
-			d.setTruckVendorEntity(selectedSoObject.getTruckVendorEntity());
+			if (selectedSoObject.getTruckVendorEntity() != null && selectedSoObject.getTruckVendorEntity().getVendorTruckId() != null) {
+				d.setTruckVendorEntity(truckVendorManager.getTruckVendorById(selectedSoObject.getTruckVendorEntity().getVendorTruckId()));
+			}			
 			
 			dl.add(d);
 			i.setDeliverList(dl);
@@ -346,9 +347,14 @@ public class WarehouseDashboardController {
 						}
 					}
 					itemX.getDeliverList().get(0).setCreatedBy(loginContextSession.getUserLogin().getUserId());
-					itemX.getDeliverList().get(0).setCreatedDate(new Date());					
+					itemX.getDeliverList().get(0).setCreatedDate(new Date());
+					if (itemX.getDeliverList().get(0).getTruckVendorEntity().getVendorTruckId() == null) {
+						itemX.getDeliverList().get(0).setTruckVendorEntity(null);
+					}
 					items.setDeliverList(itemX.getDeliverList());
-
+					
+					
+					
 					if (sales.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 						StocksOut stocksOut = new StocksOut();
 						stocksOut.setSalesOrderEntity(sales);

@@ -18,6 +18,7 @@
 		}	
 	</style>
 	<script>
+		var ctxpath = "${ pageContext.request.contextPath }";
 		//Flot Line Chart
 		$(document).ready(function() {
 		    console.log("document ready");
@@ -1246,9 +1247,15 @@
 		            content: "x: %x, y: %y"
 		        }
 		    };
+
+		    $('#priceList').mousewheel(function(e, delta) {
+		        this.scrollLeft -= (delta * 40);
+		        e.preventDefault();
+		    });
+
 		    var barData = {
-		        label: "bar",
-		        data: [
+		        "label": "bar",
+		        "data": [
 		            [1354521600000, 1000],
 		            [1355040000000, 2000],
 		            [1355223600000, 3000],
@@ -1257,12 +1264,27 @@
 		            [1355571900000, 6000]
 		        ]
 		    };
-		    $.plot($("#flot-bar-chart"), [barData], barOptions);
 
-		    $('#priceList').mousewheel(function(e, delta) {
-		        this.scrollLeft -= (delta * 40);
-		        e.preventDefault();
-		    });		    
+		    /*
+		    var barData = { label: "bar", data: [0,0] };
+		    		    
+		    $(function() { 
+				barData = $.ajax({
+					url : ctxpath + "/dashboard/get/sales",
+					type : "GET",
+					success : function(response) {
+						alert('a');
+						//var obj = JSON.parse(JSON.stringify(response, null, 4));
+						alert(JSON.stringify(response, null, 4));
+						return JSON.stringify(response, null, 4);
+					},
+					error : function(xhr, status, error) {
+						alert(error);
+					}
+				});
+		    });
+			*/
+		    $.plot($("#flot-bar-chart"), [barData], barOptions);
 		});
 	</script>
 </head>
