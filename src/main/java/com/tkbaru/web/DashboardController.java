@@ -1,6 +1,5 @@
 package com.tkbaru.web;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -56,33 +55,16 @@ public class DashboardController {
 		logger.info("[retrieveSalesData] " + "Locale: " + locale.toString());
 		
 		FlotBarChart f = new FlotBarChart();
-
-		Long[] arrLong = new Long[] { Long.valueOf("1355040000000"), (long) 2000};
-		
-		
-		ArrayList y = new ArrayList();
-		ArrayList x = new ArrayList();
-		x.add(arrLong);
-		
-		y.add(x);
-		f.setData(y);
-		
-		/*
-		
-		HashMap<String, String> p2 = new HashMap<String, String>();
-		p2.put("1355040000000", "2000");
-		//p.put("1355223600000", "3000");
-		//p.put("1355306400000", "4000");
-		//p.put("1355487300000", "5000");
-		//p.put("1355571900000", "6000");
-		ArrayList s = new ArrayList();
-		
-		s.add(p);
-		s.add(p2);
-		f.setData2(s);
-		*/
 		
 		return f;
 	}
+
+	@RequestMapping(value = "/get/stocks", method = RequestMethod.GET)
+	public @ResponseBody String retrieveStocksData(Locale locale, Model model) {
+		logger.info("[retrieveStocksData] " + "Locale: " + locale.toString());
+		
 	
+		return "";
+	}
+
 }

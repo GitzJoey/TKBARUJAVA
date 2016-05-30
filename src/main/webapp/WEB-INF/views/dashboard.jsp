@@ -19,96 +19,7 @@
 	</style>
 	<script>
 		var ctxpath = "${ pageContext.request.contextPath }";
-		//Flot Line Chart
-		$(document).ready(function() {
-		    console.log("document ready");
-		    var offset = 0;
-		    plot();
-	
-		    function plot() {
-		        var sin = [],
-		            cos = [];
-		        for (var i = 0; i < 12; i += 0.2) {
-		            sin.push([i, Math.sin(i + offset)]);
-		            cos.push([i, Math.cos(i + offset)]);
-		        }
-	
-		        var options = {
-		            series: {
-		                lines: {
-		                    show: true
-		                },
-		                points: {
-		                    show: true
-		                }
-		            },
-		            grid: {
-		                hoverable: true
-		            },
-		            yaxis: {
-		                min: -1.2,
-		                max: 1.2
-		            },
-		            tooltip: true,
-		            tooltipOpts: {
-		                content: "'%s' of %x.1 is %y.4",
-		                shifts: {
-		                    x: -60,
-		                    y: 25
-		                }
-		            }
-		        };
-	
-		        var plotObj = $.plot($("#flot-line-chart"), [{
-		                data: sin,
-		                label: "sin(x)"
-		            }, {
-		                data: cos,
-		                label: "cos(x)"
-		            }],
-		            options);
-		    }
-		});
-		//Flot Pie Chart
-		$(function() {
-	
-		    var data = [{
-		        label: "Series 0",
-		        data: 1
-		    }, {
-		        label: "Series 1",
-		        data: 3
-		    }, {
-		        label: "Series 2",
-		        data: 9
-		    }, {
-		        label: "Series 3",
-		        data: 20
-		    }];
-	
-		    var plotObj = $.plot($("#flot-pie-chart"), data, {
-		        series: {
-		            pie: {
-		                show: true
-		            }
-		        },
-		        grid: {
-		            hoverable: true
-		        },
-		        tooltip: true,
-		        tooltipOpts: {
-		            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
-		            shifts: {
-		                x: 20,
-		                y: 0
-		            },
-		            defaultTheme: false
-		        }
-		    });
-	
-		});	
-
-
+		
 		//Flot Multiple Axes Line Chart
 		$(function() {
 		    var oilprices = [
@@ -1120,8 +1031,54 @@
 		    });
 		});
 
-		//Flot Moving Line Chart
+		//Flot Line Chart
+	    $(function () {
+	    	var offset = 0;
+	    	
+	        var sin = [],
+	            cos = [];
+	        for (var i = 0; i < 12; i += 0.2) {
+	            sin.push([i, Math.sin(i + offset)]);
+	            cos.push([i, Math.cos(i + offset)]);
+	        }
 
+	        var options = {
+	            series: {
+	                lines: {
+	                    show: true
+	                },
+	                points: {
+	                    show: true
+	                }
+	            },
+	            grid: {
+	                hoverable: true
+	            },
+	            yaxis: {
+	                min: -1.2,
+	                max: 1.2
+	            },
+	            tooltip: true,
+	            tooltipOpts: {
+	                content: "'%s' of %x.1 is %y.4",
+	                shifts: {
+	                    x: -60,
+	                    y: 25
+	                }
+	            }
+	        };
+
+	        var plotObj = $.plot($("#flot-line-chart"), [{
+	                data: sin,
+	                label: "sin(x)"
+	            }, {
+	                data: cos,
+	                label: "cos(x)"
+	            }],
+	            options);
+	    });
+		
+		//Flot Moving Line Chart
 		$(function() {
 
 		    var container = $("#flot-line-chart-moving");
@@ -1220,72 +1177,112 @@
 
 		});
 
-		//Flot Bar Chart
+	    $('#priceList').mousewheel(function(e, delta) {
+	        this.scrollLeft -= (delta * 40);
+	        e.preventDefault();
+	    });
 
+		//Flot Pie Chart		
 		$(function() {
+			$.ajax({
+				url : ctxpath + "/dashboard/get/stocks",
+				type : "GET",
+				async: false,
+				success : function(response) {
+				    var data = [{
+				        label: "Series 0",
+				        data: 10
+				    }, {
+				        label: "Series 1",
+				        data: 10
+				    }, {
+				        label: "Series 2",
+				        data: 10
+				    }, {
+				        label: "Series 3",
+				        data: 10
+				    }];
 
-		    var barOptions = {
-		        series: {
-		            bars: {
-		                show: true,
-		                barWidth: 43200000
-		            }
-		        },
-		        xaxis: {
-		            mode: "time",
-		            timeformat: "%m/%d",
-		            minTickSize: [1, "day"]
-		        },
-		        grid: {
-		            hoverable: true
-		        },
-		        legend: {
-		            show: false
-		        },
-		        tooltip: true,
-		        tooltipOpts: {
-		            content: "x: %x, y: %y"
-		        }
-		    };
+				    var plotObj = $.plot($("#flot-pie-chart"), data, {
+				        series: {
+				            pie: {
+				                show: true
+				            }
+				        },
+				        grid: {
+				            hoverable: true
+				        },
+				        tooltip: true,
+				        tooltipOpts: {
+				            content: "%p.0%, %s", // show percentages, rounding to 2 decimal places
+				            shifts: {
+				                x: 20,
+				                y: 0
+				            },
+				            defaultTheme: false
+				        }
+				    });				
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});
+		});	
 
-		    $('#priceList').mousewheel(function(e, delta) {
-		        this.scrollLeft -= (delta * 40);
-		        e.preventDefault();
-		    });
+		//Flot Bar Chart
+	    $(function() { 
+			$.ajax({
+				url : ctxpath + "/dashboard/get/sales",
+				type : "GET",
+				async: false,
+				success : function(response) {
+					var barData = { "label": "bar", "data": [0,0] }; 
+					
+					var test1 = [1354521600000, 1000];
+					var test2 = [1355040000000, 2000];
+					var test3 = [1355223600000, 3000];
+					var test4 = [1355306400000, 4000];
+					var test5 = [1355487300000, 5000];
+					var test6 = [1355571900000, 6000];
+					
+					barData.data.push(test1);
+					barData.data.push(test2);
+					barData.data.push(test3);
+					barData.data.push(test4);
+					barData.data.push(test5);
+					barData.data.push(test6);
 
-		    var barData = {
-		        "label": "bar",
-		        "data": [
-		            [1354521600000, 1000],
-		            [1355040000000, 2000],
-		            [1355223600000, 3000],
-		            [1355306400000, 4000],
-		            [1355487300000, 5000],
-		            [1355571900000, 6000]
-		        ]
-		    };
-
-		    /*
-		    var barData = { label: "bar", data: [0,0] };
-		    		    
-		    $(function() { 
-				barData = $.ajax({
-					url : ctxpath + "/dashboard/get/sales",
-					type : "GET",
-					success : function(response) {
-						alert('a');
-						//var obj = JSON.parse(JSON.stringify(response, null, 4));
-						alert(JSON.stringify(response, null, 4));
-						return JSON.stringify(response, null, 4);
-					},
-					error : function(xhr, status, error) {
-						alert(error);
-					}
-				});
-		    });
-			*/
-		    $.plot($("#flot-bar-chart"), [barData], barOptions);
-		});
+				    var barOptions = {
+					        series: {
+					            bars: {
+					                show: true,
+					                barWidth: 43200000
+					            }
+					        },
+					        xaxis: {
+					            mode: "time",
+					            timeformat: "%m/%d",
+					            minTickSize: [1, "day"]
+					        },
+					        grid: {
+					            hoverable: true
+					        },
+					        legend: {
+					            show: false
+					        },
+					        tooltip: true,
+					        tooltipOpts: {
+					            content: "x: %x, y: %y"
+					        }
+					    };
+				    
+					$.plot($("#flot-bar-chart"), [barData], barOptions);
+				},
+				error : function(xhr, status, error) {
+					alert(error);
+				}
+			});
+	    });
 	</script>
 </head>
 <body>
@@ -1336,7 +1333,7 @@
 																</c:when>
 																<c:otherwise>
 																	<c:set var="baseURL" value="${ pageContext.request.scheme }://${ pageContext.request.serverName }:${ pageContext.request.serverPort }" />																	
-																	<img src="${ baseURL }/cdn/${ p.stocksEntity.productEntity.imagePath }" class="img-responsive img-rounded"/>
+																	<img src="${ baseURL }/cdn/${ p.stocksEntity.productEntity.imagePath }" class="img-responsive img-circle"/>
 																</c:otherwise>
 															</c:choose>
 														</div>

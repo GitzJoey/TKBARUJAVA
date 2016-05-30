@@ -102,4 +102,9 @@ public class Converter {
         cal.add(Calendar.DATE, days); 
         return cal.getTime();
     }
+    
+    public static long getEpochTime(Date date) {
+        
+    	return date.getTime();
+    }
 }
