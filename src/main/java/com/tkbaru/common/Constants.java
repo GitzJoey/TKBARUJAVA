@@ -36,6 +36,7 @@ public class Constants {
 	public static final String JSPPAGE_SEARCH 									= "search";
 	public static final String JSPPAGE_WAREHOUSE 								= "warehouse";
 	public static final String JSPPAGE_WAREHOUSE_DASHBOARD 						= "warehouse_db";
+	public static final String JSPPAGE_CUSTOMER_DELIVERY 						= "customer_delivery";
 	public static final String JSPPAGE_TODAYDELIVERY 							= "todaydelivery";
 	public static final String JSPPAGE_STORE 									= "store";
 	public static final String JSPPAGE_STOCKS 									= "stocks";
