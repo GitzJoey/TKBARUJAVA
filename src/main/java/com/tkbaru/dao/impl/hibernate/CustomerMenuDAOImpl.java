@@ -3,17 +3,19 @@ package com.tkbaru.dao.impl.hibernate;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.Subqueries;
+import org.hibernate.sql.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.tkbaru.dao.CustomerMenuDAO;
 import com.tkbaru.model.SalesOrder;
-import com.tkbaru.model.TruckVendor;
 
 @Repository
 @SuppressWarnings("unchecked")
@@ -27,31 +29,37 @@ public class CustomerMenuDAOImpl implements CustomerMenuDAO {
     
 	@Override
 	public List<SalesOrder> getSalesOrderWithDeliverId() {
-		logger.info("[getAllSalesOrder] " + "");
+		logger.info("[getSalesOrderWithDeliverId] " + "");
 		
 		List<SalesOrder> soList = new ArrayList<SalesOrder>();
 		
 		Session session = this.sessionFactory.getCurrentSession();
-		/*
-		List<Object[]> q = session.createQuery("SELECT so FROM SalesOrder so "
-														+ "JOIN so.itemsList it "
-														+ "JOIN it.deliverList d "
-														+ "WHERE d.deliverId IS NOT NULL"
-														+ " AND d.bruto IS NOT NULL").list();
-		for (Object[] result : q) {
-			SalesOrder so = (SalesOrder) result[0];
-		    soList.add(so);
-		}
-`		*/
-		soList = session.createQuery("SELECT DISTINCT so FROM SalesOrder so "
-				+ "JOIN so.itemsList it "
-				+ "JOIN it.deliverList d "
-				+ "WHERE d.deliverId IS NOT NULL"
-				+ " AND d.bruto IS NOT NULL").setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 
-		logger.info("[getAllSalesOrder] " + "SalesOrder Count: " + soList.size());
-		return soList;
-			
+		DetachedCriteria dcriteria = DetachedCriteria.forClass(SalesOrder.class, "so")
+				.createAlias("so.itemsList", "i", JoinType.INNER_JOIN)
+				.createAlias("i.deliverList", "d", JoinType.LEFT_OUTER_JOIN)
+				.add(Restrictions.isNotNull("d.deliverId"))
+				.add(Restrictions.isNotNull("d.bruto"))
+				.add(Restrictions.isNull("d.net"))
+				.setProjection(Projections.projectionList()
+						.add(Projections.groupProperty("so.salesId").as("salesId"))
+						.add(Projections.groupProperty("so.salesCode").as("salesCode"))
+				);
+
+		soList = session.createCriteria(SalesOrder.class, "so")
+				.add(Subqueries.propertiesIn(new String[] { "salesId",  "salesCode" }, dcriteria)).list();
+
+		String salesOrderReturned = "";
+		for (int i=0; i<soList.size(); i++) {
+			if (i==soList.size()-1) {
+				salesOrderReturned += soList.get(i).getSalesCode();
+			} else {
+				salesOrderReturned += soList.get(i).getSalesCode() + ", ";
+			}
+		}
+		
+		logger.info("[getSalesOrderWithDeliverId] " + "SalesOrder Count: " + soList.size() + "( " + salesOrderReturned + " )");
+		return soList;			
 	}
 	
 	@Override
