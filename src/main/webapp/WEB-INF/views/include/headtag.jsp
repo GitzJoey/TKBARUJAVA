@@ -53,7 +53,6 @@
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/scrollToTop/js/scrollToTop.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery.easing/jquery.easing.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/jquery-mousewheel/jquery.mousewheel.min.js"></script>
-	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/bootbox/bootbox.min.js"></script>
 	<script type="text/javascript" src="${pageContext.request.contextPath}/resources/js/custom.js"></script>	
 
 	<script type="text/javascript">

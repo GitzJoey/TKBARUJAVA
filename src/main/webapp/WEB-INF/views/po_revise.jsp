@@ -32,17 +32,10 @@
 					if (button == "editTableSelection") {
 						$('#editTableSelection').attr("href", ctxpath + "/po/revise/" + id);	
 					} else if (button == "rejectTableSelection") {
-						
-						bootbox.confirm("Are you sure?", function(result) {
-							if (result == true) {
-								$('#rejectTableSelection').attr("href", ctxpath + "/po/revise/" + id + "/reject");		
-							} else {
-								return false;
-							}
-						});						
+						$('#rejectTableSelection').attr("href", ctxpath + "/po/revise/" + id + "/reject");
 					} else {
 						return false;
-					}					
+					}
 				}
 			});
 
