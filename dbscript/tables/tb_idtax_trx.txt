@@ -1,0 +1,37 @@
+DROP TABLE IF EXISTS `tb_idtax_trx`;
+
+CREATE TABLE `tb_idtax_trx` (
+  `idtax_trx_id` 				int(11) 	NOT NULL AUTO_INCREMENT,
+  `so_id` 						int(11) 	NOT NULL,
+  `kode_jenis_transaksi` 		varchar(2) 	DEFAULT NULL,
+  `kode_FP_pengganti` 			varchar(2) 	DEFAULT NULL,
+  `nomor_seri_faktur_pajak` 	varchar(13)	DEFAULT NULL,
+  `masa_pajak` 					varchar(2) 	DEFAULT NULL,
+  `tahun_pajak` 				varchar(4) 	DEFAULT NULL,
+  `tanggal_faktur` 				varchar(15)	DEFAULT NULL,
+  `npwp` 						varchar(15)	DEFAULT NULL,
+  `nama_kustomer` 				varchar(55)	DEFAULT NULL,
+  `alamat`		 				varchar(95)	DEFAULT NULL,
+  `dpp`			 				varchar(15)	DEFAULT NULL,
+  `ppn`			 				varchar(15)	DEFAULT NULL,
+  `ppn_bm` 						varchar(15)	DEFAULT NULL,
+  `keterangan_tambahan`			varchar(15)	DEFAULT NULL,
+  `FG_uang_muka`				varchar(15)	DEFAULT NULL,
+  `uang_muka_DPP`				varchar(15)	DEFAULT NULL,
+  `uang_muka_ppn_bm`			varchar(15)	DEFAULT NULL,
+  `keterangan_tambahan`			varchar(15)	DEFAULT NULL,
+  `referensi` 					varchar(25)	DEFAULT NULL,
+  `material` 					varchar(25)	DEFAULT NULL,
+  `deskripsi` 					varchar(25)	DEFAULT NULL,
+  `harga` 						varchar(25)	DEFAULT NULL,
+  `kuantiti` 					varchar(25)	DEFAULT NULL,
+  `harga_total` 				varchar(25)	DEFAULT NULL,
+  `diskon` 						varchar(25)	DEFAULT NULL,
+  `dpp_material`				varchar(25)	DEFAULT NULL,
+  `ppn_material` 				varchar(25)	DEFAULT NULL,
+  `ppn_bm_material` 			varchar(25)	DEFAULT NULL,
+  `tarif_ppn_bm_material`		varchar(15)	DEFAULT NULL,
+  PRIMARY KEY (`idtax_trx_id`)
+);
+
+COMMIT;

@@ -1,0 +1,14 @@
+DROP TABLE IF EXISTS `tb_idtax_nsfp`;
+
+CREATE TABLE `tb_idtax_nsfp` (
+  `idtax_nsfp_id` 								int(11) 	NOT NULL AUTO_INCREMENT,
+  `nomor_faktur_awal` 							varchar(25) DEFAULT NULL,
+  `nomor_faktur_awal_no_format` 				int(11) 	DEFAULT NULL,
+  `nomor_faktur_akhir`							varchar(25) DEFAULT NULL,
+  `nomor_faktur_akhir_no_format`				int(11) 	DEFAULT NULL,
+  `nomor_terakhir_yang_dipakai`					varchar(25) DEFAULT NULL,
+  `nomor_terakhir_yang_dipakai_no_format`		int(11) 	DEFAULT NULL,
+  PRIMARY KEY (`idtax_nsfp_id`)
+);
+
+COMMIT;
