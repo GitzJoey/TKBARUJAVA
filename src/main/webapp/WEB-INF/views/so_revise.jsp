@@ -11,7 +11,7 @@
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
 			
-			$('#editTableSelection').click(function() {
+			$('#editTableSelection, #rejectTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 
@@ -26,6 +26,13 @@
 				} else {
 					if (button == 'editTableSelection') {
 						$('#editTableSelection').attr("href", ctxpath + "/sales/revise/" + id);
+					} if (button == 'rejectTableSelection') { 
+						var r = confirm("Please confirm to reject transaction code : " + $('#hiddenSalesCode_' + id).val());
+						if (r == true) {
+							$('#rejectTableSelection').attr("href", ctxpath + "/sales/revise/" + id + "/reject");
+						} else {
+						    return false;
+						}
 					} else {
 						return false;
 					}
@@ -129,7 +136,7 @@
 											<c:forEach items="${ reviseSalesList }" var="i" varStatus="status">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
-													<td><c:out value="${ i.salesCode }"></c:out></td>
+													<td><input id="hiddenSalesCode_${ i.salesId }" type="hidden" value="${ i.salesCode }"/><c:out value="${ i.salesCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
 													<td>
 														<spring:message code="${ i.salesTypeLookup.i18nLookupValue }" text="${ i.salesTypeLookup.lookupValue }"/>

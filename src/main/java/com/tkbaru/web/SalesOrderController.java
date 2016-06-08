@@ -470,7 +470,32 @@ public class SalesOrderController {
 
 		return Constants.JSPPAGE_SO_REVISE;
 	}
-	
+
+	@RequestMapping(value="/revise/{selectedId}/reject", method = RequestMethod.GET)
+	public String rejectSelectedSales(Locale locale, Model model, RedirectAttributes redirectAttributes, @PathVariable int selectedId) {
+		logger.info("[rejectSelectedSales] " + "selectedId: " + selectedId);
+		
+		SalesOrder so = salesOrderManager.getSalesOrderById(selectedId);
+
+		so.setSalesStatusLookup(lookupManager.getLookupByKey("L016_RJT"));
+		
+		salesOrderManager.editSalesOrder(so);
+		
+		model.addAttribute("reviseSalesForm", so);
+		if (so.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
+			model.addAttribute("stocksListDDL", stocksManager.getAllStocks());
+		} else {
+			model.addAttribute("productListDDL", productManager.getAllProduct());
+		}
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_EDIT);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		
+		redirectAttributes.addFlashAttribute(Constants.PAGE_TITLE, "");
+
+		return "redirect:/sales/revise";
+	}
+
 	@RequestMapping(value = "/revise/{salesId}/additems/{productORstocksId}", method = RequestMethod.POST)
 	public String reviseAddItems(Locale locale, Model model, @ModelAttribute("reviseSalesForm") SalesOrder reviseSalesForm, @PathVariable int salesId, @PathVariable int productORstocksId) {
 		logger.info("[reviseAddItems] " + "salesId: " + salesId + ", productORstocksId: " + productORstocksId);
