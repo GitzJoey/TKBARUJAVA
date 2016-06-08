@@ -153,10 +153,11 @@ public class PurchaseOrderDAOImpl implements PurchaseOrderDAO {
 		parameterNameAndValues.put("warehouseId", warehouseId);
 		parameterNameAndValues.put("startDate", startDate);
 		parameterNameAndValues.put("endDate", endDate);
+		parameterNameAndValues.put("poStatus", "L013_WA");
 		
 		Session session = this.sessionFactory.getCurrentSession();
 	
-		Query q = session.createQuery("FROM PurchaseOrder po WHERE po.warehouseEntity.warehouseId = :warehouseId AND po.shippingDate BETWEEN :startDate AND :endDate ");
+		Query q = session.createQuery("FROM PurchaseOrder po WHERE po.warehouseEntity.warehouseId = :warehouseId AND po.poStatusLookup.lookupKey = :poStatus AND po.shippingDate BETWEEN :startDate AND :endDate ");
 
 		for (Entry<String, Object> e : parameterNameAndValues.entrySet()) {
 		    q.setParameter(e.getKey(), e.getValue());

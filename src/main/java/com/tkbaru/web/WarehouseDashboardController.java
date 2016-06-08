@@ -393,7 +393,7 @@ public class WarehouseDashboardController {
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		model.addAttribute(Constants.PAGE_TITLE, "");
+		redirectAttributes.addFlashAttribute(Constants.PAGE_TITLE, "");
 
 		return "redirect:/warehouse/dashboard/id/" + warehouseId;
 	}

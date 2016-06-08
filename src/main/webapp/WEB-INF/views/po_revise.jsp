@@ -32,7 +32,12 @@
 					if (button == "editTableSelection") {
 						$('#editTableSelection').attr("href", ctxpath + "/po/revise/" + id);	
 					} else if (button == "rejectTableSelection") {
-						$('#rejectTableSelection').attr("href", ctxpath + "/po/revise/" + id + "/reject");
+						var r = confirm("Please confirm to reject transaction code : " + $('#hiddenPOCode_' + id).val());
+						if (r == true) {
+							$('#rejectTableSelection').attr("href", ctxpath + "/po/revise/" + id + "/reject");
+						} else {
+						    return false;
+						}
 					} else {
 						return false;
 					}
@@ -156,7 +161,7 @@
 											<c:forEach items="${ reviseList }" var="i" varStatus="status">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ i.poId }"/>" type="checkbox" value="<c:out value="${ i.poId }"/>" /></td>
-													<td><c:out value="${ i.poCode }"></c:out></td>
+													<td><input type="hidden" id="hiddenPOCode_${ i.poId }" value="${ i.poCode }"/><c:out value="${ i.poCode }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.poCreatedDate }" /></td>
 													<td><c:out value="${ i.supplierEntity.supplierName }"></c:out></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.shippingDate }" /></td>
@@ -233,7 +238,7 @@
 																		<label for="inputPOStatus" class="col-sm-3 control-label"><spring:message code="po_revise_jsp.po_status" text="Status"/></label>
 																		<div class="col-sm-9">
 																			<form:hidden path="poStatusLookup.lookupKey"></form:hidden>
-																			<label id="inputPOStatus" class="control-label"><c:out value="${ reviseForm.poStatusLookup.lookupValue }"></c:out></label>
+																			<label id="inputPOStatus" class="control-label"><spring:message code="${ reviseForm.poStatusLookup.i18nLookupValue }" text="${ reviseForm.poStatusLookup.lookupValue }"></spring:message></label>
 																		</div>
 																	</div>
 																</div>

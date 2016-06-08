@@ -445,20 +445,20 @@ public class PurchaseOrderController {
 	}
 
 	@RequestMapping(value = "/revise/{selectedId}/reject", method = RequestMethod.GET)
-	public String reviseReject(Locale locale, Model model, @PathVariable Integer selectedId) {
+	public String reviseReject(Locale locale, Model model, RedirectAttributes redirectAttributes, @PathVariable Integer selectedId) {
 		logger.info("[reviseReject] " + "selectedId: " + selectedId);
 
 		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
 
-		selectedPo.setPoStatusLookup(lookupManager.getLookupByKey("L013_C"));
+		selectedPo.setPoStatusLookup(lookupManager.getLookupByKey("L013_RJT"));
 
 		poManager.editPurchaseOrder(selectedPo);
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
-		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 
-		model.addAttribute(Constants.PAGE_TITLE, "");
+		redirectAttributes.addFlashAttribute(Constants.PAGE_TITLE, "");
 
 		return "redirect:/po/revise";
 	}
