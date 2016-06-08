@@ -444,6 +444,25 @@ public class PurchaseOrderController {
 		return Constants.JSPPAGE_PO_REVISE;
 	}
 
+	@RequestMapping(value = "/revise/{selectedId}/reject", method = RequestMethod.GET)
+	public String reviseReject(Locale locale, Model model, @PathVariable Integer selectedId) {
+		logger.info("[reviseReject] " + "selectedId: " + selectedId);
+
+		PurchaseOrder selectedPo = poManager.getPurchaseOrderById(selectedId);
+
+		selectedPo.setPoStatusLookup(lookupManager.getLookupByKey("L013_C"));
+
+		poManager.editPurchaseOrder(selectedPo);
+		
+		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+
+		model.addAttribute(Constants.PAGE_TITLE, "");
+
+		return "redirect:/po/revise";
+	}
+	
 	@RequestMapping(value = "/addpoform", method = RequestMethod.GET)
 	public String addPoForm(Locale locale, Model model) {
 		logger.info("[addPoForm] ");

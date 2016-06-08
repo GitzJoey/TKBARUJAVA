@@ -15,7 +15,7 @@
 				window.location = (ctxpath + "/po/revise");
 			});
 
-			$('#editTableSelection').click(function() {
+			$('#editTableSelection, #rejectTableSelection').click(function() {
 				var id = "";
 				var button = $(this).attr('id');
 
@@ -24,12 +24,25 @@
 						id = $(item).attr("value");
 					}
 				});
-
+				
 				if (id == "") {
 					jsAlert("Please select at least 1 po");
 					return false;
 				} else {
-					$('#editTableSelection').attr("href",ctxpath + "/po/revise/" + id);
+					if (button == "editTableSelection") {
+						$('#editTableSelection').attr("href", ctxpath + "/po/revise/" + id);	
+					} else if (button == "rejectTableSelection") {
+						
+						bootbox.confirm("Are you sure?", function(result) {
+							if (result == true) {
+								$('#rejectTableSelection').attr("href", ctxpath + "/po/revise/" + id + "/reject");		
+							} else {
+								return false;
+							}
+						});						
+					} else {
+						return false;
+					}					
 				}
 			});
 
@@ -74,7 +87,7 @@
 			$("#supplierTooltip").tooltip({ title : supplier });
 			
 			$('#reviseTableList').DataTable();
-
+			
 			window.Parsley.addValidator('checkprod', function (val, value) {
 				var supplierId = $('#inputHiddenSupplierId').val();
 				var productId = $("#productSelect").val();
