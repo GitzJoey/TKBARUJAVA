@@ -69,7 +69,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-wrench fa-fw"></span>&nbsp;<spring:message code="" text="Customer Delivery"/>
+					<span class="fa fa-wrench fa-fw"></span>&nbsp;<spring:message code="customer_menu_jsp.title" text="Customer Delivery"/>
 				</h1>
 				
 				<c:choose>
@@ -87,21 +87,19 @@
 										<table id="outflowTable" class="table table-bordered table-hover display responsive">
 											<thead>
 												<tr>
-													<th class="center-align" rowspan="2"><spring:message code="warehouse_db_jsp.table.outflow.header.shipping_date" text="Shipping Date"/></th>
-													<th class="center-align" rowspan="2"><spring:message code="warehouse_db_jsp.table.outflow.header.sales_code" text="Sales Code"/></th>
-													<th class="center-align" rowspan="2"><spring:message code="warehouse_db_jsp.table.outflow.header.deliver_date" text="Deliver Date"/></th>
-													<th class="center-align" colspan="2"><spring:message code="" text="items list"/></th>
+													<th class="center-align" rowspan="2"><spring:message code="customer_menu_jsp.table.header.shipping_date" text="Shipping Date"/></th>
+													<th class="center-align" rowspan="2"><spring:message code="customer_menu_jsp.table.header.sales_code" text="Sales Code"/></th>
+													<th class="center-align" rowspan="2"><spring:message code="customer_menu_jsp.table.header.deliver_date" text="Deliver Date"/></th>
+													<th class="center-align" colspan="2"><spring:message code="customer_menu_jsp.table.header.items_list" text="items list"/></th>
 													<th class="center-align" rowspan="2"></th>
 												</tr>
 												<tr>
-													<th class="center-align"><spring:message code="" text="Product Name"/></th>
-													<th class="center-align"><spring:message code="" text="Bruto"/></th>
+													<th class="center-align"><spring:message code="customer_menu_jsp.table.header.items_list.product_name" text="Product Name"/></th>
+													<th class="center-align"><spring:message code="customer_menu_jsp.table.header.items_list.bruto" text="Bruto"/></th>
 												</tr>
 											</thead>
 											<tbody>
 												<c:forEach items="${ CustomerMenuList }" var="cm" varStatus="cmIdx">
-											    	<c:forEach items="${ cm.itemsList }" var="iL" varStatus="iLIdx">
-													
 											    		<tr>
 												    		<td class="center-align"><fmt:formatDate pattern="dd MMM yyyy" value="${ cm.shippingDate }"/></td>
 													    	
@@ -112,18 +110,22 @@
 												    			<c:out value="${ cm.itemsList[0].deliverList[0].deliverDate }"/>
 												    		</td>
 															<td class="center-align">
-												   				<c:out value="${ cm.itemsList[iLIdx.index].productEntity.productName }"/>
-														    </td>
+																<c:forEach items="${ cm.itemsList }" var="iL" varStatus="iLIdx">
+																	<c:out value="${ cm.itemsList[iLIdx.index].productEntity.productName }"/>
+													   				<br />
+													   			</c:forEach>
+												   			</td>
 														   	<td>
-													   			<c:out value="${ cm.itemsList[iLIdx.index].deliverList[iLIdx.index].bruto }"/>
-													   			<c:out value="${ cm.itemsList[iLIdx.index].baseUnitCodeLookup.lookupValue }"/>
-											    			</td>
-													    	<td class="center-align">
+														   		<c:forEach items="${ cm.itemsList }" var="iLx" varStatus="iLxIdx">
+																	<c:out value="${ cm.itemsList[iLxIdx.index].deliverList[0].bruto }"/>
+														   			<c:out value="${ cm.itemsList[iLxIdx.index].baseUnitCodeLookup.lookupValue }"/>
+												    				<br />
+													   			</c:forEach>
+												   			</td>
+															<td class="center-align">
 													    		<button type="button" class="btn btn-xs btn-primary" id="deliverButton_${ cm.salesId }" value="${ cm.salesId }"><span class="fa fa-edit fa-fw"></span></button>
 														    </td>
 													    </tr>
-												    </c:forEach>
-													
 												</c:forEach>
 											</tbody>
 										</table>
@@ -136,24 +138,23 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="warehouse_db_jsp.outflow.submit_so_detail" text="Submit Sales Order Detail"/>
+									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="customer_menu_jsp.submit_so_detail" text="Submit Sales Order Detail"/>
 								</h1>
 							</div>
 							<div class="panel-body">
 								<form:form id="customerMenuSOForm" role="form" class="form-horizontal" modelAttribute="customerMenuSOForm" action="${pageContext.request.contextPath}/customer/delivery/confirmation/savedeliver/${ customerMenuSOForm.salesId }" data-parsley-validate="parsley">
 									<div class="form-group">
-										<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.sales_code" text="Sales Code"/></label>
+										<label for="inputPoCode" class="col-sm-2 control-label"><spring:message code="customer_menu_jsp.sales_code" text="Sales Code"/></label>
 										<div class="col-sm-3">
 											<input class="form-control" value="${ customerMenuSOForm.salesCode }" readonly="readonly"/>
 										</div>
 									</div>
 									<div class="form-group">
-										<label for="inputCustomerName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.customer_name" text="Customer Name"/></label>
+										<label for="inputCustomerName" class="col-sm-2 control-label"><spring:message code="customer_menu_jsp.customer_name" text="Customer Name"/></label>
 										<div class="col-sm-3">
 											<c:choose>
 												<c:when test="${ customerMenuSOForm.customerTypeLookup.lookupKey == 'L022_WIN' }">
-													<!-- <input class="form-control" value="${ customerMenuSOForm.walkInCustDetail } "  readonly="readonly"/> -->
-													<input class="form-control" value="walk in customer"  readonly="readonly" readonly="readonly"/>
+													<input class="form-control" value="${ customerMenuSOForm.walkInCustDetail }" readonly="readonly"/>
 												</c:when>
 												<c:otherwise>
 													<input class="form-control" value="${ customerMenuSOForm.customerEntity.customerName }" readonly="readonly"/>
@@ -162,18 +163,18 @@
 										</div>
 									</div>
 									<div class="form-group">
-												<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="warehouse_db_jsp.outflow.product" text="Product"/></label>
+												<label for="inputProductName" class="col-sm-2 control-label"><spring:message code="customer_menu_jsp.product" text="Product"/></label>
 												<div class="col-sm-10">
 													 <div class="table-responsive">
  															<table class="table">
  																<thead>
  																	<tr>
- 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.product" text="Product"/></th>
- 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.quantity" text="Quantity"/></th>
- 																		<th><spring:message code="warehouse_db_jsp.outflow.table.header.stocks" text="Stocks"/></th>
- 																		<th width="15%"><spring:message code="warehouse_db_jsp.outflow.table.header.bruto" text="Bruto"/></th>
- 																		<th width="15%"><spring:message code="" text="Netto"/></th>
- 																		<th width="20%"><spring:message code="warehouse_db_jsp.outflow.table.header.unit" text="Unit"/></th>
+ 																		<th><spring:message code="customer_menu_jsp.table.header.product" text="Product"/></th>
+ 																		<th><spring:message code="customer_menu_jsp.table.header.quantity" text="Quantity"/></th>
+ 																		<th><spring:message code="customer_menu_jsp.table.header.stocks" text="Stocks"/></th>
+ 																		<th width="15%"><spring:message code="customer_menu_jsp.table.header.bruto" text="Bruto"/></th>
+ 																		<th width="15%"><spring:message code="customer_menu_jsp.table.header.netto" text="Netto"/></th>
+ 																		<th width="20%"><spring:message code="customer_menu_jsp.table.header.unit" text="Unit"/></th>
  																	</tr>
  																</thead>
  																<tbody>

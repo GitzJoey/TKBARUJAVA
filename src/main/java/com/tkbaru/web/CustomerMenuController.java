@@ -97,22 +97,24 @@ public class CustomerMenuController {
 										@PathVariable int salesId) {	
 		logger.info("[saveDeliver] " + "editDeliver: " + customerMenuSO.toString());
 
+		SalesOrder so = salesManager.getSalesOrderById(salesId);
 		
-		customerMenuSO.getItemsList().get(0).getDeliverList().get(0).setBaseNet(
-				customerMenuSO.getItemsList().get(0).getDeliverList().get(0).getNet() * 
-				customerMenuSO.getItemsList().get(0).getProductEntity().getProductUnit().get(0).getConversionValue());
+		for (Items soI:so.getItemsList()) {
+			for (Items csoI:customerMenuSO.getItemsList()) {
+				if (soI.getItemsId() == csoI.getItemsId()) {
+					soI.getDeliverList().get(0).setNet(csoI.getDeliverList().get(0).getNet());
+					soI.getDeliverList().get(0).setBaseNet(csoI.getDeliverList().get(0).getNet() * soI.getToBaseValue());
+					
+					soI.getDeliverList().get(0).setTare(soI.getDeliverList().get(0).getBruto() - csoI.getDeliverList().get(0).getNet());
+					soI.getDeliverList().get(0).setBaseTare((soI.getDeliverList().get(0).getBruto() - csoI.getDeliverList().get(0).getNet()) * soI.getToBaseValue());
+					
+					soI.getDeliverList().get(0).setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+					soI.getDeliverList().get(0).setUpdatedDate(new Date());
+				}
+			}
+		}
 		
-		CustomerMenuManager.editDeliver(customerMenuSO); 
-		
-		customerMenuSO.getItemsList().get(0).getDeliverList().get(0).setTare(
-				customerMenuSO.getItemsList().get(0).getDeliverList().get(0).getBruto() - 
-				customerMenuSO.getItemsList().get(0).getDeliverList().get(0).getNet()); 
-				
-		customerMenuSO.getItemsList().get(0).getDeliverList().get(0).setBaseTare(
-				customerMenuSO.getItemsList().get(0).getDeliverList().get(0).getTare() * 
-				customerMenuSO.getItemsList().get(0).getProductEntity().getProductUnit().get(0).getConversionValue());
-		
-		CustomerMenuManager.editDeliver(customerMenuSO); 
+		CustomerMenuManager.editDeliver(so); 
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
