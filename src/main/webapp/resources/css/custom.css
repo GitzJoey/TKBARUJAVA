@@ -156,3 +156,7 @@ tr.group, tr.group:hover {
 	background-color: #008cba;
 	color: #ffffff;
 }
+
+.center-align {
+	text-align: center;
+}
