@@ -69,6 +69,8 @@
 			    	sessionTimeout = (sessionTimeout - 1000);
 			    	if (sessionTimeout >= 0) {
 			    		$('#timeoutCount').text(sessionTimeout / 1000);
+			    	} else {
+			    		window.location.href = ctxpath + "/logout";
 			    	}
 			        timeout();
 			    }, 1000);
