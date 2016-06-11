@@ -112,7 +112,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-wrench fa-fw fa-2x"></span>&nbsp;<spring:message code="customer_menu_jsp.submit_so_detail" text="Submit Sales Order Detail"/>
+									<span class="fa fa-check fa-fw fa-2x"></span>&nbsp;<spring:message code="customer_menu_jsp.submit_so_detail" text="Submit Sales Order Detail"/>
 								</h1>
 							</div>
 							<div class="panel-body">
