@@ -50,7 +50,7 @@
 				<div id="jsAlerts"></div>
 
 				<h1>
-					<span class="fa fa-check fa-fw"></span>&nbsp;<spring:message code="customer_menu_jsp.title" text="Customer Delivery"/>
+					<span class="fa fa-smile-o fa-fw"></span>&nbsp;<spring:message code="customer_menu_jsp.title" text="Customer"/>
 				</h1>
 				
 				<c:choose>
