@@ -112,4 +112,15 @@ public class StocksDAOImpl implements StocksDAO {
 		return s;
 	}
 
+	@Override
+	public long getQuantityByStocksId(int stocksId, int warehouseId) {
+		logger.info("[getQuantityByStocksId] " + "stocksId: " +  stocksId + ", warehouseId: " + warehouseId);
+		
+		Session session = this.sessionFactory.getCurrentSession();
+		long qty = (long)session.createQuery("select s.prodQuantity FROM Stocks s where s.stocksId= :stocksId and s.warehouseId = :warehouseId").setInteger("stocksId", stocksId).setInteger("warehouseId", warehouseId).uniqueResult();
+		
+		logger.info("[getQuantityByStocksId] " + "Quantity: " +  qty);
+		return qty;
+	}
+
 }

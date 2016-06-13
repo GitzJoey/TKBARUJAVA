@@ -14,7 +14,6 @@ import com.tkbaru.model.Truck;
 @Repository
 @SuppressWarnings("unchecked")
 public class TruckDAOImpl implements TruckDAO {
-
 	private static final Logger logger = LoggerFactory.getLogger(TruckDAOImpl.class);
         
     private SessionFactory sessionFactory;

@@ -53,6 +53,8 @@ INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, pa
 SELECT 'F_WH_WAREHOUSE', 'Dashboard', 'fa fa-wrench fa-fw', '/warehouse/dashboard', 400200, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_WH';
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
 SELECT 'F_WH_STOCK', 'Stock Report', 'fa fa-wrench fa-fw', '/warehouse/dashboard/stocks', 400300, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_WH';
+INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)
+SELECT 'F_WH_STOCK_MERGE', 'Stock Merge', 'fa fa-retweet fa-fw', '/warehouse/stocks/merge', 400400, function_id, 0, (SELECT CURRENT_TIMESTAMP()) FROM tb_function WHERE function_code = 'F_WH';
 
 /*Bank*/
 INSERT INTO tb_function (function_code, menu_name, menu_icon, url, order_num, parent_function_id, created_by, created_date)

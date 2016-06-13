@@ -12,4 +12,5 @@ public interface StocksDAO {
 	long findStockByProductIdAndByWarehouseId(int productId, int warehouseId);
 	public List<Stocks> getAllStocksByWarehouseId(int warehouseId);
 	public Stocks getStocksById(int selectedId);
+	public long getQuantityByStocksId(int stocksId, int warehouseId);
 }

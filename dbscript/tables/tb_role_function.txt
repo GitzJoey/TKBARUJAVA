@@ -96,5 +96,7 @@ INSERT tb_role_function (role_id, function_id)
 VALUES (1, 44);
 INSERT tb_role_function (role_id, function_id)
 VALUES (1, 45);
+INSERT tb_role_function (role_id, function_id)
+VALUES (1, 46);
 
 COMMIT;
