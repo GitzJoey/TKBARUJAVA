@@ -37,6 +37,7 @@ import com.tkbaru.model.PurchaseOrder;
 import com.tkbaru.model.Receipt;
 import com.tkbaru.model.SalesOrder;
 import com.tkbaru.model.Stocks;
+import com.tkbaru.model.StocksIn;
 import com.tkbaru.model.StocksOut;
 import com.tkbaru.model.WarehouseDashboard;
 import com.tkbaru.service.LookupService;
@@ -207,6 +208,7 @@ public class WarehouseDashboardController {
 
 		List<Items> itemsList = po.getItemsList();
 		List<Stocks> stocksList = new ArrayList<Stocks>();
+		List<StocksIn> stocksInList = new ArrayList<StocksIn>();
 		for (Items items : itemsList) {
 			if (items.getItemsId() == itemId) {
 				List<Receipt> receiptList = items.getReceiptList();
@@ -228,16 +230,16 @@ public class WarehouseDashboardController {
 						}
 					}
 					
-					Stocks stocks = new Stocks();
-					stocks.setPurchaseOrderEntity(po);
-					stocks.setProductEntity(items.getProductEntity());
-					stocks.setWarehouseEntity(po.getWarehouseEntity());
-					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
-					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
-					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
-					stocks.setCreatedDate(new Date());
-					stocks.setStocksStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
-					stocksList.add(stocks);
+					StocksIn stocksIn = new StocksIn();
+					stocksIn.setPurchaseOrderEntity(po);
+					stocksIn.setProductEntity(items.getProductEntity());
+					stocksIn.setWarehouseEntity(po.getWarehouseEntity());
+					stocksIn.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocksIn.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocksIn.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+					stocksIn.setCreatedDate(new Date());
+					stocksIn.setStocksStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+					stocksInList.add(stocksIn);
 				}
 				receiptList.add(warehouseDashboard.getReceipt());
 			}
