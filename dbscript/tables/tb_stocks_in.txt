@@ -1,7 +1,7 @@
 DROP TABLE IF EXISTS `tb_stocks_in`;
 
 CREATE TABLE `tb_stocks_in` (
-`stocks_in_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
+  `stocks_in_id` 	int(11) 	NOT NULL AUTO_INCREMENT,
   `store_id` 		int(11) 	DEFAULT '0',
   `po_id` 			int(11) 	DEFAULT NULL,
   `stocks_id` 		int(11) 	DEFAULT NULL,
@@ -13,6 +13,6 @@ CREATE TABLE `tb_stocks_in` (
   `updated_by` 		int(11) 	DEFAULT '0',
   `updated_date` 	datetime 	DEFAULT NULL,
   PRIMARY KEY (`stocks_in_id`)
-  );
+);
 
 COMMIT;

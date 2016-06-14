@@ -44,6 +44,7 @@ import com.tkbaru.service.LookupService;
 import com.tkbaru.service.PurchaseOrderService;
 import com.tkbaru.service.ReportService;
 import com.tkbaru.service.SalesOrderService;
+import com.tkbaru.service.StocksInService;
 import com.tkbaru.service.StocksOutService;
 import com.tkbaru.service.StocksService;
 import com.tkbaru.service.TruckVendorService;
@@ -71,6 +72,9 @@ public class WarehouseDashboardController {
 
 	@Autowired
 	StocksOutService stocksOutManager;
+
+	@Autowired
+	StocksInService stocksInManager;
 
 	@Autowired
 	LookupService lookupManager;
@@ -253,6 +257,10 @@ public class WarehouseDashboardController {
 
 		for (Stocks stocks : stocksList) {
 			stocksManager.addOrCreateStocks(stocks);
+		}
+		
+		for (StocksIn sIn : stocksInList) {
+			stocksInManager.addOrCreateStocksIn(sIn);
 		}
 
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
