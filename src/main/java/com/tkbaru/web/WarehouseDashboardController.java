@@ -234,6 +234,17 @@ public class WarehouseDashboardController {
 						}
 					}
 					
+					Stocks stocks = new Stocks();
+					stocks.setPurchaseOrderEntity(po);
+					stocks.setProductEntity(items.getProductEntity());
+					stocks.setWarehouseEntity(po.getWarehouseEntity());
+					stocks.setProdQuantity(warehouseDashboard.getReceipt().getNet());
+					stocks.setCurrentQuantity(warehouseDashboard.getReceipt().getNet());
+					stocks.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+					stocks.setCreatedDate(new Date());
+					stocks.setStocksStoreEntity(loginContextSession.getUserLogin().getStoreEntity());
+					stocksList.add(stocks);
+					
 					StocksIn stocksIn = new StocksIn();
 					stocksIn.setPurchaseOrderEntity(po);
 					stocksIn.setProductEntity(items.getProductEntity());

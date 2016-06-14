@@ -38,7 +38,7 @@ public class StocksIn {
 	private Date updatedDate;
 	
 	@ManyToOne
-	@JoinColumn(name="so_id")
+	@JoinColumn(name="po_id")
 	private PurchaseOrder purchaseOrderEntity;
 
 	@ManyToOne
@@ -153,7 +153,5 @@ public class StocksIn {
 				+ ", stocksEntity=" + stocksEntity + ", productEntity=" + productEntity + ", warehouseEntity="
 				+ warehouseEntity + "]";
 	}
-
-	
 	
 }

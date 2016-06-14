@@ -67,7 +67,7 @@ public class StocksInDAOImpl implements StocksInDAO {
 
 	@Override
 	public List<StocksIn> getAllStocksInByWarehouseId(int warehouseId) {
-		// TODO Auto-generated method stub
+
 		return null;
 	}
 
