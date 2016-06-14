@@ -1286,8 +1286,16 @@
 			//Calendar
 	        var calendar = $("#calendar").calendar({
 				tmpl_path: ctxpath + "/resources/bootstrap-calendar/tmpls/",
-	            events_source: function () { return []; }
-			});  
+	            //events_source: function () { return []; }
+				events_source: [{
+				                    "id": 293,
+				                    "title": "Event 1",
+				                    "url": "http://example.com",
+				                    "class": "event-important",
+				                    "start": 12039485678000, // Milliseconds
+				                    "end": 1234576967000 // Milliseconds
+				                }]
+			});
 	    });
 	</script>
 </head>
@@ -1514,6 +1522,19 @@
 				<div class="row">
 					<div class="col-md-6">
 						<div id="calendar"></div>
+						<div class="form-inline">
+							<div class="btn-group">
+								<button class="btn btn-primary" data-calendar-nav="prev">Prev</button>
+								<button class="btn" data-calendar-nav="today">Today</button>
+								<button class="btn btn-primary" data-calendar-nav="next">Next</button>
+							</div>
+							<div class="btn-group pull-right">
+								<button class="btn btn-warning" data-calendar-view="year">Year</button>
+								<button class="btn btn-warning active" data-calendar-view="month">Month</button>
+								<button class="btn btn-warning" data-calendar-view="week">Week</button>
+								<button class="btn btn-warning" data-calendar-view="day">Day</button>
+							</div>
+						</div>
 						<br/>
 					</div>
 					<div class="col-md-6">
