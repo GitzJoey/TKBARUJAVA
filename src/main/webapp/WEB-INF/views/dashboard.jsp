@@ -1282,6 +1282,12 @@
 					alert(error);
 				}
 			});
+			
+			//Calendar
+	        var calendar = $("#calendar").calendar({
+				tmpl_path: ctxpath + "/resources/bootstrap-calendar/tmpls/",
+	            events_source: function () { return []; }
+			});  
 	    });
 	</script>
 </head>
@@ -1505,6 +1511,31 @@
 						</div>
 					</c:otherwise>
 				</c:choose>
+				<div class="row">
+					<div class="col-md-6">
+						<div id="calendar"></div>
+						<br/>
+					</div>
+					<div class="col-md-6">
+	                    <div class="panel panel-default">
+	                        <div class="panel-body">
+	                            <div class="flot-chart">
+	                                <div class="flot-chart-content" id="flot-line-chart"></div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="panel panel-default">
+	                        <div class="panel-heading">
+	                            Moving Line Chart Example
+	                        </div>
+	                        <div class="panel-body">
+	                            <div class="flot-chart">
+	                                <div class="flot-chart-content" id="flot-line-chart-moving"></div>
+	                            </div>
+	                        </div>
+						</div>	                    
+					</div>
+				</div>
             	<div class="row">
 	                <div class="col-lg-10 col-md-10">
 	                    <div class="panel panel-default">
@@ -1528,24 +1559,6 @@
 				<div class="row">
 	                <div class="col-lg-6 col-md-6">
 	                    <div class="panel panel-default">
-	                        <div class="panel-body">
-	                            <div class="flot-chart">
-	                                <div class="flot-chart-content" id="flot-line-chart"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-lg-6 col-md-6">
-	                    <div class="panel panel-default">
-	                        <div class="panel-body">
-	                            <div class="flot-chart">
-	                                <div class="flot-chart-content" id="flot-pie-chart"></div>
-	                            </div>
-	                        </div>
-	                    </div>
-	                </div>
-	                <div class="col-lg-6">
-	                    <div class="panel panel-default">
 	                        <div class="panel-heading">
 	                            Multiple Axes Line Chart Example
 	                        </div>
@@ -1555,17 +1568,13 @@
 	                                <div class="flot-chart-content" id="flot-line-chart-multi"></div>
 	                            </div>
 	                        </div>
-	                    </div>
+	                    </div>	                
 	                </div>
-	                <div class="col-lg-6">
+	                <div class="col-lg-6 col-md-6">
 	                    <div class="panel panel-default">
-	                        <div class="panel-heading">
-	                            Moving Line Chart Example
-	                        </div>
-	                        <!-- /.panel-heading -->
 	                        <div class="panel-body">
 	                            <div class="flot-chart">
-	                                <div class="flot-chart-content" id="flot-line-chart-moving"></div>
+	                                <div class="flot-chart-content" id="flot-pie-chart"></div>
 	                            </div>
 	                        </div>
 	                    </div>
