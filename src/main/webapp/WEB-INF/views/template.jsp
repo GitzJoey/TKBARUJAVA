@@ -44,7 +44,7 @@
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h1 class="panel-title">
-									<span class="fa fa-plus fa-fw fa-2x"></span><spring:message code="" text="Sub Title"/>
+									<span class="fa fa-plus fa-fw fa-2x"></span>&nbsp;<spring:message code="" text="Sub Title"/>
 								</h1>
 							</div>
 							<div class="panel-body">
