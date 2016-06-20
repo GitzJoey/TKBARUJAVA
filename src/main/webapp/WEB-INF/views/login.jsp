@@ -57,7 +57,7 @@
 		                                </div>
 										<div class="form-group">
 											<div class="checkbox">
-							        			<input id="cbx_remember_me" name="_spring_security_remember_me" type="checkbox" value=""/>
+							        			<input id="cbx_remember_me" name="cbx_remember_me" type="checkbox" value="true"/>
 							        			<label for="cbx_remember_me"><spring:message code="login_jsp.remember_me" text="Remember Me"/></label> 
 								        		<a class="pull-right" href="${ pageContext.request.contextPath }/static/forgot.html"><spring:message code="login_jsp.forgot_password" text="Forgot Password"></spring:message></a>
 											</div>

@@ -24,7 +24,7 @@
 		
 		<remember-me key="ReVKpgd2tKB4ch2TiLdO" 
 					token-validity-seconds="432000"
-					remember-me-parameter="remember-me"
+					remember-me-parameter="cbx_remember_me"
 					remember-me-cookie="tkbaruRememberMe"/>
 					
 		
