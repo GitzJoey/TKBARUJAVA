@@ -33,6 +33,12 @@
 			function format(d) {
 		        return '<strong>Bank Details</strong><br/><br/>';
 		    }
+			
+			$('#inputDateRange').daterangepicker({
+		        locale: {
+		            format: 'DD MMM YYYY'
+				}
+			});
 		});
 	</script>
 </head>
@@ -72,17 +78,8 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<div class="form-inline">
-									<div class="form-group">
-										<label for="inputTransactionDate" class="col-md-12">Transaction Date</label>
-										<div class="col-md-4">
-											<input type="text" class="form-control" id="inputStartDate" name="inputStartDate"/>
-										</div>
-										<div class="col-md-4">
-											<input type="text" class="form-control" id="inputEndDate" name="inputEndDate"/>
-										</div>
-									</div>
-								</div>
+								<input type="text" class="form-control" id="inputDateRange" name="inputDateRange" value="01/01/2015 - 01/31/2015" />
+								<br/>
 								<div class="row">
 									<div class="col-md-12">
 										<table id="consolidateTable" class="table table-hover table-bordered display responsive">

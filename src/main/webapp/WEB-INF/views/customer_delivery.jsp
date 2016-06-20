@@ -91,10 +91,10 @@
 											   				<br />
 											   			</c:forEach>
 										   			</td>
-												   	<td>
+												   	<td align="right">
 												   		<c:forEach items="${ cm.itemsList }" var="iLx" varStatus="iLxIdx">
 															<c:out value="${ cm.itemsList[iLxIdx.index].deliverList[0].bruto }"/>
-												   			<c:out value="${ cm.itemsList[iLxIdx.index].baseUnitCodeLookup.lookupValue }"/>
+												   			<c:out value="${ cm.itemsList[iLxIdx.index].unitCodeLookup.lookupValue }"/>
 										    				<br />
 											   			</c:forEach>
 										   			</td>
