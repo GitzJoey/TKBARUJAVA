@@ -105,7 +105,8 @@
 												<th width="15%"><spring:message code="stocks_merge_jsp.from_table.header.product_category" text="Product Category"></spring:message></th>
 												<th width="15%"><spring:message code="stocks_merge_jsp.from_table.header.product_name" text="Product Name"></spring:message></th>
 												<th width="10%"><spring:message code="stocks_merge_jsp.from_table.header.quantity" text="Quantity"></spring:message></th>
-												<th width="50%"><spring:message code="stocks_merge_jsp.from_table.header.po_detail" text="PO Details"></spring:message></th>
+												<th width="15%"><spring:message code="stocks_merge_jsp.from_table.header.warehouse" text="Warehouse"></spring:message></th>
+												<th width="35%"><spring:message code="stocks_merge_jsp.from_table.header.po_detail" text="PO Details"></spring:message></th>
 												<th width="5%"></th>
 											</tr>
 										</thead>
@@ -114,7 +115,7 @@
 												<c:forEach items="${ stocksFromList }" var="sF" varStatus="sFIdx">
 													<tr>
 														<td align="center">
-															<input id="cbx_f_<c:out value="${ sF.stocksId }"/>" type="checkbox" name="cbx_F[]" value="<c:out value="${ sF.stocksId }"/>" data-parsley-mincheck="1"/>
+															<input id="cbx_f_<c:out value="${ sF.stocksId }"/>" type="checkbox" name="cbx_F[]" value="<c:out value="${ sF.stocksId }"/>"/>
 														</td>
 														<td><spring:message code="${ sF.productEntity.productTypeLookup.i18nLookupValue }" text="${ sF.productEntity.productTypeLookup.lookupValue }"/></td>
 														<td><c:out value="${ sF.productEntity.productName }"></c:out></td>
@@ -125,6 +126,9 @@
 																</c:if>
 															</c:forEach>
 															<c:out value="${ sF.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
+														</td>
+														<td>
+															<c:out value="${ sF.warehouseEntity.warehouseName }"/>
 														</td>
 														<td>PO Code: <c:out value="${ sF.purchaseOrderEntity.poCode }"/></td>
 														<td></td>
@@ -146,7 +150,8 @@
 												<th width="15%"><spring:message code="stocks_merge_jsp.to_table.header.product_category" text="Product Category"></spring:message></th>
 												<th width="15%"><spring:message code="stocks_merge_jsp.to_table.header.product_name" text="Product Name"></spring:message></th>
 												<th width="10%"><spring:message code="stocks_merge_jsp.to_table.header.quantity" text="Quantity"></spring:message></th>
-												<th width="50%"><spring:message code="stocks_merge_jsp.to_table.header.po_detail" text="PO Details"></spring:message></th>
+												<th width="15%"><spring:message code="stocks_merge_jsp.to_table.header.warehouse" text="Warehouse"></spring:message></th>
+												<th width="35%"><spring:message code="stocks_merge_jsp.to_table.header.po_detail" text="PO Details"></spring:message></th>
 												<th width="5%"></th>
 											</tr>
 										</thead>
@@ -155,7 +160,7 @@
 												<c:forEach items="${ stocksToList }" var="sT" varStatus="sTIdx">
 													<tr>
 														<td align="center">
-															<input id="cbx_t_<c:out value="${ sT.stocksId }"/>" name="cbx_T[]" type="checkbox" value="<c:out value="${ sT.stocksId }"/>" parsley-data-mincheck="1"/>
+															<input id="cbx_t_<c:out value="${ sT.stocksId }"/>" name="cbx_T[]" type="checkbox" value="<c:out value="${ sT.stocksId }"/>"/>
 														</td>
 														<td><spring:message code="${ sT.productEntity.productTypeLookup.i18nLookupValue }" text="${ sT.productEntity.productTypeLookup.lookupValue }"/></td>
 														<td><c:out value="${ sT.productEntity.productName }"></c:out></td>
@@ -166,6 +171,9 @@
 																</c:if>
 															</c:forEach>
 															<c:out value="${ sT.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
+														</td>
+														<td>
+															<c:out value="${ sT.warehouseEntity.warehouseName }"/>
 														</td>
 														<td>PO Code: <c:out value="${ sT.purchaseOrderEntity.poCode }"/></td>
 														<td></td>
