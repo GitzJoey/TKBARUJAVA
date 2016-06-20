@@ -35,7 +35,7 @@
 		    }
 			
 			$('#inputDateRange').daterangepicker({
-		        locale: {
+				locale: {
 		            format: 'DD MMM YYYY'
 				}
 			});
@@ -78,7 +78,7 @@
 								</h1>
 							</div>
 							<div class="panel-body">
-								<input type="text" class="form-control" id="inputDateRange" name="inputDateRange" value="01/01/2015 - 01/31/2015" />
+								<input type="text" class="form-control" id="inputDateRange" name="inputDateRange" value="" />
 								<br/>
 								<div class="row">
 									<div class="col-md-12">
