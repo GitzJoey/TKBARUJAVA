@@ -14,5 +14,5 @@ public interface StocksService {
 	public List<Stocks> getAllStocksByWarehouseId(int warehouseId);
 	public Stocks getStocksById(int selectedId);
 	public long getQuantityByStocksId(int stocksId, int warehouseId);
-	public void mergeStocks(int stocksId_From, int stocksId_To, int warehouseId, int userId, int storeId);
+	public void mergeStocks(int stocksId_From, int stocksId_To, int warehouseId_From, int warehouseId_To, int userId, int storeId);
 }

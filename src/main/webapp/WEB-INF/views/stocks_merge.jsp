@@ -9,6 +9,52 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
+			
+			$('#mergeButton').click(function() {
+				if (isValid()) {
+					window.location.href = ctxpath + "/master/product";	
+				}
+				return false;
+			});
+
+			function isValid() {
+				var fcheck = false;
+				var fval = "";
+				var tcheck = false;
+				var tval = "";
+				
+				$('input[type="checkbox"][id^="cbx_f_"]').each(function(index, item) {
+					if ($(item).prop("checked")) { fcheck = true; fval = $(item).val(); }	
+				});
+				$('input[type="checkbox"][id^="cbx_t_"]').each(function(index, item) {
+					if ($(item).prop("checked")) { tcheck = true; tval = $(item).val(); }
+				});
+				
+				if (!fcheck || !tcheck) {
+					jsAlert("Please select at least 1 stocks in each table.")
+					return false;
+				}
+
+				if (fval == tval) {
+					jsAlert("Cannot merge with the same stocks")
+					return false;
+				}
+				
+				return true;
+			}
+			
+			$('input[type="checkbox"][id^="cbx_"]').click(function() {
+				var selected = $(this);
+				var ft = $(selected).attr("id").split('_')[1];
+
+				$('input[type="checkbox"][id^="cbx_' + ft + '_"]').each(function(index, item) {
+					if ($(item).attr("id") != $(selected).attr("id")) { 
+						if ($(item).prop("checked")) {
+							$(item).prop("checked", false);
+						}
+					}
+				});
+			});
 		});
 	</script>
 </head>
@@ -64,21 +110,23 @@
 											</tr>
 										</thead>
 										<tbody>
-											<c:if test="${ not empty stocksList }">
-												<c:forEach items="${ stocksList }" var="s" varStatus="sIdx">
+											<c:if test="${ not empty stocksFromList }">
+												<c:forEach items="${ stocksFromList }" var="sF" varStatus="sFIdx">
 													<tr>
-														<td align="center"><input id="cbx_<c:out value="${ s.stocksId }"/>" type="checkbox" value="<c:out value="${ s.stocksId }"/>"/></td>
-														<td><spring:message code="${ s.productEntity.productTypeLookup.i18nLookupValue }" text="${ s.productEntity.productTypeLookup.lookupValue }"/></td>
-														<td><c:out value="${ s.productEntity.productName }"></c:out></td>
+														<td align="center">
+															<input id="cbx_f_<c:out value="${ sF.stocksId }"/>" type="checkbox" name="cbx_F[]" value="<c:out value="${ sF.stocksId }"/>" data-parsley-mincheck="1"/>
+														</td>
+														<td><spring:message code="${ sF.productEntity.productTypeLookup.i18nLookupValue }" text="${ sF.productEntity.productTypeLookup.lookupValue }"/></td>
+														<td><c:out value="${ sF.productEntity.productName }"></c:out></td>
 														<td align="right">
-															<c:forEach items="${ s.productEntity.productUnit }" var="pu">
+															<c:forEach items="${ sF.productEntity.productUnit }" var="pu">
 																<c:if test="${ pu.isBaseUnit }">
 																	<c:set var="defUnit" value="${ pu.unitCodeLookup.lookupValue }"></c:set>
 																</c:if>
 															</c:forEach>
-															<c:out value="${ s.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
+															<c:out value="${ sF.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
 														</td>
-														<td></td>
+														<td>PO Code: <c:out value="${ sF.purchaseOrderEntity.poCode }"/></td>
 														<td></td>
 													</tr>
 												</c:forEach>
@@ -95,14 +143,35 @@
 										<thead>
 											<tr>
 												<th width="5%"></th>
-												<th width="15%"></th>
-												<th width="15%"></th>
-												<th width="10%"></th>
-												<th width="50%"></th>
+												<th width="15%"><spring:message code="stocks_merge_jsp.to_table.header.product_category" text="Product Category"></spring:message></th>
+												<th width="15%"><spring:message code="stocks_merge_jsp.to_table.header.product_name" text="Product Name"></spring:message></th>
+												<th width="10%"><spring:message code="stocks_merge_jsp.to_table.header.quantity" text="Quantity"></spring:message></th>
+												<th width="50%"><spring:message code="stocks_merge_jsp.to_table.header.po_detail" text="PO Details"></spring:message></th>
 												<th width="5%"></th>
 											</tr>
 										</thead>
 										<tbody>
+											<c:if test="${ not empty stocksToList }">
+												<c:forEach items="${ stocksToList }" var="sT" varStatus="sTIdx">
+													<tr>
+														<td align="center">
+															<input id="cbx_t_<c:out value="${ sT.stocksId }"/>" name="cbx_T[]" type="checkbox" value="<c:out value="${ sT.stocksId }"/>" parsley-data-mincheck="1"/>
+														</td>
+														<td><spring:message code="${ sT.productEntity.productTypeLookup.i18nLookupValue }" text="${ sT.productEntity.productTypeLookup.lookupValue }"/></td>
+														<td><c:out value="${ sT.productEntity.productName }"></c:out></td>
+														<td align="right">
+															<c:forEach items="${ sT.productEntity.productUnit }" var="pu">
+																<c:if test="${ pu.isBaseUnit }">
+																	<c:set var="defUnit" value="${ pu.unitCodeLookup.lookupValue }"></c:set>
+																</c:if>
+															</c:forEach>
+															<c:out value="${ sT.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
+														</td>
+														<td>PO Code: <c:out value="${ sT.purchaseOrderEntity.poCode }"/></td>
+														<td></td>
+													</tr>
+												</c:forEach>
+											</c:if>											
 										</tbody>
 									</table>
 								</div>
