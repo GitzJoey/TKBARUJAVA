@@ -134,8 +134,8 @@
 										</c:if>
 									</tbody>
 								</table>
-								<a id="addTableSelection" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/price/addpricelevel"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>
-								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>
+								<a id="addTableSelection" class="btn btn-sm btn-primary" href="${pageContext.request.contextPath}/price/addpricelevel"><span class="fa fa-plus fa-fw"></span>&nbsp;Add</a>&nbsp;&nbsp;&nbsp;
+								<a id="editTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-edit fa-fw"></span>&nbsp;Edit</a>&nbsp;&nbsp;&nbsp;
 								<a id="deleteTableSelection" class="btn btn-sm btn-primary" href=""><span class="fa fa-close fa-fw"></span>&nbsp;Delete</a>
 							</div>
 						</div>
