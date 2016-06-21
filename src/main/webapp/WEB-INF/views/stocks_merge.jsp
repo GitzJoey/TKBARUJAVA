@@ -12,7 +12,27 @@
 			
 			$('#mergeButton').click(function() {
 				if (isValid()) {
-					window.location.href = ctxpath + "/master/product";	
+					var fval = "";
+					var tval = "";
+					var fwval = "";
+					var twval = "";
+					
+					$('input[type="checkbox"][id^="cbx_f_"]').each(function(index, item) {
+						if ($(item).prop("checked")) { 
+							fval = $(item).val();
+							fwval = $('#wh_f_' + $(item).val()).val();
+						}	
+					});
+					$('input[type="checkbox"][id^="cbx_t_"]').each(function(index, item) {
+						if ($(item).prop("checked")) { 
+							tval = $(item).val(); 
+							twval = $('#wh_t_' + $(item).val()).val();
+						}
+					});
+
+					if (fval.length > 0 && tval.length > 0 && fwval.length > 0 && twval.length > 0) {
+						window.location.href = ctxpath + "/warehouse/stocks/merge/fs/" + fval + "/wf/" + fwval + "/ts/" + tval + "/wt/" + twval;	
+					}
 				}
 				return false;
 			});
@@ -115,7 +135,7 @@
 												<c:forEach items="${ stocksFromList }" var="sF" varStatus="sFIdx">
 													<tr>
 														<td align="center">
-															<input id="cbx_f_<c:out value="${ sF.stocksId }"/>" type="checkbox" name="cbx_F[]" value="<c:out value="${ sF.stocksId }"/>"/>
+															<input id="cbx_f_<c:out value="${ sF.stocksId }"/>" type="checkbox" value="<c:out value="${ sF.stocksId }"/>"/>
 														</td>
 														<td><spring:message code="${ sF.productEntity.productTypeLookup.i18nLookupValue }" text="${ sF.productEntity.productTypeLookup.lookupValue }"/></td>
 														<td><c:out value="${ sF.productEntity.productName }"></c:out></td>
@@ -128,6 +148,7 @@
 															<c:out value="${ sF.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
 														</td>
 														<td>
+															<input type="hidden" id="wh_f_<c:out value="${ sF.stocksId }"/>" value="${ sF.warehouseEntity.warehouseId }"/>
 															<c:out value="${ sF.warehouseEntity.warehouseName }"/>
 														</td>
 														<td>PO Code: <c:out value="${ sF.purchaseOrderEntity.poCode }"/></td>
@@ -160,7 +181,7 @@
 												<c:forEach items="${ stocksToList }" var="sT" varStatus="sTIdx">
 													<tr>
 														<td align="center">
-															<input id="cbx_t_<c:out value="${ sT.stocksId }"/>" name="cbx_T[]" type="checkbox" value="<c:out value="${ sT.stocksId }"/>"/>
+															<input id="cbx_t_<c:out value="${ sT.stocksId }"/>" type="checkbox" value="<c:out value="${ sT.stocksId }"/>"/>
 														</td>
 														<td><spring:message code="${ sT.productEntity.productTypeLookup.i18nLookupValue }" text="${ sT.productEntity.productTypeLookup.lookupValue }"/></td>
 														<td><c:out value="${ sT.productEntity.productName }"></c:out></td>
@@ -173,6 +194,7 @@
 															<c:out value="${ sT.currentQuantity }"></c:out>&nbsp;<c:out value="${ defUnit }"/>
 														</td>
 														<td>
+															<input type="hidden" id="wh_t_<c:out value="${ sT.stocksId }"/>" value="${ sT.warehouseEntity.warehouseId }"/>
 															<c:out value="${ sT.warehouseEntity.warehouseName }"/>
 														</td>
 														<td>PO Code: <c:out value="${ sT.purchaseOrderEntity.poCode }"/></td>
@@ -188,6 +210,19 @@
 							</div>
 						</div>
 					</c:when>
+					<c:when test="${ PAGEMODE == 'PAGEMODE_CONFIRMATION' }">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="well">
+									<p>Merge Successful</p>
+								</div>
+								<a id="backButton" class="btn btn-primary" href="${ pageContext.request.contextPath }/warehouse/stocks/merge"><spring:message code="common.back_button" text="Back"/></a>							
+							</div>
+						</div>
+					</c:when>
+					<c:otherwise>
+					
+					</c:otherwise>
 				</c:choose>
 			</div>
 		</div>

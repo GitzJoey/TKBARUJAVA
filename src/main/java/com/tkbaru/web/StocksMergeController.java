@@ -49,22 +49,22 @@ public class StocksMergeController {
 	}
 
 	@RequestMapping(value = "/fs/{fromStocksId}/wf/{fromWarehouseId}/ts/{toStocksId}/wt/{toWarehouseId}", method = RequestMethod.GET)
-	public String mergeStocks(Locale locale, Model model, RedirectAttributes redirectAttributes, 
+	public String mergeStocks(Locale locale, Model model, 
 			@PathVariable Integer fromStocksId, 
 			@PathVariable Integer toStocksId,
 			@PathVariable Integer fromWarehouseId,
 			@PathVariable Integer toWarehouseId) {
 		logger.info("[mergeStocks] " + "fromStocksId: " + fromStocksId + ", toStocksId: " + toStocksId);
 
-		stocksManager.mergeStocks(fromStocksId, toStocksId, fromWarehouseId, toWarehouseId, loginContextSession.getUserLogin().getUserId(), loginContextSession.getUserLogin().getStoreId());
+		//stocksManager.mergeStocks(fromStocksId, toStocksId, fromWarehouseId, toWarehouseId, loginContextSession.getUserLogin().getUserId(), loginContextSession.getUserLogin().getStoreId());
 		
 		model.addAttribute(Constants.SESSIONKEY_LOGINCONTEXT, loginContextSession);
-		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_PAGELOAD);
-		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
+		model.addAttribute(Constants.PAGEMODE, Constants.PAGEMODE_CONFIRMATION);
+		model.addAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		redirectAttributes.addFlashAttribute(Constants.PAGE_TITLE, "");
+		model.addAttribute(Constants.PAGE_TITLE, "");
 
-		return "redirect:/warehouse/stocks/merge";
+		return Constants.JSPPAGE_STOCKS_MERGE;
 	}
 
 }
