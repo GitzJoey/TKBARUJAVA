@@ -106,7 +106,7 @@
 																			<c:out value="${ p.poCode }"/>
 																		</td>
 																		<td>
-																			<c:out value="${ p.supplierLookup.supplierName }"/>
+																			<c:out value="${ p.supplierEntity.supplierName }"/>
 																		</td>
 																		<td>
 																			<fmt:parseNumber var="poTotal" integerOnly="true" type="number" value="0" />
@@ -116,11 +116,11 @@
 																			<fmt:formatNumber type="number" pattern="##,###.00" value="${ poTotal }"></fmt:formatNumber>
 																		</td>
 																		<td>
-																			<spring:message code="${ p.statusLookup.i18nLookupValue }" text="${ p.poStatus }"/>
+																			<spring:message code="${ p.poStatusLookup.i18nLookupValue }" text="${ p.poStatusLookup.lookupKey }"/>
 																		</td>
 																		<td class="none">
 																			<c:forEach items="${ p.itemsList }" var="i">
-																				<c:out value="${ i.productLookup.productName }"/>
+																				<c:out value="${ i.productEntity.productName }"/>
 																			</c:forEach>
 																		</td>
 																	</tr>
@@ -171,7 +171,7 @@
 															<c:if test="${ not empty stocksList }">
 																<c:forEach items="${ stocksList }" var="s">
 																	<tr>
-																		<td class="all"><c:out value="${ s.productLookup.productName }"/></td>
+																		<td class="all"><c:out value="${ s.productEntity.productName }"/></td>
 																		<td>111</td>
 																		<td class="none">222</td>
 																	</tr>
