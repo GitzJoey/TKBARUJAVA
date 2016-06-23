@@ -46,6 +46,7 @@
 				<beans:value>/WEB-INF/spring/i18n/lookup_code</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/customer_menu</beans:value>
 				<beans:value>/WEB-INF/spring/i18n/stocks_merge</beans:value>
+				<beans:value>/WEB-INF/spring/i18n/calendar</beans:value>
 			</beans:list>
         </beans:property>
         <beans:property name="defaultEncoding" value="UTF-8" />

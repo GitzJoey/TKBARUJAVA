@@ -57,6 +57,8 @@ public class Customer implements Serializable {
 	private String customerRemarks;
 	@Column(name="npwp_num")
 	private String npwpNum;
+	@Column(name="payment_due_day")
+	private Integer paymentDueDay;
 	@Column(name="created_by")
 	private Integer createdBy;
 	@Column(name="created_date")
@@ -67,8 +69,6 @@ public class Customer implements Serializable {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
-	@Column(name="payment_due_day")
-	private Integer paymentDueDay;
 	
 	@ManyToMany(cascade=CascadeType.ALL)
 	@JoinTable(name="tb_customer_bankacc", 

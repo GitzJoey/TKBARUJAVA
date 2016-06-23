@@ -1285,6 +1285,19 @@
 			
 			//Calendar
 			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay'
+				},
+				editable: true,
+				eventLimit: true,
+				events: [
+							{
+								title: 'All Day Event',
+								start: '2016-06-22'
+							}
+				],
 			    dayClick: function() {
 			        alert('a day has been clicked!');
 			    }
