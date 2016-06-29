@@ -9,7 +9,8 @@
 	<script>
 		$(document).ready(function() {
 			var ctxpath = "${ pageContext.request.contextPath }";
-
+			var uid = "${ loginContext.userLogin.userId }";
+			
 			$('#cancelButton').click(function() {
 				window.location.href = ctxpath + "/user/calendar";
 			});
@@ -38,24 +39,54 @@
 			
 			$('#inputStartDate, #inputEndDate').datetimepicker({ format:'d-m-Y', timepicker:false });
 			
-			$('#calendar').fullCalendar({
-				header: {
-					left: 'prev,next today',
-					center: 'title',
-					right: 'month,agendaWeek,agendaDay'
+			$.ajax({
+				url : ctxpath + "/user/calendar/get/cal/",
+				data : 'userId=' + encodeURIComponent(uid),
+				type : "GET",
+				async: false,
+				success : function(response) {
+					var obj = JSON.parse(JSON.stringify(response, null, 4));
+					
+					var evvL = [];
+					var evv = new Object();
+					evv.start = '2016-06-29';
+					evv.title = 'All Day Event';
+					
+					var evv1 = new Object();
+					evv1.start = '2016-06-28';
+					evv1.title = 'All Day Event';
+					evv1.nouse = 'aa';
+					
+					evvL.push(evv);
+					evvL.push(evv1);
+					
+					$('#calendar').fullCalendar({
+						header: {
+							left: 'prev,next today',
+							center: 'title',
+							right: 'month,agendaWeek,agendaDay'
+						},
+						editable: true,
+						eventLimit: true,
+						/*
+						events: [
+									{
+										title: 'All Day Event',
+										start: '2016-06-22'
+									}
+						],
+						*/
+						events: evvL,
+					    dayClick: function() {
+					        alert('a day has been clicked!');
+					    }
+		    		});
 				},
-				editable: true,
-				eventLimit: true,
-				events: [
-							{
-								title: 'All Day Event',
-								start: '2016-06-22'
-							}
-				],
-			    dayClick: function() {
-			        alert('a day has been clicked!');
-			    }
-    		});
+				error : function(xhr, status, error) {
+					alert(xhr.responseText);
+				}
+			});
+
 		});
 	</script>
 </head>

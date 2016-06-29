@@ -1,7 +1,10 @@
 package com.tkbaru.web;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
+import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.tkbaru.common.Constants;
@@ -104,6 +109,22 @@ public class CalendarController {
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
 		return "redirect:/master/customer";
+	}
+
+	@RequestMapping(value = "/get/cal", method = RequestMethod.GET)
+	public @ResponseBody List<Calendar> getCalendar(@RequestParam("userId") int userId) {
+		logger.info("[getCalendar] " + "userId: " + userId);
+
+		List<Calendar> calList = new ArrayList<Calendar>();
+		calList = calendarManager.getAllCalendarByUserId(userId);
+		
+		Calendar c = new Calendar();
+		c.setStartDate(new DateTime(2016, 6, 29, 0,0).toDate());
+		c.setEventTitle("test");
+
+		calList.add(c);
+		
+		return calList;
 	}
 
 }

@@ -1,5 +1,6 @@
 package com.tkbaru.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="tb_calendar")
@@ -17,7 +19,10 @@ public class Calendar {
 	public Calendar() {
 		
 	}
-
+	
+	@Transient
+	private String DATE_PATTERN = "yyyy-MM-dd";
+	
 	@Id
 	@Column(name="calendar_id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -42,6 +47,42 @@ public class Calendar {
 	@Column(name="updated_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
+	
+	public String startDateToString() {
+		if (startDate != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+			return sdf.format(startDate);
+		} else {
+			return "";
+		}
+	}
+	
+	public String startDateToString(String datePattern) {
+		if (startDate != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
+			return sdf.format(startDate);
+		} else {
+			return "";
+		}
+	}
+	
+	public String endDateToString() {
+		if (endDate != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
+			return sdf.format(endDate);
+		} else {
+			return "";
+		}
+	}
+	
+	public String endDateToString(String datePattern) {
+		if (endDate != null) {
+			SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
+			return sdf.format(endDate);
+		} else {
+			return "";
+		}		
+	}
 	
 	public Integer getCalendarId() {
 		return calendarId;
