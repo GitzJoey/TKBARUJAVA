@@ -44,9 +44,10 @@ public class CalendarServiceImpl implements CalendarService {
 	}
 
 	@Override
+	@Transactional
 	public Calendar getEventsById(int selectedId) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return calendarDAO.getEventsById(selectedId);
 	}
 
 }

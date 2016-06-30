@@ -50,7 +50,7 @@ public class Calendar {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date updatedDate;
 	
-	public String startDateToString() {
+	public String getStartDateToString() {
 		if (startDate != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 			return sdf.format(startDate);
@@ -59,7 +59,7 @@ public class Calendar {
 		}
 	}
 	
-	public String startDateToString(String datePattern) {
+	public String getStartDateToString(String datePattern) {
 		if (startDate != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
 			return sdf.format(startDate);
@@ -68,7 +68,7 @@ public class Calendar {
 		}
 	}
 	
-	public String endDateToString() {
+	public String getEndDateToString() {
 		if (endDate != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat(DATE_PATTERN);
 			return sdf.format(endDate);
@@ -77,7 +77,7 @@ public class Calendar {
 		}
 	}
 	
-	public String endDateToString(String datePattern) {
+	public String getEndDateToString(String datePattern) {
 		if (endDate != null) {
 			SimpleDateFormat sdf = new SimpleDateFormat(datePattern);
 			return sdf.format(endDate);

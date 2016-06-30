@@ -52,7 +52,7 @@
 					for (i=0; i<obj.length; i++) {
 						var evv = new Object();
 
-						evv.start = obj[i].startDate;
+						evv.start = obj[i].startDateToString;
 						evv.title = obj[i].eventTitle;
 						evvL.push(evv);						
 					}
