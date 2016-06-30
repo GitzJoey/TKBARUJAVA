@@ -1,15 +1,20 @@
 package com.tkbaru.web;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-import org.joda.time.DateTime;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -33,6 +38,14 @@ public class CalendarController {
 	
 	@Autowired
 	private LoginContext loginContextSession;
+
+	@InitBinder
+	public void bindingPreparation(WebDataBinder binder) {
+		DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		dateFormat.setLenient(true);
+		CustomDateEditor orderDateEditor = new CustomDateEditor(dateFormat, true);
+		binder.registerCustomEditor(Date.class, orderDateEditor);
+	}
 
 	@RequestMapping(method = RequestMethod.GET)
 	public String calendarPageLoad(Locale locale, Model model) {
@@ -99,16 +112,21 @@ public class CalendarController {
 
 		if (cal.getCalendarId() == null) { 
 			logger.info("[saveCalendar] " + "addCalendar: " + cal.toString());
+			cal.setUserId(loginContextSession.getUserLogin().getUserId());
+			cal.setCreatedBy(loginContextSession.getUserLogin().getUserId());
+			cal.setCreatedDate(new Date());
 			calendarManager.addCalendar(loginContextSession.getUserLogin().getUserId(), cal);
 		} else {
 			logger.info("[saveCalendar] " + "editCalendar: " + cal.toString());
+			cal.setUpdatedBy(loginContextSession.getUserLogin().getUserId());
+			cal.setUpdatedDate(new Date());			
 			calendarManager.editCalendar(loginContextSession.getUserLogin().getUserId(), cal);
 		}
 		
 		redirectAttributes.addFlashAttribute(Constants.PAGEMODE, Constants.PAGEMODE_LIST);
 		redirectAttributes.addFlashAttribute(Constants.ERRORFLAG, Constants.ERRORFLAG_HIDE);
 		
-		return "redirect:/master/customer";
+		return "redirect:/user/calendar";
 	}
 
 	@RequestMapping(value = "/get/cal", method = RequestMethod.GET)
@@ -117,12 +135,6 @@ public class CalendarController {
 
 		List<Calendar> calList = new ArrayList<Calendar>();
 		calList = calendarManager.getAllCalendarByUserId(userId);
-		
-		Calendar c = new Calendar();
-		c.setStartDate(new DateTime(2016, 6, 29, 0,0).toDate());
-		c.setEventTitle("test");
-
-		calList.add(c);
 		
 		return calList;
 	}

@@ -97,7 +97,7 @@
 												</tr>
 											</tbody>
 										</table>
-     									<a href="${ pageContext.request.contextPath }/user/calendar" class="btn btn-primary"><span class="fa fa-calendar fa-fw"></span>&nbsp;<spring:message code="common.calendar" text="Calendar"/></a>&nbsp;&nbsp;&nbsp;
+     									<a href="${ pageContext.request.contextPath }/user/calendar" class="btn btn-primary"><span class="fa fa-calendar fa-fw"></span>&nbsp;<spring:message code="common.calendar_button" text="Calendar"/></a>&nbsp;&nbsp;&nbsp;
      									<a href="${ pageContext.request.contextPath }/user/profile/changepass" class="btn btn-primary"><span class="fa fa-key fa-fw"></span>&nbsp;<spring:message code="common.change_password" text="Change Password"/></a>
 									</div>
 								</div>

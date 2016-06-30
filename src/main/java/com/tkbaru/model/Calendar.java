@@ -39,6 +39,8 @@ public class Calendar {
 	private String eventTitle;
 	@Column(name="ext_url")
 	private String extURL;
+	@Column(name="created_by")
+	private Integer createdBy;
 	@Column(name="created_date")
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createdDate;
@@ -83,60 +85,85 @@ public class Calendar {
 			return "";
 		}		
 	}
-	
+
 	public Integer getCalendarId() {
 		return calendarId;
 	}
+
 	public void setCalendarId(Integer calendarId) {
 		this.calendarId = calendarId;
 	}
-	public Integer getUserId() {
+
+	public int getUserId() {
 		return userId;
 	}
+
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
+
 	public Date getStartDate() {
 		return startDate;
 	}
+
 	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
+
 	public Date getEndDate() {
 		return endDate;
 	}
+
 	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
+
 	public String getEventTitle() {
 		return eventTitle;
 	}
+
 	public void setEventTitle(String eventTitle) {
 		this.eventTitle = eventTitle;
 	}
+
 	public String getExtURL() {
 		return extURL;
 	}
+
 	public void setExtURL(String extURL) {
 		this.extURL = extURL;
 	}
+
+	public Integer getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(Integer createdBy) {
+		this.createdBy = createdBy;
+	}
+
 	public Date getCreatedDate() {
 		return createdDate;
 	}
+
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
+
 	public Integer getUpdatedBy() {
 		return updatedBy;
 	}
+
 	public void setUpdatedBy(Integer updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
 	public Date getUpdatedDate() {
 		return updatedDate;
 	}
+
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
 	}
-
+	
 }

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!DOCTYPE html>
@@ -46,19 +47,15 @@
 				async: false,
 				success : function(response) {
 					var obj = JSON.parse(JSON.stringify(response, null, 4));
-					
 					var evvL = [];
-					var evv = new Object();
-					evv.start = '2016-06-29';
-					evv.title = 'All Day Event';
-					
-					var evv1 = new Object();
-					evv1.start = '2016-06-28';
-					evv1.title = 'All Day Event';
-					evv1.nouse = 'aa';
-					
-					evvL.push(evv);
-					evvL.push(evv1);
+
+					for (i=0; i<obj.length; i++) {
+						var evv = new Object();
+
+						evv.start = obj[i].startDate;
+						evv.title = obj[i].eventTitle;
+						evvL.push(evv);						
+					}
 					
 					$('#calendar').fullCalendar({
 						header: {
@@ -68,14 +65,6 @@
 						},
 						editable: true,
 						eventLimit: true,
-						/*
-						events: [
-									{
-										title: 'All Day Event',
-										start: '2016-06-22'
-									}
-						],
-						*/
 						events: evvL,
 					    dayClick: function() {
 					        alert('a day has been clicked!');
@@ -142,8 +131,8 @@
 											<c:forEach items="${ calendarList }" var="c" varStatus="cIdx">
 												<tr>
 													<td align="center"><input id="cbx_<c:out value="${ c.calendarId }"/>" type="checkbox" value="<c:out value="${ c.calendarId }"/>"/></td>
-													<td></td>
-													<td></td>
+													<td><fmt:formatDate pattern="dd MMM yyyy" value="${ c.startDate }"/></td>
+													<td><fmt:formatDate pattern="dd MMM yyyy" value="${ c.endDate }"/></td>
 													<td><c:out value="${ c.eventTitle }"></c:out></td>
 													<td><c:out value="${ c.extURL }"></c:out></td>
 													<td></td>
@@ -182,10 +171,13 @@
 							<div class="panel-body">
 								<form:form id="calendarForm" role="form" class="form-horizontal" modelAttribute="calendarForm" action="${pageContext.request.contextPath}/user/calendar/save" data-parsley-validate="parsley">
 									<form:hidden path="calendarId"/>
+									<form:hidden path="userId"/>
+									<form:hidden path="createdBy"/>
+									<form:hidden path="createdDate"/>
 									<div class="form-group">
 										<label for="inputStartDate" class="col-sm-2 control-label"><spring:message code="calendar_jsp.start_date" text="Start Date"/></label>
 										<div class="col-sm-3">
-											<form:input type="text" class="form-control" id="inputStartDate" name="inputStartDate" path="startDate" placeholder="Start Date"></form:input>
+											<form:input type="text" class="form-control" id="inputStartDate" name="inputStartDate" path="startDate" placeholder="Start Date" data-parsley-required="true"></form:input>
 										</div>
 									</div>
 									<div class="form-group">
@@ -203,7 +195,7 @@
 									<div class="form-group">
 										<label for="inputExtURL" class="col-sm-2 control-label"><spring:message code="calendar_jsp.ext_url" text="URL"/></label>
 										<div class="col-sm-6">
-											<form:input type="text" class="form-control" id="inputExtURL" name="inputExtURL" path="extURL" placeholder="Enter URL"></form:input>
+											<form:input type="text" class="form-control" id="inputExtURL" name="inputExtURL" path="extURL" placeholder="Enter URL" data-parsley-type='url'></form:input>
 										</div>
 									</div>
 									<div class="col-md-7 col-offset-md-5">
