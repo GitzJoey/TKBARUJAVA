@@ -75,7 +75,6 @@
 					alert(xhr.responseText);
 				}
 			});
-
 		});
 	</script>
 </head>
@@ -213,6 +212,7 @@
 				</c:choose>
 			</div>
 		</div>
+		
 		<jsp:include page="/WEB-INF/views/include/footer.jsp"></jsp:include>
 	
 	</div>
