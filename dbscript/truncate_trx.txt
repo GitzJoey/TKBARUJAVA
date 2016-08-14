@@ -13,3 +13,6 @@ truncate table tb_payment;
 truncate table tb_price;
 truncate table tb_receipt;
 truncate table tb_deliver;
+truncate table tb_stocks;
+truncate table tb_stocks_in;
+truncate table tb_stocks_out;

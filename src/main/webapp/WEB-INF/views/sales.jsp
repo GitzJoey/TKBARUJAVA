@@ -154,7 +154,7 @@
     			var custType = $('[id="selectCustType_' + activetab + '"]').val();
 
     			if (custType != '') {
-	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/type/" + custType);
+	    			$('#soForm').attr("action", ctxpath + "/sales/t/" + activetab + "/select/cust/type/" + custType);
 	    			$('#soForm').submit();
     			}
     		});    		

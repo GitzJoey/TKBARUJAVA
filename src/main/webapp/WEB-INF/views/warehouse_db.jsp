@@ -333,9 +333,9 @@
 	 																				<c:out value="-"/>
 	 																			</c:if>
 	 																		</td>
-	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto"></form:input></td>
+	 																		<td><form:input class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].bruto" data-parsley-required="true"></form:input></td>
 	 																		<td>
-	 																			<form:select class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].unitCodeLookup.lookupKey">
+	 																			<form:select class="form-control" path="salesOrderList[0].itemsList[${ itIdx.index }].deliverList[0].unitCodeLookup.lookupKey" data-parsley-required="true">
 																					<option value=""><spring:message code="common.please_select" text="Please Select"/></option>
 																					<c:forEach items="${ unitDDL }" var="i">
 																						<form:option value="${ i.lookupKey }"><spring:message code="${ i.i18nLookupValue }"></spring:message></form:option>

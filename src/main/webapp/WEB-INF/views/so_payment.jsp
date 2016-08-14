@@ -60,7 +60,7 @@
 			});
 			
 		    $('#cancelButton').click(function() {
-		    	window.location.href = ctxpath + "/sales/revise";
+		    	window.location.href = ctxpath + "/sales/payment";
 			});
 		
 		    $('#paymentListTable').DataTable();
@@ -132,10 +132,34 @@
 													<td align="center"><input id="cbx_<c:out value="${ i.salesId }"/>" type="checkbox" value="<c:out value="${ i.salesId }"/>" /></td>
 													<td><a href="${ pageContext.request.contextPath }/so/payment/view/${ i.salesId }"><c:out value="${ i.salesCode }"/></a></td>
 													<td><fmt:formatDate pattern="dd-MM-yyyy" value="${ i.salesCreatedDate }" /></td>
-													<td><c:out value="${ i.customerEntity.customerName }"></c:out></td>
-													<td></td>
-													<td></td>
-													<td></td>
+													<td>
+														<c:if test="${ i.customerTypeLookup.lookupKey == 'L022_WIN' }">
+															<c:out value="${ i.walkInCustDetail }"></c:out>
+														</c:if>
+														<c:if test="${ i.customerTypeLookup.lookupKey == 'L022_R' }">
+															<c:out value="${ i.customerEntity.customerName }"></c:out>
+														</c:if>
+													</td>
+													<td>
+														<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="0" />
+														<c:out value="${ i.itemsList[0].receiptList }"/>
+														<c:forEach items="${ i.itemsList }" var="iL">
+															<c:if test="${ not empty iL.receiptList }">
+																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].net * iL.prodPrice)) }" />
+															</c:if>
+														</c:forEach>
+														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt }"></fmt:formatNumber>													
+													</td>
+													<td>
+														<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="0" />
+														<c:forEach items="${ i.paymentList }" var="ppL">
+															<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="${ (intTotalPaid + ppL.totalAmount) }" />
+														</c:forEach>
+														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalPaid }"></fmt:formatNumber>							
+													</td>
+													<td>
+														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt - intTotalPaid }"></fmt:formatNumber>
+													</td>
 												</tr>
 											</c:forEach>
 										</c:if>
