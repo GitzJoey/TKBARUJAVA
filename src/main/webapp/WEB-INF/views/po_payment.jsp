@@ -128,7 +128,7 @@
 														<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="0" />
 														<c:forEach items="${ p.itemsList }" var="iL">
 															<c:if test="${ not empty iL.receiptList }">
-																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].net * iL.prodPrice)) }" />
+																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].baseNet * iL.prodPrice)) }" />
 															</c:if>
 														</c:forEach>
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt }"></fmt:formatNumber>

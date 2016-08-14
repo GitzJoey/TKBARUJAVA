@@ -374,8 +374,6 @@ public class WarehouseDashboardController {
 					}
 					items.setDeliverList(itemX.getDeliverList());
 					
-					
-					
 					if (sales.getSalesTypeLookup().getLookupKey().equals("L015_S")) {
 						StocksOut stocksOut = new StocksOut();
 						stocksOut.setSalesOrderEntity(sales);

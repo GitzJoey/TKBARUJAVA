@@ -140,24 +140,23 @@
 															<c:out value="${ i.customerEntity.customerName }"></c:out>
 														</c:if>
 													</td>
-													<td>
+													<td class="text-right">
 														<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="0" />
-														<c:out value="${ i.itemsList[0].receiptList }"/>
 														<c:forEach items="${ i.itemsList }" var="iL">
-															<c:if test="${ not empty iL.receiptList }">
-																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.receiptList[0].net * iL.prodPrice)) }" />
+															<c:if test="${ not empty iL.deliverList }">
+																<fmt:parseNumber var="intTotalAmt" integerOnly="true" type="number" value="${ (intTotalAmt + (iL.deliverList[0].baseBruto * iL.prodPrice)) }" />
 															</c:if>
 														</c:forEach>
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt }"></fmt:formatNumber>													
 													</td>
-													<td>
+													<td class="text-right">
 														<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="0" />
 														<c:forEach items="${ i.paymentList }" var="ppL">
 															<fmt:parseNumber var="intTotalPaid" integerOnly="true" type="number" value="${ (intTotalPaid + ppL.totalAmount) }" />
 														</c:forEach>
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalPaid }"></fmt:formatNumber>							
 													</td>
-													<td>
+													<td class="text-right">
 														<fmt:formatNumber type="number" pattern="##,###.00" value="${ intTotalAmt - intTotalPaid }"></fmt:formatNumber>
 													</td>
 												</tr>
