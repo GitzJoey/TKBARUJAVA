@@ -414,6 +414,13 @@
 															</div>
 														</div>
 													</div>
+													<div class="row">
+														<div class="col-md-12">
+															<div class="text-center">
+																<button id="printButton" type="button" class="btn btn-primary"><span class="fa fa-print"></span>&nbsp;<spring:message code="common.print_button" text="Print"/></button>
+															</div>
+														</div>
+													</div>
 												</div>
 											</div>
 										</div>
